@@ -6,9 +6,15 @@ import { useCallback, useMemo } from "react"
 import { constants } from "@/lib/constants";
 import { clusterApiUrl } from "@solana/web3.js";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
+import {
+    CoinbaseWalletAdapter,
+    LedgerWalletAdapter,
+    SafePalWalletAdapter,
+    SolflareWalletAdapter, 
+    WalletConnectWalletAdapter
+} from "@solana/wallet-adapter-wallets";
 
 import '@solana/wallet-adapter-react-ui/styles.css';
-import { CoinbaseWalletAdapter, FractalWalletAdapter, LedgerWalletAdapter, PhantomWalletAdapter, SafePalWalletAdapter, SolflareWalletAdapter, WalletConnectWalletAdapter } from "@solana/wallet-adapter-wallets";
 
 const SolanaProvider = ({ children }: { children: React.ReactNode }) => {
 
@@ -31,7 +37,6 @@ const SolanaProvider = ({ children }: { children: React.ReactNode }) => {
      * in the npm package `@solana/wallet-adapter-wallets`.
     */
     const wallets: Adapter[] = useMemo(() => [
-        new PhantomWalletAdapter(),
         new SolflareWalletAdapter(),
         new WalletConnectWalletAdapter({ network, options: { projectId: constants.WalletConnect.projectId }}),
         new LedgerWalletAdapter(),
