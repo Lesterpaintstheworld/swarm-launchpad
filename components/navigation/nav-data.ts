@@ -1,11 +1,11 @@
-export interface Link {
+export interface LinkType {
     label: string;
     url: string;
     disabled?: boolean;
     target?: string;
 }
 
-export const Links: Link[] = [
+export const Links: LinkType[] = [
     {
         label: 'invest',
         url: '/invest',
