@@ -5,7 +5,7 @@ import "./globals.css";
 import { Navigation } from "@/components/navigation";
 
 export const metadata: Metadata = {
-  title: "UBC - Invest",
+  title: "Universal Basic Compute",
 };
 
 export default function RootLayout({
