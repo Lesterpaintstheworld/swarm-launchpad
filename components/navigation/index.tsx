@@ -2,14 +2,14 @@
 
 import Image from "next/image"
 import { Links, LinkType } from "./nav-data"
-import css from "./navigation.module.css";
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { usePathname } from "next/navigation";
+import { ConnectButton } from "../solana/connectButton";
+import css from "./navigation.module.css";
 
 const Navigation = () => {
 
     const pathname = usePathname();
-    
+
     return (
         <nav className={css.navigation__wrapper}>
             <div className={css.navigation__container}>
@@ -27,7 +27,7 @@ const Navigation = () => {
                         </span>
                     )
                 })}
-                <WalletMultiButton />
+                <ConnectButton />
             </div>
         </nav>
     )

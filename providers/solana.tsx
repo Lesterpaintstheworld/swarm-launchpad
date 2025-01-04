@@ -10,8 +10,9 @@ import {
     CoinbaseWalletAdapter,
     LedgerWalletAdapter,
     SafePalWalletAdapter,
-    SolflareWalletAdapter, 
-    WalletConnectWalletAdapter
+    SolflareWalletAdapter,
+    WalletConnectWalletAdapter,
+    PhantomWalletAdapter
 } from "@solana/wallet-adapter-wallets";
 
 import '@solana/wallet-adapter-react-ui/styles.css';
@@ -37,8 +38,9 @@ const SolanaProvider = ({ children }: { children: React.ReactNode }) => {
      * in the npm package `@solana/wallet-adapter-wallets`.
     */
     const wallets: Adapter[] = useMemo(() => [
+        new PhantomWalletAdapter(),
         new SolflareWalletAdapter(),
-        new WalletConnectWalletAdapter({ network, options: { projectId: constants.WalletConnect.projectId }}),
+        new WalletConnectWalletAdapter({ network, options: { projectId: constants.WalletConnect.projectId } }),
         new LedgerWalletAdapter(),
         new CoinbaseWalletAdapter(),
         new SafePalWalletAdapter(),
