@@ -1,6 +1,6 @@
 const WalletSVG = () => {
     return (
-        <svg width="97" height="96" viewBox="0 0 97 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="60" height="60" viewBox="0 0 97 96" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="48.5" cy="48" r="48" fill="url(#paint0_linear_880_5115)" fillOpacity="0.1" />
             <circle
                 cx="48.5"
