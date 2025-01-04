@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
 @layer utilities {
 	.text-balance {
 		text-wrap: balance;
@@ -19,11 +15,14 @@ body {
 		-ms-overflow-style: none;  /* IE and Edge */
 		scrollbar-width: none;  /* Firefox */
 	}
+	.font-inter {
+		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important;
+	}
 }
 
 @layer base {
 	:root {
-		/* --background: 0 0% 0%;
+		--background: 0 0% 0%;
 		--foreground: 0 0% 93%;
 		--card: 145 99% 36%;
 		--card-foreground: 0 0% 93%;
@@ -49,15 +48,15 @@ body {
 		--chart-2: 173 58% 39%;
 		--chart-3: 197 37% 24%;
 		--chart-4: 43 74% 66%;
-		--chart-5: 27 87% 67%; */
-		--radius: 0.5rem;
+		--chart-5: 27 87% 67%;
+		--radius: 1rem;
 	}
 	.dark {
 		--background: 0 0% 0%;
 		--foreground: 0 0% 93%;
-		--card: 145, 99%, 36%, 0.3;
+		--card: 0, 0%, 0%, 0.3;
 		--card-foreground: 0 0% 93%;
-		--popover: 0, 0%, 4%, 0.95;
+		--popover: 0, 0%, 4%, 0.75;
 		--popover-foreground: 0 0% 93%;
 		--primary: 0, 0%, 0%, 0.3;
 		--primary-foreground: 0 0% 93%;
@@ -72,7 +71,7 @@ body {
 		--success-foreground: 0 0% 93%;
 		--destructive: 0 62.8% 30.6%;
 		--destructive-foreground: 0 0% 98%;
-		--border: 0, 0%, 100%, 0.5;
+		--border: 0, 0%, 100%, 0.1;
 		--input: 240 3.7% 15.9%;
 		--ring: 240 4.9% 83.9%;
 		--chart-1: 220 70% 50%;
@@ -85,7 +84,7 @@ body {
 
 @layer base {
 	* {
-		@apply border-border no-scrollbar;
+		@apply border-border no-scrollbar font-inter;
 	}
 	body {
 		@apply bg-background text-foreground;
