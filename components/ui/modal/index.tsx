@@ -4,6 +4,13 @@ import { X } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
 import { useEffect, useRef } from "react"
 
+interface ModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    children?: React.ReactNode;
+    animationDuration?: number;
+}
+
 const Modal = ({ isOpen, onClose, children, animationDuration }: ModalProps) => {
 
     const modalRef = useRef<HTMLDivElement>(null)
@@ -81,3 +88,4 @@ const Modal = ({ isOpen, onClose, children, animationDuration }: ModalProps) => 
 };
 
 export { Modal };
+export type { ModalProps };
