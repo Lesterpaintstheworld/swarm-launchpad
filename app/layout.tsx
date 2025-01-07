@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Providers } from "./providers";
 import { Toaster } from "@/components/shadcn/sonner";
-import "./globals.css";
 import { Navigation } from "@/components/navigation";
 import { BackgroundBlur } from "@/components/background";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Universal Basic Compute",
+  title: "Universal Basic Compute"
 };
 
 export default function RootLayout({
@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased dark">
+      <body className={`antialiased dark`}>
         <BackgroundBlur />
         <Providers>
           <Navigation />
