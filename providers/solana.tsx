@@ -41,14 +41,17 @@ const SolanaProvider = ({ children }: { children: React.ReactNode }) => {
     const wallets: Adapter[] = useMemo(() => [
         new PhantomWalletAdapter(),
         new SolflareWalletAdapter(),
-        // new WalletConnectWalletAdapter({ network, options: { projectId: constants.WalletConnect.projectId } }),
+        // new WalletConnectWalletAdapter({ network, options: { projectId: constants.WalletConnect.projectId } }), // Requires project setup with wallet connect
         new LedgerWalletAdapter(),
         // new CoinbaseWalletAdapter(),
         new SafePalWalletAdapter(),
     ], [network])
 
     const onError = useCallback((error: WalletError) => {
-        toast(error.message);
+        if (error?.message) {
+            toast(error.message);
+        }
+        console.error(error);
     }, []);
 
     return (
