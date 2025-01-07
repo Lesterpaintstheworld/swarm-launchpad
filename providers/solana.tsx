@@ -6,13 +6,14 @@ import { useCallback, useMemo } from "react"
 import { constants } from "@/lib/constants";
 import { clusterApiUrl } from "@solana/web3.js";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
+import { toast } from "sonner";
 import {
     CoinbaseWalletAdapter,
     LedgerWalletAdapter,
     SafePalWalletAdapter,
     SolflareWalletAdapter,
     WalletConnectWalletAdapter,
-    PhantomWalletAdapter
+    PhantomWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
 
 import '@solana/wallet-adapter-react-ui/styles.css';
@@ -40,14 +41,16 @@ const SolanaProvider = ({ children }: { children: React.ReactNode }) => {
     const wallets: Adapter[] = useMemo(() => [
         new PhantomWalletAdapter(),
         new SolflareWalletAdapter(),
-        new WalletConnectWalletAdapter({ network, options: { projectId: constants.WalletConnect.projectId } }),
+        // new WalletConnectWalletAdapter({ network, options: { projectId: constants.WalletConnect.projectId } }), // Requires project setup with wallet connect
         new LedgerWalletAdapter(),
-        new CoinbaseWalletAdapter(),
+        // new CoinbaseWalletAdapter(),
         new SafePalWalletAdapter(),
     ], [network])
 
     const onError = useCallback((error: WalletError) => {
-        // TODO: Display error using sonner (toast) instead of console
+        if (error?.message) {
+            toast(error.message);
+        }
         console.error(error);
     }, []);
 
