@@ -20,7 +20,7 @@ const AgentsPreviewGrid = () => {
     return (
         <>
             <Search value={searchValue} onInputChange={setSearchValue} />
-            <div className="container grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
                 <AnimatePresence>
                     {filteredPreviews().map((agent: AgentPreviewData, index: number) => {
                         return (
