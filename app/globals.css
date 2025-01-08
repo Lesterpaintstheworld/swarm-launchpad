@@ -15,6 +15,15 @@
 		-ms-overflow-style: none;  /* IE and Edge */
 		scrollbar-width: none;  /* Firefox */
 	}
+	.container {
+		max-width: 1048px;
+		width: 100%;
+		margin-inline: auto;
+		padding-inline: 24px;
+	}
+	.container-full {
+		width: 100vw;
+	}
 }
 
 @layer base {
@@ -53,7 +62,7 @@
 		--foreground: 0 0% 93%;
 		--card: 0, 0%, 0%, 0.3;
 		--card-foreground: 0 0% 93%;
-		--popover: 0, 0%, 4%, 0.75;
+		--popover: 0, 0%, 4%, 1;
 		--popover-foreground: 0 0% 93%;
 		--primary: 0, 0%, 0%, 0.3;
 		--primary-foreground: 0 0% 93%;

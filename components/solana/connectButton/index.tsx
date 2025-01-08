@@ -12,7 +12,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@/components/shadcn/dropdown-menu";
-import { LucideArrowLeftRight, LucidePower, LucideUser } from "lucide-react";
+import { ChartPie, LucideArrowLeftRight, LucidePower, LucideUser } from "lucide-react";
 import { DropdownMenuGroup } from "@radix-ui/react-dropdown-menu";
 
 function ConnectButton() {
@@ -61,12 +61,16 @@ function ConnectButton() {
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
                             <DropdownMenuItem disabled>
-                                Profile
-                                <LucideUser className="ml-auto max-w-3 text-muted" />
+                                Portfolio
+                                <ChartPie className="ml-auto max-w-3 text-muted" />
                             </DropdownMenuItem>
                             <DropdownMenuItem disabled>
                                 Transactions
                                 <LucideArrowLeftRight className="ml-auto max-w-3 text-muted" />
+                            </DropdownMenuItem>
+                            <DropdownMenuItem disabled>
+                                Profile
+                                <LucideUser className="ml-auto max-w-3 text-muted" />
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
