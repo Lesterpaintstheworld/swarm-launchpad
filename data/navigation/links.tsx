@@ -1,10 +1,3 @@
-export interface LinkType {
-    label: string;
-    url: string;
-    disabled?: boolean;
-    target?: string;
-}
-
 export const Links: LinkType[] = [
     {
         label: 'invest',
@@ -12,7 +5,8 @@ export const Links: LinkType[] = [
     },
     {
         label: 'stake',
-        url: 'https://stake.smithii.io/ubc'
+        url: 'https://stake.smithii.io/ubc',
+        target: '_blank'
     },
     {
         label: 'swap',

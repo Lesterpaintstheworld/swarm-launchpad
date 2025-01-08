@@ -7,12 +7,13 @@ import { cn } from "@/lib/utils";
 
 interface SearchProps extends InputProps {
     onInputChange?: (value: string) => void;
+    onSearch?: (value: string | undefined) => void;
     defaultValue?: string;
 }
 
 const Search = forwardRef<HTMLInputElement, SearchProps>(
     (
-        { onInputChange, defaultValue, className, ...props },
+        { onInputChange, defaultValue, className, onSearch, ...props },
         ref
     ) => {
 
@@ -29,6 +30,13 @@ const Search = forwardRef<HTMLInputElement, SearchProps>(
             onInputChange?.(newValue);
         }
 
+        const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === 'Enter' && onSearch) {
+                e.preventDefault()
+                onSearch(searchValue);
+            }
+        }
+
         return (
             <div className={cn("relative w-full bg-card rounded-lg border border-border", className)}>
                 <Input
@@ -37,6 +45,7 @@ const Search = forwardRef<HTMLInputElement, SearchProps>(
                     className="border-none bg-transparent w-full pl-4 pr-5"
                     aria-label="Search input"
                     onChange={handleInputChange}
+                    onKeyDown={handleKeyDown}
                     value={searchValue}
                     {...props}
                     ref={ref}
@@ -59,7 +68,7 @@ const Search = forwardRef<HTMLInputElement, SearchProps>(
                         </button>
                     )}
                     {!searchValue && (
-                        <SearchIcon className="h-4 w-4 text-muted" aria-hidden="true" />
+                        <SearchIcon className="h-4 w-4 text-foreground" aria-hidden="true" />
                     )}
                 </div>
             </div>

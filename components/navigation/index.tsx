@@ -1,9 +1,9 @@
 "use client"
 
 import Image from "next/image"
-import { Links, LinkType } from "./nav-data"
 import { usePathname } from "next/navigation";
 import { ConnectButton } from "../solana/connectButton";
+import { Links } from "@/data/navigation/links";
 import css from "./navigation.module.css";
 
 const Navigation = () => {
