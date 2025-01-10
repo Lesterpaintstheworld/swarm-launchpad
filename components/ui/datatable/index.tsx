@@ -25,7 +25,6 @@ import {
 } from "@/components/shadcn/table";
 
 import { DataTablePagination } from "./pagination";
-import { Input } from "../input";
 import { Search } from "../search";
 
 interface DataTableProps<TData, TValue> {
@@ -33,13 +32,15 @@ interface DataTableProps<TData, TValue> {
     data: TData[];
     rowAnimationDuration?: number;
     searchable?: boolean;
+    pagination?: boolean;
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
     rowAnimationDuration = 0.25,
-    searchable = false
+    searchable = false,
+    pagination = false
 }: DataTableProps<TData, TValue>) {
 
     const [sorting, setSorting] = useState<SortingState>([]);
@@ -123,7 +124,7 @@ export function DataTable<TData, TValue>({
                     </TableBody>
                 </Table>
             </div>
-            <DataTablePagination table={table} />
+            {pagination && <DataTablePagination table={table} />}
         </div>
     )
 }
