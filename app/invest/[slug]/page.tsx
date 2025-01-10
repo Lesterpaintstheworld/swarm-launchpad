@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { AgentData } from "@/data/agents/info";
 import { redirect } from "next/navigation";
@@ -18,7 +18,7 @@ export default function Agent({ params }: { params: { slug: string } }) {
             <Breadcrumb
                 className="mt-4"
                 crumbs={[
-                    { label: "Agents", href: "/" },
+                    { label: "Agents", href: "/invest" },
                     { label: agent.name }
                 ]}
             />
