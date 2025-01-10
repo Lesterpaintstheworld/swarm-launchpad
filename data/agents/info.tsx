@@ -6,7 +6,12 @@ export const AgentData: AgentInfo[] = [
         image: '/agents/kinkong.jpg',
         models: ['GPT-4o Mini', 'Claude Haiku'],
         name: 'Kin Kong',
-        gallery: [''],
+        gallery: [
+            { type: 'image', content: 'https://picsum.photos/400/225' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
+            { type: 'image', content: 'https://picsum.photos/399/226' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
+        ],
         description: '',
         programAddress: ''
     },
@@ -15,7 +20,12 @@ export const AgentData: AgentInfo[] = [
         image: '/agents/swarm-ventures.jpg',
         models: ['Claude Haiku'],
         name: 'Swarm Ventures',
-        gallery: [''],
+        gallery: [
+            { type: 'image', content: 'https://picsum.photos/400/225' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
+            { type: 'image', content: 'https://picsum.photos/399/226' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
+        ],
         description: '',
         programAddress: ''
     },
@@ -24,7 +34,12 @@ export const AgentData: AgentInfo[] = [
         image: '/agents/terminal-velocity.jpg',
         models: ['Claude Haiku'],
         name: 'Terminal Velocity',
-        gallery: [''],
+        gallery: [
+            { type: 'image', content: 'https://picsum.photos/400/225' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
+            { type: 'image', content: 'https://picsum.photos/399/226' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
+        ],
         description: '',
         programAddress: ''
     },
@@ -34,7 +49,12 @@ export const AgentData: AgentInfo[] = [
         models: ['GPT-4o Mini'],
         name: 'Synthetic Souls',
         description: SyntheticSoulsDescription,
-        gallery: [''],
+        gallery: [
+            { type: 'image', content: 'https://picsum.photos/400/225' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
+            { type: 'image', content: 'https://picsum.photos/399/226' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
+        ],
         programAddress: ''
     }
 ]
