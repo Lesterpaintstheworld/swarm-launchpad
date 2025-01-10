@@ -1,0 +1,65 @@
+.markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-block: 2rem 1rem;
+}
+
+.markdown p {
+    margin-bottom: 1rem;
+    color: hsl(var(--foreground));
+    opacity: 0.8;
+}
+
+.markdown ul li {
+    position: relative;
+    margin-left: 2rem;
+}
+
+.markdown ul li::before {
+    content: '';
+    position: absolute;
+    top: 0.6rem;
+    left: -1rem;
+    width: 0.25rem;
+    height: 0.25rem;
+    border-radius: 50%;
+    background: hsl(var(--foreground));
+}
+
+.markdown blockquote {
+    position: relative;
+    background: hsl(var(--card));
+    padding: 1rem;
+    padding-left: 1.5rem;
+}
+
+.markdown blockquote::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0.1rem;
+    background: linear-gradient(hsl(var(--accent-2)), hsl(var(--accent-3)));
+}
+
+.markdown blockquote p {
+    margin: 0;
+}
+
+.markdown code {
+    background: hsl(var(--card));
+    font-size: 0.9rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: calc(var(--radius) - 0.6rem);
+    border: 1px solid hsl(var(--border));
+}
+
+.markdown a {
+    color: aquamarine;
+}
+
+.markdown a:hover {
+    text-decoration: underline;
+}
