@@ -8,7 +8,12 @@ interface AgentPreviewData {
     id: string; // UUID
 }
 
+interface AgentGalleryItem {
+    type: 'image' | 'video' | 'node';
+    content: string | React.ReactNode;
+}
+
 interface AgentInfo extends AgentPreviewData {
-    gallery: React.ReactNode[] | string[];
+    gallery: AgentGalleryItem[];
     programAddress: string;
 }
