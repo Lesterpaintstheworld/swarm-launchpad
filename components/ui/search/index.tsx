@@ -9,11 +9,12 @@ interface SearchProps extends InputProps {
     onInputChange?: (value: string) => void;
     onSearch?: (value: string | undefined) => void;
     defaultValue?: string;
+    inputClassName?: string;
 }
 
 const Search = forwardRef<HTMLInputElement, SearchProps>(
     (
-        { onInputChange, defaultValue, className, onSearch, ...props },
+        { onInputChange, defaultValue, className, inputClassName, onSearch, ...props },
         ref
     ) => {
 
@@ -38,11 +39,11 @@ const Search = forwardRef<HTMLInputElement, SearchProps>(
         }
 
         return (
-            <div className={cn("relative w-full bg-card rounded-lg border border-border", className)}>
+            <div className={cn("relative w-full bg-card rounded-lg flex flex-row items-center border border-border overflow-hidden", className)}>
                 <Input
                     type="text"
                     placeholder="Search..."
-                    className="border-none bg-transparent w-full pl-4 pr-5"
+                    className={cn("border-none bg-transparent w-full pl-4 pr-5 rounded-none", inputClassName)}
                     aria-label="Search input"
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
@@ -50,7 +51,7 @@ const Search = forwardRef<HTMLInputElement, SearchProps>(
                     {...props}
                     ref={ref}
                 />
-                <div className="absolute inset-y-0 right-0 flex items-center pr-4">
+                <div className="flex items-center pr-4">
                     {searchValue && (
                         <button
                             type="button"

@@ -62,7 +62,14 @@ const config: Config = {
   		},
 		animation: {
 			'spin-slow': 'spin 120s linear infinite',
+			'fade-in-grow': 'fade-in-grow 0.5s ease-in-out forwards'
 		},
+		keyframes: {
+			'fade-in-grow': {
+				'0%': { scale: '0.7', },
+				'100%': { scale: '1', }
+			}
+		}
   	}
   },
   plugins: [require("tailwindcss-animate")],
