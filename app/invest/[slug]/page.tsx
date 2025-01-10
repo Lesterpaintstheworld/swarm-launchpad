@@ -2,6 +2,8 @@ import { useCallback, useEffect } from "react";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { AgentData } from "@/data/agents/info";
 import { redirect } from "next/navigation";
+import { Markdown } from "@/components/ui/markdown";
+import { Expandable } from "@/components/ui/expandable";
 
 export default function Agent({ params }: { params: { slug: string } }) {
 
@@ -21,6 +23,9 @@ export default function Agent({ params }: { params: { slug: string } }) {
                 ]}
             />
             <h1 className="font-bold mt-2">{agent.name}</h1>
+            <Expandable>
+                <Markdown markdown={agent.description} />
+            </Expandable>
         </main>
     )
 
