@@ -24,6 +24,9 @@
 	.container-full {
 		width: 100vw;
 	}
+	.perspective {
+		perspective: 800px;
+	}
 }
 
 @layer base {
