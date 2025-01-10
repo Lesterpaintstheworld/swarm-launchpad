@@ -67,32 +67,30 @@ const InfiniteCarousel = ({
 
     return (
         <div className={cn('relative aspect-[200/79]', className)}>
-            <div className="flex h-full justify-center">
+            <div className="flex h-full justify-center perspective">
                 <AnimatePresence>
                     {visibleslides.map((item: CarouselSlide, index: number) => (
                         <motion.div
                             key={item.id}
-                            exit={{ opacity: 0 }}
+                            exit={{ opacity: 0, transform: 'translateX(0) scale(0.7)' }}
+                            transition={{ duration: 0.5 }}
                             className={`
-                                absolute aspect-video opacity-50 transition-all duration-300 ease-in-out border border-border rounded-lg bg-card
-                                ${index === 2 && direction === 1 && css['animate-in-right']}
-                                ${index === 0 && direction === -1 && css['animate-in-left']}
-                                ${index === 1 ? 'z-20 !opacity-100 scale-100 shadow'
-                                    : index === 0 && direction === 1
-                                        ? 'z-10 scale-80'
-                                        : index === 2 && direction === -1
-                                            ? 'z-10 scale-80'
-                                            : 'z-0 scale-80'
-                                }
+                                absolute aspect-video transition-all  duration-500 ease-in-out border border-border rounded-lg bg-card -z-10
+                                ${index === 2 && direction === 1 && 'animate-fade-in-grow'}
+                                ${index === 0 && direction === -1 && 'animate-fade-in-grow'}
+                                ${index === 1 && '!z-50 shadow'}
                             `}
                             style={{
-                                transform: `translateX(${(index - 1) * 31.5}%) ${index !== 1 ? 'scale(0.8)' : ''
-                                    }`,
+                                transform: `
+                                    translateX(${(index - 1) * 24.75}%)
+                                    ${index !== 1 ? 'scale(0.8)' : 'scale(1)'}
+                                    ${index === 0 ? 'rotateY(15deg)' : index === 2 ? 'rotateY(-15deg)' : ''}
+                                `,
                                 left: '15%',
                                 width: '70%',
                             }}
                         >
-                            <div className="bg-popover aspect-video flex slides-center justify-center text-2xl font-bold rounded-lg overflow-hidden">
+                            <div className={`bg-popover aspect-video flex slides-center justify-center text-2xl font-bold rounded-lg overflow-hidden ${index !== 1 && 'pointer-events-none'}`}>
                                 {item.content}
                             </div>
                         </motion.div>
