@@ -7,11 +7,6 @@ import { Expandable } from "@/components/ui/expandable";
 import { InfiniteCarousel, Slides } from "@/components/ui/infiniteCarousel";
 import { AgentInvestCard } from "@/components/agents/invest";
 import { AgentRecentMarketListings } from "@/components/agents/recentMarketListings";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/shadcn/button";
-import Link from "next/link";
-import { LucidePieChart, LucideStore } from "lucide-react";
-import { ConnectButton } from "@/components/solana/connectButton";
 import { ManagePortfolioCard } from "@/components/cards/managePortfolio";
 
 export default function Agent({ params }: { params: { slug: string } }) {
