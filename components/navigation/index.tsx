@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { ConnectButton } from "../solana/connectButton";
 import { Links } from "@/data/navigation/links";
 import css from "./navigation.module.css";
+import { LinkType } from "./navigation.types";
 
 const Navigation = () => {
 

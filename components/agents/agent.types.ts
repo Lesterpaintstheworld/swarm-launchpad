@@ -17,3 +17,10 @@ interface AgentInfo extends AgentPreviewData {
     gallery: AgentGalleryItem[];
     programAddress: string;
 }
+
+export type {
+    AgentPreviewData,
+    AgentModel,
+    AgentGalleryItem,
+    AgentInfo
+}

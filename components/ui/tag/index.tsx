@@ -1,9 +1,7 @@
 import { cn } from "@/lib/utils";
 import { forwardRef } from "react";
 
-interface TagProps extends React.HTMLAttributes<HTMLParagraphElement> { }
-
-const Tag = forwardRef<HTMLParagraphElement, TagProps>(
+const Tag = forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
     (
         { children, className, ...props },
         ref
@@ -16,5 +14,6 @@ const Tag = forwardRef<HTMLParagraphElement, TagProps>(
     }
 );
 
+Tag.displayName = 'Tag';
+
 export { Tag };
-export type { TagProps };

@@ -12,4 +12,6 @@ const UBCToken = forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParag
     }
 )
 
+UBCToken.displayName = 'UBCToken';
+
 export { UBCToken }

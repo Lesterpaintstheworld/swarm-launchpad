@@ -1,3 +1,4 @@
+import { AgentInfo } from "@/components/agents/agent.types"
 import { SyntheticSoulsDescription } from "./descriptions/syntheticsouls"
 
 export const AgentData: AgentInfo[] = [

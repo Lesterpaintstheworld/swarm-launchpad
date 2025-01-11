@@ -4,3 +4,5 @@ interface LinkType {
     disabled?: boolean;
     target?: string;
 }
+
+export type { LinkType }

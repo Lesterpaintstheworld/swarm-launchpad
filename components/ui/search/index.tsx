@@ -77,5 +77,7 @@ const Search = forwardRef<HTMLInputElement, SearchProps>(
     }
 )
 
+Search.displayName = 'Search';
+
 export { Search }
 export type { SearchProps }

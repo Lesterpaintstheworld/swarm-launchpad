@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { Button } from "@/components/shadcn/button"
 import { ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -33,14 +33,14 @@ export default function Expandable({
         if (contentRef.current) {
             setShowButton(contentRef.current.scrollHeight > overflowThreshold);
         };
-    }, [children]);
+    }, [children, overflowThreshold]);
 
     const toggleExpand = () => {
         setIsExpanded(!isExpanded);
     };
 
     // Function to recursively set tabIndex on all focusable elements
-    const setTabIndex = (elements: HTMLCollection, tabIndex: number) => {
+    const setTabIndex = useCallback((elements: HTMLCollection, tabIndex: number) => {
         Array.from(elements).forEach((element) => {
             if (
                 element instanceof HTMLButtonElement ||
@@ -56,13 +56,13 @@ export default function Expandable({
                 setTabIndex(element.children, tabIndex);
             }
         })
-    }
+    }, [])
 
     useEffect(() => {
         if (contentRef.current) {
             setTabIndex(contentRef.current.children, isExpanded ? 0 : -1);
         }
-    }, [isExpanded]);
+    }, [isExpanded, setTabIndex]);
 
     return (
         <div className={cn("relative flex flex-col gap-4", className)}>

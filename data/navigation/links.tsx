@@ -1,3 +1,5 @@
+import { LinkType } from "@/components/navigation/navigation.types";
+
 export const Links: LinkType[] = [
     {
         label: 'invest',

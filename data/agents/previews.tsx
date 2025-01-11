@@ -1,3 +1,5 @@
+import { AgentPreviewData } from "@/components/agents/agent.types";
+
 export const previews: AgentPreviewData[] = [
     {
         id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',

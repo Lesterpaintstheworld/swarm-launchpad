@@ -4,7 +4,6 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/shadcn/button'
 import { AnimatePresence, motion } from 'motion/react';
-import css from './infiniteCarousel.module.css';
 import { cn } from '@/lib/utils';
 
 interface CarouselSlide {

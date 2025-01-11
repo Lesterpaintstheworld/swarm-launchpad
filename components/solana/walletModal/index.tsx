@@ -9,6 +9,11 @@ import { WalletSVG } from "../walletSVG";
 import { AnimatePresence, motion } from "motion/react";
 import { Button } from "@/components/shadcn/button";
 
+interface WalletModalProps {
+    isModalOpen: boolean;
+    closeModal: () => void;
+}
+
 const WalletModal = ({ isModalOpen, closeModal }: WalletModalProps) => {
 
     const { wallets, select } = useWallet();
@@ -120,7 +125,7 @@ const WalletModal = ({ isModalOpen, closeModal }: WalletModalProps) => {
                 </>
             ) : (
                 <div className="flex flex-col">
-                    <h6 className="text-center w-fit mx-auto mt-6 mb-8 font-medium">You'll need a wallet<br />on Solana to continue</h6>
+                    <h6 className="text-center w-fit mx-auto mt-6 mb-8 font-medium">You&apos;ll need a wallet<br />on Solana to continue</h6>
                     <div className="mx-auto">
                         <WalletSVG />
                     </div>
@@ -139,3 +144,4 @@ const WalletModal = ({ isModalOpen, closeModal }: WalletModalProps) => {
 }
 
 export { WalletModal }
+export type { WalletModalProps }

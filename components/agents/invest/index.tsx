@@ -53,7 +53,7 @@ const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
             <div className="flex flex-col gap-8 md:flex-row md:gap-none justify-between mt-6">
                 <div className="flex flex-col basis-1/2 md:max-w-[48%]">
                     <div className="border border-border rounded-md bg-card p-4 pb-2 flex flex-col">
-                        <p className="text-muted text-sm">You'll receive</p>
+                        <p className="text-muted text-sm">You&apos;ll receive</p>
                         <div className="flex flex-row">
                             <Input
                                 className="border-none rounded-none bg-transparent pl-0 text-4xl font-bold no-arrows"
@@ -79,7 +79,7 @@ const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
                 <div className="flex flex-col basis-1/2 md:max-w-[48%]">
                     <div className="border border-border flex flex-row items-center rounded-md bg-card">
                         <div className="p-4 pb-2 flex flex-col flex-grow">
-                            <p className="text-muted text-sm">You'll pay</p>
+                            <p className="text-muted text-sm">You&apos;ll pay</p>
                             <Input
                                 className="border-none bg-transparent px-0 text-4xl font-bold !text-foreground no-arrows"
                                 placeholder={data.remainingSupply === 0 ? 'Sold out' : connected ? '10,000' : '--'}

@@ -5,6 +5,7 @@ import { AgentPreviewCard } from "../preview"
 import { previews } from "@/data/agents/previews"
 import { useCallback, useState } from "react"
 import { AnimatePresence } from "motion/react"
+import { AgentModel, AgentPreviewData } from "../agent.types"
 
 const AgentsPreviewGrid = () => {
 

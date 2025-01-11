@@ -12,7 +12,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@/components/shadcn/dropdown-menu";
-import { ChartPie, Link, LucideArrowLeftRight, LucidePower, LucideUser } from "lucide-react";
+import { ChartPie, Link, LucideArrowLeftRight, LucidePower } from "lucide-react";
 import { DropdownMenuGroup } from "@radix-ui/react-dropdown-menu";
 
 function ConnectButton() {
@@ -39,7 +39,7 @@ function ConnectButton() {
             return disconnect();
         }
         return openModal();
-    }, [connected, connecting, disconnecting, publicKey]);
+    }, [connected, disconnect]);
 
     return (
         <>

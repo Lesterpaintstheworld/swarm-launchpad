@@ -2,7 +2,7 @@ import { Column } from "@tanstack/react-table"
 import { Button } from "@/components/shadcn/button";
 import { useState } from "react";
 import { cn } from "@/lib/utils"
-import { LucideChevronsDown, LucideChevronsUp, LucideChevronsUpDown } from "lucide-react";
+import { LucideChevronsDown, LucideChevronsUp } from "lucide-react";
 
 export interface DataTableColumnHeaderProps<TData, TValue>
     extends React.HTMLAttributes<HTMLDivElement> {

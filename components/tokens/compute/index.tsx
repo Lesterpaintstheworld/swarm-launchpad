@@ -12,4 +12,6 @@ const ComputeToken = forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLP
     }
 )
 
+ComputeToken.displayName = 'ComputeToken';
+
 export { ComputeToken }
