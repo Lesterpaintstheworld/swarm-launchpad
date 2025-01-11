@@ -14,9 +14,12 @@ import {
 } from "@/components/shadcn/dropdown-menu";
 import { ChartPie, Link, LucideArrowLeftRight, LucidePower } from "lucide-react";
 import { DropdownMenuGroup } from "@radix-ui/react-dropdown-menu";
-import { formatPublicKey } from "@/lib/utils";
+import { cn, formatPublicKey } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
-function ConnectButton() {
+function ConnectButton({ className }: { className?: string }) {
+
+    const router = useRouter();
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [label, setlabel] = useState<string>('Connect Wallet');
@@ -45,7 +48,7 @@ function ConnectButton() {
     return (
         <>
             {!connected ? (
-                <Button disabled={connecting || disconnecting} onClick={handleClick} className="px-4">
+                <Button disabled={connecting || disconnecting} onClick={handleClick} className={cn("px-4", className)}>
                     {connected && <img src={wallet?.adapter.icon} alt={`${wallet?.adapter.name} icon`} className="max-w-4" />}
                     {label}
                 </Button>
@@ -61,9 +64,9 @@ function ConnectButton() {
                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <DropdownMenuItem disabled>
+                            <DropdownMenuItem onClick={() => router.push('/invest/portfolio')}>
                                 Portfolio
-                                <ChartPie className="ml-auto max-w-3 text-muted" />
+                                <ChartPie className="ml-auto max-w-3" />
                             </DropdownMenuItem>
                             <DropdownMenuItem disabled>
                                 Market
