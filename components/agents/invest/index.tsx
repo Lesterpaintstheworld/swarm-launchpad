@@ -28,8 +28,10 @@ const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
     const [price, setPrice] = useState<number>(0);
 
     const handleSharesInput = (e: ChangeEvent<HTMLInputElement>) => {
+
         const value = Number(e.target.value);
-        if (isNaN(value)) return;
+
+        if (isNaN(value) || value < 0) return;
 
         setPrice(Math.floor((Number(value) * data.pricePerShare) / data.pricePerShare) * data.pricePerShare);
         setNumShares(String(value));
@@ -65,6 +67,7 @@ const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
                                 type="number"
                                 placeholder={data.remainingSupply === 0 ? 'Sold out' : connected ? '0' : '--'}
                                 step={1}
+                                min={0}
                                 value={connected ? Number(numShares) !== 0 ? numShares : '' : ''}
                                 onChange={handleSharesInput}
                             />
@@ -85,6 +88,7 @@ const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
                                 placeholder={data.remainingSupply === 0 ? 'Sold out' : connected ? '10,000' : '--'}
                                 disabled
                                 value={price !== 0 ? IntlNumberFormat(price) : ''}
+                                min={0}
                             />
                         </div>
                         <ComputeToken className="h-fit text-lg mr-6" />
