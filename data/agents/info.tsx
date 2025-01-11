@@ -9,9 +9,9 @@ export const AgentData: AgentInfo[] = [
         name: 'Kin Kong',
         gallery: [
             { type: 'image', content: 'https://picsum.photos/400/225' },
-            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
-            { type: 'image', content: 'https://picsum.photos/399/226' },
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
+            { type: 'image', content: 'https://picsum.photos/399/226' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
         ],
         description: SyntheticSoulsDescription,
         programAddress: ''
@@ -23,9 +23,9 @@ export const AgentData: AgentInfo[] = [
         name: 'Swarm Ventures',
         gallery: [
             { type: 'image', content: 'https://picsum.photos/400/225' },
-            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
-            { type: 'image', content: 'https://picsum.photos/399/226' },
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
+            { type: 'image', content: 'https://picsum.photos/399/226' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
         ],
         description: SyntheticSoulsDescription,
         programAddress: ''
@@ -37,9 +37,9 @@ export const AgentData: AgentInfo[] = [
         name: 'Terminal Velocity',
         gallery: [
             { type: 'image', content: 'https://picsum.photos/400/225' },
-            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
-            { type: 'image', content: 'https://picsum.photos/399/226' },
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
+            { type: 'image', content: 'https://picsum.photos/399/226' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
         ],
         description: SyntheticSoulsDescription,
         programAddress: ''
@@ -52,9 +52,9 @@ export const AgentData: AgentInfo[] = [
         description: SyntheticSoulsDescription,
         gallery: [
             { type: 'image', content: 'https://picsum.photos/400/225' },
-            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
-            { type: 'image', content: 'https://picsum.photos/399/226' },
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
+            { type: 'image', content: 'https://picsum.photos/399/226' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
         ],
         programAddress: ''
     },
@@ -66,9 +66,9 @@ export const AgentData: AgentInfo[] = [
         description: SyntheticSoulsDescription,
         gallery: [
             { type: 'image', content: 'https://picsum.photos/400/225' },
-            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
-            { type: 'image', content: 'https://picsum.photos/399/226' },
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
+            { type: 'image', content: 'https://picsum.photos/399/226' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
         ],
         programAddress: ''
     },
@@ -80,9 +80,9 @@ export const AgentData: AgentInfo[] = [
         description: SyntheticSoulsDescription,
         gallery: [
             { type: 'image', content: 'https://picsum.photos/400/225' },
-            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
-            { type: 'image', content: 'https://picsum.photos/399/226' },
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
+            { type: 'image', content: 'https://picsum.photos/399/226' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
         ],
         programAddress: ''
     },
@@ -94,9 +94,9 @@ export const AgentData: AgentInfo[] = [
         description: SyntheticSoulsDescription,
         gallery: [
             { type: 'image', content: 'https://picsum.photos/400/225' },
-            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
-            { type: 'image', content: 'https://picsum.photos/399/226' },
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
+            { type: 'image', content: 'https://picsum.photos/399/226' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
         ],
         programAddress: ''
     },
@@ -108,9 +108,9 @@ export const AgentData: AgentInfo[] = [
         description: SyntheticSoulsDescription,
         gallery: [
             { type: 'image', content: 'https://picsum.photos/400/225' },
-            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
-            { type: 'image', content: 'https://picsum.photos/399/226' },
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
+            { type: 'image', content: 'https://picsum.photos/399/226' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
         ],
         programAddress: ''
     },
