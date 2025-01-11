@@ -14,6 +14,7 @@ import {
 } from "@/components/shadcn/dropdown-menu";
 import { ChartPie, Link, LucideArrowLeftRight, LucidePower } from "lucide-react";
 import { DropdownMenuGroup } from "@radix-ui/react-dropdown-menu";
+import { formatPublicKey } from "@/lib/utils";
 
 function ConnectButton() {
 
@@ -27,7 +28,7 @@ function ConnectButton() {
 
     useEffect(() => {
         setlabel(
-            connected ? publicKey?.toBase58().slice(0, 5) + '...' + publicKey?.toBase58().slice(-2) :
+            connected ? formatPublicKey(publicKey?.toBase58() as string) :
                 connecting ? 'Connecting...' :
                     disconnecting ? 'Disconnecting...' :
                         'Connect Wallet'

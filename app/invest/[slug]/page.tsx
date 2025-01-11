@@ -6,6 +6,7 @@ import { Markdown } from "@/components/ui/markdown";
 import { Expandable } from "@/components/ui/expandable";
 import { InfiniteCarousel, Slides } from "@/components/ui/infiniteCarousel";
 import { AgentInvestCard } from "@/components/agents/invest";
+import { AgentRecentMarketListings } from "@/components/agents/recentMarketListings";
 
 export default function Agent({ params }: { params: { slug: string } }) {
 
@@ -47,7 +48,7 @@ export default function Agent({ params }: { params: { slug: string } }) {
                 className="mt-16 mb-12"
                 data={{
                     totalSupply: 1000045155,
-                    pricePerShare: 1000,
+                    pricePerShare: 0.1,
                     remainingSupply: 450216315
                 }}
             />
@@ -60,6 +61,61 @@ export default function Agent({ params }: { params: { slug: string } }) {
                     </Expandable>
                 </>
             }
+            <AgentRecentMarketListings
+                agentId={agent.id}
+                numberOfListings={7}
+                listings={[
+                    {
+                        id: '47b552e3-af9a-42a0-b6f3-88923ec38165',
+                        seller: '6LpzxkfTDQfVKfZoquGkkmNqCLj75Ff3wXCBnaJQvP6Q',
+                        number_of_shares: 100000,
+                        token: 'SOL',
+                        price_per_share: 0.1
+                    },
+                    {
+                        id: '1ce3af82-82aa-4ee6-9d35-0eea0672ae2e',
+                        seller: 'GzQ6zxC23F38m3retSWbesi6P3asBDy8iYoGozD9Rqts',
+                        number_of_shares: 10000,
+                        token: 'USDC',
+                        price_per_share: 0.5
+                    },
+                    {
+                        id: 'a28bd78f-c25f-4b19-bebc-2d819a60e394',
+                        seller: 'Du1cRmGaNJsaHaeuaKfDHArugh3WgZJNuTZ7wUsyrGBy',
+                        number_of_shares: 2550,
+                        token: '$COMPUTE',
+                        price_per_share: 10000
+                    },
+                    {
+                        id: 'e5fe5595-0266-4eb9-ae59-ed2192619574',
+                        seller: 'BseSbuXPsCrubogu8SnvZkpyJhKW3HCWyrTYHsjGvqt8',
+                        number_of_shares: 12863,
+                        token: '$UBC',
+                        price_per_share: 580
+                    },
+                    {
+                        id: 'ff5eb981-7dec-4d7f-941b-88729ec34f02',
+                        seller: '6LpzxkfTDQfVKfZoquGkkmNqCLj75Ff3wXCBnaJQvP6Q',
+                        number_of_shares: 50000,
+                        token: 'USDC',
+                        price_per_share: 4.2
+                    },
+                    {
+                        id: '67c2df7b-b3c0-428f-8fda-47451544cb96',
+                        seller: '2mWk81seRfcQ8NEtrSYm4S3hFqN3TaXXGU7tWvF2Z4cW',
+                        number_of_shares: 100000,
+                        token: 'SOL',
+                        price_per_share: 0.1
+                    },
+                    {
+                        id: '12f3aefc-1642-475c-b484-6a7dbfef006d',
+                        seller: 'GzQ6zxC23F38m3retSWbesi6P3asBDy8iYoGozD9Rqts',
+                        number_of_shares: 100000,
+                        token: 'SOL',
+                        price_per_share: 0.1
+                    },
+                ]}
+            />
         </main>
     )
 

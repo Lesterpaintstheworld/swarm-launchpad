@@ -18,9 +18,18 @@ interface AgentInfo extends AgentPreviewData {
     programAddress: string;
 }
 
+interface MarketListing {
+    id: string;
+    number_of_shares: number;
+    seller: string;
+    price_per_share: number;
+    token: string;
+}
+
 export type {
     AgentPreviewData,
     AgentModel,
     AgentGalleryItem,
-    AgentInfo
+    AgentInfo,
+    MarketListing
 }

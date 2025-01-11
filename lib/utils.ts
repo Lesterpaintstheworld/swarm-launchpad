@@ -14,3 +14,8 @@ export function IntlNumberFormatCompact(number: number): string {
 export function IntlNumberFormat(number: number): string {
 	return new Intl.NumberFormat('en-US').format(number);
 }
+
+export function formatPublicKey(publicKey: string): string {
+	return publicKey?.slice(0, 5) + '...' + publicKey?.slice(-4);
+}
+

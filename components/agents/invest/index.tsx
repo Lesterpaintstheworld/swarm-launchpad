@@ -33,7 +33,7 @@ const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
 
         if (isNaN(value) || value < 0) return;
 
-        setPrice(Math.floor((Number(value) * data.pricePerShare) / data.pricePerShare) * data.pricePerShare);
+        setPrice(Math.floor((Number(value))) * data.pricePerShare);
         setNumShares(String(value));
     }
 
