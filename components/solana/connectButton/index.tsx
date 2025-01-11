@@ -65,18 +65,14 @@ function ConnectButton() {
                                 <ChartPie className="ml-auto max-w-3 text-muted" />
                             </DropdownMenuItem>
                             <DropdownMenuItem disabled>
-                                Transactions
-                                <Link className="ml-auto max-w-3 text-muted" />
-                            </DropdownMenuItem>
-                            <DropdownMenuItem disabled>
-                                Profile
-                                <LucideUser className="ml-auto max-w-3 text-muted" />
+                                Market
+                                <LucideArrowLeftRight className="ml-auto max-w-3 text-muted" />
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem disabled>
-                            Market
-                            <LucideArrowLeftRight className="ml-auto max-w-3 text-muted" />
+                            Transactions
+                            <Link className="ml-auto max-w-3 text-muted" />
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem onClick={() => disconnect()} className="cursor-pointer">
