@@ -12,6 +12,7 @@ interface ExpandableProps {
     openLabel?: string;
     closedLabel?: string;
     showChevron?: boolean;
+    overflowThreshold?: number;
 }
 
 export default function Expandable({
@@ -19,7 +20,8 @@ export default function Expandable({
     className,
     openLabel = 'Read less',
     closedLabel = 'Read more',
-    showChevron = true
+    showChevron = true,
+    overflowThreshold = 500
 }: ExpandableProps) {
 
     const [isExpanded, setIsExpanded] = useState(false);
@@ -29,7 +31,7 @@ export default function Expandable({
 
     useEffect(() => {
         if (contentRef.current) {
-            setShowButton(contentRef.current.scrollHeight > 500);
+            setShowButton(contentRef.current.scrollHeight > overflowThreshold);
         };
     }, [children]);
 
@@ -66,8 +68,8 @@ export default function Expandable({
         <div className={cn("relative flex flex-col gap-4", className)}>
             <div
                 ref={contentRef}
-                className={`overflow-hidden transition-all duration-700 ease-in-out${isExpanded ? '' : ` max-h-[500px] ${css['mask-fade']}`}`}
-                style={{ maxHeight: isExpanded ? `${contentRef.current?.scrollHeight}px` : '500px' }}
+                className={`overflow-hidden transition-all duration-700 ease-in-out${isExpanded ? '' : ` max-h-[${overflowThreshold}px] ${css['mask-fade']}`}`}
+                style={{ maxHeight: isExpanded ? `${contentRef.current?.scrollHeight}px` : `${overflowThreshold}px` }}
             >
                 {children}
             </div>

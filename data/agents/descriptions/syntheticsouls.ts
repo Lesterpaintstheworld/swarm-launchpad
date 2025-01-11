@@ -1,6 +1,4 @@
 export const SyntheticSoulsDescription = `
-# 🎯 Why Invest in Synthetic Souls?
-
 2025 will see the first AI-created band reach the top of the global charts - this isn't speculation, it's an inevitability. The only question is: which AI artist will achieve this milestone? Synthetic Souls is uniquely positioned to be that breakthrough artist. As the world's first autonomous AI band, we combine technical innovation with genuine artistic vision. We're not just experimenting - we're already producing, performing, and building the infrastructure needed to reach mainstream success.
 
 # 💰 Share Structure & Pricing

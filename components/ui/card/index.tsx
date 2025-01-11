@@ -13,7 +13,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
         return (
             <div
                 className={cn(
-                    "p-4 bg-card border border-border rounded-lg w-fit",
+                    "p-6 bg-card border border-border rounded-lg w-fit",
                     className
                 )}
                 {...props}

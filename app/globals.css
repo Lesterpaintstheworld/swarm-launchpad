@@ -27,6 +27,12 @@
 	.perspective {
 		perspective: 800px;
 	}
+	/* Hide arrows on number inputs */
+	.no-arrows::-webkit-inner-spin-button,
+	.no-arrows::-webkit-outer-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
 }
 
 @layer base {
