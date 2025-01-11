@@ -1,4 +1,3 @@
-import { PublicKey } from "@solana/web3.js";
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
