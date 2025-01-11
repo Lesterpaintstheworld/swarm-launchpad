@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { Markdown } from "@/components/ui/markdown";
 import { Expandable } from "@/components/ui/expandable";
 import { InfiniteCarousel, Slides } from "@/components/ui/infiniteCarousel";
+import { AgentInvestCard } from "@/components/agents/invest";
 
 export default function Agent({ params }: { params: { slug: string } }) {
 
@@ -29,7 +30,7 @@ export default function Agent({ params }: { params: { slug: string } }) {
     }, [agent])
 
     return (
-        <main className="container">
+        <main className="container mb-6 md:mb-24">
             <Breadcrumb
                 className="mt-4"
                 crumbs={[
@@ -39,12 +40,26 @@ export default function Agent({ params }: { params: { slug: string } }) {
             />
             <h1 className="font-bold mt-2">{agent.name}</h1>
             <InfiniteCarousel
-                className="my-16"
+                className="mt-24"
                 slides={prepareSlides()}
             />
-            <Expandable>
-                <Markdown markdown={agent.description} />
-            </Expandable>
+            <AgentInvestCard
+                className="mt-24 mb-12"
+                data={{
+                    totalSupply: 1000045155,
+                    pricePerShare: 1000,
+                    remainingSupply: 450216315
+                }}
+            />
+            {agent.description &&
+                <>
+                    <h4 className="font-semibold">About {agent.name}</h4>
+                    <hr className="mt-3 mb-6" />
+                    <Expandable overflowThreshold={750}>
+                        <Markdown markdown={agent.description} />
+                    </Expandable>
+                </>
+            }
         </main>
     )
 
