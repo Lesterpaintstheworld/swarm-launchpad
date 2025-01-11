@@ -26,6 +26,7 @@ import {
 
 import { DataTablePagination } from "./pagination";
 import { Search } from "../search";
+import { cn } from "@/lib/utils";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -33,6 +34,7 @@ interface DataTableProps<TData, TValue> {
     rowAnimationDuration?: number;
     searchable?: boolean;
     pagination?: boolean;
+    rowClassName?: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -40,7 +42,8 @@ export function DataTable<TData, TValue>({
     data,
     rowAnimationDuration = 0.25,
     searchable = false,
-    pagination = false
+    pagination = false,
+    rowClassName
 }: DataTableProps<TData, TValue>) {
 
     const [sorting, setSorting] = useState<SortingState>([]);
@@ -102,7 +105,7 @@ export function DataTable<TData, TValue>({
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         transition={{ ease: "ease", duration: rowAnimationDuration }}
-                                        className="border-b border-border transition-colors hover:bg-foreground/[3%] data-[state=selected]:bg-muted"
+                                        className={cn("border-b border-border transition-colors hover:bg-foreground/[3%] data-[state=selected]:bg-muted", rowClassName)}
                                         key={row.id}
                                         data-state={row.getIsSelected() && "selected"}
                                     >
