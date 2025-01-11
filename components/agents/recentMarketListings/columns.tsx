@@ -14,7 +14,7 @@ export const columns: ColumnDef<MarketListing>[] = [
             <DataTableColumnHeader column={column} title="No. Shares" />
         ),
         cell: ({ row }) => (
-            <p className="ml-2">{IntlNumberFormat(Number(row.getValue('number_of_shares')))}</p>
+            <p>{IntlNumberFormat(Number(row.getValue('number_of_shares')))}</p>
         )
     },
     {
