@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from "@/components/shadcn/button";
+import { ConnectButton } from "@/components/solana/connectButton";
 import { ComputeToken } from "@/components/tokens/compute";
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
@@ -105,7 +106,7 @@ const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
                 </Button>
             }
             {connected && data.remainingSupply !== 0 && <Button variant='success' onClick={handleBuy} className="mt-10 w-full md:max-w-40">BUY</Button>}
-            {!connected && data.remainingSupply !== 0 && <Button disabled className="mt-10 w-full md:max-w-40">Requires Wallet</Button>}
+            {!connected && data.remainingSupply !== 0 && <ConnectButton className="mt-10 w-full md:max-w-40" />}
         </Card>
     )
 }
