@@ -40,11 +40,11 @@ export default function Agent({ params }: { params: { slug: string } }) {
             />
             <h1 className="font-bold mt-2">{agent.name}</h1>
             <InfiniteCarousel
-                className="mt-24"
+                className="mt-16"
                 slides={prepareSlides()}
             />
             <AgentInvestCard
-                className="mt-24 mb-12"
+                className="mt-16 mb-12"
                 data={{
                     totalSupply: 1000045155,
                     pricePerShare: 1000,
