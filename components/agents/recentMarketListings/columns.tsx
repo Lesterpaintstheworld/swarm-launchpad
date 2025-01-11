@@ -32,7 +32,7 @@ export const columns: ColumnDef<MarketListing>[] = [
             <DataTableColumnHeader column={column} title="Price per share" />
         ),
         cell: ({ row }) => {
-            return <p className="text-foreground/60 ml-2">{IntlNumberFormat(Number(row.getValue('price_per_share')))}</p>
+            return <p className="text-foreground/60">{IntlNumberFormat(Number(row.getValue('price_per_share')))}</p>
         }
     },
     {
@@ -43,7 +43,7 @@ export const columns: ColumnDef<MarketListing>[] = [
         cell: ({ row }) => {
             return (
                 <div className="flex flex-row items-center gap-2">
-                    <p className="text-foreground/60 ml-2 font-bold !text-foreground">{IntlNumberFormat(Number(row.getValue('price_per_share')) * Number(row.getValue('number_of_shares')))}</p>
+                    <p className="text-foreground/60 font-bold !text-foreground">{IntlNumberFormat(Number(row.getValue('price_per_share')) * Number(row.getValue('number_of_shares')))}</p>
                     <Tag className="capitalise">{row.getValue('token')}</Tag>
                 </div>
             )

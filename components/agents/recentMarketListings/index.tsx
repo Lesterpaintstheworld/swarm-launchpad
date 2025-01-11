@@ -16,7 +16,7 @@ const AgentRecentMarketListings = ({ agentId, listings, numberOfListings }: Agen
 
     return (
         <Card className="w-full flex flex-col mt-6 md:mt-12">
-            <h4 className="mb-4">Recent market listings</h4>
+            <h4 className="mb-4 font-foreground font-semibold">Recent market listings</h4>
             <DataTable
                 columns={columns}
                 data={listings?.slice(0, numberOfListings) || []}
