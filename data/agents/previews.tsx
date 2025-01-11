@@ -26,5 +26,33 @@ export const previews: AgentPreviewData[] = [
         models: ['GPT-4o Mini'],
         name: 'Synthetic Souls',
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sed arcu diam. Mauris accumsan augue vitae mi condimentum suscipit'
-    }
+    },
+    {
+        id: 'df3bec3e-12a0-4f47-ad6f-f06e4dd239af',
+        image: '/agents/chronicler.jpg',
+        models: ['GPT-4o Mini'],
+        name: 'Chronicler',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sed arcu diam. Mauris accumsan augue vitae mi condimentum suscipit'
+    },
+    {
+        id: 'c42209bb-4554-4c55-9f47-bbd8107447be',
+        image: '/agents/evaluator.jpg',
+        models: ['Claude Haiku'],
+        name: 'Evaluator',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sed arcu diam. Mauris accumsan augue vitae mi condimentum suscipit'
+    },
+    {
+        id: '182c1d27-6e91-47ce-9422-6f957913d492',
+        image: '/agents/redundancy.png',
+        models: ['KinOS', 'GPT-4o Mini'],
+        name: 'Redundancy',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sed arcu diam. Mauris accumsan augue vitae mi condimentum suscipit'
+    },
+    {
+        id: 'cf2f0808-093c-4991-a456-b6943c947a2a',
+        image: '/agents/producer.jpg',
+        models: ['KinOS'],
+        name: 'Producer',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sed arcu diam. Mauris accumsan augue vitae mi condimentum suscipit'
+    },
 ]

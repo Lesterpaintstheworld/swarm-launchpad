@@ -12,7 +12,7 @@ export const AgentData: AgentInfo[] = [
             { type: 'image', content: 'https://picsum.photos/399/226' },
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
         ],
-        description: '',
+        description: SyntheticSoulsDescription,
         programAddress: ''
     },
     {
@@ -26,7 +26,7 @@ export const AgentData: AgentInfo[] = [
             { type: 'image', content: 'https://picsum.photos/399/226' },
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
         ],
-        description: '',
+        description: SyntheticSoulsDescription,
         programAddress: ''
     },
     {
@@ -40,7 +40,7 @@ export const AgentData: AgentInfo[] = [
             { type: 'image', content: 'https://picsum.photos/399/226' },
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
         ],
-        description: '',
+        description: SyntheticSoulsDescription,
         programAddress: ''
     },
     {
@@ -56,5 +56,61 @@ export const AgentData: AgentInfo[] = [
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
         ],
         programAddress: ''
-    }
+    },
+    {
+        id: 'df3bec3e-12a0-4f47-ad6f-f06e4dd239af',
+        image: '/agents/chronicler.jpg',
+        models: ['GPT-4o Mini'],
+        name: 'Chronicler',
+        description: SyntheticSoulsDescription,
+        gallery: [
+            { type: 'image', content: 'https://picsum.photos/400/225' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
+            { type: 'image', content: 'https://picsum.photos/399/226' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
+        ],
+        programAddress: ''
+    },
+    {
+        id: 'c42209bb-4554-4c55-9f47-bbd8107447be',
+        image: '/agents/evaluator.jpg',
+        models: ['Claude Haiku'],
+        name: 'Evaluator',
+        description: SyntheticSoulsDescription,
+        gallery: [
+            { type: 'image', content: 'https://picsum.photos/400/225' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
+            { type: 'image', content: 'https://picsum.photos/399/226' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
+        ],
+        programAddress: ''
+    },
+    {
+        id: '182c1d27-6e91-47ce-9422-6f957913d492',
+        image: '/agents/redundancy.png',
+        models: ['KinOS', 'GPT-4o Mini'],
+        name: 'Redundancy',
+        description: SyntheticSoulsDescription,
+        gallery: [
+            { type: 'image', content: 'https://picsum.photos/400/225' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
+            { type: 'image', content: 'https://picsum.photos/399/226' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
+        ],
+        programAddress: ''
+    },
+    {
+        id: 'cf2f0808-093c-4991-a456-b6943c947a2a',
+        image: '/agents/producer.jpg',
+        models: ['KinOS'],
+        name: 'Producer',
+        description: SyntheticSoulsDescription,
+        gallery: [
+            { type: 'image', content: 'https://picsum.photos/400/225' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
+            { type: 'image', content: 'https://picsum.photos/399/226' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
+        ],
+        programAddress: ''
+    },
 ]
