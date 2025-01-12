@@ -12,10 +12,13 @@ const AgentsPreviewGrid = () => {
     const [searchValue, setSearchValue] = useState<string>('');
 
     const filteredPreviews = useCallback(() => {
-        return previews.filter(({ name, description, models }) =>
+        return previews.filter(({ name, description, models, tags, role }) =>
             name.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
             description.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
-            models.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase() as AgentModel));
+            models.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase() as AgentModel) ||
+            tags.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
+            role?.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())
+        );
     }, [searchValue])
 
     return (
