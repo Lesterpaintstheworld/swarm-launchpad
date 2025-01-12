@@ -14,7 +14,9 @@ export const AgentData: AgentInfo[] = [
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
         ],
         description: SyntheticSoulsDescription,
-        programAddress: ''
+        programAddress: '',
+        tags: ['AI', 'OpenAI'],
+        role: 'Lorem ipsum'
     },
     {
         id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',
@@ -28,7 +30,9 @@ export const AgentData: AgentInfo[] = [
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
         ],
         description: SyntheticSoulsDescription,
-        programAddress: ''
+        programAddress: '',
+        tags: ['AI', 'OpenAI'],
+        role: 'Lorem ipsum'
     },
     {
         id: '988b16b4-6beb-4cc5-9a14-50f48ee47a22',
@@ -42,7 +46,9 @@ export const AgentData: AgentInfo[] = [
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
         ],
         description: SyntheticSoulsDescription,
-        programAddress: ''
+        programAddress: '',
+        tags: ['AI', 'OpenAI'],
+        role: 'Lorem ipsum'
     },
     {
         id: '03616e66-a21e-425b-a93b-16d6396e883f',
@@ -56,7 +62,9 @@ export const AgentData: AgentInfo[] = [
             { type: 'image', content: 'https://picsum.photos/399/226' },
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
         ],
-        programAddress: ''
+        programAddress: '',
+        tags: ['AI', 'OpenAI'],
+        role: 'Lorem ipsum'
     },
     {
         id: 'df3bec3e-12a0-4f47-ad6f-f06e4dd239af',
@@ -70,7 +78,9 @@ export const AgentData: AgentInfo[] = [
             { type: 'image', content: 'https://picsum.photos/399/226' },
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
         ],
-        programAddress: ''
+        programAddress: '',
+        tags: ['AI', 'OpenAI'],
+        role: 'Lorem ipsum'
     },
     {
         id: 'c42209bb-4554-4c55-9f47-bbd8107447be',
@@ -84,7 +94,9 @@ export const AgentData: AgentInfo[] = [
             { type: 'image', content: 'https://picsum.photos/399/226' },
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
         ],
-        programAddress: ''
+        programAddress: '',
+        tags: ['AI', 'OpenAI'],
+        role: 'Lorem ipsum'
     },
     {
         id: '182c1d27-6e91-47ce-9422-6f957913d492',
@@ -98,7 +110,9 @@ export const AgentData: AgentInfo[] = [
             { type: 'image', content: 'https://picsum.photos/399/226' },
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
         ],
-        programAddress: ''
+        programAddress: '',
+        tags: ['AI', 'OpenAI'],
+        role: 'Lorem ipsum'
     },
     {
         id: 'cf2f0808-093c-4991-a456-b6943c947a2a',
@@ -112,6 +126,8 @@ export const AgentData: AgentInfo[] = [
             { type: 'image', content: 'https://picsum.photos/399/226' },
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
         ],
-        programAddress: ''
+        programAddress: '',
+        tags: ['AI', 'OpenAI'],
+        role: 'Lorem ipsum'
     },
 ]
