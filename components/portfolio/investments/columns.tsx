@@ -66,7 +66,7 @@ export const columns: ColumnDef<Investment>[] = [
     {
         accessorKey: 'id',
         header: () => <></>,
-        cell: ({ row }) => {
+        cell: () => {
             return (
                 <div className="w-full flex my-2">
                     <Button
