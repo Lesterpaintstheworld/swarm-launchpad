@@ -6,6 +6,8 @@ interface AgentPreviewData {
     description: string; // Max length of 125 characters
     models: AgentModel[];
     id: string; // UUID
+    tags: string[];
+    role?: string;
 }
 
 interface AgentGalleryItem {
