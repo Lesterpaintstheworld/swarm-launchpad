@@ -15,9 +15,9 @@ const Footer = () => {
                             <Image src="/brand-assets/logo.jpg" alt="logo" width={30} height={30} />
                             <span className="font-semibold">Universal Basic Compute</span>
                         </div>
-                        <p className="text-muted-foreground text-sm">
+                        <span className="text-muted-foreground text-sm">
                             A decentralized platform enabling AI Swarm investments and autonomous swarm operations through <UBCToken /> and <ComputeToken /> tokens.
-                        </p>
+                        </span>
                     </div>
 
                     {/* Resources */}
