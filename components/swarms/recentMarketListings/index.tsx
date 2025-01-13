@@ -1,18 +1,18 @@
 import { Card } from "@/components/ui/card";
-import { MarketListing } from "../agent.types";
+import { MarketListing } from "../swarm.types";
 import { DataTable } from "@/components/ui/datatable";
 import { columns } from "./columns";
 import { Button } from "@/components/shadcn/button";
 import Link from "next/link";
 import { LucideArrowRight } from "lucide-react";
 
-interface AgentRecentMarketListingsProps {
-    agentId: string;
+interface SwarmRecentMarketListingsProps {
+    swarmId: string;
     listings?: MarketListing[];
     numberOfListings: number;
 }
 
-const AgentRecentMarketListings = ({ agentId, listings, numberOfListings }: AgentRecentMarketListingsProps) => {
+const SwarmRecentMarketListings = ({ swarmId, listings, numberOfListings }: SwarmRecentMarketListingsProps) => {
 
     return (
         <Card className="w-full flex flex-col mt-6 md:mt-12">
@@ -26,7 +26,7 @@ const AgentRecentMarketListings = ({ agentId, listings, numberOfListings }: Agen
                     <hr />
                     <Button variant='link' className="ml-auto hover:no-underline" asChild>
                         <div className="flex flex-row items-center gap-2 w-fit text-muted mt-4 hover:text-foreground">
-                            <Link href={`/market?agentId=${agentId}`}>
+                            <Link href={`/market?swarmId=${swarmId}`}>
                                 View all
                             </Link>
                             <LucideArrowRight />
@@ -39,5 +39,5 @@ const AgentRecentMarketListings = ({ agentId, listings, numberOfListings }: Agen
 
 }
 
-export { AgentRecentMarketListings }
-export type { AgentRecentMarketListingsProps }
+export { SwarmRecentMarketListings }
+export type { SwarmRecentMarketListingsProps }

@@ -3,6 +3,13 @@ interface LinkType {
     url: string;
     disabled?: boolean;
     target?: string;
+    hasDropdown?: boolean;
 }
 
-export type { LinkType }
+interface MenuItem {
+    label: string;
+    url: string;
+    target?: string;
+}
+
+export type { LinkType, MenuItem }

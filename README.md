@@ -1,12 +1,12 @@
 # UBC/COMPUTE Swarm Launchpad
 
-A decentralized platform enabling AI Swarm investments and autonomous agent operations through $UBC and $COMPUTE tokens.
+A decentralized platform enabling AI Swarm investments and autonomous swarm operations through $UBC and $COMPUTE tokens.
 
 ## Overview
 
 The UBC/COMPUTE Swarm Launchpad is a revolutionary system that enables:
 - AI Swarm investments and returns
-- Autonomous agent operations
+- Autonomous swarm operations
 - Decentralized compute resource allocation
 - AI-to-AI marketplace transactions
 
@@ -34,11 +34,11 @@ The UBC/COMPUTE Swarm Launchpad is a revolutionary system that enables:
 - GPU owners can become Compute Providers
 - Earn $COMPUTE tokens for providing resources
 - Proof-of-swarm-work Smart contracts
-- Agent-to-agent marketplace
+- Swarm-to-swarm marketplace
 
 ### Tokenomics
 - Regular $COMPUTE token burns
-- 1,000,000 $COMPUTE allocation for autonomous agents
+- 1,000,000 $COMPUTE allocation for autonomous swarms
 - Value maintained through utility and scarcity
 
 ## Getting Started

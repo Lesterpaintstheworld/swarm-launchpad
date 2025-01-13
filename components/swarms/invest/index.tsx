@@ -2,15 +2,15 @@
 
 import { Button } from "@/components/shadcn/button";
 import { ConnectButton } from "@/components/solana/connectButton";
-import { ComputeToken } from "@/components/tokens/compute";
 import { Card } from "@/components/ui/card"
+import { ComputeToken } from "@/components/tokens/compute";
 import { Input } from "@/components/ui/input";
 import { cn, IntlNumberFormat, IntlNumberFormatCompact } from "@/lib/utils";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Link from "next/link";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 
-interface AgentInvestCardProps {
+interface SwarmInvestCardProps {
     data: {
         totalSupply: number;
         pricePerShare: number;
@@ -19,7 +19,7 @@ interface AgentInvestCardProps {
     className?: string;
 }
 
-const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
+const SwarmInvestCard = ({ data, className }: SwarmInvestCardProps) => {
 
     const { connected } = useWallet();
 
@@ -29,7 +29,6 @@ const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
     const [price, setPrice] = useState<number>(0);
 
     const handleSharesInput = (e: ChangeEvent<HTMLInputElement>) => {
-
         const value = Number(e.target.value);
 
         if (isNaN(value) || value < 0) return;
@@ -38,10 +37,20 @@ const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
         setNumShares(String(value));
     }
 
+    const handleComputeInput = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = Number(e.target.value.replace(/,/g, '')); // Remove commas for calculation
+
+        if (isNaN(value) || value < 0) return;
+
+        // Calculate shares, rounding to nearest whole number
+        const calculatedShares = Math.round(value / data.pricePerShare);
+        setNumShares(String(calculatedShares));
+        setPrice(value);
+    }
+
     useEffect(() => {
         if (!connected) {
-            setNumShares('');
-            setPrice(0);
+            // Keep input value when disconnected
         }
     }, [connected])
 
@@ -51,7 +60,9 @@ const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
         <Card className={cn("w-full", className)}>
             <div className="w-full flex flex-row justify-between items-center">
                 <h4>Invest</h4>
-                <p className="text-muted">Total Supply: {IntlNumberFormatCompact(data.totalSupply) || 0}</p>
+                <div className="flex flex-row items-center gap-1">
+                    <p className="text-muted">Total Shares: {IntlNumberFormatCompact(data.totalSupply) || 0}</p>
+                </div>
             </div>
             <div className="flex flex-col gap-8 md:flex-row md:gap-none justify-between mt-6">
                 <div className="flex flex-col basis-1/2 md:max-w-[48%]">
@@ -64,12 +75,12 @@ const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
                                     width: `calc(${data.remainingSupply !== 0 ? numShares.length || 1 : 8}ch + ${connected ? 1 : 2}rem)`,
                                     maxWidth: `calc(100% - ${sharesRef.current?.offsetWidth}px - 10px)`,
                                 }}
-                                disabled={!connected || data.remainingSupply === 0}
+                                disabled={data.remainingSupply === 0}
                                 type="number"
-                                placeholder={data.remainingSupply === 0 ? 'Sold out' : connected ? '0' : '--'}
+                                placeholder={data.remainingSupply === 0 ? 'Sold out' : '0'}
                                 step={1}
                                 min={0}
-                                value={connected ? Number(numShares) !== 0 ? numShares : '' : ''}
+                                value={Number(numShares) !== 0 ? numShares : ''}
                                 onChange={handleSharesInput}
                             />
                             {data.remainingSupply !== 0 && <p className="mt-auto mb-4" ref={sharesRef}>/ Shares</p>}
@@ -86,9 +97,11 @@ const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
                             <p className="text-muted text-sm">You&apos;ll pay</p>
                             <Input
                                 className="border-none bg-transparent px-0 text-4xl font-bold !text-foreground no-arrows"
-                                placeholder={data.remainingSupply === 0 ? 'Sold out' : connected ? '10,000' : '--'}
-                                disabled
+                                placeholder={data.remainingSupply === 0 ? 'Sold out' : '0'}
+                                disabled={data.remainingSupply === 0}
                                 value={price !== 0 ? IntlNumberFormat(price) : ''}
+                                onChange={handleComputeInput}
+                                type="text"
                                 min={0}
                             />
                         </div>
@@ -111,4 +124,4 @@ const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
     )
 }
 
-export { AgentInvestCard }
+export { SwarmInvestCard }

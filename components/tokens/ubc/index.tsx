@@ -3,11 +3,17 @@ import { forwardRef } from "react";
 
 const UBCToken = forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
     (
-        { ...props },
+        { className, ...props },
         ref
     ) => {
         return (
-            <Tag {...props} ref={ref}>$UBC</Tag>
+            <Tag 
+                {...props} 
+                ref={ref} 
+                className={`transition-all duration-200 hover:scale-110 hover:rotate-3 cursor-pointer ${className || ''}`}
+            >
+                $UBC
+            </Tag>
         )
     }
 )

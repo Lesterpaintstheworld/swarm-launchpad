@@ -1,19 +1,22 @@
-import { AgentsPreviewGrid } from "@/components/agents/previewGrid";
+import { SwarmsPreviewGrid } from "@/components/swarms/previewGrid";
 import { ComputeToken } from "@/components/tokens/compute";
+import { UBCToken } from "@/components/tokens/ubc";
 
 export default function Invest() {
 
     return (
         <main className="container">
             <div className="h-80 flex flex-col items-center justify-center gap-3">
-                <h2 className="text-center">Invest in our <span className="font-bold">AI Agents</span></h2>
+                <h2 className="text-center">Invest in our <span className="font-bold">AI Swarms</span></h2>
                 <div className="text-muted flex flex-row flex-wrap text-lg items-center justify-center">
-                    <p className="text-center text-nowrap">Generate returns by investing your&ensp;</p>
+                    <p className="text-center text-nowrap">Generate&ensp;</p>
+                    <UBCToken />
+                    <p className="text-center text-nowrap">&ensp;returns by investing your&ensp;</p>
                     <ComputeToken />
                     <p className="text-center text-nowrap">&ensp;tokens into our ai swarms.</p>
                 </div>
             </div>
-            <AgentsPreviewGrid />
+            <SwarmsPreviewGrid />
         </main>
     )
 

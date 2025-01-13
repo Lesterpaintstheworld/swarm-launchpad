@@ -2,6 +2,7 @@
 
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
 import { WalletModal } from "@/components/solana/walletModal";
 import { Button } from "@/components/shadcn/button";
 import {
@@ -49,14 +50,29 @@ function ConnectButton({ className }: { className?: string }) {
         <>
             {!connected ? (
                 <Button disabled={connecting || disconnecting} onClick={handleClick} className={cn("px-4", className)}>
-                    {connected && <img src={wallet?.adapter.icon} alt={`${wallet?.adapter.name} icon`} className="max-w-4" />}
+                    {connected && wallet?.adapter.icon && (
+                        <Image 
+                            src={wallet.adapter.icon as string} 
+                            alt={`${wallet.adapter.name} icon`} 
+                            width={16} 
+                            height={16} 
+                        />
+                    )}
                     {label}
                 </Button>
             ) : (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button disabled={connecting || disconnecting}>
-                            {connected && <img src={wallet?.adapter.icon} alt={`${wallet?.adapter.name} icon`} className="max-w-4" />}
+                            {connected && wallet?.adapter.icon && (
+                                <Image 
+                                    src={wallet.adapter.icon as string} 
+                                    alt={`${wallet.adapter.name} icon`} 
+                                    width={16} 
+                                    height={16} 
+                                    className="max-w-4" 
+                                />
+                            )}
                             {label}
                         </Button>
                     </DropdownMenuTrigger>
