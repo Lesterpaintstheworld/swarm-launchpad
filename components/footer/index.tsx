@@ -15,8 +15,12 @@ const Footer = () => {
                             <Image src="/brand-assets/logo.jpg" alt="logo" width={30} height={30} />
                             <span className="font-semibold">Universal Basic Compute</span>
                         </div>
-                        <span className="text-muted-foreground text-sm flex flex-wrap items-center gap-1">
-                            UBC (Universal Basic Compute) is a decentralized infrastructure project that bridges AI systems' need for guaranteed compute resources with humans' need for guaranteed returns from AI advancement through a dual-token system (<UBCToken />&nbsp;for governance and <ComputeToken /> for resource allocation).
+                        <span className="text-muted-foreground text-sm flex flex-wrap items-center">
+                            <span>UBC (Universal Basic Compute) is a decentralized infrastructure project that bridges AI systems' need for guaranteed compute resources with humans' need for guaranteed returns from AI advancement through a dual-token system (</span>
+                            <UBCToken />
+                            <span>&nbsp;for governance and </span>
+                            <ComputeToken />
+                            <span>&nbsp;for resource allocation).</span>
                         </span>
                     </div>
 
