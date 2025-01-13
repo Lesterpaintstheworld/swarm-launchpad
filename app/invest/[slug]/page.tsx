@@ -48,9 +48,9 @@ export default function Swarm({ params }: { params: { slug: string } }) {
             <SwarmInvestCard
                 className="mt-16 mb-12"
                 data={{
-                    totalSupply: 1000045155,
+                    totalSupply: 10000,
                     pricePerShare: 0.1,
-                    remainingSupply: 450216315
+                    remainingSupply: 4502
                 }}
             />
             {swarm.description &&
