@@ -40,8 +40,7 @@ const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
 
     useEffect(() => {
         if (!connected) {
-            setNumShares('');
-            setPrice(0);
+            // Keep input value when disconnected
         }
     }, [connected])
 
@@ -64,12 +63,12 @@ const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
                                     width: `calc(${data.remainingSupply !== 0 ? numShares.length || 1 : 8}ch + ${connected ? 1 : 2}rem)`,
                                     maxWidth: `calc(100% - ${sharesRef.current?.offsetWidth}px - 10px)`,
                                 }}
-                                disabled={!connected || data.remainingSupply === 0}
+                                disabled={data.remainingSupply === 0}
                                 type="number"
-                                placeholder={data.remainingSupply === 0 ? 'Sold out' : connected ? '0' : '--'}
+                                placeholder={data.remainingSupply === 0 ? 'Sold out' : '0'}
                                 step={1}
                                 min={0}
-                                value={connected ? Number(numShares) !== 0 ? numShares : '' : ''}
+                                value={Number(numShares) !== 0 ? numShares : ''}
                                 onChange={handleSharesInput}
                             />
                             {data.remainingSupply !== 0 && <p className="mt-auto mb-4" ref={sharesRef}>/ Shares</p>}
