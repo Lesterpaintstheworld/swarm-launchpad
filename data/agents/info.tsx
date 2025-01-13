@@ -145,7 +145,7 @@ export const AgentData: AgentInfo[] = [
             { type: 'image', content: 'https://picsum.photos/399/226' },
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
         ],
-        description: GameBuddyDescription,
+        description: LudosAIDescription,
         programAddress: '',
         tags: ['AI', 'Gaming', 'KinOS'],
         role: 'Gaming Companion'
