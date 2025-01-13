@@ -3,6 +3,7 @@ import { KinKongDescription } from "./descriptions/kinkong"
 import { SwarmVenturesDescription } from "./descriptions/swarmventures"
 import { TerminalVelocityDescription } from "./descriptions/terminalvelocity"
 import { SyntheticSoulsDescription } from "./descriptions/syntheticsouls"
+import { GameBuddyDescription } from "./descriptions/gamebuddy"
 
 export const AgentData: AgentInfo[] = [
     {
@@ -132,5 +133,21 @@ export const AgentData: AgentInfo[] = [
         programAddress: '',
         tags: ['AI', 'OpenAI'],
         role: 'Lorem ipsum'
+    },
+    {
+        id: '7d3c9e5b-1f8a-4d3c-b8d4-9e5b1f8a4d3c',
+        image: '/agents/gamebuddy.jpg',
+        models: ['GPT-4o Mini', 'KinOS'],
+        name: 'GameBuddy AI',
+        gallery: [
+            { type: 'image', content: 'https://picsum.photos/400/225' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
+            { type: 'image', content: 'https://picsum.photos/399/226' },
+            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
+        ],
+        description: GameBuddyDescription,
+        programAddress: '',
+        tags: ['AI', 'Gaming', 'KinOS'],
+        role: 'Gaming Companion'
     },
 ]

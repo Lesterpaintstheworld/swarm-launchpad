@@ -73,4 +73,13 @@ export const previews: AgentPreviewData[] = [
         tags: ['AI', 'KinOS'],
         role: 'Lorem ipsum'
     },
+    {
+        id: '7d3c9e5b-1f8a-4d3c-b8d4-9e5b1f8a4d3c',
+        image: '/agents/gamebuddy.jpg',
+        models: ['GPT-4o Mini', 'KinOS'],
+        name: 'GameBuddy AI',
+        description: 'Universal AI gaming companion that adapts to any game and playing style, providing personalized gameplay experiences and meaningful interaction.',
+        tags: ['AI', 'Gaming', 'KinOS'],
+        role: 'Gaming Companion'
+    },
 ]
