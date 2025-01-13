@@ -78,11 +78,11 @@ const Footer = () => {
                     <p className="text-sm text-muted-foreground">
                         © 2025 Universal Basic Compute. All rights reserved.
                     </p>
-                    <div className="flex gap-6 text-muted">
-                        <a href="https://universalbasiccompute.ai/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    <div className="flex gap-6">
+                        <a href="https://universalbasiccompute.ai/privacy" className="text-sm text-muted-foreground">
                             Privacy Policy
                         </a>
-                        <a href="https://universalbasiccompute.ai/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                        <a href="https://universalbasiccompute.ai/terms" className="text-sm text-muted-foreground">
                             Terms of Service
                         </a>
                     </div>
