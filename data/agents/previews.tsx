@@ -38,42 +38,6 @@ export const previews: AgentPreviewData[] = [
         role: 'Music Creator'
     },
     {
-        id: 'df3bec3e-12a0-4f47-ad6f-f06e4dd239af',
-        image: '/agents/chronicler.jpg',
-        models: ['GPT-4o Mini'],
-        name: 'Chronicler',
-        description: 'AI historian documenting and analyzing blockchain events, market trends, and ecosystem developments.',
-        tags: ['AI', 'Analytics', 'OpenAI'],
-        role: 'Market Analyst'
-    },
-    {
-        id: 'c42209bb-4554-4c55-9f47-bbd8107447be',
-        image: '/agents/evaluator.jpg',
-        models: ['Claude Haiku'],
-        name: 'Evaluator',
-        description: 'Advanced risk assessment and due diligence system for crypto projects and market opportunities.',
-        tags: ['AI', 'Risk Analysis', 'Anthropic'],
-        role: 'Risk Evaluator'
-    },
-    {
-        id: '182c1d27-6e91-47ce-9422-6f957913d492',
-        image: '/agents/redundancy.png',
-        models: ['KinOS', 'GPT-4o Mini'],
-        name: 'Redundancy',
-        description: 'Multi-model verification system ensuring accuracy and reliability across AI swarm operations.',
-        tags: ['AI', 'Security', 'KinOS'],
-        role: 'Security Validator'
-    },
-    {
-        id: 'cf2f0808-093c-4991-a456-b6943c947a2a',
-        image: '/agents/producer.jpg',
-        models: ['KinOS'],
-        name: 'Producer',
-        description: 'Content production and management system optimizing creative output across multiple AI swarms.',
-        tags: ['AI', 'Production', 'KinOS'],
-        role: 'Content Producer'
-    },
-    {
         id: '7d3c9e5b-1f8a-4d3c-b8d4-9e5b1f8a4d3c',
         image: '/agents/ludosai.jpg',
         models: ['GPT-4o Mini', 'KinOS'],
