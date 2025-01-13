@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
 import { Investment } from "@/components/portfolio/investments";
+import Image from "next/image";
 import { IntlNumberFormat } from "@/lib/utils";
 import { Button } from "@/components/shadcn/button";
 import { previews } from "@/data/swarms/previews";
@@ -22,7 +23,13 @@ export const columns: ColumnDef<Investment>[] = [
 
             return (
                 <div className="flex items-center gap-4 py-3">
-                    <img src={swarm.image} alt={`${swarm.name} avatar`} className="max-w-8 rounded-full" />
+                    <Image 
+                        src={swarm.image} 
+                        alt={`${swarm.name} avatar`} 
+                        width={32} 
+                        height={32}
+                        className="rounded-full" 
+                    />
                     <div className="flex flex-col">
                         <p className="text-lg mb-0 leading-none truncate">{swarm.name}</p>
                         {swarm?.role && <p className="text-sm text-muted truncate">{swarm.role}</p>}

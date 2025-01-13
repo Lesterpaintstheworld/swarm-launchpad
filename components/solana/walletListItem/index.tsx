@@ -1,5 +1,6 @@
 import { WalletReadyState } from "@solana/wallet-adapter-base";
 import { WalletListItemProps } from "./WalletListItem.types";
+import Image from "next/image";
 
 const WalletListItem = ({ wallet, handleClick, tabIndex }: WalletListItemProps) => {
     return (
@@ -9,7 +10,12 @@ const WalletListItem = ({ wallet, handleClick, tabIndex }: WalletListItemProps) 
             key={wallet.adapter.name}
             tabIndex={tabIndex}
         >
-            <img src={wallet.adapter.icon} alt={`${wallet.adapter.name} icon`} className="max-w-4" />
+            <Image 
+                src={wallet.adapter.icon} 
+                alt={`${wallet.adapter.name} icon`} 
+                width={16} 
+                height={16}
+            />
             <span className="ml-3">{wallet.adapter.name}</span>
             <span className="text-muted text-sm ml-auto">{wallet.readyState === WalletReadyState.Installed && <span>Detected</span>}</span>
         </button>

@@ -1,5 +1,6 @@
 import { Button } from "@/components/shadcn/button";
 import { Card } from "@/components/ui/card"
+import Image from "next/image";
 import { Tag } from "@/components/ui/tag";
 import { motion } from "motion/react";
 import Link from "next/link";
@@ -19,9 +20,11 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
         >
             <Link href={`/invest/${swarm.id}`} className="block transition-all duration-200 hover:scale-[1.02] hover:-translate-y-1">
                 <Card className="p-2 md:max-w-[300px] w-full cursor-pointer hover:shadow-lg">
-                    <img
+                    <Image
                         src={swarm.image}
                         alt={`${swarm.name} image`}
+                        width={300}
+                        height={300}
                         className="w-full aspect-square object-fill rounded-sm"
                     />
                     <div className="flex flex-col gap-2 px-[2px] mt-2 mb-1">
