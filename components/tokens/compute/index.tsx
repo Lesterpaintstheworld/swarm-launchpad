@@ -1,4 +1,5 @@
 import { Tag } from "@/components/ui/tag";
+import { cn } from "@/lib/utils";
 import { forwardRef } from "react";
 
 const ComputeToken = forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
@@ -7,10 +8,10 @@ const ComputeToken = forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLP
         ref
     ) => {
         return (
-            <Tag 
-                {...props} 
+            <Tag
+                {...props}
                 ref={ref}
-                className={`transition-all duration-200 hover:scale-110 hover:rotate-3 cursor-pointer ${className || ''}`}
+                className={cn("transition-all duration-200 hover:scale-110 hover:rotate-3 cursor-pointer", className)}
             >
                 $COMPUTE
             </Tag>
