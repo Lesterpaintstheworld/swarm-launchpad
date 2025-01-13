@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
-import { MarketListing } from "../agent.types";
+import { MarketListing } from "../swarm.types";
 import { IntlNumberFormat } from "@/lib/utils";
 import { Tag } from "@/components/ui/tag";
 import { Button } from "@/components/shadcn/button";

@@ -1,14 +1,14 @@
-import { AgentInfo } from "@/components/agents/agent.types"
+import { SwarmInfo } from "@/components/swarms/swarm.types"
 import { KinKongDescription } from "./descriptions/kinkong"
 import { SwarmVenturesDescription } from "./descriptions/swarmventures"
 import { TerminalVelocityDescription } from "./descriptions/terminalvelocity"
 import { SyntheticSoulsDescription } from "./descriptions/syntheticsouls"
 import { LudosAIDescription } from "./descriptions/ludosai"
 
-export const AgentData: AgentInfo[] = [
+export const SwarmData: SwarmInfo[] = [
     {
         id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
-        image: '/agents/kinkong.jpg',
+        image: '/swarms/kinkong.jpg',
         models: ['GPT-4o Mini', 'Claude Haiku'],
         name: 'Kin Kong',
         gallery: [
@@ -24,7 +24,7 @@ export const AgentData: AgentInfo[] = [
     },
     {
         id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',
-        image: '/agents/swarm-ventures.jpg',
+        image: '/swarms/swarm-ventures.jpg',
         models: ['Claude Haiku'],
         name: 'Swarm Ventures',
         gallery: [
@@ -40,7 +40,7 @@ export const AgentData: AgentInfo[] = [
     },
     {
         id: '988b16b4-6beb-4cc5-9a14-50f48ee47a22',
-        image: '/agents/terminal-velocity.jpg',
+        image: '/swarms/terminal-velocity.jpg',
         models: ['Claude Haiku'],
         name: 'Terminal Velocity',
         gallery: [
@@ -56,7 +56,7 @@ export const AgentData: AgentInfo[] = [
     },
     {
         id: '03616e66-a21e-425b-a93b-16d6396e883f',
-        image: '/agents/synthetic-souls.jpg',
+        image: '/swarms/synthetic-souls.jpg',
         models: ['GPT-4o Mini'],
         name: 'Synthetic Souls',
         description: SyntheticSoulsDescription,
@@ -72,7 +72,7 @@ export const AgentData: AgentInfo[] = [
     },
     {
         id: '7d3c9e5b-1f8a-4d3c-b8d4-9e5b1f8a4d3c',
-        image: '/agents/ludosai.jpg',
+        image: '/swarms/ludosai.jpg',
         models: ['GPT-4o Mini', 'KinOS'],
         name: 'LudosAI',
         gallery: [

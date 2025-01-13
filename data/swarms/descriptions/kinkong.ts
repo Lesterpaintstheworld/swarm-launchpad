@@ -1,7 +1,7 @@
 export const KinKongDescription = `
 # 🦍 KinKong: The AI Token Trading Specialist
 
-Maximize your profits with agent trading during the peak of this bull run.
+Maximize your profits with swarm trading during the peak of this bull run.
 
 # What KinKong Does
 

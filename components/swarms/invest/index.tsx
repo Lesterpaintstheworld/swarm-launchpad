@@ -10,7 +10,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import Link from "next/link";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 
-interface AgentInvestCardProps {
+interface SwarmInvestCardProps {
     data: {
         totalSupply: number;
         pricePerShare: number;
@@ -19,7 +19,7 @@ interface AgentInvestCardProps {
     className?: string;
 }
 
-const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
+const SwarmInvestCard = ({ data, className }: SwarmInvestCardProps) => {
 
     const { connected } = useWallet();
 
@@ -124,4 +124,4 @@ const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
     )
 }
 
-export { AgentInvestCard }
+export { SwarmInvestCard }

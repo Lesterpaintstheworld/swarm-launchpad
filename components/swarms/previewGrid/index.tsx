@@ -1,13 +1,13 @@
 "use client"
 
 import { Search } from "@/components/ui/search"
-import { AgentPreviewCard } from "../preview"
-import { previews } from "@/data/agents/previews"
+import { SwarmPreviewCard } from "../preview"
+import { previews } from "@/data/swarms/previews"
 import { useCallback, useState } from "react"
 import { AnimatePresence } from "motion/react"
-import { AgentModel, AgentPreviewData } from "../agent.types"
+import { SwarmModel, SwarmPreviewData } from "../swarm.types"
 
-const AgentsPreviewGrid = () => {
+const SwarmsPreviewGrid = () => {
 
     const [searchValue, setSearchValue] = useState<string>('');
 
@@ -15,7 +15,7 @@ const AgentsPreviewGrid = () => {
         return previews.filter(({ name, description, models, tags, role }) =>
             name.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
             description.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
-            models.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase() as AgentModel) ||
+            models.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase() as SwarmModel) ||
             tags.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
             role?.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())
         );
@@ -26,9 +26,9 @@ const AgentsPreviewGrid = () => {
             <Search value={searchValue} onInputChange={setSearchValue} />
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
                 <AnimatePresence>
-                    {filteredPreviews().map((agent: AgentPreviewData, index: number) => {
+                    {filteredPreviews().map((swarm: SwarmPreviewData, index: number) => {
                         return (
-                            <AgentPreviewCard agent={agent} key={index} />
+                            <SwarmPreviewCard swarm={swarm} key={index} />
                         )
                     })}
                 </AnimatePresence>
@@ -37,4 +37,4 @@ const AgentsPreviewGrid = () => {
     )
 }
 
-export { AgentsPreviewGrid }
+export { SwarmsPreviewGrid }

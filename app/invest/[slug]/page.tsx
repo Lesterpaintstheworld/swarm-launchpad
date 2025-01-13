@@ -1,27 +1,27 @@
 import { useCallback } from "react";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
-import { AgentData } from "@/data/agents/info";
+import { SwarmData } from "@/data/swarms/info";
 import { redirect } from "next/navigation";
 import { Markdown } from "@/components/ui/markdown";
 import { Expandable } from "@/components/ui/expandable";
 import { InfiniteCarousel, Slides } from "@/components/ui/infiniteCarousel";
-import { AgentInvestCard } from "@/components/agents/invest";
-import { AgentRecentMarketListings } from "@/components/agents/recentMarketListings";
+import { SwarmInvestCard } from "@/components/swarms/invest";
+import { SwarmRecentMarketListings } from "@/components/swarms/recentMarketListings";
 import { ManagePortfolioCard } from "@/components/cards/managePortfolio";
 
-export default function Agent({ params }: { params: { slug: string } }) {
+export default function Swarm({ params }: { params: { slug: string } }) {
 
-    const agent = useCallback(() => AgentData.find((agent) => agent.id === params.slug), [params.slug])() || undefined;
+    const swarm = useCallback(() => SwarmData.find((swarm) => swarm.id === params.slug), [params.slug])() || undefined;
 
-    if (!agent) {
+    if (!swarm) {
         redirect('/404');
     }
 
     const prepareSlides = useCallback(() => {
-        return agent.gallery.map((item, index) => {
+        return swarm.gallery.map((item, index) => {
             let content;
             if (item.type === 'image') {
-                content = <img src={item.content as string} alt={`${agent.name} carousel item ${index}`} className="w-full object-cover" />
+                content = <img src={item.content as string} alt={`${swarm.name} carousel item ${index}`} className="w-full object-cover" />
             } else if (item.type === 'video') {
                 content = <video autoPlay={index === 1} controls muted={index === 1}><source src={item.content as string} type="video/mp4" className="h-full" /></video>
             } else {
@@ -29,23 +29,23 @@ export default function Agent({ params }: { params: { slug: string } }) {
             }
             return { id: index, content };
         }) as Slides;
-    }, [agent])
+    }, [swarm])
 
     return (
         <main className="container mb-6 md:mb-24">
             <Breadcrumb
                 className="mt-4"
                 crumbs={[
-                    { label: "Agents", href: "/invest" },
-                    { label: agent.name }
+                    { label: "Swarms", href: "/invest" },
+                    { label: swarm.name }
                 ]}
             />
-            <h1 className="font-bold mt-2">{agent.name}</h1>
+            <h1 className="font-bold mt-2">{swarm.name}</h1>
             <InfiniteCarousel
                 className="mt-16"
                 slides={prepareSlides()}
             />
-            <AgentInvestCard
+            <SwarmInvestCard
                 className="mt-16 mb-12"
                 data={{
                     totalSupply: 1000045155,
@@ -53,17 +53,17 @@ export default function Agent({ params }: { params: { slug: string } }) {
                     remainingSupply: 450216315
                 }}
             />
-            {agent.description &&
+            {swarm.description &&
                 <>
-                    <h4 className="font-semibold">About {agent.name}</h4>
+                    <h4 className="font-semibold">About {swarm.name}</h4>
                     <hr className="mt-3 mb-6" />
                     <Expandable overflowThreshold={750}>
-                        <Markdown markdown={agent.description} />
+                        <Markdown markdown={swarm.description} />
                     </Expandable>
                 </>
             }
-            <AgentRecentMarketListings
-                agentId={agent.id}
+            <SwarmRecentMarketListings
+                swarmId={swarm.id}
                 numberOfListings={7}
                 listings={[
                     {

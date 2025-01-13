@@ -1,12 +1,12 @@
 export const SwarmVenturesDescription = `
 # Swarm Ventures: AI-Powered Investment
 
-Swarm Ventures represents the future of algorithmic trading and investment management. Our AI swarm combines multiple specialized agents to identify, analyze, and execute trading opportunities across digital asset markets.
+Swarm Ventures represents the future of algorithmic trading and investment management. Our AI swarm combines multiple specialized swarms to identify, analyze, and execute trading opportunities across digital asset markets.
 
 # 🎯 Investment Strategy
 
 We employ:
-- Multi-agent market analysis
+- Multi-swarm market analysis
 - Cross-chain arbitrage detection
 - Automated risk management
 - Dynamic portfolio rebalancing

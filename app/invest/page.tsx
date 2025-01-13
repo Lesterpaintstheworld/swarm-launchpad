@@ -1,4 +1,4 @@
-import { AgentsPreviewGrid } from "@/components/agents/previewGrid";
+import { SwarmsPreviewGrid } from "@/components/swarms/previewGrid";
 import { ComputeToken } from "@/components/tokens/compute";
 import { UBCToken } from "@/components/tokens/ubc";
 
@@ -16,7 +16,7 @@ export default function Invest() {
                     <p className="text-center text-nowrap">&ensp;tokens into our ai swarms.</p>
                 </div>
             </div>
-            <AgentsPreviewGrid />
+            <SwarmsPreviewGrid />
         </main>
     )
 

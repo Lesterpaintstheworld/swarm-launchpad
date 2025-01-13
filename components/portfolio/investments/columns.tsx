@@ -5,27 +5,27 @@ import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
 import { Investment } from "@/components/portfolio/investments";
 import { IntlNumberFormat } from "@/lib/utils";
 import { Button } from "@/components/shadcn/button";
-import { previews } from "@/data/agents/previews";
+import { previews } from "@/data/swarms/previews";
 
-const getAgent = (agentId: string) => previews.filter(agent => agent.id === agentId)[0];
+const getSwarm = (swarmId: string) => previews.filter(swarm => swarm.id === swarmId)[0];
 
 export const columns: ColumnDef<Investment>[] = [
     {
-        accessorKey: 'agent_id',
+        accessorKey: 'swarm_id',
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Agent" />
+            <DataTableColumnHeader column={column} title="Swarm" />
         ),
         minSize: 200,
         cell: ({ row }) => {
 
-            const agent = getAgent(row.getValue('agent_id'));
+            const swarm = getSwarm(row.getValue('swarm_id'));
 
             return (
                 <div className="flex items-center gap-4 py-3">
-                    <img src={agent.image} alt={`${agent.name} avatar`} className="max-w-8 rounded-full" />
+                    <img src={swarm.image} alt={`${swarm.name} avatar`} className="max-w-8 rounded-full" />
                     <div className="flex flex-col">
-                        <p className="text-lg mb-0 leading-none truncate">{agent.name}</p>
-                        {agent?.role && <p className="text-sm text-muted truncate">{agent.role}</p>}
+                        <p className="text-lg mb-0 leading-none truncate">{swarm.name}</p>
+                        {swarm?.role && <p className="text-sm text-muted truncate">{swarm.role}</p>}
                     </div>
                 </div>
             )
