@@ -1,4 +1,7 @@
 import { AgentInfo } from "@/components/agents/agent.types"
+import { KinKongDescription } from "./descriptions/kinkong"
+import { SwarmVenturesDescription } from "./descriptions/swarmventures"
+import { TerminalVelocityDescription } from "./descriptions/terminalvelocity"
 import { SyntheticSoulsDescription } from "./descriptions/syntheticsouls"
 
 export const AgentData: AgentInfo[] = [
@@ -13,7 +16,7 @@ export const AgentData: AgentInfo[] = [
             { type: 'image', content: 'https://picsum.photos/399/226' },
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
         ],
-        description: SyntheticSoulsDescription,
+        description: KinKongDescription,
         programAddress: '',
         tags: ['AI', 'OpenAI'],
         role: 'Lorem ipsum'
@@ -29,7 +32,7 @@ export const AgentData: AgentInfo[] = [
             { type: 'image', content: 'https://picsum.photos/399/226' },
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
         ],
-        description: SyntheticSoulsDescription,
+        description: SwarmVenturesDescription,
         programAddress: '',
         tags: ['AI', 'OpenAI'],
         role: 'Lorem ipsum'
@@ -45,7 +48,7 @@ export const AgentData: AgentInfo[] = [
             { type: 'image', content: 'https://picsum.photos/399/226' },
             { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
         ],
-        description: SyntheticSoulsDescription,
+        description: TerminalVelocityDescription,
         programAddress: '',
         tags: ['AI', 'OpenAI'],
         role: 'Lorem ipsum'
