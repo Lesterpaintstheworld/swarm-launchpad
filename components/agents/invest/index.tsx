@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/shadcn/button";
 import { ConnectButton } from "@/components/solana/connectButton";
-import { ComputeToken } from "@/components/tokens/compute";
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
 import { cn, IntlNumberFormat, IntlNumberFormatCompact } from "@/lib/utils";
@@ -61,9 +60,7 @@ const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
             <div className="w-full flex flex-row justify-between items-center">
                 <h4>Invest</h4>
                 <div className="flex flex-row items-center gap-1">
-                    <p className="text-muted">Total Shares</p>
-                    <ComputeToken className="text-sm" />
-                    <p className="text-muted">: {IntlNumberFormatCompact(data.totalSupply) || 0}</p>
+                    <p className="text-muted">Total Shares: {IntlNumberFormatCompact(data.totalSupply) || 0}</p>
                 </div>
             </div>
             <div className="flex flex-col gap-8 md:flex-row md:gap-none justify-between mt-6">
