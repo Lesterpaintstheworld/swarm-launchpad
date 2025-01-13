@@ -5,7 +5,7 @@ import { SwarmPreviewCard } from "../preview"
 import { previews } from "@/data/swarms/previews"
 import { useCallback, useState } from "react"
 import { AnimatePresence } from "motion/react"
-import { SwarmModel, SwarmPreviewData } from "../swarm.types"
+import { SwarmModel, SwarmPreviewData } from "../agent.types"
 
 const SwarmsPreviewGrid = () => {
 
