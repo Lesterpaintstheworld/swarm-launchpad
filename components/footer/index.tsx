@@ -75,7 +75,7 @@ const Footer = () => {
 
                 {/* Bottom Bar */}
                 <div className="flex flex-col md:flex-row justify-between items-center gap-4 mt-12 pt-8 border-t border-border">
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-500">
                         © 2025 Universal Basic Compute. All rights reserved.
                     </p>
                     <div className="flex gap-6">
