@@ -13,9 +13,11 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/shadcn/dropdown-menu";
+import { useState } from "react";
 
 const Navigation = () => {
     const pathname = usePathname();
+    const [openDropdown, setOpenDropdown] = useState(false);
 
     return (
         <nav className={css.navigation__wrapper}>
@@ -26,8 +28,13 @@ const Navigation = () => {
                 {Links.map((link: LinkType, index: number) => {
                     if (link.hasDropdown) {
                         return (
-                            <span className={css.link__container} key={index}>
-                                <DropdownMenu>
+                            <span 
+                                className={css.link__container} 
+                                key={index}
+                                onMouseEnter={() => setOpenDropdown(true)}
+                                onMouseLeave={() => setOpenDropdown(false)}
+                            >
+                                <DropdownMenu open={openDropdown}>
                                     <DropdownMenuTrigger className={css.link}>
                                         {link.label}
                                     </DropdownMenuTrigger>
