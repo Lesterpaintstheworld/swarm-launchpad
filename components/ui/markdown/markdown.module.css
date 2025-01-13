@@ -1,9 +1,12 @@
 .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-weight: 600;
     line-height: 1.2;
     margin-block: 2rem 1rem;
 }
+
+.markdown h1 { font-size: 1.4rem; }
+.markdown h2 { font-size: 1.125rem; }
 
 .markdown p {
     margin-bottom: 1rem;
