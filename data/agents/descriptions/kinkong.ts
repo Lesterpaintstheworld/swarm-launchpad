@@ -1,39 +1,77 @@
 export const KinKongDescription = `
-# About Kin Kong
+# 🦍 KinKong: The AI Token Trading Specialist
 
-Kin Kong is a revolutionary AI swarm focused on decentralized computing and network optimization. As the backbone of the Universal Basic Compute ecosystem, we leverage advanced distributed systems to maximize computational efficiency and resource allocation.
+Maximize your profits with agent trading during the peak of this bull run.
 
-# 💡 Core Technology
+# What KinKong Does
 
-Our proprietary network optimization algorithms enable:
-- Dynamic load balancing across nodes
-- Predictive resource scaling
-- Self-healing network topology
-- Real-time performance optimization
+Operating 24/7 with machine precision, KinKong analyzes market movements, identifies profitable trading opportunities, and executes trades across major exchanges.
 
-# 🔄 Resource Management
+No emotions, no distractions - just pure trading efficiency focused on the explosive AI token sector.
 
-Kin Kong excels at:
-- Intelligent workload distribution
-- Automated node discovery and integration
-- Optimal resource utilization
-- Minimal latency routing
+# Why Invest in KinKong?
 
-# 📈 Growth Strategy
+Simple math, clear returns. When you invest in KinKong, you get:
+- 75% of all trading profits distributed weekly in $UBC
+- Direct ownership (0.02% per share)
+- Automated distributions via smart contracts
+- Full transparency through on-chain verification
 
-Our expansion focuses on:
-- Strategic node placement
-- Network redundancy improvement
-- Processing capacity scaling
-- Cross-chain integration capabilities
+Your investment helps fuel KinKong's growth through:
+- 15% reinvested in development: Better algorithms, faster execution
+- 10% allocated to marketing: Expanding market presence, growing opportunities
 
-# 💰 Revenue Model
+# Why KinKong Wins
 
-Income is generated through:
-- Network usage fees
-- Optimization services
-- Infrastructure provision
-- Protocol licensing
+- Laser focus on AI token trading
+- 24/7 market presence
+- Emotion-free execution
+- Data-driven decisions
+- Transparent profit sharing
+- Clear reinvestment strategy
 
-Join us in building the future of decentralized computing infrastructure.
+The future of AI token trading is here. Will you be part of it?
+
+# 🦍 KinKong Trading Returns
+
+## 💎 Investment Structure
+- Total Shares: 5,000
+- Price per Share: 1,500 $COMPUTE
+- Each Share = 0.02% ownership
+- Minimum: 1 share
+
+## 💰 Profit Allocation
+- 75% to Shareholders
+- 15% to Development
+  - Algorithm improvements
+  - Trading system upgrades
+  - Technical infrastructure
+- 10% to Marketing
+  - Market expansion
+  - Community growth
+  - Brand building
+
+## 💫 Return Examples
+
+### Single Share (0.02%)
+Monthly Return: 15 $UBC (0.02% × 75,000 $UBC)
+
+### Multiple Shares Example
+- 5 shares (0.1%): 75 $UBC monthly
+- 10 shares (0.2%): 150 $UBC monthly
+- 50 shares (1%): 750 $UBC monthly
+- 100 shares (2%): 1,500 $UBC monthly
+
+## ⚡️ Key Features
+- Weekly distributions in $UBC
+- Automatic smart contract payments
+- Real-time profit tracking
+- Transparent on-chain verification
+
+## 🚀 Value Add
+The 25% allocated to development and marketing helps:
+- Improve trading performance
+- Increase market reach
+- Enhance technical capabilities
+- Grow overall returns
 `
