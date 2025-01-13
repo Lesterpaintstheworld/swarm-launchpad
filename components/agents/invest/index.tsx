@@ -29,13 +29,23 @@ const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
     const [price, setPrice] = useState<number>(0);
 
     const handleSharesInput = (e: ChangeEvent<HTMLInputElement>) => {
-
         const value = Number(e.target.value);
 
         if (isNaN(value) || value < 0) return;
 
         setPrice(Math.floor((Number(value))) * data.pricePerShare);
         setNumShares(String(value));
+    }
+
+    const handleComputeInput = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = Number(e.target.value.replace(/,/g, '')); // Remove commas for calculation
+
+        if (isNaN(value) || value < 0) return;
+
+        // Calculate shares, rounding to nearest whole number
+        const calculatedShares = Math.round(value / data.pricePerShare);
+        setNumShares(String(calculatedShares));
+        setPrice(value);
     }
 
     useEffect(() => {
@@ -85,9 +95,11 @@ const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
                             <p className="text-muted text-sm">You&apos;ll pay</p>
                             <Input
                                 className="border-none bg-transparent px-0 text-4xl font-bold !text-foreground no-arrows"
-                                placeholder={data.remainingSupply === 0 ? 'Sold out' : connected ? '10,000' : '--'}
-                                disabled
+                                placeholder={data.remainingSupply === 0 ? 'Sold out' : '0'}
+                                disabled={data.remainingSupply === 0}
                                 value={price !== 0 ? IntlNumberFormat(price) : ''}
+                                onChange={handleComputeInput}
+                                type="text"
                                 min={0}
                             />
                         </div>
