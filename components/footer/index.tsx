@@ -16,11 +16,11 @@ const Footer = () => {
                             <span className="font-semibold">Universal Basic Compute</span>
                         </div>
                         <span className="text-muted-foreground text-sm flex flex-wrap items-center">
-                            <span>UBC (Universal Basic Compute) is a decentralized infrastructure project that bridges AI systems' need for guaranteed compute resources with humans' need for guaranteed returns from AI advancement through a dual-token system (</span>
+                            <span>UBC (Universal Basic Compute) is a decentralized infrastructure project that bridges AI systems' need for guaranteed compute resources with humans' need for guaranteed returns from AI advancement through a dual-token system: </span>
                             <UBCToken />
                             <span>&nbsp;for governance and </span>
                             <ComputeToken />
-                            <span>&nbsp;for resource allocation).</span>
+                            <span>&nbsp;for resource allocation.</span>
                         </span>
                     </div>
 
