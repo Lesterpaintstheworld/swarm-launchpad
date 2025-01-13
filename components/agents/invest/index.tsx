@@ -60,7 +60,11 @@ const AgentInvestCard = ({ data, className }: AgentInvestCardProps) => {
         <Card className={cn("w-full", className)}>
             <div className="w-full flex flex-row justify-between items-center">
                 <h4>Invest</h4>
-                <p className="text-muted">Total Supply: {IntlNumberFormatCompact(data.totalSupply) || 0}</p>
+                <div className="flex flex-row items-center gap-1">
+                    <p className="text-muted">Total Shares</p>
+                    <ComputeToken className="text-sm" />
+                    <p className="text-muted">: {IntlNumberFormatCompact(data.totalSupply) || 0}</p>
+                </div>
             </div>
             <div className="flex flex-col gap-8 md:flex-row md:gap-none justify-between mt-6">
                 <div className="flex flex-col basis-1/2 md:max-w-[48%]">
