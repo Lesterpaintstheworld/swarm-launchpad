@@ -3,6 +3,7 @@
 import { Button } from "@/components/shadcn/button";
 import { ConnectButton } from "@/components/solana/connectButton";
 import { Card } from "@/components/ui/card"
+import { ComputeToken } from "@/components/tokens/compute";
 import { Input } from "@/components/ui/input";
 import { cn, IntlNumberFormat, IntlNumberFormatCompact } from "@/lib/utils";
 import { useWallet } from "@solana/wallet-adapter-react";
