@@ -24,7 +24,7 @@ export default function Swarm({ params }: { params: { slug: string } }) {
     }
 
     const prepareSlides = useCallback(() => {
-        return swarm.gallery.map((item: GalleryItem, index) => {
+        return swarm.gallery.map((item: GalleryItem, index: number) => {
             let content;
             if (item.type === 'image') {
                 content = <Image src={item.content} alt={`${swarm.name} carousel item ${index}`} width={1048} height={600} className="w-full object-cover" />
