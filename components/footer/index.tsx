@@ -79,10 +79,10 @@ const Footer = () => {
                         © 2025 Universal Basic Compute. All rights reserved.
                     </p>
                     <div className="flex gap-6">
-                        <a href="https://universalbasiccompute.ai/privacy" className="text-sm text-muted-foreground">
+                        <a href="https://universalbasiccompute.ai/privacy" className="text-sm text-gray-500">
                             Privacy Policy
                         </a>
-                        <a href="https://universalbasiccompute.ai/terms" className="text-sm text-muted-foreground">
+                        <a href="https://universalbasiccompute.ai/terms" className="text-sm text-gray-500">
                             Terms of Service
                         </a>
                     </div>
