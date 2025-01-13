@@ -52,7 +52,7 @@ function ConnectButton({ className }: { className?: string }) {
                 <Button disabled={connecting || disconnecting} onClick={handleClick} className={cn("px-4", className)}>
                     {connected && wallet?.adapter.icon && (
                         <Image 
-                            src={wallet.adapter.icon} 
+                            src={wallet.adapter.icon as string} 
                             alt={`${wallet.adapter.name} icon`} 
                             width={16} 
                             height={16} 
@@ -66,7 +66,7 @@ function ConnectButton({ className }: { className?: string }) {
                         <Button disabled={connecting || disconnecting}>
                             {connected && wallet?.adapter.icon && (
                                 <Image 
-                                    src={wallet.adapter.icon} 
+                                    src={wallet.adapter.icon as string} 
                                     alt={`${wallet.adapter.name} icon`} 
                                     width={16} 
                                     height={16} 
