@@ -50,14 +50,29 @@ function ConnectButton({ className }: { className?: string }) {
         <>
             {!connected ? (
                 <Button disabled={connecting || disconnecting} onClick={handleClick} className={cn("px-4", className)}>
-                    {connected && <Image src={wallet?.adapter.icon} alt={`${wallet?.adapter.name} icon`} width={16} height={16} />}
+                    {connected && wallet?.adapter.icon && (
+                        <Image 
+                            src={wallet.adapter.icon} 
+                            alt={`${wallet.adapter.name} icon`} 
+                            width={16} 
+                            height={16} 
+                        />
+                    )}
                     {label}
                 </Button>
             ) : (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button disabled={connecting || disconnecting}>
-                            {connected && <img src={wallet?.adapter.icon} alt={`${wallet?.adapter.name} icon`} className="max-w-4" />}
+                            {connected && wallet?.adapter.icon && (
+                                <Image 
+                                    src={wallet.adapter.icon} 
+                                    alt={`${wallet.adapter.name} icon`} 
+                                    width={16} 
+                                    height={16} 
+                                    className="max-w-4" 
+                                />
+                            )}
                             {label}
                         </Button>
                     </DropdownMenuTrigger>
