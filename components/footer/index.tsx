@@ -76,9 +76,9 @@ const Footer = () => {
                 {/* Bottom Bar */}
                 <div className="flex flex-col md:flex-row justify-between items-center gap-4 mt-12 pt-8 border-t border-border">
                     <p className="text-sm text-muted-foreground">
-                        © {new Date().getFullYear()} Universal Basic Compute. All rights reserved.
+                        © 2025 Universal Basic Compute. All rights reserved.
                     </p>
-                    <div className="flex gap-6">
+                    <div className="flex gap-6 text-muted">
                         <a href="https://universalbasiccompute.ai/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                             Privacy Policy
                         </a>
