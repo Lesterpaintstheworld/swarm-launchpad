@@ -6,9 +6,7 @@ import { Investment } from "@/components/portfolio/investments";
 import Image from "next/image";
 import { IntlNumberFormat } from "@/lib/utils";
 import { Button } from "@/components/shadcn/button";
-import { previews } from "@/data/swarms/previews";
-
-const getSwarm = (swarmId: string) => previews.filter(swarm => swarm.id === swarmId)[0];
+import { getSwarm } from "@/data/swarms/previews";
 
 export const columns: ColumnDef<Investment>[] = [
     {
@@ -23,12 +21,12 @@ export const columns: ColumnDef<Investment>[] = [
 
             return (
                 <div className="flex items-center gap-4 py-3">
-                    <Image 
-                        src={swarm.image} 
-                        alt={`${swarm.name} avatar`} 
-                        width={32} 
+                    <Image
+                        src={swarm.image}
+                        alt={`${swarm.name} avatar`}
+                        width={32}
                         height={32}
-                        className="rounded-full" 
+                        className="rounded-full"
                     />
                     <div className="flex flex-col">
                         <p className="text-lg mb-0 leading-none truncate">{swarm.name}</p>
