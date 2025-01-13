@@ -3,6 +3,11 @@ import Image from "next/image";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { SwarmData } from "@/data/swarms/info";
 import { redirect } from "next/navigation";
+
+interface GalleryItem {
+    type: 'image' | 'video';
+    content: string;
+}
 import { Markdown } from "@/components/ui/markdown";
 import { Expandable } from "@/components/ui/expandable";
 import { InfiniteCarousel, Slides } from "@/components/ui/infiniteCarousel";
@@ -19,12 +24,12 @@ export default function Swarm({ params }: { params: { slug: string } }) {
     }
 
     const prepareSlides = useCallback(() => {
-        return swarm.gallery.map((item, index) => {
+        return swarm.gallery.map((item: GalleryItem, index) => {
             let content;
             if (item.type === 'image') {
-                content = <Image src={item.content as string} alt={`${swarm.name} carousel item ${index}`} width={1048} height={600} className="w-full object-cover" />
+                content = <Image src={item.content} alt={`${swarm.name} carousel item ${index}`} width={1048} height={600} className="w-full object-cover" />
             } else if (item.type === 'video') {
-                content = <video autoPlay={index === 1} controls muted={index === 1}><source src={item.content as string} type="video/mp4" className="h-full" /></video>
+                content = <video autoPlay={index === 1} controls muted={index === 1}><source src={item.content} type="video/mp4" className="h-full" /></video>
             } else {
                 content = item.content;
             }
