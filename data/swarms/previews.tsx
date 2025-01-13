@@ -1,5 +1,7 @@
 import { SwarmPreviewData } from "@/components/swarms/swarm.types";
 
+export const getSwarm = (swarmId: string) => previews.filter(swarm => swarm.id === swarmId)[0];
+
 export const previews: SwarmPreviewData[] = [
     {
         id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',

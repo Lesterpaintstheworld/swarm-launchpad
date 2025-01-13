@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card"
 import { columns } from "./columns";
 import { DataTable } from "@/components/ui/datatable";
+import { cn } from "@/lib/utils";
 
 type Investment = {
     swarm_id: string;
@@ -11,12 +12,13 @@ type Investment = {
 
 interface InvestmentsProps {
     investments: Investment[];
+    className?: string;
 }
 
-const Investments = ({ investments }: InvestmentsProps) => {
+const Investments = ({ investments, className }: InvestmentsProps) => {
 
     return (
-        <Card className="w-full">
+        <Card className={cn("w-full", className)}>
             <h4 className="mb-4">Your Investments</h4>
             <DataTable columns={columns} data={investments} />
         </Card>
