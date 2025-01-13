@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card"
 import { Tag } from "@/components/ui/tag";
 import { motion } from "motion/react";
 import Link from "next/link";
-import { SwarmPreviewData } from "../agent.types";
+import { SwarmPreviewData } from "../swarm.types";
 
 interface SwarmPreviewCardProps {
     swarm: SwarmPreviewData;
