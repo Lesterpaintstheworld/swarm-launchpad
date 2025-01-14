@@ -15,6 +15,9 @@
 		-ms-overflow-style: none;  /* IE and Edge */
 		scrollbar-width: none;  /* Firefox */
 	}
+	.view {
+		min-height: 100vh;
+	}
 	.container {
 		max-width: 1048px;
 		width: 100%;
