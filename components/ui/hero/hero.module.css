@@ -18,3 +18,8 @@
     font-weight: 500;
     max-width: 800px;
 }
+
+.token {
+    color: #FFD700;
+    font-weight: 700;
+}

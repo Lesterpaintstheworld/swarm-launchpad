@@ -1,16 +1,16 @@
 import css from './hero.module.css';
 
 interface HeroProps {
-    title: string;
+    title?: string;
     className?: string;
 }
 
-const Hero = ({ title, className }: HeroProps) => {
+const Hero = ({ className }: HeroProps) => {
     return (
         <div className={`${css.hero__wrapper} ${className}`}>
             <div className={css.hero__container}>
                 <h1 className={css.hero__title}>
-                    {title}
+                    Invest <span className={css.token}>$COMPUTE</span>, get returns in <span className={css.token}>$UBC</span>
                 </h1>
             </div>
         </div>
