@@ -1,10 +1,11 @@
 import { Hero } from "@/components/ui/hero";
+import { ProcessFlow } from "@/components/ui/processFlow";
 
 export default function HowItWorksPage() {
     return (
         <main>
             <Hero />
-            {/* We can add more content sections below the hero later */}
+            <ProcessFlow />
         </main>
     );
 }
