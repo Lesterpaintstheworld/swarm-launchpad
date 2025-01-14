@@ -61,6 +61,7 @@ const Navigation = () => {
                                 href={link.disabled ? undefined : link.url}
                                 data-disabled={!!link.disabled}
                                 data-active={pathname.includes(link.url)}
+                                data-highlight={!!link.highlight}
                                 className={css.link}
                                 target={link?.target}
                             >

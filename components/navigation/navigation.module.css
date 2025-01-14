@@ -63,3 +63,7 @@
 .link[data-active="true"]::after {
     width: 100%;
 }
+
+.link[data-highlight="true"] {
+    color: #FFD700;
+}

@@ -18,5 +18,6 @@ export const Links: LinkType[] = [
     {
         label: 'how it works',
         url: '/how-it-works',
+        highlight: true
     },
 ]
