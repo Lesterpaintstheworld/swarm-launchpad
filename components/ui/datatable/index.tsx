@@ -54,7 +54,7 @@ export function DataTable<TData, TValue>({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
+        getPaginationRowModel: pagination === true ? getPaginationRowModel() : undefined,
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
@@ -62,7 +62,7 @@ export function DataTable<TData, TValue>({
         globalFilterFn: 'includesString',
         state: {
             sorting,
-            globalFilter
+            globalFilter,
         }
     })
 
