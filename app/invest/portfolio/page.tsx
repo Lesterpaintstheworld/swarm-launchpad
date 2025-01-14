@@ -1,3 +1,4 @@
+import { DividendPayments } from "@/components/portfolio/dividendPayments";
 import { Investment, Investments } from "@/components/portfolio/investments";
 import { PortfolioOverview } from "@/components/portfolio/overview";
 
@@ -36,8 +37,9 @@ export default function Portfolio() {
                 <h2 className="text-center">Your Portfolio</h2>
                 <p className="text-center text-balance text-muted text-lg">Manage your AI swarm investments, and track returns</p>
             </div>
-            <Investments investments={mockInvestments} className="mb-4" />
-            <PortfolioOverview investments={mockInvestments} className="mb-4" />
+            <Investments investments={mockInvestments} className="mb-6" />
+            <PortfolioOverview investments={mockInvestments} className="mb-6" />
+            <DividendPayments className="mb-12" />
         </main>
     )
 
