@@ -35,7 +35,7 @@ export default function Swarm({ params }: { params: { slug: string } }) {
     }, [swarm])
 
     return (
-        <main className="container mb-6 md:mb-24">
+        <main className="container mb-6 md:mb-24 view">
             <Breadcrumb
                 className="mt-4"
                 crumbs={[
