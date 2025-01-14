@@ -26,7 +26,7 @@ const SwarmRecentMarketListings = ({ swarmId, listings, numberOfListings }: Swar
                     <hr />
                     <Button variant='link' className="ml-auto hover:no-underline" asChild>
                         <div className="flex flex-row items-center gap-2 w-fit text-muted mt-4 hover:text-foreground">
-                            <Link href={`/market?swarmId=${swarmId}`}>
+                            <Link href={`/invest/market?swarmId=${swarmId}`}>
                                 View all
                             </Link>
                             <LucideArrowRight />

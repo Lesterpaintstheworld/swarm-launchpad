@@ -25,26 +25,22 @@ const SwarmInvestCard = ({ data, className }: SwarmInvestCardProps) => {
 
     const sharesRef = useRef<HTMLParagraphElement>(null);
 
-    const [numShares, setNumShares] = useState<string>('');
+    const [numShares, setNumShares] = useState<number>(0);
     const [price, setPrice] = useState<number>(0);
 
     const handleSharesInput = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = Number(e.target.value);
-
+        const value = Number(e.target.value.replace(/,/g, ''));
         if (isNaN(value) || value < 0) return;
-
         setPrice(Math.floor((Number(value))) * data.pricePerShare);
-        setNumShares(String(value));
+        setNumShares(value);
     }
 
     const handleComputeInput = (e: ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value.replace(/,/g, '')); // Remove commas for calculation
-
         if (isNaN(value) || value < 0) return;
-
         // Calculate shares, rounding to nearest whole number
         const calculatedShares = Math.round(value / data.pricePerShare);
-        setNumShares(String(calculatedShares));
+        setNumShares(calculatedShares);
         setPrice(value);
     }
 
@@ -72,15 +68,12 @@ const SwarmInvestCard = ({ data, className }: SwarmInvestCardProps) => {
                             <Input
                                 className="border-none rounded-none bg-transparent pl-0 text-4xl font-bold no-arrows"
                                 style={{
-                                    width: `calc(${data.remainingSupply !== 0 ? numShares.length || 1 : 8}ch + ${connected ? 1 : 2}rem)`,
+                                    width: `calc(${data.remainingSupply !== 0 ? IntlNumberFormat(numShares).length || 1 : 8}ch + ${connected ? 1 : 2}rem)`,
                                     maxWidth: `calc(100% - ${sharesRef.current?.offsetWidth}px - 10px)`,
                                 }}
-                                disabled={data.remainingSupply === 0}
-                                type="number"
                                 placeholder={data.remainingSupply === 0 ? 'Sold out' : '0'}
-                                step={1}
-                                min={0}
-                                value={Number(numShares) !== 0 ? numShares : ''}
+                                disabled={data.remainingSupply === 0}
+                                value={numShares !== 0 ? IntlNumberFormat(numShares) : ''}
                                 onChange={handleSharesInput}
                             />
                             {data.remainingSupply !== 0 && <p className="mt-auto mb-4" ref={sharesRef}>/ Shares</p>}
@@ -101,7 +94,6 @@ const SwarmInvestCard = ({ data, className }: SwarmInvestCardProps) => {
                                 disabled={data.remainingSupply === 0}
                                 value={price !== 0 ? IntlNumberFormat(price) : ''}
                                 onChange={handleComputeInput}
-                                type="text"
                                 min={0}
                             />
                         </div>
