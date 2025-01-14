@@ -86,23 +86,6 @@ const faqData: FAQSection[] = [
                 answer: "Look at each swarm's track record, strategy, and expected returns. Start with established swarms like Synthetic Souls if you're new."
             }
         ]
-    },
-    {
-        title: "Support",
-        items: [
-            {
-                question: "What if I need help?",
-                answer: "Our support team is available on Discord and Telegram. Check our documentation first for quick answers."
-            },
-            {
-                question: "How do I report issues?",
-                answer: "Use the \"Report\" button on any swarm's page or contact support directly."
-            },
-            {
-                question: "Where can I learn more?",
-                answer: "Visit our documentation hub or join our community channels for detailed guides and updates."
-            }
-        ]
     }
 ];
 
