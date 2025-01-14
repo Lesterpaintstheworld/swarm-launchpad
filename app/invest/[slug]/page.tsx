@@ -59,7 +59,7 @@ export default function Swarm({ params }: { params: { slug: string } }) {
             {swarm.description &&
                 <>
                     <h4 className="font-semibold">About {swarm.name}</h4>
-                    <hr className="mt-3 mb-6" />
+                    <hr className="mt-3" />
                     <Expandable overflowThreshold={750}>
                         <Markdown markdown={swarm.description} />
                     </Expandable>

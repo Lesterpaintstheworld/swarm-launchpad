@@ -23,7 +23,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
                 toolTipContent: <p>{swarm.name} - <strong>{IntlNumberFormat(number_of_shares / total_owned_shares * 100)}%</strong></p>
             }
         });
-    }, [investments]);
+    }, [investments, total_owned_shares]);
 
     return (
         <Card className={cn("w-full", className)}>

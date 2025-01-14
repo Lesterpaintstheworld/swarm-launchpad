@@ -2,20 +2,22 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
-import { Investment } from "@/components/portfolio/investments";
-import Image from "next/image";
-import { IntlNumberFormat } from "@/lib/utils";
-import { Button } from "@/components/shadcn/button";
+import { formatSignature, IntlNumberFormat } from "@/lib/utils";
 import { getSwarm } from "@/data/swarms/previews";
+import { Tag } from "@/components/ui/tag";
+import { DividendPayment } from ".";
+import Image from "next/image";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/shadcn/tooltip";
 import Link from "next/link";
+import { Copy } from "@/components/ui/copy";
 
-export const columns: ColumnDef<Investment>[] = [
+export const columns: ColumnDef<DividendPayment>[] = [
     {
         accessorKey: 'swarm_id',
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Swarm" />
         ),
-        minSize: 200,
+        minSize: 250,
         cell: ({ row }) => {
 
             const swarm = getSwarm(row.getValue('swarm_id'));
@@ -38,31 +40,25 @@ export const columns: ColumnDef<Investment>[] = [
         }
     },
     {
-        accessorKey: 'number_of_shares',
+        accessorKey: 'amount',
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Number of shares" />
+            <DataTableColumnHeader column={column} title="Amount" />
         ),
         cell: ({ row }) => (
-            <p className="font-bold">{IntlNumberFormat(row.getValue('number_of_shares'))}</p>
+            <div className="flex flex-row items-center gap-2">
+                <p className="font-bold">{IntlNumberFormat(row.getValue('amount'))}</p>
+                <Tag>{row.original.token}</Tag>
+            </div>
         )
     },
     {
-        accessorKey: 'total_shares',
+        accessorKey: 'timestamp',
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Ownership %" />
-        ),
-        cell: ({ row }) => {
-            return <p className="text-muted">{IntlNumberFormat(Number(row.original.number_of_shares) / Number(row.original.total_shares) * 100)}%</p>
-        }
-    },
-    {
-        accessorKey: 'last_dividend_payment',
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Last dividend payment" />
+            <DataTableColumnHeader column={column} title="Date" />
         ),
         cell: ({ row }) => {
 
-            const date = new Date(Number(row.getValue('last_dividend_payment')) * 1000);
+            const date = new Date(Number(row.getValue('timestamp')) * 1000);
 
             return (
                 <p className="text-muted whitespace-nowrap">{date.toLocaleString()}</p>
@@ -70,20 +66,22 @@ export const columns: ColumnDef<Investment>[] = [
         }
     },
     {
-        accessorKey: 'id',
-        header: () => <></>,
-        minSize: 100,
-        cell: () => {
+        accessorKey: 'signature',
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Signature" />
+        ),
+        cell: ({ row }) => {
             return (
-                <div className="w-full flex my-2 min-w-[100px]">
-                    <Button
-                        variant='destructive'
-                        className="ml-auto h-fit py-1 font-normal"
-                        onClick={() => alert('Initiate sale flow for investment')}
-                    >
-                        SELL
-                    </Button>
-                </div>
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger>
+                            <Copy label={formatSignature(row.getValue('signature'))} value={row.getValue('signature')} />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Copy</p>
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
             )
         }
     },
