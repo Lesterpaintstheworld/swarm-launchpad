@@ -7,6 +7,7 @@ import Image from "next/image";
 import { IntlNumberFormat } from "@/lib/utils";
 import { Button } from "@/components/shadcn/button";
 import { getSwarm } from "@/data/swarms/previews";
+import Link from "next/link";
 
 export const columns: ColumnDef<Investment>[] = [
     {
@@ -20,17 +21,17 @@ export const columns: ColumnDef<Investment>[] = [
             const swarm = getSwarm(row.getValue('swarm_id'));
 
             return (
-                <div className="flex items-center gap-4 py-3">
+                <div className="flex items-center min-w-[200px] gap-4 py-1">
                     <Image
-                        src={swarm.image}
-                        alt={`${swarm.name} avatar`}
+                        src={swarm?.image}
+                        alt={`${swarm?.name} avatar`}
                         width={32}
                         height={32}
                         className="rounded-full"
                     />
                     <div className="flex flex-col">
-                        <p className="text-lg mb-0 leading-none truncate">{swarm.name}</p>
-                        {swarm?.role && <p className="text-sm text-muted truncate">{swarm.role}</p>}
+                        <Link className="text-lg mb-0 leading-1 truncate hover:underline" href={`/invest/${swarm.id}`}>{swarm?.name}</Link>
+                        {swarm?.role && <p className="text-sm text-muted truncate">{swarm?.role}</p>}
                     </div>
                 </div>
             )
@@ -42,7 +43,7 @@ export const columns: ColumnDef<Investment>[] = [
             <DataTableColumnHeader column={column} title="Number of shares" />
         ),
         cell: ({ row }) => (
-            <p className="text-lg font-bold">{IntlNumberFormat(row.getValue('number_of_shares'))}</p>
+            <p className="font-bold">{IntlNumberFormat(row.getValue('number_of_shares'))}</p>
         )
     },
     {
@@ -51,7 +52,7 @@ export const columns: ColumnDef<Investment>[] = [
             <DataTableColumnHeader column={column} title="Ownership %" />
         ),
         cell: ({ row }) => {
-            return <p className="text-lg text-muted">{IntlNumberFormat(Number(row.original.number_of_shares) / Number(row.original.total_shares) * 100)}%</p>
+            return <p className="text-muted">{IntlNumberFormat(Number(row.original.number_of_shares) / Number(row.original.total_shares) * 100)}%</p>
         }
     },
     {
@@ -64,16 +65,17 @@ export const columns: ColumnDef<Investment>[] = [
             const date = new Date(Number(row.getValue('last_dividend_payment')) * 1000);
 
             return (
-                <p className="text-lg text-muted whitespace-nowrap">{date.toLocaleString()}</p>
+                <p className="text-muted whitespace-nowrap">{date.toLocaleString()}</p>
             )
         }
     },
     {
         accessorKey: 'id',
         header: () => <></>,
+        minSize: 100,
         cell: () => {
             return (
-                <div className="w-full flex my-2">
+                <div className="w-full flex my-2 min-w-[100px]">
                     <Button
                         variant='destructive'
                         className="ml-auto h-fit py-1 font-normal"
