@@ -15,4 +15,9 @@ export const Links: LinkType[] = [
         url: '/swap',
         disabled: true,
     },
+    {
+        label: 'how it works',
+        url: '/how-it-works',
+        highlight: true
+    },
 ]

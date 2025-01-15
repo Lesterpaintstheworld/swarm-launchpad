@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { Token } from "../tokens/token"
 import { supportedTokens } from "@/data/tokens/supported"
+import Link from "next/link"
 
 const Footer = () => {
     return (
@@ -79,12 +80,12 @@ const Footer = () => {
                         © 2025 Universal Basic Compute. All rights reserved.
                     </p>
                     <div className="flex gap-6">
-                        <a href="https://universalbasiccompute.ai/privacy" className="text-sm text-muted hover:text-foreground transition-colors">
+                        <Link href="/privacy" className="text-sm text-muted hover:text-foreground transition-colors">
                             Privacy Policy
-                        </a>
-                        <a href="https://universalbasiccompute.ai/terms" className="text-sm text-muted hover:text-foreground transition-colors">
+                        </Link>
+                        <Link href="/terms" className="text-sm text-muted hover:text-foreground transition-colors">
                             Terms of Service
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

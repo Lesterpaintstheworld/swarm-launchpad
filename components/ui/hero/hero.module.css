@@ -1,0 +1,32 @@
+.hero__wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-block: 6rem;
+}
+
+.hero__container {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.hero__title {
+    font-weight: 500;
+    max-width: 800px;
+    margin-bottom: 2rem;
+}
+
+.hero__description {
+    max-width: 800px;
+    line-height: 1.6;
+    font-size: 1.125rem;
+}
+
+.token {
+    color: #E5C76B;
+    font-weight: 700;
+}

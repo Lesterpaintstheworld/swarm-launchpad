@@ -1,0 +1,124 @@
+.process__wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-block: 4rem;
+}
+
+.process__container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.step__container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+}
+
+.step__content {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    padding: 2rem;
+    height: 100%;
+    flex: 1;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.step__content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(229, 199, 107, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.step__content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(229, 199, 107, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.step__content:hover::before {
+    transform: translateX(100%);
+}
+
+.step__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
+}
+
+.step__content:hover .step__title {
+    color: #E5C76B;
+}
+
+.step__description {
+    font-size: 1rem;
+    line-height: 1.5;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.step__content:hover .step__description {
+    opacity: 1;
+}
+
+.arrow {
+    font-size: 2rem;
+    margin-inline: 1rem;
+    color: #E5C76B;
+    transition: transform 0.3s ease;
+}
+
+.step__container:hover + .step__container .arrow {
+    transform: translateX(10px);
+}
+
+@media (max-width: 768px) {
+    .process__container {
+        flex-direction: column;
+    }
+
+    .step__container {
+        width: 100%;
+    }
+
+    .arrow {
+        transform: rotate(90deg);
+        margin-block: 1rem;
+    }
+
+    .step__container:hover + .step__container .arrow {
+        transform: rotate(90deg) translateX(10px);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.step__container:nth-child(1) { animation-delay: 0.2s; }
+.step__container:nth-child(2) { animation-delay: 0.4s; }
+.step__container:nth-child(3) { animation-delay: 0.6s; }

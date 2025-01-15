@@ -4,6 +4,7 @@ interface LinkType {
     disabled?: boolean;
     target?: string;
     hasDropdown?: boolean;
+    highlight?: boolean;
 }
 
 interface MenuItem {
