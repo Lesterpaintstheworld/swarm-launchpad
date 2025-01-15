@@ -10,7 +10,6 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { LucideLoader } from "lucide-react";
 import { MarketListing } from "../market.types";
 import { supportedTokens } from "@/data/tokens/supported";
-import { useSearchParams } from "next/navigation";
 
 const mockMarketListings: MarketListing[] = [
     {
@@ -280,8 +279,6 @@ const mockMarketListings: MarketListing[] = [
 ]
 
 const MarketListings = ({ className }: { className?: string }) => {
-
-    const searchParams = useSearchParams();
 
     const ITEMS_PER_PAGE = 15;
     const [transactions, setTransactions] = useState<MarketListing[]>([]);
