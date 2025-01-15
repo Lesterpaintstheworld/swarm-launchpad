@@ -1,9 +1,9 @@
 "use client"
 
 import Image from "next/image"
+import { Token } from "../tokens/token"
+import { supportedTokens } from "@/data/tokens/supported"
 import Link from "next/link"
-import { UBCToken } from "@/components/tokens/ubc"
-import { ComputeToken } from "@/components/tokens/compute"
 
 const Footer = () => {
     return (
@@ -18,9 +18,9 @@ const Footer = () => {
                         </div>
                         <span className="text-muted-foreground text-sm flex flex-wrap items-center">
                             <span className="mb-2">UBC (Universal Basic Compute) is a decentralized infrastructure project that bridges AI systems&apos; need for guaranteed compute resources with humans&apos; need for guaranteed returns from AI advancement through a dual-token system: </span>
-                            <UBCToken />
+                            <Token token={supportedTokens[0]} />
                             <span>&nbsp;for governance and&nbsp;</span>
-                            <ComputeToken />
+                            <Token token={supportedTokens[1]} />
                             <span>&nbsp;for resource allocation.</span>
                         </span>
                     </div>

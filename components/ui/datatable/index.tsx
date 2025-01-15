@@ -35,6 +35,7 @@ interface DataTableProps<TData, TValue> {
     searchable?: boolean;
     pagination?: boolean;
     rowClassName?: string;
+    initialFilter?: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -43,12 +44,13 @@ export function DataTable<TData, TValue>({
     rowAnimationDuration = 0.25,
     searchable = false,
     pagination = false,
-    rowClassName
+    rowClassName,
+    initialFilter
 }: DataTableProps<TData, TValue>) {
 
     const [sorting, setSorting] = useState<SortingState>([]);
 
-    const [globalFilter, setGlobalFilter] = useState<string>('');
+    const [globalFilter, setGlobalFilter] = useState<string>(initialFilter || '');
 
     const table = useReactTable({
         data,

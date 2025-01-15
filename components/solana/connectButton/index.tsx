@@ -51,11 +51,11 @@ function ConnectButton({ className }: { className?: string }) {
             {!connected ? (
                 <Button disabled={connecting || disconnecting} onClick={handleClick} className={cn("px-4", className)}>
                     {connected && wallet?.adapter.icon && (
-                        <Image 
-                            src={wallet.adapter.icon as string} 
-                            alt={`${wallet.adapter.name} icon`} 
-                            width={16} 
-                            height={16} 
+                        <Image
+                            src={wallet.adapter.icon as string}
+                            alt={`${wallet.adapter.name} icon`}
+                            width={16}
+                            height={16}
                         />
                     )}
                     {label}
@@ -65,12 +65,12 @@ function ConnectButton({ className }: { className?: string }) {
                     <DropdownMenuTrigger asChild>
                         <Button disabled={connecting || disconnecting}>
                             {connected && wallet?.adapter.icon && (
-                                <Image 
-                                    src={wallet.adapter.icon as string} 
-                                    alt={`${wallet.adapter.name} icon`} 
-                                    width={16} 
-                                    height={16} 
-                                    className="max-w-4" 
+                                <Image
+                                    src={wallet.adapter.icon as string}
+                                    alt={`${wallet.adapter.name} icon`}
+                                    width={16}
+                                    height={16}
+                                    className="max-w-4"
                                 />
                             )}
                             {label}
@@ -84,7 +84,7 @@ function ConnectButton({ className }: { className?: string }) {
                                 Portfolio
                                 <ChartPie className="ml-auto max-w-3" />
                             </DropdownMenuItem>
-                            <DropdownMenuItem disabled>
+                            <DropdownMenuItem onClick={() => router.push('/invest/market')}>
                                 Market
                                 <LucideArrowLeftRight className="ml-auto max-w-3 text-muted" />
                             </DropdownMenuItem>
