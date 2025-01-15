@@ -2,9 +2,10 @@
 
 import { Button } from "@/components/shadcn/button";
 import { ConnectButton } from "@/components/solana/connectButton";
+import { Token } from "@/components/tokens/token";
 import { Card } from "@/components/ui/card"
-import { ComputeToken } from "@/components/tokens/compute";
 import { Input } from "@/components/ui/input";
+import { supportedTokens } from "@/data/tokens/supported";
 import { cn, IntlNumberFormat, IntlNumberFormatCompact } from "@/lib/utils";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Link from "next/link";
@@ -97,7 +98,7 @@ const SwarmInvestCard = ({ data, className }: SwarmInvestCardProps) => {
                                 min={0}
                             />
                         </div>
-                        <ComputeToken className="h-fit text-lg mr-6" />
+                        <Token token={supportedTokens[1]} className="h-fit text-lg mr-6" />
                     </div>
                     <p className="text-sm text-muted pl-4 mt-2">Minimum: {IntlNumberFormat(data.pricePerShare)} $COMPUTE</p>
                 </div>
