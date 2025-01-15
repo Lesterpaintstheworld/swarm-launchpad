@@ -5,11 +5,9 @@ import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
 import { Investment } from "@/components/portfolio/investments";
 import Image from "next/image";
 import { IntlNumberFormat } from "@/lib/utils";
-import { Button } from "@/components/shadcn/button";
 import { getSwarm } from "@/data/swarms/previews";
 import Link from "next/link";
-import { useState } from "react";
-import { SellPositionModal } from "@/components/swarms/sellPositionModal";
+import { SellButton } from "./sellButton";
 
 export const columns: ColumnDef<Investment>[] = [
     {
@@ -76,25 +74,7 @@ export const columns: ColumnDef<Investment>[] = [
         header: () => <></>,
         minSize: 100,
         cell: ({ row }) => {
-            const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-            return (
-                <>
-                    <div className="w-full flex my-2 min-w-[100px]">
-                        <Button
-                            variant='destructive'
-                            className="ml-auto h-fit py-1 font-normal"
-                            onClick={() => setIsModalOpen(true)}
-                        >
-                            SELL
-                        </Button>
-                    </div>
-                    <SellPositionModal
-                        swarmId={row.original.swarm_id}
-                        isModalOpen={isModalOpen}
-                        closeModal={() => setIsModalOpen(false)}
-                    />
-                </>
-            )
+            return <SellButton swarmId={row.original.swarm_id} />;
         }
     },
 ];
