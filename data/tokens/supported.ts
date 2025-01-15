@@ -1,3 +1,5 @@
+import { Token } from "@/components/tokens/tokens.types";
+
 export const supportedTokens: Token[] = [
     {
         label: "$UBC",

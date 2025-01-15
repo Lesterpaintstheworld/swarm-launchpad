@@ -20,6 +20,7 @@ import {
 } from "@/components/shadcn/popover";
 import { useEffect, useRef, useState } from "react";
 import { supportedTokens } from "@/data/tokens/supported";
+import { Token } from "../tokens.types";
 
 interface SwarmComboBoxProps {
     defaultValue?: string;
@@ -34,18 +35,17 @@ const TokenComboBox = ({ className, defaultValue, onChange, disabled }: SwarmCom
 
     const [open, setOpen] = useState<boolean>(false)
     const [value, setValue] = useState<string>(defaultValue || "");
-    const [token, setToken] = useState<string | undefined>(undefined);
 
     const getToken = (token: string): Token | undefined => {
         return supportedTokens.filter((t: Token) => t.label === token)[0];
     }
 
     useEffect(() => {
-        if (getToken(value)) setToken(value);
+        if (!getToken(value)) return;
         onChange(getToken(value));
-    }, [value, defaultValue])
+    }, [value, defaultValue, onChange])
 
-    const handleFilter = (value: string, search: string, keywords?: string[]): number => {
+    const handleFilter = (value: string, search: string): number => {
         supportedTokens.forEach((token: Token) => {
             if (token.label.includes(search)) return 1;
         });

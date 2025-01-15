@@ -3,6 +3,7 @@
 import { Button } from "@/components/shadcn/button";
 import { SwarmComboBox } from "@/components/swarms/comboBox";
 import { TokenComboBox } from "@/components/tokens/comboBox";
+import { Token } from "@/components/tokens/tokens.types";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { Tag } from "@/components/ui/tag";

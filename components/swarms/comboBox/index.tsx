@@ -40,9 +40,9 @@ const SwarmComboBox = ({ className, defaultValue, onChange }: SwarmComboBoxProps
     useEffect(() => {
         setSwarm(getSwarm(value));
         onChange(value);
-    }, [value, defaultValue])
+    }, [value, defaultValue, onChange])
 
-    const handleFilter = (value: string, search: string, keywords?: string[]): number => {
+    const handleFilter = (value: string, search: string): number => {
         const swarm = getSwarm(value);
         if (
             swarm.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
