@@ -36,9 +36,12 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
                                 </Tag>
                             ))}
                         </div>
-                        <p>{swarm.name}</p>
+                        <p className="text-lg font-medium">{swarm.name}</p>
                         <p className="text-muted text-xs text-truncate line-clamp-4 min-h-16">{swarm.description}</p>
-                        <Button variant='success' className="mt-auto">
+                        <Button 
+                            variant='outline' 
+                            className="mt-auto bg-yellow-400 hover:bg-yellow-500 text-black border-yellow-500 hover:text-black"
+                        >
                             Invest
                         </Button>
                     </div>
