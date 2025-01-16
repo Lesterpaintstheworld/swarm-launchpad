@@ -4,6 +4,16 @@ export const getSwarm = (swarmId: string) => previews.filter(swarm => swarm.id =
 
 export const previews: SwarmPreviewData[] = [
     {
+        id: 'digitalkin-partner-id',
+        image: '/swarms/digitalkin.jpg',
+        models: ['KinOS', 'Claude Haiku'],
+        name: 'DigitalKin',
+        description: 'Enterprise-grade AI agents that autonomously handle complex digital tasks. Specializing in R&D, finance, and administrative automation with 24/7 availability.',
+        tags: ['AI', 'Enterprise', 'Automation', 'KinOS'],
+        role: 'Digital Employee Manager',
+        swarmType: 'partner'
+    },
+    {
         id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
         image: '/swarms/kinkong.jpg',
         models: ['KinOS'],

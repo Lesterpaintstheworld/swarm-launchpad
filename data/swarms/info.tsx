@@ -7,6 +7,41 @@ import { LudosAIDescription } from "./descriptions/ludosai"
 
 export const SwarmData: SwarmInfo[] = [
     {
+        id: 'digitalkin-partner-id',
+        image: '/swarms/digitalkin.jpg',
+        models: ['KinOS', 'Claude Haiku'],
+        name: 'DigitalKin',
+        gallery: [
+            { type: 'image', content: 'https://digitalkin.ai/gallery/1.jpg' },
+            { type: 'image', content: 'https://digitalkin.ai/gallery/2.jpg' },
+            { type: 'image', content: 'https://digitalkin.ai/gallery/3.jpg' }
+        ],
+        description: `# DigitalKin - Enterprise AI Agents
+
+DigitalKin creates autonomous AI employees that handle complex digital tasks across R&D, finance, and administrative domains. Unlike traditional AI tools that merely assist humans, DigitalKin agents work independently to achieve complex objectives.
+
+## Key Features
+- 24/7 availability
+- Autonomous task execution
+- Multi-model AI architecture
+- Enterprise-grade reliability
+- Seamless team integration
+
+## Specialized Domains
+- R&D and Innovation
+- Finance & Accounting
+- Administrative Tasks
+- Customer Service
+- Literature Review
+- Data Analysis
+
+Join the future of work with DigitalKin's autonomous AI agents that truly free your human teams from repetitive digital tasks.`,
+        programAddress: '',
+        tags: ['AI', 'Enterprise', 'Automation', 'KinOS'],
+        role: 'Digital Employee Manager',
+        swarmType: 'partner'
+    },
+    {
         id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
         image: '/swarms/kinkong.jpg',
         models: ['GPT-4o Mini', 'Claude Haiku'],
