@@ -179,4 +179,14 @@ export const previews: SwarmPreviewData[] = [
         role: 'Grant Writer',
         isInception: true
     },
+    {
+        id: 'm3n4o5p6-q7r8-6m7n-ko1p-2q3r4s5t6u7v',
+        image: '/swarms/resume.jpg',
+        models: ['KinOS'],
+        name: 'Resume Swarm',
+        description: 'AI swarm crafting targeted resumes by analyzing job descriptions, highlighting relevant experience, and optimizing for ATS',
+        tags: ['AI', 'Career', 'KinOS', 'Resume'],
+        role: 'Career Optimizer',
+        isInception: true
+    },
 ]
