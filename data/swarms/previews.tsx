@@ -109,4 +109,14 @@ export const previews: SwarmPreviewData[] = [
         role: 'Recruitment Assistant',
         isInception: true
     },
+    {
+        id: 'f6g7h8i9-j0k1-9f0g-dh4i-5j6k7l8m9n0o',
+        image: '/swarms/carehive.jpg',
+        models: ['KinOS'],
+        name: 'CareHive',
+        description: 'Healthcare operations swarm maximizing patient care through efficient practice management',
+        tags: ['AI', 'Healthcare', 'KinOS', 'Operations'],
+        role: 'Practice Manager',
+        isInception: true
+    },
 ]
