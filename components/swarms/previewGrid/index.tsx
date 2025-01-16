@@ -6,6 +6,44 @@ import { previews } from "@/data/swarms/previews"
 import { useCallback, useState } from "react"
 import { AnimatePresence } from "motion/react"
 import { SwarmModel, SwarmPreviewData, SwarmType } from "../swarm.types"
+import { Button } from "@/components/shadcn/button"
+import { InfoIcon } from "lucide-react"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/shadcn/tooltip"
+
+const swarmTypeInfo = {
+    partner: `• Full team operational
+• Product in final stages/launched
+• Active codebase
+• Real users/Token trading
+• 6+ months into development`,
+    early: `• Core team formed (2-4 people)
+• Basic prototype exists
+• Initial codebase established
+• Some testing completed
+• 2-6 months into development`,
+    inception: `• Solo founder seeking team / Promising idea without team
+• No code yet, just vision
+• Pre-prototype stage
+• 0-3 months into development`
+}
+
+const SwarmTypeHeader = ({ type, icon, title }: { type: SwarmType, icon: string, title: string }) => (
+    <div className="flex items-center gap-2">
+        <h3 className="text-xl font-semibold mb-4">{icon} {title}</h3>
+        <TooltipProvider>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <Button variant="ghost" size="icon" className="h-6 w-6 mb-4">
+                        <InfoIcon className="h-4 w-4" />
+                    </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                    <pre className="text-sm whitespace-pre-line">{swarmTypeInfo[type]}</pre>
+                </TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
+    </div>
+)
 
 const SwarmsPreviewGrid = () => {
 
@@ -30,7 +68,7 @@ const SwarmsPreviewGrid = () => {
             <div className="flex flex-col gap-8 mt-4">
                 {/* Partner Swarms First */}
                 <div>
-                    <h3 className="text-xl font-semibold mb-4">🤝 Partner Swarms</h3>
+                    <SwarmTypeHeader type="partner" icon="🤝" title="Partner Swarms" />
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <AnimatePresence>
                             {filterPreviews('partner').map((swarm: SwarmPreviewData, index: number) => (
@@ -42,7 +80,7 @@ const SwarmsPreviewGrid = () => {
 
                 {/* Early Swarms Second */}
                 <div>
-                    <h3 className="text-xl font-semibold mb-4">🚀 Early Swarms</h3>
+                    <SwarmTypeHeader type="early" icon="🚀" title="Early Swarms" />
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <AnimatePresence>
                             {filterPreviews('early').map((swarm: SwarmPreviewData, index: number) => (
@@ -54,7 +92,7 @@ const SwarmsPreviewGrid = () => {
                 
                 {/* Inception Swarms Last */}
                 <div>
-                    <h3 className="text-xl font-semibold mb-4">🌱 Inception Swarms</h3>
+                    <SwarmTypeHeader type="inception" icon="🌱" title="Inception Swarms" />
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <AnimatePresence>
                             {filterPreviews('inception').map((swarm: SwarmPreviewData, index: number) => (
