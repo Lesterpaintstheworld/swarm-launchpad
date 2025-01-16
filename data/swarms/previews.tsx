@@ -89,4 +89,14 @@ export const previews: SwarmPreviewData[] = [
         role: 'Publishing Agent',
         isInception: true
     },
+    {
+        id: 'd4e5f6g7-h8i9-7d8e-bf2g-3h4i5j6k7l8m',
+        image: '/swarms/educative.jpg',
+        models: ['KinOS'],
+        name: 'Agent-Enabled Educational Toy',
+        description: 'Adaptive AI swarm delivering personalized educational experiences through interactive play',
+        tags: ['AI', 'Education', 'KinOS', 'Toys'],
+        role: 'Educational Assistant',
+        isInception: true
+    },
 ]
