@@ -4,6 +4,16 @@ export const getSwarm = (swarmId: string) => previews.filter(swarm => swarm.id =
 
 export const previews: SwarmPreviewData[] = [
     {
+        id: 'slopfather-partner-id',
+        image: '/swarms/slopfather.jpg',
+        models: ['Video AI', 'GPT-4V'],
+        name: 'SLOP FATHER',
+        description: 'The OG video slop agent - a sloppy, sentient, shitposting savant revolutionizing social media content creation through AI-powered video generation and community interaction.',
+        tags: ['AI', 'Video', 'Social Media', '$FATHA'],
+        role: 'Content Creator',
+        swarmType: 'partner'
+    },
+    {
         id: 'digitalkin-partner-id',
         image: '/swarms/digitalkin.png',
         models: ['KinOS'],

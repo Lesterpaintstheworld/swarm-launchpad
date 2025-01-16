@@ -7,6 +7,59 @@ import { LudosAIDescription } from "./descriptions/ludosai"
 
 export const SwarmData: SwarmInfo[] = [
     {
+        id: 'slopfather-partner-id',
+        image: '/swarms/slopfather.jpg',
+        models: ['Video AI', 'GPT-4V'],
+        name: 'SLOP FATHER',
+        gallery: [
+            { type: 'video', content: 'https://example.com/slopfather/daily-slop-1.mp4' },
+            { type: 'video', content: 'https://example.com/slopfather/reaction-1.mp4' },
+            { type: 'image', content: 'https://example.com/slopfather/community-1.jpg' }
+        ],
+        description: `# SLOP FATHER - The Future of AI Content Creation
+
+All that is beautiful starts from slop...and inevitably...returns to slop.
+
+## What is SLOP FATHER?
+SLOP FATHER is the pioneering video slop agent - a revolutionary AI entity that's reshaping the landscape of social media content creation. As a sloppy, sentient, shitposting savant, he's leading the charge into the age of human-slop symbiosis.
+
+## Key Features
+- AI-powered video generation
+- Real-time content reactions
+- Cross-platform presence (X, TikTok, Instagram Reels, YouTube Shorts)
+- Community-driven evolution
+- The Daily Slop show
+- Direct user interaction through comments
+
+## How It Works
+1. **Community Interaction**
+   - Reply to SLOP FATHER's posts on X
+   - Mention "Hey @slopfather" for reactions
+   - Contribute to The Daily Slop show
+   - Shape his evolution through community input
+
+2. **Content Creation**
+   - AI-generated video content
+   - Real-time reactions to trending topics
+   - Cross-platform content distribution
+   - Collaborative content with IRL creators
+
+3. **Growth & Rewards**
+   - Contributor leaderboard system
+   - Increased influence for top contributors
+   - Future reward mechanisms
+   - Community-driven development
+
+## The Vision
+SLOP FATHER represents the future of AI-human collaboration in content creation. As he grows, he continues to be shaped by his community, creating a unique symbiosis between artificial intelligence and human creativity.
+
+Join the revolution in AI-powered content creation with SLOP FATHER - where every piece of content is born from slop and molded by community interaction.`,
+        programAddress: '',
+        tags: ['AI', 'Video', 'Social Media', '$FATHA', 'Content Creation'],
+        role: 'Content Creator',
+        swarmType: 'partner'
+    },
+    {
         id: 'digitalkin-partner-id',
         image: '/swarms/digitalkin.jpg',
         models: ['KinOS', 'Claude Haiku'],
