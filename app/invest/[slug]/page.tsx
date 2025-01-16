@@ -24,7 +24,17 @@ export default function Swarm({ params }: { params: { slug: string } }) {
         return swarm.gallery.map((item: GalleryItem, index: number) => {
             let content;
             if (item.type === 'image') {
-                content = <Image src={item.content as string} alt={`${swarm.name} carousel item ${index}`} width={1048} height={600} className="w-full object-cover" />
+                content = <Image 
+                    src={item.content as string} 
+                    alt={`${swarm.name} carousel item ${index}`} 
+                    width={1048} 
+                    height={600} 
+                    className="w-full object-cover"
+                    onError={(e) => {
+                        const img = e.target as HTMLImageElement;
+                        img.src = '/default.png';
+                    }}
+                />
             } else if (item.type === 'video') {
                 content = <video autoPlay={index === 1} controls muted={index === 1}><source src={item.content as string} type="video/mp4" className="h-full" /></video>
             } else {
