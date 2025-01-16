@@ -32,7 +32,7 @@ export default function Swarm({ params }: { params: { slug: string } }) {
                     className="w-full object-cover"
                     onError={(e) => {
                         const img = e.target as HTMLImageElement;
-                        img.src = '/default.png';
+                        img.src = `${window.location.origin}/default.png`;
                     }}
                 />
             } else if (item.type === 'video') {

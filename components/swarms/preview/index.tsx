@@ -29,7 +29,7 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
                         className="w-full aspect-square object-fill rounded-sm"
                         onError={(e) => {
                             const img = e.target as HTMLImageElement;
-                            img.src = '/default.png';
+                            img.src = `${window.location.origin}/default.png`;
                         }}
                     />
                     <div className="flex flex-col gap-3 px-[2px] mt-2 mb-1 flex-grow">
