@@ -28,7 +28,7 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
                         className="w-full aspect-square object-fill rounded-sm"
                     />
                     <div className="flex flex-col gap-2 px-[2px] mt-2 mb-1">
-                        <div className="flex flex-row gap-2 overflow-x-scroll mt-2">
+                        <div className="flex flex-row flex-wrap gap-2">
                             {swarm.tags.map((tag, index) => (
                                 <Tag className="text-xs" key={index}>
                                     {tag}
