@@ -3,7 +3,7 @@
 import { SwarmGalleryItem as GalleryItem } from "@/components/swarms/swarm.types";
 import { InfiniteCarousel, Slides } from "@/components/ui/infiniteCarousel";
 import Image from "next/image";
-import { useState } from "react";
+import { useCallback } from "react";
 
 interface SwarmGalleryProps {
     gallery: GalleryItem[];
@@ -12,20 +12,22 @@ interface SwarmGalleryProps {
 }
 
 export const SwarmGallery = ({ gallery, swarmName, className }: SwarmGalleryProps) => {
-    const prepareSlides = () => {
+    const handleImageError = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
+        const img = e.target as HTMLImageElement;
+        img.src = '/default.png';
+    }, []);
+
+    const prepareSlides = useCallback(() => {
         return gallery.map((item: GalleryItem, index: number) => {
             let content;
             if (item.type === 'image') {
-                const [imgSrc, setImgSrc] = useState(item.content as string);
                 content = <Image 
-                    src={imgSrc}
+                    src={item.content as string}
                     alt={`${swarmName} carousel item ${index}`} 
                     width={1048} 
                     height={600} 
                     className="w-full object-cover"
-                    onError={() => {
-                        setImgSrc('/default.png')
-                    }}
+                    onError={handleImageError}
                 />
             } else if (item.type === 'video') {
                 content = <video autoPlay={index === 1} controls muted={index === 1}>
@@ -36,7 +38,7 @@ export const SwarmGallery = ({ gallery, swarmName, className }: SwarmGalleryProp
             }
             return { id: index, content };
         }) as Slides;
-    }
+    }, [gallery, swarmName, handleImageError]);
 
     return (
         <InfiniteCarousel
