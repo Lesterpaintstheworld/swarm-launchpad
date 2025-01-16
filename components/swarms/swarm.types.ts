@@ -26,4 +26,5 @@ export interface SwarmInfo {
     tags: string[];
     role: string;
     programAddress: string;
+    isInception?: boolean;
 }
