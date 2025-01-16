@@ -69,4 +69,14 @@ export const previews: SwarmPreviewData[] = [
         role: 'Trading Agent',
         isInception: true
     },
+    {
+        id: 'b2c3d4e5-f6g7-5b6c-9d0e-1f2g3h4i5j6k',
+        image: '/swarms/mental-health.jpg',
+        models: ['KinOS'],
+        name: 'Mental Health Swarm',
+        description: 'Coordinated AI swarm optimizing mental health practice operations and patient care',
+        tags: ['AI', 'Healthcare', 'KinOS', 'Mental Health'],
+        role: 'Healthcare Assistant',
+        isInception: true
+    },
 ]
