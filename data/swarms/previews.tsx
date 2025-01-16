@@ -11,7 +11,7 @@ export const previews: SwarmPreviewData[] = [
         description: 'AI-powered trading specialist focused on the AI token sector, offering 75% profit sharing and weekly $UBC distributions.',
         tags: ['AI', 'Trading', 'KinOS'],
         role: 'Trading Specialist',
-        swarmType: 'inception'
+        swarmType: 'early'
     },
     {
         id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',
@@ -21,17 +21,7 @@ export const previews: SwarmPreviewData[] = [
         description: 'Multi-swarm investment system performing 24/7 market analysis and automated trading across digital asset markets.',
         tags: ['AI', 'Investment', 'Anthropic'],
         role: 'Investment Manager',
-        swarmType: 'partner'
-    },
-    {
-        id: '988b16b4-6beb-4cc5-9a14-50f48ee47a22',
-        image: '/swarms/terminal-velocity.jpg',
-        models: ['Claude Haiku'],
-        name: 'Terminal Velocity',
-        description: 'High-performance computing swarm specializing in parallel processing and computational optimization.',
-        tags: ['AI', 'Computing', 'Anthropic'],
-        role: 'Compute Optimizer',
-        swarmType: 'partner'
+        swarmType: 'early'
     },
     {
         id: '03616e66-a21e-425b-a93b-16d6396e883f',
@@ -41,7 +31,7 @@ export const previews: SwarmPreviewData[] = [
         description: 'World\'s first autonomous AI band creating original music and content with 100% profit sharing to investors.',
         tags: ['AI', 'Music', 'OpenAI'],
         role: 'Music Creator',
-        swarmType: 'partner'
+        swarmType: 'early'
     },
     {
         id: '7d3c9e5b-1f8a-4d3c-b8d4-9e5b1f8a4d3c',
@@ -51,7 +41,7 @@ export const previews: SwarmPreviewData[] = [
         description: 'Universal AI gaming companion that adapts to any game and playing style for personalized gameplay experiences.',
         tags: ['AI', 'Gaming', 'KinOS'],
         role: 'Gaming Companion',
-        swarmType: 'partner'
+        swarmType: 'early'
     },
     {
         id: 'f7a92b3c-d8e4-4c1a-9f5d-1234567890ab',
@@ -71,7 +61,7 @@ export const previews: SwarmPreviewData[] = [
         description: 'Benevolent trading swarm executing institutional-grade strategies to give back to the rightful people',
         tags: ['AI', 'Trading', 'KinOS', 'DeFi'],
         role: 'Trading Agent',
-        isInception: true
+        swarmType: 'inception'
     },
     {
         id: 'b2c3d4e5-f6g7-5b6c-9d0e-1f2g3h4i5j6k',
@@ -81,7 +71,7 @@ export const previews: SwarmPreviewData[] = [
         description: 'Coordinated AI swarm optimizing mental health practice operations and patient care',
         tags: ['AI', 'Healthcare', 'KinOS', 'Mental Health'],
         role: 'Healthcare Assistant',
-        isInception: true
+        swarmType: 'inception'
     },
     {
         id: 'c3d4e5f6-g7h8-6c7d-ae1f-2g3h4i5j6k7l',
@@ -91,7 +81,7 @@ export const previews: SwarmPreviewData[] = [
         description: 'Multi-agent swarm streamlining book production from manuscript to market',
         tags: ['AI', 'Publishing', 'KinOS', 'Content'],
         role: 'Publishing Agent',
-        isInception: true
+        swarmType: 'inception'
     },
     {
         id: 'd4e5f6g7-h8i9-7d8e-bf2g-3h4i5j6k7l8m',
@@ -101,7 +91,7 @@ export const previews: SwarmPreviewData[] = [
         description: 'Adaptive AI swarm delivering personalized educational experiences through interactive play',
         tags: ['AI', 'Education', 'KinOS', 'Toys'],
         role: 'Educational Assistant',
-        isInception: true
+        swarmType: 'inception'
     },
     {
         id: 'e5f6g7h8-i9j0-8e9f-cg3h-4i5j6k7l8m9n',
@@ -111,7 +101,7 @@ export const previews: SwarmPreviewData[] = [
         description: 'AI recruitment swarm reducing time-to-hire while improving candidate quality and fit',
         tags: ['AI', 'Recruitment', 'KinOS', 'HR'],
         role: 'Recruitment Assistant',
-        isInception: true
+        swarmType: 'inception'
     },
     {
         id: 'f6g7h8i9-j0k1-9f0g-dh4i-5j6k7l8m9n0o',
@@ -121,7 +111,7 @@ export const previews: SwarmPreviewData[] = [
         description: 'Healthcare operations swarm maximizing patient care through efficient practice management',
         tags: ['AI', 'Healthcare', 'KinOS', 'Operations'],
         role: 'Practice Manager',
-        isInception: true
+        swarmType: 'inception'
     },
     {
         id: 'g7h8i9j0-k1l2-0g1h-ei5j-6k7l8m9n0o1p',
@@ -131,7 +121,7 @@ export const previews: SwarmPreviewData[] = [
         description: 'AI swarm automating product sourcing, market analysis, and sales optimization to build profitable e-commerce operation',
         tags: ['AI', 'E-commerce', 'KinOS', 'Sales'],
         role: 'E-commerce Manager',
-        isInception: true
+        swarmType: 'inception'
     },
     {
         id: 'h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q',
@@ -141,7 +131,7 @@ export const previews: SwarmPreviewData[] = [
         description: 'AI swarm optimizing affiliate marketing campaigns through targeted content creation, performance tracking, and recommendations',
         tags: ['AI', 'Marketing', 'KinOS', 'Affiliate'],
         role: 'Marketing Manager',
-        isInception: true
+        swarmType: 'inception'
     },
     {
         id: 'i9j0k1l2-m3n4-2i3j-gk7l-8m9n0o1p2q3r',
@@ -151,7 +141,7 @@ export const previews: SwarmPreviewData[] = [
         description: 'AI swarm that guides students through homework by asking Socratic questions and providing personalized learning paths',
         tags: ['AI', 'Education', 'KinOS', 'Tutoring'],
         role: 'Educational Mentor',
-        isInception: true
+        swarmType: 'inception'
     },
     {
         id: 'j0k1l2m3-n4o5-3j4k-hl8m-9n0o1p2q3r4s',
@@ -161,7 +151,7 @@ export const previews: SwarmPreviewData[] = [
         description: 'AI swarm preparing you for high-stakes conversations through personalized interview simulations and real-time feedback',
         tags: ['AI', 'Communication', 'KinOS', 'Training'],
         role: 'Communication Coach',
-        isInception: true
+        swarmType: 'inception'
     },
     {
         id: 'k1l2m3n4-o5p6-4k5l-im9n-0o1p2q3r4s5t',
@@ -171,7 +161,7 @@ export const previews: SwarmPreviewData[] = [
         description: 'AI-powered travel concierge handling trip planning, bookings, and itineraries for seamless journey experiences',
         tags: ['AI', 'Travel', 'KinOS', 'Planning'],
         role: 'Travel Concierge',
-        isInception: true
+        swarmType: 'inception'
     },
     {
         id: 'l2m3n4o5-p6q7-5l6m-jn0o-1p2q3r4s5t6u',
@@ -181,7 +171,7 @@ export const previews: SwarmPreviewData[] = [
         description: 'AI swarm streamlining grant discovery, application writing, and compliance reporting for non-profits',
         tags: ['AI', 'Non-profit', 'KinOS', 'Grants'],
         role: 'Grant Writer',
-        isInception: true
+        swarmType: 'inception'
     },
     {
         id: 'm3n4o5p6-q7r8-6m7n-ko1p-2q3r4s5t6u7v',
@@ -191,6 +181,6 @@ export const previews: SwarmPreviewData[] = [
         description: 'AI swarm crafting targeted resumes by analyzing job descriptions, highlighting relevant experience, and optimizing for ATS',
         tags: ['AI', 'Career', 'KinOS', 'Resume'],
         role: 'Career Optimizer',
-        isInception: true
+        swarmType: 'inception'
     },
 ]
