@@ -1,26 +1,3 @@
-type SwarmModel = 'GPT-4o Mini' | 'Claude Haiku' | 'KinOS';
-
-interface SwarmPreviewData {
-    image: string;
-    name: string;
-    description: string; // Max length of 125 characters
-    models: SwarmModel[];
-    id: string; // UUID
-    tags: string[];
-    role?: string;
-    isInception?: boolean;
-}
-
-interface SwarmGalleryItem {
-    type: 'image' | 'video' | 'node';
-    content: string | React.ReactNode;
-}
-
-interface SwarmInfo extends SwarmPreviewData {
-    gallery: SwarmGalleryItem[];
-    programAddress: string;
-}
-
     SwarmInfo
 }
 >>>>>>> 3de30723ef371300718b8f18a973e088422f4843
