@@ -63,7 +63,7 @@ const SwarmsPreviewGrid = () => {
     }, [searchValue]);
 
     return (
-        <>
+        <TooltipProvider>
             <Search value={searchValue} onInputChange={setSearchValue} />
             <div className="flex flex-col gap-8 mt-4">
                 {/* Partner Swarms First */}
@@ -102,7 +102,7 @@ const SwarmsPreviewGrid = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </TooltipProvider>
     )
 }
 
