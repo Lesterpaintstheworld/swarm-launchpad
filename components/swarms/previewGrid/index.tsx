@@ -29,7 +29,7 @@ const SwarmsPreviewGrid = () => {
             <Search value={searchValue} onInputChange={setSearchValue} />
             <div className="flex flex-col gap-8 mt-4">
                 <div>
-                    <h3 className="text-xl font-semibold mb-4">Active Swarms</h3>
+                    <h3 className="text-xl font-semibold mb-4">🚀 Early Swarms</h3>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <AnimatePresence>
                             {filterPreviews().map((swarm: SwarmPreviewData, index: number) => (
