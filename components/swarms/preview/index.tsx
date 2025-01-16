@@ -40,7 +40,7 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
                         <p className="text-muted text-xs text-truncate line-clamp-4 min-h-16 mb-2">{swarm.description}</p>
                         <Button 
                             variant='outline' 
-                            className="mt-auto bg-blue-600 hover:bg-blue-700 text-white border-blue-700 hover:text-white"
+                            className="mt-auto bg-[#1e3a8a] hover:bg-[#172554] text-white border-[#172554] hover:text-white"
                         >
                             Invest
                         </Button>
