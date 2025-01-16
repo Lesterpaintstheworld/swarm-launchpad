@@ -30,14 +30,21 @@ const swarmTypeInfo = {
 const SwarmTypeHeader = ({ type, icon, title }: { type: SwarmType, icon: string, title: string }) => (
     <div className="flex items-center gap-2">
         <h3 className="text-xl font-semibold mb-4">{icon} {title}</h3>
-        <TooltipProvider>
+        <TooltipProvider delayDuration={0}>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <Button variant="ghost" size="icon" className="h-6 w-6 mb-4">
+                    <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className="h-6 w-6 mb-4 hover:bg-accent hover:text-accent-foreground"
+                    >
                         <InfoIcon className="h-4 w-4" />
                     </Button>
                 </TooltipTrigger>
-                <TooltipContent>
+                <TooltipContent 
+                    className="bg-gray-700/90 text-white p-3 rounded-md shadow-lg border border-gray-600"
+                    sideOffset={5}
+                >
                     <pre className="text-sm whitespace-pre-line">{swarmTypeInfo[type]}</pre>
                 </TooltipContent>
             </Tooltip>
