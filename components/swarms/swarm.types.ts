@@ -21,4 +21,9 @@ export interface SwarmInfo {
     name: string;
     description: string;
     gallery: SwarmGalleryItem[];
+    image: string;
+    models: string[];
+    tags: string[];
+    role: string;
+    programAddress: string;
 }
