@@ -5,12 +5,15 @@ import { Tag } from "@/components/ui/tag";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { SwarmPreviewData } from "../swarm.types";
+import { useState } from 'react';
 
 interface SwarmPreviewCardProps {
     swarm: SwarmPreviewData;
 }
 
 const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
+    const [imgSrc, setImgSrc] = useState(swarm.image);
+
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -22,14 +25,13 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
             <Link href={`/${swarm.swarmType}/${swarm.id}`} className="block transition-all duration-200 h-full">
                 <Card className="p-2 md:max-w-[300px] w-full h-full flex flex-col cursor-pointer hover:shadow-lg hover:border-foreground/30 transition-colors">
                     <Image
-                        src={swarm.image}
+                        src={imgSrc}
                         alt={`${swarm.name} image`}
                         width={300}
                         height={300}
                         className="w-full aspect-square object-fill rounded-sm"
-                        onError={(e) => {
-                            const img = e.target as HTMLImageElement;
-                            img.src = `${window.location.origin}/default.png`;
+                        onError={() => {
+                            setImgSrc('/default.png')
                         }}
                     />
                     <div className="flex flex-col gap-3 px-[2px] mt-2 mb-1 flex-grow">

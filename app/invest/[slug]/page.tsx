@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { SwarmData } from "@/data/swarms/info";
 import { redirect } from "next/navigation";
@@ -24,15 +24,15 @@ export default function Swarm({ params }: { params: { slug: string } }) {
         return swarm.gallery.map((item: GalleryItem, index: number) => {
             let content;
             if (item.type === 'image') {
+                const [imgSrc, setImgSrc] = useState(item.content as string);
                 content = <Image 
-                    src={item.content as string} 
+                    src={imgSrc}
                     alt={`${swarm.name} carousel item ${index}`} 
                     width={1048} 
                     height={600} 
                     className="w-full object-cover"
-                    onError={(e) => {
-                        const img = e.target as HTMLImageElement;
-                        img.src = `${window.location.origin}/default.png`;
+                    onError={() => {
+                        setImgSrc('/default.png')
                     }}
                 />
             } else if (item.type === 'video') {
