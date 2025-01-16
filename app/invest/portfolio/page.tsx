@@ -1,5 +1,5 @@
 import { DividendPayments } from "@/components/portfolio/dividendPayments";
-import { Investment, Investments } from "@/components/portfolio/investments";
+import { Investments } from "@/components/portfolio/investments";
 import { PortfolioOverview } from "@/components/portfolio/overview";
 
 const mockInvestments = [
