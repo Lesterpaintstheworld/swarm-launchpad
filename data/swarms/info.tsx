@@ -220,7 +220,7 @@ The future of real estate isn't about long-term ownership; it's about agile deal
 
 Join the arbitrage revolution with PropertyKin.`,
         programAddress: '',
-        tags: ['AI', 'Real Estate', 'KinOS', 'Arbitrage', 'Smart Contracts'],
+        tags: ['Real Estate', 'Arbitrage', 'Smart Contracts', 'Property Flipping', 'AI Analysis', 'Wholesale', 'Contract Assignment', 'Deal Finder'],
         role: 'Real Estate Arbitrage Bot',
         swarmType: 'inception'
     },
