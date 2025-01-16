@@ -12,9 +12,9 @@ export const SwarmData: SwarmInfo[] = [
         models: ['Video AI', 'GPT-4V'],
         name: 'SLOP FATHER',
         gallery: [
-            { type: 'video', content: 'https://example.com/slopfather/daily-slop-1.mp4' },
-            { type: 'video', content: 'https://example.com/slopfather/reaction-1.mp4' },
-            { type: 'image', content: 'https://example.com/slopfather/community-1.jpg' }
+            { type: 'image', content: '/swarms/slopfather.png' },
+            { type: 'image', content: '/default.png' },
+            { type: 'image', content: '/default.png' }
         ],
         description: `# SLOP FATHER - The Future of AI Content Creation
 
@@ -65,9 +65,9 @@ Join the revolution in AI-powered content creation with SLOP FATHER - where ever
         models: ['KinOS', 'Claude Haiku'],
         name: 'DigitalKin',
         gallery: [
-            { type: 'image', content: 'https://digitalkin.ai/gallery/1.jpg' },
-            { type: 'image', content: 'https://digitalkin.ai/gallery/2.jpg' },
-            { type: 'image', content: 'https://digitalkin.ai/gallery/3.jpg' }
+            { type: 'image', content: '/swarms/digitalkin.png' },
+            { type: 'image', content: '/default.png' },
+            { type: 'image', content: '/default.png' }
         ],
         description: `# DigitalKin - Enterprise AI Agents
 
@@ -100,10 +100,9 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         models: ['GPT-4o Mini', 'Claude Haiku'],
         name: 'Kin Kong',
         gallery: [
-            { type: 'image', content: 'https://picsum.photos/400/225' },
-            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
-            { type: 'image', content: 'https://picsum.photos/399/226' },
-            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
+            { type: 'image', content: '/swarms/kinkong.jpg' },
+            { type: 'image', content: '/default.png' },
+            { type: 'image', content: '/default.png' }
         ],
         description: KinKongDescription,
         programAddress: '',
@@ -117,10 +116,9 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         models: ['Claude Haiku'],
         name: 'Swarm Ventures',
         gallery: [
-            { type: 'image', content: 'https://picsum.photos/400/225' },
-            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
-            { type: 'image', content: 'https://picsum.photos/399/226' },
-            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
+            { type: 'image', content: '/swarms/swarm-ventures.jpg' },
+            { type: 'image', content: '/default.png' },
+            { type: 'image', content: '/default.png' }
         ],
         description: SwarmVenturesDescription,
         programAddress: '',
@@ -134,10 +132,9 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         models: ['Claude Haiku'],
         name: 'Terminal Velocity',
         gallery: [
-            { type: 'image', content: 'https://picsum.photos/400/225' },
-            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
-            { type: 'image', content: 'https://picsum.photos/399/226' },
-            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
+            { type: 'image', content: '/swarms/terminal-velocity.jpg' },
+            { type: 'image', content: '/default.png' },
+            { type: 'image', content: '/default.png' }
         ],
         description: TerminalVelocityDescription,
         programAddress: '',
@@ -152,10 +149,9 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         name: 'Synthetic Souls',
         description: SyntheticSoulsDescription,
         gallery: [
-            { type: 'image', content: 'https://picsum.photos/400/225' },
-            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
-            { type: 'image', content: 'https://picsum.photos/399/226' },
-            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
+            { type: 'image', content: '/swarms/synthetic-souls.jpg' },
+            { type: 'image', content: '/default.png' },
+            { type: 'image', content: '/default.png' }
         ],
         programAddress: '',
         tags: ['AI', 'OpenAI'],
@@ -168,10 +164,9 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         models: ['GPT-4o Mini', 'KinOS'],
         name: 'LudosAI',
         gallery: [
-            { type: 'image', content: 'https://picsum.photos/400/225' },
-            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
-            { type: 'image', content: 'https://picsum.photos/399/226' },
-            { type: 'video', content: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
+            { type: 'image', content: '/swarms/ludosai.jpg' },
+            { type: 'image', content: '/default.png' },
+            { type: 'image', content: '/default.png' }
         ],
         description: LudosAIDescription,
         programAddress: '',
@@ -185,7 +180,9 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         models: ['KinOS', 'GPT-4V'],
         name: 'PropertyKin',
         gallery: [
-            { type: 'image', content: '/swarms/property.jpg' }
+            { type: 'image', content: '/swarms/property.png' },
+            { type: 'image', content: '/default.png' },
+            { type: 'image', content: '/default.png' }
         ],
         description: `# PropertyKin - The Future of Real Estate Arbitrage
 
