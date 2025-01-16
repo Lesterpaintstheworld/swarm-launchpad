@@ -8,7 +8,7 @@ import { LudosAIDescription } from "./descriptions/ludosai"
 export const SwarmData: SwarmInfo[] = [
     {
         id: 'slopfather-partner-id',
-        image: '/swarms/slopfather.jpg',
+        image: '/swarms/slopfather.png',
         models: ['Video AI', 'GPT-4V'],
         name: 'SLOP FATHER',
         gallery: [
@@ -61,7 +61,7 @@ Join the revolution in AI-powered content creation with SLOP FATHER - where ever
     },
     {
         id: 'digitalkin-partner-id',
-        image: '/swarms/digitalkin.jpg',
+        image: '/swarms/digitalkin.png',
         models: ['KinOS', 'Claude Haiku'],
         name: 'DigitalKin',
         gallery: [
@@ -181,7 +181,7 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
     },
     {
         id: 'propertykin-inception-id',
-        image: '/swarms/property.jpg',
+        image: '/swarms/property.png',
         models: ['KinOS', 'GPT-4V'],
         name: 'PropertyKin',
         gallery: [

@@ -95,7 +95,7 @@ export const previews: SwarmPreviewData[] = [
     },
     {
         id: 'c3d4e5f6-g7h8-6c7d-ae1f-2g3h4i5j6k7l',
-        image: '/swarms/publishing.jpg',
+        image: '/swarms/book.png',
         models: ['KinOS'],
         name: 'Book & Content Publishing Swarm',
         description: 'Multi-agent swarm streamlining book production from manuscript to market',
@@ -105,7 +105,7 @@ export const previews: SwarmPreviewData[] = [
     },
     {
         id: 'd4e5f6g7-h8i9-7d8e-bf2g-3h4i5j6k7l8m',
-        image: '/swarms/educative.jpg',
+        image: '/swarms/education.png',
         models: ['KinOS'],
         name: 'Agent-Enabled Educational Toy',
         description: 'Adaptive AI swarm delivering personalized educational experiences through interactive play',
@@ -115,7 +115,7 @@ export const previews: SwarmPreviewData[] = [
     },
     {
         id: 'e5f6g7h8-i9j0-8e9f-cg3h-4i5j6k7l8m9n',
-        image: '/swarms/talent.jpg',
+        image: '/swarms/talentaid.jpg',
         models: ['KinOS'],
         name: 'Talent Swarm',
         description: 'AI recruitment swarm reducing time-to-hire while improving candidate quality and fit',
@@ -145,7 +145,7 @@ export const previews: SwarmPreviewData[] = [
     },
     {
         id: 'h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q',
-        image: '/swarms/affiliate.jpg',
+        image: '/swarms/affiliate.jpeg',
         models: ['KinOS'],
         name: 'Affiliate Marketing Swarm',
         description: 'AI swarm optimizing affiliate marketing campaigns through targeted content creation, performance tracking, and recommendations',
@@ -205,7 +205,7 @@ export const previews: SwarmPreviewData[] = [
     },
     {
         id: 'propertykin-inception-id',
-        image: '/swarms/property.jpg',
+        image: '/swarms/property.png',
         models: ['KinOS', 'GPT-4V'],
         name: 'PropertyKin',
         description: 'AI-powered real estate arbitrage bot scanning multiple listing sources to identify undervalued properties, analyze renovation costs, and match opportunities with verified investors through smart contract escrow.',
