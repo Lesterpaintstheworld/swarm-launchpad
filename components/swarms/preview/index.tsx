@@ -29,13 +29,11 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
                     />
                     <div className="flex flex-col gap-2 px-[2px] mt-2 mb-1">
                         <div className="flex flex-row gap-2 overflow-x-scroll mt-2">
-                            {swarm.models.map((model, index) => {
-                                return (
-                                    <Tag className="text-xs" key={index}>
-                                        {model}
-                                    </Tag>
-                                )
-                            })}
+                            {swarm.tags.map((tag, index) => (
+                                <Tag className="text-xs" key={index}>
+                                    {tag}
+                                </Tag>
+                            ))}
                         </div>
                         <p>{swarm.name}</p>
                         <p className="text-muted text-xs text-truncate line-clamp-4 min-h-16">{swarm.description}</p>
