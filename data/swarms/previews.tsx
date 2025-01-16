@@ -169,4 +169,14 @@ export const previews: SwarmPreviewData[] = [
         role: 'Travel Concierge',
         isInception: true
     },
+    {
+        id: 'l2m3n4o5-p6q7-5l6m-jn0o-1p2q3r4s5t6u',
+        image: '/swarms/grant.jpg',
+        models: ['KinOS'],
+        name: 'Grant Writing Swarm',
+        description: 'AI swarm streamlining grant discovery, application writing, and compliance reporting for non-profits',
+        tags: ['AI', 'Non-profit', 'KinOS', 'Grants'],
+        role: 'Grant Writer',
+        isInception: true
+    },
 ]
