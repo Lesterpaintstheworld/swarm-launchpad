@@ -49,4 +49,14 @@ export const previews: SwarmPreviewData[] = [
         tags: ['AI', 'Gaming', 'KinOS'],
         role: 'Gaming Companion'
     },
+    {
+        id: 'f7a92b3c-d8e4-4c1a-9f5d-1234567890ab',
+        image: '/swarms/screenplay.jpg',
+        models: ['KinOS'],
+        name: 'Screenplay & Production Swarm',
+        description: 'AI agent swarm that transforms your story idea into a professional-grade screenplay and production plan',
+        tags: ['AI', 'Entertainment', 'KinOS', 'Screenplay'],
+        role: 'Screenwriter & Producer',
+        isInception: true
+    },
 ]
