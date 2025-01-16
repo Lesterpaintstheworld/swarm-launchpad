@@ -1,16 +1,14 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { SwarmData } from "@/data/swarms/info";
 import { redirect } from "next/navigation";
-import { SwarmGalleryItem as GalleryItem } from "@/components/swarms/swarm.types";
 import { Markdown } from "@/components/ui/markdown";
 import { Expandable } from "@/components/ui/expandable";
-import { InfiniteCarousel, Slides } from "@/components/ui/infiniteCarousel";
 import { SwarmInvestCard } from "@/components/swarms/invest";
 import { ManagePortfolioCard } from "@/components/cards/managePortfolio";
 import { SwarmRecentMarketListings } from "@/components/market/recentListings";
 import { supportedTokens } from "@/data/tokens/supported";
-import Image from "next/image";
+import { SwarmGallery } from "@/components/swarms/gallery";
 
 export default function Swarm({ params }: { params: { slug: string } }) {
 
@@ -20,29 +18,6 @@ export default function Swarm({ params }: { params: { slug: string } }) {
         redirect('/404');
     }
 
-    const prepareSlides = useCallback(() => {
-        return swarm.gallery.map((item: GalleryItem, index: number) => {
-            let content;
-            if (item.type === 'image') {
-                const [imgSrc, setImgSrc] = useState(item.content as string);
-                content = <Image 
-                    src={imgSrc}
-                    alt={`${swarm.name} carousel item ${index}`} 
-                    width={1048} 
-                    height={600} 
-                    className="w-full object-cover"
-                    onError={() => {
-                        setImgSrc('/default.png')
-                    }}
-                />
-            } else if (item.type === 'video') {
-                content = <video autoPlay={index === 1} controls muted={index === 1}><source src={item.content as string} type="video/mp4" className="h-full" /></video>
-            } else {
-                content = item.content;
-            }
-            return { id: index, content };
-        }) as Slides;
-    }, [swarm])
 
     return (
         <main className="container mb-6 md:mb-24 view">
@@ -54,9 +29,10 @@ export default function Swarm({ params }: { params: { slug: string } }) {
                 ]}
             />
             <h1 className="font-bold mt-2">{swarm.name}</h1>
-            <InfiniteCarousel
+            <SwarmGallery
                 className="mt-16"
-                slides={prepareSlides()}
+                gallery={swarm.gallery}
+                swarmName={swarm.name}
             />
             <SwarmInvestCard
                 className="mt-16 mb-12"
