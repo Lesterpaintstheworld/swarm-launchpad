@@ -59,4 +59,14 @@ export const previews: SwarmPreviewData[] = [
         role: 'Screenwriter & Producer',
         isInception: true
     },
+    {
+        id: 'a1b2c3d4-e5f6-4a5b-8c7d-9e8f7a6b5c4d',
+        image: '/swarms/robinhood.jpg',
+        models: ['KinOS'],
+        name: 'Robinhood Agent',
+        description: 'Benevolent trading swarm executing institutional-grade strategies to give back to the rightful people',
+        tags: ['AI', 'Trading', 'KinOS', 'DeFi'],
+        role: 'Trading Agent',
+        isInception: true
+    },
 ]
