@@ -20,7 +20,8 @@ export const previews: SwarmPreviewData[] = [
         name: 'Swarm Ventures',
         description: 'Multi-swarm investment system performing 24/7 market analysis and automated trading across digital asset markets.',
         tags: ['AI', 'Investment', 'Anthropic'],
-        role: 'Investment Manager'
+        role: 'Investment Manager',
+        swarmType: 'partner'
     },
     {
         id: '988b16b4-6beb-4cc5-9a14-50f48ee47a22',
@@ -29,7 +30,8 @@ export const previews: SwarmPreviewData[] = [
         name: 'Terminal Velocity',
         description: 'High-performance computing swarm specializing in parallel processing and computational optimization.',
         tags: ['AI', 'Computing', 'Anthropic'],
-        role: 'Compute Optimizer'
+        role: 'Compute Optimizer',
+        swarmType: 'partner'
     },
     {
         id: '03616e66-a21e-425b-a93b-16d6396e883f',
@@ -38,7 +40,8 @@ export const previews: SwarmPreviewData[] = [
         name: 'Synthetic Souls',
         description: 'World\'s first autonomous AI band creating original music and content with 100% profit sharing to investors.',
         tags: ['AI', 'Music', 'OpenAI'],
-        role: 'Music Creator'
+        role: 'Music Creator',
+        swarmType: 'partner'
     },
     {
         id: '7d3c9e5b-1f8a-4d3c-b8d4-9e5b1f8a4d3c',
@@ -47,7 +50,8 @@ export const previews: SwarmPreviewData[] = [
         name: 'LudosAI',
         description: 'Universal AI gaming companion that adapts to any game and playing style for personalized gameplay experiences.',
         tags: ['AI', 'Gaming', 'KinOS'],
-        role: 'Gaming Companion'
+        role: 'Gaming Companion',
+        swarmType: 'partner'
     },
     {
         id: 'f7a92b3c-d8e4-4c1a-9f5d-1234567890ab',

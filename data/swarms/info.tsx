@@ -20,7 +20,8 @@ export const SwarmData: SwarmInfo[] = [
         description: KinKongDescription,
         programAddress: '',
         tags: ['AI', 'OpenAI'],
-        role: 'Lorem ipsum'
+        role: 'Lorem ipsum',
+        swarmType: 'partner'
     },
     {
         id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',
@@ -36,7 +37,8 @@ export const SwarmData: SwarmInfo[] = [
         description: SwarmVenturesDescription,
         programAddress: '',
         tags: ['AI', 'OpenAI'],
-        role: 'Lorem ipsum'
+        role: 'Lorem ipsum',
+        swarmType: 'partner'
     },
     {
         id: '988b16b4-6beb-4cc5-9a14-50f48ee47a22',
@@ -52,7 +54,8 @@ export const SwarmData: SwarmInfo[] = [
         description: TerminalVelocityDescription,
         programAddress: '',
         tags: ['AI', 'OpenAI'],
-        role: 'Lorem ipsum'
+        role: 'Lorem ipsum',
+        swarmType: 'partner'
     },
     {
         id: '03616e66-a21e-425b-a93b-16d6396e883f',
@@ -84,6 +87,7 @@ export const SwarmData: SwarmInfo[] = [
         description: LudosAIDescription,
         programAddress: '',
         tags: ['AI', 'Gaming', 'KinOS'],
-        role: 'Gaming Companion'
+        role: 'Gaming Companion',
+        swarmType: 'partner'
     },
 ]
