@@ -10,7 +10,8 @@ export const previews: SwarmPreviewData[] = [
         name: 'Kin Kong',
         description: 'AI-powered trading specialist focused on the AI token sector, offering 75% profit sharing and weekly $UBC distributions.',
         tags: ['AI', 'Trading', 'KinOS'],
-        role: 'Trading Specialist'
+        role: 'Trading Specialist',
+        isInception: true
     },
     {
         id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',

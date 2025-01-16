@@ -11,27 +11,44 @@ const SwarmsPreviewGrid = () => {
 
     const [searchValue, setSearchValue] = useState<string>('');
 
-    const filteredPreviews = useCallback(() => {
-        return previews.filter(({ name, description, models, tags, role }) =>
-            name.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
-            description.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
-            models.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase() as SwarmModel) ||
-            tags.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
-            role?.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())
-        );
-    }, [searchValue])
+    const filterPreviews = useCallback((isInception?: boolean) => {
+        return previews.filter(swarm => {
+            const matchesSearch = 
+                swarm.name.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
+                swarm.description.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
+                swarm.models.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase() as SwarmModel) ||
+                swarm.tags.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
+                swarm.role?.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase());
+            
+            return matchesSearch && (isInception ? swarm.isInception : !swarm.isInception);
+        });
+    }, [searchValue]);
 
     return (
         <>
             <Search value={searchValue} onInputChange={setSearchValue} />
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-                <AnimatePresence>
-                    {filteredPreviews().map((swarm: SwarmPreviewData, index: number) => {
-                        return (
-                            <SwarmPreviewCard swarm={swarm} key={index} />
-                        )
-                    })}
-                </AnimatePresence>
+            <div className="flex flex-col gap-8 mt-4">
+                <div>
+                    <h3 className="text-xl font-semibold mb-4">Active Swarms</h3>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <AnimatePresence>
+                            {filterPreviews().map((swarm: SwarmPreviewData, index: number) => (
+                                <SwarmPreviewCard swarm={swarm} key={index} />
+                            ))}
+                        </AnimatePresence>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 className="text-xl font-semibold mb-4">🌱 Inception Swarms</h3>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <AnimatePresence>
+                            {filterPreviews(true).map((swarm: SwarmPreviewData, index: number) => (
+                                <SwarmPreviewCard swarm={swarm} key={index} />
+                            ))}
+                        </AnimatePresence>
+                    </div>
+                </div>
             </div>
         </>
     )

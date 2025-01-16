@@ -8,6 +8,7 @@ interface SwarmPreviewData {
     id: string; // UUID
     tags: string[];
     role?: string;
+    isInception?: boolean;
 }
 
 interface SwarmGalleryItem {
