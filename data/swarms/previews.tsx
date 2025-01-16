@@ -119,4 +119,14 @@ export const previews: SwarmPreviewData[] = [
         role: 'Practice Manager',
         isInception: true
     },
+    {
+        id: 'g7h8i9j0-k1l2-0g1h-ei5j-6k7l8m9n0o1p',
+        image: '/swarms/commercenest.jpg',
+        models: ['KinOS'],
+        name: 'CommerceNest',
+        description: 'AI swarm automating product sourcing, market analysis, and sales optimization to build profitable e-commerce operation',
+        tags: ['AI', 'E-commerce', 'KinOS', 'Sales'],
+        role: 'E-commerce Manager',
+        isInception: true
+    },
 ]
