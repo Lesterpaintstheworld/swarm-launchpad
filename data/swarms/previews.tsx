@@ -139,4 +139,14 @@ export const previews: SwarmPreviewData[] = [
         role: 'Marketing Manager',
         isInception: true
     },
+    {
+        id: 'i9j0k1l2-m3n4-2i3j-gk7l-8m9n0o1p2q3r',
+        image: '/swarms/mentor.jpg',
+        models: ['KinOS'],
+        name: 'Mentor Swarm',
+        description: 'AI swarm that guides students through homework by asking Socratic questions and providing personalized learning paths',
+        tags: ['AI', 'Education', 'KinOS', 'Tutoring'],
+        role: 'Educational Mentor',
+        isInception: true
+    },
 ]
