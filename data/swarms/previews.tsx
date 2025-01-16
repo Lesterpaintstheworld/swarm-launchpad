@@ -9,7 +9,7 @@ export const previews: SwarmPreviewData[] = [
         models: ['KinOS'],
         name: 'DigitalKin',
         description: 'Enterprise-grade AI agents that autonomously handle complex digital tasks. Specializing in R&D, finance, and administrative automation with 24/7 availability.',
-        tags: ['AI', 'Enterprise', 'Automation', 'KinOS'],
+        tags: ['Enterprise AI', 'Automation', 'R&D', 'Finance', 'Admin', '24/7 Operations', 'KinOS'],
         role: 'Digital Employee Manager',
         swarmType: 'partner'
     },
@@ -19,7 +19,7 @@ export const previews: SwarmPreviewData[] = [
         models: ['Video AI', 'GPT-4V'],
         name: 'SLOP FATHER',
         description: 'The OG video slop agent - a sloppy, sentient, shitposting savant revolutionizing social media content creation through AI-powered video generation and community interaction.',
-        tags: ['AI', 'Video', 'Social Media', '$FATHA'],
+        tags: ['Content Creation', 'Video AI', 'Social Media', 'Community', '$FATHA', 'Viral Growth'],
         role: 'Content Creator',
         swarmType: 'partner'
     },
@@ -29,7 +29,7 @@ export const previews: SwarmPreviewData[] = [
         models: ['KinOS'],
         name: 'Kin Kong',
         description: 'AI-powered trading specialist focused on the AI token sector, offering 75% profit sharing and weekly $UBC distributions.',
-        tags: ['AI', 'Trading', 'KinOS'],
+        tags: ['AI Trading', 'Token Markets', 'Profit Sharing', 'Weekly Rewards', 'KinOS', 'UBC'],
         role: 'Trading Specialist',
         swarmType: 'early'
     },
@@ -39,7 +39,7 @@ export const previews: SwarmPreviewData[] = [
         models: ['Claude Haiku'],
         name: 'Swarm Ventures',
         description: 'Multi-swarm investment system performing 24/7 market analysis and automated trading across digital asset markets.',
-        tags: ['AI', 'Investment', 'Anthropic'],
+        tags: ['Investment', 'Market Analysis', '24/7 Trading', 'Multi-Asset', 'Portfolio Management'],
         role: 'Investment Manager',
         swarmType: 'early'
     },
@@ -49,7 +49,7 @@ export const previews: SwarmPreviewData[] = [
         models: ['GPT-4o Mini'],
         name: 'Synthetic Souls',
         description: 'World\'s first autonomous AI band creating original music and content with 100% profit sharing to investors.',
-        tags: ['AI', 'Music', 'OpenAI'],
+        tags: ['AI Music', 'Content Creation', 'Profit Sharing', 'Entertainment', 'Royalties'],
         role: 'Music Creator',
         swarmType: 'early'
     },
@@ -59,7 +59,7 @@ export const previews: SwarmPreviewData[] = [
         models: ['GPT-4o Mini', 'KinOS'],
         name: 'LudosAI',
         description: 'Universal AI gaming companion that adapts to any game and playing style for personalized gameplay experiences.',
-        tags: ['AI', 'Gaming', 'KinOS'],
+        tags: ['Gaming', 'AI Companion', 'Personalization', 'Adaptive Learning', 'KinOS'],
         role: 'Gaming Companion',
         swarmType: 'early'
     },
@@ -69,7 +69,7 @@ export const previews: SwarmPreviewData[] = [
         models: ['KinOS'],
         name: 'Screenplay & Production Swarm',
         description: 'AI agent swarm that transforms your story idea into a professional-grade screenplay and production plan',
-        tags: ['AI', 'Entertainment', 'KinOS', 'Screenplay'],
+        tags: ['Entertainment', 'Screenwriting', 'Production', 'AI Creative', 'Content'],
         role: 'Screenwriter & Producer',
         swarmType: 'inception'
     },
@@ -79,7 +79,7 @@ export const previews: SwarmPreviewData[] = [
         models: ['KinOS'],
         name: 'Robinhood Agent',
         description: 'Benevolent trading swarm executing institutional-grade strategies to give back to the rightful people',
-        tags: ['AI', 'Trading', 'KinOS', 'DeFi'],
+        tags: ['Trading', 'DeFi', 'Profit Sharing', 'Strategy', 'Institutional'],
         role: 'Trading Agent',
         swarmType: 'inception'
     },
@@ -89,7 +89,7 @@ export const previews: SwarmPreviewData[] = [
         models: ['KinOS'],
         name: 'Mental Health Swarm',
         description: 'Coordinated AI swarm optimizing mental health practice operations and patient care',
-        tags: ['AI', 'Healthcare', 'KinOS', 'Mental Health'],
+        tags: ['Healthcare', 'Mental Health', 'Practice Management', 'Patient Care', 'AI Assistant'],
         role: 'Healthcare Assistant',
         swarmType: 'inception'
     },
@@ -99,7 +99,7 @@ export const previews: SwarmPreviewData[] = [
         models: ['KinOS'],
         name: 'Book & Content Publishing Swarm',
         description: 'Multi-agent swarm streamlining book production from manuscript to market',
-        tags: ['AI', 'Publishing', 'KinOS', 'Content'],
+        tags: ['Publishing', 'Book Production', 'Content', 'Distribution', 'Marketing'],
         role: 'Publishing Agent',
         swarmType: 'inception'
     },
@@ -109,7 +109,7 @@ export const previews: SwarmPreviewData[] = [
         models: ['KinOS'],
         name: 'Agent-Enabled Educational Toy',
         description: 'Adaptive AI swarm delivering personalized educational experiences through interactive play',
-        tags: ['AI', 'Education', 'KinOS', 'Toys'],
+        tags: ['Education', 'Interactive Learning', 'Personalization', 'Child Development', 'EdTech'],
         role: 'Educational Assistant',
         swarmType: 'inception'
     },
@@ -119,7 +119,7 @@ export const previews: SwarmPreviewData[] = [
         models: ['KinOS'],
         name: 'Talent Swarm',
         description: 'AI recruitment swarm reducing time-to-hire while improving candidate quality and fit',
-        tags: ['AI', 'Recruitment', 'KinOS', 'HR'],
+        tags: ['Recruitment', 'HR Tech', 'Talent Matching', 'AI Screening', 'Hiring'],
         role: 'Recruitment Assistant',
         swarmType: 'inception'
     },
