@@ -17,9 +17,10 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.05 }}
+            className="h-full"
         >
-            <Link href={`/${swarm.swarmType}/${swarm.id}`} className="block transition-all duration-200">
-                <Card className="p-2 md:max-w-[300px] w-full cursor-pointer hover:shadow-lg hover:border-foreground/30 transition-colors">
+            <Link href={`/${swarm.swarmType}/${swarm.id}`} className="block transition-all duration-200 h-full">
+                <Card className="p-2 md:max-w-[300px] w-full h-full flex flex-col cursor-pointer hover:shadow-lg hover:border-foreground/30 transition-colors">
                     <Image
                         src={swarm.image}
                         alt={`${swarm.name} image`}
@@ -27,7 +28,7 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
                         height={300}
                         className="w-full aspect-square object-fill rounded-sm"
                     />
-                    <div className="flex flex-col gap-2 px-[2px] mt-2 mb-1">
+                    <div className="flex flex-col gap-2 px-[2px] mt-2 mb-1 flex-grow">
                         <div className="flex flex-row flex-wrap gap-1.5">
                             {swarm.tags.map((tag, index) => (
                                 <Tag className="text-[10px] font-normal px-2 py-0.5" key={index}>
@@ -37,7 +38,7 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
                         </div>
                         <p>{swarm.name}</p>
                         <p className="text-muted text-xs text-truncate line-clamp-4 min-h-16">{swarm.description}</p>
-                        <Button variant='success' className="mt-2">
+                        <Button variant='success' className="mt-auto">
                             Invest
                         </Button>
                     </div>
