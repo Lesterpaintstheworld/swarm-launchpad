@@ -11,7 +11,7 @@ export const previews: SwarmPreviewData[] = [
         description: 'AI-powered trading specialist focused on the AI token sector, offering 75% profit sharing and weekly $UBC distributions.',
         tags: ['AI', 'Trading', 'KinOS'],
         role: 'Trading Specialist',
-        isInception: true
+        swarmType: 'inception'
     },
     {
         id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',
@@ -57,7 +57,7 @@ export const previews: SwarmPreviewData[] = [
         description: 'AI agent swarm that transforms your story idea into a professional-grade screenplay and production plan',
         tags: ['AI', 'Entertainment', 'KinOS', 'Screenplay'],
         role: 'Screenwriter & Producer',
-        isInception: true
+        swarmType: 'inception'
     },
     {
         id: 'a1b2c3d4-e5f6-4a5b-8c7d-9e8f7a6b5c4d',

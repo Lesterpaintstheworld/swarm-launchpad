@@ -11,7 +11,7 @@ import Image from "next/image";
 export default function InceptionSwarm({ params }: { params: { slug: string } }) {
     const swarm = useCallback(() => SwarmData.find((swarm) => swarm.id === params.slug), [params.slug])() || undefined;
 
-    if (!swarm || !swarm.isInception) {
+    if (!swarm || swarm.swarmType !== 'inception') {
         redirect('/404');
     }
 

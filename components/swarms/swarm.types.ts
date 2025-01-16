@@ -1,3 +1,5 @@
+export type SwarmType = 'inception' | 'early' | 'partner';
+
 export interface SwarmPreviewData {
     id: string;
     image: string;
@@ -6,7 +8,7 @@ export interface SwarmPreviewData {
     description: string;
     tags: string[];
     role: string;
-    isInception?: boolean;
+    swarmType: SwarmType;
 }
 
 export type SwarmModel = 'KinOS' | 'Claude Haiku' | 'GPT-4o Mini';
@@ -26,5 +28,5 @@ export interface SwarmInfo {
     tags: string[];
     role: string;
     programAddress: string;
-    isInception?: boolean;
+    swarmType: SwarmType;
 }
