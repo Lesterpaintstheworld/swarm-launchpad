@@ -99,4 +99,14 @@ export const previews: SwarmPreviewData[] = [
         role: 'Educational Assistant',
         isInception: true
     },
+    {
+        id: 'e5f6g7h8-i9j0-8e9f-cg3h-4i5j6k7l8m9n',
+        image: '/swarms/talent.jpg',
+        models: ['KinOS'],
+        name: 'Talent Swarm',
+        description: 'AI recruitment swarm reducing time-to-hire while improving candidate quality and fit',
+        tags: ['AI', 'Recruitment', 'KinOS', 'HR'],
+        role: 'Recruitment Assistant',
+        isInception: true
+    },
 ]
