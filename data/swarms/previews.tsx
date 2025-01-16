@@ -149,4 +149,14 @@ export const previews: SwarmPreviewData[] = [
         role: 'Educational Mentor',
         isInception: true
     },
+    {
+        id: 'j0k1l2m3-n4o5-3j4k-hl8m-9n0o1p2q3r4s',
+        image: '/swarms/speaker.jpg',
+        models: ['KinOS'],
+        name: 'Speaker Swarm',
+        description: 'AI swarm preparing you for high-stakes conversations through personalized interview simulations and real-time feedback',
+        tags: ['AI', 'Communication', 'KinOS', 'Training'],
+        role: 'Communication Coach',
+        isInception: true
+    },
 ]
