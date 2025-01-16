@@ -129,4 +129,14 @@ export const previews: SwarmPreviewData[] = [
         role: 'E-commerce Manager',
         isInception: true
     },
+    {
+        id: 'h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q',
+        image: '/swarms/affiliate.jpg',
+        models: ['KinOS'],
+        name: 'Affiliate Marketing Swarm',
+        description: 'AI swarm optimizing affiliate marketing campaigns through targeted content creation, performance tracking, and recommendations',
+        tags: ['AI', 'Marketing', 'KinOS', 'Affiliate'],
+        role: 'Marketing Manager',
+        isInception: true
+    },
 ]
