@@ -28,7 +28,7 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
                         height={300}
                         className="w-full aspect-square object-fill rounded-sm"
                     />
-                    <div className="flex flex-col gap-2 px-[2px] mt-2 mb-1 flex-grow">
+                    <div className="flex flex-col gap-3 px-[2px] mt-2 mb-1 flex-grow">
                         <div className="flex flex-row flex-wrap gap-1.5">
                             {swarm.tags.map((tag, index) => (
                                 <Tag className="text-[10px] font-normal px-2 py-0.5" key={index}>
@@ -37,10 +37,10 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
                             ))}
                         </div>
                         <p className="text-lg font-medium">{swarm.name}</p>
-                        <p className="text-muted text-xs text-truncate line-clamp-4 min-h-16">{swarm.description}</p>
+                        <p className="text-muted text-xs text-truncate line-clamp-4 min-h-16 mb-2">{swarm.description}</p>
                         <Button 
                             variant='outline' 
-                            className="mt-auto bg-yellow-400 hover:bg-yellow-500 text-black border-yellow-500 hover:text-black"
+                            className="mt-auto bg-blue-500 hover:bg-blue-600 text-white border-blue-600 hover:text-white"
                         >
                             Invest
                         </Button>

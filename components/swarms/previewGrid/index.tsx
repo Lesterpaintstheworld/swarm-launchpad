@@ -28,15 +28,15 @@ const swarmTypeInfo = {
 }
 
 const SwarmTypeHeader = ({ type, icon, title }: { type: SwarmType, icon: string, title: string }) => (
-    <div className="flex items-center gap-2">
-        <h3 className="text-xl font-semibold mb-4">{icon} {title}</h3>
+    <div className="flex items-center gap-2 my-8">
+        <h3 className="text-2xl font-semibold">{icon} {title}</h3>
         <TooltipProvider delayDuration={0}>
             <Tooltip>
                 <TooltipTrigger asChild>
                     <Button 
                         variant="ghost" 
                         size="icon" 
-                        className="h-6 w-6 mb-4 hover:bg-accent/50 hover:text-accent-foreground transition-colors"
+                        className="h-6 w-6 hover:bg-accent/50 hover:text-accent-foreground transition-colors"
                     >
                         <InfoIcon className="h-4 w-4" />
                     </Button>
@@ -72,7 +72,7 @@ const SwarmsPreviewGrid = () => {
     return (
         <TooltipProvider>
             <Search value={searchValue} onInputChange={setSearchValue} />
-            <div className="flex flex-col gap-8 mt-4">
+            <div className="flex flex-col gap-12 mt-8">
                 {/* Partner Swarms First */}
                 <div>
                     <SwarmTypeHeader type="partner" icon="🤝" title="Partner Swarms" />
