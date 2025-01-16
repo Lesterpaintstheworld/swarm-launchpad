@@ -159,4 +159,14 @@ export const previews: SwarmPreviewData[] = [
         role: 'Communication Coach',
         isInception: true
     },
+    {
+        id: 'k1l2m3n4-o5p6-4k5l-im9n-0o1p2q3r4s5t',
+        image: '/swarms/travel.jpg',
+        models: ['KinOS'],
+        name: 'Travel Swarm',
+        description: 'AI-powered travel concierge handling trip planning, bookings, and itineraries for seamless journey experiences',
+        tags: ['AI', 'Travel', 'KinOS', 'Planning'],
+        role: 'Travel Concierge',
+        isInception: true
+    },
 ]
