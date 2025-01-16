@@ -2,10 +2,10 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
-import { MarketListing } from "../swarm.types";
 import { IntlNumberFormat } from "@/lib/utils";
-import { Tag } from "@/components/ui/tag";
 import { Button } from "@/components/shadcn/button";
+import { MarketListing } from "../market.types";
+import { Token } from "@/components/tokens/token";
 
 export const columns: ColumnDef<MarketListing>[] = [
     {
@@ -44,7 +44,7 @@ export const columns: ColumnDef<MarketListing>[] = [
             return (
                 <div className="flex flex-row items-center gap-2">
                     <p className="text-foreground/60 font-bold !text-foreground">{IntlNumberFormat(Number(row.getValue('price_per_share')) * Number(row.getValue('number_of_shares')))}</p>
-                    <Tag className="capitalise">{row.getValue('token')}</Tag>
+                    <Token token={row.getValue('token')} />
                 </div>
             )
         }

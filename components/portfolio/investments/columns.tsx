@@ -5,9 +5,9 @@ import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
 import { Investment } from "@/components/portfolio/investments";
 import Image from "next/image";
 import { IntlNumberFormat } from "@/lib/utils";
-import { Button } from "@/components/shadcn/button";
 import { getSwarm } from "@/data/swarms/previews";
 import Link from "next/link";
+import { SellButton } from "./sellButton";
 
 export const columns: ColumnDef<Investment>[] = [
     {
@@ -70,21 +70,11 @@ export const columns: ColumnDef<Investment>[] = [
         }
     },
     {
-        accessorKey: 'id',
+        accessorKey: 'swarm_id',
         header: () => <></>,
         minSize: 100,
-        cell: () => {
-            return (
-                <div className="w-full flex my-2 min-w-[100px]">
-                    <Button
-                        variant='destructive'
-                        className="ml-auto h-fit py-1 font-normal"
-                        onClick={() => alert('Initiate sale flow for investment')}
-                    >
-                        SELL
-                    </Button>
-                </div>
-            )
+        cell: ({ row }) => {
+            return <SellButton swarmId={row.original.swarm_id} />;
         }
     },
 ];

@@ -1,5 +1,6 @@
 'use client'
 
+import { cn } from "@/lib/utils";
 import { X } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
 import { useEffect, useRef } from "react"
@@ -9,9 +10,10 @@ interface ModalProps {
     onClose: () => void;
     children?: React.ReactNode;
     animationDuration?: number;
+    className?: string;
 }
 
-const Modal = ({ isOpen, onClose, children, animationDuration }: ModalProps) => {
+const Modal = ({ isOpen, onClose, children, animationDuration, className }: ModalProps) => {
 
     const modalRef = useRef<HTMLDivElement>(null)
 
@@ -68,7 +70,7 @@ const Modal = ({ isOpen, onClose, children, animationDuration }: ModalProps) => 
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.95, opacity: 0 }}
                         transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-                        className="relative z-50 w-fit min-w-96 max-w-lg rounded-lg bg-popover border border-border p-3 shadow-xl"
+                        className={cn("relative z-50 w-fit min-w-96 max-w-lg rounded-lg bg-popover border border-border p-3 shadow-xl", className)}
                         style={{ pointerEvents: isOpen ? 'auto' : 'none' }}
                         tabIndex={-1}
                     >

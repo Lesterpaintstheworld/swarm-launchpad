@@ -21,18 +21,10 @@ interface SwarmInfo extends SwarmPreviewData {
     programAddress: string;
 }
 
-interface MarketListing {
-    id: string;
-    number_of_shares: number;
-    seller: string;
-    price_per_share: number;
-    token: string;
+    SwarmInfo
 }
-
-export type {
-    SwarmPreviewData,
-    SwarmModel,
-    SwarmGalleryItem,
-    SwarmInfo,
-    MarketListing
+>>>>>>> 3de30723ef371300718b8f18a973e088422f4843
+=======
+    SwarmInfo
 }
+>>>>>>> 3de30723ef371300718b8f18a973e088422f4843

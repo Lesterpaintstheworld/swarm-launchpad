@@ -18,8 +18,8 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.05 }}
         >
-            <Link href={`/invest/${swarm.id}`} className="block transition-all duration-200 hover:scale-[1.02] hover:-translate-y-1">
-                <Card className="p-2 md:max-w-[300px] w-full cursor-pointer hover:shadow-lg">
+            <Link href={`/invest/${swarm.id}`} className="block transition-all duration-200">
+                <Card className="p-2 md:max-w-[300px] w-full cursor-pointer hover:shadow-lg hover:border-foreground/30 transition-colors">
                     <Image
                         src={swarm.image}
                         alt={`${swarm.name} image`}
@@ -38,7 +38,7 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
                             })}
                         </div>
                         <p>{swarm.name}</p>
-                        <p className="text-muted text-xs text-truncate line-clamp-4">{swarm.description}</p>
+                        <p className="text-muted text-xs text-truncate line-clamp-4 min-h-16">{swarm.description}</p>
                         <Button variant='success' className="mt-2">
                             Invest
                         </Button>
