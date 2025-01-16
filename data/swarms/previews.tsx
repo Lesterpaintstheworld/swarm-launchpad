@@ -79,4 +79,14 @@ export const previews: SwarmPreviewData[] = [
         role: 'Healthcare Assistant',
         isInception: true
     },
+    {
+        id: 'c3d4e5f6-g7h8-6c7d-ae1f-2g3h4i5j6k7l',
+        image: '/swarms/publishing.jpg',
+        models: ['KinOS'],
+        name: 'Book & Content Publishing Swarm',
+        description: 'Multi-agent swarm streamlining book production from manuscript to market',
+        tags: ['AI', 'Publishing', 'KinOS', 'Content'],
+        role: 'Publishing Agent',
+        isInception: true
+    },
 ]
