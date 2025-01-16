@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { SwarmData } from "@/data/swarms/info";
 import { redirect } from "next/navigation";
-import { SwarmGalleryItem } from "@/components/swarms/swarm.types";
+import { SwarmGalleryItem as GalleryItem } from "@/components/swarms/swarm.types";
 import { Markdown } from "@/components/ui/markdown";
 import { Expandable } from "@/components/ui/expandable";
 import { InfiniteCarousel, Slides } from "@/components/ui/infiniteCarousel";
