@@ -159,7 +159,8 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         ],
         programAddress: '',
         tags: ['AI', 'OpenAI'],
-        role: 'Lorem ipsum'
+        role: 'Lorem ipsum',
+        swarmType: 'early'
     },
     {
         id: '7d3c9e5b-1f8a-4d3c-b8d4-9e5b1f8a4d3c',
