@@ -36,16 +36,16 @@ const SwarmTypeHeader = ({ type, icon, title }: { type: SwarmType, icon: string,
                     <Button 
                         variant="ghost" 
                         size="icon" 
-                        className="h-6 w-6 mb-4 hover:bg-accent hover:text-accent-foreground"
+                        className="h-6 w-6 mb-4 hover:bg-accent/50 hover:text-accent-foreground transition-colors"
                     >
                         <InfoIcon className="h-4 w-4" />
                     </Button>
                 </TooltipTrigger>
                 <TooltipContent 
-                    className="bg-gray-700/90 text-white p-3 rounded-md shadow-lg border border-gray-600"
+                    className="bg-black/90 backdrop-blur-sm text-white px-4 py-3 rounded-lg shadow-xl border border-white/10 max-w-[280px]"
                     sideOffset={5}
                 >
-                    <pre className="text-sm whitespace-pre-line">{swarmTypeInfo[type]}</pre>
+                    <pre className="text-sm whitespace-pre-line font-light leading-relaxed">{swarmTypeInfo[type]}</pre>
                 </TooltipContent>
             </Tooltip>
         </TooltipProvider>
