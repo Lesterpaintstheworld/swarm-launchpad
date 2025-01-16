@@ -4,16 +4,6 @@ export const getSwarm = (swarmId: string) => previews.filter(swarm => swarm.id =
 
 export const previews: SwarmPreviewData[] = [
     {
-        id: 'slopfather-partner-id',
-        image: '/swarms/slopfather.jpg',
-        models: ['Video AI', 'GPT-4V'],
-        name: 'SLOP FATHER',
-        description: 'The OG video slop agent - a sloppy, sentient, shitposting savant revolutionizing social media content creation through AI-powered video generation and community interaction.',
-        tags: ['AI', 'Video', 'Social Media', '$FATHA'],
-        role: 'Content Creator',
-        swarmType: 'partner'
-    },
-    {
         id: 'digitalkin-partner-id',
         image: '/swarms/digitalkin.png',
         models: ['KinOS'],
@@ -21,6 +11,16 @@ export const previews: SwarmPreviewData[] = [
         description: 'Enterprise-grade AI agents that autonomously handle complex digital tasks. Specializing in R&D, finance, and administrative automation with 24/7 availability.',
         tags: ['AI', 'Enterprise', 'Automation', 'KinOS'],
         role: 'Digital Employee Manager',
+        swarmType: 'partner'
+    },
+    {
+        id: 'slopfather-partner-id',
+        image: '/swarms/slopfather.png',
+        models: ['Video AI', 'GPT-4V'],
+        name: 'SLOP FATHER',
+        description: 'The OG video slop agent - a sloppy, sentient, shitposting savant revolutionizing social media content creation through AI-powered video generation and community interaction.',
+        tags: ['AI', 'Video', 'Social Media', '$FATHA'],
+        role: 'Content Creator',
         swarmType: 'partner'
     },
     {
