@@ -11,8 +11,12 @@ import Image from "next/image";
 export default function InceptionSwarm({ params }: { params: { slug: string } }) {
     const swarm = useCallback(() => SwarmData.find((swarm) => swarm.id === params.slug), [params.slug])() || undefined;
 
-    if (!swarm || swarm.swarmType !== 'inception') {
+    if (!swarm) {
         redirect('/404');
+    }
+
+    if (swarm.swarmType !== 'inception') {
+        redirect('/invest/' + params.slug);
     }
 
     const prepareSlides = useCallback(() => {
