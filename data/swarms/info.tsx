@@ -160,11 +160,11 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
     },
     {
         id: '7d3c9e5b-1f8a-4d3c-b8d4-9e5b1f8a4d3c',
-        image: '/swarms/ludosai.jpg',
+        image: '/swarms/duoai.jpg',
         models: ['GPT-4o Mini', 'KinOS'],
         name: 'DuoAI',
         gallery: [
-            { type: 'image', content: '/swarms/ludosai.jpg' },
+            { type: 'image', content: '/swarms/duoai.jpg' },
             { type: 'image', content: '/default.png' },
             { type: 'image', content: '/default.png' }
         ],
