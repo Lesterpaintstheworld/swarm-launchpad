@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { InfoPanel } from "@/components/ui/infoPanel";
 import { SwarmData } from "@/data/swarms/info";
 import { redirect } from "next/navigation";
 import { Markdown } from "@/components/ui/markdown";
@@ -50,13 +51,19 @@ export default function Swarm({ params }: { params: { slug: string } }) {
                 }}
             />
             {swarm.description &&
-                <>
-                    <h4 className="font-semibold">About {swarm.name}</h4>
-                    <hr className="mt-3" />
-                    <Expandable overflowThreshold={750}>
-                        <Markdown markdown={swarm.description} />
-                    </Expandable>
-                </>
+                <div className="flex flex-col md:flex-row gap-8">
+                    <div className="flex-1">
+                        <h4 className="font-semibold">About {swarm.name}</h4>
+                        <hr className="mt-3" />
+                        <Expandable overflowThreshold={750}>
+                            <Markdown markdown={swarm.description} />
+                        </Expandable>
+                    </div>
+                    <InfoPanel 
+                        socials={swarm.socials}
+                        achievements={swarm.achievements}
+                    />
+                </div>
             }
             <SwarmRecentMarketListings
                 swarmId={swarm.id}

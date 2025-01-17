@@ -37,4 +37,12 @@ export interface SwarmInfo {
     programAddress: string;
     swarmType: SwarmType;
     achievements?: Achievement[];
+    socials?: {
+        website?: string;
+        twitter?: string;
+        telegram?: string;
+        telegramChannel?: string;
+        discord?: string;
+        dexscreener?: string;
+    };
 }
