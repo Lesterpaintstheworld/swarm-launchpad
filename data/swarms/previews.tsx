@@ -154,7 +154,7 @@ export const previews: SwarmPreviewData[] = [
         swarmType: 'inception'
     },
     {
-        id: 'i9j0k1l2-m3n4-2i3j-gk7l-8m9n0o1p2q3r',
+        id: 'mentor-swarm-id',
         image: '/swarms/mentor.jpg',
         models: ['KinOS'],
         name: 'Mentor Swarm',
@@ -164,7 +164,7 @@ export const previews: SwarmPreviewData[] = [
         swarmType: 'inception'
     },
     {
-        id: 'j0k1l2m3-n4o5-3j4k-hl8m-9n0o1p2q3r4s',
+        id: 'speaker-swarm-id',
         image: '/swarms/speaker.jpg',
         models: ['KinOS'],
         name: 'Speaker Swarm',
@@ -174,7 +174,7 @@ export const previews: SwarmPreviewData[] = [
         swarmType: 'inception'
     },
     {
-        id: 'k1l2m3n4-o5p6-4k5l-im9n-0o1p2q3r4s5t',
+        id: 'travel-swarm-id',
         image: '/swarms/travel.jpg',
         models: ['KinOS'],
         name: 'Travel Swarm',
@@ -184,7 +184,7 @@ export const previews: SwarmPreviewData[] = [
         swarmType: 'inception'
     },
     {
-        id: 'l2m3n4o5-p6q7-5l6m-jn0o-1p2q3r4s5t6u',
+        id: 'grant-swarm-id',
         image: '/swarms/grant.jpg',
         models: ['KinOS'],
         name: 'Grant Writing Swarm',
@@ -194,7 +194,7 @@ export const previews: SwarmPreviewData[] = [
         swarmType: 'inception'
     },
     {
-        id: 'm3n4o5p6-q7r8-6m7n-ko1p-2q3r4s5t6u7v',
+        id: 'resume-swarm-id',
         image: '/swarms/resume.jpg',
         models: ['KinOS'],
         name: 'Resume Swarm',
