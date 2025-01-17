@@ -155,7 +155,7 @@ export const previews: SwarmPreviewData[] = [
     },
     {
         id: 'mentor-swarm-id',
-        image: '/swarms/mentor.jpg',
+        image: '/swarms/mentor.png',
         models: ['KinOS'],
         name: 'Mentor Swarm',
         description: 'AI swarm that guides students through homework by asking Socratic questions and providing personalized learning paths',

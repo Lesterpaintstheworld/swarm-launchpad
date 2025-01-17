@@ -171,7 +171,7 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         description: DuoAIDescription,
         programAddress: '',
         tags: ['AI', 'Gaming', 'KinOS'],
-        role: 'Gaming Companion',
+        role: 'Gaming Compan    ion',
         swarmType: 'partner'
     },
     {
