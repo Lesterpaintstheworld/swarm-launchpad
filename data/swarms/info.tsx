@@ -3,7 +3,7 @@ import { KinKongDescription } from "./descriptions/kinkong"
 import { SwarmVenturesDescription } from "./descriptions/swarmventures"
 import { TerminalVelocityDescription } from "./descriptions/terminalvelocity"
 import { SyntheticSoulsDescription } from "./descriptions/syntheticsouls"
-import { LudosAIDescription } from "./descriptions/ludosai"
+import { DuoAIDescription } from "./descriptions/duoai"
 
 export const SwarmData: SwarmInfo[] = [
     {
@@ -162,13 +162,13 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         id: '7d3c9e5b-1f8a-4d3c-b8d4-9e5b1f8a4d3c',
         image: '/swarms/ludosai.jpg',
         models: ['GPT-4o Mini', 'KinOS'],
-        name: 'LudosAI',
+        name: 'DuoAI',
         gallery: [
             { type: 'image', content: '/swarms/ludosai.jpg' },
             { type: 'image', content: '/default.png' },
             { type: 'image', content: '/default.png' }
         ],
-        description: LudosAIDescription,
+        description: DuoAIDescription,
         programAddress: '',
         tags: ['AI', 'Gaming', 'KinOS'],
         role: 'Gaming Companion',
