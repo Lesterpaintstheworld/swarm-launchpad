@@ -55,7 +55,7 @@ export const previews: SwarmPreviewData[] = [
     },
     {
         id: '7d3c9e5b-1f8a-4d3c-b8d4-9e5b1f8a4d3c',
-        image: '/swarms/ludosai.jpg',
+        image: '/swarms/duoai.jpg',
         models: ['GPT-4o Mini', 'KinOS'],
         name: 'DuoAI',
         description: 'Universal AI gaming companion that adapts to any game and playing style for personalized gameplay experiences.',
@@ -165,7 +165,7 @@ export const previews: SwarmPreviewData[] = [
     },
     {
         id: 'speaker-swarm-id',
-        image: '/swarms/speaker.jpg',
+        image: '/swarms/speaker.jpeg',
         models: ['KinOS'],
         name: 'Speaker Swarm',
         description: 'AI swarm preparing you for high-stakes conversations through personalized interview simulations and real-time feedback',
@@ -175,7 +175,7 @@ export const previews: SwarmPreviewData[] = [
     },
     {
         id: 'travel-swarm-id',
-        image: '/swarms/travel.jpg',
+        image: '/swarms/travel.jpeg',
         models: ['KinOS'],
         name: 'Travel Swarm',
         description: 'AI-powered travel concierge handling trip planning, bookings, and itineraries for seamless journey experiences',
@@ -185,7 +185,7 @@ export const previews: SwarmPreviewData[] = [
     },
     {
         id: 'grant-swarm-id',
-        image: '/swarms/grant.jpg',
+        image: '/swarms/grant.jpeg',
         models: ['KinOS'],
         name: 'Grant Writing Swarm',
         description: 'AI swarm streamlining grant discovery, application writing, and compliance reporting for non-profits',
@@ -195,7 +195,7 @@ export const previews: SwarmPreviewData[] = [
     },
     {
         id: 'resume-swarm-id',
-        image: '/swarms/resume.jpg',
+        image: '/swarms/resume.jpeg',
         models: ['KinOS'],
         name: 'Resume Swarm',
         description: 'AI swarm crafting targeted resumes by analyzing job descriptions, highlighting relevant experience, and optimizing for ATS',
