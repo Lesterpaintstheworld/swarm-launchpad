@@ -4,13 +4,9 @@ const Returns = () => {
     return (
         <div className="bg-accent-1 py-24">
             <div className="container">
-                <div className="text-center mb-16 max-w-2xl mx-auto px-4">
-                    <h2 className="text-balance">Investment Returns</h2>
-                    <h3 className="text-muted mt-2 text-balance">Generate passive income through UBC rewards</h3>
-                    <p className="text-muted-foreground mt-4 text-balance">
-                        Our innovative fee structure ensures fair distribution of returns while fostering ecosystem growth. 
-                        Every trade contributes to both immediate rewards and long-term development.
-                    </p>
+                <div className="text-center mb-16">
+                    <h2>Investment Returns</h2>
+                    <h3 className="text-muted mt-2">Clear Structure, Transparent Distribution</h3>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-8 px-4">
