@@ -1,6 +1,7 @@
 import { SwarmsPreviewGrid } from "@/components/swarms/previewGrid";
 import { Token } from "@/components/tokens/token";
 import { supportedTokens } from "@/data/tokens/supported";
+import { TokenTooltip } from "@/components/ui/tokenTooltip";
 
 export default function Invest() {
 
@@ -10,9 +11,9 @@ export default function Invest() {
                 <h2 className="text-center">Invest in our <span className="font-bold">AI Swarms</span></h2>
                 <div className="text-muted flex flex-row flex-wrap text-lg items-center justify-center">
                     <p className="text-center text-nowrap">Generate&ensp;</p>
-                    <Token token={supportedTokens[0]} />
+                    <TokenTooltip token="$UBC"><Token token={supportedTokens[0]} /></TokenTooltip>
                     <p className="text-center text-nowrap">&ensp;returns by investing your&ensp;</p>
-                    <Token token={supportedTokens[1]} />
+                    <TokenTooltip token="$COMPUTE"><Token token={supportedTokens[1]} /></TokenTooltip>
                     <p className="text-center text-nowrap">&ensp;tokens into our ai swarms.</p>
                 </div>
             </div>
