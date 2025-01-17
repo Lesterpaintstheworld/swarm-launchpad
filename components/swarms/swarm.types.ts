@@ -1,5 +1,12 @@
 export type SwarmType = 'inception' | 'early' | 'partner';
 
+export interface Achievement {
+    id: string;
+    name: string;
+    description: string;
+    completed: boolean;
+}
+
 export interface SwarmPreviewData {
     id: string;
     image: string;
@@ -29,4 +36,5 @@ export interface SwarmInfo {
     role: string;
     programAddress: string;
     swarmType: SwarmType;
+    achievements?: Achievement[];
 }

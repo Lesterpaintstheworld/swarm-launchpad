@@ -4,6 +4,7 @@ import { SwarmData } from "@/data/swarms/info";
 import { redirect } from "next/navigation";
 import { Markdown } from "@/components/ui/markdown";
 import { Expandable } from "@/components/ui/expandable";
+import { Achievements } from "@/components/swarms/achievements";
 import { SwarmInvestCard } from "@/components/swarms/invest";
 import { ManagePortfolioCard } from "@/components/cards/managePortfolio";
 import { SwarmRecentMarketListings } from "@/components/market/recentListings";
@@ -34,6 +35,12 @@ export default function Swarm({ params }: { params: { slug: string } }) {
                 gallery={swarm.gallery}
                 swarmName={swarm.name}
             />
+            {swarm.achievements && swarm.achievements.length > 0 && (
+                <Achievements 
+                    achievements={swarm.achievements}
+                    className="mt-8 mb-4" 
+                />
+            )}
             <SwarmInvestCard
                 className="mt-16 mb-12"
                 data={{
