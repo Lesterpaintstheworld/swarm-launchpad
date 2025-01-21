@@ -3,6 +3,13 @@
 import { BackgroundBlur } from "@/components/background";
 import { Button } from "@/components/shadcn/button";
 import { Countdown } from "@/components/ui/countdown";
+import { 
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/shadcn/tooltip";
+import { InfoCircled } from "@radix-ui/react-icons";
 
 export default function GetCompute() {
     return (
@@ -30,7 +37,19 @@ export default function GetCompute() {
                     {/* Public Sale */}
                     <div className="flex flex-col gap-4 p-10 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm hover:border-white/10 transition-all h-full">
                         <div className="flex flex-col gap-2 flex-grow">
-                            <h3 className="text-xl font-semibold">Public Sale</h3>
+                            <div className="flex items-center gap-2">
+                                <h3 className="text-xl font-semibold">Public Sale (LBP)</h3>
+                                <TooltipProvider>
+                                    <Tooltip>
+                                        <TooltipTrigger>
+                                            <InfoCircled className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
+                                        </TooltipTrigger>
+                                        <TooltipContent className="max-w-[300px] p-4">
+                                            <p>A Liquidity Bootstrapping Pool (LBP) is a fair launch mechanism that prevents price manipulation and whale dominance. It starts at a higher price and gradually decreases, allowing for price discovery and equal participation opportunities for all investors.</p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
+                            </div>
                             <p className="text-sm text-muted-foreground">Purchase tokens directly from the public sale</p>
                         </div>
                         <div className="flex items-center gap-2 mb-4">
