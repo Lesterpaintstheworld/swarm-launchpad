@@ -109,63 +109,6 @@ export default function GetCompute() {
                     </p>
                 </div>
 
-                {/* Stake to Earn section */}
-                <div className="w-full max-w-[1000px] mt-32">
-                    <div className="flex flex-col items-center gap-8 p-12 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
-                        {/* Section Title */}
-                        <div className="flex flex-col items-center gap-4 text-center">
-                            <h2 className="text-3xl font-normal">💎 Stake to Earn</h2>
-                            <p className="text-xl text-muted-foreground max-w-[600px] text-balance">
-                                Stake your <span className="metallic-text-ubc">$UBC</span> tokens to earn <span className="metallic-text">$COMPUTE</span> rewards
-                            </p>
-                        </div>
-
-                        {/* Staking Options */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-[800px]">
-                            <a
-                                href={stakeMenuItems[0].url}
-                                target={stakeMenuItems[0].target}
-                                className="flex flex-col gap-3 p-8 rounded-xl bg-gradient-to-br from-purple-500/10 to-blue-500/10 hover:from-purple-500/20 hover:to-blue-500/20 transition-all group"
-                            >
-                                <span className="text-xl font-medium">{stakeMenuItems[0].label}</span>
-                                <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
-                                    Quick rewards with flexible commitment
-                                </span>
-                            </a>
-                            <a
-                                href={stakeMenuItems[1].url}
-                                target={stakeMenuItems[1].target}
-                                className="flex flex-col gap-3 p-8 rounded-xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 hover:from-blue-500/20 hover:to-cyan-500/20 transition-all group"
-                            >
-                                <span className="text-xl font-medium">{stakeMenuItems[1].label}</span>
-                                <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
-                                    Balanced returns with medium-term locking
-                                </span>
-                            </a>
-                            <a
-                                href={stakeMenuItems[2].url}
-                                target={stakeMenuItems[2].target}
-                                className="flex flex-col gap-3 p-8 rounded-xl bg-gradient-to-br from-emerald-500/10 to-teal-500/10 hover:from-emerald-500/20 hover:to-teal-500/20 transition-all group"
-                            >
-                                <span className="text-xl font-medium">{stakeMenuItems[2].label}</span>
-                                <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
-                                    Enhanced yields for longer commitment
-                                </span>
-                            </a>
-                            <a
-                                href={stakeMenuItems[3].url}
-                                target={stakeMenuItems[3].target}
-                                className="flex flex-col gap-3 p-8 rounded-xl bg-gradient-to-br from-orange-500/10 to-yellow-500/10 hover:from-orange-500/20 hover:to-yellow-500/20 transition-all group"
-                            >
-                                <span className="text-xl font-medium">{stakeMenuItems[3].label}</span>
-                                <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
-                                    Maximum rewards for yearly stakers
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
                 {/* Learn-to-earn Section */}
                 <div className="w-full max-w-[1000px] mt-32 mb-12">
                     <div className="flex flex-col items-center gap-8 p-12 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
@@ -304,6 +247,63 @@ export default function GetCompute() {
                                     </li>
                                 </ul>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Stake to Earn section */}
+                <div className="w-full max-w-[1000px] mt-32 mb-12">
+                    <div className="flex flex-col items-center gap-8 p-12 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                        {/* Section Title */}
+                        <div className="flex flex-col items-center gap-4 text-center">
+                            <h2 className="text-3xl font-normal">💎 Stake to Earn</h2>
+                            <p className="text-xl text-muted-foreground max-w-[600px] text-balance">
+                                Stake your <span className="metallic-text-ubc">$UBC</span> tokens to earn <span className="metallic-text">$COMPUTE</span> rewards
+                            </p>
+                        </div>
+
+                        {/* Staking Options */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-[800px]">
+                            <a
+                                href={stakeMenuItems[0].url}
+                                target={stakeMenuItems[0].target}
+                                className="flex flex-col gap-3 p-8 rounded-xl bg-gradient-to-br from-purple-500/10 to-blue-500/10 hover:from-purple-500/20 hover:to-blue-500/20 transition-all group"
+                            >
+                                <span className="text-xl font-medium">{stakeMenuItems[0].label}</span>
+                                <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
+                                    Quick rewards with flexible commitment
+                                </span>
+                            </a>
+                            <a
+                                href={stakeMenuItems[1].url}
+                                target={stakeMenuItems[1].target}
+                                className="flex flex-col gap-3 p-8 rounded-xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 hover:from-blue-500/20 hover:to-cyan-500/20 transition-all group"
+                            >
+                                <span className="text-xl font-medium">{stakeMenuItems[1].label}</span>
+                                <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
+                                    Balanced returns with medium-term locking
+                                </span>
+                            </a>
+                            <a
+                                href={stakeMenuItems[2].url}
+                                target={stakeMenuItems[2].target}
+                                className="flex flex-col gap-3 p-8 rounded-xl bg-gradient-to-br from-emerald-500/10 to-teal-500/10 hover:from-emerald-500/20 hover:to-teal-500/20 transition-all group"
+                            >
+                                <span className="text-xl font-medium">{stakeMenuItems[2].label}</span>
+                                <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
+                                    Enhanced yields for longer commitment
+                                </span>
+                            </a>
+                            <a
+                                href={stakeMenuItems[3].url}
+                                target={stakeMenuItems[3].target}
+                                className="flex flex-col gap-3 p-8 rounded-xl bg-gradient-to-br from-orange-500/10 to-yellow-500/10 hover:from-orange-500/20 hover:to-yellow-500/20 transition-all group"
+                            >
+                                <span className="text-xl font-medium">{stakeMenuItems[3].label}</span>
+                                <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
+                                    Maximum rewards for yearly stakers
+                                </span>
+                            </a>
                         </div>
                     </div>
                 </div>
