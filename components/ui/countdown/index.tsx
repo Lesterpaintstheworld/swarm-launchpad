@@ -77,7 +77,12 @@ export function Countdown() {
     return (
         <div className="flex flex-col gap-8">
             <TimeDisplay timeLeft={launchpadTimeLeft} label="Launchpad Launch" />
-            <TimeDisplay timeLeft={computeTimeLeft} label={<>$COMPUTE Launch</>} />
+            <TimeDisplay 
+                timeLeft={computeTimeLeft} 
+                label={<>
+                    <span className="metallic-text">$COMPUTE</span> Launch
+                </>} 
+            />
         </div>
     );
 }
