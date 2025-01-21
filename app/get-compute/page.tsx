@@ -123,19 +123,46 @@ export default function GetCompute() {
 
                         {/* Staking Options */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-[800px]">
-                            {stakeMenuItems.map((item, index) => (
-                                <a
-                                    key={index}
-                                    href={item.url}
-                                    target={item.target}
-                                    className="flex flex-col gap-3 p-8 rounded-xl bg-black/30 hover:bg-black/40 transition-colors group"
-                                >
-                                    <span className="text-xl font-medium">{item.label}</span>
-                                    <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
-                                        Lock your tokens for {item.label.split('-')[0]} days to maximize rewards
-                                    </span>
-                                </a>
-                            ))}
+                            <a
+                                href={stakeMenuItems[0].url}
+                                target={stakeMenuItems[0].target}
+                                className="flex flex-col gap-3 p-8 rounded-xl bg-black/30 hover:bg-black/40 transition-colors group"
+                            >
+                                <span className="text-xl font-medium">{stakeMenuItems[0].label}</span>
+                                <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
+                                    Quick rewards with flexible commitment
+                                </span>
+                            </a>
+                            <a
+                                href={stakeMenuItems[1].url}
+                                target={stakeMenuItems[1].target}
+                                className="flex flex-col gap-3 p-8 rounded-xl bg-black/30 hover:bg-black/40 transition-colors group"
+                            >
+                                <span className="text-xl font-medium">{stakeMenuItems[1].label}</span>
+                                <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
+                                    Balanced returns with medium-term locking
+                                </span>
+                            </a>
+                            <a
+                                href={stakeMenuItems[2].url}
+                                target={stakeMenuItems[2].target}
+                                className="flex flex-col gap-3 p-8 rounded-xl bg-black/30 hover:bg-black/40 transition-colors group"
+                            >
+                                <span className="text-xl font-medium">{stakeMenuItems[2].label}</span>
+                                <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
+                                    Enhanced yields for longer commitment
+                                </span>
+                            </a>
+                            <a
+                                href={stakeMenuItems[3].url}
+                                target={stakeMenuItems[3].target}
+                                className="flex flex-col gap-3 p-8 rounded-xl bg-black/30 hover:bg-black/40 transition-colors group"
+                            >
+                                <span className="text-xl font-medium">{stakeMenuItems[3].label}</span>
+                                <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
+                                    Maximum rewards for yearly stakers
+                                </span>
+                            </a>
                         </div>
                     </div>
                 </div>
