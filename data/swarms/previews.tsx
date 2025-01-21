@@ -63,7 +63,7 @@ export const previews: SwarmPreviewData[] = [
         image: '/swarms/screenplay.jpg',
         models: ['KinOS'],
         name: 'StudioKin',
-        description: 'AI agent swarm that transforms your story idea into a professional-grade screenplay and production plan',
+        description: 'Transform any story idea into a professional screenplay and complete production plan through our AI-powered filmmaking system. From concept to camera-ready, all powered by coordinated AI agents.',
         tags: ['Entertainment', 'Screenwriting', 'Production', 'AI Creative', 'Content'],
         role: 'Screenwriter & Producer',
         swarmType: 'inception',
