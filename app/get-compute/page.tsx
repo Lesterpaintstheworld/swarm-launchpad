@@ -117,20 +117,23 @@ export default function GetCompute() {
                         <div className="flex flex-col items-center gap-2 text-center">
                             <h2 className="text-3xl font-normal">Stake to Earn</h2>
                             <p className="text-xl text-muted-foreground max-w-[600px] text-balance">
-                                Stake your <span className="metallic-text">$COMPUTE</span> tokens to earn <span className="metallic-text-ubc">$UBC</span> rewards
+                                Stake your <span className="metallic-text-ubc">$UBC</span> tokens to earn <span className="metallic-text">$COMPUTE</span> rewards
                             </p>
                         </div>
 
                         {/* Staking Options */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-[800px]">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-[800px]">
                             {stakeMenuItems.map((item, index) => (
                                 <a
                                     key={index}
                                     href={item.url}
                                     target={item.target}
-                                    className="flex items-center p-6 rounded-lg bg-black/30 hover:bg-black/40 transition-colors"
+                                    className="flex flex-col gap-3 p-8 rounded-xl bg-black/30 hover:bg-black/40 transition-colors group"
                                 >
-                                    <span className="text-lg">{item.label}</span>
+                                    <span className="text-xl font-medium">{item.label}</span>
+                                    <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
+                                        Lock your tokens for {item.label.split('-')[0]} days to maximize rewards
+                                    </span>
                                 </a>
                             ))}
                         </div>
