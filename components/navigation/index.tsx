@@ -81,6 +81,7 @@ export function Navigation() {
                       "text-base font-normal tracking-wide px-4 py-2 transition-colors text-left",
                       "hover:text-accent-foreground bg-transparent justify-start",
                       link.highlight && "text-yellow-500",
+                      link.disabled && "text-gray-500 pointer-events-none",
                       pathname === link.url && "text-accent-foreground"
                     )}
                   >
