@@ -13,7 +13,8 @@ import { InfoCircled } from "@radix-ui/react-icons";
 
 export default function GetCompute() {
     return (
-        <main className="container view">
+        <TooltipProvider>
+            <main className="container view">
             <BackgroundBlur />
             <div className="flex flex-col items-center justify-center min-h-[80vh] gap-8">
                 {/* Title section */}
@@ -39,16 +40,16 @@ export default function GetCompute() {
                         <div className="flex flex-col gap-2 flex-grow">
                             <div className="flex items-center gap-2">
                                 <h3 className="text-xl font-semibold">Public Sale (LBP)</h3>
-                                <TooltipProvider>
-                                    <Tooltip>
-                                        <TooltipTrigger>
-                                            <InfoCircled className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
-                                        </TooltipTrigger>
-                                        <TooltipContent className="max-w-[300px] p-4">
-                                            <p>A Liquidity Bootstrapping Pool (LBP) is a fair launch mechanism that prevents price manipulation and whale dominance. It starts at a higher price and gradually decreases, allowing for price discovery and equal participation opportunities for all investors.</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                </TooltipProvider>
+                                <Tooltip>
+                                    <TooltipTrigger>
+                                        <span className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors inline-flex items-center justify-center rounded-full border border-muted-foreground/50">
+                                            i
+                                        </span>
+                                    </TooltipTrigger>
+                                    <TooltipContent className="max-w-[300px] p-4">
+                                        <p>A Liquidity Bootstrapping Pool (LBP) is a fair launch mechanism that prevents price manipulation and whale dominance. It starts at a higher price and gradually decreases, allowing for price discovery and equal participation opportunities for all investors.</p>
+                                    </TooltipContent>
+                                </Tooltip>
                             </div>
                             <p className="text-sm text-muted-foreground">Purchase tokens directly from the public sale</p>
                         </div>
@@ -145,5 +146,6 @@ export default function GetCompute() {
                 </div>
             </div>
         </main>
+        </TooltipProvider>
     );
 }
