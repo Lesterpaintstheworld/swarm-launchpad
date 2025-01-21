@@ -11,15 +11,26 @@ const TREASURY_ADDRESS = new PublicKey(
     "Ax6MPHrXAAZhDe241BL8R5hkPKKtEpTYDZKS1xb1apaw",
 );
 
-// delegate tokens to this address:
-// spl-token delegate <treasury ata> <token amount> <BACKEND_KEYPAIR.publicKey>
-const BACKEND_KEYPAIR = Keypair.fromSecretKey(
-    Uint8Array.from(JSON.parse(process.env.BACKEND_WALLET_KEYPAIR ?? "[]")),
-);
+// Safely create keypair with fallback for development
+const BACKEND_KEYPAIR = process.env.BACKEND_WALLET_KEYPAIR 
+    ? Keypair.fromSecretKey(
+        Uint8Array.from(JSON.parse(process.env.BACKEND_WALLET_KEYPAIR))
+      )
+    : Keypair.generate(); // Generate a dummy keypair if env var is missing
 
 const connection = new Connection(constants.rpcUrl);
 
 export async function POST(req: Request): Promise<Response> {
+    // Check for backend wallet configuration
+    if (!process.env.BACKEND_WALLET_KEYPAIR) {
+        return Response.json(
+            {
+                error: "server_error",
+                message: "Backend wallet not configured",
+            },
+            { status: 500 },
+        );
+    }
     const body = await req.json();
 
     const userAddress = body?.userAddress;
