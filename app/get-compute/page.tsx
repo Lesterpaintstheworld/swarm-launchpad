@@ -124,6 +124,13 @@ export default function GetCompute() {
                         <div className="flex flex-col items-center gap-6 text-center">
                             <p className="text-lg">Learn from our AI mentor and start earning</p>
                             
+                            <Button 
+                                className="px-8 py-6 text-lg bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none"
+                                onClick={() => window.open('https://chatgpt.com/g/g-678e1bf0877481919eda0dfdb2efcd57-wealth-hive', '_blank')}
+                            >
+                                Start Learning
+                            </Button>
+                            
                             <div className="flex flex-col items-center gap-4">
                                 <p className="text-muted-foreground text-lg">
                                     Complete real learning milestones to earn your tokens
