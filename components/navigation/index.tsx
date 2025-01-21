@@ -86,9 +86,9 @@ export function Navigation() {
                     )}
                   >
                     {link.label === 'Get $COMPUTE' ? (
-                      <>
-                        Get <span className="text-yellow-500 metallic-text">$COMPUTE</span>
-                      </>
+                      <span className="text-foreground">
+                        Get <span className="metallic-text">$COMPUTE</span>
+                      </span>
                     ) : (
                       link.label
                     )}
