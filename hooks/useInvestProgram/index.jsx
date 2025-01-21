@@ -9,15 +9,20 @@ import { constants } from "@/lib/constants";
 import { IDL } from "@/data/programs/idl";
 
 const getShareholderPDA = async (programId, ownerPublicKey, poolPublicKey) => {
-    const [shareholderPda] = PublicKey.findProgramAddressSync(
-        [
-            Buffer.from("shareholder"),
-            poolPublicKey.toBuffer(),
-            ownerPublicKey.toBuffer()
-        ],
-        programId
-    );
-    return shareholderPda;
+    try {
+        const [shareholderPda] = PublicKey.findProgramAddressSync(
+            [
+                Buffer.from("shareholder"),
+                poolPublicKey.toBuffer(),
+                ownerPublicKey.toBuffer()
+            ],
+            programId
+        );
+        return shareholderPda;
+    } catch (error) {
+        console.error('Error generating PDA:', error);
+        return null;
+    }
 }
 
 const useInvestProgram = () => {
@@ -25,11 +30,21 @@ const useInvestProgram = () => {
     const { publicKey } = useWallet();
     const network = constants.environment === 'development' ? WalletAdapterNetwork.Devnet : WalletAdapterNetwork.Mainnet;
     const provider = useAnchorProvider();
-    const programId = useMemo(() => new PublicKey(constants.investmentProgram.id), [network]);
     
-    // Only create program if we have a valid provider
+    const programId = useMemo(() => {
+        try {
+            return new PublicKey(constants.investmentProgram.id);
+        } catch (error) {
+            console.error('Failed to create program ID:', error);
+            return null;
+        }
+    }, [network]);
+    
+    // Only create program if we have all required dependencies
     const program = useMemo(() => {
-        if (!provider || !(provider instanceof AnchorProvider)) return null;
+        if (!provider || !programId || !(provider instanceof AnchorProvider)) {
+            return null;
+        }
         
         try {
             return new Program(
@@ -43,12 +58,17 @@ const useInvestProgram = () => {
         }
     }, [provider, programId]);
 
-    // Get all shareholder accounts
+    // Get all shareholder accounts with safe guards
     const shareholders = useQuery({
         queryKey: ['get-all-shareholder-accounts', publicKey?.toBase58()],
         queryFn: async () => {
             if (!program) throw new Error("Program not initialized");
-            return program.account.Shareholders.all();
+            try {
+                return program.account.Shareholders.all();
+            } catch (error) {
+                console.error('Failed to fetch shareholders:', error);
+                return [];
+            }
         },
         enabled: !!program && !!connection && !!publicKey,
         staleTime: 30000,
