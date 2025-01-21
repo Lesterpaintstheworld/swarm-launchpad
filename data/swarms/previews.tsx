@@ -206,8 +206,8 @@ export const previews: SwarmPreviewData[] = [
         image: '/swarms/grant.jpeg',
         models: ['KinOS'],
         name: 'GrantKin',
-        description: 'AI swarm streamlining grant discovery, application writing, and compliance reporting for non-profits',
-        tags: ['AI', 'Non-profit', 'KinOS', 'Grants'],
+        description: 'AI swarm revolutionizing non-profit funding by automating grant discovery, application writing, and compliance reporting through coordinated AI agents.',
+        tags: ['Non-profit', 'Grant Writing', 'Funding', 'Compliance', 'AI Automation'],
         role: 'Grant Writer',
         swarmType: 'inception',
         revenueShare: 25
