@@ -7,6 +7,15 @@ import { useInvestProgram } from "@/hooks/useInvestProgram";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Button } from "@/components/shadcn/button";
 
+// Add interface for account type
+interface ShareholderAccount {
+    account: {
+        owner: {
+            toBase58: () => string;
+        };
+    };
+}
+
 export default function Portfolio() {
     const { publicKey, connected } = useWallet();
     const { shareholders } = useInvestProgram();
@@ -55,7 +64,7 @@ export default function Portfolio() {
 
     // Get user's investments from shareholders data
     const userInvestments = shareholders.data?.filter(
-        account => account.account.owner.toBase58() === publicKey?.toBase58()
+        (account: ShareholderAccount) => account.account.owner.toBase58() === publicKey?.toBase58()
     ) || [];
 
     return (
