@@ -15,6 +15,19 @@ const nextConfig = {
         config.externals.push('pino-pretty', 'encoding')
         return config
     },
+    async headers() {
+        return [
+            {
+                source: "/:path*",
+                headers: [
+                    {
+                        key: "Content-Security-Policy",
+                        value: "frame-src 'self' x.com *.x.com twitter.com *.twitter.com;",
+                    },
+                ],
+            },
+        ];
+    },
 };
 
 export default nextConfig;
