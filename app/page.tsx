@@ -17,11 +17,12 @@ export default function HomePage() {
             
             {/* Live Stream Container */}
             <div className="w-full max-w-[1200px] mx-auto mt-8 mb-12 px-4">
-                <div className="relative pb-[56.25%] h-0 rounded-xl overflow-hidden">
+                <div className="relative pb-[56.25%] h-0 rounded-xl overflow-hidden bg-black/20">
                     <iframe 
                         src="https://x.com/UBC4ai/live"
                         className="absolute top-0 left-0 w-full h-full border-0"
                         allowFullScreen
+                        loading="lazy"
                     />
                 </div>
             </div>
