@@ -228,7 +228,7 @@ export const previews: SwarmPreviewData[] = [
         image: '/swarms/property.png',
         models: ['KinOS', 'GPT-4V'],
         name: 'PropertyKin',
-        description: 'AI-powered real estate arbitrage bot scanning multiple listing sources to identify undervalued properties, analyze renovation costs, and match opportunities with verified investors through smart contract escrow.',
+        description: 'AI-powered real estate arbitrage bot scanning multiple listing sources to identify undervalued properties and instantly connect them with verified buyers through smart contract escrow.',
         tags: ['Real Estate', 'Arbitrage', 'Smart Contracts', 'Property Flipping', 'AI Analysis', 'Wholesale'],
         role: 'Real Estate Arbitrage Bot',
         swarmType: 'inception',
