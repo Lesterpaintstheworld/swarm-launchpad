@@ -28,6 +28,56 @@ export default function HomePage() {
                 </div>
             </div>
 
+            {/* Timeline flow */}
+            <div className="w-full max-w-[1000px] mx-auto flex flex-col gap-6 px-4 mb-24">
+                {/* Explainer text */}
+                <p className="text-center text-lg text-muted-foreground max-w-[800px] mx-auto mb-4">
+                    We believe in informed investment decisions. Our 6-hour launch process gives everyone time to research and participate fairly.
+                </p>
+
+                <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
+                    {/* Hour 1-2 */}
+                    <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm relative md:col-span-2">
+                        <h3 className="text-xl font-medium">Hours 1-2</h3>
+                        <p className="text-yellow-500 font-medium">Livestream</p>
+                        <p className="text-sm text-muted-foreground">Join the community livestream for detailed project insights</p>
+                        {/* Arrow for desktop */}
+                        <div className="hidden md:block absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
+                            <span className="text-2xl text-yellow-500">→</span>
+                        </div>
+                    </div>
+
+                    {/* Hour 3-4 */}
+                    <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm relative md:col-span-2">
+                        <h3 className="text-xl font-medium">Hours 3-4</h3>
+                        <p className="text-yellow-500 font-medium">DYOR</p>
+                        <p className="text-sm text-muted-foreground">Take time to research and make informed decisions</p>
+                        {/* Arrow for desktop */}
+                        <div className="hidden md:block absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
+                            <span className="text-2xl text-yellow-500">→</span>
+                        </div>
+                    </div>
+
+                    {/* Hour 5 */}
+                    <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm relative">
+                        <h3 className="text-xl font-medium">Hour 5</h3>
+                        <p className="text-yellow-500 font-medium">Shares Open</p>
+                        <p className="text-sm text-muted-foreground">Purchase shares at your own pace - no rush, no FOMO</p>
+                        {/* Arrow for desktop */}
+                        <div className="hidden md:block absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
+                            <span className="text-2xl text-yellow-500">→</span>
+                        </div>
+                    </div>
+
+                    {/* Hour 6 */}
+                    <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                        <h3 className="text-xl font-medium">Hour 6</h3>
+                        <p className="text-yellow-500 font-medium">Secondary Market</p>
+                        <p className="text-sm text-muted-foreground">Trading begins on decentralized markets</p>
+                    </div>
+                </div>
+            </div>
+
             <Hero 
                 title={<>Invest <span className="metallic-text">$COMPUTE</span>, get returns in <span className="metallic-text-ubc">$UBC</span></>}
                 className="text-balance"
