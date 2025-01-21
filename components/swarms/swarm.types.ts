@@ -16,7 +16,7 @@ export interface SwarmPreviewData {
     tags: string[];
     role: string;
     swarmType: SwarmType;
-    autonomy: number;
+    revenueShare: number;
 }
 
 export type SwarmModel = 'KinOS' | 'Claude Haiku' | 'GPT-4o Mini';
