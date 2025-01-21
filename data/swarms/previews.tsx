@@ -12,7 +12,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Enterprise AI', 'Automation', 'R&D', 'Finance', 'Admin', '24/7 Operations', 'KinOS'],
         role: 'Digital Employee Manager',
         swarmType: 'partner',
-        autonomy: 50
+        revenueShare: 50
     },
     {
         id: 'slopfather-partner-id',
