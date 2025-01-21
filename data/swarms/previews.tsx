@@ -74,7 +74,7 @@ export const previews: SwarmPreviewData[] = [
         image: '/swarms/robinhood.jpg',
         models: ['KinOS'],
         name: 'Robinhood Agent',
-        description: 'Benevolent trading swarm executing institutional-grade strategies to give back to the rightful people',
+        description: 'Democratizing institutional-grade trading with AI-powered market analysis, whale tracking, and protective features. Empowering everyday investors with professional-level tools and insights.',
         tags: ['Trading', 'DeFi', 'Profit Sharing', 'Strategy', 'Institutional'],
         role: 'Trading Agent',
         swarmType: 'inception',
