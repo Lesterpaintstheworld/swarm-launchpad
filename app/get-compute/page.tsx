@@ -125,7 +125,7 @@ export default function GetCompute() {
                             <a
                                 href={stakeMenuItems[0].url}
                                 target={stakeMenuItems[0].target}
-                                className="flex flex-col gap-3 p-8 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
+                                className="flex flex-col gap-3 p-8 rounded-xl bg-gradient-to-br from-purple-500/10 to-blue-500/10 hover:from-purple-500/20 hover:to-blue-500/20 transition-all group"
                             >
                                 <span className="text-xl font-medium">{stakeMenuItems[0].label}</span>
                                 <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
@@ -135,7 +135,7 @@ export default function GetCompute() {
                             <a
                                 href={stakeMenuItems[1].url}
                                 target={stakeMenuItems[1].target}
-                                className="flex flex-col gap-3 p-8 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
+                                className="flex flex-col gap-3 p-8 rounded-xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 hover:from-blue-500/20 hover:to-cyan-500/20 transition-all group"
                             >
                                 <span className="text-xl font-medium">{stakeMenuItems[1].label}</span>
                                 <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
@@ -145,7 +145,7 @@ export default function GetCompute() {
                             <a
                                 href={stakeMenuItems[2].url}
                                 target={stakeMenuItems[2].target}
-                                className="flex flex-col gap-3 p-8 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
+                                className="flex flex-col gap-3 p-8 rounded-xl bg-gradient-to-br from-emerald-500/10 to-teal-500/10 hover:from-emerald-500/20 hover:to-teal-500/20 transition-all group"
                             >
                                 <span className="text-xl font-medium">{stakeMenuItems[2].label}</span>
                                 <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
@@ -155,7 +155,7 @@ export default function GetCompute() {
                             <a
                                 href={stakeMenuItems[3].url}
                                 target={stakeMenuItems[3].target}
-                                className="flex flex-col gap-3 p-8 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
+                                className="flex flex-col gap-3 p-8 rounded-xl bg-gradient-to-br from-orange-500/10 to-yellow-500/10 hover:from-orange-500/20 hover:to-yellow-500/20 transition-all group"
                             >
                                 <span className="text-xl font-medium">{stakeMenuItems[3].label}</span>
                                 <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
@@ -183,7 +183,7 @@ export default function GetCompute() {
                             
                             <div className="flex flex-col gap-6 w-full max-w-[600px]">
                                 {/* Course 1 */}
-                                <div className="flex flex-col gap-3">
+                                <div className="flex flex-col gap-3 p-8 rounded-xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 hover:from-indigo-500/20 hover:to-purple-500/20 transition-all">
                                     <p className="text-lg font-medium">Course 1: AI Investing Fundamentals</p>
                                     <p className="text-muted-foreground">Earn 10,000 <span className="metallic-text">$COMPUTE</span></p>
                                     <Button 
@@ -195,7 +195,7 @@ export default function GetCompute() {
                                 </div>
 
                                 {/* Course 2 */}
-                                <div className="flex flex-col gap-3">
+                                <div className="flex flex-col gap-3 p-8 rounded-xl bg-gradient-to-br from-rose-500/10 to-pink-500/10 hover:from-rose-500/20 hover:to-pink-500/20 transition-all">
                                     <p className="text-lg font-medium">Course 2: $COMPUTE Launch Strategies</p>
                                     <p className="text-muted-foreground">Earn 9,000 <span className="metallic-text">$COMPUTE</span></p>
                                     <Button 
@@ -245,7 +245,7 @@ export default function GetCompute() {
                         {/* Content */}
                         <div className="flex flex-col items-center gap-8 w-full max-w-[800px]">
                             {/* How to Earn */}
-                            <div className="w-full">
+                            <div className="w-full p-8 rounded-xl bg-gradient-to-br from-amber-500/10 to-orange-500/10">
                                 <h3 className="text-xl font-medium mb-4">How to Earn</h3>
                                 <ul className="flex flex-col gap-2 text-muted-foreground">
                                     <li className="flex items-center gap-2">
@@ -268,7 +268,7 @@ export default function GetCompute() {
                             </div>
 
                             {/* Rewards */}
-                            <div className="w-full">
+                            <div className="w-full p-8 rounded-xl bg-gradient-to-br from-emerald-500/10 to-green-500/10">
                                 <h3 className="text-xl font-medium mb-4">Rewards</h3>
                                 <ul className="flex flex-col gap-2 text-muted-foreground">
                                     <li className="flex items-center gap-2">
@@ -287,7 +287,7 @@ export default function GetCompute() {
                             </div>
 
                             {/* To Redeem */}
-                            <div className="w-full">
+                            <div className="w-full p-8 rounded-xl bg-gradient-to-br from-blue-500/10 to-indigo-500/10">
                                 <h3 className="text-xl font-medium mb-4">To Redeem</h3>
                                 <ul className="flex flex-col gap-2 text-muted-foreground">
                                     <li className="flex items-center gap-2">
