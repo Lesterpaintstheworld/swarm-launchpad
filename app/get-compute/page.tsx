@@ -2,7 +2,6 @@
 
 import { BackgroundBlur } from "@/components/background";
 import { Button } from "@/components/shadcn/button";
-import { Countdown } from "@/components/ui/countdown";
 import { 
     Tooltip,
     TooltipContent,
