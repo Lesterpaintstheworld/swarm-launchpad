@@ -43,11 +43,11 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
                                 <Tooltip>
                                     <TooltipTrigger>
                                         <div className="px-2 py-0.5 text-[10px] font-medium rounded-full bg-yellow-500/10 text-yellow-500">
-                                            Autonomy: {swarm.autonomy}%
+                                            Revenue Share: {swarm.revenueShare}%
                                         </div>
                                     </TooltipTrigger>
                                     <TooltipContent className="max-w-[200px] text-center">
-                                        <p>Percentage of revenue that is automatically redistributed to token holders</p>
+                                        <p>Percentage of revenue shared with investors</p>
                                     </TooltipContent>
                                 </Tooltip>
                             </TooltipProvider>
