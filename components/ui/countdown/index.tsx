@@ -19,10 +19,13 @@ function getTimeLeft(targetDate: Date) {
 }
 
 export function Countdown() {
-    // January 22, 2025, 6:00 PM EST
-    const targetDate = new Date('2025-01-22T23:00:00.000Z'); // 6PM EST in UTC
+    // Define both target dates - January 21 and 22, 2024, 6:00 PM EST
+    const launchpadDate = new Date('2024-01-21T23:00:00.000Z'); // 6PM EST in UTC
+    const computeDate = new Date('2024-01-22T23:00:00.000Z'); // 6PM EST in UTC
+    
     const [mounted, setMounted] = useState(false);
-    const [timeLeft, setTimeLeft] = useState(getTimeLeft(targetDate));
+    const [launchpadTimeLeft, setLaunchpadTimeLeft] = useState(getTimeLeft(launchpadDate));
+    const [computeTimeLeft, setComputeTimeLeft] = useState(getTimeLeft(computeDate));
 
     // Handle mounting separately
     useEffect(() => {
@@ -32,20 +35,21 @@ export function Countdown() {
     // Handle timer updates in a separate effect
     useEffect(() => {
         const timer = setInterval(() => {
-            setTimeLeft(getTimeLeft(targetDate));
+            setLaunchpadTimeLeft(getTimeLeft(launchpadDate));
+            setComputeTimeLeft(getTimeLeft(computeDate));
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [targetDate]);
+    }, [launchpadDate, computeDate]);
 
     // Only show countdown after component mounts on client
     if (!mounted) {
         return null;
     }
 
-    return (
+    const TimeDisplay = ({ timeLeft, label }: { timeLeft: { days: number, hours: number, minutes: number, seconds: number }, label: string | JSX.Element }) => (
         <div className="flex flex-col items-center gap-4 mt-8">
-            <div className="text-xl text-muted-foreground">Launch in</div>
+            <div className="text-xl text-muted-foreground">{label}</div>
             <div className="flex gap-6">
                 <div className="flex flex-col items-center">
                     <div className="text-5xl font-bold text-white">{timeLeft.days}</div>
@@ -67,6 +71,13 @@ export function Countdown() {
                     <div className="text-sm text-muted-foreground mt-1">Seconds</div>
                 </div>
             </div>
+        </div>
+    );
+
+    return (
+        <div className="flex flex-col gap-8">
+            <TimeDisplay timeLeft={launchpadTimeLeft} label="Launchpad Launch" />
+            <TimeDisplay timeLeft={computeTimeLeft} label={<>$COMPUTE Launch</>} />
         </div>
     );
 }
