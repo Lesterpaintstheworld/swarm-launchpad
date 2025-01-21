@@ -4,8 +4,7 @@ import { useAnchorProvider } from "../useAnchor";
 import { PublicKey } from "@solana/web3.js";
 import { useMemo } from "react";
 import { Program } from "@coral-xyz/anchor";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { toast } from "sonner";
+import { useQuery } from "@tanstack/react-query";
 import { constants } from "@/lib/constants";
 import IDL from "@/data/programs/idl.json";
 
