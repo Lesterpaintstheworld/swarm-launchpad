@@ -1,5 +1,6 @@
 'use client';
 
+import { Countdown } from "@/components/ui/countdown";
 import { Hero } from "@/components/ui/hero";
 import { ProcessFlow } from "@/components/ui/processFlow";
 import { Returns } from "@/components/ui/returns/index";
@@ -15,6 +16,17 @@ export default function HomePage() {
             <BackgroundBlur />
             <Navigation />
             
+            {/* Launch Timer */}
+            <div className="w-full max-w-[1200px] mx-auto mt-8 mb-12 px-4">
+                <div className="flex flex-col items-center justify-center gap-4">
+                    <h2 className="text-center">Launchpad Opens In</h2>
+                    <Countdown 
+                        targetDate={new Date('2024-01-22T18:00:00.000Z')} // 1pm EST = 18:00 UTC
+                        className="scale-150 mb-8"
+                    />
+                </div>
+            </div>
+
             {/* Live Stream Container */}
             <div className="w-full max-w-[1200px] mx-auto mt-8 mb-12 px-4">
                 <div className="relative pb-[56.25%] h-0 rounded-xl overflow-hidden bg-black/20">
