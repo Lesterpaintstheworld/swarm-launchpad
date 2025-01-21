@@ -27,10 +27,52 @@ export default function GetCompute() {
                     </p>
                 </div>
 
-                {/* Countdown */}
-                <Countdown />
+                {/* Timeline flow instead of countdown */}
+                <div className="w-full max-w-[1000px] flex flex-col gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        {/* Hour 1 */}
+                        <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm relative">
+                            <h3 className="text-xl font-medium">Hour 1</h3>
+                            <p className="text-yellow-500 font-medium">Livestream</p>
+                            <p className="text-sm text-muted-foreground">Join the community livestream</p>
+                            {/* Arrow for desktop */}
+                            <div className="hidden md:block absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
+                                <span className="text-2xl text-yellow-500">→</span>
+                            </div>
+                        </div>
 
-                {/* Add more vertical space after countdown */}
+                        {/* Hour 2 */}
+                        <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm relative">
+                            <h3 className="text-xl font-medium">Hour 2</h3>
+                            <p className="text-yellow-500 font-medium">DYOR</p>
+                            <p className="text-sm text-muted-foreground">Research and prepare</p>
+                            {/* Arrow for desktop */}
+                            <div className="hidden md:block absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
+                                <span className="text-2xl text-yellow-500">→</span>
+                            </div>
+                        </div>
+
+                        {/* Hour 3 */}
+                        <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm relative">
+                            <h3 className="text-xl font-medium">Hour 3</h3>
+                            <p className="text-yellow-500 font-medium">Primary Market</p>
+                            <p className="text-sm text-muted-foreground">Initial token offering</p>
+                            {/* Arrow for desktop */}
+                            <div className="hidden md:block absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
+                                <span className="text-2xl text-yellow-500">→</span>
+                            </div>
+                        </div>
+
+                        {/* Hour 4 */}
+                        <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                            <h3 className="text-xl font-medium">Hour 4</h3>
+                            <p className="text-yellow-500 font-medium">Secondary Market</p>
+                            <p className="text-sm text-muted-foreground">Trading begins</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Add more vertical space after timeline */}
                 <div className="h-8" />
 
                 {/* Three boxes */}
