@@ -12,7 +12,7 @@ type Investment = {
 
 interface InvestmentsProps {
     className?: string;
-    investments: any[];
+    investments: Investment[];
 }
 
 const Investments = ({ className, investments }: InvestmentsProps) => {
