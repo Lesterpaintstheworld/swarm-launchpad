@@ -31,11 +31,12 @@ export async function POST(req: Request): Promise<Response> {
     let user;
     try {
         user = new PublicKey(userAddress);
-    } catch (e: any) {
+    } catch (e: unknown) {
+        const error = e as Error;
         return Response.json(
             {
                 error: "invalid public key",
-                message: `could not parse ${userAddress} as public key: ${e?.message}`,
+                message: `could not parse ${userAddress} as public key: ${error?.message}`,
             },
             { status: 400 },
         );
