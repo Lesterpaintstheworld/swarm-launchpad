@@ -13,7 +13,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/shadcn/navigation-menu";
 import { cn } from "@/lib/utils";
 import { MenuItem } from "./navigation.types";

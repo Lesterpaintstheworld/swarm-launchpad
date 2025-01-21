@@ -9,7 +9,6 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/shadcn/tooltip";
-import { InfoCircled } from "@radix-ui/react-icons";
 import { stakeMenuItems } from "@/data/navigation/menu";
 
 export default function GetCompute() {

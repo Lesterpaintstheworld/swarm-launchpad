@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 function getTimeLeft(targetDate: Date) {
     const now = new Date();
@@ -20,12 +20,14 @@ function getTimeLeft(targetDate: Date) {
 
 export function Countdown() {
     // Define both target dates for 2025
-    const launchpadDate = new Date('2025-01-21T23:00:00.000Z'); // January 21, 2025, 6PM EST
-    const computeDate = new Date('2025-01-22T23:00:00.000Z');   // January 22, 2025, 6PM EST
+    const dates = useMemo(() => ({
+        launchpadDate: new Date('2025-01-21T23:00:00.000Z'), // January 21, 2025, 6PM EST
+        computeDate: new Date('2025-01-22T23:00:00.000Z')    // January 22, 2025, 6PM EST
+    }), []);
     
     const [mounted, setMounted] = useState(false);
-    const [launchpadTimeLeft, setLaunchpadTimeLeft] = useState(getTimeLeft(launchpadDate));
-    const [computeTimeLeft, setComputeTimeLeft] = useState(getTimeLeft(computeDate));
+    const [launchpadTimeLeft, setLaunchpadTimeLeft] = useState(getTimeLeft(dates.launchpadDate));
+    const [computeTimeLeft, setComputeTimeLeft] = useState(getTimeLeft(dates.computeDate));
 
     // Handle mounting separately
     useEffect(() => {
@@ -35,12 +37,12 @@ export function Countdown() {
     // Handle timer updates in a separate effect
     useEffect(() => {
         const timer = setInterval(() => {
-            setLaunchpadTimeLeft(getTimeLeft(launchpadDate));
-            setComputeTimeLeft(getTimeLeft(computeDate));
+            setLaunchpadTimeLeft(getTimeLeft(dates.launchpadDate));
+            setComputeTimeLeft(getTimeLeft(dates.computeDate));
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [launchpadDate, computeDate]);
+    }, [dates]);
 
     // Only show countdown after component mounts on client
     if (!mounted) {
