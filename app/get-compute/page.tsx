@@ -258,13 +258,16 @@ export default function GetCompute() {
                             </p>
                         </div>
 
-                        {/* Claim Button */}
-                        <Button 
-                            className="px-8 py-6 text-lg bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none"
-                            onClick={() => window.open('/claim', '_blank')}
-                        >
-                            Claim Now
-                        </Button>
+                        {/* Claim Button and Coming Soon text */}
+                        <div className="flex flex-col items-center gap-2">
+                            <Button 
+                                className="px-8 py-6 text-lg bg-black/20 text-gray-500 border-none cursor-not-allowed"
+                                disabled={true}
+                            >
+                                Claim Now
+                            </Button>
+                            <span className="text-sm text-gray-500">coming soon</span>
+                        </div>
                     </div>
                 </div>
 
