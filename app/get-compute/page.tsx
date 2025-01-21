@@ -166,27 +166,46 @@ export default function GetCompute() {
                     </div>
                 </div>
 
-                {/* Learn-to-earn Section with improved styling */}
+                {/* Learn-to-earn Section */}
                 <div className="w-full max-w-[1000px] mt-32 mb-12">
                     <div className="flex flex-col items-center gap-8 p-12 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
                         {/* Section Title */}
                         <div className="flex flex-col items-center gap-2 text-center">
                             <h2 className="text-3xl font-normal">🎓 Learn to Earn</h2>
                             <p className="text-xl text-muted-foreground max-w-[600px] text-balance">
-                                Master AI investing fundamentals and earn your first 10,000 <span className="metallic-text">$COMPUTE</span>
+                                Master AI investing fundamentals and earn up to 19,000 <span className="metallic-text">$COMPUTE</span>
                             </p>
                         </div>
 
                         {/* Content */}
                         <div className="flex flex-col items-center gap-6 text-center">
-                            <p className="text-lg">Learn from our AI mentor and start earning</p>
+                            <p className="text-lg">Complete both courses to maximize your earnings</p>
                             
-                            <Button 
-                                className="px-8 py-6 text-lg bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none"
-                                onClick={() => window.open('https://chatgpt.com/g/g-678e1bf0877481919eda0dfdb2efcd57-wealth-hive', '_blank')}
-                            >
-                                Start Learning
-                            </Button>
+                            <div className="flex flex-col gap-6 w-full max-w-[600px]">
+                                {/* Course 1 */}
+                                <div className="flex flex-col gap-3">
+                                    <p className="text-lg font-medium">Course 1: AI Investing Fundamentals</p>
+                                    <p className="text-muted-foreground">Earn 10,000 <span className="metallic-text">$COMPUTE</span></p>
+                                    <Button 
+                                        className="px-8 py-6 text-lg bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none"
+                                        onClick={() => window.open('https://chatgpt.com/g/g-678e1bf0877481919eda0dfdb2efcd57-wealth-hive', '_blank')}
+                                    >
+                                        Start Course 1
+                                    </Button>
+                                </div>
+
+                                {/* Course 2 */}
+                                <div className="flex flex-col gap-3">
+                                    <p className="text-lg font-medium">Course 2: $COMPUTE Launch Strategies</p>
+                                    <p className="text-muted-foreground">Earn 9,000 <span className="metallic-text">$COMPUTE</span></p>
+                                    <Button 
+                                        className="px-8 py-6 text-lg bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none"
+                                        onClick={() => window.open('https://chatgpt.com/g/g-678fc15a28b08191a98d4d23bd1a6839-wealthhive-module-2-compute-launch-strategies', '_blank')}
+                                    >
+                                        Start Course 2
+                                    </Button>
+                                </div>
+                            </div>
                             
                             <div className="flex flex-col items-center gap-4">
                                 <p className="text-muted-foreground text-lg">
@@ -196,12 +215,12 @@ export default function GetCompute() {
                                 <div className="flex flex-col items-center gap-3 mt-4 p-6 rounded-lg bg-black/30">
                                     <p className="text-lg">🔒 Verify achievements:</p>
                                     <a 
-                                        href="https://t.me/verifyleo" 
+                                        href="https://t.me/Bigbosefx2" 
                                         target="_blank" 
                                         rel="noopener noreferrer"
                                         className="text-blue-400 hover:text-blue-300 transition-colors text-lg"
                                     >
-                                        @verifyleo on Telegram
+                                        @Bigbosefx2 on Telegram
                                     </a>
                                 </div>
                             </div>
