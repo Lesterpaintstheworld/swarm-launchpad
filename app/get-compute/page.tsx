@@ -113,7 +113,7 @@ export default function GetCompute() {
                 <div className="w-full max-w-[1000px] mt-32">
                     <div className="flex flex-col items-center gap-8 p-12 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
                         {/* Section Title */}
-                        <div className="flex flex-col items-center gap-2 text-center">
+                        <div className="flex flex-col items-center gap-4 text-center">
                             <h2 className="text-3xl font-normal">💎 Stake to Earn</h2>
                             <p className="text-xl text-muted-foreground max-w-[600px] text-balance">
                                 Stake your <span className="metallic-text-ubc">$UBC</span> tokens to earn <span className="metallic-text">$COMPUTE</span> rewards
@@ -125,7 +125,7 @@ export default function GetCompute() {
                             <a
                                 href={stakeMenuItems[0].url}
                                 target={stakeMenuItems[0].target}
-                                className="flex flex-col gap-3 p-8 rounded-xl bg-black/30 hover:bg-black/40 transition-colors group"
+                                className="flex flex-col gap-3 p-8 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
                             >
                                 <span className="text-xl font-medium">{stakeMenuItems[0].label}</span>
                                 <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
@@ -135,7 +135,7 @@ export default function GetCompute() {
                             <a
                                 href={stakeMenuItems[1].url}
                                 target={stakeMenuItems[1].target}
-                                className="flex flex-col gap-3 p-8 rounded-xl bg-black/30 hover:bg-black/40 transition-colors group"
+                                className="flex flex-col gap-3 p-8 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
                             >
                                 <span className="text-xl font-medium">{stakeMenuItems[1].label}</span>
                                 <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
@@ -145,7 +145,7 @@ export default function GetCompute() {
                             <a
                                 href={stakeMenuItems[2].url}
                                 target={stakeMenuItems[2].target}
-                                className="flex flex-col gap-3 p-8 rounded-xl bg-black/30 hover:bg-black/40 transition-colors group"
+                                className="flex flex-col gap-3 p-8 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
                             >
                                 <span className="text-xl font-medium">{stakeMenuItems[2].label}</span>
                                 <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
@@ -155,7 +155,7 @@ export default function GetCompute() {
                             <a
                                 href={stakeMenuItems[3].url}
                                 target={stakeMenuItems[3].target}
-                                className="flex flex-col gap-3 p-8 rounded-xl bg-black/30 hover:bg-black/40 transition-colors group"
+                                className="flex flex-col gap-3 p-8 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
                             >
                                 <span className="text-xl font-medium">{stakeMenuItems[3].label}</span>
                                 <span className="text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
@@ -170,7 +170,7 @@ export default function GetCompute() {
                 <div className="w-full max-w-[1000px] mt-32 mb-12">
                     <div className="flex flex-col items-center gap-8 p-12 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
                         {/* Section Title */}
-                        <div className="flex flex-col items-center gap-2 text-center">
+                        <div className="flex flex-col items-center gap-4 text-center">
                             <h2 className="text-3xl font-normal">🎓 Learn to Earn</h2>
                             <p className="text-xl text-muted-foreground max-w-[600px] text-balance">
                                 Master AI investing fundamentals and earn up to 19,000 <span className="metallic-text">$COMPUTE</span>
@@ -232,7 +232,7 @@ export default function GetCompute() {
                 <div className="w-full max-w-[1000px] mt-32 mb-12">
                     <div className="flex flex-col items-center gap-8 p-12 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
                         {/* Section Title */}
-                        <div className="flex flex-col items-center gap-2 text-center">
+                        <div className="flex flex-col items-center gap-4 text-center">
                             <h2 className="text-3xl font-normal">Raid to Earn 🎁</h2>
                             <p className="text-xl text-muted-foreground max-w-[600px] text-balance">
                                 Introducing <span className="metallic-text-ubc">$UBC</span> Raid Rewards!
