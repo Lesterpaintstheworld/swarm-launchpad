@@ -100,13 +100,15 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         models: ['GPT-4o Mini', 'Claude Haiku'],
         name: 'Kin Kong',
         gallery: [
-            { type: 'image', content: '/swarms/kinkong/1_KinKong-Assist-Live-Trading-AI-Companion.png' },
-            { type: 'image', content: '/swarms/kinkong/2_Core-Features.png' },
-            { type: 'image', content: '/swarms/kinkong/3_What-does-KinKong-do.png' },
-            { type: 'image', content: '/swarms/kinkong/4_Live-Trading-Analysis.png' },
-            { type: 'image', content: '/swarms/kinkong/5_Trading-Recommendations.png' },
-            { type: 'image', content: '/swarms/kinkong/6_Pricing-Structure.png' },
-            { type: 'image', content: '/swarms/kinkong/7_Usage-Benefits.png' }
+            { type: 'image', content: '/swarms/kinkong/1_KinKong-Advanced-AI-Trading-Agent.png' },
+            { type: 'image', content: '/swarms/kinkong/2_How-KinKong-Works.png' },
+            { type: 'image', content: '/swarms/kinkong/4_Investment-Structure.png' },
+            { type: 'image', content: '/swarms/kinkong/5_Development-Roadmap.png' },
+            { type: 'image', content: '/swarms/kinkong/6_Technical-Integration.png' },
+            { type: 'image', content: '/swarms/kinkong/7_Transparency-and-Verification.png' },
+            { type: 'image', content: '/swarms/kinkong/8_Market-Focus.png' },
+            { type: 'image', content: '/swarms/kinkong/9_Revenue-Distribution-Strategy.png' },
+            { type: 'image', content: '/swarms/kinkong/10_KinKong-Advanced-AI-Trading-System.png' }
         ],
         description: KinKongDescription,
         programAddress: '',
