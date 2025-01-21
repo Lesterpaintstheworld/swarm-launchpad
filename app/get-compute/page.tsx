@@ -54,8 +54,8 @@ export default function GetCompute() {
                             <span className="text-lg"><span className="metallic-text">$COMPUTE</span>/SOL</span>
                         </div>
                         <Button 
-                            className="w-full bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none mt-auto"
-                            onClick={() => window.open('https://app.meteora.ag/dlmm/7EVJ9P1M9qeNWLYPWWBbGwrWDtTCWo6r2A7J7XU19tNw', '_blank')}
+                            className="w-full bg-black/20 text-gray-500 border-none mt-auto cursor-not-allowed"
+                            disabled={true}
                         >
                             Trade Now
                         </Button>
@@ -71,8 +71,8 @@ export default function GetCompute() {
                             <span className="text-lg"><span className="metallic-text">$COMPUTE</span>/<span className="metallic-text-ubc">$UBC</span></span>
                         </div>
                         <Button 
-                            className="w-full bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none mt-auto"
-                            onClick={() => window.open('https://app.meteora.ag/dlmm/H4dLDVvV68xSnziLaPFXQZWjkozqPG5HgZdPnW5QsFtWI', '_blank')}
+                            className="w-full bg-black/20 text-gray-500 border-none mt-auto cursor-not-allowed"
+                            disabled={true}
                         >
                             Trade Now
                         </Button>
