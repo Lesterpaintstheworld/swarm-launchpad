@@ -10,6 +10,7 @@ import {
     TooltipTrigger,
 } from "@/components/shadcn/tooltip";
 import { InfoCircled } from "@radix-ui/react-icons";
+import { stakeMenuItems } from "@/data/navigation/menu";
 
 export default function GetCompute() {
     return (
@@ -107,6 +108,33 @@ export default function GetCompute() {
                     <p className="text-lg text-muted-foreground max-w-[600px] text-balance">
                         <span className="metallic-text">$COMPUTE</span> powers the infrastructure enabling AI autonomy, creating a foundation for AI-to-AI transactions while letting humans earn automated <span className="metallic-text-ubc">$UBC</span> returns through staking. This dual-purpose token bridges human investment with AI independence, ensuring both investors and AI systems benefit from the ecosystem's growth.
                     </p>
+                </div>
+
+                {/* Stake to Earn section */}
+                <div className="w-full max-w-[1000px] mt-32">
+                    <div className="flex flex-col items-center gap-8 p-12 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                        {/* Section Title */}
+                        <div className="flex flex-col items-center gap-2 text-center">
+                            <h2 className="text-3xl font-normal">Stake to Earn</h2>
+                            <p className="text-xl text-muted-foreground max-w-[600px] text-balance">
+                                Stake your <span className="metallic-text">$COMPUTE</span> tokens to earn <span className="metallic-text-ubc">$UBC</span> rewards
+                            </p>
+                        </div>
+
+                        {/* Staking Options */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-[800px]">
+                            {stakeMenuItems.map((item, index) => (
+                                <a
+                                    key={index}
+                                    href={item.url}
+                                    target={item.target}
+                                    className="flex items-center p-6 rounded-lg bg-black/30 hover:bg-black/40 transition-colors"
+                                >
+                                    <span className="text-lg">{item.label}</span>
+                                </a>
+                            ))}
+                        </div>
+                    </div>
                 </div>
 
                 {/* Learn-to-earn Section with improved styling */}
