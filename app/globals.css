@@ -85,6 +85,25 @@
   animation-delay: 3s;
 }
 
+.metallic-text-sol {
+  color: #ec4899; /* Pink base color */
+  background: linear-gradient(
+    120deg,
+    #ec4899 0%,    /* Pink base */
+    #f472b6 10%,   /* Lighter pink */
+    #fce7f3 20%,   /* Very light pink */
+    #f472b6 30%,   /* Lighter pink */
+    #ec4899 40%    /* Pink base */
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: metallic-shine 10s linear infinite; /* Slower animation */
+  animation-delay: 1.5s;
+}
+
 @layer base {
 	:root {
 		--background: 0 0% 0%;

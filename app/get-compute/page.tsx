@@ -51,7 +51,9 @@ export default function GetCompute() {
                             <p className="text-sm text-muted-foreground">Trade tokens in the decentralized liquidity pool</p>
                         </div>
                         <div className="flex items-center gap-2 mb-4 text-muted-foreground">
-                            <span className="text-lg"><span className="metallic-text">$COMPUTE</span>/SOL</span>
+                            <span className="text-lg">
+                                <span className="metallic-text">$COMPUTE</span>/<span className="metallic-text-sol">$SOL</span>
+                            </span>
                         </div>
                         <Button 
                             className="w-full bg-black/20 text-gray-500 border-none mt-auto cursor-not-allowed"
