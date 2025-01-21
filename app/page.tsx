@@ -50,8 +50,8 @@ export default function HomePage() {
                     {/* Hour 3 */}
                     <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm relative">
                         <h3 className="text-xl font-medium">Hour 3</h3>
-                        <p className="text-yellow-500 font-medium">Livestream</p>
-                        <p className="text-sm text-muted-foreground">Join the community livestream for final insights and updates</p>
+                        <p className="text-yellow-500 font-medium">Livestream with the team</p>
+                        <p className="text-sm text-muted-foreground">Join the community livestream for final insights</p>
                         {/* Arrow for desktop */}
                         <div className="hidden md:block absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
                             <span className="text-2xl text-yellow-500">→</span>
@@ -62,7 +62,7 @@ export default function HomePage() {
                     <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm relative">
                         <h3 className="text-xl font-medium">Hour 4</h3>
                         <p className="text-yellow-500 font-medium">Shares Open</p>
-                        <p className="text-sm text-muted-foreground">Purchase shares at your own pace - no rush, no FOMO</p>
+                        <p className="text-sm text-muted-foreground">Purchase shares at the best prices, informed</p>
                         {/* Arrow for desktop */}
                         <div className="hidden md:block absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
                             <span className="text-2xl text-yellow-500">→</span>
@@ -73,7 +73,7 @@ export default function HomePage() {
                     <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
                         <h3 className="text-xl font-medium">Hour 5</h3>
                         <p className="text-yellow-500 font-medium">Trading Begins</p>
-                        <p className="text-sm text-muted-foreground">Secondary market opens for decentralized trading</p>
+                        <p className="text-sm text-muted-foreground">Secondary market opens</p>
                     </div>
                 </div>
             </div>
