@@ -6,17 +6,23 @@ import { PortfolioOverview } from "@/components/portfolio/overview";
 import { useInvestProgram } from "@/hooks/useInvestProgram";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Button } from "@/components/shadcn/button";
+import dynamic from 'next/dynamic';
 
-// Add interface for account type
-interface ShareholderAccount {
-    account: {
-        owner: {
-            toBase58: () => string;
-        };
-    };
-}
+// Dynamically import components that use Web3
+const DynamicPortfolio = dynamic(() => Promise.resolve(({ children }: { children: React.ReactNode }) => <>{children}</>), {
+    ssr: false
+});
 
 export default function Portfolio() {
+    // Move hooks inside dynamic component to prevent SSR
+    return (
+        <DynamicPortfolio>
+            <PortfolioContent />
+        </DynamicPortfolio>
+    );
+}
+
+function PortfolioContent() {
     const { publicKey, connected } = useWallet();
     const { shareholders } = useInvestProgram();
 
@@ -64,7 +70,7 @@ export default function Portfolio() {
 
     // Get user's investments from shareholders data
     const userInvestments = shareholders.data?.filter(
-        (account: ShareholderAccount) => account.account.owner.toBase58() === publicKey?.toBase58()
+        (account) => account.account.owner.toBase58() === publicKey?.toBase58()
     ) || [];
 
     return (
