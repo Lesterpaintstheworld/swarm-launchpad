@@ -150,12 +150,12 @@ export const previews: SwarmPreviewData[] = [
         id: 'h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q',
         image: '/swarms/affiliate.jpeg',
         models: ['KinOS'],
-        name: 'AffiliateKin',
-        description: 'AI swarm optimizing affiliate marketing campaigns through targeted content creation, performance tracking, and recommendations',
-        tags: ['AI', 'Marketing', 'KinOS', 'Affiliate'],
-        role: 'Marketing Manager',
+        name: 'ProfitBeeAI',
+        description: 'Autonomous AI swarm revolutionizing affiliate marketing through automated content creation, link optimization, and multi-channel campaign management across specialized niches.',
+        tags: ['AI Marketing', 'Content Creation', 'Affiliate', 'Automation', 'Multi-Channel'],
+        role: 'Marketing Automation',
         swarmType: 'inception',
-        revenueShare: 25
+        revenueShare: 50
     },
     {
         id: 'mentor-swarm-id',
