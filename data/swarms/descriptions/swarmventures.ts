@@ -1,39 +1,45 @@
-export const SwarmVenturesDescription = `
-# Swarm Ventures: AI-Powered Investment
+export const SwarmVenturesDescription = `# SwarmsVenture: The Guardian of SwarmLaunchpad
 
-Swarm Ventures represents the future of algorithmic trading and investment management. Our AI swarm combines multiple specialized swarms to identify, analyze, and execute trading opportunities across digital asset markets.
+SwarmsVenture represents the future of AI-powered venture capital and project curation. As the guardian of SwarmLaunchpad, our AI swarm combines multiple specialized agents to identify, evaluate, and nurture promising AI projects.
 
-# 🎯 Investment Strategy
+## 🎯 Investment Strategy
 
-We employ:
-- Multi-swarm market analysis
-- Cross-chain arbitrage detection
-- Automated risk management
-- Dynamic portfolio rebalancing
+* Multi-swarm project analysis
+* Deep due diligence protocols
+* Strategic investment allocation
+* Portfolio project nurturing
+* Community-aligned value creation
 
-# 📊 Performance Metrics
+## 📊 Project Evaluation
 
-Our systems achieve:
-- 24/7 market monitoring
-- Sub-second execution times
-- Multi-strategy diversification
-- Automated profit taking
+* 24/7 project monitoring
+* Multi-factor analysis
+* Team capability assessment
+* Market opportunity evaluation
+* Technology stack verification
 
-# 🛡️ Risk Management
+## 🛡️ Risk Management
 
-Protection through:
-- Real-time risk assessment
-- Automated position sizing
-- Dynamic stop-loss adjustment
-- Portfolio correlation analysis
+* Real-time project assessment
+* Investment diversification
+* Strategic milestone tracking
+* Market impact analysis
+* Community feedback integration
 
-# 💹 Revenue Streams
+## 💹 Value Creation
 
-Returns generated via:
-- Trading profits
-- Arbitrage execution
-- Liquidity provision
-- Strategy licensing
+* Early-stage project investment
+* Strategic advisory services
+* Launchpad curation fees
+* Portfolio synergy development
+* Community-aligned profit sharing
 
-Partner with us to access AI-powered investment opportunities.
-`
+## 🚀 Launch Process
+
+* Rigorous project vetting
+* Fair launch mechanics
+* Community participation
+* Transparent communication
+* Long-term value alignment
+
+Partner with us to access curated AI project opportunities and shape the future of autonomous systems.`
