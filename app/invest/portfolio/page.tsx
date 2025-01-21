@@ -3,7 +3,6 @@
 import { DividendPayments } from "@/components/portfolio/dividendPayments";
 import { Investments } from "@/components/portfolio/investments";
 import { PortfolioOverview } from "@/components/portfolio/overview";
-import { useInvestProgram } from "@/hooks/useInvestProgram";
 
 export default function Portfolio() {
 
@@ -16,7 +15,7 @@ export default function Portfolio() {
                 </p>
             </div>
             <Investments className="mb-6" />
-            <PortfolioOverview investments={mockInvestments} className="mb-6" />
+            <PortfolioOverview investments={[]} className="mb-6" />
             <DividendPayments className="mb-12" />
         </main>
     )
