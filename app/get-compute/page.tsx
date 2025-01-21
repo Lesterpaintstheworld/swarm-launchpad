@@ -244,6 +244,30 @@ export default function GetCompute() {
                     </div>
                 </div>
 
+                {/* Snapshot Holder Section */}
+                <div className="w-full max-w-[1000px] mt-32 mb-12">
+                    <div className="flex flex-col items-center gap-8 p-12 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                        {/* Section Title */}
+                        <div className="flex flex-col items-center gap-4 text-center">
+                            <h2 className="text-3xl font-normal">📸 Snapshot Holder?</h2>
+                            <p className="text-xl text-muted-foreground max-w-[600px] text-balance">
+                                Claim 10,000 <span className="metallic-text">$COMPUTE</span>!
+                            </p>
+                            <p className="text-lg text-muted-foreground max-w-[600px] text-balance mt-2">
+                                Max distribution: 5M <span className="metallic-text">$COMPUTE</span>
+                            </p>
+                        </div>
+
+                        {/* Claim Button */}
+                        <Button 
+                            className="px-8 py-6 text-lg bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none"
+                            onClick={() => window.open('/claim', '_blank')}
+                        >
+                            Claim Now
+                        </Button>
+                    </div>
+                </div>
+
                 {/* Stake to Earn section */}
                 <div className="w-full max-w-[1000px] mt-32 mb-12">
                     <div className="flex flex-col items-center gap-8 p-12 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
