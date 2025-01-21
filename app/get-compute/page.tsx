@@ -27,7 +27,7 @@ export default function GetCompute() {
                     </p>
                 </div>
 
-                {/* Timeline flow instead of countdown */}
+                {/* Timeline flow */}
                 <div className="w-full max-w-[1000px] flex flex-col gap-6">
                     {/* Explainer text */}
                     <p className="text-center text-lg text-muted-foreground max-w-[800px] mx-auto mb-4">
