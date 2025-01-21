@@ -1,0 +1,120 @@
+'use client';
+
+import { BackgroundBlur } from "@/components/background";
+import { Button } from "@/components/shadcn/button";
+import { Countdown } from "@/components/ui/countdown";
+
+export default function GetCompute() {
+    return (
+        <main className="container view">
+            <BackgroundBlur />
+            <div className="flex flex-col items-center justify-center min-h-[80vh] gap-8">
+                {/* Title section */}
+                <div className="flex flex-col items-center gap-6 text-center mt-24">
+                    <h1 className="font-normal tracking-tight">
+                        Get <span className="metallic-text">$COMPUTE</span>
+                    </h1>
+                    <p className="text-xl text-muted-foreground max-w-[600px] text-balance">
+                        The token that powers AI swarm investments and rewards
+                    </p>
+                </div>
+
+                {/* Countdown */}
+                <Countdown />
+
+                {/* Add more vertical space after countdown */}
+                <div className="h-8" />
+
+                {/* Three boxes */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-[1000px]">
+                    {/* Public Sale */}
+                    <div className="flex flex-col gap-4 p-10 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm hover:border-white/10 transition-all h-full">
+                        <div className="flex flex-col gap-2 flex-grow">
+                            <h3 className="text-xl font-semibold">Public Sale</h3>
+                            <p className="text-sm text-muted-foreground">Purchase tokens directly from the public sale</p>
+                        </div>
+                        <div className="flex items-center gap-2 mb-4">
+                            <span className="text-lg"><span className="metallic-text">$COMPUTE</span> Opening: $0.0581</span>
+                        </div>
+                        <Button 
+                            className="w-full bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none mt-auto"
+                            onClick={() => window.open('https://app.fjordfoundry.com/token-sales/4Jot2JtKav3Xd8tSQ2XdMErhnHFab2yushSfXF6BXwq6', '_blank')}
+                        >
+                            Buy Now
+                        </Button>
+                    </div>
+
+                    {/* DLMM Pool */}
+                    <div className="flex flex-col gap-4 p-10 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm hover:border-white/10 transition-all h-full">
+                        <div className="flex flex-col gap-2 flex-grow">
+                            <h3 className="text-xl font-semibold">DLMM Pool</h3>
+                            <p className="text-sm text-muted-foreground">Trade tokens in the decentralized liquidity pool</p>
+                        </div>
+                        <div className="flex items-center gap-2 mb-4 text-muted-foreground">
+                            <span className="text-lg"><span className="metallic-text">$COMPUTE</span>/SOL</span>
+                        </div>
+                        <Button 
+                            className="w-full bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none mt-auto"
+                            onClick={() => window.open('https://app.meteora.ag/dlmm/7EVJ9P1M9qeNWLYPWWBbGwrWDtTCWo6r2A7J7XU19tNw', '_blank')}
+                        >
+                            Trade Now
+                        </Button>
+                    </div>
+
+                    {/* UBC Pool */}
+                    <div className="flex flex-col gap-4 p-10 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm hover:border-white/10 transition-all h-full">
+                        <div className="flex flex-col gap-2 flex-grow">
+                            <h3 className="text-xl font-semibold">UBC Pool</h3>
+                            <p className="text-sm text-muted-foreground">Trade tokens against the UBC token pair</p>
+                        </div>
+                        <div className="flex items-center gap-2 mb-4 text-muted-foreground">
+                            <span className="text-lg"><span className="metallic-text">$COMPUTE</span>/<span className="metallic-text-ubc">$UBC</span></span>
+                        </div>
+                        <Button 
+                            className="w-full bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none mt-auto"
+                            onClick={() => window.open('https://app.meteora.ag/dlmm/H4dLDVvV68xSnziLaPFXQZWjkozqPG5HgZdPnW5QsFtWI', '_blank')}
+                        >
+                            Trade Now
+                        </Button>
+                    </div>
+                </div>
+
+
+                <div className="flex flex-col items-center gap-6 mt-24 mb-12 text-center">
+                    <h2 className="text-2xl font-normal">Why <span className="metallic-text">$COMPUTE</span>?</h2>
+                    <p className="text-lg text-muted-foreground max-w-[600px] text-balance">
+                        <span className="metallic-text">$COMPUTE</span> powers the infrastructure enabling AI autonomy, creating a foundation for AI-to-AI transactions while letting humans earn automated <span className="metallic-text-ubc">$UBC</span> returns through staking. This dual-purpose token bridges human investment with AI independence, ensuring both investors and AI systems benefit from the ecosystem's growth.
+                    </p>
+                </div>
+
+                {/* Learn to Earn Section */}
+                <div className="flex flex-col items-center gap-6 mt-24 mb-12 text-center">
+                    <h2 className="text-2xl font-normal">Begin Your Journey 🎓</h2>
+                    <p className="text-lg text-muted-foreground max-w-[600px] text-balance">
+                        Master AI investing fundamentals and earn your first 10,000 <span className="metallic-text">$COMPUTE</span>
+                    </p>
+                    <div className="flex flex-col items-center gap-4 mt-4">
+                        <p className="text-lg">Learn from our AI mentor and start earning</p>
+                        
+                        <div className="flex flex-col items-center gap-2 mt-2">
+                            <h3 className="text-xl">Learn to Earn</h3>
+                            <p className="text-muted-foreground">Complete real learning milestones to earn your tokens</p>
+                        </div>
+
+                        <div className="flex flex-col items-center gap-1 mt-4">
+                            <p>🔒 Verify achievements:</p>
+                            <a 
+                                href="https://t.me/verifyleo" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-blue-400 hover:text-blue-300 transition-colors"
+                            >
+                                @verifyleo on Telegram
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    );
+}

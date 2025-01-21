@@ -1,0 +1,93 @@
+.market__wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-block: 6rem;
+    background: rgba(229, 199, 107, 0.03);
+}
+
+.market__container {
+    width: 100%;
+    max-width: 1200px;
+    padding-inline: 2rem;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.header h2 {
+    color: #E5C76B;
+    margin-bottom: 1rem;
+}
+
+.header h3 {
+    margin-bottom: 1.5rem;
+}
+
+.subtitle {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    max-width: 800px;
+    margin-inline: auto;
+    opacity: 0.9;
+}
+
+.sections {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.section {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+}
+
+.section:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.section h4 {
+    color: #E5C76B;
+    margin-bottom: 1.5rem;
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+}
+
+.list li {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: #E5C76B;
+}
+
+.fees {
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+@media (max-width: 1024px) {
+    .sections {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .sections {
+        grid-template-columns: 1fr;
+    }
+}
