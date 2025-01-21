@@ -29,12 +29,17 @@ export default function GetCompute() {
 
                 {/* Timeline flow instead of countdown */}
                 <div className="w-full max-w-[1000px] flex flex-col gap-6">
+                    {/* Explainer text */}
+                    <p className="text-center text-lg text-muted-foreground max-w-[800px] mx-auto mb-4">
+                        We believe in informed investment decisions. Our 4-hour launch process gives everyone time to research and participate fairly.
+                    </p>
+
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                         {/* Hour 1 */}
                         <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm relative">
                             <h3 className="text-xl font-medium">Hour 1</h3>
                             <p className="text-yellow-500 font-medium">Livestream</p>
-                            <p className="text-sm text-muted-foreground">Join the community livestream</p>
+                            <p className="text-sm text-muted-foreground">Join the community livestream for detailed project insights</p>
                             {/* Arrow for desktop */}
                             <div className="hidden md:block absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
                                 <span className="text-2xl text-yellow-500">→</span>
@@ -45,7 +50,7 @@ export default function GetCompute() {
                         <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm relative">
                             <h3 className="text-xl font-medium">Hour 2</h3>
                             <p className="text-yellow-500 font-medium">DYOR</p>
-                            <p className="text-sm text-muted-foreground">Research and prepare</p>
+                            <p className="text-sm text-muted-foreground">Take time to research and make informed decisions</p>
                             {/* Arrow for desktop */}
                             <div className="hidden md:block absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
                                 <span className="text-2xl text-yellow-500">→</span>
@@ -55,8 +60,8 @@ export default function GetCompute() {
                         {/* Hour 3 */}
                         <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm relative">
                             <h3 className="text-xl font-medium">Hour 3</h3>
-                            <p className="text-yellow-500 font-medium">Primary Market</p>
-                            <p className="text-sm text-muted-foreground">Initial token offering</p>
+                            <p className="text-yellow-500 font-medium">Shares Open</p>
+                            <p className="text-sm text-muted-foreground">Purchase shares at your own pace - no rush, no FOMO</p>
                             {/* Arrow for desktop */}
                             <div className="hidden md:block absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
                                 <span className="text-2xl text-yellow-500">→</span>
@@ -67,7 +72,7 @@ export default function GetCompute() {
                         <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
                             <h3 className="text-xl font-medium">Hour 4</h3>
                             <p className="text-yellow-500 font-medium">Secondary Market</p>
-                            <p className="text-sm text-muted-foreground">Trading begins</p>
+                            <p className="text-sm text-muted-foreground">Trading begins on decentralized markets</p>
                         </div>
                     </div>
                 </div>
