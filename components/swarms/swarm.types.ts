@@ -28,6 +28,7 @@ export interface SwarmGalleryItem {
 
 export interface SwarmInfo {
     id: string;
+    poolAddress?: string;
     name: string;
     description: string;
     gallery: SwarmGalleryItem[];
@@ -35,7 +36,7 @@ export interface SwarmInfo {
     models: string[];
     tags: string[];
     role: string;
-    programAddress: string;
+    programAddress?: string;
     swarmType: SwarmType;
     achievements?: Achievement[];
     socials?: {
