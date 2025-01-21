@@ -7,11 +7,13 @@ import { SecondaryMarket } from "@/components/ui/secondaryMarket";
 import { FAQ } from "@/components/ui/faq";
 import { Button } from "@/components/shadcn/button";
 import { BackgroundBlur } from "@/components/background";
+import { Navigation } from "@/components/navigation";
 
 export default function HomePage() {
     return (
         <main>
             <BackgroundBlur />
+            <Navigation />
             <Hero 
                 title={<>Invest <span className="metallic-text">$COMPUTE</span>, get returns in <span className="metallic-text-ubc">$UBC</span></>}
                 className="text-balance"
