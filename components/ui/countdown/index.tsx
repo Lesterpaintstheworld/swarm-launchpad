@@ -19,9 +19,9 @@ function getTimeLeft(targetDate: Date) {
 }
 
 export function Countdown() {
-    // Define both target dates - January 21 and 22, 2024, 6:00 PM EST
-    const launchpadDate = new Date('2024-01-21T23:00:00.000Z'); // 6PM EST in UTC
-    const computeDate = new Date('2024-01-22T23:00:00.000Z'); // 6PM EST in UTC
+    // Define both target dates for 2025
+    const launchpadDate = new Date('2025-01-21T23:00:00.000Z'); // January 21, 2025, 6PM EST
+    const computeDate = new Date('2025-01-22T23:00:00.000Z');   // January 22, 2025, 6PM EST
     
     const [mounted, setMounted] = useState(false);
     const [launchpadTimeLeft, setLaunchpadTimeLeft] = useState(getTimeLeft(launchpadDate));
