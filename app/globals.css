@@ -48,14 +48,14 @@
 }
 
 .metallic-text {
-  color: #6d28d9; /* Slightly more blueish violet base */
+  color: #5b21b6; /* Even more blueish violet base */
   background: linear-gradient(
     120deg,
-    #6d28d9 0%,    /* More blueish violet base */
-    #8b5cf6 10%,   /* Lighter blueish violet */
-    #ddd6fe 20%,   /* Very light blueish violet */
-    #8b5cf6 30%,   /* Lighter blueish violet */
-    #6d28d9 40%    /* More blueish violet base */
+    #5b21b6 0%,    /* More blueish violet base */
+    #7c3aed 10%,   /* Lighter blueish violet */
+    #c4b5fd 20%,   /* Very light blueish violet */
+    #7c3aed 30%,   /* Lighter blueish violet */
+    #5b21b6 40%    /* More blueish violet base */
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
