@@ -3,10 +3,10 @@ import { WalletAdapterNetwork } from "@solana/wallet-adapter-base"
 import { useAnchorProvider } from "../useAnchor";
 import { PublicKey } from "@solana/web3.js";
 import { useMemo } from "react";
-import { Program } from "@coral-xyz/anchor";
+import { Program, AnchorProvider } from "@coral-xyz/anchor";
 import { useQuery } from "@tanstack/react-query";
 import { constants } from "@/lib/constants";
-import IDL from "@/data/programs/idl.json";
+import { IDL } from "@/data/programs/idl";
 
 const getShareholderPDA = async (programId, ownerPublicKey, poolPublicKey) => {
     const [shareholderPda] = PublicKey.findProgramAddressSync(
@@ -29,11 +29,18 @@ const useInvestProgram = () => {
     
     // Only create program if we have a valid provider
     const program = useMemo(() => {
-        if (!provider) return null;
-        return new Program(
-            { ...IDL, address: programId.toBase58() },
-            provider
-        );
+        if (!provider || !(provider instanceof AnchorProvider)) return null;
+        
+        try {
+            return new Program(
+                IDL,
+                programId,
+                provider
+            );
+        } catch (error) {
+            console.error('Failed to create program:', error);
+            return null;
+        }
     }, [provider, programId]);
 
     // Get all shareholder accounts
