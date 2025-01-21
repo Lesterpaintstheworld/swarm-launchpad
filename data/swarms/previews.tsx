@@ -194,9 +194,9 @@ export const previews: SwarmPreviewData[] = [
         id: 'travel-swarm-id',
         image: '/swarms/travel.jpeg',
         models: ['KinOS'],
-        name: 'TravelKin',
-        description: 'AI-powered travel concierge handling trip planning, bookings, and itineraries for seamless journey experiences',
-        tags: ['AI', 'Travel', 'KinOS', 'Planning'],
+        name: 'TravelAId',
+        description: 'AI-powered travel concierge orchestrating perfect journeys through intelligent planning, personalized recommendations, and real-time travel assistance.',
+        tags: ['Travel', 'AI Concierge', 'Trip Planning', 'Personalization', 'Real-time Assistance'],
         role: 'Travel Concierge',
         swarmType: 'inception',
         revenueShare: 25
