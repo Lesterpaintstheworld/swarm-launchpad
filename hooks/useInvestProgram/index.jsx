@@ -8,6 +8,20 @@ import { useQuery } from "@tanstack/react-query";
 import { constants } from "@/lib/constants";
 import IDL from "@/data/programs/idl.json";
 
+const getShareholderPDA = async (programId, ownerPublicKey, poolPublicKey) => {
+
+    const [shareholderPda] = PublicKey.findProgramAddressSync(
+        [
+            Buffer.from("shareholder"),
+            poolPublicKey.toBuffer(),
+            ownerPublicKey.toBuffer()
+        ],
+        programId
+    );
+
+    return shareholderPda;
+}
+
 const useInvestProgram = () => {
 
     const { connection } = useConnection();
@@ -36,22 +50,24 @@ const useInvestProgram = () => {
 
 }
 
-const useInvestProgramAccount = () => {
+const useInvestProgramAccount = (poolAddress) => {
 
     const { publicKey } = useWallet();
-    const { program } = useInvestProgram();
+    const { program, programId } = useInvestProgram();
 
-    // TODO: Get shareholder accounts for a specific publickey
-    const swarmInvestments = useQuery({
+    const poolPDA = getShareholderPDA(programId, publicKey, new PublicKey(poolAddress));
+
+    // TODO: Get shareholder position in a spoecific pool
+    const position = useQuery({
         queryKey: ['get-shareholder-account', publicKey],
-        // queryFn: async () => program.account.Shareholders.fetch(publicKey),
+        queryFn: async () => program.account.shareholder.fetch(poolPDA),
         enabled: !!program && !!publicKey,
         staleTime: 30000,
         retry: 3
-    })
+    });
 
     return {
-        swarmInvestments
+        position
     }
 
 }
