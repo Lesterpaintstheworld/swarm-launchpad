@@ -232,11 +232,11 @@ export default function GetCompute() {
                                 <ul className="flex flex-col gap-2 text-muted-foreground">
                                     <li className="flex items-center gap-2">
                                         <span className="text-yellow-500">•</span>
-                                        Post quality content about <span className="metallic-text-ubc">$UBC</span>
+                                        On Telegram, type "raid + tweetlink" in <a href="https://t.me/ubc_portal" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors">t.me/ubc_portal</a>
                                     </li>
                                     <li className="flex items-center gap-2">
                                         <span className="text-yellow-500">•</span>
-                                        Participate in raids
+                                        Post quality content about <span className="metallic-text-ubc">$UBC</span>
                                     </li>
                                     <li className="flex items-center gap-2">
                                         <span className="text-yellow-500">•</span>
