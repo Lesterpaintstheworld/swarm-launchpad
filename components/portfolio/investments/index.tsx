@@ -11,16 +11,15 @@ type Investment = {
 }
 
 interface InvestmentsProps {
-    investments: Investment[];
     className?: string;
 }
 
-const Investments = ({ investments, className }: InvestmentsProps) => {
+const Investments = ({ className }: InvestmentsProps) => {
 
     return (
         <Card className={cn("w-full", className)}>
             <h4 className="mb-4">Your Investments</h4>
-            <DataTable columns={columns} data={investments} />
+            <DataTable columns={columns} data={[]} />
         </Card>
     )
 
