@@ -2,7 +2,7 @@ import { LinkType } from "@/components/navigation/navigation.types";
 
 export const Links: LinkType[] = [
     {
-        label: 'How It Works',
+        label: 'Learn How It Works',
         url: '/how-it-works',
     },
     {
@@ -13,5 +13,6 @@ export const Links: LinkType[] = [
     {
         label: 'Invest',
         url: '/invest',
+        disabled: true
     },
 ]
