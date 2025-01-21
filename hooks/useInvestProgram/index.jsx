@@ -9,7 +9,6 @@ import { constants } from "@/lib/constants";
 import IDL from "@/data/programs/idl.json";
 
 const getShareholderPDA = async (programId, ownerPublicKey, poolPublicKey) => {
-
     const [shareholderPda] = PublicKey.findProgramAddressSync(
         [
             Buffer.from("shareholder"),
@@ -18,24 +17,33 @@ const getShareholderPDA = async (programId, ownerPublicKey, poolPublicKey) => {
         ],
         programId
     );
-
     return shareholderPda;
 }
 
 const useInvestProgram = () => {
-
     const { connection } = useConnection();
-
-    const network = constants.environment == 'development' ? WalletAdapterNetwork.Devnet : WalletAdapterNetwork.Mainnet;
+    const { publicKey } = useWallet();
+    const network = constants.environment === 'development' ? WalletAdapterNetwork.Devnet : WalletAdapterNetwork.Mainnet;
     const provider = useAnchorProvider();
     const programId = useMemo(() => new PublicKey(constants.investmentProgram.id), [network]);
-    const program = useMemo(() => new Program({ ...IDL, address: programId.toBase58() }, provider), [provider, programId])
+    
+    // Only create program if we have a valid provider
+    const program = useMemo(() => {
+        if (!provider) return null;
+        return new Program(
+            { ...IDL, address: programId.toBase58() },
+            provider
+        );
+    }, [provider, programId]);
 
     // Get all shareholder accounts
     const shareholders = useQuery({
-        queryKey: ['get-all-shareholder-accounts', publicKey],
-        queryFn: async () => program.account.Shareholders.all(),
-        enabled: !!program && !!connection,
+        queryKey: ['get-all-shareholder-accounts', publicKey?.toBase58()],
+        queryFn: async () => {
+            if (!program) throw new Error("Program not initialized");
+            return program.account.Shareholders.all();
+        },
+        enabled: !!program && !!connection && !!publicKey,
         staleTime: 30000,
         retry: 3
     });
@@ -47,21 +55,25 @@ const useInvestProgram = () => {
         network,
         shareholders
     }
-
 }
 
 const useInvestProgramAccount = (poolAddress) => {
-
     const { publicKey } = useWallet();
     const { program, programId } = useInvestProgram();
 
-    const poolPDA = getShareholderPDA(programId, publicKey, new PublicKey(poolAddress));
+    const poolPDA = useMemo(() => {
+        if (!publicKey || !poolAddress) return null;
+        return getShareholderPDA(programId, publicKey, new PublicKey(poolAddress));
+    }, [programId, publicKey, poolAddress]);
 
-    // TODO: Get shareholder position in a spoecific pool
+    // Get shareholder position in a specific pool
     const position = useQuery({
-        queryKey: ['get-shareholder-account', publicKey],
-        queryFn: async () => program.account.shareholder.fetch(poolPDA),
-        enabled: !!program && !!publicKey,
+        queryKey: ['get-shareholder-account', publicKey?.toBase58(), poolAddress],
+        queryFn: async () => {
+            if (!program || !poolPDA) throw new Error("Program or PDA not initialized");
+            return program.account.shareholder.fetch(poolPDA);
+        },
+        enabled: !!program && !!publicKey && !!poolPDA,
         staleTime: 30000,
         retry: 3
     });
@@ -69,7 +81,6 @@ const useInvestProgramAccount = (poolAddress) => {
     return {
         position
     }
-
 }
 
 export {
