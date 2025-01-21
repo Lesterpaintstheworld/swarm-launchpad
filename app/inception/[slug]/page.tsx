@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback } from "react";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { SwarmData } from "@/data/swarms/info";
@@ -7,16 +9,23 @@ import { Expandable } from "@/components/ui/expandable";
 import { SwarmGallery } from "@/components/swarms/gallery";
 
 export default function InceptionSwarm({ params }: { params: { slug: string } }) {
-    const swarm = useCallback(() => SwarmData.find((swarm) => swarm.id === params.slug), [params.slug])() || undefined;
+    const swarm = useCallback(() => {
+        const found = SwarmData.find((swarm) => swarm.id === params.slug);
+        if (!found) {
+            redirect('/404');
+            return null;
+        }
+        // Only redirect if it's not an inception swarm
+        if (found.swarmType !== 'inception') {
+            redirect(`/invest/${found.id}`);
+            return null;
+        }
+        return found;
+    }, [params.slug])();
 
-    // First check if swarm exists at all
+    // If no swarm was found, return null while redirecting
     if (!swarm) {
-        redirect('/404');
-    }
-
-    // Then check if it's an inception swarm - if not, redirect to regular invest page
-    if (swarm.swarmType !== 'inception') {
-        redirect('/invest/' + swarm.id);
+        return null;
     }
 
     return (
@@ -36,7 +45,7 @@ export default function InceptionSwarm({ params }: { params: { slug: string } })
             />
             {swarm.description &&
                 <>
-                    <h4 className="font-semibold">About {swarm.name}</h4>
+                    <h4 className="font-semibold mt-16">About {swarm.name}</h4>
                     <hr className="mt-3" />
                     <Expandable overflowThreshold={750}>
                         <Markdown markdown={swarm.description} />
