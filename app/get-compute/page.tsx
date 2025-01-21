@@ -18,7 +18,7 @@ export default function GetCompute() {
             <BackgroundBlur />
             <div className="flex flex-col items-center justify-center min-h-[80vh] gap-8">
                 {/* Title section */}
-                <div className="flex flex-col items-center gap-6 text-center mt-24">
+                <div className="flex flex-col items-center gap-6 text-center mt-24 mb-12">
                     <h1 className="font-normal tracking-tight">
                         Get <span className="metallic-text">$COMPUTE</span>
                     </h1>
