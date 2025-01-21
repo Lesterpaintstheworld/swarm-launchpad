@@ -115,7 +115,7 @@ export default function GetCompute() {
                     <div className="flex flex-col items-center gap-8 p-12 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
                         {/* Section Title */}
                         <div className="flex flex-col items-center gap-2 text-center">
-                            <h2 className="text-3xl font-normal">Stake to Earn</h2>
+                            <h2 className="text-3xl font-normal">💎 Stake to Earn</h2>
                             <p className="text-xl text-muted-foreground max-w-[600px] text-balance">
                                 Stake your <span className="metallic-text-ubc">$UBC</span> tokens to earn <span className="metallic-text">$COMPUTE</span> rewards
                             </p>
@@ -172,7 +172,7 @@ export default function GetCompute() {
                     <div className="flex flex-col items-center gap-8 p-12 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
                         {/* Section Title */}
                         <div className="flex flex-col items-center gap-2 text-center">
-                            <h2 className="text-3xl font-normal">Learn-to-earn</h2>
+                            <h2 className="text-3xl font-normal">🎓 Learn to Earn</h2>
                             <p className="text-xl text-muted-foreground max-w-[600px] text-balance">
                                 Master AI investing fundamentals and earn your first 10,000 <span className="metallic-text">$COMPUTE</span>
                             </p>
