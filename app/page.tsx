@@ -14,6 +14,18 @@ export default function HomePage() {
         <main>
             <BackgroundBlur />
             <Navigation />
+            
+            {/* Live Stream Container */}
+            <div className="w-full max-w-[1200px] mx-auto mt-8 mb-12 px-4">
+                <div className="relative pb-[56.25%] h-0 rounded-xl overflow-hidden">
+                    <iframe 
+                        src="https://x.com/UBC4ai/live"
+                        className="absolute top-0 left-0 w-full h-full border-0"
+                        allowFullScreen
+                    />
+                </div>
+            </div>
+
             <Hero 
                 title={<>Invest <span className="metallic-text">$COMPUTE</span>, get returns in <span className="metallic-text-ubc">$UBC</span></>}
                 className="text-balance"
