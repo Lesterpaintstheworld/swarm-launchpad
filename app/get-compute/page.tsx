@@ -282,7 +282,7 @@ export default function GetCompute() {
                                     </li>
                                     <li className="flex items-center gap-2">
                                         <span className="text-yellow-500">3.</span>
-                                        DM @Abhi80a80 with proof
+                                        DM <a href="https://t.me/Abhi80a80" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors">@Abhi80a80</a> with proof
                                     </li>
                                 </ul>
                             </div>
