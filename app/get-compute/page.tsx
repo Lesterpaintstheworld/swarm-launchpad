@@ -31,13 +31,13 @@ export default function GetCompute() {
                 <div className="w-full max-w-[1000px] flex flex-col gap-6">
                     {/* Explainer text */}
                     <p className="text-center text-lg text-muted-foreground max-w-[800px] mx-auto mb-4">
-                        We believe in informed investment decisions. Our 4-hour launch process gives everyone time to research and participate fairly.
+                        We believe in informed investment decisions. Our 6-hour launch process gives everyone time to research and participate fairly.
                     </p>
 
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        {/* Hour 1 */}
-                        <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm relative">
-                            <h3 className="text-xl font-medium">Hour 1</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
+                        {/* Hour 1-2 */}
+                        <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm relative md:col-span-2">
+                            <h3 className="text-xl font-medium">Hours 1-2</h3>
                             <p className="text-yellow-500 font-medium">Livestream</p>
                             <p className="text-sm text-muted-foreground">Join the community livestream for detailed project insights</p>
                             {/* Arrow for desktop */}
@@ -46,9 +46,9 @@ export default function GetCompute() {
                             </div>
                         </div>
 
-                        {/* Hour 2 */}
-                        <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm relative">
-                            <h3 className="text-xl font-medium">Hour 2</h3>
+                        {/* Hour 3-4 */}
+                        <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm relative md:col-span-2">
+                            <h3 className="text-xl font-medium">Hours 3-4</h3>
                             <p className="text-yellow-500 font-medium">DYOR</p>
                             <p className="text-sm text-muted-foreground">Take time to research and make informed decisions</p>
                             {/* Arrow for desktop */}
@@ -57,9 +57,9 @@ export default function GetCompute() {
                             </div>
                         </div>
 
-                        {/* Hour 3 */}
+                        {/* Hour 5 */}
                         <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm relative">
-                            <h3 className="text-xl font-medium">Hour 3</h3>
+                            <h3 className="text-xl font-medium">Hour 5</h3>
                             <p className="text-yellow-500 font-medium">Shares Open</p>
                             <p className="text-sm text-muted-foreground">Purchase shares at your own pace - no rush, no FOMO</p>
                             {/* Arrow for desktop */}
@@ -68,9 +68,9 @@ export default function GetCompute() {
                             </div>
                         </div>
 
-                        {/* Hour 4 */}
+                        {/* Hour 6 */}
                         <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
-                            <h3 className="text-xl font-medium">Hour 4</h3>
+                            <h3 className="text-xl font-medium">Hour 6</h3>
                             <p className="text-yellow-500 font-medium">Secondary Market</p>
                             <p className="text-sm text-muted-foreground">Trading begins on decentralized markets</p>
                         </div>
