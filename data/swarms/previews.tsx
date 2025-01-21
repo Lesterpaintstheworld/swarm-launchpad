@@ -23,7 +23,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Content Creation', 'Video AI', 'Social Media', 'Community', '$FATHA', 'Viral Growth'],
         role: 'Content Creator',
         swarmType: 'partner',
-        autonomy: 50
+        revenueShare: 50
     },
     {
         id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
