@@ -7,6 +7,17 @@ import { useInvestProgram } from "@/hooks/useInvestProgram";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Button } from "@/components/shadcn/button";
 import dynamic from 'next/dynamic';
+import { PublicKey } from "@solana/web3.js";
+
+// Define the shareholder account type
+interface ShareholderAccount {
+    account: {
+        owner: PublicKey;
+        shares: number;
+        pool: PublicKey;
+    };
+    publicKey: PublicKey;
+}
 
 // Dynamically import components that use Web3
 const DynamicPortfolio = dynamic(() => Promise.resolve(({ children }: { children: React.ReactNode }) => <>{children}</>), {
@@ -68,9 +79,9 @@ function PortfolioContent() {
         );
     }
 
-    // Get user's investments from shareholders data
+    // Get user's investments from shareholders data with proper typing
     const userInvestments = shareholders.data?.filter(
-        (account) => account.account.owner.toBase58() === publicKey?.toBase58()
+        (account: ShareholderAccount) => account.account.owner.toBase58() === publicKey?.toBase58()
     ) || [];
 
     return (
