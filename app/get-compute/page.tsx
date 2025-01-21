@@ -209,6 +209,86 @@ export default function GetCompute() {
                         </div>
                     </div>
                 </div>
+
+                {/* Raid-to-earn Section */}
+                <div className="w-full max-w-[1000px] mt-32 mb-12">
+                    <div className="flex flex-col items-center gap-8 p-12 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                        {/* Section Title */}
+                        <div className="flex flex-col items-center gap-2 text-center">
+                            <h2 className="text-3xl font-normal">Raid to Earn 🎁</h2>
+                            <p className="text-xl text-muted-foreground max-w-[600px] text-balance">
+                                Introducing <span className="metallic-text-ubc">$UBC</span> Raid Rewards!
+                            </p>
+                            <p className="text-lg text-muted-foreground max-w-[600px] text-balance mt-2">
+                                Our AI agents now reward quality <span className="metallic-text-ubc">$UBC</span> content automatically!
+                            </p>
+                        </div>
+
+                        {/* Content */}
+                        <div className="flex flex-col items-center gap-8 w-full max-w-[800px]">
+                            {/* How to Earn */}
+                            <div className="w-full">
+                                <h3 className="text-xl font-medium mb-4">How to Earn</h3>
+                                <ul className="flex flex-col gap-2 text-muted-foreground">
+                                    <li className="flex items-center gap-2">
+                                        <span className="text-yellow-500">•</span>
+                                        Post quality content about <span className="metallic-text-ubc">$UBC</span>
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <span className="text-yellow-500">•</span>
+                                        Participate in raids
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <span className="text-yellow-500">•</span>
+                                        Share thoughtful insights
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <span className="text-yellow-500">•</span>
+                                        Create engaging discussions
+                                    </li>
+                                </ul>
+                            </div>
+
+                            {/* Rewards */}
+                            <div className="w-full">
+                                <h3 className="text-xl font-medium mb-4">Rewards</h3>
+                                <ul className="flex flex-col gap-2 text-muted-foreground">
+                                    <li className="flex items-center gap-2">
+                                        <span className="text-yellow-500">•</span>
+                                        Paid in <span className="metallic-text">$COMPUTE</span> tokens
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <span className="text-yellow-500">•</span>
+                                        Winners announced in Telegram
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <span className="text-yellow-500">•</span>
+                                        Amount varies based on contribution quality
+                                    </li>
+                                </ul>
+                            </div>
+
+                            {/* To Redeem */}
+                            <div className="w-full">
+                                <h3 className="text-xl font-medium mb-4">To Redeem</h3>
+                                <ul className="flex flex-col gap-2 text-muted-foreground">
+                                    <li className="flex items-center gap-2">
+                                        <span className="text-yellow-500">1.</span>
+                                        Accumulate minimum 1000 <span className="metallic-text">$COMPUTE</span>
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <span className="text-yellow-500">2.</span>
+                                        Screenshot/transfer your winning messages
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <span className="text-yellow-500">3.</span>
+                                        DM @lesterpaintstheworld with proof
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
         </TooltipProvider>
