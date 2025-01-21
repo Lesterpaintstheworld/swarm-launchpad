@@ -4,7 +4,6 @@ import { Adapter, WalletAdapterNetwork, WalletError } from "@solana/wallet-adapt
 import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react"
 import { useCallback, useMemo } from "react"
 import { constants } from "@/lib/constants";
-import { clusterApiUrl } from "@solana/web3.js";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { toast } from "sonner";
 import {
@@ -24,7 +23,7 @@ const SolanaProvider = ({ children }: { children: React.ReactNode }) => {
     const network = constants.environment === 'production' ? WalletAdapterNetwork.Mainnet : WalletAdapterNetwork.Devnet;
 
     // Can accept a custom RPC endpoint
-    const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+    const endpoint = useMemo(() => constants.rpcUrl, [constants.rpcUrl]);
 
     /**
      * Wallets that implement either of these standards will be available automatically.
