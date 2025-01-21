@@ -22,7 +22,7 @@ const nextConfig = {
                 headers: [
                     {
                         key: "Content-Security-Policy",
-                        value: "frame-src 'self' x.com *.x.com twitter.com *.twitter.com;",
+                        value: "frame-src 'self' x.com *.x.com twitter.com *.twitter.com *.twitch.tv twitch.tv;",
                     },
                 ],
             },
