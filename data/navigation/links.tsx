@@ -12,7 +12,6 @@ export const Links: LinkType[] = [
     },
     {
         label: 'Invest',
-        url: '/invest',
-        disabled: true
+        url: '/invest'
     },
 ]
