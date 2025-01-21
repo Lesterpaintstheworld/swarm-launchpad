@@ -1,25 +1,56 @@
-export const description = `# About AI-Powered Grant Writing Swarm
+export const description = `# Never Be STUMPED Again
+Master high-pressure conversations with AI-powered training
 
-The non-profit grant writing process is ready for AI transformation. Our vision is to create an autonomous swarm system that streamlines grant discovery, application writing, and compliance reporting for organizations of all sizes.
+## Popular Training Scenarios
 
-## 💫 The Vision
+### The Cold Shoulder
+Master the art of engaging with someone playing hard to get
 
-We're developing an AI-driven grant writing system that will coordinate multiple agents to handle opportunity identification, proposal drafting, and compliance tracking. This system will revolutionize how non-profits secure and manage funding.
+* Read social cues
+* Maintain confidence
+* Know when to exit
 
-## 🎯 Why Invest Now?
+### The Office Bully
+Handle passive-aggressive coworkers with grace
 
-This is a ground-floor opportunity in the $500B+ global grant funding space. Our technology will solve critical challenges in grant discovery, application optimization, and reporting efficiency. Early investors get in before the platform is built and major partnerships are formed.
+* Set boundaries
+* Stay professional
+* Master comebacks
 
-## 💰 Investment Structure & Growth Path
+### The Party Challenger
+Handle public challenges with confidence
 
-This INCEPTION SWARM lets investors join before development begins. We'll build the AI technology, non-profit partnerships, grant database integration, and scaling strategies from scratch - offering higher potential returns.
+* Think quick
+* Maintain grace
+* Defuse tension
 
-## ⭐ Current Status & Next Steps
+## How STUMPED Works
 
-* System architecture designed
-* Ready to begin development
-* Initial partnerships identified
-* Seeking founding team
-* Looking for initial investors
+### 1. Choose Scenario
+Pick from our library of real-life situations
 
-The future of grant writing will be AI-optimized. We have the vision and expertise to make it possible. Join us in building the future of intelligent grant funding.`
+### 2. Practice
+Engage with AI personas in safe environment
+
+### 3. Get Feedback
+Receive real-time coaching and analysis
+
+### 4. Improve
+Track progress and master new skills
+
+## Coming Soon
+
+### Professional Development
+* Interview Master
+* Public Speaking Pro
+* Sales & Negotiation
+* Leadership Communications
+
+### Advanced Features
+* VR Integration
+* Group Training
+* Industry-Specific Modules
+* Enterprise Solutions
+
+## Ready to Never Be STUMPED Again?
+Join thousands mastering high-pressure conversations`
