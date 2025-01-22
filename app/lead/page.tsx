@@ -182,7 +182,7 @@ export default function Lead() {
                                 </AccordionContent>
                             </AccordionItem>
                             <AccordionItem value="item-4" className="border-b-0">
-                                <AccordionTrigger className="text-sm py-2">Can I be both Guardian and Lead?</AccordionTrigger>
+                                <AccordionTrigger className="text-sm py-2">Can I then become the Swarm Lead?</AccordionTrigger>
                                 <AccordionContent className="text-sm text-muted-foreground">
                                     Yes, if you fell in love with your swarm and have both the vision and the ability to execute, you can transition your role from guardian to lead!
                                 </AccordionContent>
@@ -197,19 +197,17 @@ export default function Lead() {
                     <Button 
                         size="lg"
                         className="group bg-gradient-to-r from-purple-500 to-blue-500"
-                        onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
+                        onClick={() => window.open('https://k2mobei34z9.typeform.com/to/ydw2OzQF', '_blank')}
                     >
-                        Propose New Swarm
-                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                        Propose a New Swarm
                     </Button>
                     <Button 
                         size="lg"
-                        variant="outline"
+                        variant="secondary"
                         className="group"
-                        onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
+                        onClick={() => window.open('https://t.me/Lesterpaintstheworld', '_blank')}
                     >
-                        View Available Swarms
-                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                        Claim an existing Swarm
                     </Button>
                 </div>
             </section>
