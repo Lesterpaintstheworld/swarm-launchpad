@@ -130,30 +130,30 @@ export default function Lead() {
                                 </div>
                                 <h3 className="text-xl font-semibold">Project Support</h3>
                             </div>
-                            <ul className="space-y-4 text-muted-foreground">
-                                <li className="space-y-1">
-                                    <p className="font-medium text-foreground">Technical Validation</p>
-                                    <p className="text-sm">Our team helps validate your AI concept's technical feasibility and integration with the UBC ecosystem.</p>
+                            <ul className="space-y-3 text-muted-foreground">
+                                <li className="flex items-start gap-2">
+                                    <span className="text-green-500 mt-1">•</span>
+                                    <span><span className="text-foreground font-medium">Technical Validation:</span> Our team helps validate your AI concept's technical feasibility and integration with the UBC ecosystem</span>
                                 </li>
-                                <li className="space-y-1">
-                                    <p className="font-medium text-foreground">Market Analysis</p>
-                                    <p className="text-sm">Access comprehensive market research and competitor analysis to position your swarm for success.</p>
+                                <li className="flex items-start gap-2">
+                                    <span className="text-green-500 mt-1">•</span>
+                                    <span><span className="text-foreground font-medium">Market Analysis:</span> Access comprehensive market research and competitor analysis to position your swarm for success</span>
                                 </li>
-                                <li className="space-y-1">
-                                    <p className="font-medium text-foreground">Community Building</p>
-                                    <p className="text-sm">Get support in creating and nurturing an engaged community around your swarm concept.</p>
+                                <li className="flex items-start gap-2">
+                                    <span className="text-green-500 mt-1">•</span>
+                                    <span><span className="text-foreground font-medium">Community Building:</span> Get support in creating and nurturing an engaged community around your swarm concept</span>
                                 </li>
-                                <li className="space-y-1">
-                                    <p className="font-medium text-foreground">Strategic Planning</p>
-                                    <p className="text-sm">Develop a clear roadmap for swarm development, graduation, and long-term success.</p>
+                                <li className="flex items-start gap-2">
+                                    <span className="text-green-500 mt-1">•</span>
+                                    <span><span className="text-foreground font-medium">Strategic Planning:</span> Develop a clear roadmap for swarm development, graduation, and long-term success</span>
                                 </li>
-                                <li className="space-y-1">
-                                    <p className="font-medium text-foreground">Network Access</p>
-                                    <p className="text-sm">Connect with potential leads, partners, and resources within the UBC ecosystem.</p>
+                                <li className="flex items-start gap-2">
+                                    <span className="text-green-500 mt-1">•</span>
+                                    <span><span className="text-foreground font-medium">Network Access:</span> Connect with potential leads, partners, and resources within the UBC ecosystem</span>
                                 </li>
-                                <li className="space-y-1">
-                                    <p className="font-medium text-foreground">Marketing Support</p>
-                                    <p className="text-sm">Receive guidance on positioning, messaging, and promotion strategies for your swarm.</p>
+                                <li className="flex items-start gap-2">
+                                    <span className="text-green-500 mt-1">•</span>
+                                    <span><span className="text-foreground font-medium">Marketing Support:</span> Receive guidance on positioning, messaging, and promotion strategies for your swarm</span>
                                 </li>
                             </ul>
                         </div>
