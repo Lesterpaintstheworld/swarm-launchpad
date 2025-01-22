@@ -10,7 +10,8 @@ import {
     Lightbulb,
     Search,
     Target,
-    Users
+    Users,
+    Coins
 } from "lucide-react";
 import { 
     Accordion, 
