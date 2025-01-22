@@ -2,7 +2,7 @@
 
 import { BackgroundBlur } from "@/components/background";
 import { Button } from "@/components/shadcn/button";
-import { ArrowRight, Lightbulb, Code, Network } from "lucide-react";
+import { ArrowRight, Lightbulb, Code, Network, Users, DollarSign } from "lucide-react";
 
 export default function Lead() {
     return (
@@ -193,6 +193,130 @@ export default function Lead() {
                             <li>• Marketing strategy development</li>
                             <li>• Launch coordination</li>
                         </ul>
+                    </div>
+                </div>
+            </section>
+
+            {/* Success Metrics Section */}
+            <section className="py-24">
+                <div className="text-center mb-16">
+                    <h2 className="text-3xl font-semibold mb-4">Success Metrics</h2>
+                    <p className="text-muted-foreground">How we measure and track achievement</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+                    {/* Technical */}
+                    <div className="p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                        <div className="flex items-center gap-4 mb-4">
+                            <Code className="w-8 h-8 text-blue-500" />
+                            <h3 className="text-xl font-semibold">Technical</h3>
+                        </div>
+                        <p className="text-muted-foreground">Milestone achievement and system performance metrics</p>
+                    </div>
+
+                    {/* Community */}
+                    <div className="p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                        <div className="flex items-center gap-4 mb-4">
+                            <Users className="w-8 h-8 text-purple-500" />
+                            <h3 className="text-xl font-semibold">Community</h3>
+                        </div>
+                        <p className="text-muted-foreground">Growth and engagement of your user base</p>
+                    </div>
+
+                    {/* Revenue */}
+                    <div className="p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                        <div className="flex items-center gap-4 mb-4">
+                            <DollarSign className="w-8 h-8 text-green-500" />
+                            <h3 className="text-xl font-semibold">Revenue</h3>
+                        </div>
+                        <p className="text-muted-foreground">Sustainable income generation and growth</p>
+                    </div>
+
+                    {/* Network */}
+                    <div className="p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                        <div className="flex items-center gap-4 mb-4">
+                            <Network className="w-8 h-8 text-yellow-500" />
+                            <h3 className="text-xl font-semibold">Network</h3>
+                        </div>
+                        <p className="text-muted-foreground">Integration and cross-swarm collaboration</p>
+                    </div>
+
+                    {/* Innovation */}
+                    <div className="p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                        <div className="flex items-center gap-4 mb-4">
+                            <Lightbulb className="w-8 h-8 text-orange-500" />
+                            <h3 className="text-xl font-semibold">Innovation</h3>
+                        </div>
+                        <p className="text-muted-foreground">Impact and advancement in AI technology</p>
+                    </div>
+                </div>
+            </section>
+
+            {/* Application Process Section */}
+            <section className="py-24">
+                <div className="text-center mb-16">
+                    <h2 className="text-3xl font-semibold mb-4">Application Process</h2>
+                    <p className="text-muted-foreground">Choose your path and begin your journey</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {/* Guardian Track */}
+                    <div className="p-8 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                        <Lightbulb className="w-10 h-10 text-yellow-500 mb-6" />
+                        <h3 className="text-xl font-semibold mb-4">Guardian Track</h3>
+                        <ol className="space-y-3 text-muted-foreground list-decimal list-inside">
+                            <li>Submit swarm concept</li>
+                            <li>Technical review</li>
+                            <li>Value proposition assessment</li>
+                            <li>Guardian assignment</li>
+                        </ol>
+                        <Button 
+                            className="w-full group mt-6"
+                            onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
+                        >
+                            Apply as Guardian
+                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                        </Button>
+                    </div>
+
+                    {/* Swarm Lead Track */}
+                    <div className="p-8 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                        <Code className="w-10 h-10 text-blue-500 mb-6" />
+                        <h3 className="text-xl font-semibold mb-4">Swarm Lead Track</h3>
+                        <ol className="space-y-3 text-muted-foreground list-decimal list-inside">
+                            <li>Initial application</li>
+                            <li>Technical capability review</li>
+                            <li>Project plan assessment</li>
+                            <li>Resource allocation</li>
+                            <li>Development initiation</li>
+                        </ol>
+                        <Button 
+                            className="w-full group mt-6"
+                            onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
+                        >
+                            Apply as Lead
+                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                        </Button>
+                    </div>
+
+                    {/* Partner Track */}
+                    <div className="p-8 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                        <Network className="w-10 h-10 text-green-500 mb-6" />
+                        <h3 className="text-xl font-semibold mb-4">Partner Track</h3>
+                        <ol className="space-y-3 text-muted-foreground list-decimal list-inside">
+                            <li>Integration inquiry</li>
+                            <li>Technical assessment</li>
+                            <li>Integration planning</li>
+                            <li>Partnership agreement</li>
+                            <li>Implementation</li>
+                        </ol>
+                        <Button 
+                            className="w-full group mt-6"
+                            onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
+                        >
+                            Partner With Us
+                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                        </Button>
                     </div>
                 </div>
             </section>
