@@ -375,7 +375,7 @@ export default function GetCompute() {
                                         </span>
                                     </TooltipTrigger>
                                     <TooltipContent className="max-w-[300px] p-4">
-                                        <p>A snapshot of 24,708 UBC holders was taken on January 15th. These OG holders are eligible for the $COMPUTE airdrop.</p>
+                                        <p>A snapshot of 24,708 UBC holders was taken on January 15th. These OG holders are eligible for the $COMPUTE claim.</p>
                                     </TooltipContent>
                                 </Tooltip>
                             </div>

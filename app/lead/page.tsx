@@ -369,7 +369,7 @@ export default function Lead() {
                     <div className="space-y-6">
                         <h3 className="text-2xl font-semibold">Rewards & Benefits</h3>
                         <ul className="space-y-3 text-muted-foreground list-disc list-inside">
-                            <li>25-35% revenue share from operations</li>
+                            <li>0-50% revenue share from operations</li>
                             <li>Priority access to UBC resources</li>
                             <li>Cross-promotion opportunities</li>
                             <li>Advanced integration capabilities</li>
