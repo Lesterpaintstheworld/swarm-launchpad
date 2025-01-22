@@ -111,7 +111,7 @@ const SwarmInvestCard = ({ data, className }: SwarmInvestCardProps) => {
                     <Link href="/invest/market">Go to market</Link>
                 </Button>
             }
-            {connected && data.remainingSupply !== 0 && <Button variant='success' onClick={handleBuy} className="mt-10 w-full md:max-w-40">BUY</Button>}
+            {connected && data.remainingSupply !== 0 && <Button variant='success' onClick={handleBuy} className="mt-10 w-full md:max-w-40" disabled={true}>BUY</Button>}
             {!connected && data.remainingSupply !== 0 && <ConnectButton className="mt-10 w-full md:max-w-40" />}
         </Card>
     )
