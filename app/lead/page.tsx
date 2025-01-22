@@ -349,33 +349,171 @@ export default function Lead() {
             <section className="py-24">
                 <div className="text-center mb-16">
                     <div className="flex items-center justify-center gap-3 mb-4">
-                        <Star className="w-8 h-8 text-yellow-500" />
-                        <h2 className="text-3xl font-semibold">Early Swarms</h2>
+                        <Star className="w-8 h-8 text-blue-500" />
+                        <h2 className="text-3xl font-semibold">Build an Early Swarm</h2>
                     </div>
-                    <p className="text-muted-foreground">Scale your proven AI solution</p>
+                    <p className="text-xl text-muted-foreground">
+                        Take your AI project from prototype to product, access funding and support
+                    </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-6">
-                        <h3 className="text-2xl font-semibold">Role & Responsibilities</h3>
-                        <ul className="space-y-3 text-muted-foreground list-disc list-inside">
-                            <li>Scale operations and user base</li>
-                            <li>Optimize revenue streams</li>
-                            <li>Expand feature set and capabilities</li>
-                            <li>Build partnerships within ecosystem</li>
-                            <li>Maintain high performance standards</li>
+                {/* Two Paths Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                    <div className="p-8 rounded-xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-white/5 backdrop-blur-sm">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="h-10 w-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                                <Rocket className="h-5 w-5 text-blue-500" />
+                            </div>
+                            <h3 className="text-xl font-semibold">Got a Prototype?<br />Launch Your Project</h3>
+                        </div>
+                        <ul className="space-y-3 text-muted-foreground">
+                            <li className="flex items-start gap-2">
+                                <span className="text-blue-500 mt-1">•</span>
+                                Build on top of our proven infrastructure
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-blue-500 mt-1">•</span>
+                                Access immediate funding through our launchpad
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-blue-500 mt-1">•</span>
+                                Get technical and marketing support to scale
+                            </li>
                         </ul>
                     </div>
-                    <div className="space-y-6">
-                        <h3 className="text-2xl font-semibold">Rewards & Benefits</h3>
-                        <ul className="space-y-3 text-muted-foreground list-disc list-inside">
-                            <li>0-50% revenue share from operations</li>
-                            <li>Priority access to UBC resources</li>
-                            <li>Cross-promotion opportunities</li>
-                            <li>Advanced integration capabilities</li>
-                            <li>Ecosystem partnership opportunities</li>
+
+                    <div className="p-8 rounded-xl bg-gradient-to-br from-cyan-500/10 to-teal-500/10 border border-white/5 backdrop-blur-sm">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="h-10 w-10 rounded-lg bg-cyan-500/20 flex items-center justify-center">
+                                <Search className="h-5 w-5 text-cyan-500" />
+                            </div>
+                            <h3 className="text-xl font-semibold">Got Experience?<br />Take Over a Project</h3>
+                        </div>
+                        <ul className="space-y-3 text-muted-foreground">
+                            <li className="flex items-start gap-2">
+                                <span className="text-cyan-500 mt-1">•</span>
+                                Browse ready-to-scale early swarms
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-cyan-500 mt-1">•</span>
+                                Take leadership of existing prototypes
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-cyan-500 mt-1">•</span>
+                                Access the same support structure
+                            </li>
                         </ul>
                     </div>
+                </div>
+
+                {/* Lead Role */}
+                <div className="mb-16 p-8 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                    <div className="flex items-center gap-3 mb-6">
+                        <div className="h-10 w-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                            <Target className="h-5 w-5 text-blue-500" />
+                        </div>
+                        <h3 className="text-xl font-semibold">What Early Swarm Leads Do</h3>
+                    </div>
+                    <p className="text-muted-foreground mb-4">
+                        Early Swarm leads take validated prototypes to market. They build their team, develop the product, and prepare for launch while growing an active community. 
+                        Through the launchpad, they access funding and resources needed to scale.
+                    </p>
+                    <p className="text-muted-foreground mb-4">
+                        During this phase, leads focus on proving product-market fit and establishing a sustainable business model. They work closely with the UBC ecosystem 
+                        to integrate their swarm's capabilities and create value.
+                    </p>
+                    <p className="text-muted-foreground">
+                        Their success comes from combining technical execution with community growth, setting the foundation for a thriving AI business.
+                    </p>
+                </div>
+
+                {/* Project Support and FAQ Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                    {/* Left Column - Project Support */}
+                    <div className="space-y-6">
+                        <div className="flex items-center gap-3">
+                            <div className="h-10 w-10 rounded-lg bg-green-500/20 flex items-center justify-center">
+                                <Rocket className="h-5 w-5 text-green-500" />
+                            </div>
+                            <h3 className="text-xl font-semibold">Project Support</h3>
+                        </div>
+                        <ul className="space-y-3">
+                            <li className="flex items-start gap-2">
+                                <span className="text-green-500 mt-1">•</span>
+                                <span><span className="text-foreground font-medium">Technical Resources</span> <span className="text-muted-foreground">- Full access to KinOS infrastructure, development tools, and technical expertise</span></span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-green-500 mt-1">•</span>
+                                <span><span className="text-foreground font-medium">Launch Support</span> <span className="text-muted-foreground">- Direct path to funding through our launchpad and established investor network</span></span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-green-500 mt-1">•</span>
+                                <span><span className="text-foreground font-medium">Community Growth</span> <span className="text-muted-foreground">- Tools and strategies to expand your community and user base</span></span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-green-500 mt-1">•</span>
+                                <span><span className="text-foreground font-medium">Business Development</span> <span className="text-muted-foreground">- Support in establishing partnerships and revenue streams</span></span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-green-500 mt-1">•</span>
+                                <span><span className="text-foreground font-medium">Marketing Amplification</span> <span className="text-muted-foreground">- Access to UBC's network for increased visibility and user acquisition</span></span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-green-500 mt-1">•</span>
+                                <span><span className="text-foreground font-medium">Integration Support</span> <span className="text-muted-foreground">- Technical guidance for seamless integration with the UBC ecosystem</span></span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    {/* Right Column - Quick Questions */}
+                    <div className="p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                        <h3 className="text-lg font-semibold mb-4">Quick Questions</h3>
+                        <Accordion type="single" collapsible className="space-y-2">
+                            <AccordionItem value="item-1" className="border-b-0">
+                                <AccordionTrigger className="text-sm py-2">What makes a successful Early Swarm?</AccordionTrigger>
+                                <AccordionContent className="text-sm text-muted-foreground">
+                                    A combination of technical excellence, active community engagement, and clear path to revenue. We look for projects with validated prototypes and strong leadership.
+                                </AccordionContent>
+                            </AccordionItem>
+                            <AccordionItem value="item-2" className="border-b-0">
+                                <AccordionTrigger className="text-sm py-2">What support do you provide?</AccordionTrigger>
+                                <AccordionContent className="text-sm text-muted-foreground">
+                                    Comprehensive support including technical infrastructure, funding access, marketing resources, and business development assistance to help you scale effectively.
+                                </AccordionContent>
+                            </AccordionItem>
+                            <AccordionItem value="item-3" className="border-b-0">
+                                <AccordionTrigger className="text-sm py-2">How does the funding work?</AccordionTrigger>
+                                <AccordionContent className="text-sm text-muted-foreground">
+                                    Early Swarms access funding through our launchpad platform, with transparent terms and community-aligned incentives.
+                                </AccordionContent>
+                            </AccordionItem>
+                            <AccordionItem value="item-4" className="border-b-0">
+                                <AccordionTrigger className="text-sm py-2">What are the requirements?</AccordionTrigger>
+                                <AccordionContent className="text-sm text-muted-foreground">
+                                    A working prototype, clear vision for scaling, and commitment to building within the UBC ecosystem. Technical expertise and community building skills are essential.
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion>
+                    </div>
+                </div>
+
+                {/* Call to Action */}
+                <div className="flex justify-center gap-4">
+                    <Button 
+                        size="lg"
+                        className="group bg-gradient-to-r from-blue-500 to-cyan-500"
+                        onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
+                    >
+                        Launch Your Swarm
+                    </Button>
+                    <Button 
+                        size="lg"
+                        variant="secondary"
+                        className="group"
+                        onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
+                    >
+                        Take Over a Project
+                    </Button>
                 </div>
             </section>
 
