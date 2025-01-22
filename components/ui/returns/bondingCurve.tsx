@@ -12,7 +12,7 @@ function calculateAmountRaised(supply: number) {
     for (let i = 0; i < supply; i += stepSize) {
         const cycle = Math.floor(i / 5000);
         const x = i % 5000;
-        const base = 1 * Math.pow(1.38, cycle);
+        const base = 1 * Math.pow(1.41, cycle);
         
         let multiplier;
         if (x <= 1250) {
@@ -49,7 +49,7 @@ function generateBondingCurveData() {
     for (let supply = 0; supply <= maxSupply; supply += 100) {
         const cycle = Math.floor(supply / 5000);
         const x = supply % 5000;
-        const base = 1 * Math.pow(1.35, cycle);
+        const base = 1 * Math.pow(1.41, cycle);
         
         let multiplier;
         if (x <= 1250) {
