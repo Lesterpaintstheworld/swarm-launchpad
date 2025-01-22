@@ -36,6 +36,104 @@ export default function Lead() {
                 </p>
             </section>
 
+            {/* Leadership Journey Infographic */}
+            <section className="py-24">
+                <div className="relative">
+                    {/* Background Line */}
+                    <div className="absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-green-500/20" />
+                    
+                    {/* Stages Grid */}
+                    <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {/* Inception Stage */}
+                        <div className="flex flex-col items-center gap-6">
+                            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500/20 to-blue-500/20 border border-purple-500/30 flex items-center justify-center">
+                                <div className="w-12 h-12 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-2xl">
+                                    1
+                                </div>
+                            </div>
+                            <div className="text-center space-y-2">
+                                <h3 className="text-xl font-semibold bg-gradient-to-r from-purple-500 to-blue-500 text-transparent bg-clip-text">
+                                    Inception Stage
+                                </h3>
+                                <div className="p-4 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                                    <p className="font-medium mb-2">Guardian</p>
+                                    <ul className="text-sm text-muted-foreground space-y-2">
+                                        <li>• Shapes initial vision</li>
+                                        <li>• Builds community</li>
+                                        <li>• Finds potential leads</li>
+                                        <li>• Earns 5% of raise</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Early Stage */}
+                        <div className="flex flex-col items-center gap-6">
+                            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 flex items-center justify-center">
+                                <div className="w-12 h-12 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-2xl">
+                                    2
+                                </div>
+                            </div>
+                            <div className="text-center space-y-2">
+                                <h3 className="text-xl font-semibold bg-gradient-to-r from-blue-500 to-cyan-500 text-transparent bg-clip-text">
+                                    Early Stage
+                                </h3>
+                                <div className="p-4 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                                    <p className="font-medium mb-2">Lead</p>
+                                    <ul className="text-sm text-muted-foreground space-y-2">
+                                        <li>• Executes vision</li>
+                                        <li>• Builds product</li>
+                                        <li>• Grows revenue</li>
+                                        <li>• Earns 25-35% of revenue</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Partner Stage */}
+                        <div className="flex flex-col items-center gap-6">
+                            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-500/20 to-green-500/20 border border-emerald-500/30 flex items-center justify-center">
+                                <div className="w-12 h-12 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-2xl">
+                                    3
+                                </div>
+                            </div>
+                            <div className="text-center space-y-2">
+                                <h3 className="text-xl font-semibold bg-gradient-to-r from-emerald-500 to-green-500 text-transparent bg-clip-text">
+                                    Partner Stage
+                                </h3>
+                                <div className="p-4 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                                    <p className="font-medium mb-2">Partner</p>
+                                    <ul className="text-sm text-muted-foreground space-y-2">
+                                        <li>• Drives ecosystem</li>
+                                        <li>• Mentors others</li>
+                                        <li>• Sets standards</li>
+                                        <li>• Negotiable revenue share</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Connection Arrows for larger screens */}
+                    <div className="hidden md:block">
+                        {/* Left Arrow */}
+                        <div className="absolute top-1/2 left-[30%] transform -translate-y-1/2 text-muted-foreground">
+                            <div className="relative w-8 h-0.5 bg-muted-foreground">
+                                <div className="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 rotate-45 w-2 h-0.5 bg-muted-foreground" />
+                                <div className="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 -rotate-45 w-2 h-0.5 bg-muted-foreground" />
+                            </div>
+                        </div>
+                        {/* Right Arrow */}
+                        <div className="absolute top-1/2 right-[30%] transform -translate-y-1/2 text-muted-foreground">
+                            <div className="relative w-8 h-0.5 bg-muted-foreground">
+                                <div className="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 rotate-45 w-2 h-0.5 bg-muted-foreground" />
+                                <div className="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 -rotate-45 w-2 h-0.5 bg-muted-foreground" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* Inception Swarms - Updated Section */}
             <section className="py-24">
                 <div className="text-center mb-16">
