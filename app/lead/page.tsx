@@ -112,53 +112,75 @@ export default function Lead() {
                 </div>
 
                 {/* Benefits Grid */}
+                {/* Benefits and FAQ Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-                    <div className="space-y-6">
-                        <div className="flex items-center gap-3">
-                            <div className="h-10 w-10 rounded-lg bg-green-500/20 flex items-center justify-center">
-                                <Rocket className="h-5 w-5 text-green-500" />
+                    {/* Left Column - Benefits */}
+                    <div className="space-y-8">
+                        {/* Project Support */}
+                        <div className="space-y-6">
+                            <div className="flex items-center gap-3">
+                                <div className="h-10 w-10 rounded-lg bg-green-500/20 flex items-center justify-center">
+                                    <Rocket className="h-5 w-5 text-green-500" />
+                                </div>
+                                <h3 className="text-xl font-semibold">Project Support</h3>
                             </div>
-                            <h3 className="text-xl font-semibold">Project Support</h3>
+                            <ul className="space-y-3 text-muted-foreground list-disc pl-6">
+                                <li>Technical validation assistance</li>
+                                <li>Market opportunity analysis</li>
+                                <li>Business case development</li>
+                                <li>Risk assessment support</li>
+                            </ul>
                         </div>
-                        <ul className="space-y-3 text-muted-foreground list-disc pl-6">
-                            <li>Technical validation assistance</li>
-                            <li>Market opportunity analysis</li>
-                            <li>Business case development</li>
-                            <li>Risk assessment support</li>
-                        </ul>
+
+                        {/* Network Access */}
+                        <div className="space-y-6">
+                            <div className="flex items-center gap-3">
+                                <div className="h-10 w-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                                    <Users className="h-5 w-5 text-blue-500" />
+                                </div>
+                                <h3 className="text-xl font-semibold">Network Access</h3>
+                            </div>
+                            <ul className="space-y-3 text-muted-foreground list-disc pl-6">
+                                <li>Connect with potential Swarm Leads</li>
+                                <li>Access the UBC ecosystem</li>
+                                <li>Join the Guardian community</li>
+                                <li>Build valuable partnerships</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    {/* Right Column - Compact FAQ */}
+                    <div className="p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                        <h3 className="text-lg font-semibold mb-4">Quick Questions</h3>
+                        <Accordion type="single" collapsible className="space-y-2">
+                            <AccordionItem value="item-1" className="border-b-0">
+                                <AccordionTrigger className="text-sm py-2">What makes a good Guardian?</AccordionTrigger>
+                                <AccordionContent className="text-sm text-muted-foreground">
+                                    Vision, strategic thinking, and the ability to guide a project's development. Technical expertise is valuable but not required.
+                                </AccordionContent>
+                            </AccordionItem>
+                            <AccordionItem value="item-2" className="border-b-0">
+                                <AccordionTrigger className="text-sm py-2">How involved will I be?</AccordionTrigger>
+                                <AccordionContent className="text-sm text-muted-foreground">
+                                    Guardians provide strategic guidance and vision alignment throughout development, but don't handle day-to-day operations.
+                                </AccordionContent>
+                            </AccordionItem>
+                            <AccordionItem value="item-3" className="border-b-0">
+                                <AccordionTrigger className="text-sm py-2">How does the 5% reward work?</AccordionTrigger>
+                                <AccordionContent className="text-sm text-muted-foreground">
+                                    When the project successfully raises funds, you receive 5% of the initial fundraising, aligned with project milestones.
+                                </AccordionContent>
+                            </AccordionItem>
+                            <AccordionItem value="item-4" className="border-b-0">
+                                <AccordionTrigger className="text-sm py-2">Can I be both Guardian and Lead?</AccordionTrigger>
+                                <AccordionContent className="text-sm text-muted-foreground">
+                                    Yes, if you have both the vision and the ability to execute, you can take both roles.
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion>
                     </div>
                 </div>
 
-                {/* FAQ Accordion */}
-                <div className="mb-16">
-                    <h3 className="text-2xl font-semibold mb-8">Frequently Asked Questions</h3>
-                    <Accordion type="single" collapsible className="space-y-4">
-                        <AccordionItem value="item-1">
-                            <AccordionTrigger>What makes a good Guardian?</AccordionTrigger>
-                            <AccordionContent>
-                                Vision, strategic thinking, and the ability to guide a project's development. Technical expertise is valuable but not required.
-                            </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value="item-2">
-                            <AccordionTrigger>How involved will I be?</AccordionTrigger>
-                            <AccordionContent>
-                                Guardians provide strategic guidance and vision alignment throughout development, but don't handle day-to-day operations.
-                            </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value="item-3">
-                            <AccordionTrigger>How does the 5% reward work?</AccordionTrigger>
-                            <AccordionContent>
-                                When the project successfully raises funds, you receive 5% of the initial fundraising, aligned with project milestones.
-                            </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value="item-4">
-                            <AccordionTrigger>Can I be both Guardian and Lead?</AccordionTrigger>
-                            <AccordionContent>
-                                Yes, if you have both the vision and the ability to execute, you can take both roles.
-                            </AccordionContent>
-                        </AccordionItem>
-                    </Accordion>
-                </div>
 
                 {/* Call to Action */}
                 <div className="flex justify-center gap-4">
