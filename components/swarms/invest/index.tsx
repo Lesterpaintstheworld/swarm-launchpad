@@ -33,17 +33,17 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
 
 
     const { pools } = useLaunchpadProgram();
-    const { poolAccount, purchaseShares } = useLaunchpadProgramAccount({ poolAddress: pool });
+    // const { poolAccount, purchaseShares } = useLaunchpadProgramAccount({ poolAddress: pool });
 
-    useEffect(() => {
-        console.log(poolAccount.data);
-        setData({
-            totalSupply: poolAccount.data?.totalShares.toNumber(),
-            remainingSupply: poolAccount.data?.availableShares.toNumber(),
-            // pricePerShare: calculateCostPerShareWithBondingCurve(poolAccount.data?.totalShares.toNumber() - poolAccount.data?.availableShares.toNumber())
-            pricePerShare: 250
-        })
-    }, [poolAccount.data, pools.data]);
+    // useEffect(() => {
+    //     console.log(poolAccount.data);
+    //     setData({
+    //         totalSupply: poolAccount.data?.totalShares.toNumber(),
+    //         remainingSupply: poolAccount.data?.availableShares.toNumber(),
+    //         // pricePerShare: calculateCostPerShareWithBondingCurve(poolAccount.data?.totalShares.toNumber() - poolAccount.data?.availableShares.toNumber())
+    //         pricePerShare: 250
+    //     })
+    // }, [poolAccount.data, pools.data]);
 
     const handleSharesInput = (e: ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value.replace(/,/g, ''));
