@@ -77,7 +77,7 @@ export default function Lead() {
                                         </li>
                                         <li className="flex items-center gap-2 text-purple-200/80">
                                             <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-                                            Finds potential leads
+                                            Finds potential leaders
                                         </li>
                                         <li className="flex items-center gap-2 text-purple-200/80">
                                             <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
@@ -122,7 +122,7 @@ export default function Lead() {
                                         </li>
                                         <li className="flex items-center gap-2 text-blue-200/80">
                                             <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-                                            Earns 25-35% of revenue
+                                            Earns from raise, revenues & fees
                                         </li>
                                     </ul>
                                 </div>
@@ -151,19 +151,15 @@ export default function Lead() {
                                     <ul className="space-y-3 text-sm">
                                         <li className="flex items-center gap-2 text-emerald-200/80">
                                             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                                            Integrates with other Swarms
+                                        </li>
+                                        <li className="flex items-center gap-2 text-emerald-200/80">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                                             Drives ecosystem
                                         </li>
-                                        <li className="flex items-center gap-2 text-emerald-200/80">
+                                        <li className="flex items-center gap-2 text-blue-200/80">
                                             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                                            Mentors others
-                                        </li>
-                                        <li className="flex items-center gap-2 text-emerald-200/80">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                                            Sets standards
-                                        </li>
-                                        <li className="flex items-center gap-2 text-emerald-200/80">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                                            Negotiable revenue share
+                                            Earns from raise, revenues & fees
                                         </li>
                                     </ul>
                                 </div>
