@@ -6,7 +6,7 @@ import { Token } from "@/components/tokens/token";
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
 import { supportedTokens } from "@/data/tokens/supported";
-import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
+import { useLaunchpadProgram, useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { cn, IntlNumberFormat, IntlNumberFormatCompact } from "@/lib/utils";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Link from "next/link";
@@ -31,7 +31,9 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
         pricePerShare: 0,
     });
 
-    const { poolAccount, purchaseShares, shareholderAccount } = useLaunchpadProgramAccount({ poolAddress: pool });
+
+    const { pools } = useLaunchpadProgram();
+    const { poolAccount, purchaseShares } = useLaunchpadProgramAccount({ poolAddress: pool });
 
     useEffect(() => {
         console.log(poolAccount.data);
@@ -41,11 +43,7 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
             // pricePerShare: calculateCostPerShareWithBondingCurve(poolAccount.data?.totalShares.toNumber() - poolAccount.data?.availableShares.toNumber())
             pricePerShare: 250
         })
-    }, [poolAccount.data]);
-    
-    useEffect(() => {
-        console.log(shareholderAccount.data);
-    }, [shareholderAccount.data]);
+    }, [poolAccount.data, pools.data]);
 
     const handleSharesInput = (e: ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value.replace(/,/g, ''));

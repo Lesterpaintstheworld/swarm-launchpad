@@ -1,8 +1,8 @@
 'use client'
 
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
-import { Keypair, LAMPORTS_PER_SOL, PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY } from '@solana/web3.js'
-import { getAssociatedTokenAddress } from '@solana/spl-token';
+import { Keypair, LAMPORTS_PER_SOL, PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY, Transaction } from '@solana/web3.js'
+import { createAssociatedTokenAccountInstruction, getAssociatedTokenAddress } from '@solana/spl-token';
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { constants } from '@/lib/constants'
@@ -12,8 +12,10 @@ import { getLaunchpadProgram, getShareholderPDA, getTokenAccountPDA } from './ut
 import { BN } from '@coral-xyz/anchor'
 
 import { TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token'
+import { toast } from 'sonner';
 
 export function useLaunchpadProgram() {
+
     const network = constants.environment === 'production' 
         ? WalletAdapterNetwork.Mainnet 
         : WalletAdapterNetwork.Devnet;
@@ -81,6 +83,7 @@ export function useLaunchpadProgram() {
                     platformAccount
                 )
                 .accounts({
+                    // @ts-ignore
                     pool: poolPda,
                     authority: publicKey,
                     systemProgram: SystemProgram.programId,
@@ -92,9 +95,9 @@ export function useLaunchpadProgram() {
                 tx.feePayer = publicKey;
                 
                 // Send and confirm
+                // @ts-ignore
                 const signature = await program.provider.sendAndConfirm(tx);
-                console.log('StorePool PDA:', poolPda.toBase58());
-                console.log("Transaction successful:", signature);
+                toast(`Pool Address: ${poolPda.toBase58()}`, { duration: 20000 });
                 return signature;
 
             } catch (error) {
@@ -126,11 +129,13 @@ export function useLaunchpadProgram() {
     return {
         program,
         programId,
+        connection,
         computeMint,
         ubcMint,
         pools,
         initializePool,
-        freezePool
+        freezePool,
+        provider
     }
 }
 
@@ -139,7 +144,7 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
     const pool = new PublicKey(poolAddress);
 
     const { publicKey } = useWallet()
-    const { program, programId, computeMint, ubcMint } = useLaunchpadProgram()
+    const { program, programId, computeMint, ubcMint, connection, provider } = useLaunchpadProgram()
     const network = constants.environment === 'production' 
         ? WalletAdapterNetwork.Mainnet 
         : WalletAdapterNetwork.Devnet
@@ -152,199 +157,274 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
             if (!accountInfo) {
                 throw new Error('Pool account not found');
             }
+            
             return program.account.pool.fetch(pool);
         },
         enabled: !!program
     })
 
     const purchaseShares = useMutation({
-        mutationKey: ['shares', 'purchase', pool.toBase58, network],
+        mutationKey: ['shares', 'purchase', pool.toString()],
         mutationFn: async ({
             numberOfShares,
             calculatedCost
         }: {
             numberOfShares: number,
-            calculatedCost: number,
+            calculatedCost: number
         }) => {
             if (!publicKey) throw new Error('Wallet not connected')
+                if (!poolAccount.data) throw new Error('Pool data not loaded')
     
-            // Get pool data to get the various account addresses
-            const accountInfo = await program.provider.connection.getAccountInfo(pool);
-            
-            // Generate PDAs
-            const [shareholderPda] = PublicKey.findProgramAddressSync(
-                [
-                    Buffer.from("shareholder"),
-                    pool.toBuffer(),
-                    publicKey.toBuffer()
-                ],
-                programId
-            );
-    
-            // Get associated token accounts
-            const senderComputeAccount = await getAssociatedTokenAddress(
-                computeMint,
-                publicKey
-            );
-    
-            const senderUbcAccount = await getAssociatedTokenAddress(
-                ubcMint,
-                publicKey
-            );
-    
-            const swarmComputeAccount = await getAssociatedTokenAddress(
-                computeMint,
-                poolData.swarmAccount
-            );
-    
-            const partnerUbcAccount = await getAssociatedTokenAddress(
-                ubcMint,
-                poolData.partnerAccount
-            );
-    
-            const platformUbcAccount = await getAssociatedTokenAddress(
-                ubcMint,
-                poolData.platformAccount
-            );
-    
-            return program.methods
-                .purchaseShares(
-                    new BN(numberOfShares),
-                    new BN(calculatedCost)
+                // Get token accounts
+                const senderComputeAccount = await getAssociatedTokenAddress(
+                    poolAccount.data.computeMint,
+                    publicKey
                 )
-                .accounts({
-                    pool,
-                    shareholder: shareholderPda,
-                    computeMintAccount: computeMint,
-                    ubcMintAccount: ubcMint,
-                    senderComputeAccount,
-                    senderUbcAccount,
-                    swarmAccount: poolData.swarmAccount,
-                    swarmComputeAccount,
-                    partnerAccount: poolData.partnerAccount,
-                    partnerUbcAccount,
-                    platformAccount: poolData.platformAccount,
-                    platformUbcAccount,
-                    buyer: publicKey,
-                    systemProgram: SystemProgram.programId,
-                    tokenProgram: TOKEN_PROGRAM_ID,
-                    associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID
-                })
-                .rpc()
+                const senderUbcAccount = await getAssociatedTokenAddress(
+                    poolAccount.data.ubcMint,
+                    publicKey
+                )
+                const swarmComputeAccount = await getAssociatedTokenAddress(
+                    poolAccount.data.computeMint,
+                    poolAccount.data.swarmAccount
+                )
+                const partnerUbcAccount = await getAssociatedTokenAddress(
+                    poolAccount.data.ubcMint,
+                    poolAccount.data.partnerAccount
+                )
+                const platformUbcAccount = await getAssociatedTokenAddress(
+                    poolAccount.data.ubcMint,
+                    poolAccount.data.platformAccount
+                )
+    
+                // Check which accounts exist
+                const [
+                    senderComputeAccountInfo,
+                    senderUbcAccountInfo,
+                    swarmComputeAccountInfo
+                ] = await Promise.all([
+                    connection.getAccountInfo(senderComputeAccount),
+                    connection.getAccountInfo(senderUbcAccount),
+                    connection.getAccountInfo(swarmComputeAccount)
+                ]);
+    
+                // Create instructions for missing ATAs
+                const createAtaInstructions = [];
+    
+                if (!senderComputeAccountInfo) {
+                    console.log('Creating sender compute ATA');
+                    createAtaInstructions.push(
+                        createAssociatedTokenAccountInstruction(
+                            publicKey,
+                            senderComputeAccount,
+                            publicKey,
+                            poolAccount.data.computeMint
+                        )
+                    );
+                }
+    
+                if (!senderUbcAccountInfo) {
+                    console.log('Creating sender UBC ATA');
+                    createAtaInstructions.push(
+                        createAssociatedTokenAccountInstruction(
+                            publicKey,
+                            senderUbcAccount,
+                            publicKey,
+                            poolAccount.data.ubcMint
+                        )
+                    );
+                }
+    
+                if (!swarmComputeAccountInfo) {
+                    console.log('Creating swarm compute ATA');
+                    createAtaInstructions.push(
+                        createAssociatedTokenAccountInstruction(
+                            publicKey,
+                            swarmComputeAccount,
+                            poolAccount.data.swarmAccount,
+                            poolAccount.data.computeMint
+                        )
+                    );
+                }
+    
+                // If we need to create any ATAs, send that transaction first
+                if (createAtaInstructions.length > 0) {
+                    const createAtasTx = new Transaction().add(...createAtaInstructions);
+                    const { blockhash } = await connection.getLatestBlockhash();
+                    createAtasTx.recentBlockhash = blockhash;
+                    createAtasTx.feePayer = publicKey;
+    
+                    console.log('Sending create ATAs transaction');
+                    await provider.sendAndConfirm(createAtasTx);
+                    console.log('ATAs created successfully');
+                }
+    
+                // Generate the shareholder PDA
+                const [shareholderPda] = PublicKey.findProgramAddressSync(
+                    [
+                        Buffer.from("shareholder"),
+                        pool.toBuffer(),
+                        publicKey.toBuffer()
+                    ],
+                    program.programId
+                );
+    
+                console.log('Sending purchase transaction with accounts:', {
+                    pool: pool.toString(),
+                    shareholder: shareholderPda.toString(),
+                    computeMintAccount: poolAccount.data.computeMint.toString(),
+                    // ubcMintAccount: poolAccount.data.ubcMint.toString(),
+                    senderComputeAccount: senderComputeAccount.toString(),
+                    // senderUbcAccount: senderUbcAccount.toString(),
+                    swarmAccount: poolAccount.data.swarmAccount.toString(),
+                    swarmComputeAccount: swarmComputeAccount.toString(),
+                    // partnerAccount: poolAccount.data.partnerAccount.toString(),
+                    // partnerUbcAccount: partnerUbcAccount.toString(),
+                    // platformAccount: poolAccount.data.platformAccount.toString(),
+                    // platformUbcAccount: platformUbcAccount.toString(),
+                    buyer: publicKey.toString()
+                });
+    
+                // Send the purchase transaction
+                return program.methods
+                    .purchaseShares(
+                        new BN(numberOfShares),
+                        new BN(calculatedCost)
+                    )
+                    .accounts({
+                        pool,
+                        // @ts-ignore
+                        shareholder: shareholderPda,
+                        computeMintAccount: poolAccount.data.computeMint,
+                        ubcMintAccount: poolAccount.data.ubcMint,
+                        senderComputeAccount,
+                        senderUbcAccount,
+                        swarmAccount: poolAccount.data.swarmAccount,
+                        swarmComputeAccount,
+                        partnerAccount: poolAccount.data.partnerAccount,
+                        partnerUbcAccount,
+                        platformAccount: poolAccount.data.platformAccount,
+                        platformUbcAccount,
+                        buyer: publicKey,
+                        systemProgram: SystemProgram.programId,
+                        tokenProgram: TOKEN_PROGRAM_ID,
+                        associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID
+                    })
+                    .rpc()
         }
     })
 
     // Get shareholder account data if wallet is connected
-    const shareholderAccount = useQuery({
-        queryKey: ['shareholder', 'fetch', pool.toBase58(), publicKey?.toBase58(), network],
-        queryFn: async () => {
-            if (!publicKey) throw new Error('Wallet not connected')
-            const pda = await getShareholderPDA(program.programId, publicKey, pool)
-            if (!pda) throw new Error('Failed to generate shareholder PDA')
-            return program.account.shareholder.fetch(pda)
-        },
-        enabled: !!pool && !!publicKey && !!program
-    })
+    // const shareholderAccount = useQuery({
+    //     queryKey: ['shareholder', 'fetch', pool.toBase58(), publicKey?.toBase58(), network],
+    //     queryFn: async () => {
+    //         if (!publicKey) throw new Error('Wallet not connected')
+    //         const pda = await getShareholderPDA(program.programId, publicKey, pool)
+    //         if (!pda) throw new Error('Failed to generate shareholder PDA')
+    //         return program.account.shareholder.fetch(pda)
+    //     },
+    //     enabled: !!pool && !!publicKey && !!program
+    // })
 
     // Create share listing
-    const createListing = useMutation({
-        mutationKey: ['listing', 'create', pool.toBase58(), network],
-        mutationFn: async ({
-            listingId,
-            numberOfShares,
-            pricePerShare,
-            wantedTokenMint
-        }: {
-            listingId: string,
-            numberOfShares: number,
-            pricePerShare: number,
-            wantedTokenMint: PublicKey
-        }) => {
-            if (!publicKey) throw new Error('Wallet not connected')
+    // const createListing = useMutation({
+    //     mutationKey: ['listing', 'create', pool.toBase58(), network],
+    //     mutationFn: async ({
+    //         listingId,
+    //         numberOfShares,
+    //         pricePerShare,
+    //         wantedTokenMint
+    //     }: {
+    //         listingId: string,
+    //         numberOfShares: number,
+    //         pricePerShare: number,
+    //         wantedTokenMint: PublicKey
+    //     }) => {
+    //         if (!publicKey) throw new Error('Wallet not connected')
 
-            const [listingPda] = PublicKey.findProgramAddressSync(
-                [
-                    Buffer.from("listing"),
-                    pool.toBuffer(),
-                    publicKey.toBuffer(),
-                    Buffer.from(listingId)
-                ],
-                program.programId
-            )
+    //         const [listingPda] = PublicKey.findProgramAddressSync(
+    //             [
+    //                 Buffer.from("listing"),
+    //                 pool.toBuffer(),
+    //                 publicKey.toBuffer(),
+    //                 Buffer.from(listingId)
+    //             ],
+    //             program.programId
+    //         )
 
-            return program.methods
-                .createListing(
-                    listingId,
-                    new BN(numberOfShares),
-                    new BN(pricePerShare),
-                    wantedTokenMint
-                )
-                .accounts({
-                    shareholder: await getShareholderPDA(program.programId, publicKey, pool),
-                    shareListing: listingPda,
-                    pool,
-                    seller: publicKey,
-                    systemProgram: SystemProgram.programId
-                })
-                .rpc()
-        }
-    })
+    //         return program.methods
+    //             .createListing(
+    //                 listingId,
+    //                 new BN(numberOfShares),
+    //                 new BN(pricePerShare),
+    //                 wantedTokenMint
+    //             )
+    //             .accounts({
+    //                 shareholder: await getShareholderPDA(program.programId, publicKey, pool),
+    //                 shareListing: listingPda,
+    //                 pool,
+    //                 seller: publicKey,
+    //                 systemProgram: SystemProgram.programId
+    //             })
+    //             .rpc()
+    //     }
+    // })
 
     // Cancel listing
-    const cancelListing = useMutation({
-        mutationKey: ['listing', 'cancel', pool.toBase58(), network],
-        mutationFn: async (listing: PublicKey) => {
-            if (!publicKey) throw new Error('Wallet not connected')
+    // const cancelListing = useMutation({
+    //     mutationKey: ['listing', 'cancel', pool.toBase58(), network],
+    //     mutationFn: async (listing: PublicKey) => {
+    //         if (!publicKey) throw new Error('Wallet not connected')
 
-            return program.methods
-                .cancelListing()
-                .accounts({
-                    shareListing: listing,
-                    shareholder: await getShareholderPDA(program.programId, publicKey, pool),
-                    pool,
-                    seller: publicKey,
-                    systemProgram: SystemProgram.programId
-                })
-                .rpc()
-        }
-    })
+    //         return program.methods
+    //             .cancelListing()
+    //             .accounts({
+    //                 shareListing: listing,
+    //                 shareholder: await getShareholderPDA(program.programId, publicKey, pool),
+    //                 pool,
+    //                 seller: publicKey,
+    //                 systemProgram: SystemProgram.programId
+    //             })
+    //             .rpc()
+    //     }
+    // })
 
     // Buy listing
-    const buyListing = useMutation({
-        mutationKey: ['listing', 'buy', pool.toBase58(), network],
-        mutationFn: async ({
-            listing,
-            computeMint,
-            ubcMint
-        }: {
-            listing: PublicKey,
-            computeMint: PublicKey,
-            ubcMint: PublicKey
-        }) => {
-            if (!publicKey) throw new Error('Wallet not connected')
+    // const buyListing = useMutation({
+    //     mutationKey: ['listing', 'buy', pool.toBase58(), network],
+    //     mutationFn: async ({
+    //         listing,
+    //         computeMint,
+    //         ubcMint
+    //     }: {
+    //         listing: PublicKey,
+    //         computeMint: PublicKey,
+    //         ubcMint: PublicKey
+    //     }) => {
+    //         if (!publicKey) throw new Error('Wallet not connected')
 
-            return program.methods
-                .buyListing()
-                .accounts({
-                    shareListing: listing,
-                    buyerShareholder: await getShareholderPDA(program.programId, publicKey, pool),
-                    // Add all required account addresses
-                    pool,
-                    buyer: publicKey,
-                    systemProgram: SystemProgram.programId,
-                    tokenProgram: TOKEN_PROGRAM_ID,
-                    associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID
-                })
-                .rpc()
-        }
-    })
+    //         return program.methods
+    //             .buyListing()
+    //             .accounts({
+    //                 shareListing: listing,
+    //                 buyerShareholder: await getShareholderPDA(program.programId, publicKey, pool),
+    //                 // Add all required account addresses
+    //                 pool,
+    //                 buyer: publicKey,
+    //                 systemProgram: SystemProgram.programId,
+    //                 tokenProgram: TOKEN_PROGRAM_ID,
+    //                 associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID
+    //             })
+    //             .rpc()
+    //     }
+    // })
 
     return {
         poolAccount,
-        shareholderAccount,
         purchaseShares,
-        createListing,
-        cancelListing,
-        buyListing
+        // shareholderAccount,
+        // createListing,
+        // cancelListing,
+        // buyListing
     }
 }

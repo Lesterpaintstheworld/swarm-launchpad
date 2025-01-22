@@ -5,7 +5,7 @@ import { Investments } from "@/components/portfolio/investments";
 import { PortfolioOverview } from "@/components/portfolio/overview";
 import { useWallet } from "@solana/wallet-adapter-react";
 import dynamic from 'next/dynamic';
-import { PublicKey } from "@solana/web3.js";
+// import { PublicKey } from "@solana/web3.js";
 import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
 import { useEffect } from "react";
 
@@ -36,13 +36,6 @@ export default function Portfolio() {
 function PortfolioContent() {
 
     const { connected } = useWallet();
-
-    const { pools } = useLaunchpadProgram();
-
-    useEffect(() => {
-        console.log(pools.data)
-    }, [pools])
-    
 
     // Handle wallet not connected
     if (!connected) {

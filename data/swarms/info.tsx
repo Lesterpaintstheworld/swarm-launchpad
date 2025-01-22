@@ -64,7 +64,7 @@ Join the revolution in AI-powered content creation with SLOP FATHER - where ever
         image: '/swarms/digitalkin.png',
         models: ['KinOS', 'Claude Haiku'],
         name: 'DigitalKin',
-        pool: 'BMos5kWkgdXQvc6Lxf4ZYQyBNprJHREdU6iwmEibJSjY',
+        pool: 'Ccd141Zg8CRrxA2MfUu3Hr5iCBz2PhTYsdU2pNQAwvdJ',
         gallery: [
             { type: 'image', content: '/swarms/digitalkin.png' },
             { type: 'image', content: '/default.png' },
@@ -114,7 +114,8 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         programAddress: '',
         tags: ['AI', 'OpenAI'],
         role: 'Lorem ipsum',
-        swarmType: 'partner'
+        swarmType: 'partner',
+        pool: 'BMos5kWkgdXQvc6Lxf4ZYQyBNprJHREdU6iwmEibJSjY',
     },
     {
         id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',
