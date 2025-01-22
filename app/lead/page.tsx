@@ -502,7 +502,7 @@ export default function Lead() {
                     <Button 
                         size="lg"
                         className="group bg-gradient-to-r from-blue-500 to-cyan-500"
-                        onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
+                        onClick={() => window.open('https://k2mobei34z9.typeform.com/to/JJ8ECGcD', '_blank')}
                     >
                         Launch Your Swarm
                     </Button>
@@ -510,7 +510,7 @@ export default function Lead() {
                         size="lg"
                         variant="secondary"
                         className="group"
-                        onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
+                        onClick={() => window.open('https://t.me/Lesterpaintstheworld', '_blank')}
                     >
                         Take Over a Project
                     </Button>
