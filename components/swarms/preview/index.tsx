@@ -7,6 +7,15 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { SwarmPreviewData } from "../swarm.types";
 import { useState } from 'react';
+import { cn } from "@/lib/utils";
+
+const getRevenueShareColor = (revenueShare: number) => {
+    if (revenueShare === 0) return "bg-purple-500/10 text-purple-500";
+    if (revenueShare < 10) return "bg-red-500/10 text-red-500";
+    if (revenueShare < 50) return "bg-yellow-500/10 text-yellow-500";
+    if (revenueShare < 100) return "bg-green-500/10 text-green-500";
+    return "bg-blue-500/10 text-blue-500";
+}
 
 interface SwarmPreviewCardProps {
     swarm: SwarmPreviewData;
@@ -42,7 +51,10 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
                             <TooltipProvider>
                                 <Tooltip>
                                     <TooltipTrigger>
-                                        <div className="px-2 py-0.5 text-[10px] font-medium rounded-full bg-yellow-500/10 text-yellow-500">
+                                        <div className={cn(
+                                            "px-2 py-0.5 text-[10px] font-medium rounded-full",
+                                            getRevenueShareColor(swarm.revenueShare)
+                                        )}>
                                             Revenue Share: {swarm.revenueShare}%
                                         </div>
                                     </TooltipTrigger>
