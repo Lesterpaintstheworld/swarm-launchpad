@@ -2,7 +2,8 @@
 
 import { BackgroundBlur } from "@/components/background";
 import { Button } from "@/components/shadcn/button";
-import { ArrowRight, Lightbulb, Code, Network, Users, DollarSign } from "lucide-react";
+import { ArrowRight, Rocket, Star, Handshake } from "lucide-react";
+import { BondingCurve } from "@/components/ui/returns/bondingCurve";
 
 export default function Lead() {
     return (
@@ -12,139 +13,131 @@ export default function Lead() {
             {/* Hero Section */}
             <section className="flex flex-col items-center justify-center min-h-[60vh] gap-8 text-center">
                 <h1 className="font-normal tracking-tight max-w-[800px]">
-                    Lead the <span className="metallic-text">AI Revolution</span>: Your Journey from Visionary to Ecosystem Builder
+                    Join the <span className="metallic-text">AI Revolution</span>: Build Your Swarm
                 </h1>
                 <p className="text-xl text-muted-foreground max-w-[700px] text-balance">
-                    Shape the future of artificial intelligence with UBC ecosystem. Transform your ideas into thriving AI swarms with our comprehensive support system.
+                    From inception to partnership, discover your path in the UBC ecosystem and shape the future of artificial intelligence.
                 </p>
             </section>
 
-            {/* Leadership Journey Section */}
+            {/* Inception Swarms */}
             <section className="py-24">
                 <div className="text-center mb-16">
-                    <h2 className="text-3xl font-semibold mb-4">Your Leadership Journey</h2>
-                    <p className="text-muted-foreground">Choose your path in the AI revolution</p>
+                    <div className="flex items-center justify-center gap-3 mb-4">
+                        <Rocket className="w-8 h-8 text-purple-500" />
+                        <h2 className="text-3xl font-semibold">Inception Swarms</h2>
+                    </div>
+                    <p className="text-muted-foreground">Launch your AI vision with community support</p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {/* Guardian Card */}
-                    <div className="flex flex-col gap-6 p-8 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm hover:border-white/10 transition-all">
-                        <Lightbulb className="w-10 h-10 text-yellow-500" />
-                        <h3 className="text-2xl font-semibold">The Visionary</h3>
-                        <p className="text-muted-foreground flex-grow">
-                            For creative minds with groundbreaking AI concepts. Be the originator of new possibilities in the AI space.
-                        </p>
-                        <Button 
-                            className="w-full group"
-                            onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
-                        >
-                            Become a Guardian
-                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        </Button>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                    <div className="space-y-6">
+                        <h3 className="text-2xl font-semibold">Role & Responsibilities</h3>
+                        <ul className="space-y-3 text-muted-foreground list-disc list-inside">
+                            <li>Define your AI swarm's vision and roadmap</li>
+                            <li>Engage with early supporters and community</li>
+                            <li>Work with guardians on technical implementation</li>
+                            <li>Guide development and feature priorities</li>
+                            <li>Build initial user base and traction</li>
+                        </ul>
                     </div>
-
-                    {/* Swarm Lead Card */}
-                    <div className="flex flex-col gap-6 p-8 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm hover:border-white/10 transition-all">
-                        <Code className="w-10 h-10 text-blue-500" />
-                        <h3 className="text-2xl font-semibold">The Builder</h3>
-                        <p className="text-muted-foreground flex-grow">
-                            Take the helm of an AI project and turn vision into reality. Lead the development of next-gen AI systems.
-                        </p>
-                        <Button 
-                            className="w-full group"
-                            onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
-                        >
-                            Become a Swarm Lead
-                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        </Button>
+                    <div className="space-y-6">
+                        <h3 className="text-2xl font-semibold">Rewards & Benefits</h3>
+                        <ul className="space-y-3 text-muted-foreground list-disc list-inside">
+                            <li>25-50% revenue share from swarm operations</li>
+                            <li>Technical support from UBC guardians</li>
+                            <li>Access to UBC development resources</li>
+                            <li>Community funding through bonding curve</li>
+                            <li>Marketing and launch support</li>
+                        </ul>
                     </div>
+                </div>
 
-                    {/* Partner Card */}
-                    <div className="flex flex-col gap-6 p-8 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm hover:border-white/10 transition-all">
-                        <Network className="w-10 h-10 text-green-500" />
-                        <h3 className="text-2xl font-semibold">The Ecosystem Player</h3>
-                        <p className="text-muted-foreground flex-grow">
-                            Scale your success and join the network of established AI leaders. Shape the future of AI-to-AI commerce.
-                        </p>
-                        <Button 
-                            className="w-full group"
-                            onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
-                        >
-                            Partner With Us
-                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        </Button>
+                <div className="rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm p-8">
+                    <h3 className="text-xl font-semibold mb-6">Inception Funding Model</h3>
+                    <BondingCurve />
+                </div>
+            </section>
+
+            {/* Early Swarms */}
+            <section className="py-24">
+                <div className="text-center mb-16">
+                    <div className="flex items-center justify-center gap-3 mb-4">
+                        <Star className="w-8 h-8 text-yellow-500" />
+                        <h2 className="text-3xl font-semibold">Early Swarms</h2>
+                    </div>
+                    <p className="text-muted-foreground">Scale your proven AI solution</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-6">
+                        <h3 className="text-2xl font-semibold">Role & Responsibilities</h3>
+                        <ul className="space-y-3 text-muted-foreground list-disc list-inside">
+                            <li>Scale operations and user base</li>
+                            <li>Optimize revenue streams</li>
+                            <li>Expand feature set and capabilities</li>
+                            <li>Build partnerships within ecosystem</li>
+                            <li>Maintain high performance standards</li>
+                        </ul>
+                    </div>
+                    <div className="space-y-6">
+                        <h3 className="text-2xl font-semibold">Rewards & Benefits</h3>
+                        <ul className="space-y-3 text-muted-foreground list-disc list-inside">
+                            <li>25-35% revenue share from operations</li>
+                            <li>Priority access to UBC resources</li>
+                            <li>Cross-promotion opportunities</li>
+                            <li>Advanced integration capabilities</li>
+                            <li>Ecosystem partnership opportunities</li>
+                        </ul>
                     </div>
                 </div>
             </section>
-        
 
-            {/* Application Process Section */}
+            {/* Partner Swarms */}
             <section className="py-24">
                 <div className="text-center mb-16">
-                    <h2 className="text-3xl font-semibold mb-4">Application Process</h2>
-                    <p className="text-muted-foreground">Choose your path and begin your journey</p>
+                    <div className="flex items-center justify-center gap-3 mb-4">
+                        <Handshake className="w-8 h-8 text-green-500" />
+                        <h2 className="text-3xl font-semibold">Partner Swarms</h2>
+                    </div>
+                    <p className="text-muted-foreground">Lead the ecosystem as an established player</p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {/* Guardian Track */}
-                    <div className="p-8 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
-                        <Lightbulb className="w-10 h-10 text-yellow-500 mb-6" />
-                        <h3 className="text-xl font-semibold mb-4">Guardian Track</h3>
-                        <ol className="space-y-3 text-muted-foreground list-decimal list-inside">
-                            <li>Submit swarm concept</li>
-                            <li>Technical review</li>
-                            <li>Value proposition assessment</li>
-                            <li>Guardian assignment</li>
-                        </ol>
-                        <Button 
-                            className="w-full group mt-6"
-                            onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
-                        >
-                            Apply as Guardian
-                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        </Button>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-6">
+                        <h3 className="text-2xl font-semibold">Role & Responsibilities</h3>
+                        <ul className="space-y-3 text-muted-foreground list-disc list-inside">
+                            <li>Drive ecosystem innovation</li>
+                            <li>Mentor inception swarms</li>
+                            <li>Participate in governance</li>
+                            <li>Lead cross-swarm initiatives</li>
+                            <li>Set industry standards</li>
+                        </ul>
                     </div>
-
-                    {/* Swarm Lead Track */}
-                    <div className="p-8 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
-                        <Code className="w-10 h-10 text-blue-500 mb-6" />
-                        <h3 className="text-xl font-semibold mb-4">Swarm Lead Track</h3>
-                        <ol className="space-y-3 text-muted-foreground list-decimal list-inside">
-                            <li>Initial application</li>
-                            <li>Technical capability review</li>
-                            <li>Project plan assessment</li>
-                            <li>Resource allocation</li>
-                            <li>Development initiation</li>
-                        </ol>
-                        <Button 
-                            className="w-full group mt-6"
-                            onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
-                        >
-                            Apply as Lead
-                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        </Button>
-                    </div>
-
-                    {/* Partner Track */}
-                    <div className="p-8 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
-                        <Network className="w-10 h-10 text-green-500 mb-6" />
-                        <h3 className="text-xl font-semibold mb-4">Partner Track</h3>
-                        <ol className="space-y-3 text-muted-foreground list-decimal list-inside">
-                            <li>Integration inquiry</li>
-                            <li>Technical assessment</li>
-                            <li>Integration planning</li>
-                            <li>Partnership agreement</li>
-                            <li>Implementation</li>
-                        </ol>
-                        <Button 
-                            className="w-full group mt-6"
-                            onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
-                        >
-                            Partner With Us
-                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        </Button>
+                    <div className="space-y-6">
+                        <h3 className="text-2xl font-semibold">Benefits & Influence</h3>
+                        <ul className="space-y-3 text-muted-foreground list-disc list-inside">
+                            <li>Revenue share negotiable</li>
+                            <li>Governance participation</li>
+                            <li>First access to new features</li>
+                            <li>Strategic partnership opportunities</li>
+                            <li>Ecosystem-wide influence</li>
+                        </ul>
                     </div>
                 </div>
+            </section>
+
+            {/* Call to Action */}
+            <section className="py-24 text-center">
+                <h2 className="text-3xl font-semibold mb-8">Ready to Build Your Swarm?</h2>
+                <Button 
+                    size="lg"
+                    className="group"
+                    onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
+                >
+                    Contact Us to Get Started
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
             </section>
         </main>
     );
