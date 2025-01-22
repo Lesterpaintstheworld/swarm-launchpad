@@ -60,8 +60,6 @@ const SwarmsPreviewGrid = ({ filterType }: SwarmsPreviewGridProps) => {
     const [searchValue, setSearchValue] = useState<string>('');
 
     const filterPreviews = useCallback((type: SwarmType) => {
-        if (filterType && type !== filterType) return [];
-        
         return previews.filter(swarm => {
             const matchesSearch = 
                 swarm.name.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
@@ -70,13 +68,15 @@ const SwarmsPreviewGrid = ({ filterType }: SwarmsPreviewGridProps) => {
                 swarm.tags.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
                 swarm.role?.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase());
             
-            return matchesSearch && swarm.swarmType === type;
+            // Remove the type filter, only filter by search
+            return matchesSearch;
         });
-    }, [searchValue, filterType]);
+    }, [searchValue]);
 
-    const showPartner = !filterType || filterType === 'partner';
-    const showEarly = !filterType || filterType === 'early';
-    const showInception = !filterType || filterType === 'inception';
+    // Always show all sections
+    const showPartner = true;
+    const showEarly = true;
+    const showInception = true;
 
     return (
         <TooltipProvider>
