@@ -103,12 +103,17 @@ export default function Lead() {
                         </div>
                         <h3 className="text-xl font-semibold">What Guardians Do</h3>
                     </div>
-                    <p className="text-muted-foreground mb-8">
+                    <p className="text-muted-foreground mb-4">
                         Guardians help the swarm find its vision and leader until it graduates to an early swarm. They evaluate potential leaders, 
                         support them through the graduation process, and receive 5% of the fundraising when the swarm successfully graduates.
                     </p>
+                    <p className="text-muted-foreground mb-4">
+                        A crucial part of their role is creating buzz and engagement around the ideas. By building an active community early on, 
+                        Guardians lay the foundation for successful fundraising and long-term growth of the swarm's ecosystem.
+                    </p>
                     <p className="text-muted-foreground">
-                        Their role is to bridge the gap between concept and execution by finding the right leadership.
+                        Their role bridges the gap between concept and execution by finding the right leadership while nurturing a thriving community 
+                        that supports the initial investment and future development.
                     </p>
                 </div>
 
