@@ -17,7 +17,6 @@ export default function InceptionSwarm({ params }: { params: { slug: string } })
             router.push('/404');
             return null;
         }
-        // Only redirect if it's not an inception swarm
         if (found.swarmType !== 'inception') {
             router.push(`/invest/${found.id}`);
             return null;
