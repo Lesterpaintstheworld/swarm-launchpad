@@ -123,9 +123,9 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         models: ['Claude Haiku'],
         name: 'Swarm Ventures',
         gallery: [
-            { type: 'image', content: '/swarms/swarm-ventures.jpg' },
-            { type: 'image', content: '/default.png' },
-            { type: 'image', content: '/default.png' }
+            { type: 'image', content: '/swarms/swarmventures/1.jpg' },
+            { type: 'image', content: '/swarms/swarmventures/2.jpg' },
+            { type: 'image', content: '/swarms/swarm-ventures.jpg' }
         ],
         description: SwarmVenturesDescription,
         programAddress: '',
