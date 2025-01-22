@@ -10,6 +10,10 @@ import { Button } from "@/components/shadcn/button"
 import { InfoIcon } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/shadcn/tooltip"
 
+interface SwarmsPreviewGridProps {
+    filterType?: SwarmType;
+}
+
 const swarmTypeInfo = {
     partner: `• Full team operational
 • Product in final stages/launched
@@ -52,11 +56,12 @@ const SwarmTypeHeader = ({ type, icon, title }: { type: SwarmType, icon: string,
     </div>
 )
 
-const SwarmsPreviewGrid = () => {
-
+const SwarmsPreviewGrid = ({ filterType }: SwarmsPreviewGridProps) => {
     const [searchValue, setSearchValue] = useState<string>('');
 
     const filterPreviews = useCallback((type: SwarmType) => {
+        if (filterType && type !== filterType) return [];
+        
         return previews.filter(swarm => {
             const matchesSearch = 
                 swarm.name.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
@@ -67,14 +72,18 @@ const SwarmsPreviewGrid = () => {
             
             return matchesSearch && swarm.swarmType === type;
         });
-    }, [searchValue]);
+    }, [searchValue, filterType]);
+
+    const showPartner = !filterType || filterType === 'partner';
+    const showEarly = !filterType || filterType === 'early';
+    const showInception = !filterType || filterType === 'inception';
 
     return (
         <TooltipProvider>
             <Search value={searchValue} onInputChange={setSearchValue} />
             <div className="flex flex-col gap-12 mt-8">
-                {/* Partner Swarms First */}
-                <div>
+                {showPartner && (
+                    <div>
                     <SwarmTypeHeader type="partner" icon="🤝" title="Partner Swarms" />
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <AnimatePresence>
@@ -83,10 +92,11 @@ const SwarmsPreviewGrid = () => {
                             ))}
                         </AnimatePresence>
                     </div>
-                </div>
+                    </div>
+                )}
 
-                {/* Early Swarms Second */}
-                <div>
+                {showEarly && (
+                    <div>
                     <SwarmTypeHeader type="early" icon="🚀" title="Early Swarms" />
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <AnimatePresence>
@@ -95,10 +105,11 @@ const SwarmsPreviewGrid = () => {
                             ))}
                         </AnimatePresence>
                     </div>
-                </div>
+                    </div>
+                )}
                 
-                {/* Inception Swarms Last */}
-                <div>
+                {showInception && (
+                    <div>
                     <SwarmTypeHeader type="inception" icon="🌱" title="Inception Swarms" />
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <AnimatePresence>
@@ -107,7 +118,8 @@ const SwarmsPreviewGrid = () => {
                             ))}
                         </AnimatePresence>
                     </div>
-                </div>
+                    </div>
+                )}
             </div>
         </TooltipProvider>
     )
