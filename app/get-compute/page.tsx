@@ -9,13 +9,13 @@ import {
     TooltipTrigger,
 } from "@/components/shadcn/tooltip";
 import { stakeMenuItems } from "@/data/navigation/menu";
-import { useWallet } from '@solana/wallet-adapter-react';
-import { useCallback, useState } from 'react';
-import { Transaction } from '@solana/web3.js';
-import { toast } from 'sonner';
+// import { useWallet } from '@solana/wallet-adapter-react';
+// import { useCallback, useState } from 'react';
+// import { Transaction } from '@solana/web3.js';
+// import { toast } from 'sonner';
 
 export default function GetCompute() {
-    const { publicKey, signTransaction } = useWallet();
+    // const { publicKey, signTransaction } = useWallet();
     // const [claiming, setClaiming] = useState(false);
 
     // const handleClaim = useCallback(async () => {

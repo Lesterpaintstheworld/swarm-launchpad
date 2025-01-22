@@ -34,6 +34,7 @@ export interface SwarmInfo {
     pool?: string;
     name: string;
     description: string;
+    logo?: string;
     gallery: SwarmGalleryItem[];
     image: string;
     models: string[];
