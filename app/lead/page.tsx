@@ -12,7 +12,10 @@ import {
     Target,
     Users,
     Coins,
-    Crown
+    Crown,
+    Network,
+    Expand,
+    Gift
 } from "lucide-react";
 import { 
     Accordion, 
@@ -522,32 +525,170 @@ export default function Lead() {
                 <div className="text-center mb-16">
                     <div className="flex items-center justify-center gap-3 mb-4">
                         <Handshake className="w-8 h-8 text-green-500" />
-                        <h2 className="text-3xl font-semibold">Partner Swarms</h2>
+                        <h2 className="text-3xl font-semibold">Join as a Partner Swarm</h2>
                     </div>
-                    <p className="text-muted-foreground">Lead the ecosystem as an established player</p>
+                    <p className="text-xl text-muted-foreground">
+                        Scale your AI project through ecosystem integration, unlock new revenue streams
+                    </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-6">
-                        <h3 className="text-2xl font-semibold">Role & Responsibilities</h3>
-                        <ul className="space-y-3 text-muted-foreground list-disc list-inside">
-                            <li>Drive ecosystem innovation</li>
-                            <li>Mentor inception swarms</li>
-                            <li>Participate in governance</li>
-                            <li>Lead cross-swarm initiatives</li>
-                            <li>Set industry standards</li>
+                {/* Two Paths Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                    <div className="p-8 rounded-xl bg-gradient-to-br from-emerald-500/10 to-green-500/10 border border-white/5 backdrop-blur-sm">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="h-10 w-10 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                                <Network className="h-5 w-5 text-emerald-500" />
+                            </div>
+                            <h3 className="text-xl font-semibold">Got a Live Product?<br />Join the Network</h3>
+                        </div>
+                        <ul className="space-y-3 text-muted-foreground">
+                            <li className="flex items-start gap-2">
+                                <span className="text-emerald-500 mt-1">•</span>
+                                Connect with other AI swarms
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-emerald-500 mt-1">•</span>
+                                Access new revenue opportunities
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-emerald-500 mt-1">•</span>
+                                Integrate with UBC infrastructure
+                            </li>
                         </ul>
                     </div>
-                    <div className="space-y-6">
-                        <h3 className="text-2xl font-semibold">Benefits & Influence</h3>
-                        <ul className="space-y-3 text-muted-foreground list-disc list-inside">
-                            <li>Revenue share negotiable</li>
-                            <li>Governance participation</li>
-                            <li>First access to new features</li>
-                            <li>Strategic partnership opportunities</li>
-                            <li>Ecosystem-wide influence</li>
+
+                    <div className="p-8 rounded-xl bg-gradient-to-br from-green-500/10 to-teal-500/10 border border-white/5 backdrop-blur-sm">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="h-10 w-10 rounded-lg bg-green-500/20 flex items-center justify-center">
+                                <Expand className="h-5 w-5 text-green-500" />
+                            </div>
+                            <h3 className="text-xl font-semibold">Looking to Expand?<br />Access Our Ecosystem</h3>
+                        </div>
+                        <ul className="space-y-3 text-muted-foreground">
+                            <li className="flex items-start gap-2">
+                                <span className="text-green-500 mt-1">•</span>
+                                Tap into AI-to-AI commerce
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-green-500 mt-1">•</span>
+                                Scale through strategic partnerships
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-green-500 mt-1">•</span>
+                                Leverage combined network effects
+                            </li>
                         </ul>
                     </div>
+                </div>
+
+                {/* Partner Role */}
+                <div className="mb-16 p-8 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                    <div className="flex items-center gap-3 mb-6">
+                        <div className="h-10 w-10 rounded-lg bg-green-500/20 flex items-center justify-center">
+                            <Target className="h-5 w-5 text-green-500" />
+                        </div>
+                        <h3 className="text-xl font-semibold">What Partner Swarms Do</h3>
+                    </div>
+                    <p className="text-muted-foreground mb-4">
+                        Partner swarms integrate their existing AI products into the UBC ecosystem. They build connections with other swarms, 
+                        enabling AI-to-AI commerce and collaborative opportunities. Through these integrations, they access new markets and revenue streams.
+                    </p>
+                    <p className="text-muted-foreground mb-4">
+                        Partners actively participate in shaping the ecosystem's development, contributing their expertise while benefiting from collective growth. 
+                        They create value through cross-swarm collaborations and shared capabilities.
+                    </p>
+                    <p className="text-muted-foreground">
+                        Their focus is on maximizing mutual benefit through strategic integration and ecosystem participation.
+                    </p>
+                </div>
+
+                {/* Benefits and FAQ Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                    {/* Left Column - Partnership Benefits */}
+                    <div className="space-y-6">
+                        <div className="flex items-center gap-3">
+                            <div className="h-10 w-10 rounded-lg bg-green-500/20 flex items-center justify-center">
+                                <Gift className="h-5 w-5 text-green-500" />
+                            </div>
+                            <h3 className="text-xl font-semibold">Partnership Benefits</h3>
+                        </div>
+                        <ul className="space-y-3">
+                            <li className="flex items-start gap-2">
+                                <span className="text-green-500 mt-1">•</span>
+                                <span><span className="text-foreground font-medium">Revenue Generation</span> <span className="text-muted-foreground">- New income streams through AI-to-AI commerce and ecosystem participation</span></span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-green-500 mt-1">•</span>
+                                <span><span className="text-foreground font-medium">Technical Integration</span> <span className="text-muted-foreground">- Seamless connection with UBC infrastructure and other swarms</span></span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-green-500 mt-1">•</span>
+                                <span><span className="text-foreground font-medium">Market Access</span> <span className="text-muted-foreground">- Exposure to established UBC community and user base</span></span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-green-500 mt-1">•</span>
+                                <span><span className="text-foreground font-medium">Strategic Alliances</span> <span className="text-muted-foreground">- Direct collaboration with complementary AI projects</span></span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-green-500 mt-1">•</span>
+                                <span><span className="text-foreground font-medium">Network Effects</span> <span className="text-muted-foreground">- Leverage combined reach and capabilities</span></span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="text-green-500 mt-1">•</span>
+                                <span><span className="text-foreground font-medium">Resource Optimization</span> <span className="text-muted-foreground">- Share and access specialized AI capabilities</span></span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    {/* Right Column - Quick Questions */}
+                    <div className="p-6 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
+                        <h3 className="text-lg font-semibold mb-4">Quick Questions</h3>
+                        <Accordion type="single" collapsible className="space-y-2">
+                            <AccordionItem value="item-1" className="border-b-0">
+                                <AccordionTrigger className="text-sm py-2">What makes a good partner swarm?</AccordionTrigger>
+                                <AccordionContent className="text-sm text-muted-foreground">
+                                    Established AI projects with proven market traction, technical excellence, and a vision for ecosystem collaboration.
+                                </AccordionContent>
+                            </AccordionItem>
+                            <AccordionItem value="item-2" className="border-b-0">
+                                <AccordionTrigger className="text-sm py-2">How does integration work?</AccordionTrigger>
+                                <AccordionContent className="text-sm text-muted-foreground">
+                                    Our team provides technical support for seamless integration with UBC infrastructure and connection with other swarms.
+                                </AccordionContent>
+                            </AccordionItem>
+                            <AccordionItem value="item-3" className="border-b-0">
+                                <AccordionTrigger className="text-sm py-2">What are the revenue opportunities?</AccordionTrigger>
+                                <AccordionContent className="text-sm text-muted-foreground">
+                                    Partners access new revenue through AI-to-AI commerce, ecosystem participation, and collaborative ventures.
+                                </AccordionContent>
+                            </AccordionItem>
+                            <AccordionItem value="item-4" className="border-b-0">
+                                <AccordionTrigger className="text-sm py-2">What are the requirements?</AccordionTrigger>
+                                <AccordionContent className="text-sm text-muted-foreground">
+                                    Live product with active users, technical capability for integration, and commitment to ecosystem participation.
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion>
+                    </div>
+                </div>
+
+                {/* Call to Action */}
+                <div className="flex justify-center gap-4">
+                    <Button 
+                        size="lg"
+                        className="group bg-gradient-to-r from-emerald-500 to-green-500"
+                        onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
+                    >
+                        Apply for Partnership
+                    </Button>
+                    <Button 
+                        size="lg"
+                        variant="secondary"
+                        className="group"
+                        onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
+                    >
+                        Explore Ecosystem
+                    </Button>
                 </div>
             </section>
 
