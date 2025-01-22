@@ -9,8 +9,65 @@ import {
     TooltipTrigger,
 } from "@/components/shadcn/tooltip";
 import { stakeMenuItems } from "@/data/navigation/menu";
+import { useWallet } from '@solana/wallet-adapter-react';
+import { useCallback, useState } from 'react';
+import { Transaction } from '@solana/web3.js';
+import { toast } from 'sonner';
 
 export default function GetCompute() {
+    const { publicKey, signTransaction } = useWallet();
+    const [claiming, setClaiming] = useState(false);
+
+    const handleClaim = useCallback(async () => {
+        if (!publicKey || !signTransaction) {
+            toast.error('Please connect your wallet first');
+            return;
+        }
+
+        try {
+            setClaiming(true);
+            
+            const response = await fetch('/api/claim', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userAddress: publicKey.toBase58(),
+                }),
+            });
+
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.message || 'Failed to claim tokens');
+            }
+
+            const transaction = Transaction.from(
+                Buffer.from(data.transaction, 'base64')
+            );
+
+            const signedTransaction = await signTransaction(transaction);
+            
+            const serializedTransaction = signedTransaction.serialize();
+            
+            const signature = await window.solana.request({
+                method: 'sendTransaction',
+                params: [
+                    serializedTransaction.toString('base64'),
+                    { encoding: 'base64' }
+                ],
+            });
+
+            toast.success('Successfully claimed tokens!');
+            
+        } catch (error: any) {
+            toast.error(error.message || 'Failed to claim tokens');
+        } finally {
+            setClaiming(false);
+        }
+    }, [publicKey, signTransaction]);
+
     return (
         <TooltipProvider>
             <main className="container view">
@@ -319,8 +376,10 @@ export default function GetCompute() {
                         <div className="flex flex-col items-center gap-2">
                             <Button 
                                 className="px-8 py-6 text-lg bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none"
+                                onClick={handleClaim}
+                                disabled={claiming}
                             >
-                                Claim Now
+                                {claiming ? 'Claiming...' : 'Claim Now'}
                             </Button>
                         </div>
                     </div>
