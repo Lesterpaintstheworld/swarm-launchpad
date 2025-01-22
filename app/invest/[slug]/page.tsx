@@ -12,7 +12,6 @@ import { ManagePortfolioCard } from "@/components/cards/managePortfolio";
 import { SwarmRecentMarketListings } from "@/components/market/recentListings";
 import { supportedTokens } from "@/data/tokens/supported";
 import { SwarmGallery } from "@/components/swarms/gallery";
-import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 
 export default function Swarm({ params }: { params: { slug: string } }) {
     

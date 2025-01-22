@@ -4,21 +4,20 @@ import { DividendPayments } from "@/components/portfolio/dividendPayments";
 import { Investments } from "@/components/portfolio/investments";
 import { PortfolioOverview } from "@/components/portfolio/overview";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { Button } from "@/components/shadcn/button";
 import dynamic from 'next/dynamic';
 import { PublicKey } from "@solana/web3.js";
 import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
 import { useEffect } from "react";
 
-// Define the shareholder account type
-interface ShareholderAccount {
-    account: {
-        owner: PublicKey;
-        shares: number;
-        pool: PublicKey;
-    };
-    publicKey: PublicKey;
-}
+// // Define the shareholder account type
+// interface ShareholderAccount {
+//     account: {
+//         owner: PublicKey;
+//         shares: number;
+//         pool: PublicKey;
+//     };
+//     publicKey: PublicKey;
+// }
 
 // Dynamically import components that use Web3
 const DynamicPortfolio = dynamic(() => Promise.resolve(({ children }: { children: React.ReactNode }) => <>{children}</>), {

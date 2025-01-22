@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
 import { supportedTokens } from "@/data/tokens/supported";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
-import { calculateCostPerShareWithBondingCurve, cn, IntlNumberFormat, IntlNumberFormatCompact } from "@/lib/utils";
+import { cn, IntlNumberFormat, IntlNumberFormatCompact } from "@/lib/utils";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Link from "next/link";
 import { ChangeEvent, useEffect, useRef, useState } from "react";

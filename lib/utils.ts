@@ -34,7 +34,7 @@ export function calculateCostPerShareWithBondingCurve(supply: number, maxSupply:
     const basePrice = 1 + 999 * (0.4 * x + 0.6 * Math.pow(x, 1.8));
     
     // Apply the cyclical variation
-    const cycle = Math.floor(supply / 5000);
+    // const cycle = Math.floor(supply / 5000);
     const position = supply % 5000;
     
     let multiplier;
