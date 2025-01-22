@@ -166,18 +166,6 @@ export default function Lead() {
                             </div>
                         </div>
                     </div>
-
-                    {/* Connection Lines */}
-                    <div className="hidden md:block">
-                        {/* Left Connection */}
-                        <div className="absolute top-1/2 left-[30%] transform -translate-y-1/2 w-[10%]">
-                            <div className="h-[2px] w-full bg-gradient-to-r from-purple-500/50 to-blue-500/50" />
-                        </div>
-                        {/* Right Connection */}
-                        <div className="absolute top-1/2 right-[30%] transform -translate-y-1/2 w-[10%]">
-                            <div className="h-[2px] w-full bg-gradient-to-r from-blue-500/50 to-emerald-500/50" />
-                        </div>
-                    </div>
                 </div>
             </section>
 
