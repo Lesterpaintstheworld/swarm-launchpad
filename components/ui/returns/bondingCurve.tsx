@@ -4,28 +4,38 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'rec
 import { Slider } from "@/components/shadcn/slider";
 import { useState } from 'react';
 
+function calculatePrice(supply: number, maxSupply: number = 100000) {
+    // Normalize x to be between 0 and 1
+    const x = supply / maxSupply;
+    // Base formula: P(x) = 1 + 999 * (0.4 * x + 0.6 * x^1.8)
+    const basePrice = 1 + 999 * (0.4 * x + 0.6 * Math.pow(x, 1.8));
+    
+    // Apply the cyclical variation
+    const cycle = Math.floor(supply / 5000);
+    const position = supply % 5000;
+    
+    let multiplier;
+    if (position <= 1250) {
+        multiplier = 1 + (0.30 * position / 1250);
+    } else if (position <= 2500) {
+        multiplier = 1.30 - (0.30 * (position - 1250) / 1250);
+    } else if (position <= 3750) {
+        multiplier = 1 - (0.30 * (position - 2500) / 1250);
+    } else {
+        multiplier = 0.70 + (0.30 * (position - 3750) / 1250);
+    }
+    
+    return basePrice * multiplier;
+}
+
 // Helper function to calculate amount raised by integrating the price curve
 function calculateAmountRaised(supply: number) {
     let total = 0;
     const stepSize = 100; // Smaller steps for more accurate integration
     
     for (let i = 0; i < supply; i += stepSize) {
-        const cycle = Math.floor(i / 5000);
-        const x = i % 5000;
-        const base = 1 * Math.pow(1.41, cycle);
-        
-        let multiplier;
-        if (x <= 1250) {
-            multiplier = 1 + (0.30 * x / 1250);
-        } else if (x <= 2500) {
-            multiplier = 1.30 - (0.30 * (x - 1250) / 1250);
-        } else if (x <= 3750) {
-            multiplier = 1 - (0.30 * (x - 2500) / 1250);
-        } else {
-            multiplier = 0.70 + (0.30 * (x - 3750) / 1250);
-        }
-        
-        total += base * multiplier * stepSize;
+        const price = calculatePrice(i);
+        total += price * stepSize;
     }
     
     return total;
@@ -45,29 +55,8 @@ function generateBondingCurveData() {
     const data = [];
     const maxSupply = 100000;
     
-    // Generate points every 100 shares for a smooth curve
     for (let supply = 0; supply <= maxSupply; supply += 100) {
-        const cycle = Math.floor(supply / 5000);
-        const x = supply % 5000;
-        const base = 1 * Math.pow(1.41, cycle);
-        
-        let multiplier;
-        if (x <= 1250) {
-            // Phase 1: Linear up to +30%
-            multiplier = 1 + (0.30 * x / 1250);
-        } else if (x <= 2500) {
-            // Phase 2: Linear down to base
-            multiplier = 1.30 - (0.30 * (x - 1250) / 1250);
-        } else if (x <= 3750) {
-            // Phase 3: Linear down to -30%
-            multiplier = 1 - (0.30 * (x - 2500) / 1250);
-        } else {
-            // Phase 4: Linear up to base
-            multiplier = 0.70 + (0.30 * (x - 3750) / 1250);
-        }
-        
-        const marketPrice = base * multiplier;
-        
+        const marketPrice = calculatePrice(supply, maxSupply);
         data.push({
             supply,
             marketPrice: Number(marketPrice.toFixed(2))
