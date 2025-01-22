@@ -17,6 +17,9 @@ export interface SwarmPreviewData {
     role: string;
     swarmType: SwarmType;
     revenueShare: number;
+    program?: {
+        pool?: string;
+    }
 }
 
 export type SwarmModel = 'KinOS' | 'Claude Haiku' | 'GPT-4o Mini';
@@ -28,7 +31,7 @@ export interface SwarmGalleryItem {
 
 export interface SwarmInfo {
     id: string;
-    poolAddress?: string;
+    pool?: string;
     name: string;
     description: string;
     gallery: SwarmGalleryItem[];

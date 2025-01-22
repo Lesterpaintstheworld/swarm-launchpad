@@ -1,6 +1,4 @@
 import { SwarmsPreviewGrid } from "@/components/swarms/previewGrid";
-import { Token } from "@/components/tokens/token";
-import { supportedTokens } from "@/data/tokens/supported";
 import { TokenTooltip } from "@/components/ui/tokenTooltip";
 import { BackgroundBlur } from "@/components/background";
 

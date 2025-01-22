@@ -6,21 +6,18 @@ import { Token } from "@/components/tokens/token";
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
 import { supportedTokens } from "@/data/tokens/supported";
+import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { cn, IntlNumberFormat, IntlNumberFormatCompact } from "@/lib/utils";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Link from "next/link";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 interface SwarmInvestCardProps {
-    data: {
-        totalSupply: number;
-        pricePerShare: number;
-        remainingSupply: number;
-    },
+    pool: string;
     className?: string;
 }
 
-const SwarmInvestCard = ({ data, className }: SwarmInvestCardProps) => {
+const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
 
     const { connected } = useWallet();
 
@@ -28,30 +25,47 @@ const SwarmInvestCard = ({ data, className }: SwarmInvestCardProps) => {
 
     const [numShares, setNumShares] = useState<number>(0);
     const [price, setPrice] = useState<number>(0);
+    const [data, setData] = useState({
+        totalSupply: 0,
+        remainingSupply: 0,
+        pricePerShare: 0,
+    });
+
+    const { poolAccount, purchaseShares, shareholderAccount } = useLaunchpadProgramAccount({ poolAddress: pool });
+
+    useEffect(() => {
+        console.log(poolAccount.data);
+        setData({
+            totalSupply: poolAccount.data?.totalShares.toNumber(),
+            remainingSupply: poolAccount.data?.availableShares.toNumber(),
+            // pricePerShare: calculateCostPerShareWithBondingCurve(poolAccount.data?.totalShares.toNumber() - poolAccount.data?.availableShares.toNumber())
+            pricePerShare: 250
+        })
+    }, [poolAccount.data]);
+    
+    useEffect(() => {
+        console.log(shareholderAccount.data);
+    }, [shareholderAccount.data]);
 
     const handleSharesInput = (e: ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value.replace(/,/g, ''));
-        if (isNaN(value) || value < 0) return;
-        setPrice(Math.floor((Number(value))) * data.pricePerShare);
+        if (isNaN(value) || value < 0 || value > 1000) return;
+        setPrice(Math.floor((Number(value))) * (data.pricePerShare));
         setNumShares(value);
     }
 
     const handleComputeInput = (e: ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value.replace(/,/g, '')); // Remove commas for calculation
-        if (isNaN(value) || value < 0) return;
-        // Calculate shares, rounding to nearest whole number
         const calculatedShares = Math.round(value / data.pricePerShare);
+        if (isNaN(value) || value < 0 || calculatedShares > 1000) return;
+        // Calculate shares, rounding to nearest whole number
         setNumShares(calculatedShares);
         setPrice(value);
     }
 
-    useEffect(() => {
-        if (!connected) {
-            // Keep input value when disconnected
-        }
-    }, [connected])
-
-    const handleBuy = () => { alert('Initiate payment flow') }
+    const handleBuy = () => {
+        purchaseShares.mutateAsync({ numberOfShares: numShares, calculatedCost: price });
+    }
 
     return (
         <Card className={cn("w-full", className)}>
@@ -111,7 +125,13 @@ const SwarmInvestCard = ({ data, className }: SwarmInvestCardProps) => {
                     <Link href="/invest/market">Go to market</Link>
                 </Button>
             }
-            {connected && data.remainingSupply !== 0 && <Button variant='success' onClick={handleBuy} className="mt-10 w-full md:max-w-40" disabled={true}>BUY</Button>}
+            {connected && data.remainingSupply !== 0 &&
+                <Button
+                    variant='success'
+                    onClick={handleBuy}
+                    className="mt-10 w-full md:max-w-40"
+                    disabled={!numShares || price <= 0}
+                >BUY</Button>}
             {!connected && data.remainingSupply !== 0 && <ConnectButton className="mt-10 w-full md:max-w-40" />}
         </Card>
     )

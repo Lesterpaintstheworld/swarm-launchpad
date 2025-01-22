@@ -56,7 +56,7 @@ const SwarmTypeHeader = ({ type, icon, title }: { type: SwarmType, icon: string,
     </div>
 )
 
-const SwarmsPreviewGrid = ({ filterType }: SwarmsPreviewGridProps) => {
+const SwarmsPreviewGrid = ({}: SwarmsPreviewGridProps) => {
     const [searchValue, setSearchValue] = useState<string>('');
 
     const filterPreviews = useCallback((type: SwarmType) => {

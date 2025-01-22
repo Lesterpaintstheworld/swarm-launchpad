@@ -1,8 +1,6 @@
 "use client"
 
 import Image from "next/image"
-import { Token } from "../tokens/token"
-import { supportedTokens } from "@/data/tokens/supported"
 import Link from "next/link"
 import { TokenTooltip } from "@/components/ui/tokenTooltip"
 
