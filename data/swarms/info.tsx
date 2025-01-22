@@ -755,11 +755,11 @@ DeskMate solves these by providing:
     },
     {
         id: 'speaker-swarm-id',
-        image: '/swarms/speaker.jpeg',
+        image: '/swarms/stumped.jpg',
         models: ['KinOS'],
         name: 'STUMPED',
         gallery: [
-            { type: 'image', content: '/swarms/speaker.jpeg' }
+            { type: 'image', content: '/swarms/stumped.jpg' }
         ],
         description: `# STUMPED - AI-Powered Communication Training
 
