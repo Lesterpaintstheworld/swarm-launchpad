@@ -176,7 +176,7 @@ export default function Lead() {
             <section className="py-24">
                 <div className="text-center mb-16">
                     <div className="flex items-center justify-center gap-3 mb-4">
-                        <Rocket className="w-8 h-8 text-purple-500" />
+                        <span className="text-3xl">🌱</span>
                         <h2 className="text-3xl font-semibold">Become a Swarm Guardian</h2>
                     </div>
                     <p className="text-muted-foreground">Take a swarm from idea to project, earn 5% of the raise</p>
@@ -352,7 +352,7 @@ export default function Lead() {
             <section className="py-24">
                 <div className="text-center mb-16">
                     <div className="flex items-center justify-center gap-3 mb-4">
-                        <Star className="w-8 h-8 text-blue-500" />
+                        <span className="text-3xl">🚀</span>
                         <h2 className="text-3xl font-semibold">Build an Early Swarm</h2>
                     </div>
                     <p className="text-xl text-muted-foreground">
