@@ -21,7 +21,7 @@ function getTimeLeft(targetDate: Date) {
 export function Countdown() {
     // Define both target dates for 2025
     const dates = useMemo(() => ({
-        launchpadDate: new Date('2024-01-22T18:00:00.000Z'), // January 22, 2024, 1PM EST (18:00 UTC)
+        launchpadDate: new Date('2025-01-22T18:00:00.000Z'), // January 22, 2025, 1PM EST (18:00 UTC)
         computeDate: new Date('2025-01-22T23:00:00.000Z')    // January 22, 2025, 6PM EST
     }), []);
     
