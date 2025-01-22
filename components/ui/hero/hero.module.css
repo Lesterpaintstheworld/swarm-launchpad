@@ -3,7 +3,6 @@
     display: flex;
     justify-content: center;
     padding-block: 6rem;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
 }
 
 .hero__container {
