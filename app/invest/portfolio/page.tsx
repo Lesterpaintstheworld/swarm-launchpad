@@ -6,8 +6,8 @@ import { PortfolioOverview } from "@/components/portfolio/overview";
 import { useWallet } from "@solana/wallet-adapter-react";
 import dynamic from 'next/dynamic';
 // import { PublicKey } from "@solana/web3.js";
-import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
-import { useEffect } from "react";
+// import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
+// import { useEffect } from "react";
 
 // // Define the shareholder account type
 // interface ShareholderAccount {

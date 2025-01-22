@@ -16,57 +16,57 @@ import { toast } from 'sonner';
 
 export default function GetCompute() {
     const { publicKey, signTransaction } = useWallet();
-    const [claiming, setClaiming] = useState(false);
+    // const [claiming, setClaiming] = useState(false);
 
-    const handleClaim = useCallback(async () => {
-        if (!publicKey || !signTransaction) {
-            toast.error('Please connect your wallet first');
-            return;
-        }
+    // const handleClaim = useCallback(async () => {
+    //     if (!publicKey || !signTransaction) {
+    //         toast.error('Please connect your wallet first');
+    //         return;
+    //     }
 
-        try {
-            setClaiming(true);
+    //     try {
+    //         setClaiming(true);
             
-            const response = await fetch('/api/claim', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    userAddress: publicKey.toBase58(),
-                }),
-            });
+    //         const response = await fetch('/api/claim', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({
+    //                 userAddress: publicKey.toBase58(),
+    //             }),
+    //         });
 
-            const data = await response.json();
+    //         const data = await response.json();
             
-            if (!response.ok) {
-                throw new Error(data.message || 'Failed to claim tokens');
-            }
+    //         if (!response.ok) {
+    //             throw new Error(data.message || 'Failed to claim tokens');
+    //         }
 
-            const transaction = Transaction.from(
-                Buffer.from(data.transaction, 'base64')
-            );
+    //         const transaction = Transaction.from(
+    //             Buffer.from(data.transaction, 'base64')
+    //         );
 
-            const signedTransaction = await signTransaction(transaction);
+    //         const signedTransaction = await signTransaction(transaction);
             
-            const serializedTransaction = signedTransaction.serialize();
+    //         const serializedTransaction = signedTransaction.serialize();
             
-            const signature = await window.solana.request({
-                method: 'sendTransaction',
-                params: [
-                    serializedTransaction.toString('base64'),
-                    { encoding: 'base64' }
-                ],
-            });
+    //         const signature = await window.solana.request({
+    //             method: 'sendTransaction',
+    //             params: [
+    //                 serializedTransaction.toString('base64'),
+    //                 { encoding: 'base64' }
+    //             ],
+    //         });
 
-            toast.success('Successfully claimed tokens!');
+    //         toast.success('Successfully claimed tokens!');
             
-        } catch (error: any) {
-            toast.error(error.message || 'Failed to claim tokens');
-        } finally {
-            setClaiming(false);
-        }
-    }, [publicKey, signTransaction]);
+    //     } catch (error: any) {
+    //         toast.error(error.message || 'Failed to claim tokens');
+    //     } finally {
+    //         setClaiming(false);
+    //     }
+    // }, [publicKey, signTransaction]);
 
     return (
         <TooltipProvider>

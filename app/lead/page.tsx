@@ -3,15 +3,12 @@
 import { BackgroundBlur } from "@/components/background";
 import { Button } from "@/components/shadcn/button";
 import { 
-    ArrowRight, 
     Rocket, 
     Star, 
     Handshake,
     Lightbulb,
     Search,
     Target,
-    Users,
-    Coins,
     Crown,
     Network,
     Expand,
@@ -23,7 +20,7 @@ import {
     AccordionItem, 
     AccordionTrigger 
 } from "@/components/shadcn/accordion";
-import { BondingCurve } from "@/components/ui/returns/bondingCurve";
+// import { BondingCurve } from "@/components/ui/returns/bondingCurve";
 
 export default function Lead() {
     return (
