@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 import { Markdown } from "@/components/ui/markdown";
 import { Expandable } from "@/components/ui/expandable";
 import { Achievements } from "@/components/swarms/achievements";
-import { SwarmInvestCard } from "@/components/swarms/invest";
+// import { SwarmInvestCard } from "@/components/swarms/invest";
 import { ManagePortfolioCard } from "@/components/cards/managePortfolio";
 import { SwarmRecentMarketListings } from "@/components/market/recentListings";
 import { supportedTokens } from "@/data/tokens/supported";
