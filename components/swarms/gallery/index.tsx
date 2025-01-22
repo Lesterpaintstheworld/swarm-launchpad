@@ -29,11 +29,19 @@ export const SwarmGallery = ({ gallery, swarmName, className }: SwarmGalleryProp
                     className="w-full object-cover"
                     onError={handleImageError}
                 />
-            } else if (item.type === 'video') {
+            } else if (item.type === 'video' && item.content.includes('.mp4')) {
                 content = <video autoPlay={index === 1} controls muted={index === 1}>
                     <source src={item.content as string} type="video/mp4" className="h-full" />
                 </video>
-            } else {
+            } else if (item.type === 'video' && item.content.includes('youtube')) {
+                content =
+                <iframe 
+                    id="player" 
+                    width="640" 
+                    height="390"
+                    src={`${item.content}?enablejsapi=1&origin=https://localhost:3000/invest/digitalkin-partner-id.com`}
+                ></iframe>
+            }else {
                 content = item.content;
             }
             return { id: index, content };

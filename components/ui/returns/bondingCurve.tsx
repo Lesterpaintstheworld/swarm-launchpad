@@ -4,15 +4,41 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'rec
 import { Slider } from "@/components/shadcn/slider";
 import { useState } from 'react';
 
+function calculatePrice(supply: number, maxSupply: number = 100000) {
+    // Normalize x to be between 0 and 1
+    const x = supply / maxSupply;
+    // Base formula: P(x) = 1 + 999 * (0.4 * x + 0.6 * x^1.8)
+    const basePrice = 1 + 999 * (0.4 * x + 0.6 * Math.pow(x, 1.8));
+    
+    // Apply the cyclical variation
+    // const cycle = Math.floor(supply / 5000);
+    const position = supply % 5000;
+    
+    let multiplier;
+    if (position <= 1250) {
+        multiplier = 1 + (0.30 * position / 1250);
+    } else if (position <= 2500) {
+        multiplier = 1.30 - (0.30 * (position - 1250) / 1250);
+    } else if (position <= 3750) {
+        multiplier = 1 - (0.30 * (position - 2500) / 1250);
+    } else {
+        multiplier = 0.70 + (0.30 * (position - 3750) / 1250);
+    }
+    
+    return basePrice * multiplier;
+}
+
 // Helper function to calculate amount raised by integrating the price curve
 function calculateAmountRaised(supply: number) {
-    const maxSupply = 100000;
-    const x = supply / maxSupply;
+    let total = 0;
+    const stepSize = 100; // Smaller steps for more accurate integration
     
-    // Integral of P(x) = 1 + 999 * (0.4 * x + 0.6 * x^1.8)
-    const integral = x + 999 * (0.4 * Math.pow(x, 2)/2 + 0.6 * Math.pow(x, 2.8)/2.8);
+    for (let i = 0; i < supply; i += stepSize) {
+        const price = calculatePrice(i);
+        total += price * stepSize;
+    }
     
-    return integral * maxSupply;
+    return total;
 }
 
 function formatNumber(num: number) {
@@ -29,22 +55,8 @@ function generateBondingCurveData() {
     const data = [];
     const maxSupply = 100000;
     
-    // Generate points every 500 shares for a smooth curve
-    for (let supply = 0; supply <= maxSupply; supply += 500) {
-        // Normalize supply to [0,1] range
-        const x = supply / maxSupply;
-        
-        // Calculate price using P(x) = 1 + 999 * (0.4 * x + 0.6 * x^1.8)
-        const basePrice = 1 + 999 * (0.4 * x + 0.6 * Math.pow(x, 1.8));
-        
-        // Add sinusoidal volatility
-        const volatilityFactor = 0.30; // 30% volatility
-        const cycleLength = 5000; // Complete cycle every 5k shares
-        const volatility = Math.sin((2 * Math.PI * supply) / cycleLength) * volatilityFactor;
-        
-        // Calculate market price with volatility
-        const marketPrice = basePrice * (1 + volatility);
-        
+    for (let supply = 0; supply <= maxSupply; supply += 100) {
+        const marketPrice = calculatePrice(supply, maxSupply);
         data.push({
             supply,
             marketPrice: Number(marketPrice.toFixed(2))

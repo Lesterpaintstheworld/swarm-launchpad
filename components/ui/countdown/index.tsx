@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useMemo } from 'react';
+import { Card } from "@/components/ui/card";
 
 function getTimeLeft(targetDate: Date) {
     const now = new Date();
@@ -50,26 +51,26 @@ export function Countdown() {
     }
 
     const TimeDisplay = ({ timeLeft, label }: { timeLeft: { days: number, hours: number, minutes: number, seconds: number }, label: string | JSX.Element }) => (
-        <div className="flex flex-col items-center gap-4 mt-8">
+        <div className="flex flex-col items-center gap-4">
             <div className="text-xl text-muted-foreground">{label}</div>
             <div className="flex gap-6">
                 <div className="flex flex-col items-center">
-                    <div className="text-5xl font-bold text-white">{timeLeft.days}</div>
+                    <div className="text-5xl font-bold text-muted">{timeLeft.days}</div>
                     <div className="text-sm text-muted-foreground mt-1">Days</div>
                 </div>
-                <div className="text-4xl font-bold text-white self-start">:</div>
+                <div className="text-4xl font-bold text-muted self-start">:</div>
                 <div className="flex flex-col items-center">
-                    <div className="text-5xl font-bold text-white">{timeLeft.hours.toString().padStart(2, '0')}</div>
+                    <div className="text-5xl font-bold text-muted">{timeLeft.hours.toString().padStart(2, '0')}</div>
                     <div className="text-sm text-muted-foreground mt-1">Hours</div>
                 </div>
-                <div className="text-4xl font-bold text-white self-start">:</div>
+                <div className="text-4xl font-bold text-muted self-start">:</div>
                 <div className="flex flex-col items-center">
-                    <div className="text-5xl font-bold text-white">{timeLeft.minutes.toString().padStart(2, '0')}</div>
+                    <div className="text-5xl font-bold text-muted">{timeLeft.minutes.toString().padStart(2, '0')}</div>
                     <div className="text-sm text-muted-foreground mt-1">Minutes</div>
                 </div>
-                <div className="text-4xl font-bold text-white self-start">:</div>
+                <div className="text-4xl font-bold text-muted self-start">:</div>
                 <div className="flex flex-col items-center">
-                    <div className="text-5xl font-bold text-white">{timeLeft.seconds.toString().padStart(2, '0')}</div>
+                    <div className="text-5xl font-bold text-muted">{timeLeft.seconds.toString().padStart(2, '0')}</div>
                     <div className="text-sm text-muted-foreground mt-1">Seconds</div>
                 </div>
             </div>
@@ -77,14 +78,18 @@ export function Countdown() {
     );
 
     return (
-        <div className="flex flex-col gap-8">
-            <TimeDisplay timeLeft={launchpadTimeLeft} label="Launchpad Launch" />
-            <TimeDisplay 
-                timeLeft={computeTimeLeft} 
-                label={<>
-                    <span className="metallic-text">$COMPUTE</span> Launch
-                </>} 
-            />
+        <div className="flex flex-col lg:flex-row gap-10 mt-12">
+            <Card className="p-8">
+                <TimeDisplay timeLeft={launchpadTimeLeft} label="Launchpad Launch" />
+            </Card>
+            <Card className="p-8">
+                <TimeDisplay 
+                    timeLeft={computeTimeLeft} 
+                    label={<>
+                        <span className="metallic-text">$COMPUTE</span> Launch
+                    </>}
+                />
+            </Card>
         </div>
     );
 }

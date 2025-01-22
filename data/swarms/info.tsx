@@ -64,10 +64,12 @@ Join the revolution in AI-powered content creation with SLOP FATHER - where ever
         image: '/swarms/digitalkin.png',
         models: ['KinOS', 'Claude Haiku'],
         name: 'DigitalKin',
+        pool: 'Ccd141Zg8CRrxA2MfUu3Hr5iCBz2PhTYsdU2pNQAwvdJ',
         gallery: [
-            { type: 'image', content: '/swarms/digitalkin.png' },
-            { type: 'image', content: '/default.png' },
-            { type: 'image', content: '/default.png' }
+            { type: 'video', content: 'https://www.youtube.com/watch?v=WcWWTgL8ouc' },
+            { type: 'image', content: '/swarms/digitalkin/1.png' },
+            { type: 'image', content: '/swarms/digitalkin/2.png' },
+            { type: 'image', content: '/swarms/digitalkin/3.png' }
         ],
         description: `# DigitalKin - Enterprise AI Agents
 
@@ -89,7 +91,6 @@ DigitalKin creates autonomous AI employees that handle complex digital tasks acr
 - Data Analysis
 
 Join the future of work with DigitalKin's autonomous AI agents that truly free your human teams from repetitive digital tasks.`,
-        poolAddress: 'XBr1STz5dvDnARgLH5daZtQpKujVMVySG3r9jd5zTCX',
         tags: ['AI', 'Enterprise', 'Automation', 'KinOS'],
         role: 'Digital Employee Manager',
         swarmType: 'partner'
@@ -114,7 +115,8 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         programAddress: '',
         tags: ['AI', 'OpenAI'],
         role: 'Lorem ipsum',
-        swarmType: 'partner'
+        swarmType: 'partner',
+        pool: 'BMos5kWkgdXQvc6Lxf4ZYQyBNprJHREdU6iwmEibJSjY',
     },
     {
         id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',
@@ -122,9 +124,9 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         models: ['Claude Haiku'],
         name: 'Swarm Ventures',
         gallery: [
-            { type: 'image', content: '/swarms/swarm-ventures.jpg' },
-            { type: 'image', content: '/default.png' },
-            { type: 'image', content: '/default.png' }
+            { type: 'image', content: '/swarms/swarmventures/1.jpg' },
+            { type: 'image', content: '/swarms/swarmventures/2.jpg' },
+            { type: 'image', content: '/swarms/swarm-ventures.jpg' }
         ],
         description: SwarmVenturesDescription,
         programAddress: '',
@@ -322,40 +324,107 @@ Join us in transforming the publishing industry with AI-powered innovation.`,
         id: 'd4e5f6g7-h8i9-7d8e-bf2g-3h4i5j6k7l8m',
         image: '/swarms/education.png',
         models: ['KinOS'],
-        name: 'ToyKin',
+        name: 'PlayWise',
         gallery: [
-            { type: 'image', content: '/swarms/education.png' }
+            { type: 'image', content: '/swarms/toy.png' }
         ],
-        description: `# ToyKin - AI-Powered Educational Play
+        description: `# PlayWise: Your Child's AI Learning Companion
 
-## Overview
-ToyKin creates personalized educational experiences through interactive play, using AI to adapt and grow with each child's learning journey. Our swarm coordinates multiple AI agents to deliver engaging, educational content that makes learning fun and effective.
+PlayWise is an interactive AI toy that helps children learn through natural conversation and play. Designed for ages 4-12, it combines a friendly physical interface with sophisticated AI that adapts its explanations to your child's age and understanding.
+
+## How It Works
+
+Imagine this conversation:
+
+**Child:** "Hey PlayWise, why is the sky blue?"
+
+**PlayWise:** (adapting for a 7-year-old) "Let's play a fun game to understand this! Imagine you're holding a handful of tiny blue bouncy balls. When sunlight hits these balls, they love to bounce around more than any other color balls. The sky looks blue for a similar reason - there are tiny particles in the air that bounce blue light from the sun around the most. Want to try a simple experiment with a flashlight and a glass of water to see how light bounces?"
 
 ## Key Features
-- Personalized learning paths
-- Interactive storytelling
-- Adaptive difficulty levels
+
+- **Personalized Learning**: Each interaction adapts to your child's age, interests, and learning style
+- **Physical + Digital**: Friendly design with expressive LED display and intuitive controls
+- **Safe & Private**: All processing happens locally - no data leaves the device
+- **Parental Dashboard**: Track learning progress and set educational goals
+
+## Smart Technologies
+
+- Learning style analysis
+- Real-time difficulty adjustment
+- Multiple AI teaching specialists
+- Voice recognition and synthesis
+- Educational content curation
 - Progress tracking
-- Parent dashboard
-- Educational game creation
-- Real-time feedback
 
-## Benefits
-- Customized learning experience
-- Increased engagement
-- Measurable progress
-- Parent involvement
-- Continuous adaptation
-- Fun while learning
+## Investment Details
 
-## Technology
-- Adaptive learning algorithms
-- Natural language processing
-- Game mechanics
-- Progress analytics
-- Parent-child interaction tracking
+- **Hardware Price**: $100
+- **Monthly Subscription**: $20
+  - Regular content updates
+  - New learning modules
+  - System improvements
+  - Educational assessments
+- **Revenue Share**: 60% of revenue distributed to shareholders
 
-Join us in revolutionizing educational play with AI-powered personalization.`,
+## Development Roadmap
+
+1. **Launch Phase** (Q2 2025)
+   - Core educational content
+   - Basic personalization
+   - Parent dashboard
+
+2. **Enhancement Phase** (Q3-Q4 2025)
+   - Advanced personalization
+   - New subject areas
+   - Interactive games
+   - Learning analytics
+
+3. **Expansion Phase** (2026)
+   - Multi-device interaction
+   - Peer learning features
+   - Educational institution partnerships
+   - International markets
+
+## Target Market
+
+Primary: Parents of children ages 4-12 who:
+- Value educational development
+- Seek alternatives to screen time
+- Want personalized learning
+- Can afford premium educational tools
+
+Secondary: Educational institutions and learning centers
+
+## Why PlayWise Matters
+
+Current educational solutions fall into two categories:
+1. Traditional toys: Fun but passive learning
+2. Educational apps: Learning focused but screen-based
+
+PlayWise bridges this gap by offering:
+- Hands-on, screen-free interaction
+- Adaptive learning through natural conversation
+- Engagement through play and experimentation
+- Real-time personalization to each child
+
+## Leadership Opportunity
+
+As an INCEPTION SWARM, we're seeking a visionary leader with toy industry or education sector experience to build this vision into reality. The core AI technology exists - now we need someone to:
+- Build and lead the founding team
+- Shape the product development strategy
+- Design the educational framework
+- Establish manufacturing partnerships
+- Create the go-to-market strategy
+- Raise and manage capital
+
+The ideal candidate brings:
+- Proven track record in toys or education
+- Experience scaling physical products
+- Understanding of early childhood development
+- Passion for educational innovation
+- Strong business development skills
+
+Join us in redefining how children learn through AI-powered play.`,
         programAddress: '',
         tags: ['Education', 'Interactive Learning', 'Personalization', 'Child Development', 'EdTech'],
         role: 'Educational Assistant',
@@ -537,40 +606,149 @@ Join us in transforming affiliate marketing with AI automation.`,
         id: 'mentor-swarm-id',
         image: '/swarms/mentor.png',
         models: ['KinOS'],
-        name: 'Mentor Swarm',
+        name: 'DeskMate',
         gallery: [
             { type: 'image', content: '/swarms/mentor.png' }
         ],
-        description: `# Mentor Swarm - AI-Powered Educational Guidance
+        description: `# DeskMate: Your Personal AI Study Guide & Lamp
 
-## Overview
-Mentor Swarm revolutionizes education through AI-powered Socratic teaching methods. Our swarm guides students through their learning journey using targeted questions and personalized learning paths, fostering deep understanding and critical thinking.
+DeskMate combines an elegant desk lamp with a sophisticated AI tutor that helps students develop critical thinking skills through Socratic questioning. Instead of giving away answers, it guides students to their own discoveries.
+
+## How It Works
+
+Here's a typical study session:
+
+*(DeskMate detects evening hours and adjusts to a warm, focused lighting setting. Its downward-facing camera observes as the student works on physics homework)*
+
+*[Student writes in notebook: "F = ma, but I don't understand how this relates to the ball going up and down"]*
+
+**Student:** "Hey DeskMate, I'm stuck on my physics homework. When I throw a ball up, why does it slow down before falling back down?"
+
+**DeskMate:** "That's a great physics question! Let's explore this through something you're familiar with. Have you ever been on an elevator going up? How does it feel at the start and just before it stops?"
+
+**Student:** "Yeah! You feel heavy when it starts going up, and then lighter when it's about to stop."
+
+**DeskMate:** "Excellent observation! Now, imagine you're the ball - what force is always pulling on you, just like in the elevator?"
+
+**Student:** "Gravity!"
+
+**DeskMate:** "Perfect! So when you throw the ball up..." *(adjusts light to project a subtle upward gradient)* "...what's happening in the battle between your throw and gravity?"
+
+**Student:** "The ball wants to go up because I threw it, but gravity is pulling it down..."
+
+**DeskMate:** "You're on the right track! Let's break this down into steps. Would you like to:
+A) Draw a force diagram together
+B) Do a quick experiment with a pencil
+C) Look at the energy transformation
+What would help you understand best?"
+
+This interaction shows how DeskMate:
+- Relates complex concepts to personal experience
+- Uses guided discovery rather than direct answers
+- Offers multiple learning approaches
+- Integrates subtle lighting cues for engagement
+- Maintains student-led learning
 
 ## Key Features
-- Socratic questioning
-- Homework assistance
-- Learning path creation
-- Progress tracking
-- Parent updates
-- Subject expertise
-- Adaptive learning
 
-## Benefits
-- Deeper understanding
-- Critical thinking
-- Personalized learning
-- Progress monitoring
-- Parent involvement
-- Subject mastery
+- **Real-Time Work Recognition**: Built-in camera reads and understands your handwritten work as you write
+- **Socratic Dialogue**: Asks guiding questions instead of providing answers
+- **Smart Illumination**: Adjusts lighting based on time of day and activity
+- **Interactive Feedback**: Watches your problem-solving process and offers guidance at the right moment
+- **Visual Understanding**: Reads textbook problems, diagrams, and written notes
+- **Progress Tracking**: Monitors understanding through actual homework completion
+- **Always Available**: 24/7 homework help without monthly tutoring costs
 
-## Technology
-- Educational AI
-- Question generation
-- Learning analytics
-- Progress tracking
-- Parent dashboard
+## Technical Capabilities
 
-Join us in transforming education with AI-powered mentoring.`,
+- Downward-facing camera with handwriting recognition
+- Privacy-first local processing
+- Adaptive questioning system
+- Real-time concept mapping
+- Visual and textual problem understanding
+- Voice and text interaction
+- Multi-subject expertise
+- Learning style analysis
+- Study pattern optimization
+- Circadian-aware lighting
+
+## Investment Structure
+
+- **Hardware Price**: $149
+- **Monthly Subscription**: $29
+  - Continuous AI improvements
+  - New subject areas
+  - Study analytics
+  - Parent/teacher dashboards
+- **Revenue Share**: 60% distributed to shareholders
+
+## Initial Focus Areas
+
+- Mathematics (Algebra, Geometry, Calculus)
+- Sciences (Physics, Chemistry, Biology)
+- English (Essay Writing, Literary Analysis)
+- History (Critical Analysis, Source Evaluation)
+- Study Skills (Time Management, Note-taking)
+
+## Market Opportunity ($100B+ Global Tutoring Market)
+
+Current solutions fall short:
+- Private tutors: Expensive ($50-100/hour)
+- Online tutorials: Passive learning
+- Answer websites: Short-term solutions
+- Study groups: Inconsistent availability
+
+DeskMate offers:
+- 24/7 availability
+- Fraction of tutoring costs
+- Active learning through guidance
+- Consistent, patient support
+
+## Development Path
+
+1. **Core Release** (Q3 2025)
+   - Essential subjects
+   - Basic concept mapping
+   - Study analytics
+
+2. **Feature Expansion** (Q4 2025)
+   - Advanced subjects
+   - Interactive visualizations
+   - Parent/teacher portal
+
+3. **Market Expansion** (2026)
+   - International languages
+   - Institution partnerships
+   - Custom curriculums
+
+## Leadership Opportunity
+
+We're seeking a visionary leader with experience in:
+- Education technology
+- Product development
+- K-12 education
+- EdTech scaling
+
+The ideal candidate brings:
+- Deep understanding of education market
+- Experience with physical product development
+- Track record in EdTech or tutoring services
+- Strong connection to education community
+- Passion for transforming how students learn
+
+## Why DeskMate Matters
+
+Traditional education faces several challenges:
+1. Limited access to quality tutoring
+2. Increasing homework complexity
+3. Growing tutoring costs
+4. Reliance on answer-sharing
+
+DeskMate solves these by providing:
+- Affordable, unlimited access
+- Development of critical thinking
+- Long-term learning benefits
+- Active engagement in learning`,
         programAddress: '',
         tags: ['AI', 'Education', 'KinOS', 'Tutoring'],
         role: 'Educational Mentor',
@@ -578,11 +756,12 @@ Join us in transforming education with AI-powered mentoring.`,
     },
     {
         id: 'speaker-swarm-id',
-        image: '/swarms/speaker.jpeg',
+        image: '/swarms/stumped.jpg',
+        logo: '/swarms/stumped.jpg',
         models: ['KinOS'],
         name: 'STUMPED',
         gallery: [
-            { type: 'image', content: '/swarms/speaker.jpeg' }
+            { type: 'image', content: '/swarms/stumped.jpg' }
         ],
         description: `# STUMPED - AI-Powered Communication Training
 

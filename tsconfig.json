@@ -33,7 +33,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-, "hooks/useInvestProgram/index.jsx"  ],
+, "hooks/useLaunchpadProgram/index.tsx"  ],
   "exclude": [
     "node_modules"
   ]

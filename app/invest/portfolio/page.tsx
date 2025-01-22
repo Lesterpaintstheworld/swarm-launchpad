@@ -3,21 +3,21 @@
 import { DividendPayments } from "@/components/portfolio/dividendPayments";
 import { Investments } from "@/components/portfolio/investments";
 import { PortfolioOverview } from "@/components/portfolio/overview";
-import { useInvestProgram } from "@/hooks/useInvestProgram";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { Button } from "@/components/shadcn/button";
 import dynamic from 'next/dynamic';
-import { PublicKey } from "@solana/web3.js";
+// import { PublicKey } from "@solana/web3.js";
+// import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
+// import { useEffect } from "react";
 
-// Define the shareholder account type
-interface ShareholderAccount {
-    account: {
-        owner: PublicKey;
-        shares: number;
-        pool: PublicKey;
-    };
-    publicKey: PublicKey;
-}
+// // Define the shareholder account type
+// interface ShareholderAccount {
+//     account: {
+//         owner: PublicKey;
+//         shares: number;
+//         pool: PublicKey;
+//     };
+//     publicKey: PublicKey;
+// }
 
 // Dynamically import components that use Web3
 const DynamicPortfolio = dynamic(() => Promise.resolve(({ children }: { children: React.ReactNode }) => <>{children}</>), {
@@ -34,8 +34,8 @@ export default function Portfolio() {
 }
 
 function PortfolioContent() {
-    const { publicKey, connected } = useWallet();
-    const { shareholders } = useInvestProgram();
+
+    const { connected } = useWallet();
 
     // Handle wallet not connected
     if (!connected) {
@@ -51,39 +51,6 @@ function PortfolioContent() {
         );
     }
 
-    // Handle loading state
-    if (shareholders.isLoading) {
-        return (
-            <main className="container view">
-                <div className="h-80 flex flex-col items-center justify-center gap-1">
-                    <h2 className="text-center">Loading Portfolio...</h2>
-                </div>
-            </main>
-        );
-    }
-
-    // Handle error state
-    if (shareholders.error) {
-        return (
-            <main className="container view">
-                <div className="h-80 flex flex-col items-center justify-center gap-4">
-                    <h2 className="text-center">Error Loading Portfolio</h2>
-                    <p className="text-center text-balance text-muted text-lg">
-                        {shareholders.error.message}
-                    </p>
-                    <Button onClick={() => shareholders.refetch()}>
-                        Try Again
-                    </Button>
-                </div>
-            </main>
-        );
-    }
-
-    // Get user's investments from shareholders data with proper typing
-    const userInvestments = shareholders.data?.filter(
-        (account: ShareholderAccount) => account.account.owner.toBase58() === publicKey?.toBase58()
-    ) || [];
-
     return (
         <main className="container view">
             <div className="h-80 flex flex-col items-center justify-center gap-1">
@@ -94,10 +61,10 @@ function PortfolioContent() {
             </div>
             <Investments 
                 className="mb-6"
-                investments={userInvestments}
+                investments={[]}
             />
             <PortfolioOverview 
-                investments={userInvestments} 
+                investments={[]} 
                 className="mb-6" 
             />
             <DividendPayments className="mb-12" />
