@@ -6,13 +6,29 @@ import { useState } from 'react';
 
 // Helper function to calculate amount raised by integrating the price curve
 function calculateAmountRaised(supply: number) {
-    const maxSupply = 100000;
-    const x = supply / maxSupply;
+    let total = 0;
+    const stepSize = 100; // Smaller steps for more accurate integration
     
-    // Integral of P(x) = 1 + 999 * (0.4 * x + 0.6 * x^1.8)
-    const integral = x + 999 * (0.4 * Math.pow(x, 2)/2 + 0.6 * Math.pow(x, 2.8)/2.8);
+    for (let i = 0; i < supply; i += stepSize) {
+        const cycle = Math.floor(i / 5000);
+        const x = i % 5000;
+        const base = 1 * Math.pow(1.35, cycle);
+        
+        let multiplier;
+        if (x <= 1250) {
+            multiplier = 1 + (0.30 * x / 1250);
+        } else if (x <= 2500) {
+            multiplier = 1.30 - (0.30 * (x - 1250) / 1250);
+        } else if (x <= 3750) {
+            multiplier = 1 - (0.30 * (x - 2500) / 1250);
+        } else {
+            multiplier = 0.70 + (0.30 * (x - 3750) / 1250);
+        }
+        
+        total += base * multiplier * stepSize;
+    }
     
-    return integral * maxSupply;
+    return total;
 }
 
 function formatNumber(num: number) {
@@ -29,21 +45,28 @@ function generateBondingCurveData() {
     const data = [];
     const maxSupply = 100000;
     
-    // Generate points every 500 shares for a smooth curve
-    for (let supply = 0; supply <= maxSupply; supply += 500) {
-        // Normalize supply to [0,1] range
-        const x = supply / maxSupply;
+    // Generate points every 100 shares for a smooth curve
+    for (let supply = 0; supply <= maxSupply; supply += 100) {
+        const cycle = Math.floor(supply / 5000);
+        const x = supply % 5000;
+        const base = 1 * Math.pow(1.35, cycle);
         
-        // Calculate price using P(x) = 1 + 999 * (0.4 * x + 0.6 * x^1.8)
-        const basePrice = 1 + 999 * (0.4 * x + 0.6 * Math.pow(x, 1.8));
+        let multiplier;
+        if (x <= 1250) {
+            // Phase 1: Linear up to +30%
+            multiplier = 1 + (0.30 * x / 1250);
+        } else if (x <= 2500) {
+            // Phase 2: Linear down to base
+            multiplier = 1.30 - (0.30 * (x - 1250) / 1250);
+        } else if (x <= 3750) {
+            // Phase 3: Linear down to -30%
+            multiplier = 1 - (0.30 * (x - 2500) / 1250);
+        } else {
+            // Phase 4: Linear up to base
+            multiplier = 0.70 + (0.30 * (x - 3750) / 1250);
+        }
         
-        // Add sinusoidal volatility
-        const volatilityFactor = 0.30; // 30% volatility
-        const cycleLength = 5000; // Complete cycle every 5k shares
-        const volatility = Math.sin((2 * Math.PI * supply) / cycleLength) * volatilityFactor;
-        
-        // Calculate market price with volatility
-        const marketPrice = basePrice * (1 + volatility);
+        const marketPrice = base * multiplier;
         
         data.push({
             supply,
