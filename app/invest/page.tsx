@@ -19,7 +19,7 @@ export default function Invest() {
                     <p className="text-center text-nowrap">&ensp;tokens into our ai swarms.</p>
                 </div>
             </div>
-            <SwarmsPreviewGrid />
+            <SwarmsPreviewGrid filterType="early" />
         </main>
     )
 
