@@ -366,7 +366,19 @@ export default function GetCompute() {
                     <div className="flex flex-col items-center gap-8 p-12 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
                         {/* Section Title */}
                         <div className="flex flex-col items-center gap-4 text-center">
-                            <h2 className="text-3xl font-normal">📸 OG Holder?</h2>
+                            <div className="flex items-center gap-2">
+                                <h2 className="text-3xl font-normal">📸 OG Holder?</h2>
+                                <Tooltip>
+                                    <TooltipTrigger>
+                                        <span className="h-5 w-5 text-muted-foreground hover:text-foreground transition-colors inline-flex items-center justify-center rounded-full border border-muted-foreground/50 text-sm">
+                                            i
+                                        </span>
+                                    </TooltipTrigger>
+                                    <TooltipContent className="max-w-[300px] p-4">
+                                        <p>A snapshot of 24,708 UBC holders was taken on January 15th. These OG holders are eligible for the $COMPUTE airdrop.</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </div>
                             <p className="text-xl text-muted-foreground max-w-[600px] text-balance">
                                 Claim 10,000 <span className="metallic-text">$COMPUTE</span>!
                             </p>
