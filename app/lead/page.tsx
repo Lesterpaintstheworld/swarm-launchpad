@@ -85,3 +85,25 @@ export default function Lead() {
         </main>
     );
 }
+'use client';
+
+import { BackgroundBlur } from "@/components/background";
+
+export default function Lead() {
+    return (
+        <main className="container view">
+            <BackgroundBlur />
+            <div className="flex flex-col items-center justify-center min-h-[80vh] gap-8">
+                {/* Title section */}
+                <div className="flex flex-col items-center gap-6 text-center mt-24 mb-12">
+                    <h1 className="font-normal tracking-tight">
+                        Lead a <span className="metallic-text">Swarm</span>
+                    </h1>
+                    <p className="text-xl text-muted-foreground max-w-[600px] text-balance">
+                        Create and manage your own AI swarm investment opportunity
+                    </p>
+                </div>
+            </div>
+        </main>
+    );
+}
