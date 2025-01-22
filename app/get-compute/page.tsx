@@ -375,12 +375,12 @@ export default function GetCompute() {
                         {/* Claim Button */}
                         <div className="flex flex-col items-center gap-2">
                             <Button 
-                                className="px-8 py-6 text-lg bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none"
-                                onClick={handleClaim}
-                                disabled={claiming}
+                                className="px-8 py-6 text-lg bg-black/20 text-gray-500 border-none cursor-not-allowed"
+                                disabled={true}
                             >
-                                {claiming ? 'Claiming...' : 'Claim Now'}
+                                Claim Now
                             </Button>
+                            <span className="text-sm text-gray-500">Coming Soon</span>
                         </div>
                     </div>
                 </div>
