@@ -120,14 +120,14 @@ export default function GetCompute() {
                             <h3 className="text-xl font-semibold">DLMM Pool</h3>
                             <p className="text-sm text-muted-foreground">Trade tokens in the decentralized liquidity pool</p>
                         </div>
-                        <div className="flex items-center gap-2 mb-4 text-muted-foreground">
+                        <div className="flex items-center gap-2 mb-4">
                             <span className="text-lg">
                                 <span className="metallic-text">$COMPUTE</span>/<span className="metallic-text-sol">$SOL</span>
                             </span>
                         </div>
                         <Button 
-                            className="w-full bg-black/20 text-gray-500 border-none mt-auto cursor-not-allowed"
-                            disabled={true}
+                            className="w-full bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none mt-auto"
+                            onClick={() => window.open('https://app.meteora.ag/spot/COMPUTE/SOL', '_blank')}
                         >
                             Trade Now
                         </Button>
@@ -139,12 +139,12 @@ export default function GetCompute() {
                             <h3 className="text-xl font-semibold">UBC Pool</h3>
                             <p className="text-sm text-muted-foreground">Trade tokens against the UBC token pair</p>
                         </div>
-                        <div className="flex items-center gap-2 mb-4 text-muted-foreground">
+                        <div className="flex items-center gap-2 mb-4">
                             <span className="text-lg"><span className="metallic-text">$COMPUTE</span>/<span className="metallic-text-ubc">$UBC</span></span>
                         </div>
                         <Button 
-                            className="w-full bg-black/20 text-gray-500 border-none mt-auto cursor-not-allowed"
-                            disabled={true}
+                            className="w-full bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none mt-auto"
+                            onClick={() => window.open('https://app.meteora.ag/spot/COMPUTE/UBC', '_blank')}
                         >
                             Trade Now
                         </Button>
