@@ -130,11 +130,31 @@ export default function Lead() {
                                 </div>
                                 <h3 className="text-xl font-semibold">Project Support</h3>
                             </div>
-                            <ul className="space-y-3 text-muted-foreground list-disc pl-6">
-                                <li>Technical validation assistance</li>
-                                <li>Market opportunity analysis</li>
-                                <li>Business case development</li>
-                                <li>Risk assessment support</li>
+                            <ul className="space-y-4 text-muted-foreground">
+                                <li className="space-y-1">
+                                    <p className="font-medium text-foreground">Technical Validation</p>
+                                    <p className="text-sm">Our team helps validate your AI concept's technical feasibility and integration with the UBC ecosystem.</p>
+                                </li>
+                                <li className="space-y-1">
+                                    <p className="font-medium text-foreground">Market Analysis</p>
+                                    <p className="text-sm">Access comprehensive market research and competitor analysis to position your swarm for success.</p>
+                                </li>
+                                <li className="space-y-1">
+                                    <p className="font-medium text-foreground">Community Building</p>
+                                    <p className="text-sm">Get support in creating and nurturing an engaged community around your swarm concept.</p>
+                                </li>
+                                <li className="space-y-1">
+                                    <p className="font-medium text-foreground">Strategic Planning</p>
+                                    <p className="text-sm">Develop a clear roadmap for swarm development, graduation, and long-term success.</p>
+                                </li>
+                                <li className="space-y-1">
+                                    <p className="font-medium text-foreground">Network Access</p>
+                                    <p className="text-sm">Connect with potential leads, partners, and resources within the UBC ecosystem.</p>
+                                </li>
+                                <li className="space-y-1">
+                                    <p className="font-medium text-foreground">Marketing Support</p>
+                                    <p className="text-sm">Receive guidance on positioning, messaging, and promotion strategies for your swarm.</p>
+                                </li>
                             </ul>
                         </div>
                     </div>
