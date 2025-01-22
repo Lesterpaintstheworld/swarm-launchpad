@@ -12,7 +12,7 @@ function calculateAmountRaised(supply: number) {
     for (let i = 0; i < supply; i += stepSize) {
         const cycle = Math.floor(i / 5000);
         const x = i % 5000;
-        const base = 1 * Math.pow(1.35, cycle);
+        const base = 1 * Math.pow(1.38, cycle);
         
         let multiplier;
         if (x <= 1250) {
