@@ -170,18 +170,12 @@ export default function Lead() {
                     {/* Connection Lines */}
                     <div className="hidden md:block">
                         {/* Left Connection */}
-                        <div className="absolute top-1/2 left-[30%] transform -translate-y-1/2 w-[10%] flex items-center">
+                        <div className="absolute top-1/2 left-[30%] transform -translate-y-1/2 w-[10%]">
                             <div className="h-[2px] w-full bg-gradient-to-r from-purple-500/50 to-blue-500/50" />
-                            <div className="absolute right-0 flex items-center">
-                                <div className="w-3 h-3 rotate-45 border-t-2 border-r-2 border-blue-500/50 translate-x-1" />
-                            </div>
                         </div>
                         {/* Right Connection */}
-                        <div className="absolute top-1/2 right-[30%] transform -translate-y-1/2 w-[10%] flex items-center">
+                        <div className="absolute top-1/2 right-[30%] transform -translate-y-1/2 w-[10%]">
                             <div className="h-[2px] w-full bg-gradient-to-r from-blue-500/50 to-emerald-500/50" />
-                            <div className="absolute right-0 flex items-center">
-                                <div className="w-3 h-3 rotate-45 border-t-2 border-r-2 border-emerald-500/50 translate-x-1" />
-                            </div>
                         </div>
                     </div>
                 </div>
