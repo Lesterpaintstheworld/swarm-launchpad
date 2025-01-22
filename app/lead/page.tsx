@@ -132,22 +132,6 @@ export default function Lead() {
                                 <li>Risk assessment support</li>
                             </ul>
                         </div>
-
-                        {/* Network Access */}
-                        <div className="space-y-6">
-                            <div className="flex items-center gap-3">
-                                <div className="h-10 w-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                                    <Users className="h-5 w-5 text-blue-500" />
-                                </div>
-                                <h3 className="text-xl font-semibold">Network Access</h3>
-                            </div>
-                            <ul className="space-y-3 text-muted-foreground list-disc pl-6">
-                                <li>Connect with potential Swarm Leads</li>
-                                <li>Access the UBC ecosystem</li>
-                                <li>Join the Guardian community</li>
-                                <li>Build valuable partnerships</li>
-                            </ul>
-                        </div>
                     </div>
 
                     {/* Right Column - Compact FAQ */}
@@ -163,19 +147,19 @@ export default function Lead() {
                             <AccordionItem value="item-2" className="border-b-0">
                                 <AccordionTrigger className="text-sm py-2">How involved will I be?</AccordionTrigger>
                                 <AccordionContent className="text-sm text-muted-foreground">
-                                    Guardians provide strategic guidance and vision alignment throughout development, but don't handle day-to-day operations.
+                                    We expect guardians to be actively working on the vision and building the team and parters. Though not a full-time commitment, ensuring guardians are active provides to the ecosystem a dynamic growth of swarms.
                                 </AccordionContent>
                             </AccordionItem>
                             <AccordionItem value="item-3" className="border-b-0">
                                 <AccordionTrigger className="text-sm py-2">How does the 5% reward work?</AccordionTrigger>
                                 <AccordionContent className="text-sm text-muted-foreground">
-                                    When the project successfully raises funds, you receive 5% of the initial fundraising, aligned with project milestones.
+                                    When the project successfully raises funds, you receive 5% of the initial $COMPUTE fundraising at the time of graduation.
                                 </AccordionContent>
                             </AccordionItem>
                             <AccordionItem value="item-4" className="border-b-0">
                                 <AccordionTrigger className="text-sm py-2">Can I be both Guardian and Lead?</AccordionTrigger>
                                 <AccordionContent className="text-sm text-muted-foreground">
-                                    Yes, if you have both the vision and the ability to execute, you can take both roles.
+                                    Yes, if you fell in love with your swarm and have both the vision and the ability to execute, you can transition your role from guardian to lead!
                                 </AccordionContent>
                             </AccordionItem>
                         </Accordion>
