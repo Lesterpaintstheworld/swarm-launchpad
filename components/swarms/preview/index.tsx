@@ -11,9 +11,9 @@ import { cn } from "@/lib/utils";
 
 const getRevenueShareColor = (revenueShare: number) => {
     if (revenueShare === 0) return "bg-purple-500/10 text-purple-500";
-    if (revenueShare < 10) return "bg-red-500/10 text-red-500";
-    if (revenueShare < 50) return "bg-yellow-500/10 text-yellow-500";
-    if (revenueShare < 100) return "bg-green-500/10 text-green-500";
+    if (revenueShare < 5) return "bg-red-500/10 text-red-500";
+    if (revenueShare < 25) return "bg-yellow-500/10 text-yellow-500";
+    if (revenueShare < 50) return "bg-green-500/10 text-green-500";
     return "bg-blue-500/10 text-blue-500";
 }
 
