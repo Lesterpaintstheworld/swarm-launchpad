@@ -3,25 +3,27 @@
 import { useCallback } from "react";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { SwarmData } from "@/data/swarms/info";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Markdown } from "@/components/ui/markdown";
 import { Expandable } from "@/components/ui/expandable";
 import { SwarmGallery } from "@/components/swarms/gallery";
 
 export default function InceptionSwarm({ params }: { params: { slug: string } }) {
+    const router = useRouter();
+
     const swarm = useCallback(() => {
         const found = SwarmData.find((swarm) => swarm.id === params.slug);
         if (!found) {
-            redirect('/404');
+            router.push('/404');
             return null;
         }
         // Only redirect if it's not an inception swarm
         if (found.swarmType !== 'inception') {
-            redirect(`/invest/${found.id}`);
+            router.push(`/invest/${found.id}`);
             return null;
         }
         return found;
-    }, [params.slug])();
+    }, [params.slug, router])();
 
     // If no swarm was found, return null while redirecting
     if (!swarm) {
