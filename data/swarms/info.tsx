@@ -233,6 +233,522 @@ Join the arbitrage revolution with PropertyKin.`,
         swarmType: 'inception'
     },
     {
+        id: 'b2c3d4e5-f6g7-5b6c-9d0e-1f2g3h4i5j6k',
+        image: '/swarms/mental-health.jpg',
+        models: ['KinOS'],
+        name: 'TherapyKin',
+        gallery: [
+            { type: 'image', content: '/swarms/mental-health.jpg' }
+        ],
+        description: `# TherapyKin - AI-Powered Mental Health Practice Management
+
+## Overview
+TherapyKin is a revolutionary AI swarm designed to optimize mental health practices through intelligent automation and enhanced patient care coordination. By streamlining administrative tasks and providing data-driven insights, TherapyKin enables mental health professionals to focus more on what matters most - their patients.
+
+## Key Features
+- Automated scheduling and appointment management
+- Intelligent patient intake and documentation
+- Real-time session transcription and analysis
+- Treatment plan optimization
+- Insurance claim processing
+- Secure patient communication
+- Practice analytics and insights
+
+## Benefits
+- Reduced administrative burden
+- Improved patient outcomes
+- Enhanced practice efficiency
+- Data-driven decision making
+- Increased revenue through optimization
+- Better work-life balance for practitioners
+
+## Technology
+- Advanced natural language processing
+- Secure healthcare data management
+- Integration with existing EHR systems
+- HIPAA-compliant communication
+- Machine learning for treatment optimization
+
+Join us in revolutionizing mental health practice management with AI.`,
+        programAddress: '',
+        tags: ['Healthcare', 'Mental Health', 'Practice Management', 'Patient Care', 'AI Assistant'],
+        role: 'Healthcare Assistant',
+        swarmType: 'inception'
+    },
+    {
+        id: 'c3d4e5f6-g7h8-6c7d-ae1f-2g3h4i5j6k7l',
+        image: '/swarms/book.png',
+        models: ['KinOS'],
+        name: 'PublishKin',
+        gallery: [
+            { type: 'image', content: '/swarms/book.png' }
+        ],
+        description: `# PublishKin - AI-Powered Book Production & Publishing
+
+## Overview
+PublishKin revolutionizes the publishing industry by streamlining the entire book production process from manuscript to market. Our AI swarm coordinates multiple specialized agents to handle editing, design, marketing, and distribution, making professional publishing accessible and efficient.
+
+## Key Features
+- Manuscript analysis and enhancement
+- Automated editing and proofreading
+- Cover design and formatting
+- Market analysis and positioning
+- Distribution channel optimization
+- Marketing campaign management
+- Sales tracking and analytics
+
+## Benefits
+- Faster time to market
+- Professional-quality output
+- Cost-effective publishing
+- Wide distribution reach
+- Data-driven marketing
+- Maximized revenue potential
+
+## Technology
+- Natural language processing
+- Design automation
+- Market intelligence
+- Distribution automation
+- Analytics and reporting
+
+Join us in transforming the publishing industry with AI-powered innovation.`,
+        programAddress: '',
+        tags: ['Publishing', 'Book Production', 'Content', 'Distribution', 'Marketing'],
+        role: 'Publishing Agent',
+        swarmType: 'inception'
+    },
+    {
+        id: 'd4e5f6g7-h8i9-7d8e-bf2g-3h4i5j6k7l8m',
+        image: '/swarms/education.png',
+        models: ['KinOS'],
+        name: 'ToyKin',
+        gallery: [
+            { type: 'image', content: '/swarms/education.png' }
+        ],
+        description: `# ToyKin - AI-Powered Educational Play
+
+## Overview
+ToyKin creates personalized educational experiences through interactive play, using AI to adapt and grow with each child's learning journey. Our swarm coordinates multiple AI agents to deliver engaging, educational content that makes learning fun and effective.
+
+## Key Features
+- Personalized learning paths
+- Interactive storytelling
+- Adaptive difficulty levels
+- Progress tracking
+- Parent dashboard
+- Educational game creation
+- Real-time feedback
+
+## Benefits
+- Customized learning experience
+- Increased engagement
+- Measurable progress
+- Parent involvement
+- Continuous adaptation
+- Fun while learning
+
+## Technology
+- Adaptive learning algorithms
+- Natural language processing
+- Game mechanics
+- Progress analytics
+- Parent-child interaction tracking
+
+Join us in revolutionizing educational play with AI-powered personalization.`,
+        programAddress: '',
+        tags: ['Education', 'Interactive Learning', 'Personalization', 'Child Development', 'EdTech'],
+        role: 'Educational Assistant',
+        swarmType: 'inception'
+    },
+    {
+        id: 'e5f6g7h8-i9j0-8e9f-cg3h-4i5j6k7l8m9n',
+        image: '/swarms/talentaid.jpg',
+        models: ['KinOS'],
+        name: 'TalentKin',
+        gallery: [
+            { type: 'image', content: '/swarms/talentaid.jpg' }
+        ],
+        description: `# TalentKin - AI-Powered Recruitment Optimization
+
+## Overview
+TalentKin revolutionizes the recruitment process by using AI to match the right candidates with the right opportunities. Our swarm of specialized agents handles everything from job posting optimization to candidate screening, reducing time-to-hire while improving match quality.
+
+## Key Features
+- Intelligent job posting optimization
+- Automated candidate screening
+- Skills assessment
+- Interview scheduling
+- Candidate communication
+- Analytics and reporting
+- ATS integration
+
+## Benefits
+- Reduced time-to-hire
+- Better candidate quality
+- Improved hiring efficiency
+- Data-driven decisions
+- Enhanced candidate experience
+- Cost savings
+
+## Technology
+- Natural language processing
+- Machine learning matching
+- Communication automation
+- Analytics engine
+- Integration capabilities
+
+Join us in transforming recruitment with AI-powered innovation.`,
+        programAddress: '',
+        tags: ['Recruitment', 'HR Tech', 'Talent Matching', 'AI Screening', 'Hiring'],
+        role: 'Recruitment Assistant',
+        swarmType: 'inception'
+    },
+    {
+        id: 'f6g7h8i9-j0k1-9f0g-dh4i-5j6k7l8m9n0o',
+        image: '/swarms/carehive.jpg',
+        models: ['KinOS'],
+        name: 'CareHive',
+        gallery: [
+            { type: 'image', content: '/swarms/carehive.jpg' }
+        ],
+        description: `# CareHive - AI-Powered Healthcare Practice Management
+
+## Overview
+CareHive optimizes healthcare practices through intelligent automation and enhanced patient care coordination. Our AI swarm streamlines operations while improving patient outcomes through data-driven insights and automated workflows.
+
+## Key Features
+- Patient scheduling optimization
+- Automated documentation
+- Insurance processing
+- Treatment tracking
+- Resource allocation
+- Analytics dashboard
+- Patient communication
+
+## Benefits
+- Improved efficiency
+- Better patient care
+- Reduced costs
+- Data-driven decisions
+- Enhanced communication
+- Streamlined operations
+
+## Technology
+- Healthcare AI
+- Workflow automation
+- Analytics engine
+- Patient engagement tools
+- Integration capabilities
+
+Join us in transforming healthcare practice management with AI.`,
+        programAddress: '',
+        tags: ['AI', 'Healthcare', 'KinOS', 'Operations'],
+        role: 'Practice Manager',
+        swarmType: 'inception'
+    },
+    {
+        id: 'g7h8i9j0-k1l2-0g1h-ei5j-6k7l8m9n0o1p',
+        image: '/swarms/commercenest.jpg',
+        models: ['KinOS'],
+        name: 'CommerceNest',
+        gallery: [
+            { type: 'image', content: '/swarms/commercenest.jpg' }
+        ],
+        description: `# CommerceNest - AI-Powered E-commerce Optimization
+
+## Overview
+CommerceNest revolutionizes e-commerce operations through intelligent automation and market analysis. Our AI swarm handles everything from product sourcing to sales optimization, creating profitable online businesses with minimal human intervention.
+
+## Key Features
+- Market trend analysis
+- Product sourcing
+- Pricing optimization
+- Inventory management
+- Marketing automation
+- Customer service
+- Performance analytics
+
+## Benefits
+- Increased profitability
+- Automated operations
+- Market insights
+- Optimized pricing
+- Efficient inventory
+- Scalable growth
+
+## Technology
+- Market intelligence AI
+- Pricing algorithms
+- Inventory optimization
+- Marketing automation
+- Analytics engine
+
+Join us in transforming e-commerce with AI-powered automation.`,
+        programAddress: '',
+        tags: ['AI', 'E-commerce', 'KinOS', 'Sales'],
+        role: 'E-commerce Manager',
+        swarmType: 'inception'
+    },
+    {
+        id: 'h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q',
+        image: '/swarms/affiliate.jpeg',
+        models: ['KinOS'],
+        name: 'ProfitBeeAI',
+        gallery: [
+            { type: 'image', content: '/swarms/affiliate.jpeg' }
+        ],
+        description: `# ProfitBeeAI - Autonomous Affiliate Marketing
+
+## Overview
+ProfitBeeAI revolutionizes affiliate marketing through AI-powered automation and optimization. Our swarm creates, manages, and optimizes affiliate campaigns across multiple channels and niches, maximizing revenue through intelligent content creation and placement.
+
+## Key Features
+- Content generation
+- Link optimization
+- Campaign management
+- Multi-channel distribution
+- Performance tracking
+- Niche analysis
+- Revenue optimization
+
+## Benefits
+- Automated operations
+- Increased revenue
+- Multi-channel presence
+- Data-driven decisions
+- Scalable growth
+- Niche targeting
+
+## Technology
+- Content AI
+- Link optimization
+- Campaign automation
+- Analytics engine
+- Distribution network
+
+Join us in transforming affiliate marketing with AI automation.`,
+        programAddress: '',
+        tags: ['AI Marketing', 'Content Creation', 'Affiliate', 'Automation', 'Multi-Channel'],
+        role: 'Marketing Automation',
+        swarmType: 'inception'
+    },
+    {
+        id: 'mentor-swarm-id',
+        image: '/swarms/mentor.png',
+        models: ['KinOS'],
+        name: 'Mentor Swarm',
+        gallery: [
+            { type: 'image', content: '/swarms/mentor.png' }
+        ],
+        description: `# Mentor Swarm - AI-Powered Educational Guidance
+
+## Overview
+Mentor Swarm revolutionizes education through AI-powered Socratic teaching methods. Our swarm guides students through their learning journey using targeted questions and personalized learning paths, fostering deep understanding and critical thinking.
+
+## Key Features
+- Socratic questioning
+- Homework assistance
+- Learning path creation
+- Progress tracking
+- Parent updates
+- Subject expertise
+- Adaptive learning
+
+## Benefits
+- Deeper understanding
+- Critical thinking
+- Personalized learning
+- Progress monitoring
+- Parent involvement
+- Subject mastery
+
+## Technology
+- Educational AI
+- Question generation
+- Learning analytics
+- Progress tracking
+- Parent dashboard
+
+Join us in transforming education with AI-powered mentoring.`,
+        programAddress: '',
+        tags: ['AI', 'Education', 'KinOS', 'Tutoring'],
+        role: 'Educational Mentor',
+        swarmType: 'inception'
+    },
+    {
+        id: 'speaker-swarm-id',
+        image: '/swarms/speaker.jpeg',
+        models: ['KinOS'],
+        name: 'STUMPED',
+        gallery: [
+            { type: 'image', content: '/swarms/speaker.jpeg' }
+        ],
+        description: `# STUMPED - AI-Powered Communication Training
+
+## Overview
+STUMPED revolutionizes professional development through AI-powered conversation training. Our swarm prepares individuals for high-pressure social and professional scenarios through realistic simulations and personalized feedback.
+
+## Key Features
+- Scenario simulation
+- Real-time feedback
+- Personalized training
+- Progress tracking
+- Situation analysis
+- Communication coaching
+- Performance metrics
+
+## Benefits
+- Improved confidence
+- Better communication
+- Professional growth
+- Measured progress
+- Practical experience
+- Skill development
+
+## Technology
+- Conversation AI
+- Feedback analysis
+- Progress tracking
+- Scenario generation
+- Performance analytics
+
+Join us in transforming professional development with AI-powered training.`,
+        programAddress: '',
+        tags: ['Communication', 'Training', 'Professional Development', 'Social Skills', 'AI Coaching'],
+        role: 'Conversation Coach',
+        swarmType: 'inception'
+    },
+    {
+        id: 'travel-swarm-id',
+        image: '/swarms/travel.jpeg',
+        models: ['KinOS'],
+        name: 'TravelAId',
+        gallery: [
+            { type: 'image', content: '/swarms/travel.jpeg' }
+        ],
+        description: `# TravelAId - AI-Powered Travel Concierge
+
+## Overview
+TravelAId revolutionizes travel planning and assistance through AI-powered personalization. Our swarm creates perfect journeys by handling everything from initial planning to real-time travel support, ensuring memorable experiences.
+
+## Key Features
+- Trip planning
+- Personalized recommendations
+- Real-time assistance
+- Booking optimization
+- Itinerary management
+- Local insights
+- Travel monitoring
+
+## Benefits
+- Perfect trips
+- Time savings
+- Local knowledge
+- Peace of mind
+- Cost optimization
+- Memorable experiences
+
+## Technology
+- Travel AI
+- Recommendation engine
+- Real-time monitoring
+- Booking automation
+- Itinerary optimization
+
+Join us in transforming travel with AI-powered assistance.`,
+        programAddress: '',
+        tags: ['Travel', 'AI Concierge', 'Trip Planning', 'Personalization', 'Real-time Assistance'],
+        role: 'Travel Concierge',
+        swarmType: 'inception'
+    },
+    {
+        id: 'grant-swarm-id',
+        image: '/swarms/grant.jpeg',
+        models: ['KinOS'],
+        name: 'GrantKin',
+        gallery: [
+            { type: 'image', content: '/swarms/grant.jpeg' }
+        ],
+        description: `# GrantKin - AI-Powered Grant Writing
+
+## Overview
+GrantKin revolutionizes non-profit funding through AI-powered grant writing and management. Our swarm handles everything from opportunity discovery to application writing and compliance reporting, maximizing funding success.
+
+## Key Features
+- Grant discovery
+- Proposal writing
+- Compliance checking
+- Deadline management
+- Report generation
+- Success tracking
+- Funder analysis
+
+## Benefits
+- Increased funding
+- Time savings
+- Better compliance
+- Higher success rates
+- Efficient reporting
+- Strategic insights
+
+## Technology
+- Writing AI
+- Compliance checking
+- Deadline tracking
+- Report generation
+- Analytics engine
+
+Join us in transforming non-profit funding with AI-powered grant writing.`,
+        programAddress: '',
+        tags: ['Non-profit', 'Grant Writing', 'Funding', 'Compliance', 'AI Automation'],
+        role: 'Grant Writer',
+        swarmType: 'inception'
+    },
+    {
+        id: 'resume-swarm-id',
+        image: '/swarms/resume.jpeg',
+        models: ['KinOS'],
+        name: 'CareerKin',
+        gallery: [
+            { type: 'image', content: '/swarms/resume.jpeg' }
+        ],
+        description: `# CareerKin - AI-Powered Career Optimization
+
+## Overview
+CareerKin revolutionizes job searching through AI-powered resume optimization. Our swarm analyzes job descriptions, highlights relevant experience, and creates targeted resumes that pass ATS systems and catch human attention.
+
+## Key Features
+- Resume optimization
+- ATS analysis
+- Job matching
+- Skills highlighting
+- Format optimization
+- Career tracking
+- Application management
+
+## Benefits
+- Better job matches
+- Higher response rates
+- ATS optimization
+- Time savings
+- Career growth
+- Application tracking
+
+## Technology
+- Resume AI
+- ATS optimization
+- Job analysis
+- Skills matching
+- Format automation
+
+Join us in transforming career development with AI-powered optimization.`,
+        programAddress: '',
+        tags: ['AI', 'Career', 'KinOS', 'Resume'],
+        role: 'Career Optimizer',
+        swarmType: 'inception'
+    },
+    {
         id: 'a1b2c3d4-e5f6-4a5b-8c7d-9e8f7a6b5c4d',
         image: '/swarms/robinhood.jpg',
         models: ['KinOS'],
