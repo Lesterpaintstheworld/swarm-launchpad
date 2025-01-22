@@ -64,6 +64,7 @@ Join the revolution in AI-powered content creation with SLOP FATHER - where ever
         image: '/swarms/digitalkin.png',
         models: ['KinOS', 'Claude Haiku'],
         name: 'DigitalKin',
+        pool: 'BMos5kWkgdXQvc6Lxf4ZYQyBNprJHREdU6iwmEibJSjY',
         gallery: [
             { type: 'image', content: '/swarms/digitalkin.png' },
             { type: 'image', content: '/default.png' },
@@ -89,7 +90,6 @@ DigitalKin creates autonomous AI employees that handle complex digital tasks acr
 - Data Analysis
 
 Join the future of work with DigitalKin's autonomous AI agents that truly free your human teams from repetitive digital tasks.`,
-        poolAddress: 'XBr1STz5dvDnARgLH5daZtQpKujVMVySG3r9jd5zTCX',
         tags: ['AI', 'Enterprise', 'Automation', 'KinOS'],
         role: 'Digital Employee Manager',
         swarmType: 'partner'

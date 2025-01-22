@@ -31,6 +31,7 @@ export interface SwarmGalleryItem {
 
 export interface SwarmInfo {
     id: string;
+    pool?: string;
     name: string;
     description: string;
     gallery: SwarmGalleryItem[];
