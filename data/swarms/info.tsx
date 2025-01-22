@@ -65,9 +65,10 @@ Join the revolution in AI-powered content creation with SLOP FATHER - where ever
         models: ['KinOS', 'Claude Haiku'],
         name: 'DigitalKin',
         gallery: [
-            { type: 'image', content: '/swarms/digitalkin.png' },
-            { type: 'image', content: '/default.png' },
-            { type: 'image', content: '/default.png' }
+            { type: 'video', content: 'https://www.youtube.com/watch?v=WcWWTgL8ouc' },
+            { type: 'image', content: '/swarms/digitalkin/1.png' },
+            { type: 'image', content: '/swarms/digitalkin/2.png' },
+            { type: 'image', content: '/swarms/digitalkin/3.png' }
         ],
         description: `# DigitalKin - Enterprise AI Agents
 
