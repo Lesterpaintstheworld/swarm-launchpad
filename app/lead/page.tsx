@@ -11,7 +11,8 @@ import {
     Search,
     Target,
     Users,
-    Coins
+    Coins,
+    Crown
 } from "lucide-react";
 import { 
     Accordion, 
@@ -39,96 +40,148 @@ export default function Lead() {
             {/* Leadership Journey Infographic */}
             <section className="py-24">
                 <div className="relative">
-                    {/* Background Line */}
-                    <div className="absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-green-500/20" />
+                    {/* Background Elements */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-blue-500/5 to-green-500/5 rounded-3xl" />
+                    <div className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-green-500/20 blur-sm" />
                     
                     {/* Stages Grid */}
-                    <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="relative grid grid-cols-1 md:grid-cols-3 gap-12 p-8">
                         {/* Inception Stage */}
-                        <div className="flex flex-col items-center gap-6">
-                            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500/20 to-blue-500/20 border border-purple-500/30 flex items-center justify-center">
-                                <div className="w-12 h-12 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-2xl">
-                                    1
+                        <div className="flex flex-col items-center gap-8 group">
+                            <div className="relative">
+                                {/* Glowing background effect */}
+                                <div className="absolute inset-0 bg-purple-500/20 rounded-full blur-xl group-hover:blur-2xl transition-all" />
+                                <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-purple-500/30 to-blue-500/30 border border-purple-500/50 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform">
+                                    <div className="w-16 h-16 rounded-full bg-black/60 flex items-center justify-center text-3xl font-semibold text-purple-400">
+                                        1
+                                    </div>
                                 </div>
                             </div>
-                            <div className="text-center space-y-2">
-                                <h3 className="text-xl font-semibold bg-gradient-to-r from-purple-500 to-blue-500 text-transparent bg-clip-text">
+                            <div className="text-center space-y-4">
+                                <h3 className="text-2xl font-semibold bg-gradient-to-r from-purple-400 to-blue-400 text-transparent bg-clip-text">
                                     Inception Stage
                                 </h3>
-                                <div className="p-4 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
-                                    <p className="font-medium mb-2">Guardian</p>
-                                    <ul className="text-sm text-muted-foreground space-y-2">
-                                        <li>• Shapes initial vision</li>
-                                        <li>• Builds community</li>
-                                        <li>• Finds potential leads</li>
-                                        <li>• Earns 5% of raise</li>
+                                <div className="p-6 rounded-2xl bg-gradient-to-br from-purple-500/10 to-blue-500/10 border border-purple-500/20 backdrop-blur-sm group-hover:border-purple-500/30 transition-colors">
+                                    <div className="flex items-center justify-center gap-2 mb-4">
+                                        <Crown className="w-5 h-5 text-purple-400" />
+                                        <p className="font-medium text-lg text-purple-200">Guardian</p>
+                                    </div>
+                                    <ul className="space-y-3 text-sm">
+                                        <li className="flex items-center gap-2 text-purple-200/80">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                                            Shapes initial vision
+                                        </li>
+                                        <li className="flex items-center gap-2 text-purple-200/80">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                                            Builds community
+                                        </li>
+                                        <li className="flex items-center gap-2 text-purple-200/80">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                                            Finds potential leads
+                                        </li>
+                                        <li className="flex items-center gap-2 text-purple-200/80">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                                            Earns 5% of raise
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
 
                         {/* Early Stage */}
-                        <div className="flex flex-col items-center gap-6">
-                            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 flex items-center justify-center">
-                                <div className="w-12 h-12 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-2xl">
-                                    2
+                        <div className="flex flex-col items-center gap-8 group">
+                            <div className="relative">
+                                <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-xl group-hover:blur-2xl transition-all" />
+                                <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-blue-500/30 to-cyan-500/30 border border-blue-500/50 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform">
+                                    <div className="w-16 h-16 rounded-full bg-black/60 flex items-center justify-center text-3xl font-semibold text-blue-400">
+                                        2
+                                    </div>
                                 </div>
                             </div>
-                            <div className="text-center space-y-2">
-                                <h3 className="text-xl font-semibold bg-gradient-to-r from-blue-500 to-cyan-500 text-transparent bg-clip-text">
+                            <div className="text-center space-y-4">
+                                <h3 className="text-2xl font-semibold bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
                                     Early Stage
                                 </h3>
-                                <div className="p-4 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
-                                    <p className="font-medium mb-2">Lead</p>
-                                    <ul className="text-sm text-muted-foreground space-y-2">
-                                        <li>• Executes vision</li>
-                                        <li>• Builds product</li>
-                                        <li>• Grows revenue</li>
-                                        <li>• Earns 25-35% of revenue</li>
+                                <div className="p-6 rounded-2xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/20 backdrop-blur-sm group-hover:border-blue-500/30 transition-colors">
+                                    <div className="flex items-center justify-center gap-2 mb-4">
+                                        <Rocket className="w-5 h-5 text-blue-400" />
+                                        <p className="font-medium text-lg text-blue-200">Lead</p>
+                                    </div>
+                                    <ul className="space-y-3 text-sm">
+                                        <li className="flex items-center gap-2 text-blue-200/80">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                                            Executes vision
+                                        </li>
+                                        <li className="flex items-center gap-2 text-blue-200/80">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                                            Builds product
+                                        </li>
+                                        <li className="flex items-center gap-2 text-blue-200/80">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                                            Grows revenue
+                                        </li>
+                                        <li className="flex items-center gap-2 text-blue-200/80">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                                            Earns 25-35% of revenue
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
 
                         {/* Partner Stage */}
-                        <div className="flex flex-col items-center gap-6">
-                            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-500/20 to-green-500/20 border border-emerald-500/30 flex items-center justify-center">
-                                <div className="w-12 h-12 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-2xl">
-                                    3
+                        <div className="flex flex-col items-center gap-8 group">
+                            <div className="relative">
+                                <div className="absolute inset-0 bg-emerald-500/20 rounded-full blur-xl group-hover:blur-2xl transition-all" />
+                                <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-emerald-500/30 to-green-500/30 border border-emerald-500/50 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform">
+                                    <div className="w-16 h-16 rounded-full bg-black/60 flex items-center justify-center text-3xl font-semibold text-emerald-400">
+                                        3
+                                    </div>
                                 </div>
                             </div>
-                            <div className="text-center space-y-2">
-                                <h3 className="text-xl font-semibold bg-gradient-to-r from-emerald-500 to-green-500 text-transparent bg-clip-text">
+                            <div className="text-center space-y-4">
+                                <h3 className="text-2xl font-semibold bg-gradient-to-r from-emerald-400 to-green-400 text-transparent bg-clip-text">
                                     Partner Stage
                                 </h3>
-                                <div className="p-4 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
-                                    <p className="font-medium mb-2">Partner</p>
-                                    <ul className="text-sm text-muted-foreground space-y-2">
-                                        <li>• Drives ecosystem</li>
-                                        <li>• Mentors others</li>
-                                        <li>• Sets standards</li>
-                                        <li>• Negotiable revenue share</li>
+                                <div className="p-6 rounded-2xl bg-gradient-to-br from-emerald-500/10 to-green-500/10 border border-emerald-500/20 backdrop-blur-sm group-hover:border-emerald-500/30 transition-colors">
+                                    <div className="flex items-center justify-center gap-2 mb-4">
+                                        <Star className="w-5 h-5 text-emerald-400" />
+                                        <p className="font-medium text-lg text-emerald-200">Partner</p>
+                                    </div>
+                                    <ul className="space-y-3 text-sm">
+                                        <li className="flex items-center gap-2 text-emerald-200/80">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                                            Drives ecosystem
+                                        </li>
+                                        <li className="flex items-center gap-2 text-emerald-200/80">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                                            Mentors others
+                                        </li>
+                                        <li className="flex items-center gap-2 text-emerald-200/80">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                                            Sets standards
+                                        </li>
+                                        <li className="flex items-center gap-2 text-emerald-200/80">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                                            Negotiable revenue share
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Connection Arrows for larger screens */}
+                    {/* Connection Lines */}
                     <div className="hidden md:block">
-                        {/* Left Arrow */}
-                        <div className="absolute top-1/2 left-[30%] transform -translate-y-1/2 text-muted-foreground">
-                            <div className="relative w-8 h-0.5 bg-muted-foreground">
-                                <div className="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 rotate-45 w-2 h-0.5 bg-muted-foreground" />
-                                <div className="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 -rotate-45 w-2 h-0.5 bg-muted-foreground" />
-                            </div>
+                        {/* Left Connection */}
+                        <div className="absolute top-1/2 left-[30%] transform -translate-y-1/2 w-[10%]">
+                            <div className="h-0.5 w-full bg-gradient-to-r from-purple-500/50 to-blue-500/50" />
+                            <div className="absolute right-0 w-2 h-2 rounded-full bg-blue-500 -translate-y-[3px]" />
                         </div>
-                        {/* Right Arrow */}
-                        <div className="absolute top-1/2 right-[30%] transform -translate-y-1/2 text-muted-foreground">
-                            <div className="relative w-8 h-0.5 bg-muted-foreground">
-                                <div className="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 rotate-45 w-2 h-0.5 bg-muted-foreground" />
-                                <div className="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 -rotate-45 w-2 h-0.5 bg-muted-foreground" />
-                            </div>
+                        {/* Right Connection */}
+                        <div className="absolute top-1/2 right-[30%] transform -translate-y-1/2 w-[10%]">
+                            <div className="h-0.5 w-full bg-gradient-to-r from-blue-500/50 to-emerald-500/50" />
+                            <div className="absolute right-0 w-2 h-2 rounded-full bg-emerald-500 -translate-y-[3px]" />
                         </div>
                     </div>
                 </div>
