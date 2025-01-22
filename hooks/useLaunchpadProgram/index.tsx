@@ -1,8 +1,9 @@
 'use client'
 
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
-import { Keypair, LAMPORTS_PER_SOL, PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY, Transaction } from '@solana/web3.js'
+import { Connection, Keypair, LAMPORTS_PER_SOL, PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY, Transaction } from '@solana/web3.js'
 import { createAssociatedTokenAccountInstruction, getAssociatedTokenAddress } from '@solana/spl-token';
+import { getMint } from "@solana/spl-token";
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { constants } from '@/lib/constants'
@@ -180,13 +181,13 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                     poolAccount.data.computeMint,
                     publicKey
                 )
-                const senderUbcAccount = await getAssociatedTokenAddress(
-                    poolAccount.data.ubcMint,
-                    publicKey
-                )
                 const swarmComputeAccount = await getAssociatedTokenAddress(
                     poolAccount.data.computeMint,
                     poolAccount.data.swarmAccount
+                )
+                const senderUbcAccount = await getAssociatedTokenAddress(
+                    poolAccount.data.ubcMint,
+                    publicKey
                 )
                 const partnerUbcAccount = await getAssociatedTokenAddress(
                     poolAccount.data.ubcMint,
@@ -196,68 +197,6 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                     poolAccount.data.ubcMint,
                     poolAccount.data.platformAccount
                 )
-    
-                // Check which accounts exist
-                const [
-                    senderComputeAccountInfo,
-                    senderUbcAccountInfo,
-                    swarmComputeAccountInfo
-                ] = await Promise.all([
-                    connection.getAccountInfo(senderComputeAccount),
-                    connection.getAccountInfo(senderUbcAccount),
-                    connection.getAccountInfo(swarmComputeAccount)
-                ]);
-    
-                // Create instructions for missing ATAs
-                const createAtaInstructions = [];
-    
-                if (!senderComputeAccountInfo) {
-                    console.log('Creating sender compute ATA');
-                    createAtaInstructions.push(
-                        createAssociatedTokenAccountInstruction(
-                            publicKey,
-                            senderComputeAccount,
-                            publicKey,
-                            poolAccount.data.computeMint
-                        )
-                    );
-                }
-    
-                if (!senderUbcAccountInfo) {
-                    console.log('Creating sender UBC ATA');
-                    createAtaInstructions.push(
-                        createAssociatedTokenAccountInstruction(
-                            publicKey,
-                            senderUbcAccount,
-                            publicKey,
-                            poolAccount.data.ubcMint
-                        )
-                    );
-                }
-    
-                if (!swarmComputeAccountInfo) {
-                    console.log('Creating swarm compute ATA');
-                    createAtaInstructions.push(
-                        createAssociatedTokenAccountInstruction(
-                            publicKey,
-                            swarmComputeAccount,
-                            poolAccount.data.swarmAccount,
-                            poolAccount.data.computeMint
-                        )
-                    );
-                }
-    
-                // If we need to create any ATAs, send that transaction first
-                if (createAtaInstructions.length > 0) {
-                    const createAtasTx = new Transaction().add(...createAtaInstructions);
-                    const { blockhash } = await connection.getLatestBlockhash();
-                    createAtasTx.recentBlockhash = blockhash;
-                    createAtasTx.feePayer = publicKey;
-    
-                    console.log('Sending create ATAs transaction');
-                    await provider.sendAndConfirm(createAtasTx);
-                    console.log('ATAs created successfully');
-                }
     
                 // Generate the shareholder PDA
                 const [shareholderPda] = PublicKey.findProgramAddressSync(
@@ -269,27 +208,28 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                     program.programId
                 );
     
-                console.log('Sending purchase transaction with accounts:', {
-                    pool: pool.toString(),
-                    shareholder: shareholderPda.toString(),
-                    computeMintAccount: poolAccount.data.computeMint.toString(),
-                    // ubcMintAccount: poolAccount.data.ubcMint.toString(),
-                    senderComputeAccount: senderComputeAccount.toString(),
-                    // senderUbcAccount: senderUbcAccount.toString(),
-                    swarmAccount: poolAccount.data.swarmAccount.toString(),
-                    swarmComputeAccount: swarmComputeAccount.toString(),
-                    // partnerAccount: poolAccount.data.partnerAccount.toString(),
-                    // partnerUbcAccount: partnerUbcAccount.toString(),
-                    // platformAccount: poolAccount.data.platformAccount.toString(),
-                    // platformUbcAccount: platformUbcAccount.toString(),
-                    buyer: publicKey.toString()
-                });
+                // console.log('Sending purchase transaction with accounts:', {
+                //     pool: pool.toString(),
+                //     shareholder: shareholderPda.toString(),
+                //     computeMintAccount: poolAccount.data.computeMint.toString(),
+                //     ubcMintAccount: poolAccount.data.ubcMint.toString(),
+                //     senderComputeAccount: senderComputeAccount.toString(),
+                //     senderUbcAccount: senderUbcAccount.toString(),
+                //     swarmAccount: poolAccount.data.swarmAccount.toString(),
+                //     swarmComputeAccount: swarmComputeAccount.toString(),
+                //     partnerAccount: poolAccount.data.partnerAccount.toString(),
+                //     partnerUbcAccount: partnerUbcAccount.toString(),
+                //     platformAccount: poolAccount.data.platformAccount.toString(),
+                //     platformUbcAccount: platformUbcAccount.toString(),
+                //     buyer: publicKey.toString()
+                // });
     
                 // Send the purchase transaction
+                // const txInstructions = await program.methods
                 return program.methods
                     .purchaseShares(
                         new BN(numberOfShares),
-                        new BN(calculatedCost)
+                        new BN(calculatedCost * Math.pow(10, 6))
                     )
                     .accounts({
                         pool,
@@ -310,7 +250,18 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                         tokenProgram: TOKEN_PROGRAM_ID,
                         associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID
                     })
-                    .rpc()
+                    .rpc();
+                
+                    // txInstructions.instructions.forEach((ix, i) => {
+                    //     console.log(`Instruction ${i}:`, {
+                    //         programId: ix.programId.toString(),
+                    //         keys: ix.keys.map(k => ({
+                    //             pubkey: k.pubkey.toString(),
+                    //             isSigner: k.isSigner,
+                    //             isWritable: k.isWritable
+                    //         })),
+                    //     });
+                    // });
         }
     })
 
