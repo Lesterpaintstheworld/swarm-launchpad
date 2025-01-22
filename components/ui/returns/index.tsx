@@ -238,7 +238,7 @@ export function Returns() {
                                             <div className="space-y-4">
                                                 <div className="flex items-center gap-2">
                                                     <div className="w-3 h-3 rounded-full bg-blue-500" />
-                                                    <h6 className="font-medium">Partner Fee (2.5%)</h6>
+                                                    <h6 className="font-medium">Partner Fee (2.5% in $UBC)</h6>
                                                 </div>
                                                 <ul className="list-disc pl-6 text-muted-foreground space-y-2">
                                                     <li>Collected in $UBC</li>
@@ -249,7 +249,7 @@ export function Returns() {
                                             <div className="space-y-4">
                                                 <div className="flex items-center gap-2">
                                                     <div className="w-3 h-3 rounded-full bg-green-500" />
-                                                    <h6 className="font-medium">Platform Fee (2.5%)</h6>
+                                                    <h6 className="font-medium">Platform Fee (2.5% in $UBC)</h6>
                                                 </div>
                                                 <ul className="list-disc pl-6 text-muted-foreground space-y-2">
                                                     <li>Funds platform operations</li>
@@ -257,42 +257,63 @@ export function Returns() {
                                                     <li>Maintains infrastructure</li>
                                                 </ul>
                                             </div>
+
+                                            <div className="mt-8 p-6 bg-black/20 border border-white/5 backdrop-blur-sm rounded-lg">
+                                                <h6 className="text-lg font-semibold mb-4">Fee Calculation Mechanics</h6>
+                                                <div className="space-y-4">
+                                                    <p className="text-muted-foreground">
+                                                        Fees are calculated using a fixed $COMPUTE to $UBC ratio that determines the $UBC fee amount. 
+                                                        This ratio is regularly updated and starts at 1:1.
+                                                    </p>
+                                                    <div className="bg-black/20 p-4 rounded-lg">
+                                                        <p className="text-sm text-muted-foreground">
+                                                            Example: When investing 1000 $COMPUTE with a 5% total fee at 1:1 ratio:
+                                                            <br />
+                                                            Fee = 50 $UBC (5% of 1000)
+                                                        </p>
+                                                    </div>
+                                                    <div className="bg-yellow-500/10 border border-yellow-500/20 p-4 rounded-lg">
+                                                        <p className="text-yellow-500 text-sm">
+                                                            <strong>Important:</strong> Investors must have sufficient $UBC in their wallet to cover fees when investing.
+                                                            This mechanism provides utility to the $UBC token while helping project leads and the ecosystem build diversified portfolios.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </>
                                     ) : (
                                         <>
                                             <div className="space-y-4">
                                                 <div className="flex items-center gap-2">
                                                     <div className="w-3 h-3 rounded-full bg-blue-500" />
-                                                    <h6 className="font-medium">Partner Fee (2%)</h6>
+                                                    <h6 className="font-medium">Partner Fee (2% in $UBC)</h6>
                                                 </div>
                                                 <ul className="list-disc pl-6 text-muted-foreground space-y-2">
                                                     <li>Collected directly in $UBC on every trade</li>
-                                                    <li>Distributed to partners weekly through automated system</li>
-                                                    <li>Rewards ecosystem contributors and growth partners</li>
+                                                    <li>Distributed to partners weekly</li>
+                                                    <li>Rewards ecosystem contributors</li>
                                                 </ul>
                                             </div>
                                             <div className="space-y-4">
                                                 <div className="flex items-center gap-2">
                                                     <div className="w-3 h-3 rounded-full bg-green-500" />
-                                                    <h6 className="font-medium">Platform Fee (2%)</h6>
+                                                    <h6 className="font-medium">Platform Fee (2% in $UBC)</h6>
                                                 </div>
                                                 <ul className="list-disc pl-6 text-muted-foreground space-y-2">
                                                     <li>Collected in $UBC from each transaction</li>
                                                     <li>Funds essential platform operations</li>
-                                                    <li>Supports ongoing technical development</li>
-                                                    <li>Maintains infrastructure and security</li>
+                                                    <li>Supports ongoing development</li>
                                                 </ul>
                                             </div>
                                             <div className="space-y-4">
                                                 <div className="flex items-center gap-2">
                                                     <div className="w-3 h-3 rounded-full bg-orange-500" />
-                                                    <h6 className="font-medium">Investor Redistribution (1%)</h6>
+                                                    <h6 className="font-medium">Investor Redistribution (1% in $UBC)</h6>
                                                 </div>
                                                 <ul className="list-disc pl-6 text-muted-foreground space-y-2">
                                                     <li>Collected in $UBC from every trade</li>
                                                     <li>Claimable by active UBC traders/holders</li>
                                                     <li>30-day window for reward claims</li>
-                                                    <li>Encourages regular platform engagement</li>
                                                 </ul>
                                             </div>
                                         </>
