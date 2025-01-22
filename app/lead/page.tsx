@@ -42,7 +42,7 @@ export default function Lead() {
                         <Rocket className="w-8 h-8 text-purple-500" />
                         <h2 className="text-3xl font-semibold">Become a Swarm Guardian</h2>
                     </div>
-                    <p className="text-muted-foreground">Shape the Future of AI, Earn 5% of Success</p>
+                    <p className="text-muted-foreground">Take a swarm from idea to project, earn 5% of the raise</p>
                 </div>
 
                 {/* Two Paths Grid */}
@@ -52,7 +52,7 @@ export default function Lead() {
                             <div className="h-10 w-10 rounded-lg bg-purple-500/20 flex items-center justify-center">
                                 <Lightbulb className="h-5 w-5 text-purple-500" />
                             </div>
-                            <h3 className="text-xl font-semibold">Propose Your Vision</h3>
+                            <h3 className="text-xl font-semibold">Got an idea?<br />Propose Your Vision</h3>
                         </div>
                         <ul className="space-y-3 text-muted-foreground">
                             <li className="flex items-start gap-2">
@@ -67,10 +67,6 @@ export default function Lead() {
                                 <span className="text-purple-500 mt-1">•</span>
                                 Earn 5% of the fundraising when it launches
                             </li>
-                            <li className="flex items-start gap-2">
-                                <span className="text-purple-500 mt-1">•</span>
-                                Guide the project's development journey
-                            </li>
                         </ul>
                     </div>
 
@@ -79,7 +75,7 @@ export default function Lead() {
                             <div className="h-10 w-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
                                 <Search className="h-5 w-5 text-blue-500" />
                             </div>
-                            <h3 className="text-xl font-semibold">Claim an Existing Concept</h3>
+                            <h3 className="text-xl font-semibold">Got the network?<br />Claim an Existing Concept</h3>
                         </div>
                         <ul className="space-y-3 text-muted-foreground">
                             <li className="flex items-start gap-2">
@@ -94,10 +90,6 @@ export default function Lead() {
                                 <span className="text-blue-500 mt-1">•</span>
                                 Receive the same 5% reward structure
                             </li>
-                            <li className="flex items-start gap-2">
-                                <span className="text-blue-500 mt-1">•</span>
-                                Shape the project's evolution
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -111,11 +103,11 @@ export default function Lead() {
                         <h3 className="text-xl font-semibold">What Guardians Do</h3>
                     </div>
                     <p className="text-muted-foreground mb-8">
-                        You'll help the swarm find its vision and leader until it graduates to an early swarm. You'll evaluate potential leaders, 
+                        Guardians help the swarm find its vision and leader until it graduates to an early swarm. They evaluate potential leaders, 
                         support them through the graduation process, and receive 5% of the fundraising when the swarm successfully graduates.
                     </p>
                     <p className="text-muted-foreground">
-                        That's it - your role is to bridge the gap between concept and execution by finding the right leadership.
+                        Their role is to bridge the gap between concept and execution by finding the right leadership.
                     </p>
                 </div>
 
@@ -133,67 +125,6 @@ export default function Lead() {
                             <li>Market opportunity analysis</li>
                             <li>Business case development</li>
                             <li>Risk assessment support</li>
-                        </ul>
-                    </div>
-                    <div className="space-y-6">
-                        <div className="flex items-center gap-3">
-                            <div className="h-10 w-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                                <Users className="h-5 w-5 text-blue-500" />
-                            </div>
-                            <h3 className="text-xl font-semibold">Network Access</h3>
-                        </div>
-                        <ul className="space-y-3 text-muted-foreground list-disc pl-6">
-                            <li>Connect with potential Swarm Leads</li>
-                            <li>Access the UBC ecosystem</li>
-                            <li>Join the Guardian community</li>
-                            <li>Build valuable partnerships</li>
-                        </ul>
-                    </div>
-                </div>
-
-                {/* Requirements Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-                    <div className="p-8 rounded-xl bg-gradient-to-br from-rose-500/10 to-orange-500/10 border border-white/5 backdrop-blur-sm">
-                        <h3 className="text-xl font-semibold mb-6">For New Concepts</h3>
-                        <ul className="space-y-3 text-muted-foreground">
-                            <li className="flex items-start gap-2">
-                                <span className="text-rose-500 mt-1">•</span>
-                                Clear technical vision
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="text-rose-500 mt-1">•</span>
-                                Defined market opportunity
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="text-rose-500 mt-1">•</span>
-                                Innovative approach
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="text-rose-500 mt-1">•</span>
-                                Scalable potential
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div className="p-8 rounded-xl bg-gradient-to-br from-emerald-500/10 to-teal-500/10 border border-white/5 backdrop-blur-sm">
-                        <h3 className="text-xl font-semibold mb-6">For Existing Concepts</h3>
-                        <ul className="space-y-3 text-muted-foreground">
-                            <li className="flex items-start gap-2">
-                                <span className="text-emerald-500 mt-1">•</span>
-                                Understanding of the concept
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="text-emerald-500 mt-1">•</span>
-                                Strategic vision for development
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="text-emerald-500 mt-1">•</span>
-                                Ability to guide implementation
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="text-emerald-500 mt-1">•</span>
-                                Commitment to success
-                            </li>
                         </ul>
                     </div>
                 </div>
