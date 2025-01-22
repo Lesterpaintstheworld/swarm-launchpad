@@ -9,8 +9,65 @@ import {
     TooltipTrigger,
 } from "@/components/shadcn/tooltip";
 import { stakeMenuItems } from "@/data/navigation/menu";
+import { useWallet } from '@solana/wallet-adapter-react';
+import { useCallback, useState } from 'react';
+import { Transaction } from '@solana/web3.js';
+import { toast } from 'sonner';
 
 export default function GetCompute() {
+    const { publicKey, signTransaction } = useWallet();
+    const [claiming, setClaiming] = useState(false);
+
+    const handleClaim = useCallback(async () => {
+        if (!publicKey || !signTransaction) {
+            toast.error('Please connect your wallet first');
+            return;
+        }
+
+        try {
+            setClaiming(true);
+            
+            const response = await fetch('/api/claim', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userAddress: publicKey.toBase58(),
+                }),
+            });
+
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.message || 'Failed to claim tokens');
+            }
+
+            const transaction = Transaction.from(
+                Buffer.from(data.transaction, 'base64')
+            );
+
+            const signedTransaction = await signTransaction(transaction);
+            
+            const serializedTransaction = signedTransaction.serialize();
+            
+            const signature = await window.solana.request({
+                method: 'sendTransaction',
+                params: [
+                    serializedTransaction.toString('base64'),
+                    { encoding: 'base64' }
+                ],
+            });
+
+            toast.success('Successfully claimed tokens!');
+            
+        } catch (error: any) {
+            toast.error(error.message || 'Failed to claim tokens');
+        } finally {
+            setClaiming(false);
+        }
+    }, [publicKey, signTransaction]);
+
     return (
         <TooltipProvider>
             <main className="container view">
@@ -309,16 +366,25 @@ export default function GetCompute() {
                     <div className="flex flex-col items-center gap-8 p-12 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
                         {/* Section Title */}
                         <div className="flex flex-col items-center gap-4 text-center">
-                            <h2 className="text-3xl font-normal">📸 OG Snapshot Holder?</h2>
+                            <div className="flex items-center gap-2">
+                                <h2 className="text-3xl font-normal">📸 OG Holder?</h2>
+                                <Tooltip>
+                                    <TooltipTrigger>
+                                        <span className="h-5 w-5 text-muted-foreground hover:text-foreground transition-colors inline-flex items-center justify-center rounded-full border border-muted-foreground/50 text-sm">
+                                            i
+                                        </span>
+                                    </TooltipTrigger>
+                                    <TooltipContent className="max-w-[300px] p-4">
+                                        <p>A snapshot of 24,708 UBC holders was taken on January 15th. These OG holders are eligible for the $COMPUTE claim.</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </div>
                             <p className="text-xl text-muted-foreground max-w-[600px] text-balance">
                                 Claim 10,000 <span className="metallic-text">$COMPUTE</span>!
                             </p>
-                            <p className="text-lg text-muted-foreground max-w-[600px] text-balance mt-2">
-                                Max distribution: 5M <span className="metallic-text">$COMPUTE</span>
-                            </p>
                         </div>
 
-                        {/* Claim Button and Coming Soon text */}
+                        {/* Claim Button */}
                         <div className="flex flex-col items-center gap-2">
                             <Button 
                                 className="px-8 py-6 text-lg bg-black/20 text-gray-500 border-none cursor-not-allowed"
@@ -326,7 +392,7 @@ export default function GetCompute() {
                             >
                                 Claim Now
                             </Button>
-                            <span className="text-sm text-gray-500">coming soon</span>
+                            <span className="text-sm text-gray-500">Coming Soon</span>
                         </div>
                     </div>
                 </div>

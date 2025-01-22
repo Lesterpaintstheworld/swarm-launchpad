@@ -1,5 +1,4 @@
 import { useCallback } from "react";
-import { ClaimButton } from "@/components/solana/claimButton";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { InfoPanel } from "@/components/ui/infoPanel";
 import { SwarmData } from "@/data/swarms/info";
@@ -37,9 +36,8 @@ export default function Swarm({ params }: { params: { slug: string } }) {
                         { label: swarm.name }
                     ]}
                 />
-                <div className="flex justify-between items-center mt-2">
+                <div className="mt-2">
                     <h1 className="font-bold">{swarm.name}</h1>
-                    <ClaimButton />
                 </div>
             </div>
             <SwarmGallery
