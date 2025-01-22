@@ -62,7 +62,7 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
     }
 
     const handleBuy = () => {
-        purchaseShares.mutateAsync({ numberOfShares: numShares, calculatedCost: price });
+        // purchaseShares.mutateAsync({ numberOfShares: numShares, calculatedCost: price });
     }
 
     return (
