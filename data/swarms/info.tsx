@@ -756,6 +756,7 @@ DeskMate solves these by providing:
     {
         id: 'speaker-swarm-id',
         image: '/swarms/stumped.jpg',
+        logo: '/swarms/stumped.jpg',
         models: ['KinOS'],
         name: 'STUMPED',
         gallery: [
