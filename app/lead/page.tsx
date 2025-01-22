@@ -33,10 +33,10 @@ export default function Lead() {
             {/* Hero Section */}
             <section className="flex flex-col items-center justify-center min-h-[60vh] gap-8 text-center">
                 <h1 className="font-normal tracking-tight max-w-[800px]">
-                    Join the <span className="metallic-text">AI Revolution</span>: Build Your Swarm
+                    Join the AI Revolution: Become a Swarm Leader
                 </h1>
                 <p className="text-xl text-muted-foreground max-w-[700px] text-balance">
-                    From inception to partnership, discover your path in the UBC ecosystem and shape the future of artificial intelligence.
+                Make your transition to AI leadership - whether you're starting with an idea, a prototype, or an established project.
                 </p>
             </section>
 
@@ -677,7 +677,7 @@ export default function Lead() {
                     <Button 
                         size="lg"
                         className="group bg-gradient-to-r from-emerald-500 to-green-500"
-                        onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
+                        onClick={() => window.open('https://k2mobei34z9.typeform.com/to/YKZi24zx', '_blank')}
                     >
                         Apply for Partnership
                     </Button>
@@ -685,25 +685,13 @@ export default function Lead() {
                         size="lg"
                         variant="secondary"
                         className="group"
-                        onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
+                        onClick={() => window.open('https://swarm-launchpad.vercel.app/invest', '_blank')}
                     >
                         Explore Ecosystem
                     </Button>
                 </div>
             </section>
 
-            {/* Call to Action */}
-            <section className="py-24 text-center">
-                <h2 className="text-3xl font-semibold mb-8">Ready to Build Your Swarm?</h2>
-                <Button 
-                    size="lg"
-                    className="group"
-                    onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
-                >
-                    Contact Us to Get Started
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-            </section>
         </main>
     );
 }
