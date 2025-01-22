@@ -68,8 +68,8 @@ const SwarmsPreviewGrid = ({ filterType }: SwarmsPreviewGridProps) => {
                 swarm.tags.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
                 swarm.role?.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase());
             
-            // Remove the type filter, only filter by search
-            return matchesSearch;
+            // Add back the type filter
+            return matchesSearch && swarm.swarmType === type;
         });
     }, [searchValue]);
 
