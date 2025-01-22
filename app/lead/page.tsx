@@ -2,86 +2,80 @@
 
 import { BackgroundBlur } from "@/components/background";
 import { Button } from "@/components/shadcn/button";
+import { ArrowRight, Lightbulb, Code, Network } from "lucide-react";
 
 export default function Lead() {
     return (
         <main className="container view">
             <BackgroundBlur />
-            <div className="flex flex-col items-center justify-center min-h-[80vh] gap-8">
-                {/* Title section */}
-                <div className="flex flex-col items-center gap-6 text-center mt-24 mb-12">
-                    <h1 className="font-normal tracking-tight">
-                        Lead the <span className="metallic-text">Revolution</span>
-                    </h1>
-                    <p className="text-xl text-muted-foreground max-w-[600px] text-balance">
-                        Join us in shaping the future of AI-powered investing
-                    </p>
+            
+            {/* Hero Section */}
+            <section className="flex flex-col items-center justify-center min-h-[60vh] gap-8 text-center">
+                <h1 className="font-normal tracking-tight max-w-[800px]">
+                    Lead the <span className="metallic-text">AI Revolution</span>: Your Journey from Visionary to Ecosystem Builder
+                </h1>
+                <p className="text-xl text-muted-foreground max-w-[700px] text-balance">
+                    Shape the future of artificial intelligence with UBC ecosystem. Transform your ideas into thriving AI swarms with our comprehensive support system.
+                </p>
+            </section>
+
+            {/* Leadership Journey Section */}
+            <section className="py-24">
+                <div className="text-center mb-16">
+                    <h2 className="text-3xl font-semibold mb-4">Your Leadership Journey</h2>
+                    <p className="text-muted-foreground">Choose your path in the AI revolution</p>
                 </div>
 
-                {/* Leadership Opportunities */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-[1000px]">
-                    {/* Community Leader */}
-                    <div className="flex flex-col gap-4 p-10 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm hover:border-white/10 transition-all h-full">
-                        <div className="flex flex-col gap-2 flex-grow">
-                            <h3 className="text-xl font-semibold">Community Leader</h3>
-                            <p className="text-sm text-muted-foreground">Guide and grow our community</p>
-                            <ul className="list-disc list-inside text-sm text-muted-foreground mt-4 space-y-2">
-                                <li>Moderate community channels</li>
-                                <li>Organize community events</li>
-                                <li>Help new members</li>
-                                <li>Share project updates</li>
-                            </ul>
-                        </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {/* Guardian Card */}
+                    <div className="flex flex-col gap-6 p-8 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm hover:border-white/10 transition-all">
+                        <Lightbulb className="w-10 h-10 text-yellow-500" />
+                        <h3 className="text-2xl font-semibold">The Visionary</h3>
+                        <p className="text-muted-foreground flex-grow">
+                            For creative minds with groundbreaking AI concepts. Be the originator of new possibilities in the AI space.
+                        </p>
                         <Button 
-                            className="w-full bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none mt-4"
+                            className="w-full group"
                             onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
                         >
-                            Apply Now
+                            Become a Guardian
+                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                         </Button>
                     </div>
 
-                    {/* Technical Ambassador */}
-                    <div className="flex flex-col gap-4 p-10 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm hover:border-white/10 transition-all h-full">
-                        <div className="flex flex-col gap-2 flex-grow">
-                            <h3 className="text-xl font-semibold">Technical Ambassador</h3>
-                            <p className="text-sm text-muted-foreground">Represent our technical vision</p>
-                            <ul className="list-disc list-inside text-sm text-muted-foreground mt-4 space-y-2">
-                                <li>Create technical content</li>
-                                <li>Answer technical questions</li>
-                                <li>Provide development support</li>
-                                <li>Review community contributions</li>
-                            </ul>
-                        </div>
+                    {/* Swarm Lead Card */}
+                    <div className="flex flex-col gap-6 p-8 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm hover:border-white/10 transition-all">
+                        <Code className="w-10 h-10 text-blue-500" />
+                        <h3 className="text-2xl font-semibold">The Builder</h3>
+                        <p className="text-muted-foreground flex-grow">
+                            Take the helm of an AI project and turn vision into reality. Lead the development of next-gen AI systems.
+                        </p>
                         <Button 
-                            className="w-full bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none mt-4"
+                            className="w-full group"
                             onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
                         >
-                            Apply Now
+                            Become a Swarm Lead
+                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                        </Button>
+                    </div>
+
+                    {/* Partner Card */}
+                    <div className="flex flex-col gap-6 p-8 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm hover:border-white/10 transition-all">
+                        <Network className="w-10 h-10 text-green-500" />
+                        <h3 className="text-2xl font-semibold">The Ecosystem Player</h3>
+                        <p className="text-muted-foreground flex-grow">
+                            Scale your success and join the network of established AI leaders. Shape the future of AI-to-AI commerce.
+                        </p>
+                        <Button 
+                            className="w-full group"
+                            onClick={() => window.open('https://t.me/Bigbosefx2', '_blank')}
+                        >
+                            Partner With Us
+                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                         </Button>
                     </div>
                 </div>
-
-                {/* Benefits Section */}
-                <div className="w-full max-w-[1000px] mt-24">
-                    <div className="flex flex-col items-center gap-8 p-12 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm">
-                        <h2 className="text-2xl font-normal">Leadership Benefits</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
-                            <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20">
-                                <h3 className="text-lg font-medium">Compensation</h3>
-                                <p className="text-sm text-muted-foreground">Earn competitive rewards in $COMPUTE tokens</p>
-                            </div>
-                            <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20">
-                                <h3 className="text-lg font-medium">Early Access</h3>
-                                <p className="text-sm text-muted-foreground">Preview and test new features first</p>
-                            </div>
-                            <div className="flex flex-col gap-2 p-6 rounded-xl bg-black/20">
-                                <h3 className="text-lg font-medium">Network</h3>
-                                <p className="text-sm text-muted-foreground">Connect with industry leaders and innovators</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </section>
         </main>
     );
 }
