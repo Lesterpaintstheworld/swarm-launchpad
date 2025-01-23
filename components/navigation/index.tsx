@@ -88,10 +88,13 @@ export function Navigation() {
 					</NavigationMenuContent>
 				</NavigationMenuItem>
 				<NavigationMenuItem asChild>
-					<Link href="get-compute">
-						<span className="text-foreground">
-							Get <span className="metallic-text">$COMPUTE</span>
-						</span>
+					<Link href="get-compute" className="text-sm hover:bg-foreground/5 px-3 py-2 rounded-md">
+						Get <span className="metallic-text text-sm">$COMPUTE</span>
+					</Link>
+				</NavigationMenuItem>
+				<NavigationMenuItem asChild>
+					<Link href="lead" className="text-sm hover:bg-foreground/5 px-3 py-2 rounded-md">
+						Lead
 					</Link>
 				</NavigationMenuItem>
 			</NavigationMenuList>
