@@ -1,5 +1,6 @@
 import html2canvas from 'html2canvas';
 import { createRoot } from 'react-dom/client';
+import React from 'react';
 import { CaptureCard } from '@/components/swarms/gainCard/captureCard';
 
 export const captureCards = async (selector: string): Promise<string[]> => {
@@ -33,12 +34,12 @@ export const captureCards = async (selector: string): Promise<string[]> => {
             // Render optimized version
             await new Promise<void>(resolve => {
                 root.render(
-                    <CaptureCard
-                        name={name}
-                        multiple={multiple}
-                        image={image}
-                        launchMode={isLaunchMode}
-                    />
+                    React.createElement(CaptureCard, {
+                        name,
+                        multiple,
+                        image,
+                        launchMode: isLaunchMode
+                    })
                 );
                 setTimeout(resolve, 100); // Wait for render
             });
