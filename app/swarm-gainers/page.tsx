@@ -3,53 +3,56 @@ import Image from 'next/image';
 
 export default function SwarmGainersPage() {
     const gainers = [
-        { name: 'DigitalKin', value: 85, image: '/swarms/digitalkin.png' },
-        { name: 'Kin Kong', value: 72, image: '/swarms/kinkong.jpg' },
-        { name: 'SwarmsVenture', value: 65, image: '/swarms/swarm-ventures.jpg' },
-        { name: 'Synthetic Souls', value: 58, image: '/swarms/synthetic-souls.jpg' },
-        { name: 'DuoAI', value: 52, image: '/swarms/duoai.jpg' },
-        { name: 'StudioKin', value: 45, image: '/swarms/screenplay.jpg' },
-        { name: 'Robinhood Agent', value: 38, image: '/swarms/robinhood.jpg' },
-        { name: 'TherapyKin', value: 32, image: '/swarms/mental-health.jpg' },
-        { name: 'PublishKin', value: 28, image: '/swarms/book.png' },
-        { name: 'PlayWise', value: 25, image: '/swarms/education.png' }
+        { name: 'DigitalKin', value: 8.5, image: '/swarms/digitalkin.png' },
+        { name: 'Kin Kong', value: 7.2, image: '/swarms/kinkong.jpg' },
+        { name: 'SwarmsVenture', value: 6.5, image: '/swarms/swarm-ventures.jpg' },
+        { name: 'Synthetic Souls', value: 5.8, image: '/swarms/synthetic-souls.jpg' },
+        { name: 'DuoAI', value: 5.2, image: '/swarms/duoai.jpg' },
+        { name: 'StudioKin', value: 4.5, image: '/swarms/screenplay.jpg' },
+        { name: 'Robinhood Agent', value: 3.8, image: '/swarms/robinhood.jpg' },
+        { name: 'TherapyKin', value: 3.2, image: '/swarms/mental-health.jpg' },
+        { name: 'PublishKin', value: 2.8, image: '/swarms/book.png' },
+        { name: 'PlayWise', value: 2.5, image: '/swarms/education.png' }
     ];
 
     return (
         <div className="min-h-screen bg-black p-8 flex flex-col items-center">
-            <h1 className="text-center mb-8 max-w-2xl">
-                <span className="text-2xl font-bold text-white">Top Gainer Swarms on </span>
-                <span className="text-2xl font-bold text-yellow-400">$UBC</span>
-                <span className="text-2xl font-bold text-white"> - Last 24 Hours</span>
+            <h1 className="text-center mb-16">
+                <span className="text-4xl font-bold text-yellow-400">$UBC</span>
+                <span className="text-4xl font-bold text-white"> Top Gainer Swarms - Last 24 Hours</span>
             </h1>
             
             <div className="flex items-end gap-4 h-[400px]">
                 {gainers.map((gainer) => (
-                    <div key={gainer.name} className="flex flex-col items-center">
-                        {/* Percentage */}
-                        <div className="text-yellow-400 font-bold mb-2">
-                            {gainer.value}%
+                    <div key={gainer.name} className="flex flex-col items-center w-24">
+                        {/* Multiplier */}
+                        <div className="text-yellow-400 font-bold mb-2 text-xl">
+                            {gainer.value}x
                         </div>
                         
                         {/* Bar with tech pattern */}
                         <div className="relative w-16">
+                            {/* Background pulse effect */}
                             <div 
-                                className="absolute inset-0 bg-gradient-to-t from-yellow-600/50 to-yellow-400/50 
+                                className="absolute inset-0 bg-gradient-to-t from-yellow-600/30 to-yellow-400/30 
                                           animate-pulse rounded-t-sm"
-                                style={{ height: `${gainer.value * 3}px` }}
+                                style={{ height: `${gainer.value * 40}px`, bottom: 0 }}
                             />
+                            
+                            {/* Main bar */}
                             <div 
-                                className="absolute inset-0 bg-[url('/pattern.svg')] bg-repeat opacity-20 
-                                          mix-blend-overlay rounded-t-sm"
-                                style={{ height: `${gainer.value * 3}px` }}
-                            />
-                            <div 
-                                className="relative w-full bg-gradient-to-t from-yellow-600 to-yellow-400 
+                                className="absolute bottom-0 w-full bg-gradient-to-t from-yellow-600 to-yellow-400 
                                           rounded-t-sm backdrop-blur-sm"
-                                style={{ height: `${gainer.value * 3}px` }}
+                                style={{ height: `${gainer.value * 40}px` }}
                             >
-                                {/* Lightning effect */}
-                                <div className="absolute inset-0 bg-yellow-400/20 rounded-t-sm">
+                                {/* Tech pattern overlay */}
+                                <div 
+                                    className="absolute inset-0 bg-[linear-gradient(0deg,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] 
+                                              bg-[size:4px_4px] mix-blend-overlay"
+                                />
+                                
+                                {/* Glow effect */}
+                                <div className="absolute inset-0 bg-yellow-400/20">
                                     <div className="h-full w-full animate-pulse bg-gradient-to-t from-transparent to-yellow-400/30" />
                                 </div>
                             </div>
@@ -66,7 +69,7 @@ export default function SwarmGainersPage() {
                                     className="object-cover"
                                 />
                             </div>
-                            <div className="text-yellow-400 text-sm font-medium mt-2 text-center max-w-[80px] leading-tight">
+                            <div className="text-yellow-400 text-sm font-medium mt-2 text-center leading-tight min-h-[40px]">
                                 {gainer.name}
                             </div>
                         </div>
