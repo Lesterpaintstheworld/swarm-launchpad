@@ -41,29 +41,34 @@ export const SwarmGainCard = ({ name, multiple, image, className = '' }: SwarmGa
                 {name}
             </div>
 
-            {/* Multiple and Price */}
+            {/* Multiple */}
             <div className="flex flex-col items-center gap-2 mb-auto">
                 <div className="text-7xl font-bold text-white text-center">
                     {multiple}x
                 </div>
-                <div className="text-gray-400 text-base font-medium mb-4">
+                <div className="text-gray-400 text-base font-medium">
                     24 hour performance
-                </div>
-                <div className="text-xl font-medium text-yellow-400/80">
-                    ${priceInUSD}
                 </div>
             </div>
 
-            {/* UBC Logo in corner */}
-            <div className="absolute bottom-8 left-8 flex items-center gap-2">
-                <Image
-                    src="/White on transparent.png"
-                    alt="UBC Logo"
-                    width={32}
-                    height={32}
-                    className="opacity-50"
-                />
-                <span className="text-[#7dd3fc] text-lg font-medium opacity-50">UBC</span>
+            {/* Bottom section with UBC Logo and Price */}
+            <div className="absolute bottom-8 w-[calc(100%-4rem)] flex justify-between items-center">
+                {/* UBC Logo */}
+                <div className="flex items-center gap-2">
+                    <Image
+                        src="/White on transparent.png"
+                        alt="UBC Logo"
+                        width={32}
+                        height={32}
+                        className="opacity-50"
+                    />
+                    <span className="text-[#7dd3fc] text-lg font-medium opacity-50">UBC</span>
+                </div>
+
+                {/* Price */}
+                <div className="text-xl font-medium text-green-400">
+                    ${priceInUSD}
+                </div>
             </div>
 
             {/* Tech pattern overlay */}
