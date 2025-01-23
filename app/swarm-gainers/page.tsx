@@ -10,12 +10,12 @@ export default function SwarmGainersPage() {
     const [isCapturing, setIsCapturing] = useState(false);
 
     const handleCapture = async () => {
-        setCapturing(true);
+        setIsCapturing(true);
         try {
             const newCaptures = await captureCards('.swarm-card');
             setCaptures(newCaptures);
         } finally {
-            setCapturing(false);
+            setIsCapturing(false);
         }
     };
     const gainers = [
