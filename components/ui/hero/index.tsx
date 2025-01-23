@@ -1,4 +1,3 @@
-import { Countdown } from '../countdown';
 import css from './hero.module.css';
 
 interface HeroProps {
@@ -14,9 +13,8 @@ const Hero = ({ title, subtitle, className }: HeroProps) => {
                 <h1 className={css.hero__title}>
                     {title}
                 </h1>
-                <Countdown />
                 {subtitle && (
-                    <p className="text-xl text-muted-foreground max-w-[800px] mx-auto mt-4 mb-12 text-balance">
+                    <p className="text-xl text-muted-foreground max-w-[800px] mx-auto mb-24 text-balance">
                         {subtitle}
                     </p>
                 )}

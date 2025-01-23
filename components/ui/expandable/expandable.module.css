@@ -1,5 +1,5 @@
 @supports (mask-image: linear-gradient(to bottom, black, transparent)) {
-    .mask-fade {
+    .mask-fade[data-expandable="true"] {
         mask-image: linear-gradient(to bottom, black calc(100% - 100px), transparent);
         -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 100px), transparent);
     }

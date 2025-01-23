@@ -8,8 +8,8 @@ const constants = {
     investmentProgram: {
         upgradeAuthority: '4zP3QHUvTcosCEKgJzbGJNEjTN4vcnNCHeFsCYyezAbg',
         id: '4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf',
-        ubcMint: '2enc37KwdGc6ezVE3hU86TusdmcxFbgNrXKjwAaibP4v',
-        computeMint: '82T1mjkeVsTRhpAPpqFhHmhdcGfA9iaw1LkDGh4sGoru',
+        ubcMint: '9psiRdn9cXYVps4F1kFuoNjd2EtmqNJXrCPmRppJpump',
+        computeMint: 'B1N1HcMm4RysYz4smsXwmk2UnS8NziqKCM6Ho8i62vXo',
     },
 
     rpcUrl:

@@ -2,7 +2,7 @@ import { ArrowRightLeft, LineChart, Wallet } from 'lucide-react';
 
 export function SecondaryMarket() {
     return (
-        <div className="bg-background py-24">
+        <div className="py-24">
             <div className="container">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl font-bold">Secondary Market</h2>

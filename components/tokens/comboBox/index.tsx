@@ -45,7 +45,7 @@ const TokenComboBox = ({ className, defaultValue, onChange, disabled }: SwarmCom
         onChange(getToken(value));
     }, [value, defaultValue, onChange])
 
-    const handleFilter = (value: string, search: string): number => {
+    const handleFilter = (_value: string, search: string): number => {
         supportedTokens.forEach((token: Token) => {
             if (token.label.includes(search)) return 1;
         });

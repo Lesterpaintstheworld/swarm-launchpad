@@ -22,6 +22,7 @@ import { useEffect, useRef, useState } from "react";
 import { previews as swarms } from "@/data/swarms/previews";
 import { SwarmModel, SwarmPreviewData } from "../swarm.types";
 import { getSwarm } from "@/data/swarms/previews";
+import { getSwarmInfo } from "@/data/swarms/info";
 
 interface SwarmComboBoxProps {
     defaultValue?: string;
@@ -54,6 +55,12 @@ const SwarmComboBox = ({ className, defaultValue, onChange }: SwarmComboBoxProps
         }
 
         return 0;
+    }
+
+    const handleClick = (value: string) => {
+        if(!value) return;
+        setValue(value)
+        setOpen(false)
     }
 
     return (
@@ -91,24 +98,25 @@ const SwarmComboBox = ({ className, defaultValue, onChange }: SwarmComboBoxProps
                     <CommandList>
                         <CommandEmpty>No swarms found.</CommandEmpty>
                         <CommandGroup>
-                            {swarms.map((swarm: SwarmPreviewData, index: number) => (
-                                <CommandItem
-                                    key={index}
-                                    value={swarm.id}
-                                    onSelect={(currentValue) => {
-                                        setValue(currentValue === value ? "" : currentValue)
-                                        setOpen(false)
-                                    }}
-                                >
-                                    {swarm.name}
-                                    <Check
-                                        className={cn(
-                                            "ml-auto",
-                                            value === swarm.id ? "opacity-100" : "opacity-0"
-                                        )}
-                                    />
-                                </CommandItem>
-                            ))}
+                            {swarms.map((swarm: SwarmPreviewData, index: number) => {
+                                const { pool } = getSwarmInfo(swarm.id);
+                                if(!pool) return;
+                                return (
+                                    <CommandItem
+                                        key={index}
+                                        value={swarm.id}
+                                        onSelect={(currentValue) => handleClick(currentValue)}
+                                    >
+                                        {swarm.name}
+                                        <Check
+                                            className={cn(
+                                                "ml-auto",
+                                                value === swarm.id ? "opacity-100" : "opacity-0"
+                                            )}
+                                        />
+                                    </CommandItem>
+                                )
+                             })}
                         </CommandGroup>
                     </CommandList>
                 </Command>

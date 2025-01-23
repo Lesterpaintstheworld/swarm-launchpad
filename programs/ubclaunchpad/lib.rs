@@ -7,11 +7,11 @@ use anchor_spl::{
 use std::str::FromStr;
 
 #[constant]
-pub const UPGRADE_AUTHORITY: &str = "4aBdwukwSS7pmGHiCdFFQ4fm6mUzMLFfXN87jBdWsCH2";
+pub const UPGRADE_AUTHORITY: &str = "DKc63ukZvHo1vfQMYWxk27EconWJ5tMjYrEaFmhpejZf";
 pub const ANCHOR_DISCRIMINATOR: usize = 8;
 pub const SLIPPAGE_TOLERANCE: u64 = 5; // 5%
 
-declare_id!("program_id");
+declare_id!("4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf");
 
 #[program]
 pub mod ubclaunchpad {
@@ -21,13 +21,10 @@ pub mod ubclaunchpad {
         ctx: Context<InitializePool>,
         pool_name: String,
         total_shares: u64,
-        fee_ratio: u64, // typically 50 for 5%
+        fee_ratio: u64, // typically 20 for 5%
         compute_mint: Pubkey,
         ubc_mint: Pubkey,
-        partner_account: Pubkey,
-        swarm_account: Pubkey,
-        investor_redistribution_account: Pubkey,
-        platform_account: Pubkey,
+        custodial_account: Pubkey,
     ) -> Result<()> {
         let pool = &mut ctx.accounts.pool;
 
@@ -35,21 +32,26 @@ pub mod ubclaunchpad {
         pool.admin_authority = ctx.accounts.authority.key();
         pool.total_shares = total_shares;
         pool.available_shares = total_shares;
-        pool.is_frozen = false;
+        pool.is_frozen = true;
+        pool.fee_ratio = fee_ratio;
 
         pool.ubc_mint = ubc_mint;
         pool.compute_mint = compute_mint;
-        pool.fee_ratio = fee_ratio;
 
-        pool.partner_account = partner_account;
-        pool.swarm_account = swarm_account;
-        pool.investor_redistribution_account = investor_redistribution_account;
-        pool.platform_account = platform_account;
+        pool.custodial_account = custodial_account;
 
         Ok(())
     }
 
+    pub fn remove_pool(ctx: Context<UpdatePool>) -> Result<()> {
+        let pool = &mut ctx.accounts.pool;
+        let receiver = &ctx.accounts.authority;
+        pool.close(receiver.to_account_info())?;
+        Ok(())
+    }
+
     pub fn increase_supply(ctx: Context<UpdatePool>, number_of_shares: u64) -> Result<()> {
+
         let pool = &mut ctx.accounts.pool;
 
         pool.available_shares = pool
@@ -71,20 +73,12 @@ pub mod ubclaunchpad {
         Ok(())
     }
 
-    pub fn set_accounts(
+    pub fn set_custodial_account(
         ctx: Context<UpdatePool>,
-        partner_account: Pubkey,
-        swarm_account: Pubkey,
-        investor_redistribution_account: Pubkey,
-        platform_account: Pubkey,
+        custodial_account: Pubkey,
     ) -> Result<()> {
         let pool = &mut ctx.accounts.pool;
-
-        pool.partner_account = partner_account;
-        pool.swarm_account = swarm_account;
-        pool.investor_redistribution_account = investor_redistribution_account;
-        pool.platform_account = platform_account;
-
+        pool.custodial_account = custodial_account;
         Ok(())
     }
 
@@ -94,10 +88,17 @@ pub mod ubclaunchpad {
         compute_mint: Pubkey,
     ) -> Result<()> {
         let pool = &mut ctx.accounts.pool;
-
         pool.ubc_mint = ubc_mint;
         pool.compute_mint = compute_mint;
-
+        Ok(())
+    }
+    
+    pub fn set_fee_ratio(
+        ctx: Context<UpdatePool>,
+        fee_ratio: u64,
+    ) -> Result<()> {
+        let pool = &mut ctx.accounts.pool;
+        pool.fee_ratio = fee_ratio;
         Ok(())
     }
 
@@ -107,9 +108,7 @@ pub mod ubclaunchpad {
         calculated_cost: u64,
     ) -> Result<()> {
         let pool = &mut ctx.accounts.pool;
-
-        // Check if pool is frozen
-        require!(!pool.is_frozen, ErrorCode::PoolFrozen);
+        require!(number_of_shares <= 1000, ErrorCode::TooManyShares);
 
         // Check if enough shares are available
         require!(
@@ -117,8 +116,10 @@ pub mod ubclaunchpad {
             ErrorCode::InsufficientShares
         );
 
+        let n = pool.total_shares.checked_sub(pool.available_shares).ok_or(error!(ErrorCode::MathError))?;
+
         // Calculate the price per share with bonding curve
-        let price_per_share = calculate_share_price(pool.available_shares)?;
+        let price_per_share = calculate_share_price(n);
 
         // Temporary total cost calculation until bonding curve correctly calculates cost;
         let total_cost: u64 = number_of_shares
@@ -166,17 +167,9 @@ pub mod ubclaunchpad {
             .checked_sub(number_of_shares)
             .ok_or(error!(ErrorCode::InvalidAmount))?;
 
-        // Fees
-        let ubc_fee_amount = total_cost
+        let fee = total_cost
             .checked_div(pool.fee_ratio)
             .ok_or(error!(ErrorCode::InvalidAmount))?;
-
-        // Split fees equally between partner and investor
-        let partner_fee = ubc_fee_amount
-            .checked_div(2)
-            .ok_or(error!(ErrorCode::InvalidAmount))?;
-
-        let platform_fee = ubc_fee_amount;
 
         // Transfer compute to swarm fund
         transfer(
@@ -184,24 +177,11 @@ pub mod ubclaunchpad {
                 ctx.accounts.token_program.to_account_info(),
                 Transfer {
                     from: ctx.accounts.sender_compute_account.to_account_info(),
-                    to: ctx.accounts.swarm_compute_account.to_account_info(),
+                    to: ctx.accounts.custodial_compute_account.to_account_info(),
                     authority: ctx.accounts.buyer.to_account_info(),
                 },
             ),
-            total_cost * 10u64.pow(ctx.accounts.compute_mint_account.decimals as u32),
-        )?;
-
-        // Transfer fees to partner
-        transfer(
-            CpiContext::new(
-                ctx.accounts.token_program.to_account_info(),
-                Transfer {
-                    from: ctx.accounts.sender_ubc_account.to_account_info(),
-                    to: ctx.accounts.partner_ubc_account.to_account_info(),
-                    authority: ctx.accounts.buyer.to_account_info(),
-                },
-            ),
-            partner_fee * 10u64.pow(ctx.accounts.ubc_mint_account.decimals as u32),
+            total_cost,
         )?;
 
         // Transfer fees to platform
@@ -210,11 +190,11 @@ pub mod ubclaunchpad {
                 ctx.accounts.token_program.to_account_info(),
                 Transfer {
                     from: ctx.accounts.sender_ubc_account.to_account_info(),
-                    to: ctx.accounts.platform_ubc_account.to_account_info(),
+                    to: ctx.accounts.custodial_ubc_account.to_account_info(),
                     authority: ctx.accounts.buyer.to_account_info(),
                 },
             ),
-            platform_fee * 10u64.pow(ctx.accounts.ubc_mint_account.decimals as u32),
+            fee,
         )?;
 
         Ok(())
@@ -225,8 +205,8 @@ pub mod ubclaunchpad {
         listing_id: String,
         number_of_shares: u64,
         price_per_share: u64,
-        wanted_token_mint: Pubkey,
     ) -> Result<()> {
+
         // Check if shareholder has enough available shares
         require!(
             ctx.accounts.shareholder.available_shares >= number_of_shares,
@@ -248,21 +228,16 @@ pub mod ubclaunchpad {
         listing.shareholder = shareholder.key();
         listing.number_of_shares = number_of_shares;
         listing.price_per_share = price_per_share;
-        listing.is_active = true;
         listing.listing_id = listing_id;
-
-        // If this token is not UBC or COMPUTE, UBC will be used on sale.
-        listing.wanted_token_mint = wanted_token_mint;
 
         Ok(())
     }
 
     pub fn cancel_listing(ctx: Context<CancelListing>) -> Result<()> {
+
         let listing = &mut ctx.accounts.share_listing;
         let shareholder = &mut ctx.accounts.shareholder;
         let receiver = &mut ctx.accounts.seller;
-
-        require!(listing.is_active, ErrorCode::ListingNotActive);
 
         // Return shares to seller's available balance
         shareholder.available_shares = shareholder
@@ -277,13 +252,12 @@ pub mod ubclaunchpad {
     }
 
     pub fn buy_listing(ctx: Context<BuyListing>) -> Result<()> {
+        
         let listing = &mut ctx.accounts.share_listing;
         let buyer_shareholder = &mut ctx.accounts.buyer_shareholder;
         let seller_shareholder = &mut ctx.accounts.seller_shareholder;
         let receiver = &mut ctx.accounts.seller_account;
         let pool = &mut ctx.accounts.pool;
-
-        require!(listing.is_active, ErrorCode::ListingNotActive);
 
         // Update buyer's share counts
         buyer_shareholder.shares = buyer_shareholder
@@ -307,25 +281,14 @@ pub mod ubclaunchpad {
         let total_cost: u64 = listing
             .number_of_shares
             .checked_mul(listing.price_per_share)
+            .ok_or(error!(ErrorCode::MathError))?
+            .checked_mul(10u64.pow(ctx.accounts.compute_mint_account.decimals as u32))
             .ok_or(error!(ErrorCode::InvalidAmount))?;
 
         // Fees
-        let ubc_fee_amount = total_cost
+        let fee = total_cost
             .checked_div(pool.fee_ratio)
             .ok_or(error!(ErrorCode::InvalidAmount))?;
-
-        let ubc_fee_fraction = ubc_fee_amount
-            .checked_div(5)
-            .ok_or(error!(ErrorCode::InvalidAmount))?;
-
-        // Split fees equally between partner and investor
-        let partner_fee = ubc_fee_fraction
-            .checked_mul(2)
-            .ok_or(error!(ErrorCode::InvalidAmount))?;
-
-        let platform_fee = ubc_fee_amount;
-
-        let investor_fee = ubc_fee_fraction;
 
         // Transfer compute to seller
         transfer(
@@ -337,46 +300,20 @@ pub mod ubclaunchpad {
                     authority: ctx.accounts.buyer.to_account_info(),
                 },
             ),
-            total_cost * 10u64.pow(ctx.accounts.compute_mint_account.decimals as u32),
+            total_cost,
         )?;
 
-        // Transfer fees to partner
+        // Transfer ubc fee to platform for distribution
         transfer(
             CpiContext::new(
                 ctx.accounts.token_program.to_account_info(),
                 Transfer {
                     from: ctx.accounts.buyer_ubc_account.to_account_info(),
-                    to: ctx.accounts.partner_ubc_account.to_account_info(),
+                    to: ctx.accounts.custodial_ubc_account.to_account_info(),
                     authority: ctx.accounts.buyer.to_account_info(),
                 },
             ),
-            partner_fee * 10u64.pow(ctx.accounts.ubc_mint_account.decimals as u32),
-        )?;
-
-        // Transfer fees to platform
-        transfer(
-            CpiContext::new(
-                ctx.accounts.token_program.to_account_info(),
-                Transfer {
-                    from: ctx.accounts.buyer_ubc_account.to_account_info(),
-                    to: ctx.accounts.platform_ubc_account.to_account_info(),
-                    authority: ctx.accounts.buyer.to_account_info(),
-                },
-            ),
-            platform_fee * 10u64.pow(ctx.accounts.ubc_mint_account.decimals as u32),
-        )?;
-
-        // Transfer fees to investors
-        transfer(
-            CpiContext::new(
-                ctx.accounts.token_program.to_account_info(),
-                Transfer {
-                    from: ctx.accounts.buyer_ubc_account.to_account_info(),
-                    to: ctx.accounts.investor_ubc_account.to_account_info(),
-                    authority: ctx.accounts.buyer.to_account_info(),
-                },
-            ),
-            investor_fee * 10u64.pow(ctx.accounts.ubc_mint_account.decimals as u32),
+            fee,
         )?;
 
         // Deactivate the listing
@@ -415,7 +352,7 @@ pub struct InitializePool<'info> {
 #[derive(InitSpace)]
 #[account]
 pub struct Pool {
-    #[max_len(64)]
+    #[max_len(32)]
     pub pool_name: String,
     pub admin_authority: Pubkey, // 32 bytes
     pub total_shares: u64,       // 8 bytes
@@ -428,10 +365,7 @@ pub struct Pool {
     pub fee_ratio: u64,       // 8 bytes
 
     // Recipients
-    pub partner_account: Pubkey,
-    pub swarm_account: Pubkey,
-    pub investor_redistribution_account: Pubkey,
-    pub platform_account: Pubkey,
+    pub custodial_account: Pubkey,
 }
 
 #[derive(Accounts)]
@@ -441,7 +375,7 @@ pub struct CreateShareholder<'info> {
         constraint = !pool.is_frozen @ ErrorCode::PoolFrozen,  // Pool should NOT be frozen
         constraint = pool.available_shares > 0 @ ErrorCode::InsufficientShares  // Should have shares available
     )]
-    pub pool: Account<'info, Pool>,
+    pub pool: Box<Account<'info, Pool>>,
 
     #[account(
         init_if_needed,
@@ -454,69 +388,55 @@ pub struct CreateShareholder<'info> {
         ],
         bump
     )]
-    pub shareholder: Account<'info, Shareholder>,
+    pub shareholder: Box<Account<'info, Shareholder>>,
 
-    #[account(mut)]
-    pub compute_mint_account: Account<'info, Mint>,
+    #[account(
+        mut,
+        constraint = compute_mint_account.key() == pool.compute_mint @ ErrorCode::InvalidToken
+    )]
+    pub compute_mint_account: Box<Account<'info, Mint>>,
 
-    #[account(mut)]
-    pub ubc_mint_account: Account<'info, Mint>,
+    #[account(
+        mut,
+        constraint = ubc_mint_account.key() == pool.ubc_mint @ ErrorCode::InvalidToken
+    )]
+    pub ubc_mint_account: Box<Account<'info, Mint>>,
 
     #[account(
         mut,
         associated_token::mint = compute_mint_account,
         associated_token::authority = buyer,
     )]
-    pub sender_compute_account: Account<'info, TokenAccount>,
+    pub sender_compute_account: Box<Account<'info, TokenAccount>>,
 
     #[account(
         mut,
-        associated_token::mint = compute_mint_account,
+        associated_token::mint = ubc_mint_account,
         associated_token::authority = buyer,
     )]
-    pub sender_ubc_account: Account<'info, TokenAccount>,
+    pub sender_ubc_account: Box<Account<'info, TokenAccount>>,
 
-    // CHECK: This is the swarm account from pool
+    /// CHECK: This is the platform account that receives fees and is verified by pool.custodial_account
     #[account(
-        constraint = swarm_account.key() == pool.swarm_account @ ErrorCode::InvalidAuthority
+        constraint = custodial_account.key() == pool.custodial_account @ ErrorCode::InvalidAuthority
     )]
-    pub swarm_account: UncheckedAccount<'info>,
+    pub custodial_account: AccountInfo<'info>,
 
     #[account(
         init_if_needed,
         payer = buyer,
         associated_token::mint = compute_mint_account,
-        associated_token::authority = swarm_account,
+        associated_token::authority = custodial_account,
     )]
-    pub swarm_compute_account: Account<'info, TokenAccount>,
-
-    // CHECK: This is the partner account from pool
-    #[account(
-        constraint = partner_account.key() == pool.partner_account @ ErrorCode::InvalidAuthority
-    )]
-    pub partner_account: UncheckedAccount<'info>,
+    pub custodial_compute_account: Box<Account<'info, TokenAccount>>,
 
     #[account(
         init_if_needed,
         payer = buyer,
         associated_token::mint = ubc_mint_account,
-        associated_token::authority = partner_account,
+        associated_token::authority = custodial_account,
     )]
-    pub partner_ubc_account: Account<'info, TokenAccount>,
-
-    // CHECK: This is the platform account from pool
-    #[account(
-        constraint = platform_account.key() == pool.platform_account @ ErrorCode::InvalidAuthority
-    )]
-    pub platform_account: UncheckedAccount<'info>,
-
-    #[account(
-        init_if_needed,
-        payer = buyer,
-        associated_token::mint = ubc_mint_account,
-        associated_token::authority = platform_account,
-    )]
-    pub platform_ubc_account: Account<'info, TokenAccount>,
+    pub custodial_ubc_account: Box<Account<'info, TokenAccount>>,
 
     // The account that will own the shares
     #[account(mut)]
@@ -556,9 +476,7 @@ pub struct ShareListing {
     pub shareholder: Pubkey,       // 32 bytes
     pub number_of_shares: u64,     // 8 bytes
     pub price_per_share: u64,      // 8 bytes
-    pub is_active: bool,           // 1 byte
-    pub wanted_token_mint: Pubkey, // 32 bytes
-    #[max_len(64)]
+    #[max_len(32)]
     pub listing_id: String, // 32 bytes
 }
 
@@ -622,11 +540,10 @@ pub struct CancelListing<'info> {
 pub struct BuyListing<'info> {
     #[account(
         mut,
-        constraint = share_listing.is_active @ ErrorCode::ListingNotActive,
         constraint = share_listing.seller != buyer.key() @ ErrorCode::CannotPurchaseOwnListing,
         constraint = share_listing.pool == pool.key() @ ErrorCode::InvalidPool,
     )]
-    pub share_listing: Account<'info, ShareListing>,
+    pub share_listing: Box<Account<'info, ShareListing>>,
 
     #[account(
         init_if_needed,
@@ -639,39 +556,40 @@ pub struct BuyListing<'info> {
         ],
         bump
     )]
-    pub buyer_shareholder: Account<'info, Shareholder>,
+    pub buyer_shareholder: Box<Account<'info, Shareholder>>,
 
     #[account(
         mut,
         constraint = seller_shareholder.owner == share_listing.seller @ ErrorCode::InvalidAuthority,
         constraint = seller_shareholder.pool == pool.key() @ ErrorCode::InvalidPool,
     )]
-    pub seller_shareholder: Account<'info, Shareholder>,
+    pub seller_shareholder: Box<Account<'info, Shareholder>>,
 
     #[account(mut)]
-    pub compute_mint_account: Account<'info, Mint>,
+    pub compute_mint_account: Box<Account<'info, Mint>>,
 
     #[account(mut)]
-    pub ubc_mint_account: Account<'info, Mint>,
+    pub ubc_mint_account: Box<Account<'info, Mint>>,
 
     #[account(
         mut,
         associated_token::mint = compute_mint_account,
         associated_token::authority = buyer,
     )]
-    pub buyer_compute_account: Account<'info, TokenAccount>,
+    pub buyer_compute_account: Box<Account<'info, TokenAccount>>,
 
     #[account(
         mut,
-        associated_token::mint = compute_mint_account,
+        associated_token::mint = ubc_mint_account,
         associated_token::authority = buyer,
     )]
-    pub buyer_ubc_account: Account<'info, TokenAccount>,
+    pub buyer_ubc_account: Box<Account<'info, TokenAccount>>,
 
+    /// CHECK: This is the sller account that receives funds
     #[account(
         constraint = seller_account.key() == share_listing.seller @ ErrorCode::InvalidAuthority
     )]
-    pub seller_account: UncheckedAccount<'info>,
+    pub seller_account: AccountInfo<'info>,
 
     #[account(
         init_if_needed,
@@ -679,46 +597,19 @@ pub struct BuyListing<'info> {
         associated_token::mint = compute_mint_account,
         associated_token::authority = seller_account,
     )]
-    pub seller_compute_account: Account<'info, TokenAccount>,
+    pub seller_compute_account: Box<Account<'info, TokenAccount>>,
 
+    /// CHECK: This is the platform account from pool
     #[account(
-        constraint = investor_account.key() == pool.investor_redistribution_account @ ErrorCode::InvalidAuthority
+        constraint = custodial_account.key() == pool.custodial_account @ ErrorCode::InvalidAuthority
     )]
-    pub investor_account: UncheckedAccount<'info>,
+    pub custodial_account: AccountInfo<'info>,
 
     #[account(
-        init_if_needed,
-        payer = buyer,
-        associated_token::mint = compute_mint_account,
-        associated_token::authority = investor_account,
-    )]
-    pub investor_ubc_account: Account<'info, TokenAccount>,
-
-    #[account(
-        constraint = partner_account.key() == pool.partner_account @ ErrorCode::InvalidAuthority
-    )]
-    pub partner_account: UncheckedAccount<'info>,
-
-    #[account(
-        init_if_needed,
-        payer = buyer,
         associated_token::mint = ubc_mint_account,
-        associated_token::authority = partner_account,
+        associated_token::authority = custodial_account,
     )]
-    pub partner_ubc_account: Account<'info, TokenAccount>,
-
-    #[account(
-        constraint = platform_account.key() == pool.platform_account @ ErrorCode::InvalidAuthority
-    )]
-    pub platform_account: UncheckedAccount<'info>,
-
-    #[account(
-        init_if_needed,
-        payer = buyer,
-        associated_token::mint = ubc_mint_account,
-        associated_token::authority = platform_account,
-    )]
-    pub platform_ubc_account: Account<'info, TokenAccount>,
+    pub custodial_ubc_account: Box<Account<'info, TokenAccount>>,
 
     // Transfer accounts
     pub pool: Account<'info, Pool>,
@@ -741,127 +632,34 @@ pub fn validate_authority(key: Pubkey, authority: &str) -> bool {
     }
 }
 
-// Calculate price for shares based on position and bonding curve
-pub fn calculate_share_price(position: u64) -> Result<u64> {
-    // Constants
-    const CYCLE_SIZE: u64 = 5000;
-    const PHASE_SIZE: u64 = 1250;
-    const BASE_PRICE: u64 = 1_000_000; // 1.0 with 6 decimals precision
-    const THIRTY_PERCENT: u64 = 300_000; // 0.3 with 6 decimals precision
-    const GROWTH_RATE: u64 = 1_350_000; // 1.35 with 6 decimals precision
-
+pub fn calculate_share_price(n: u64) -> u64 {
+    // Convert to f64 for floating point calculations
+    let n_f64 = n as f64;
+        
     // Calculate cycle and position within cycle
-    let cycle = position
-        .checked_div(CYCLE_SIZE)
-        .ok_or(error!(ErrorCode::MathError))?;
-    let x = position
-        .checked_rem(CYCLE_SIZE)
-        .ok_or(error!(ErrorCode::MathError))?;
-
+    let cycle = (n_f64 / 5000.0).floor();
+    let x = n_f64 % 5000.0;
+    
     // Calculate base price with 35% growth per cycle
-    let mut base = BASE_PRICE;
-    for _ in 0..cycle {
-        base = base
-            .checked_mul(GROWTH_RATE)
-            .ok_or(error!(ErrorCode::MathError))?
-            .checked_div(BASE_PRICE)
-            .ok_or(error!(ErrorCode::MathError))?;
-    }
-
-    // Calculate modifier based on position within cycle
-    let modifier = if x <= PHASE_SIZE {
+    let base = (1.35f64).powf(cycle);
+    
+    // Calculate multiplier based on position in cycle
+    let multiplier = if x <= 1250.0 {
         // Phase 1: Linear up to +30%
-        let ratio = x
-            .checked_mul(BASE_PRICE)
-            .ok_or(error!(ErrorCode::MathError))?
-            .checked_div(PHASE_SIZE)
-            .ok_or(error!(ErrorCode::MathError))?;
-        BASE_PRICE
-            .checked_add(
-                THIRTY_PERCENT
-                    .checked_mul(ratio)
-                    .ok_or(error!(ErrorCode::MathError))?
-                    .checked_div(BASE_PRICE)
-                    .ok_or(error!(ErrorCode::MathError))?,
-            ).ok_or(error!(ErrorCode::MathError))?
-    } else if x <= PHASE_SIZE
-        .checked_mul(2)
-        .ok_or(error!(ErrorCode::MathError))?
-    {
+        1.0 + (0.30 * x / 1250.0)
+    } else if x <= 2500.0 {
         // Phase 2: Linear down to base
-        let adjusted_x = x
-            .checked_sub(PHASE_SIZE)
-            .ok_or(error!(ErrorCode::MathError))?;
-        let ratio = adjusted_x
-            .checked_mul(BASE_PRICE)
-            .ok_or(error!(ErrorCode::MathError))?
-            .checked_div(PHASE_SIZE)
-            .ok_or(error!(ErrorCode::MathError))?;
-        let reduction = THIRTY_PERCENT
-            .checked_mul(ratio)
-            .ok_or(error!(ErrorCode::MathError))?
-            .checked_div(BASE_PRICE)
-            .ok_or(error!(ErrorCode::MathError))?;
-        BASE_PRICE
-            .checked_add(THIRTY_PERCENT)
-            .ok_or(error!(ErrorCode::MathError))?
-            .checked_sub(reduction)
-            .ok_or(error!(ErrorCode::MathError))?
-    } else if x <= PHASE_SIZE
-        .checked_mul(3)
-        .ok_or(error!(ErrorCode::MathError))?
-    {
+        1.30 - (0.30 * (x - 1250.0) / 1250.0)
+    } else if x <= 3750.0 {
         // Phase 3: Linear down to -30%
-        let adjusted_x = x
-            .checked_sub(
-                PHASE_SIZE
-                    .checked_mul(2)
-                    .ok_or(error!(ErrorCode::MathError))?,
-            ).ok_or(error!(ErrorCode::MathError))?;
-        let ratio = adjusted_x
-            .checked_mul(BASE_PRICE)
-            .ok_or(error!(ErrorCode::MathError))?
-            .checked_div(PHASE_SIZE)
-            .ok_or(error!(ErrorCode::MathError))?;
-        BASE_PRICE
-            .checked_sub(
-                THIRTY_PERCENT
-                    .checked_mul(ratio)
-                    .ok_or(error!(ErrorCode::MathError))?
-                    .checked_div(BASE_PRICE)
-                    .ok_or(error!(ErrorCode::MathError))?,
-            ).ok_or(error!(ErrorCode::MathError))?
+        1.0 - (0.30 * (x - 2500.0) / 1250.0)
     } else {
         // Phase 4: Linear up to base
-        let adjusted_x = x
-            .checked_sub(
-                PHASE_SIZE
-                    .checked_mul(3)
-                    .ok_or(error!(ErrorCode::MathError))?,
-            ).ok_or(error!(ErrorCode::MathError))?;
-        let ratio = adjusted_x
-            .checked_mul(BASE_PRICE)
-            .ok_or(error!(ErrorCode::MathError))?
-            .checked_div(PHASE_SIZE)
-            .ok_or(error!(ErrorCode::MathError))?;
-        let base_70 = BASE_PRICE
-            .checked_sub(THIRTY_PERCENT)
-            .ok_or(error!(ErrorCode::MathError))?;
-        base_70
-            .checked_add(
-                THIRTY_PERCENT
-                    .checked_mul(ratio)
-                    .ok_or(error!(ErrorCode::MathError))?
-                    .checked_div(BASE_PRICE)
-                    .ok_or(error!(ErrorCode::MathError))?,
-            ).ok_or(error!(ErrorCode::MathError))?
+        0.70 + (0.30 * (x - 3750.0) / 1250.0)
     };
-
-    // Calculate final price
-    base.checked_mul(modifier)
-        .ok_or(error!(ErrorCode::MathError))?
-        .checked_div(BASE_PRICE)
-        .ok_or(error!(ErrorCode::MathError))
+    
+    // Calculate final price and convert to u64 with 6 decimal places
+    return (base * multiplier * 1_000_000.0).round() as u64
 }
 
 /// Error Codes
@@ -898,4 +696,6 @@ pub enum ErrorCode {
     InvalidPoolNameLength,
     #[msg("Math operation failed")]
     MathError,
+    #[msg("Too many shares, limit 1000")]
+    TooManyShares,
 }
