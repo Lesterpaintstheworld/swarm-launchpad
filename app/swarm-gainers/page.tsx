@@ -42,10 +42,10 @@ export default function SwarmGainersPage() {
                     <span className="text-white/50 text-2xl font-bold">UBC</span>
                 </div>
 
-                <h1 className="text-center mb-16">
-                    <span className="text-5xl font-bold text-yellow-400">$UBC</span>
-                    <span className="text-5xl font-bold text-white"> Top Gainer Swarms - Last 24 Hours</span>
-                </h1>
+                <div className="text-center mb-16">
+                    <h1 className="text-5xl font-bold text-yellow-400 mb-2">$UBC Top Gainer Swarms</h1>
+                    <h2 className="text-3xl font-bold text-white">Last 24 Hours</h2>
+                </div>
 
                 {/* Graph section */}
                 <div className="flex items-end gap-4 h-[400px] mb-16">
@@ -91,7 +91,7 @@ export default function SwarmGainersPage() {
                 </div>
 
                 {/* Cards grid */}
-                <div className="grid grid-cols-2 gap-12 mt-32 max-w-[1400px] mx-auto">
+                <div className="grid grid-cols-2 gap-16 mt-40 max-w-[2000px] mx-auto">
                     {previews.map((swarm) => (
                         <SwarmGainCard
                             key={swarm.id}
