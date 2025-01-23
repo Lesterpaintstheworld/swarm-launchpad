@@ -16,7 +16,7 @@ export const SwarmGainCard = ({ name, multiple, image, className = '', launchMod
 
     return (
         <div 
-            className={`export-card w-[500px] h-[500px] bg-[#332600] rounded-xl border border-yellow-400/20 p-8 flex flex-col items-center relative overflow-hidden ${className}`}
+            className={`export-card w-[500px] h-[500px] bg-[#1a1500] rounded-xl border border-yellow-400/20 p-8 flex flex-col items-center relative overflow-hidden ${className}`}
             style={{
                 display: 'block',
                 position: 'relative',
