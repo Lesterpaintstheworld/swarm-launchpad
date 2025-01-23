@@ -17,7 +17,7 @@ export const SwarmGainCard = ({ name, multiple, image, className = '' }: SwarmGa
             <div className="absolute inset-0 bg-gradient-to-b from-yellow-400/5 to-transparent" />
             
             {/* Title */}
-            <div className="text-2xl font-bold text-white mb-6">
+            <div className="text-2xl font-bold text-white mb-6 border-b border-white/20 pb-2">
                 $UBC Top Gainer Swarm
             </div>
 
@@ -60,9 +60,9 @@ export const SwarmGainCard = ({ name, multiple, image, className = '' }: SwarmGa
                         alt="UBC Logo"
                         width={32}
                         height={32}
-                        className="opacity-50"
+                        className="opacity-75"
                     />
-                    <span className="text-[#7dd3fc] text-lg font-medium opacity-50">UBC</span>
+                    <span className="text-[#7dd3fc] text-lg font-medium opacity-75">UBC</span>
                 </div>
 
                 {/* Price */}
