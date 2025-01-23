@@ -11,18 +11,18 @@ export const SwarmGainCard = ({ name, multiple, image, className = '' }: SwarmGa
     const priceInUSD = (multiple * 0.007).toFixed(3);
 
     return (
-        <div className={`w-[630px] h-[420px] bg-black/40 backdrop-blur-sm rounded-xl border border-yellow-400/20 
-                        p-8 flex flex-col items-center justify-between relative overflow-hidden ${className}`}>
+        <div className={`w-[500px] h-[500px] bg-black/40 backdrop-blur-sm rounded-xl border border-yellow-400/20 
+                        p-8 flex flex-col items-center relative overflow-hidden ${className}`}>
             {/* Background glow effect */}
             <div className="absolute inset-0 bg-gradient-to-b from-yellow-400/5 to-transparent" />
             
             {/* Title */}
-            <div className="text-lg font-medium text-yellow-400/80 mb-8">
+            <div className="text-2xl font-bold text-white mb-12">
                 $UBC Top Gainer Swarm
             </div>
 
             {/* Logo */}
-            <div className="relative mt-4">
+            <div className="relative mt-4 mb-8">
                 <div className="absolute inset-0 bg-yellow-400/20 blur-xl transform scale-110" />
                 <div className="relative w-36 h-36 rounded-full overflow-hidden border-2 border-yellow-400/50 
                               bg-gradient-to-b from-yellow-400/20 to-transparent backdrop-blur-sm">
@@ -37,22 +37,22 @@ export const SwarmGainCard = ({ name, multiple, image, className = '' }: SwarmGa
             </div>
 
             {/* Name */}
-            <div className="text-2xl font-bold text-yellow-400 text-center mt-6">
+            <div className="text-2xl font-bold text-yellow-400 text-center mb-8">
                 {name}
             </div>
 
             {/* Multiple */}
-            <div className="flex flex-col items-center gap-2">
+            <div className="flex flex-col items-center gap-2 mb-auto">
                 <div className="text-7xl font-bold text-white text-center">
                     {multiple}x
                 </div>
-                <div className="text-gray-400 text-lg font-medium">
+                <div className="text-gray-400 text-base font-medium">
                     24 hour performance
                 </div>
             </div>
 
             {/* Bottom section */}
-            <div className="w-full flex justify-between items-center mt-4">
+            <div className="w-full flex justify-between items-center">
                 {/* UBC Logo - now larger and in bottom left */}
                 <div className="flex items-center gap-2">
                     <Image
