@@ -66,6 +66,17 @@
   animation-delay: 0s;
 }
 
+.metallic-bg-ubc {
+	background: linear-gradient(
+    120deg,
+    #f59e0b 0%,
+    #fbbf24 10%,
+    #dfbb2f 20%,
+    #fbbf24 30%,
+    #f59e0b 40%
+  );
+}
+
 .metallic-text-ubc {
   color: #f59e0b; /* Amber/yellow base color */
   background: linear-gradient(

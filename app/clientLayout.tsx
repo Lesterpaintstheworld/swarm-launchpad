@@ -5,6 +5,7 @@ import { Toaster } from "@/components/shadcn/sonner";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { usePathname } from 'next/navigation';
+import { Banner } from "@/components/banner";
 
 export function ClientLayout({
   children,
@@ -15,6 +16,7 @@ export function ClientLayout({
 
   return (
     <Providers>
+      <Banner />
       {!isHomePage && <Navigation />}
       {children}
       <Footer />

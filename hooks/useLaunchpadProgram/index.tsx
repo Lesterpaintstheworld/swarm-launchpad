@@ -41,18 +41,12 @@ export function useLaunchpadProgram() {
             poolName,
             totalShares,
             feeRatio,
-            partnerAccount,
-            swarmAccount,
-            investorRedistributionAccount,
-            platformAccount
+            custodialAccount,
         }: {
             poolName: string,
             totalShares: BN,
             feeRatio: BN,
-            partnerAccount: PublicKey,
-            swarmAccount: PublicKey,
-            investorRedistributionAccount: PublicKey,
-            platformAccount: PublicKey
+            custodialAccount: PublicKey,
         }) => {
             if (!publicKey || !program) {
                 throw new Error('Wallet not connected or program not initialized');
@@ -78,10 +72,7 @@ export function useLaunchpadProgram() {
                     feeRatio,
                     computeMint,
                     ubcMint,
-                    partnerAccount,
-                    swarmAccount,
-                    investorRedistributionAccount,
-                    platformAccount
+                    custodialAccount,
                 )
                 .accounts({
                     // @ts-ignore
@@ -126,6 +117,22 @@ export function useLaunchpadProgram() {
                 .rpc()
         }
     })
+    
+    // Freeze/unfreeze pool
+    const removePool = useMutation({
+        mutationKey: ['remove-pool', 'freeze', network],
+        mutationFn: async ({ pool }: { pool: PublicKey }) => {
+            if (!publicKey) throw new Error('Wallet not connected')
+
+            return program.methods
+                .removePool()
+                .accounts({
+                    pool,
+                    authority: publicKey
+                })
+                .rpc()
+        }
+    })
 
     return {
         program,
@@ -136,6 +143,7 @@ export function useLaunchpadProgram() {
         pools,
         initializePool,
         freezePool,
+        removePool,
         provider
     }
 }

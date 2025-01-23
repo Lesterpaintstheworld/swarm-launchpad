@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/ubclaunchpad.json`.
  */
 export type Ubclaunchpad = {
-  "address": "A8m3HbpY5CcptDV4xD74VNnRPXs1NemndqP28gvy785d",
+  "address": "4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf",
   "metadata": {
     "name": "ubclaunchpad",
     "version": "0.1.0",
@@ -212,7 +212,7 @@ export type Ubclaunchpad = {
               },
               {
                 "kind": "account",
-                "path": "computeMintAccount"
+                "path": "ubcMintAccount"
               }
             ],
             "program": {
@@ -348,202 +348,16 @@ export type Ubclaunchpad = {
           }
         },
         {
-          "name": "investorAccount"
+          "name": "custodialAccount"
         },
         {
-          "name": "investorUbcAccount",
+          "name": "custodialUbcAccount",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "investorAccount"
-              },
-              {
-                "kind": "const",
-                "value": [
-                  6,
-                  221,
-                  246,
-                  225,
-                  215,
-                  101,
-                  161,
-                  147,
-                  217,
-                  203,
-                  225,
-                  70,
-                  206,
-                  235,
-                  121,
-                  172,
-                  28,
-                  180,
-                  133,
-                  237,
-                  95,
-                  91,
-                  55,
-                  145,
-                  58,
-                  140,
-                  245,
-                  133,
-                  126,
-                  255,
-                  0,
-                  169
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "computeMintAccount"
-              }
-            ],
-            "program": {
-              "kind": "const",
-              "value": [
-                140,
-                151,
-                37,
-                143,
-                78,
-                36,
-                137,
-                241,
-                187,
-                61,
-                16,
-                41,
-                20,
-                142,
-                13,
-                131,
-                11,
-                90,
-                19,
-                153,
-                218,
-                255,
-                16,
-                132,
-                4,
-                142,
-                123,
-                216,
-                219,
-                233,
-                248,
-                89
-              ]
-            }
-          }
-        },
-        {
-          "name": "partnerAccount"
-        },
-        {
-          "name": "partnerUbcAccount",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "partnerAccount"
-              },
-              {
-                "kind": "const",
-                "value": [
-                  6,
-                  221,
-                  246,
-                  225,
-                  215,
-                  101,
-                  161,
-                  147,
-                  217,
-                  203,
-                  225,
-                  70,
-                  206,
-                  235,
-                  121,
-                  172,
-                  28,
-                  180,
-                  133,
-                  237,
-                  95,
-                  91,
-                  55,
-                  145,
-                  58,
-                  140,
-                  245,
-                  133,
-                  126,
-                  255,
-                  0,
-                  169
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "ubcMintAccount"
-              }
-            ],
-            "program": {
-              "kind": "const",
-              "value": [
-                140,
-                151,
-                37,
-                143,
-                78,
-                36,
-                137,
-                241,
-                187,
-                61,
-                16,
-                41,
-                20,
-                142,
-                13,
-                131,
-                11,
-                90,
-                19,
-                153,
-                218,
-                255,
-                16,
-                132,
-                4,
-                142,
-                123,
-                216,
-                219,
-                233,
-                248,
-                89
-              ]
-            }
-          }
-        },
-        {
-          "name": "platformAccount"
-        },
-        {
-          "name": "platformUbcAccount",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "platformAccount"
+                "path": "custodialAccount"
               },
               {
                 "kind": "const",
@@ -759,10 +573,6 @@ export type Ubclaunchpad = {
         {
           "name": "pricePerShare",
           "type": "u64"
-        },
-        {
-          "name": "wantedTokenMint",
-          "type": "pubkey"
         }
       ]
     },
@@ -896,19 +706,7 @@ export type Ubclaunchpad = {
           "type": "pubkey"
         },
         {
-          "name": "partnerAccount",
-          "type": "pubkey"
-        },
-        {
-          "name": "swarmAccount",
-          "type": "pubkey"
-        },
-        {
-          "name": "investorRedistributionAccount",
-          "type": "pubkey"
-        },
-        {
-          "name": "platformAccount",
+          "name": "custodialAccount",
           "type": "pubkey"
         }
       ]
@@ -1108,192 +906,6 @@ export type Ubclaunchpad = {
               },
               {
                 "kind": "account",
-                "path": "computeMintAccount"
-              }
-            ],
-            "program": {
-              "kind": "const",
-              "value": [
-                140,
-                151,
-                37,
-                143,
-                78,
-                36,
-                137,
-                241,
-                187,
-                61,
-                16,
-                41,
-                20,
-                142,
-                13,
-                131,
-                11,
-                90,
-                19,
-                153,
-                218,
-                255,
-                16,
-                132,
-                4,
-                142,
-                123,
-                216,
-                219,
-                233,
-                248,
-                89
-              ]
-            }
-          }
-        },
-        {
-          "name": "swarmAccount"
-        },
-        {
-          "name": "swarmComputeAccount",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "swarmAccount"
-              },
-              {
-                "kind": "const",
-                "value": [
-                  6,
-                  221,
-                  246,
-                  225,
-                  215,
-                  101,
-                  161,
-                  147,
-                  217,
-                  203,
-                  225,
-                  70,
-                  206,
-                  235,
-                  121,
-                  172,
-                  28,
-                  180,
-                  133,
-                  237,
-                  95,
-                  91,
-                  55,
-                  145,
-                  58,
-                  140,
-                  245,
-                  133,
-                  126,
-                  255,
-                  0,
-                  169
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "computeMintAccount"
-              }
-            ],
-            "program": {
-              "kind": "const",
-              "value": [
-                140,
-                151,
-                37,
-                143,
-                78,
-                36,
-                137,
-                241,
-                187,
-                61,
-                16,
-                41,
-                20,
-                142,
-                13,
-                131,
-                11,
-                90,
-                19,
-                153,
-                218,
-                255,
-                16,
-                132,
-                4,
-                142,
-                123,
-                216,
-                219,
-                233,
-                248,
-                89
-              ]
-            }
-          }
-        },
-        {
-          "name": "partnerAccount"
-        },
-        {
-          "name": "partnerUbcAccount",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "partnerAccount"
-              },
-              {
-                "kind": "const",
-                "value": [
-                  6,
-                  221,
-                  246,
-                  225,
-                  215,
-                  101,
-                  161,
-                  147,
-                  217,
-                  203,
-                  225,
-                  70,
-                  206,
-                  235,
-                  121,
-                  172,
-                  28,
-                  180,
-                  133,
-                  237,
-                  95,
-                  91,
-                  55,
-                  145,
-                  58,
-                  140,
-                  245,
-                  133,
-                  126,
-                  255,
-                  0,
-                  169
-                ]
-              },
-              {
-                "kind": "account",
                 "path": "ubcMintAccount"
               }
             ],
@@ -1337,16 +949,106 @@ export type Ubclaunchpad = {
           }
         },
         {
-          "name": "platformAccount"
+          "name": "custodialAccount"
         },
         {
-          "name": "platformUbcAccount",
+          "name": "custodialComputeAccount",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "platformAccount"
+                "path": "custodialAccount"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  6,
+                  221,
+                  246,
+                  225,
+                  215,
+                  101,
+                  161,
+                  147,
+                  217,
+                  203,
+                  225,
+                  70,
+                  206,
+                  235,
+                  121,
+                  172,
+                  28,
+                  180,
+                  133,
+                  237,
+                  95,
+                  91,
+                  55,
+                  145,
+                  58,
+                  140,
+                  245,
+                  133,
+                  126,
+                  255,
+                  0,
+                  169
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "computeMintAccount"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "custodialUbcAccount",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "custodialAccount"
               },
               {
                 "kind": "const",
@@ -1458,16 +1160,41 @@ export type Ubclaunchpad = {
       ]
     },
     {
-      "name": "setAccounts",
+      "name": "removePool",
       "discriminator": [
-        195,
-        74,
-        80,
-        123,
-        79,
-        174,
-        16,
-        242
+        132,
+        42,
+        53,
+        138,
+        28,
+        220,
+        170,
+        55
+      ],
+      "accounts": [
+        {
+          "name": "pool",
+          "writable": true
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "setCustodiaAccount",
+      "discriminator": [
+        34,
+        44,
+        4,
+        75,
+        62,
+        251,
+        83,
+        42
       ],
       "accounts": [
         {
@@ -1482,20 +1209,38 @@ export type Ubclaunchpad = {
       ],
       "args": [
         {
-          "name": "partnerAccount",
+          "name": "custodialAccount",
           "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "setFeeRatio",
+      "discriminator": [
+        213,
+        25,
+        1,
+        91,
+        57,
+        80,
+        247,
+        30
+      ],
+      "accounts": [
+        {
+          "name": "pool",
+          "writable": true
         },
         {
-          "name": "swarmAccount",
-          "type": "pubkey"
-        },
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": [
         {
-          "name": "investorRedistributionAccount",
-          "type": "pubkey"
-        },
-        {
-          "name": "platformAccount",
-          "type": "pubkey"
+          "name": "feeRatio",
+          "type": "u64"
         }
       ]
     },
@@ -1696,19 +1441,7 @@ export type Ubclaunchpad = {
             "type": "u64"
           },
           {
-            "name": "partnerAccount",
-            "type": "pubkey"
-          },
-          {
-            "name": "swarmAccount",
-            "type": "pubkey"
-          },
-          {
-            "name": "investorRedistributionAccount",
-            "type": "pubkey"
-          },
-          {
-            "name": "platformAccount",
+            "name": "custodialAccount",
             "type": "pubkey"
           }
         ]
@@ -1738,14 +1471,6 @@ export type Ubclaunchpad = {
           {
             "name": "pricePerShare",
             "type": "u64"
-          },
-          {
-            "name": "isActive",
-            "type": "bool"
-          },
-          {
-            "name": "wantedTokenMint",
-            "type": "pubkey"
           },
           {
             "name": "listingId",
@@ -1783,7 +1508,7 @@ export type Ubclaunchpad = {
     {
       "name": "upgradeAuthority",
       "type": "string",
-      "value": "\"4aBdwukwSS7pmGHiCdFFQ4fm6mUzMLFfXN87jBdWsCH2\""
+      "value": "\"4zP3QHUvTcosCEKgJzbGJNEjTN4vcnNCHeFsCYyezAbg\""
     }
   ]
 };
