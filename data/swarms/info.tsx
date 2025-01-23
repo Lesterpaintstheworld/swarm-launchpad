@@ -16,9 +16,7 @@ export const SwarmData: SwarmInfo[] = [
         models: ['Video AI', 'GPT-4V'],
         name: 'SLOP FATHER',
         gallery: [
-            { type: 'image', content: '/swarms/slopfather.png' },
-            { type: 'image', content: '/default.png' },
-            { type: 'image', content: '/default.png' }
+            { type: 'image', content: '/swarms/slopfather.png' }
         ],
         description: `# SLOP FATHER - The Future of AI Content Creation
 
@@ -144,9 +142,7 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         models: ['Claude Haiku'],
         name: 'Terminal Velocity',
         gallery: [
-            { type: 'image', content: '/swarms/terminal-velocity.jpg' },
-            { type: 'image', content: '/default.png' },
-            { type: 'image', content: '/default.png' }
+            { type: 'image', content: '/swarms/terminal-velocity.jpg' }
         ],
         description: TerminalVelocityDescription,
         programAddress: '',
@@ -162,9 +158,7 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         pool: 'CmC2AUuurX19TLBVQbpNct8pmEjaHsRj6o8SLBAVvxAk',
         description: SyntheticSoulsDescription,
         gallery: [
-            { type: 'image', content: '/swarms/syntheticsouls/Lyra 16-9 web.jpg' },
-            { type: 'image', content: '/default.png' },
-            { type: 'image', content: '/default.png' }
+            { type: 'image', content: '/swarms/syntheticsouls/Lyra 16-9 web.jpg' }
         ],
         programAddress: '',
         tags: ['AI', 'OpenAI'],
@@ -178,9 +172,7 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         name: 'DuoAI',
         pool: '68K6BBsPynRbLkjJzdQmKMvTPLaUiKb93BUwbJfjqepS',
         gallery: [
-            { type: 'image', content: '/swarms/duoai.jpg' },
-            { type: 'image', content: '/default.png' },
-            { type: 'image', content: '/default.png' }
+            { type: 'image', content: '/swarms/duoai.jpg' }
         ],
         description: DuoAIDescription,
         programAddress: '',
