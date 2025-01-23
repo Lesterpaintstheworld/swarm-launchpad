@@ -54,6 +54,7 @@ export default function Portfolio() {
             const positions: any[] = [];
             for(let i = 0; i < poolIds.length; i++) {
                 const poolId = poolIds[i];
+                if(!poolId) { continue; }
                 const poolPubkey = new PublicKey(poolId);
                 const position = await getPosition(publicKey as PublicKey, poolId);
                 if(!position) {
@@ -72,7 +73,8 @@ export default function Portfolio() {
         };
 
         fetchData();
-    }, [publicKey, connected, poolIds, program.account.pool, program.account.shareholder, program.programId]);
+        // eslint-disable-next-line
+    }, [publicKey, connected]);
 
     return (
         <main className="container view">
