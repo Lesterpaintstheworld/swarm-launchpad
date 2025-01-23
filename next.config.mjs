@@ -6,10 +6,16 @@ const nextConfig = {
         styledComponents: true,
     },
     images: {
-        remotePatterns: [{
-            protocol: 'https',
-            hostname: 'picsum.photos'
-        }],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'picsum.photos'
+            },
+            {
+                protocol: 'http',
+                hostname: 'localhost'
+            }
+        ],
     },
     webpack: config => {
         config.externals.push('pino-pretty', 'encoding')
