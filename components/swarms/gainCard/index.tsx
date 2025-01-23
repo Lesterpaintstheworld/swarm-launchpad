@@ -80,6 +80,7 @@ export const SwarmGainCard = ({ name, multiple, image, className = '', launchMod
                             height={144}
                             className="object-cover"
                             onLoad={() => setImageLoaded(true)}
+                            unoptimized
                         />
                     </div>
                 </div>
