@@ -124,10 +124,10 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
     },
     {
         id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',
-        pool:'',
         image: '/swarms/swarm-ventures.jpg',
         models: ['Claude Haiku'],
         name: 'Swarm Ventures',
+        pool: '911eRdu96ncdnmEUYA3UQ39gEtE9ueg7UbqycKuKweCG',
         gallery: [
             { type: 'image', content: '/swarms/swarmventures/1.jpg' },
             { type: 'image', content: '/swarms/swarmventures/2.jpg' },
@@ -160,6 +160,7 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         image: '/swarms/synthetic-souls.jpg',
         models: ['GPT-4o Mini'],
         name: 'Synthetic Souls',
+        pool: 'CmC2AUuurX19TLBVQbpNct8pmEjaHsRj6o8SLBAVvxAk',
         description: SyntheticSoulsDescription,
         gallery: [
             { type: 'image', content: '/swarms/synthetic-souls.jpg' },
@@ -176,6 +177,7 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         image: '/swarms/duoai.jpg',
         models: ['GPT-4o Mini', 'KinOS'],
         name: 'DuoAI',
+        pool: '68K6BBsPynRbLkjJzdQmKMvTPLaUiKb93BUwbJfjqepS',
         gallery: [
             { type: 'image', content: '/swarms/duoai.jpg' },
             { type: 'image', content: '/default.png' },
