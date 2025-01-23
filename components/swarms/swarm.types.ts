@@ -17,6 +17,7 @@ export interface SwarmPreviewData {
     role: string;
     swarmType: SwarmType;
     revenueShare: number;
+    multiple: number;
     program?: {
         pool?: string;
     }
@@ -42,6 +43,7 @@ export interface SwarmInfo {
     role: string;
     programAddress?: string;
     swarmType: SwarmType;
+    multiple: number;
     achievements?: Achievement[];
     socials?: {
         website?: string;
