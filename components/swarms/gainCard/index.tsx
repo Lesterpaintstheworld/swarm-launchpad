@@ -15,38 +15,39 @@ export const SwarmGainCard = ({ name, multiple, image, className = '', launchMod
     const priceInUSD = launchMode ? "0.007" : (multiple * 0.007).toFixed(3);
 
     return (
-        <div className={`export-card w-[500px] h-[500px] bg-[#1a1a00] rounded-xl border border-yellow-400/20 
-                        p-8 flex flex-col items-center relative overflow-hidden ${className}`}
-             style={{
-                 display: 'block',
-                 position: 'relative',
-                 width: '500px',
-                 height: '500px'
-             }}>
-            {/* Background glow effect - slightly more yellow */}
-            <div className="absolute inset-0 bg-gradient-to-b from-yellow-400/10 to-transparent" />
+        <div 
+            className={`export-card bg-black rounded-xl border border-yellow-400/20 p-8 flex flex-col items-center relative overflow-hidden ${className}`}
+            style={{
+                display: 'block',
+                position: 'relative',
+                width: '500px',
+                height: '500px'
+            }}
+        >
+            {/* Background glow effect */}
+            <div className="absolute inset-0 bg-gradient-to-b from-yellow-400/5 to-transparent" />
             
-            {/* Title - centered */}
+            {/* Title */}
             <div className="w-full text-center mb-6">
                 <div className="text-2xl font-bold text-white border-b border-white/20 pb-2 inline-block">
                     {launchMode ? "$UBC Contender Swarm" : "$UBC Top Gainer Swarm"}
                 </div>
             </div>
 
-            {/* Logo container - centered */}
+            {/* Logo container */}
             <div className="flex-1 flex items-center justify-center w-full">
                 <div className="relative">
                     <div className="absolute inset-0 bg-yellow-400/20 blur-xl transform scale-110" />
-                    <div className="relative w-36 h-36 rounded-full overflow-hidden border-2 border-yellow-400/50 
-                                bg-gradient-to-b from-yellow-400/20 to-transparent backdrop-blur-sm">
-                    <Image
-                        src={image}
-                        alt={name}
-                        width={144}
-                        height={144}
-                        className="object-cover"
-                        onLoad={() => setImageLoaded(true)}
-                    />
+                    <div className="relative w-36 h-36 rounded-full overflow-hidden border-2 border-yellow-400/50 bg-gradient-to-b from-yellow-400/20 to-transparent backdrop-blur-sm">
+                        <Image
+                            src={image}
+                            alt={name}
+                            width={144}
+                            height={144}
+                            className="object-cover"
+                            onLoad={() => setImageLoaded(true)}
+                        />
+                    </div>
                 </div>
             </div>
 
@@ -75,27 +76,26 @@ export const SwarmGainCard = ({ name, multiple, image, className = '', launchMod
 
             {/* Bottom section with UBC Logo and Price */}
             <div className="absolute bottom-8 w-[calc(100%-4rem)] flex justify-between items-center">
-                {/* UBC Logo */}
                 <div className="flex items-center gap-2">
-                    <Image
-                        src="/White on transparent.png"
-                        alt="UBC Logo"
-                        width={32}
-                        height={32}
-                        className="opacity-75"
-                    />
+                    <div className="w-8 h-8">
+                        <Image
+                            src="/White on transparent.png"
+                            alt="UBC Logo"
+                            width={32}
+                            height={32}
+                            className="opacity-75"
+                        />
+                    </div>
                     <span className="text-[#7dd3fc] text-lg font-medium opacity-75">UBC</span>
                 </div>
 
-                {/* Price */}
                 <div className="text-xl font-medium text-green-400">
                     ${priceInUSD}
                 </div>
             </div>
 
             {/* Tech pattern overlay */}
-            <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] 
-                          bg-[size:4px_4px] mix-blend-overlay pointer-events-none" />
+            <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:4px_4px] mix-blend-overlay pointer-events-none" />
         </div>
     );
 };
