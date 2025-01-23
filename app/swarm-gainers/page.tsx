@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { SwarmGainCard } from '@/components/swarms/gainCard';
 import { previews } from '@/data/swarms/previews';
 import { captureCards } from '@/utils/captureCards';
+import { exportCards } from '@/utils/exportCards';
 
 export default function SwarmGainersPage() {
     const [captures, setCaptures] = useState<string[]>([]);
@@ -14,6 +15,15 @@ export default function SwarmGainersPage() {
         try {
             const newCaptures = await captureCards('.swarm-card');
             setCaptures(newCaptures);
+        } finally {
+            setIsCapturing(false);
+        }
+    };
+
+    const handleDownloadAll = async () => {
+        setIsCapturing(true);
+        try {
+            await exportCards('.swarm-card');
         } finally {
             setIsCapturing(false);
         }
@@ -105,13 +115,22 @@ export default function SwarmGainersPage() {
                     ))}
                 </div>
 
-                <button
-                    onClick={handleCapture}
-                    disabled={isCapturing}
-                    className="fixed bottom-8 right-8 z-50 px-6 py-3 bg-yellow-400 text-black rounded-lg font-bold hover:bg-yellow-300 transition-colors disabled:opacity-50"
-                >
-                    {isCapturing ? 'Capturing...' : 'Capture Cards'}
-                </button>
+                <div className="fixed bottom-8 right-8 z-50 flex gap-4">
+                    <button
+                        onClick={handleDownloadAll}
+                        disabled={isCapturing}
+                        className="px-6 py-3 bg-yellow-400 text-black rounded-lg font-bold hover:bg-yellow-300 transition-colors disabled:opacity-50"
+                    >
+                        {isCapturing ? 'Downloading...' : 'Download All'}
+                    </button>
+                    <button
+                        onClick={handleCapture}
+                        disabled={isCapturing}
+                        className="px-6 py-3 bg-yellow-400 text-black rounded-lg font-bold hover:bg-yellow-300 transition-colors disabled:opacity-50"
+                    >
+                        {isCapturing ? 'Capturing...' : 'Capture Cards'}
+                    </button>
+                </div>
 
                 {/* Display captures */}
                 {captures.length > 0 && (
