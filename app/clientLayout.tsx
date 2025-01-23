@@ -16,7 +16,7 @@ export function ClientLayout({
 
   return (
     <Providers>
-      <Banner />
+      {/* <Banner /> */}
       {!isHomePage && <Navigation />}
       {children}
       <Footer />
