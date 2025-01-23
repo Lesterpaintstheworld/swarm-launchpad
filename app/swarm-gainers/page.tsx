@@ -1,5 +1,5 @@
-import { previews } from '@/data/swarms/previews';
 import Image from 'next/image';
+import { SwarmGainCard } from '@/components/swarms/gainCard';
 
 export default function SwarmGainersPage() {
     const gainers = [
@@ -45,51 +45,15 @@ export default function SwarmGainersPage() {
                     <span className="text-5xl font-bold text-yellow-400">$UBC</span>
                     <span className="text-5xl font-bold text-white"> Top Gainer Swarms - Last 24 Hours</span>
                 </h1>
-                
-                <div className="flex items-end gap-4 h-[400px]">
+
+                <div className="grid grid-cols-3 gap-8">
                     {gainers.map((gainer) => (
-                        <div key={gainer.name} className="flex flex-col items-center w-28">
-                            {/* Multiplier above bar */}
-                            <div className="text-white font-bold text-2xl mb-2">
-                                {gainer.value}x
-                            </div>
-                            
-                            {/* Bar */}
-                            <div className="relative w-16">
-                                <div 
-                                    className="w-full bg-gradient-to-t from-yellow-600 to-yellow-400 
-                                              rounded-t-sm backdrop-blur-sm overflow-hidden"
-                                    style={{ height: `${gainer.value * 12}px` }}
-                                >
-                                    {/* Tech pattern overlay */}
-                                    <div 
-                                        className="absolute inset-0 bg-[linear-gradient(0deg,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] 
-                                                  bg-[size:4px_4px] mix-blend-overlay"
-                                    />
-                                    
-                                    {/* Glow effect */}
-                                    <div className="absolute inset-0 bg-yellow-400/20">
-                                        <div className="h-full w-full animate-pulse bg-gradient-to-t from-transparent to-yellow-400/30" />
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            {/* Icon and Name */}
-                            <div className="mt-4 flex flex-col items-center">
-                                <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-yellow-400/50 bg-white">
-                                    <Image
-                                        src={gainer.image}
-                                        alt={gainer.name}
-                                        width={64}
-                                        height={64}
-                                        className="object-cover"
-                                    />
-                                </div>
-                                <div className="text-yellow-400 text-base font-medium mt-2 text-center leading-tight min-h-[40px]">
-                                    {gainer.name}
-                                </div>
-                            </div>
-                        </div>
+                        <SwarmGainCard
+                            key={gainer.name}
+                            name={gainer.name}
+                            multiple={gainer.value}
+                            image={gainer.image}
+                        />
                     ))}
                 </div>
             </div>
