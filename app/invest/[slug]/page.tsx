@@ -9,7 +9,6 @@ import { Achievements } from "@/components/swarms/achievements";
 import { SwarmInvestCard } from "@/components/swarms/invest";
 import { ManagePortfolioCard } from "@/components/cards/managePortfolio";
 import { SwarmRecentMarketListings } from "@/components/market/recentListings";
-import { supportedTokens } from "@/data/tokens/supported";
 import { SwarmGallery } from "@/components/swarms/gallery";
 
 export default function Swarm({ params }: { params: { slug: string } }) {

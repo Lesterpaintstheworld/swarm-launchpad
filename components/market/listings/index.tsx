@@ -9,7 +9,6 @@ import { Button } from "@/components/shadcn/button";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { LucideLoader } from "lucide-react";
 import { MarketListing } from "../market.types";
-import { supportedTokens } from "@/data/tokens/supported";
 
 const MarketListings = ({ className }: { className?: string }) => {
 

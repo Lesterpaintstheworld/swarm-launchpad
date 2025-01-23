@@ -2,9 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { ConnectButton } from "../solana/connectButton";
-import { stakeMenuItems, buyMenuItems } from "@/data/navigation/menu";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,24 +12,10 @@ import {
   NavigationMenuTrigger,
 } from "@/components/shadcn/navigation-menu";
 import { cn } from "@/lib/utils";
-import { MenuItem } from "./navigation.types";
 import { forwardRef } from "react";
-import { Tag, WavesLadder } from "lucide-react";
-import { Token } from "../tokens/token";
+import { WavesLadder } from "lucide-react";
 
 export function Navigation() {
-  const pathname = usePathname();
-
-  const getMenuItems = (type: string): MenuItem[] => {
-    switch(type.toLowerCase()) {
-      case 'stake':
-        return stakeMenuItems;
-      case 'buy':
-        return buyMenuItems;
-      default:
-        return [];
-    }
-  };
 
   return (
     <nav className="container w-full py-8 flex flex-row items-center">

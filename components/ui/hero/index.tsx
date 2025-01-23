@@ -1,4 +1,3 @@
-import { Countdown } from '../countdown';
 import css from './hero.module.css';
 
 interface HeroProps {

@@ -12,6 +12,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import Link from "next/link";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
+import { Tag } from "@/components/ui/tag";
 
 interface SwarmInvestCardProps {
     pool: string;
@@ -26,6 +27,7 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
 
     const [numShares, setNumShares] = useState<number>(0);
     const [price, setPrice] = useState<number>(0);
+    const [fee, setFee] = useState<number>(0);
     const [data, setData] = useState({
         totalSupply: 0,
         remainingSupply: 0,
@@ -64,6 +66,10 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
     const handleBuy = () => {
         purchaseShares.mutateAsync({ numberOfShares: numShares, calculatedCost: price });
     }
+
+    useEffect(() => {
+        setFee(price / poolAccount.data?.feeRatio.toNumber());
+    }, [price, poolAccount.data?.feeRatio]);
 
     return (
         <Card className={cn("w-full", className)}>
@@ -115,6 +121,12 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
                     <p className="text-sm text-muted pl-4 mt-2">Minimum: {IntlNumberFormat(data.pricePerShare)} $COMPUTE</p>
                 </div>
             </div>
+            {fee > 0 &&
+                <div className="flex flex-row gap-2 items-center mt-6 pl-4">
+                    <p>+ Fee: {fee}</p>
+                    <Tag className="text-xs">UBC</Tag>
+                </div>
+            }
             {data.remainingSupply === 0 &&
                 <Button
                     className="mt-10 w-full md:max-w-40 bg-foreground text-background font-bold hover:bg-foreground/70"

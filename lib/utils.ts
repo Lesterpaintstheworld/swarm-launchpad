@@ -54,3 +54,8 @@ export function calculateSharePrice(n: number): number {
     // Return price with 6 decimal places of precision
     return base * multiplier;
 }
+
+// eslint-disable-next-line
+export const extractKey = (array: any[], key: string) => {
+    return array.map(item => item[key]).filter(item => item !== undefined);
+}

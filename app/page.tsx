@@ -6,7 +6,6 @@ import { Returns } from "@/components/ui/returns/index";
 import { SecondaryMarket } from "@/components/ui/secondaryMarket";
 import { FAQ } from "@/components/ui/faq";
 import { Button } from "@/components/shadcn/button";
-import { BackgroundBlur } from "@/components/background";
 import { Navigation } from "@/components/navigation";
 
 export default function HomePage() {

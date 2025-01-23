@@ -215,30 +215,16 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                     program.programId
                 );
 
-                const computeTransferIx = createTransferInstruction(
-                    senderComputeAccount,       // from
-                    custodialComputeAccount,    // to
-                    publicKey,                  // authority
-                    calculatedCost * Math.pow(10, 6)  // amount in token units
-                );
-                
-                // If UBC needs to be transferred as well, create that instruction
-                const ubcTransferIx = createTransferInstruction(
-                    senderUbcAccount,          // from
-                    custodialUbcAccount,       // to
-                    publicKey,                 // authority
-                    calculatedCost * Math.pow(10, 6)  // amount in token units
-                );
-    
                 // Send the purchase transaction
                 // return await program.methods
                 const tx = await program.methods
                     .purchaseShares(
-                        new BN(numberOfShares),
-                        new BN(calculatedCost * Math.pow(10, 6))
+                        new BN(Math.floor(numberOfShares)),
+                        new BN(Math.floor(calculatedCost * Math.pow(10, 6)))
                     )
                     .accounts({
                         pool,
+                        // @ts-ignore
                         shareholder: shareholderPda,
                         computeMintAccount: poolAccount.data.computeMint,
                         ubcMintAccount: poolAccount.data.ubcMint,
@@ -252,10 +238,6 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                         tokenProgram: TOKEN_PROGRAM_ID,
                         associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID
                     })
-                    .preInstructions([
-                        computeTransferIx,
-                        ubcTransferIx
-                    ])
                     .rpc();
                 
                     toast(`Success! Your transaction signature is: ${tx}`, { duration: 20000 });
@@ -266,18 +248,6 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
             }
         }
     });
-
-    // Get shareholder account data if wallet is connected
-    const shareholderAccount = useQuery({
-        queryKey: ['shareholder', 'fetch', pool.toBase58(), publicKey?.toBase58(), network],
-        queryFn: async () => {
-            if (!publicKey) throw new Error('Wallet not connected')
-            const pda = await getShareholderPDA(program.programId, publicKey, pool)
-            if (!pda) throw new Error('Failed to generate shareholder PDA')
-            return program.account.shareholder.fetch(pda)
-        },
-        enabled: !!pool && !!publicKey && !!program
-    })
 
     // Create share listing
     // const createListing = useMutation({
@@ -375,7 +345,6 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
     return {
         poolAccount,
         purchaseShares,
-        shareholderAccount,
         // createListing,
         // cancelListing,
         // buyListing

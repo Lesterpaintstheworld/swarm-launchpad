@@ -1,6 +1,5 @@
 import { SwarmsPreviewGrid } from "@/components/swarms/previewGrid";
 import { TokenTooltip } from "@/components/ui/tokenTooltip";
-import { BackgroundBlur } from "@/components/background";
 
 export default function Invest() {
 

@@ -5,6 +5,8 @@ import { TerminalVelocityDescription } from "./descriptions/terminalvelocity"
 import { SyntheticSoulsDescription } from "./descriptions/syntheticsouls"
 import { DuoAIDescription } from "./descriptions/duoai"
 
+export const getSwarmUsingPoolId = (poolId: string) => SwarmData.filter(swarm => swarm.pool === poolId)[0];
+
 export const SwarmData: SwarmInfo[] = [
     {
         id: 'slopfather-partner-id',
@@ -61,10 +63,10 @@ Join the revolution in AI-powered content creation with SLOP FATHER - where ever
     },
     {
         id: 'digitalkin-partner-id',
+        pool: '6JCzpKdSMhqyGCCZRmKdseVrdyMSRZaDVMk2egZNJ96Z',
         image: '/swarms/digitalkin.png',
         models: ['KinOS', 'Claude Haiku'],
         name: 'DigitalKin',
-        pool: '924aGvFFYpvpefMozdht5bNxnHEy8iiJvaW87Z3YTUtX',
         gallery: [
             { type: 'video', content: 'https://www.youtube.com/watch?v=WcWWTgL8ouc' },
             { type: 'image', content: '/swarms/digitalkin/1.png' },
@@ -97,6 +99,7 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
     },
     {
         id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
+        pool: 'Fq66WREQ5rq4MFrsEr3FSM1UWhhdLtgC7aytWx7CD57w',
         image: '/swarms/kinkong.jpg',
         models: ['GPT-4o Mini', 'Claude Haiku'],
         name: 'Kin Kong',
@@ -116,7 +119,6 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         tags: ['AI', 'OpenAI'],
         role: 'Lorem ipsum',
         swarmType: 'partner',
-        pool: 'BMos5kWkgdXQvc6Lxf4ZYQyBNprJHREdU6iwmEibJSjY',
     },
     {
         id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',
