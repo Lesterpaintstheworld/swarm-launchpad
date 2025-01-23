@@ -46,6 +46,50 @@ export default function SwarmGainersPage() {
                     <span className="text-5xl font-bold text-white"> Top Gainer Swarms - Last 24 Hours</span>
                 </h1>
 
+                {/* Graph section */}
+                <div className="flex items-end gap-4 h-[400px] mb-16">
+                    {gainers.map((gainer) => (
+                        <div key={gainer.name} className="flex flex-col items-center w-28">
+                            <div className="text-white font-bold text-2xl mb-2">
+                                {gainer.value}x
+                            </div>
+                            
+                            <div className="relative w-16">
+                                <div 
+                                    className="w-full bg-gradient-to-t from-yellow-600 to-yellow-400 
+                                              rounded-t-sm backdrop-blur-sm overflow-hidden"
+                                    style={{ height: `${gainer.value * 12}px` }}
+                                >
+                                    <div 
+                                        className="absolute inset-0 bg-[linear-gradient(0deg,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] 
+                                                  bg-[size:4px_4px] mix-blend-overlay"
+                                    />
+                                    
+                                    <div className="absolute inset-0 bg-yellow-400/20">
+                                        <div className="h-full w-full animate-pulse bg-gradient-to-t from-transparent to-yellow-400/30" />
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className="mt-4 flex flex-col items-center">
+                                <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-yellow-400/50 bg-white">
+                                    <Image
+                                        src={gainer.image}
+                                        alt={gainer.name}
+                                        width={64}
+                                        height={64}
+                                        className="object-cover"
+                                    />
+                                </div>
+                                <div className="text-yellow-400 text-base font-medium mt-2 text-center leading-tight min-h-[40px]">
+                                    {gainer.name}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Cards grid */}
                 <div className="grid grid-cols-3 gap-8">
                     {gainers.map((gainer) => (
                         <SwarmGainCard
