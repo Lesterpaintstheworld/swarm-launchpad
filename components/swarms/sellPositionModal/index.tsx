@@ -122,8 +122,8 @@ const SellPositionModal = ({ isModalOpen, closeModal, swarmId }: SellPositionPro
             <Button
                 onClick={() => handleSale()}
                 variant='destructive'
-                disabled={data?.availableShares === 0 || Number(numShares) === 0 || pricePerShare === 0 || !token || !publicKey || !swarmID}
-                // disabled={true}
+                // disabled={data?.availableShares === 0 || Number(numShares) === 0 || pricePerShare === 0 || !token || !publicKey || !swarmID}
+                disabled={true}
                 className="w-full"
             >
                 Unavailable
