@@ -17,7 +17,7 @@ export const SwarmGainCard = ({ name, multiple, image, className = '' }: SwarmGa
             <div className="absolute inset-0 bg-gradient-to-b from-yellow-400/5 to-transparent" />
             
             {/* Title */}
-            <div className="text-2xl font-bold text-white mb-12">
+            <div className="text-2xl font-bold text-white mb-6">
                 $UBC Top Gainer Swarm
             </div>
 
@@ -41,34 +41,29 @@ export const SwarmGainCard = ({ name, multiple, image, className = '' }: SwarmGa
                 {name}
             </div>
 
-            {/* Multiple */}
+            {/* Multiple and Price */}
             <div className="flex flex-col items-center gap-2 mb-auto">
                 <div className="text-7xl font-bold text-white text-center">
                     {multiple}x
                 </div>
-                <div className="text-gray-400 text-base font-medium">
+                <div className="text-gray-400 text-base font-medium mb-4">
                     24 hour performance
                 </div>
-            </div>
-
-            {/* Bottom section */}
-            <div className="w-full flex justify-between items-center">
-                {/* UBC Logo - now larger and in bottom left */}
-                <div className="flex items-center gap-2">
-                    <Image
-                        src="/White on transparent.png"
-                        alt="UBC Logo"
-                        width={32}
-                        height={32}
-                        className="opacity-70"
-                    />
-                    <span className="text-[#7dd3fc] text-lg font-medium">UBC</span>
-                </div>
-
-                {/* Price */}
                 <div className="text-xl font-medium text-yellow-400/80">
                     ${priceInUSD}
                 </div>
+            </div>
+
+            {/* UBC Logo in corner */}
+            <div className="absolute bottom-8 left-8 flex items-center gap-2">
+                <Image
+                    src="/White on transparent.png"
+                    alt="UBC Logo"
+                    width={32}
+                    height={32}
+                    className="opacity-50"
+                />
+                <span className="text-[#7dd3fc] text-lg font-medium opacity-50">UBC</span>
             </div>
 
             {/* Tech pattern overlay */}
