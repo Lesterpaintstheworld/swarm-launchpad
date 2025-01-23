@@ -32,6 +32,7 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
         totalSupply: 0,
         remainingSupply: 0,
         pricePerShare: 0,
+        frozen: true,
     });
 
 
@@ -44,6 +45,7 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
             totalSupply: poolAccount.data?.totalShares.toNumber(),
             remainingSupply: poolAccount.data?.availableShares.toNumber(),
             pricePerShare: calculateSharePrice(poolAccount.data?.totalShares.toNumber() - poolAccount.data?.availableShares.toNumber()),
+            frozen: poolAccount.data?.isFrozen || true,
         })
     }, [poolAccount.data, pools.data]);
 
@@ -91,7 +93,7 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
                                     maxWidth: `calc(100% - ${sharesRef.current?.offsetWidth}px - 10px)`,
                                 }}
                                 placeholder={data.remainingSupply === 0 ? 'Sold out' : '0'}
-                                disabled={data.remainingSupply === 0}
+                                disabled={data.remainingSupply === 0 || data.frozen}
                                 value={numShares !== 0 ? IntlNumberFormat(numShares) : ''}
                                 onChange={handleSharesInput}
                             />
@@ -110,7 +112,7 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
                             <Input
                                 className="border-none bg-transparent px-0 text-4xl font-bold !text-foreground no-arrows"
                                 placeholder={data.remainingSupply === 0 ? 'Sold out' : '0'}
-                                disabled={data.remainingSupply === 0}
+                                disabled={data.remainingSupply === 0 || data.frozen}
                                 value={price !== 0 ? IntlNumberFormat(price) : ''}
                                 onChange={handleComputeInput}
                                 min={0}
@@ -137,11 +139,14 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
             }
             {connected && data.remainingSupply !== 0 &&
                 <Button
-                    variant='success'
+                    variant={data.frozen ? undefined : "success"}
                     onClick={handleBuy}
                     className="mt-10 w-full md:max-w-40"
-                    disabled={!numShares || price <= 0}
-                >BUY</Button>}
+                    disabled={!numShares || price <= 0 || data.frozen}
+                >
+                    {data.frozen ? 'Trading Suspended' : 'Buy'}
+                </Button>
+            }
             {!connected && data.remainingSupply !== 0 && <ConnectButton className="mt-10 w-full md:max-w-40" />}
         </Card>
     )
