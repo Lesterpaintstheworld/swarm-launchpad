@@ -40,7 +40,7 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
     const { poolAccount, purchaseShares } = useLaunchpadProgramAccount({ poolAddress: pool });
 
     useEffect(() => {
-        console.log(poolAccount.data && poolAccount.data.feeRatio.toNumber());
+        console.log(poolAccount.data && poolAccount.data.isFrozen);
         setData({
             totalSupply: poolAccount.data?.totalShares.toNumber(),
             remainingSupply: poolAccount.data?.availableShares.toNumber(),
@@ -93,7 +93,7 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
                                     maxWidth: `calc(100% - ${sharesRef.current?.offsetWidth}px - 10px)`,
                                 }}
                                 placeholder={data.remainingSupply === 0 ? 'Sold out' : '0'}
-                                disabled={data.remainingSupply === 0 || data.frozen}
+                                disabled={data.remainingSupply === 0}
                                 value={numShares !== 0 ? IntlNumberFormat(numShares) : ''}
                                 onChange={handleSharesInput}
                             />
@@ -112,7 +112,7 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
                             <Input
                                 className="border-none bg-transparent px-0 text-4xl font-bold !text-foreground no-arrows"
                                 placeholder={data.remainingSupply === 0 ? 'Sold out' : '0'}
-                                disabled={data.remainingSupply === 0 || data.frozen}
+                                disabled={data.remainingSupply === 0}
                                 value={price !== 0 ? IntlNumberFormat(price) : ''}
                                 onChange={handleComputeInput}
                                 min={0}
@@ -139,14 +139,11 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
             }
             {connected && data.remainingSupply !== 0 &&
                 <Button
-                    variant={data.frozen ? undefined : "success"}
+                    variant='success'
                     onClick={handleBuy}
                     className="mt-10 w-full md:max-w-40"
-                    disabled={!numShares || price <= 0 || data.frozen}
-                >
-                    {data.frozen ? 'Trading Suspended' : 'Buy'}
-                </Button>
-            }
+                    disabled={!numShares || price <= 0}
+                >BUY</Button>}
             {!connected && data.remainingSupply !== 0 && <ConnectButton className="mt-10 w-full md:max-w-40" />}
         </Card>
     )
