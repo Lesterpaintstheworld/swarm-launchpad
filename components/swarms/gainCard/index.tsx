@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { captureElement } from '@/utils/captureElement';
 
 interface SwarmGainCardProps {
     name: string;
@@ -14,9 +15,22 @@ export const SwarmGainCard = ({ name, multiple, image, className = '', launchMod
     const [imageLoaded, setImageLoaded] = useState(false);
     const priceInUSD = launchMode ? "0.007" : (multiple * 0.007).toFixed(3);
 
+    const handleCapture = async (event: React.MouseEvent<HTMLDivElement>) => {
+        const element = event.currentTarget;
+        const dataUrl = await captureElement(element);
+        
+        if (dataUrl) {
+            const link = document.createElement('a');
+            link.download = `${name}-card.png`;
+            link.href = dataUrl;
+            link.click();
+        }
+    };
+
     return (
         <div 
-            className={`export-card w-[500px] h-[500px] bg-[#1a1500] rounded-xl border border-yellow-400/20 p-8 flex flex-col items-center relative overflow-hidden ${className}`}
+            className={`export-card w-[500px] h-[500px] bg-[#1a1500] rounded-xl border border-yellow-400/20 p-8 flex flex-col items-center relative overflow-hidden cursor-pointer hover:border-yellow-400/40 transition-colors ${className}`}
+            onClick={handleCapture}
             style={{
                 display: 'block',
                 position: 'relative',
