@@ -21,6 +21,7 @@ interface SellPositionProps {
 
 const SellPositionModal = ({ isModalOpen, closeModal, swarmId }: SellPositionProps) => {
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { publicKey } = useWallet();
 
     const [swarmID, setSwarmID] = useState<string>(swarmId || 'digitalkin-partner-id');
