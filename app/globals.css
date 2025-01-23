@@ -38,6 +38,17 @@
 	}
 }
 
+.export-card {
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.export-card * {
+    transform: none !important;
+    transition: none !important;
+}
+
 @keyframes metallic-shine {
   0% {
     background-position: -200%;

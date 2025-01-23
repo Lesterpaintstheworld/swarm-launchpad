@@ -15,8 +15,14 @@ export const SwarmGainCard = ({ name, multiple, image, className = '', launchMod
     const priceInUSD = launchMode ? "0.007" : (multiple * 0.007).toFixed(3);
 
     return (
-        <div className={`w-[500px] h-[500px] bg-black/40 backdrop-blur-sm rounded-xl border border-yellow-400/20 
-                        p-8 flex flex-col items-center relative overflow-hidden ${className}`}>
+        <div className={`export-card w-[500px] h-[500px] bg-black rounded-xl border border-yellow-400/20 
+                        p-8 flex flex-col items-center relative overflow-hidden ${className}`}
+             style={{
+                 display: 'block',
+                 position: 'relative',
+                 width: '500px',
+                 height: '500px'
+             }}>
             {/* Background glow effect */}
             <div className="absolute inset-0 bg-gradient-to-b from-yellow-400/5 to-transparent" />
             
