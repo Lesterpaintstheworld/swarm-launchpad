@@ -117,6 +117,7 @@ export default function SwarmGainersPage() {
                             name={swarm.name}
                             multiple={gainers.find(g => g.name === swarm.name)?.value || 1}
                             image={swarm.image}
+                            className="swarm-card"
                         />
                     ))}
                 </div>
@@ -137,6 +138,7 @@ export default function SwarmGainersPage() {
                         multiple={0}
                         image={swarm.image}
                         launchMode={true}
+                        className="swarm-card"
                     />
                 ))}
             </div>
