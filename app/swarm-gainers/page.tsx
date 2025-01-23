@@ -18,15 +18,15 @@ export default function SwarmGainersPage() {
     return (
         <div className="min-h-screen bg-black p-8 flex flex-col items-center relative">
             {/* Logo UBC dans le coin */}
-            <div className="absolute top-8 right-8 flex items-center gap-2">
+            <div className="absolute top-8 right-8 flex items-center gap-3">
                 <Image
                     src="/White on transparent.png"
                     alt="UBC Logo"
-                    width={40}
-                    height={40}
+                    width={60}
+                    height={60}
                     className="opacity-50"
                 />
-                <span className="text-white/50 text-xl font-bold">UBC</span>
+                <span className="text-white/50 text-2xl font-bold">UBC</span>
             </div>
 
             <h1 className="text-center mb-16">
