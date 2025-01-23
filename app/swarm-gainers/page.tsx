@@ -1,24 +1,21 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { SwarmGainCard } from '@/components/swarms/gainCard';
 import { previews } from '@/data/swarms/previews';
-import { exportCards } from '@/utils/exportCards';
+import { captureCards } from '@/utils/captureCards';
 
 export default function SwarmGainersPage() {
-    const [isClient, setIsClient] = useState(false);
-    const [isExporting, setIsExporting] = useState(false);
+    const [captures, setCaptures] = useState<string[]>([]);
+    const [isCapturing, setIsCapturing] = useState(false);
 
-    useEffect(() => {
-        setIsClient(true);
-    }, []);
-
-    const handleExport = async () => {
-        setIsExporting(true);
+    const handleCapture = async () => {
+        setCapturing(true);
         try {
-            await exportCards('.swarm-card');
+            const newCaptures = await captureCards('.swarm-card');
+            setCaptures(newCaptures);
         } finally {
-            setIsExporting(false);
+            setCapturing(false);
         }
     };
     const gainers = [
@@ -108,15 +105,49 @@ export default function SwarmGainersPage() {
                     ))}
                 </div>
 
-                {isClient && (
-                    <div className="fixed bottom-8 right-8 z-50">
-                        <button
-                            onClick={handleExport}
-                            disabled={isExporting}
-                            className="px-6 py-3 bg-yellow-400 text-black rounded-lg font-bold hover:bg-yellow-300 transition-colors disabled:opacity-50"
-                        >
-                            {isExporting ? 'Exporting...' : 'Export All Cards'}
-                        </button>
+                <button
+                    onClick={handleCapture}
+                    disabled={isCapturing}
+                    className="fixed bottom-8 right-8 z-50 px-6 py-3 bg-yellow-400 text-black rounded-lg font-bold hover:bg-yellow-300 transition-colors disabled:opacity-50"
+                >
+                    {isCapturing ? 'Capturing...' : 'Capture Cards'}
+                </button>
+
+                {/* Display captures */}
+                {captures.length > 0 && (
+                    <div className="fixed top-0 left-0 w-full h-full bg-black/80 z-50 overflow-auto p-8">
+                        <div className="max-w-7xl mx-auto">
+                            <div className="flex justify-end mb-4">
+                                <button 
+                                    onClick={() => setCaptures([])}
+                                    className="px-4 py-2 bg-red-500 text-white rounded-lg"
+                                >
+                                    Close
+                                </button>
+                            </div>
+                            <div className="grid grid-cols-2 gap-8">
+                                {captures.map((capture, index) => (
+                                    <div key={index} className="relative">
+                                        <img 
+                                            src={capture} 
+                                            alt={`Captured card ${index + 1}`}
+                                            className="w-full rounded-xl"
+                                        />
+                                        <button
+                                            onClick={() => {
+                                                const link = document.createElement('a');
+                                                link.download = `swarm-${index + 1}.png`;
+                                                link.href = capture;
+                                                link.click();
+                                            }}
+                                            className="absolute top-4 right-4 px-4 py-2 bg-yellow-400 text-black rounded-lg"
+                                        >
+                                            Download
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 )}
 
