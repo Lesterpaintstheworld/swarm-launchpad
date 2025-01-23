@@ -28,7 +28,7 @@ export default function Portfolio() {
 
     useEffect(() => {
 
-        if (!connected || !publicKey) {
+        if (!connected || !publicKey || poolIds.length < 1) {
             return;
         }
 
