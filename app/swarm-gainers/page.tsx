@@ -105,12 +105,12 @@ export default function SwarmGainersPage() {
 
             {/* Launching Today Cards */}
             <div className="mt-32 text-center mb-16">
-                <h2 className="text-5xl font-bold text-yellow-400 mb-2">Launching Today</h2>
-                <h3 className="text-3xl font-bold text-white">New Swarm Opportunities</h3>
+                <h2 className="text-5xl font-bold text-yellow-400 mb-2">$UBC Contender Swarms</h2>
+                <h3 className="text-3xl font-bold text-white">Launching Today</h3>
             </div>
 
             {/* Launching Today grid */}
-            <div className="grid grid-cols-2 gap-16 max-w-[2000px] mx-auto">
+            <div className="grid grid-cols-2 gap-16 max-w-[2000px] mx-auto px-8">
                 {previews.map((swarm) => (
                     <SwarmGainCard
                         key={`launch-${swarm.id}`}

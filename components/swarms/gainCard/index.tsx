@@ -19,7 +19,7 @@ export const SwarmGainCard = ({ name, multiple, image, className = '', launchMod
             
             {/* Title */}
             <div className="text-2xl font-bold text-white mb-6 border-b border-white/20 pb-2">
-                $UBC Top Gainer Swarm
+                {launchMode ? "$UBC Contender Swarm" : "$UBC Top Gainer Swarm"}
             </div>
 
             {/* Logo */}
