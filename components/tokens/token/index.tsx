@@ -27,7 +27,7 @@ const Token = forwardRef<HTMLParagraphElement, TokenProps>(
                         height={12}
                     />
                 }
-                {token.label}
+                {token?.label}
             </Tag>
         )
     }

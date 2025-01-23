@@ -7,7 +7,10 @@ import { Token } from "@/components/tokens/tokens.types";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { Tag } from "@/components/ui/tag";
+import { getSwarmInfo } from "@/data/swarms/info";
+import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { IntlNumberFormat } from "@/lib/utils";
+import { useWallet } from "@solana/wallet-adapter-react";
 import { ChangeEvent, useRef, useState } from "react";
 
 interface SellPositionProps {
@@ -16,23 +19,23 @@ interface SellPositionProps {
     swarmId?: string;
 }
 
-const mockData = {
-    owned_shares: 7950,
-    available_shares: 5000
-}
-
 const SellPositionModal = ({ isModalOpen, closeModal, swarmId }: SellPositionProps) => {
 
-    const [swarm, setSwarm] = useState<string>(swarmId || '');
+    const { publicKey } = useWallet();
+
+    const [swarmID, setSwarmID] = useState<string>(swarmId || 'digitalkin-partner-id');
     const [numShares, setNumShares] = useState<string>('');
     const [pricePerShare, setPricePerShare] = useState<number>(0);
     const [token, setToken] = useState<Token>();
 
+    const swarm = getSwarmInfo(swarmID);
+    const { position } = useLaunchpadProgramAccount({ poolAddress: swarm?.pool as string });
+    const { data } = position;
     const sharesRef = useRef<HTMLParagraphElement>(null);
 
     const handleSharesInput = (e: ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value); // Remove commas for calculation
-        if (isNaN(value) || value < 0 || value > mockData.available_shares) return;
+        if (isNaN(value) || value < 0 || value > data?.availableShares.toNumber()) return;
         setNumShares(String(value));
     }
 
@@ -48,8 +51,8 @@ const SellPositionModal = ({ isModalOpen, closeModal, swarmId }: SellPositionPro
             <p className="text-muted text-sm mb-4">Select which swarm you want to sell shares from, set a price per share, and the number of shares you want to sell.</p>
             <SwarmComboBox
                 className="mb-4"
-                defaultValue={swarm}
-                onChange={(value: string) => setSwarm(value)}
+                defaultValue={swarm.id}
+                onChange={(value: string) => setSwarmID(value)}
             />
             <div className="border border-border rounded-md bg-card p-4 pb-2 flex flex-col">
                 <p className="text-muted text-sm">You&apos;ll sell</p>
@@ -58,15 +61,15 @@ const SellPositionModal = ({ isModalOpen, closeModal, swarmId }: SellPositionPro
                         className="border-none rounded-none bg-transparent pl-0 text-4xl font-bold no-arrows w-full"
                         style={{
                             minWidth: '2ch',
-                            width: `${Number(numShares) !== 0 ? numShares.length + 1 : String(mockData.available_shares).length + 1.2}ch`,
+                            width: `${Number(numShares) !== 0 ? numShares.length + 1 : String(data?.availableShares).length + 1.2}ch`,
                             maxWidth: `calc(100% - ${sharesRef.current?.offsetWidth}px - 10px)`,
                         }}
-                        disabled={mockData.available_shares === 0 || !swarm}
+                        disabled={data?.availableShares === 0 || !swarm}
                         type="number"
-                        placeholder={IntlNumberFormat(mockData.available_shares)}
+                        placeholder={IntlNumberFormat(data?.availableShares)}
                         step={1}
                         min={0}
-                        max={mockData.available_shares}
+                        max={data?.availableShares}
                         value={Number(numShares) !== 0 ? numShares : ''}
                         onChange={handleSharesInput}
                     />
@@ -74,15 +77,15 @@ const SellPositionModal = ({ isModalOpen, closeModal, swarmId }: SellPositionPro
                 </div>
             </div>
             <div className="flex flex-row justify-between mt-2 text-sm text-muted px-4 gap-6 flex-wrap mb-4">
-                <p>Available to sell: {IntlNumberFormat(mockData.available_shares)}</p>
-                <p>You own: {IntlNumberFormat(mockData.owned_shares)} share{mockData.owned_shares > 1 ? 's' : ''}</p>
+                <p>Available to sell: {IntlNumberFormat(data?.availableShares)}</p>
+                <p>You own: {IntlNumberFormat(data?.shares)} share{data?.shares > 1 ? 's' : ''}</p>
             </div>
             <div className="border border-border rounded-md bg-card p-4 pb-2 flex flex-col">
                 <p className="text-muted text-sm">Price per share</p>
                 <div className="flex flex-row">
                     <Input
                         className="border-none rounded-none bg-transparent pl-0 text-4xl font-bold no-arrows w-full"
-                        disabled={mockData.available_shares === 0 || Number(numShares) === 0}
+                        disabled={data?.availableShares === 0 || Number(numShares) === 0}
                         type="number"
                         placeholder="--"
                         step={1}
@@ -90,7 +93,7 @@ const SellPositionModal = ({ isModalOpen, closeModal, swarmId }: SellPositionPro
                         value={pricePerShare === 0 ? '' : pricePerShare}
                         onChange={handlePriceInput}
                     />
-                    <TokenComboBox onChange={(token?: Token) => setToken(token)} disabled={mockData.available_shares === 0 || Number(numShares) === 0} />
+                    <TokenComboBox onChange={(token?: Token) => setToken(token)} disabled={data?.availableShares === 0 || Number(numShares) === 0} />
                 </div>
             </div>
             <div className="flex flex-row justify-between mt-2 text-sm text-muted px-4 gap-6 flex-wrap mb-4">
@@ -108,10 +111,11 @@ const SellPositionModal = ({ isModalOpen, closeModal, swarmId }: SellPositionPro
             <Button
                 onClick={() => alert('selling shares...')}
                 variant='destructive'
-                disabled={mockData.available_shares === 0 || Number(numShares) === 0}
+                // disabled={data?.availableShares === 0 || Number(numShares) === 0}
+                disabled={true}
                 className="w-full"
             >
-                Sell shares
+                Unavailable
             </Button>
         </Modal>
     )

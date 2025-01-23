@@ -6,6 +6,8 @@ import { SyntheticSoulsDescription } from "./descriptions/syntheticsouls"
 import { DuoAIDescription } from "./descriptions/duoai"
 
 export const getSwarmUsingPoolId = (poolId: string) => SwarmData.filter(swarm => swarm.pool === poolId)[0];
+export const getSwarmInfo = (swarmId: string) => SwarmData.filter(swarm => swarm.id === swarmId)[0];
+
 
 export const SwarmData: SwarmInfo[] = [
     {

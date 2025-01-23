@@ -171,6 +171,16 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
         },
         enabled: !!program
     })
+    
+    const position = useQuery({
+        queryKey: ['position', publicKey, pool.toBase58()],
+        queryFn: async () => {
+            const pda = getShareholderPDA(program.programId, publicKey as PublicKey, pool);
+            const shareholderData = await program.account.shareholder.fetch(pda as PublicKey);
+            return shareholderData;
+        },
+        enabled: !!program
+    })
 
     const purchaseShares = useMutation({
         mutationKey: ['shares', 'purchase', pool?.toString() ?? 'unknown'],
@@ -215,6 +225,8 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                     program.programId
                 );
 
+                toast(`Purchase transaction pending...`, { duration: 20000 });
+
                 // Send the purchase transaction
                 // return await program.methods
                 const tx = await program.methods
@@ -239,7 +251,7 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                         associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID
                     })
                     .rpc();
-                
+
                     toast(`Success! Your transaction signature is: ${tx}`, { duration: 20000 });
 
             } catch (error) {
@@ -345,6 +357,7 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
     return {
         poolAccount,
         purchaseShares,
+        position,
         // createListing,
         // cancelListing,
         // buyListing

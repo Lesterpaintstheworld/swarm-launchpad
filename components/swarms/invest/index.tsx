@@ -143,7 +143,10 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
                     onClick={handleBuy}
                     className="mt-10 w-full md:max-w-40"
                     disabled={!numShares || price <= 0}
-                >BUY</Button>}
+                >
+                    BUY
+                </Button>
+            }
             {!connected && data.remainingSupply !== 0 && <ConnectButton className="mt-10 w-full md:max-w-40" />}
         </Card>
     )
