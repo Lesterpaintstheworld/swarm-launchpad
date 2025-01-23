@@ -48,9 +48,9 @@ export default function SwarmGainersPage() {
                 
                 <div className="flex items-end gap-4 h-[400px]">
                     {gainers.map((gainer) => (
-                        <div key={gainer.name} className="flex flex-col items-center w-24">
+                        <div key={gainer.name} className="flex flex-col items-center w-28">
                             {/* Multiplier above bar */}
-                            <div className="text-white font-bold text-xl mb-2">
+                            <div className="text-white font-bold text-2xl mb-2">
                                 {gainer.value}x
                             </div>
                             
@@ -76,16 +76,16 @@ export default function SwarmGainersPage() {
                             
                             {/* Icon and Name */}
                             <div className="mt-4 flex flex-col items-center">
-                                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-yellow-400/50 bg-white">
+                                <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-yellow-400/50 bg-white">
                                     <Image
                                         src={gainer.image}
                                         alt={gainer.name}
-                                        width={48}
-                                        height={48}
+                                        width={64}
+                                        height={64}
                                         className="object-cover"
                                     />
                                 </div>
-                                <div className="text-yellow-400 text-sm font-medium mt-2 text-center leading-tight min-h-[40px]">
+                                <div className="text-yellow-400 text-base font-medium mt-2 text-center leading-tight min-h-[40px]">
                                     {gainer.name}
                                 </div>
                             </div>
