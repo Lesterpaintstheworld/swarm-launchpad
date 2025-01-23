@@ -65,10 +65,10 @@ Join the revolution in AI-powered content creation with SLOP FATHER - where ever
     },
     {
         id: 'digitalkin-partner-id',
-        pool: 'DAyBZwKztAqorn1w3Ux9xFyRPFifWjdAAAkoqMNXrVaG',
         image: '/swarms/digitalkin.png',
         models: ['KinOS', 'Claude Haiku'],
         name: 'DigitalKin',
+        pool: 'FM6aFbs9cQ6Jrp3GJPABBVxpLnGFEZZD3tSJ5JGCUsyZ',
         gallery: [
             { type: 'video', content: 'https://www.youtube.com/watch?v=WcWWTgL8ouc' },
             { type: 'image', content: '/swarms/digitalkin/1.png' },
@@ -101,10 +101,10 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
     },
     {
         id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
-        pool: '',
         image: '/swarms/kinkong.jpg',
         models: ['GPT-4o Mini', 'Claude Haiku'],
         name: 'Kin Kong',
+        pool: 'FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz',
         gallery: [
             { type: 'image', content: '/swarms/kinkong/1_KinKong-Advanced-AI-Trading-Agent.png' },
             { type: 'image', content: '/swarms/kinkong/2_How-KinKong-Works.png' },
@@ -192,6 +192,7 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         image: '/swarms/property.png',
         models: ['KinOS', 'GPT-4V'],
         name: 'PropertyKin',
+        pool: '6HnxTkNhQaoYRkPyZD1zTH5WBvFGLes5X2vrH66roa5G',
         gallery: [
             { type: 'image', content: '/swarms/propertykin/1_PropertyKin-The-Future-of-Real-Estate-Arbitrage.png' },
             { type: 'image', content: '/swarms/propertykin/2_The-PropertyKin-Advantage-AI-Powered-Contract-Flipping.png' },
@@ -244,6 +245,7 @@ Join the arbitrage revolution with PropertyKin.`,
         image: '/swarms/mental-health.jpg',
         models: ['KinOS'],
         name: 'TherapyKin',
+        pool: '5wWLpeH2DDrAS9Lxx1nGnwtMTvu7U9txf4BuXxdN6V6H',
         gallery: [
             { type: 'image', content: '/swarms/mental-health.jpg' }
         ],
@@ -287,6 +289,7 @@ Join us in revolutionizing mental health practice management with AI.`,
         image: '/swarms/book.png',
         models: ['KinOS'],
         name: 'PublishKin',
+        pool: 'Dt7iwGTgRVZGV2NZFvNtrWVNX77s8ejGdhB2XaR4DxX6',
         gallery: [
             { type: 'image', content: '/swarms/book.png' }
         ],
@@ -440,6 +443,7 @@ Join us in redefining how children learn through AI-powered play.`,
         image: '/swarms/talentaid.jpg',
         models: ['KinOS'],
         name: 'TalentKin',
+        pool: 'DTFE1peg5aNe8gFuaT9KZe8TJ4RHks9prpd12iUBKwi4',
         gallery: [
             { type: 'image', content: '/swarms/talentaid.jpg' }
         ],
@@ -483,6 +487,7 @@ Join us in transforming recruitment with AI-powered innovation.`,
         image: '/swarms/carehive.jpg',
         models: ['KinOS'],
         name: 'CareHive',
+        pool: 'FHXsVnEfqHQBQS6An4icuSD5ewwn5WWkoj2LWRMGw4mb',
         gallery: [
             { type: 'image', content: '/swarms/carehive.jpg' }
         ],
@@ -526,6 +531,7 @@ Join us in transforming healthcare practice management with AI.`,
         image: '/swarms/commercenest.jpg',
         models: ['KinOS'],
         name: 'CommerceNest',
+        pool: '9hAfNquoNDbvzcEc1rBG8JzbWRskAsjKm7sYbarRfxyj',
         gallery: [
             { type: 'image', content: '/swarms/commercenest.jpg' }
         ],
@@ -569,6 +575,7 @@ Join us in transforming e-commerce with AI-powered automation.`,
         image: '/swarms/affiliate.jpeg',
         models: ['KinOS'],
         name: 'ProfitBeeAI',
+        pool: '7AEP5qWyPF92Wgv6tLCwe51e8yrF3WwSzSef5Vg7RQt4',
         gallery: [
             { type: 'image', content: '/swarms/affiliate.jpeg' }
         ],
@@ -765,6 +772,7 @@ DeskMate solves these by providing:
         logo: '/swarms/stumped.jpg',
         models: ['KinOS'],
         name: 'STUMPED',
+        pool: '5wL5rah4gWqbbv74vWvsmqqEf99uhRLr3jNPsMcw5imN',
         gallery: [
             { type: 'image', content: '/swarms/stumped.jpg' }
         ],
@@ -808,6 +816,7 @@ Join us in transforming professional development with AI-powered training.`,
         image: '/swarms/travel.jpeg',
         models: ['KinOS'],
         name: 'TravelAId',
+        pool: 'BEsb73xDJH3PrRGs1D4zkPAssg94Yi8dAtiFa59gzeY1',
         gallery: [
             { type: 'image', content: '/swarms/travel.jpeg' }
         ],
@@ -851,6 +860,7 @@ Join us in transforming travel with AI-powered assistance.`,
         image: '/swarms/grant.jpeg',
         models: ['KinOS'],
         name: 'GrantKin',
+        pool: '3oa4GKg3hpavEAEacDUKJQoA12VPvRE1CKoHypBho2Rt',
         gallery: [
             { type: 'image', content: '/swarms/grant.jpeg' }
         ],
@@ -894,6 +904,7 @@ Join us in transforming non-profit funding with AI-powered grant writing.`,
         image: '/swarms/resume.jpeg',
         models: ['KinOS'],
         name: 'CareerKin',
+        pool: 'EMtoBMEn6JtV9tnbF8ZVVrxnYZbdapWAYEzabq7cW2gR',
         gallery: [
             { type: 'image', content: '/swarms/resume.jpeg' }
         ],
@@ -937,6 +948,7 @@ Join us in transforming career development with AI-powered optimization.`,
         image: '/swarms/robinhood.jpg',
         models: ['KinOS'],
         name: 'Robinhood Agent',
+        pool: 'H7xCtjoCyqf55uc5nmPKpypN82jANkRDTNmPx6C3XhS5',
         gallery: [
             { type: 'image', content: '/swarms/robinhood/1_Robinhood-Agent-Democratizing-AI-Trading.png' },
             { type: 'image', content: '/swarms/robinhood/2_What-Robinhood-Agent-Does.png' },
@@ -959,6 +971,7 @@ Join us in transforming career development with AI-powered optimization.`,
         image: '/swarms/screenplay.jpg',
         models: ['KinOS'],
         name: 'StudioKin',
+        pool: 'EJ4Ad3faa43JLZW3HQnxweYFqm4T2cUzBGntG5KnJWE8',
         gallery: [
             { type: 'image', content: '/swarms/screenplay/1_Screenplay-and-Production-Swarm-Redefining-Filmmaking-with-AI.png' },
             { type: 'image', content: '/swarms/screenplay/2_Introducing-KinOS-AI-Swarm-for-Filmmaking.png' },
@@ -980,6 +993,7 @@ Join us in transforming career development with AI-powered optimization.`,
         image: '/swarms/wealthhive.png',
         models: ['KinOS', 'GPT-4'],
         name: 'WealthHive',
+        pool: 'HeR7qoPbvmgcLFywkduZ27Hr2wKYuxtVkTBaGhVohP88',
         gallery: [
             { type: 'image', content: '/swarms/wealthhive.png' }
         ],

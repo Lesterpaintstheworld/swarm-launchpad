@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 import { getSwarmUsingPoolId, SwarmData } from "@/data/swarms/info";
 import { extractKey } from "@/lib/utils";
 import { getShareholderPDA } from "@/hooks/useLaunchpadProgram/utils";
-import { redirect } from "next/navigation";
 
 type Investment = {
     swarm_id: string;
