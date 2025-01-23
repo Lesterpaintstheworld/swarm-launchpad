@@ -24,7 +24,7 @@ export default function Portfolio() {
     const { program } = useLaunchpadProgram();
     const [investments, setInvestments] = useState<Investment[]>([]);
 
-    const poolIds: string[] = extractKey(SwarmData, 'pool');
+    const poolIds: string[] = extractKey(SwarmData, 'pool') || [];
 
     useEffect(() => {
 

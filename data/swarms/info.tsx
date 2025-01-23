@@ -101,7 +101,7 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
     },
     {
         id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
-        pool: 'Fq66WREQ5rq4MFrsEr3FSM1UWhhdLtgC7aytWx7CD57w',
+        pool: '',
         image: '/swarms/kinkong.jpg',
         models: ['GPT-4o Mini', 'Claude Haiku'],
         name: 'Kin Kong',
@@ -124,7 +124,7 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
     },
     {
         id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',
-        pool:'28T5ANYC3D5rjSouvuZwxZurq26Txo4gqAZp7zJ5PKdy',
+        pool:'',
         image: '/swarms/swarm-ventures.jpg',
         models: ['Claude Haiku'],
         name: 'Swarm Ventures',
