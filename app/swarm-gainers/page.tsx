@@ -26,26 +26,28 @@ export default function SwarmGainersPage() {
                 {gainers.map((gainer) => (
                     <div key={gainer.name} className="flex flex-col items-center w-24">
                         <div className="relative w-16 flex flex-col items-center">
-                            {/* Multiplier on top */}
-                            <div className="absolute -top-8 text-yellow-400 font-bold text-xl z-10">
-                                {gainer.value}x
-                            </div>
-                            
                             {/* Bar with tech pattern */}
-                            <div 
-                                className="absolute bottom-0 w-full bg-gradient-to-t from-yellow-600 to-yellow-400 
-                                          rounded-t-sm backdrop-blur-sm overflow-hidden"
-                                style={{ height: `${gainer.value * 12}px` }}
-                            >
-                                {/* Tech pattern overlay */}
+                            <div className="relative w-full">
                                 <div 
-                                    className="absolute inset-0 bg-[linear-gradient(0deg,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] 
-                                              bg-[size:4px_4px] mix-blend-overlay"
-                                />
-                                
-                                {/* Glow effect */}
-                                <div className="absolute inset-0 bg-yellow-400/20">
-                                    <div className="h-full w-full animate-pulse bg-gradient-to-t from-transparent to-yellow-400/30" />
+                                    className="w-full bg-gradient-to-t from-yellow-600 to-yellow-400 
+                                              rounded-t-sm backdrop-blur-sm overflow-hidden"
+                                    style={{ height: `${gainer.value * 12}px` }}
+                                >
+                                    {/* Tech pattern overlay */}
+                                    <div 
+                                        className="absolute inset-0 bg-[linear-gradient(0deg,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] 
+                                                  bg-[size:4px_4px] mix-blend-overlay"
+                                    />
+                                    
+                                    {/* Glow effect */}
+                                    <div className="absolute inset-0 bg-yellow-400/20">
+                                        <div className="h-full w-full animate-pulse bg-gradient-to-t from-transparent to-yellow-400/30" />
+                                    </div>
+
+                                    {/* Multiplier on top of the bar */}
+                                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 text-yellow-400 font-bold text-xl">
+                                        {gainer.value}x
+                                    </div>
                                 </div>
                             </div>
                         </div>
