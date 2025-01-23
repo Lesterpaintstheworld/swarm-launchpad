@@ -70,7 +70,6 @@ Join the revolution in AI-powered content creation with SLOP FATHER - where ever
         name: 'DigitalKin',
         pool: 'FM6aFbs9cQ6Jrp3GJPABBVxpLnGFEZZD3tSJ5JGCUsyZ',
         gallery: [
-            { type: 'video', content: 'https://www.youtube.com/watch?v=WcWWTgL8ouc' },
             { type: 'image', content: '/swarms/digitalkin/1.png' },
             { type: 'image', content: '/swarms/digitalkin/2.png' },
             { type: 'image', content: '/swarms/digitalkin/3.png' }
