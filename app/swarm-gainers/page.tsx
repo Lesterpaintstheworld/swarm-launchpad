@@ -23,12 +23,12 @@ export default function SwarmGainersPage() {
                     src="/site image-modified.jpg"
                     alt="Background"
                     fill
-                    className="object-cover opacity-50"
+                    className="object-cover opacity-15"
                 />
             </div>
 
             {/* Content container */}
-            <div className="relative z-10 p-8 flex flex-col items-center">
+            <div className="relative z-10 p-8 pt-24 flex flex-col items-center">
                 {/* Logo UBC */}
                 <div className="absolute top-8 right-8 flex items-center gap-3">
                     <Image
@@ -50,7 +50,7 @@ export default function SwarmGainersPage() {
                     {gainers.map((gainer) => (
                         <div key={gainer.name} className="flex flex-col items-center w-24">
                             {/* Multiplier above bar */}
-                            <div className="text-yellow-400 font-bold text-xl mb-2">
+                            <div className="text-white font-bold text-xl mb-2">
                                 {gainer.value}x
                             </div>
                             
