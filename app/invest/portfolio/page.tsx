@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { getSwarmUsingPoolId, SwarmData } from "@/data/swarms/info";
 import { extractKey } from "@/lib/utils";
 import { getShareholderPDA } from "@/hooks/useLaunchpadProgram/utils";
+import { redirect } from "next/navigation";
 
 type Investment = {
     swarm_id: string;
@@ -25,6 +26,10 @@ export default function Portfolio() {
     const [investments, setInvestments] = useState<Investment[]>([]);
 
     const poolIds: string[] = extractKey(SwarmData, 'pool') || [];
+
+    if(!connected) {
+        redirect('/invest')
+    }
 
     useEffect(() => {
 
