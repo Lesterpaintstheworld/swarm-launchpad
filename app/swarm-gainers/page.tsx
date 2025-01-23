@@ -16,30 +16,46 @@ export default function SwarmGainersPage() {
     ];
 
     return (
-        <div className="min-h-screen bg-black p-8 flex flex-col items-center relative">
-            {/* Logo UBC dans le coin */}
-            <div className="absolute top-8 right-8 flex items-center gap-3">
+        <div className="min-h-screen bg-black relative">
+            {/* Background image */}
+            <div className="absolute inset-0 z-0">
                 <Image
-                    src="/White on transparent.png"
-                    alt="UBC Logo"
-                    width={60}
-                    height={60}
-                    className="opacity-50"
+                    src="/site image-modified.jpg"
+                    alt="Background"
+                    fill
+                    className="object-cover opacity-50"
                 />
-                <span className="text-white/50 text-2xl font-bold">UBC</span>
             </div>
 
-            <h1 className="text-center mb-16">
-                <span className="text-5xl font-bold text-yellow-400">$UBC</span>
-                <span className="text-5xl font-bold text-white"> Top Gainer Swarms - Last 24 Hours</span>
-            </h1>
-            
-            <div className="flex items-end gap-4 h-[400px]">
-                {gainers.map((gainer) => (
-                    <div key={gainer.name} className="flex flex-col items-center w-24">
-                        <div className="relative w-16 flex flex-col items-center">
-                            {/* Bar with tech pattern */}
-                            <div className="relative w-full">
+            {/* Content container */}
+            <div className="relative z-10 p-8 flex flex-col items-center">
+                {/* Logo UBC */}
+                <div className="absolute top-8 right-8 flex items-center gap-3">
+                    <Image
+                        src="/White on transparent.png"
+                        alt="UBC Logo"
+                        width={60}
+                        height={60}
+                        className="opacity-50"
+                    />
+                    <span className="text-white/50 text-2xl font-bold">UBC</span>
+                </div>
+
+                <h1 className="text-center mb-16">
+                    <span className="text-5xl font-bold text-yellow-400">$UBC</span>
+                    <span className="text-5xl font-bold text-white"> Top Gainer Swarms - Last 24 Hours</span>
+                </h1>
+                
+                <div className="flex items-end gap-4 h-[400px]">
+                    {gainers.map((gainer) => (
+                        <div key={gainer.name} className="flex flex-col items-center w-24">
+                            {/* Multiplier above bar */}
+                            <div className="text-yellow-400 font-bold text-xl mb-2">
+                                {gainer.value}x
+                            </div>
+                            
+                            {/* Bar */}
+                            <div className="relative w-16">
                                 <div 
                                     className="w-full bg-gradient-to-t from-yellow-600 to-yellow-400 
                                               rounded-t-sm backdrop-blur-sm overflow-hidden"
@@ -55,32 +71,27 @@ export default function SwarmGainersPage() {
                                     <div className="absolute inset-0 bg-yellow-400/20">
                                         <div className="h-full w-full animate-pulse bg-gradient-to-t from-transparent to-yellow-400/30" />
                                     </div>
-
-                                    {/* Multiplier on top of the bar */}
-                                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 text-yellow-400 font-bold text-xl">
-                                        {gainer.value}x
-                                    </div>
+                                </div>
+                            </div>
+                            
+                            {/* Icon and Name */}
+                            <div className="mt-4 flex flex-col items-center">
+                                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-yellow-400/50 bg-white">
+                                    <Image
+                                        src={gainer.image}
+                                        alt={gainer.name}
+                                        width={48}
+                                        height={48}
+                                        className="object-cover"
+                                    />
+                                </div>
+                                <div className="text-yellow-400 text-sm font-medium mt-2 text-center leading-tight min-h-[40px]">
+                                    {gainer.name}
                                 </div>
                             </div>
                         </div>
-                        
-                        {/* Icon and Name */}
-                        <div className="mt-4 flex flex-col items-center">
-                            <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-yellow-400/50 bg-white">
-                                <Image
-                                    src={gainer.image}
-                                    alt={gainer.name}
-                                    width={48}
-                                    height={48}
-                                    className="object-cover"
-                                />
-                            </div>
-                            <div className="text-yellow-400 text-sm font-medium mt-2 text-center leading-tight min-h-[40px]">
-                                {gainer.name}
-                            </div>
-                        </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         </div>
     );
