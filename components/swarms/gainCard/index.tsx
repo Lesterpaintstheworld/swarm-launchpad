@@ -11,42 +11,58 @@ export const SwarmGainCard = ({ name, multiple, image, className = '' }: SwarmGa
     const priceInUSD = (multiple * 0.007).toFixed(3);
 
     return (
-        <div className={`w-[300px] h-[300px] bg-black/40 backdrop-blur-sm rounded-xl border border-yellow-400/20 
-                        p-6 flex flex-col items-center justify-between relative overflow-hidden ${className}`}>
+        <div className={`w-[900px] h-[600px] bg-black/40 backdrop-blur-sm rounded-xl border border-yellow-400/20 
+                        p-12 flex flex-col items-center justify-between relative overflow-hidden ${className}`}>
             {/* Background glow effect */}
             <div className="absolute inset-0 bg-gradient-to-b from-yellow-400/5 to-transparent" />
             
             {/* Logo */}
             <div className="relative">
-                {/* Glow effect */}
                 <div className="absolute inset-0 bg-yellow-400/20 blur-xl transform scale-110" />
-                
-                <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-yellow-400/50 
-                              bg-gradient-to-b from-yellow-400/20 to-transparent backdrop-blur-sm 
-                              shadow-lg hover:shadow-yellow-400/30 transition-all duration-300">
+                <div className="relative w-48 h-48 rounded-full overflow-hidden border-2 border-yellow-400/50 
+                              bg-gradient-to-b from-yellow-400/20 to-transparent backdrop-blur-sm">
                     <Image
                         src={image}
                         alt={name}
-                        width={96}
-                        height={96}
+                        width={192}
+                        height={192}
                         className="object-cover"
                     />
                 </div>
             </div>
 
             {/* Name */}
-            <div className="text-xl font-bold text-yellow-400 text-center mt-4">
+            <div className="text-3xl font-bold text-yellow-400 text-center mt-8">
                 {name}
             </div>
 
             {/* Multiple */}
-            <div className="text-6xl font-bold text-white text-center mt-2">
-                {multiple}x
+            <div className="flex flex-col items-center gap-2">
+                <div className="text-8xl font-bold text-white text-center">
+                    {multiple}x
+                </div>
+                <div className="text-gray-500 text-sm">
+                    24 hour performance
+                </div>
             </div>
 
             {/* Price */}
-            <div className="text-lg font-medium text-yellow-400/80 mt-2">
-                ${priceInUSD}
+            <div className="flex flex-col items-center gap-4">
+                <div className="text-2xl font-medium text-yellow-400/80">
+                    ${priceInUSD}
+                </div>
+                
+                {/* Small UBC logo */}
+                <div className="flex items-center gap-2">
+                    <Image
+                        src="/White on transparent.png"
+                        alt="UBC Logo"
+                        width={20}
+                        height={20}
+                        className="opacity-50"
+                    />
+                    <span className="text-white/50 text-sm">UBC</span>
+                </div>
             </div>
 
             {/* Tech pattern overlay */}
