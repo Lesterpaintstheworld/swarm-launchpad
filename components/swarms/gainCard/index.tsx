@@ -5,10 +5,11 @@ interface SwarmGainCardProps {
     multiple: number;
     image: string;
     className?: string;
+    launchMode?: boolean;
 }
 
-export const SwarmGainCard = ({ name, multiple, image, className = '' }: SwarmGainCardProps) => {
-    const priceInUSD = (multiple * 0.007).toFixed(3);
+export const SwarmGainCard = ({ name, multiple, image, className = '', launchMode = false }: SwarmGainCardProps) => {
+    const priceInUSD = launchMode ? "0.007" : (multiple * 0.007).toFixed(3);
 
     return (
         <div className={`w-[500px] h-[500px] bg-black/40 backdrop-blur-sm rounded-xl border border-yellow-400/20 
@@ -41,14 +42,22 @@ export const SwarmGainCard = ({ name, multiple, image, className = '' }: SwarmGa
                 {name}
             </div>
 
-            {/* Multiple */}
+            {/* Multiple or Launching Today */}
             <div className="flex flex-col items-center gap-2 mb-auto">
-                <div className="text-7xl font-bold text-white text-center">
-                    {multiple}x
-                </div>
-                <div className="text-gray-400 text-base font-medium">
-                    24 hour performance
-                </div>
+                {launchMode ? (
+                    <div className="text-5xl font-bold text-white text-center">
+                        Launching Today
+                    </div>
+                ) : (
+                    <>
+                        <div className="text-7xl font-bold text-white text-center">
+                            {multiple}x
+                        </div>
+                        <div className="text-gray-400 text-base font-medium">
+                            24 hour performance
+                        </div>
+                    </>
+                )}
             </div>
 
             {/* Bottom section with UBC Logo and Price */}
