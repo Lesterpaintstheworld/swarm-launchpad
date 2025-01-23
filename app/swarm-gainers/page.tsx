@@ -3,47 +3,39 @@ import Image from 'next/image';
 
 export default function SwarmGainersPage() {
     const gainers = [
-        { name: 'DigitalKin', value: 8.5, image: '/swarms/digitalkin.png' },
-        { name: 'Kin Kong', value: 7.2, image: '/swarms/kinkong.jpg' },
-        { name: 'SwarmsVenture', value: 6.5, image: '/swarms/swarm-ventures.jpg' },
-        { name: 'Synthetic Souls', value: 5.8, image: '/swarms/synthetic-souls.jpg' },
-        { name: 'DuoAI', value: 5.2, image: '/swarms/duoai.jpg' },
-        { name: 'StudioKin', value: 4.5, image: '/swarms/screenplay.jpg' },
-        { name: 'Robinhood Agent', value: 3.8, image: '/swarms/robinhood.jpg' },
-        { name: 'TherapyKin', value: 3.2, image: '/swarms/mental-health.jpg' },
-        { name: 'PublishKin', value: 2.8, image: '/swarms/book.png' },
-        { name: 'PlayWise', value: 2.5, image: '/swarms/education.png' }
+        { name: 'DigitalKin', value: 25, image: '/swarms/digitalkin.png' },
+        { name: 'Kin Kong', value: 22, image: '/swarms/kinkong.jpg' },
+        { name: 'SwarmsVenture', value: 19, image: '/swarms/swarm-ventures.jpg' },
+        { name: 'Synthetic Souls', value: 17, image: '/swarms/synthetic-souls.jpg' },
+        { name: 'DuoAI', value: 15, image: '/swarms/duoai.jpg' },
+        { name: 'StudioKin', value: 13, image: '/swarms/screenplay.jpg' },
+        { name: 'Robinhood Agent', value: 11, image: '/swarms/robinhood.jpg' },
+        { name: 'TherapyKin', value: 9, image: '/swarms/mental-health.jpg' },
+        { name: 'PublishKin', value: 7, image: '/swarms/book.png' },
+        { name: 'PlayWise', value: 5, image: '/swarms/education.png' }
     ];
 
     return (
         <div className="min-h-screen bg-black p-8 flex flex-col items-center">
             <h1 className="text-center mb-16">
-                <span className="text-4xl font-bold text-yellow-400">$UBC</span>
-                <span className="text-4xl font-bold text-white"> Top Gainer Swarms - Last 24 Hours</span>
+                <span className="text-5xl font-bold text-yellow-400">$UBC</span>
+                <span className="text-5xl font-bold text-white"> Top Gainer Swarms - Last 24 Hours</span>
             </h1>
             
             <div className="flex items-end gap-4 h-[400px]">
                 {gainers.map((gainer) => (
                     <div key={gainer.name} className="flex flex-col items-center w-24">
-                        {/* Multiplier */}
-                        <div className="text-yellow-400 font-bold mb-2 text-xl">
-                            {gainer.value}x
-                        </div>
-                        
-                        {/* Bar with tech pattern */}
-                        <div className="relative w-16">
-                            {/* Background pulse effect */}
-                            <div 
-                                className="absolute inset-0 bg-gradient-to-t from-yellow-600/30 to-yellow-400/30 
-                                          animate-pulse rounded-t-sm"
-                                style={{ height: `${gainer.value * 40}px`, bottom: 0 }}
-                            />
+                        <div className="relative w-16 flex flex-col items-center">
+                            {/* Multiplier on top */}
+                            <div className="absolute -top-8 text-yellow-400 font-bold text-xl z-10">
+                                {gainer.value}x
+                            </div>
                             
-                            {/* Main bar */}
+                            {/* Bar with tech pattern */}
                             <div 
                                 className="absolute bottom-0 w-full bg-gradient-to-t from-yellow-600 to-yellow-400 
-                                          rounded-t-sm backdrop-blur-sm"
-                                style={{ height: `${gainer.value * 40}px` }}
+                                          rounded-t-sm backdrop-blur-sm overflow-hidden"
+                                style={{ height: `${gainer.value * 12}px` }}
                             >
                                 {/* Tech pattern overlay */}
                                 <div 
