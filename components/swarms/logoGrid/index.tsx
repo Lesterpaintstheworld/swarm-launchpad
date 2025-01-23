@@ -7,7 +7,6 @@ interface SwarmLogoGridProps {
 }
 
 export const SwarmLogoGrid = ({ swarms, className }: SwarmLogoGridProps) => {
-    // Sort swarms by multiple (if we add that field later)
     const sortedSwarms = [...swarms];
 
     return (
@@ -16,9 +15,9 @@ export const SwarmLogoGrid = ({ swarms, className }: SwarmLogoGridProps) => {
                 {sortedSwarms.map((swarm) => (
                     <div
                         key={swarm.id}
-                        className="group relative"
+                        className="group relative flex flex-col items-center gap-3"
                     >
-                        <div className="w-[120px] h-[120px] rounded-full overflow-hidden border-2 border-yellow-400 bg-white shadow-lg shadow-yellow-400/20 transition-transform duration-300 group-hover:scale-110">
+                        <div className="w-[120px] h-[120px] rounded-full overflow-hidden border-2 border-yellow-400/50 bg-gradient-to-b from-yellow-400/20 to-transparent backdrop-blur-sm shadow-lg hover:shadow-yellow-400/30 transition-all duration-300 hover:scale-105 hover:-translate-y-1 transform perspective-1000 hover:rotate-2">
                             <Image
                                 src={swarm.image}
                                 alt={swarm.name}
@@ -27,9 +26,9 @@ export const SwarmLogoGrid = ({ swarms, className }: SwarmLogoGridProps) => {
                                 className="object-cover"
                             />
                         </div>
-                        <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                            <span className="text-sm text-yellow-400 font-medium">{swarm.name}</span>
-                        </div>
+                        <span className="text-sm text-yellow-400 font-medium text-center px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm border border-yellow-400/20">
+                            {swarm.name}
+                        </span>
                     </div>
                 ))}
             </div>
