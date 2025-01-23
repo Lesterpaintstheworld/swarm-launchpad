@@ -73,13 +73,13 @@ export default function Page() {
             <div>
                 <hr className="my-8"/>
                 <h4>Pools</h4>
-                {pools.data && pools.data.map((pool, index) =>
+                {/* {pools.data && pools.data.map((pool, index) =>
                     <div className="flex flex-row gap-2 mt-2" key={index}>
                         <p>{pool.account.poolName}</p>
                         <p>{pool.publicKey.toBase58()}</p>
                         <p>{pool.account.isFrozen.toString()}</p>
                     </div>
-                )}
+                )} */}
             </div>
         </main>
     );
