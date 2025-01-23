@@ -1,19 +1,19 @@
 'use client'
 
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
-import { Connection, Keypair, LAMPORTS_PER_SOL, PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY, Transaction } from '@solana/web3.js'
-import { createAssociatedTokenAccountInstruction, createTransferInstruction, getAssociatedTokenAddress } from '@solana/spl-token';
-import { getMint } from "@solana/spl-token";
+import { PublicKey, SystemProgram } from '@solana/web3.js'
+import { getAssociatedTokenAddress } from '@solana/spl-token';
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { constants } from '@/lib/constants'
 import { useAnchorProvider } from '../useAnchor'
 import { WalletAdapterNetwork, WalletSignTransactionError } from '@solana/wallet-adapter-base'
-import { getLaunchpadProgram, getShareholderPDA, getTokenAccountPDA } from './utils'
-import { BN } from '@coral-xyz/anchor'
+import { getLaunchpadProgram, getShareholderPDA } from './utils'
+import { BN, BorshAccountsCoder } from '@coral-xyz/anchor'
 
 import { TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token'
 import { toast } from 'sonner';
+import { ListingAccount } from './types';
 
 export function useLaunchpadProgram() {
 
@@ -134,6 +134,111 @@ export function useLaunchpadProgram() {
         }
     })
 
+    const useListingsPagination = (limit: number = 20) =>{
+
+        const [currentPage, setCurrentPage] = useState(1);
+        const [totalItems, setTotalItems] = useState(0);
+    
+        // First, get only listing public keys to get total count
+        const listingKeys = useQuery({
+            queryKey: ['listing-keys'],
+            queryFn: async () => {
+                const accounts = await connection.getProgramAccounts(
+                    program.programId,
+                    {
+                        filters: [
+                            {
+                                memcmp: {
+                                    offset: 0,
+                                    // @ts-ignore - Anchor's type definitions are incomplete
+                                    bytes: BorshAccountsCoder.accountDiscriminator('ShareListing')
+                                }
+                            }
+                        ],
+                        dataSlice: {
+                            offset: 0,
+                            length: 0
+                        }
+                    }
+                );
+                setTotalItems(accounts.length);
+                return accounts.map(acc => acc.pubkey);
+            }
+        });
+    
+        // Then fetch only the current page's data
+        const currentPageData = useQuery({
+            queryKey: ['listings', currentPage, limit],
+            queryFn: async () => {
+                const startIndex = (currentPage - 1) * limit;
+                const pageKeys = listingKeys.data?.slice(startIndex, startIndex + limit);
+    
+                if (!pageKeys) return [];
+    
+                const listings = await Promise.all(
+                    pageKeys.map(async (pubkey): Promise<ListingAccount> => {
+                        const account = await program.account.shareListing.fetch(pubkey);
+                        return {
+                            publicKey: pubkey,
+                            account: {
+                                pool: account.pool,
+                                seller: account.seller,
+                                shareholder: account.shareholder,
+                                numberOfShares: Number(account.numberOfShares),
+                                pricePerShare: Number(account.pricePerShare),
+                                listingId: account.listingId
+                            }
+                        };
+                    })
+                );
+    
+                return listings;
+            },
+            enabled: !!listingKeys.data
+        });
+    
+        const totalPages = Math.ceil(totalItems / limit);
+    
+        const nextPage = () => {
+            if (currentPage < totalPages) {
+                setCurrentPage(prev => prev + 1);
+            }
+        };
+    
+        const previousPage = () => {
+            if (currentPage > 1) {
+                setCurrentPage(prev => prev - 1);
+            }
+        };
+    
+        const goToPage = (page: number) => {
+            if (page >= 1 && page <= totalPages) {
+                setCurrentPage(page);
+            }
+        };
+    
+        return {
+            listings: currentPageData.data || [],
+            isLoading: listingKeys.isLoading || currentPageData.isLoading,
+            isError: listingKeys.isError || currentPageData.isError,
+            error: listingKeys.error || currentPageData.error,
+            pagination: {
+                currentPage,
+                totalPages,
+                totalItems,
+                hasNextPage: currentPage < totalPages,
+                hasPreviousPage: currentPage > 1,
+                nextPage,
+                previousPage,
+                goToPage
+            },
+            refresh: () => {
+                listingKeys.refetch();
+                currentPageData.refetch();
+            }
+        };
+    }
+
     return {
         program,
         programId,
@@ -142,6 +247,7 @@ export function useLaunchpadProgram() {
         ubcMint,
         pools,
         initializePool,
+        useListingsPagination,
         freezePool,
         removePool,
         provider
@@ -261,49 +367,69 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
         }
     });
 
-    // Create share listing
-    // const createListing = useMutation({
-    //     mutationKey: ['listing', 'create', pool.toBase58(), network],
-    //     mutationFn: async ({
-    //         listingId,
-    //         numberOfShares,
-    //         pricePerShare,
-    //         wantedTokenMint
-    //     }: {
-    //         listingId: string,
-    //         numberOfShares: number,
-    //         pricePerShare: number,
-    //         wantedTokenMint: PublicKey
-    //     }) => {
-    //         if (!publicKey) throw new Error('Wallet not connected')
+    const createListing = useMutation({
+        mutationKey: ['listing', 'create', pool.toString()],
+        mutationFn: async ({
+            listingId,
+            numberOfShares,
+            pricePerShare
+        }: {
+            listingId: string,
+            numberOfShares: number,
+            pricePerShare: number
+        }) => {
+            if (!publicKey) throw new Error('Wallet not connected')
+            if (!poolAccount.data) throw new Error('Pool data not loaded')
+            if (listingId.length > 32) throw new Error('Listing ID too long')
+            
+            // Generate PDAs
+            const [shareholderPda] = PublicKey.findProgramAddressSync(
+                [
+                    Buffer.from("shareholder"),
+                    pool.toBuffer(),
+                    publicKey.toBuffer()
+                ],
+                program.programId
+            )
 
-    //         const [listingPda] = PublicKey.findProgramAddressSync(
-    //             [
-    //                 Buffer.from("listing"),
-    //                 pool.toBuffer(),
-    //                 publicKey.toBuffer(),
-    //                 Buffer.from(listingId)
-    //             ],
-    //             program.programId
-    //         )
+            const [listingPda] = PublicKey.findProgramAddressSync(
+                [
+                    Buffer.from("listing"),
+                    pool.toBuffer(),
+                    publicKey.toBuffer(),
+                    Buffer.from(listingId)
+                ],
+                program.programId
+            )
 
-    //         return program.methods
-    //             .createListing(
-    //                 listingId,
-    //                 new BN(numberOfShares),
-    //                 new BN(pricePerShare),
-    //                 wantedTokenMint
-    //             )
-    //             .accounts({
-    //                 shareholder: await getShareholderPDA(program.programId, publicKey, pool),
-    //                 shareListing: listingPda,
-    //                 pool,
-    //                 seller: publicKey,
-    //                 systemProgram: SystemProgram.programId
-    //             })
-    //             .rpc()
-    //     }
-    // })
+            console.log('Creating listing with:', {
+                listingId,
+                numberOfShares,
+                pricePerShare,
+                listingPda: listingPda.toString(),
+                shareholderPda: shareholderPda.toString()
+            })
+
+            toast('Creating listing')
+            const tx = await program.methods
+                .createListing(
+                    listingId,
+                    new BN(numberOfShares),
+                    new BN(pricePerShare)
+                )
+                .accounts({
+                    shareholder: shareholderPda,
+                    // @ts-ignore
+                    shareListing: listingPda,
+                    pool,
+                    seller: publicKey,
+                    systemProgram: SystemProgram.programId,
+                })
+                .rpc()
+            
+            toast(`Listing created: Tx: ${tx}`)
+        }
+    });
 
     // Cancel listing
     // const cancelListing = useMutation({
@@ -358,7 +484,7 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
         poolAccount,
         purchaseShares,
         position,
-        // createListing,
+        createListing,
         // cancelListing,
         // buyListing
     }

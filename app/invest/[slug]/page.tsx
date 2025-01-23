@@ -52,12 +52,12 @@ export default function Swarm({ params }: { params: { slug: string } }) {
             )}
             {swarm?.pool &&
                 <SwarmInvestCard
-                    className="mt-16 mb-12"
+                    className="mt-16"
                     pool={swarm.pool as string}
                 />
             }
             {swarm?.description &&
-                <div className="flex flex-col md:flex-row gap-8">
+                <div className="flex flex-col md:flex-row gap-8 mt-12">
                     <div className="flex-1">
                         <h4 className="font-semibold">About {swarm.name}</h4>
                         <hr className="mt-3" />

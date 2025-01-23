@@ -124,6 +124,7 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
     },
     {
         id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',
+        pool:'28T5ANYC3D5rjSouvuZwxZurq26Txo4gqAZp7zJ5PKdy',
         image: '/swarms/swarm-ventures.jpg',
         models: ['Claude Haiku'],
         name: 'Swarm Ventures',

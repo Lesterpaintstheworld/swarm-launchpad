@@ -8,11 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { Tag } from "@/components/ui/tag";
 import { getSwarmInfo } from "@/data/swarms/info";
-import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { IntlNumberFormat } from "@/lib/utils";
-import { useWallet } from "@solana/wallet-adapter-react";
 import { ChangeEvent, useRef, useState } from "react";
-import { randomBytes } from "crypto";
 
 interface SellPositionProps {
     isModalOpen: boolean;
@@ -20,10 +17,14 @@ interface SellPositionProps {
     swarmId?: string;
 }
 
-const SellPositionModal = ({ isModalOpen, closeModal, swarmId }: SellPositionProps) => {
+const data = {
+    shares: 7400,
+    availableShares: 5000
+}
+
+const SellPositionModalDisconnected = ({ isModalOpen, closeModal, swarmId }: SellPositionProps) => {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { publicKey } = useWallet();
 
     const [swarmID, setSwarmID] = useState<string>(swarmId || 'digitalkin-partner-id');
     const [numShares, setNumShares] = useState<string>('');
@@ -31,14 +32,11 @@ const SellPositionModal = ({ isModalOpen, closeModal, swarmId }: SellPositionPro
     const [token, setToken] = useState<Token>();
 
     const swarm = getSwarmInfo(swarmID);
-    const { position, createListing } = useLaunchpadProgramAccount({ poolAddress: swarm.pool as string });
-    const data = position.data;
-
     const sharesRef = useRef<HTMLParagraphElement>(null);
 
     const handleSharesInput = (e: ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value); // Remove commas for calculation
-        if (isNaN(value) || value < 0 || value > data?.availableShares.toNumber()) return;
+        if (isNaN(value) || value < 0 || value > data?.availableShares) return;
         setNumShares(String(value));
     }
 
@@ -48,21 +46,13 @@ const SellPositionModal = ({ isModalOpen, closeModal, swarmId }: SellPositionPro
         setPricePerShare(value);
     }
 
-    const handleSale = () => {
-        createListing.mutateAsync({
-            listingId: randomBytes(16).toString('hex'),      // Max 32 chars
-            numberOfShares: 100,            
-            pricePerShare: 250              // In base units
-        });
-    }
-
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal} className="p-6">
             <h4 className="mb-2 font-medium">Sell shares</h4>
             <p className="text-muted text-sm mb-4">Select which swarm you want to sell shares from, set a price per share, and the number of shares you want to sell.</p>
             <SwarmComboBox
                 className="mb-4"
-                defaultValue={swarmID}
+                defaultValue={swarm.id}
                 onChange={(value: string) => setSwarmID(value)}
             />
             <div className="border border-border rounded-md bg-card p-4 pb-2 flex flex-col">
@@ -75,7 +65,7 @@ const SellPositionModal = ({ isModalOpen, closeModal, swarmId }: SellPositionPro
                             width: `${Number(numShares) !== 0 ? numShares.length + 1 : String(data?.availableShares).length + 1.2}ch`,
                             maxWidth: `calc(100% - ${sharesRef.current?.offsetWidth}px - 10px)`,
                         }}
-                        disabled={data?.availableShares === 0 || !swarmID}
+                        disabled={data?.availableShares === 0 || !swarm}
                         type="number"
                         placeholder={IntlNumberFormat(data?.availableShares)}
                         step={1}
@@ -120,9 +110,9 @@ const SellPositionModal = ({ isModalOpen, closeModal, swarmId }: SellPositionPro
                 </div>
             }
             <Button
-                onClick={() => handleSale()}
+                onClick={() => alert('selling shares...')}
                 variant='destructive'
-                disabled={data?.availableShares === 0 || Number(numShares) === 0 || pricePerShare === 0 || !token || !publicKey || !swarmID}
+                disabled={data?.availableShares === 0 || Number(numShares) === 0 || pricePerShare === 0 || !token || !swarm}
                 // disabled={true}
                 className="w-full"
             >
@@ -132,5 +122,5 @@ const SellPositionModal = ({ isModalOpen, closeModal, swarmId }: SellPositionPro
     )
 }
 
-export { SellPositionModal }
+export { SellPositionModalDisconnected }
 export type { SellPositionProps }

@@ -3,6 +3,7 @@
 import { Button } from "@/components/shadcn/button"
 import { ConnectButton } from "@/components/solana/connectButton"
 import { SellPositionModal } from "@/components/swarms/sellPositionModal"
+import { SellPositionModalDisconnected } from "@/components/swarms/sellPositionModalDisconnected"
 import { Card } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { useWallet } from "@solana/wallet-adapter-react"
@@ -11,6 +12,7 @@ import { useState } from "react"
 const SellPositionCard = ({ className }: { className?: string }) => {
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const { publicKey } = useWallet();
 
     const { connected } = useWallet();
 
@@ -29,10 +31,18 @@ const SellPositionCard = ({ className }: { className?: string }) => {
                     <ConnectButton />
                 }
             </Card>
-            <SellPositionModal
-                isModalOpen={isModalOpen}
-                closeModal={() => setIsModalOpen(false)}
-            />
+            {publicKey ?
+                <SellPositionModal
+                    isModalOpen={isModalOpen}
+                    closeModal={() => setIsModalOpen(false)}
+                />
+                    :
+                <SellPositionModalDisconnected
+                    isModalOpen={isModalOpen}
+                    closeModal={() => setIsModalOpen(false)}
+                />
+
+            }
         </>
     )
 }
