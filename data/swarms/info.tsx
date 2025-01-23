@@ -157,13 +157,13 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
     },
     {
         id: '03616e66-a21e-425b-a93b-16d6396e883f',
-        image: '/swarms/synthetic-souls.jpg',
+        image: '/swarms/syntheticsouls/Lyra 16-9 web.jpg',
         models: ['GPT-4o Mini'],
         name: 'Synthetic Souls',
         pool: 'CmC2AUuurX19TLBVQbpNct8pmEjaHsRj6o8SLBAVvxAk',
         description: SyntheticSoulsDescription,
         gallery: [
-            { type: 'image', content: '/swarms/synthetic-souls.jpg' },
+            { type: 'image', content: '/swarms/syntheticsouls/Lyra 16-9 web.jpg' },
             { type: 'image', content: '/default.png' },
             { type: 'image', content: '/default.png' }
         ],
