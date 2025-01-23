@@ -16,14 +16,34 @@ export const SwarmGainCard = ({ name, multiple, image, className = '', launchMod
     const priceInUSD = launchMode ? "0.007" : (multiple * 0.007).toFixed(3);
 
     const handleCapture = async (event: React.MouseEvent<HTMLDivElement>) => {
-        const element = event.currentTarget;
-        const dataUrl = await captureElement(element);
+        event.preventDefault();
+        event.stopPropagation();
         
-        if (dataUrl) {
-            const link = document.createElement('a');
-            link.download = `${name}-card.png`;
-            link.href = dataUrl;
-            link.click();
+        console.log('Starting capture for:', name);
+        
+        try {
+            const element = event.currentTarget;
+            
+            element.style.transition = 'none';
+            element.style.transform = 'none';
+            
+            const dataUrl = await captureElement(element);
+            
+            if (dataUrl) {
+                console.log('Capture successful, downloading...');
+                const link = document.createElement('a');
+                link.download = `${name.replace(/\s+/g, '-').toLowerCase()}-card.png`;
+                link.href = dataUrl;
+                link.click();
+            }
+            
+            setTimeout(() => {
+                element.style.transition = '';
+                element.style.transform = '';
+            }, 100);
+            
+        } catch (error) {
+            console.error('Capture failed:', error);
         }
     };
 
