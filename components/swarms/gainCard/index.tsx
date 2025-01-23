@@ -16,7 +16,7 @@ export const SwarmGainCard = ({ name, multiple, image, className = '', launchMod
 
     return (
         <div 
-            className={`export-card bg-black rounded-xl border border-yellow-400/20 p-8 flex flex-col items-center relative overflow-hidden ${className}`}
+            className={`export-card w-[500px] h-[500px] bg-[#332600] rounded-xl border border-yellow-400/20 p-8 flex flex-col items-center relative overflow-hidden ${className}`}
             style={{
                 display: 'block',
                 position: 'relative',
@@ -25,7 +25,7 @@ export const SwarmGainCard = ({ name, multiple, image, className = '', launchMod
             }}
         >
             {/* Background glow effect */}
-            <div className="absolute inset-0 bg-gradient-to-b from-yellow-400/5 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-b from-yellow-400/20 to-transparent" />
             
             {/* Title */}
             <div className="w-full text-center mb-6">
