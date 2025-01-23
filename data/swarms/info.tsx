@@ -65,7 +65,7 @@ Join the revolution in AI-powered content creation with SLOP FATHER - where ever
     },
     {
         id: 'digitalkin-partner-id',
-        pool: '7ddi6VPLkwmUudc6ay7jQugcfQcP9g9VjcUErJLKcJnP',
+        pool: '',
         image: '/swarms/digitalkin.png',
         models: ['KinOS', 'Claude Haiku'],
         name: 'DigitalKin',
