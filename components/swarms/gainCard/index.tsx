@@ -1,3 +1,5 @@
+'use client';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 interface SwarmGainCardProps {
@@ -9,6 +11,7 @@ interface SwarmGainCardProps {
 }
 
 export const SwarmGainCard = ({ name, multiple, image, className = '', launchMode = false }: SwarmGainCardProps) => {
+    const [imageLoaded, setImageLoaded] = useState(false);
     const priceInUSD = launchMode ? "0.007" : (multiple * 0.007).toFixed(3);
 
     return (
@@ -33,6 +36,7 @@ export const SwarmGainCard = ({ name, multiple, image, className = '', launchMod
                         width={144}
                         height={144}
                         className="object-cover"
+                        onLoad={() => setImageLoaded(true)}
                     />
                 </div>
             </div>

@@ -1,8 +1,16 @@
+'use client';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { SwarmGainCard } from '@/components/swarms/gainCard';
 import { previews } from '@/data/swarms/previews';
+import { exportCards } from '@/utils/exportCards';
 
 export default function SwarmGainersPage() {
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
     const gainers = [
         { name: 'DigitalKin', value: 25, image: '/swarms/digitalkin.png' },
         { name: 'Kin Kong', value: 22, image: '/swarms/kinkong.jpg' },
@@ -89,6 +97,17 @@ export default function SwarmGainersPage() {
                         </div>
                     ))}
                 </div>
+
+                {isClient && (
+                    <div className="fixed bottom-8 right-8 z-50">
+                        <button
+                            onClick={() => exportCards('.swarm-card')}
+                            className="px-6 py-3 bg-yellow-400 text-black rounded-lg font-bold hover:bg-yellow-300 transition-colors"
+                        >
+                            Export All Cards
+                        </button>
+                    </div>
+                )}
 
                 {/* Cards grid */}
                 <div className="grid grid-cols-2 gap-16 mt-40 max-w-[2000px] mx-auto">
