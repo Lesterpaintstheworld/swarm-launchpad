@@ -7,10 +7,20 @@ import { exportCards } from '@/utils/exportCards';
 
 export default function SwarmGainersPage() {
     const [isClient, setIsClient] = useState(false);
+    const [isExporting, setIsExporting] = useState(false);
 
     useEffect(() => {
         setIsClient(true);
     }, []);
+
+    const handleExport = async () => {
+        setIsExporting(true);
+        try {
+            await exportCards('.swarm-card');
+        } finally {
+            setIsExporting(false);
+        }
+    };
     const gainers = [
         { name: 'DigitalKin', value: 25, image: '/swarms/digitalkin.png' },
         { name: 'Kin Kong', value: 22, image: '/swarms/kinkong.jpg' },
@@ -101,10 +111,11 @@ export default function SwarmGainersPage() {
                 {isClient && (
                     <div className="fixed bottom-8 right-8 z-50">
                         <button
-                            onClick={() => exportCards('.swarm-card')}
-                            className="px-6 py-3 bg-yellow-400 text-black rounded-lg font-bold hover:bg-yellow-300 transition-colors"
+                            onClick={handleExport}
+                            disabled={isExporting}
+                            className="px-6 py-3 bg-yellow-400 text-black rounded-lg font-bold hover:bg-yellow-300 transition-colors disabled:opacity-50"
                         >
-                            Export All Cards
+                            {isExporting ? 'Exporting...' : 'Export All Cards'}
                         </button>
                     </div>
                 )}
