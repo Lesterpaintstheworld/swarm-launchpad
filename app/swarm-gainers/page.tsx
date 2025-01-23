@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { SwarmGainCard } from '@/components/swarms/gainCard';
+import { previews } from '@/data/swarms/previews';
 
 export default function SwarmGainersPage() {
     const gainers = [
@@ -90,13 +91,13 @@ export default function SwarmGainersPage() {
                 </div>
 
                 {/* Cards grid */}
-                <div className="grid grid-cols-3 gap-8">
-                    {gainers.map((gainer) => (
+                <div className="grid grid-cols-2 gap-12 mt-32 max-w-[1400px] mx-auto">
+                    {previews.map((swarm) => (
                         <SwarmGainCard
-                            key={gainer.name}
-                            name={gainer.name}
-                            multiple={gainer.value}
-                            image={gainer.image}
+                            key={swarm.id}
+                            name={swarm.name}
+                            multiple={gainers.find(g => g.name === swarm.name)?.value || 1}
+                            image={swarm.image}
                         />
                     ))}
                 </div>
