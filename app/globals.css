@@ -69,11 +69,11 @@
 .metallic-bg-ubc {
 	background: linear-gradient(
     120deg,
-    #f59e0b 0%,
-    #fbbf24 10%,
-    #dfbb2f 20%,
-    #fbbf24 30%,
-    #f59e0b 40%
+    #f59f0bc0 0%,
+    #fbbe24ca 10%,
+    #dfbc2fd0 20%,
+    #fbbe24cf 30%,
+    #f59f0bd0 40%
   );
 }
 

@@ -2,7 +2,7 @@
 
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { Connection, Keypair, LAMPORTS_PER_SOL, PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY, Transaction } from '@solana/web3.js'
-import { createAssociatedTokenAccountInstruction, getAssociatedTokenAddress } from '@solana/spl-token';
+import { createAssociatedTokenAccountInstruction, createTransferInstruction, getAssociatedTokenAddress } from '@solana/spl-token';
 import { getMint } from "@solana/spl-token";
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
@@ -173,7 +173,7 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
     })
 
     const purchaseShares = useMutation({
-        mutationKey: ['shares', 'purchase', pool.toString()],
+        mutationKey: ['shares', 'purchase', pool?.toString() ?? 'unknown'],
         mutationFn: async ({
             numberOfShares,
             calculatedCost
@@ -181,30 +181,29 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
             numberOfShares: number,
             calculatedCost: number
         }) => {
-            if (!publicKey) throw new Error('Wallet not connected')
-                if (!poolAccount.data) throw new Error('Pool data not loaded')
+            // Early validation
+            if (!publicKey) throw new Error('Wallet not connected');
+            if (!pool) throw new Error('Pool address is undefined');
+            if (!poolAccount.data) throw new Error('Pool data not loaded');
     
+            try {
                 // Get token accounts
                 const senderComputeAccount = await getAssociatedTokenAddress(
-                    poolAccount.data.computeMint,
+                    computeMint,
                     publicKey
-                )
-                const swarmComputeAccount = await getAssociatedTokenAddress(
-                    poolAccount.data.computeMint,
-                    poolAccount.data.swarmAccount
-                )
+                );
                 const senderUbcAccount = await getAssociatedTokenAddress(
-                    poolAccount.data.ubcMint,
+                    ubcMint, 
                     publicKey
-                )
-                const partnerUbcAccount = await getAssociatedTokenAddress(
-                    poolAccount.data.ubcMint,
-                    poolAccount.data.partnerAccount
-                )
-                const platformUbcAccount = await getAssociatedTokenAddress(
-                    poolAccount.data.ubcMint,
-                    poolAccount.data.platformAccount
-                )
+                );
+                const custodialComputeAccount = await getAssociatedTokenAddress(
+                    computeMint,  // Use computeMint, not ubcMint
+                    poolAccount.data.custodialAccount
+                );
+                const custodialUbcAccount = await getAssociatedTokenAddress(
+                    ubcMint,  // Keep this as ubcMint
+                    poolAccount.data.custodialAccount
+                );
     
                 // Generate the shareholder PDA
                 const [shareholderPda] = PublicKey.findProgramAddressSync(
@@ -215,75 +214,70 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                     ],
                     program.programId
                 );
-    
-                // console.log('Sending purchase transaction with accounts:', {
-                //     pool: pool.toString(),
-                //     shareholder: shareholderPda.toString(),
-                //     computeMintAccount: poolAccount.data.computeMint.toString(),
-                //     ubcMintAccount: poolAccount.data.ubcMint.toString(),
-                //     senderComputeAccount: senderComputeAccount.toString(),
-                //     senderUbcAccount: senderUbcAccount.toString(),
-                //     swarmAccount: poolAccount.data.swarmAccount.toString(),
-                //     swarmComputeAccount: swarmComputeAccount.toString(),
-                //     partnerAccount: poolAccount.data.partnerAccount.toString(),
-                //     partnerUbcAccount: partnerUbcAccount.toString(),
-                //     platformAccount: poolAccount.data.platformAccount.toString(),
-                //     platformUbcAccount: platformUbcAccount.toString(),
-                //     buyer: publicKey.toString()
-                // });
+
+                const computeTransferIx = createTransferInstruction(
+                    senderComputeAccount,       // from
+                    custodialComputeAccount,    // to
+                    publicKey,                  // authority
+                    calculatedCost * Math.pow(10, 6)  // amount in token units
+                );
+                
+                // If UBC needs to be transferred as well, create that instruction
+                const ubcTransferIx = createTransferInstruction(
+                    senderUbcAccount,          // from
+                    custodialUbcAccount,       // to
+                    publicKey,                 // authority
+                    calculatedCost * Math.pow(10, 6)  // amount in token units
+                );
     
                 // Send the purchase transaction
-                // const txInstructions = await program.methods
-                return program.methods
+                // return await program.methods
+                const tx = await program.methods
                     .purchaseShares(
                         new BN(numberOfShares),
                         new BN(calculatedCost * Math.pow(10, 6))
                     )
                     .accounts({
                         pool,
-                        // @ts-ignore
                         shareholder: shareholderPda,
                         computeMintAccount: poolAccount.data.computeMint,
                         ubcMintAccount: poolAccount.data.ubcMint,
                         senderComputeAccount,
                         senderUbcAccount,
-                        swarmAccount: poolAccount.data.swarmAccount,
-                        swarmComputeAccount,
-                        partnerAccount: poolAccount.data.partnerAccount,
-                        partnerUbcAccount,
-                        platformAccount: poolAccount.data.platformAccount,
-                        platformUbcAccount,
+                        custodialAccount: poolAccount.data.custodialAccount,
+                        custodialComputeAccount,
+                        custodialUbcAccount,
                         buyer: publicKey,
                         systemProgram: SystemProgram.programId,
                         tokenProgram: TOKEN_PROGRAM_ID,
                         associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID
                     })
+                    .preInstructions([
+                        computeTransferIx,
+                        ubcTransferIx
+                    ])
                     .rpc();
                 
-                    // txInstructions.instructions.forEach((ix, i) => {
-                    //     console.log(`Instruction ${i}:`, {
-                    //         programId: ix.programId.toString(),
-                    //         keys: ix.keys.map(k => ({
-                    //             pubkey: k.pubkey.toString(),
-                    //             isSigner: k.isSigner,
-                    //             isWritable: k.isWritable
-                    //         })),
-                    //     });
-                    // });
+                    toast(`Success! Your transaction signature is: ${tx}`, { duration: 20000 });
+
+            } catch (error) {
+                console.error('Purchase shares error:', error);
+                throw error;
+            }
         }
-    })
+    });
 
     // Get shareholder account data if wallet is connected
-    // const shareholderAccount = useQuery({
-    //     queryKey: ['shareholder', 'fetch', pool.toBase58(), publicKey?.toBase58(), network],
-    //     queryFn: async () => {
-    //         if (!publicKey) throw new Error('Wallet not connected')
-    //         const pda = await getShareholderPDA(program.programId, publicKey, pool)
-    //         if (!pda) throw new Error('Failed to generate shareholder PDA')
-    //         return program.account.shareholder.fetch(pda)
-    //     },
-    //     enabled: !!pool && !!publicKey && !!program
-    // })
+    const shareholderAccount = useQuery({
+        queryKey: ['shareholder', 'fetch', pool.toBase58(), publicKey?.toBase58(), network],
+        queryFn: async () => {
+            if (!publicKey) throw new Error('Wallet not connected')
+            const pda = await getShareholderPDA(program.programId, publicKey, pool)
+            if (!pda) throw new Error('Failed to generate shareholder PDA')
+            return program.account.shareholder.fetch(pda)
+        },
+        enabled: !!pool && !!publicKey && !!program
+    })
 
     // Create share listing
     // const createListing = useMutation({
@@ -381,7 +375,7 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
     return {
         poolAccount,
         purchaseShares,
-        // shareholderAccount,
+        shareholderAccount,
         // createListing,
         // cancelListing,
         // buyListing

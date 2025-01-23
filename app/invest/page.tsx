@@ -6,7 +6,6 @@ export default function Invest() {
 
     return (
         <main className="container view">
-            <BackgroundBlur />
             <div className="h-80 flex flex-col items-center justify-center gap-3">
                 <h2 className="text-center">Invest in our <span className="font-bold">AI Swarms</span></h2>
                 <div className="text-muted flex flex-row flex-wrap text-lg items-center justify-center">

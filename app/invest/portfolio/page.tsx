@@ -37,6 +37,8 @@ function PortfolioContent() {
 
     const { connected } = useWallet();
 
+    // const { program } = useLaunchpadProgram();
+
     // Handle wallet not connected
     if (!connected) {
         return (

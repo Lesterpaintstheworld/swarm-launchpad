@@ -27,26 +27,30 @@ export async function sleep(ms: number) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export function calculateCostPerShareWithBondingCurve(supply: number, maxSupply: number = 100000) {
-    // Normalize x to be between 0 and 1
-    const x = supply / maxSupply;
-    // Base formula: P(x) = 1 + 999 * (0.4 * x + 0.6 * x^1.8)
-    const basePrice = 1 + 999 * (0.4 * x + 0.6 * Math.pow(x, 1.8));
+export function calculateSharePrice(n: number): number {
+    // Calculate cycle and position within cycle
+    const cycle = Math.floor(n / 5000);
+    const x = n % 5000;
     
-    // Apply the cyclical variation
-    // const cycle = Math.floor(supply / 5000);
-    const position = supply % 5000;
+    // Calculate base price with 35% growth per cycle
+    const base = Math.pow(1.35, cycle);
     
-    let multiplier;
-    if (position <= 1250) {
-        multiplier = 1 + (0.30 * position / 1250);
-    } else if (position <= 2500) {
-        multiplier = 1.30 - (0.30 * (position - 1250) / 1250);
-    } else if (position <= 3750) {
-        multiplier = 1 - (0.30 * (position - 2500) / 1250);
+    // Calculate multiplier based on position in cycle
+    let multiplier: number;
+    if (x <= 1250) {
+        // Phase 1: Linear up to +30%
+        multiplier = 1 + (0.30 * x / 1250);
+    } else if (x <= 2500) {
+        // Phase 2: Linear down to base
+        multiplier = 1.30 - (0.30 * (x - 1250) / 1250);
+    } else if (x <= 3750) {
+        // Phase 3: Linear down to -30%
+        multiplier = 1 - (0.30 * (x - 2500) / 1250);
     } else {
-        multiplier = 0.70 + (0.30 * (position - 3750) / 1250);
+        // Phase 4: Linear up to base
+        multiplier = 0.70 + (0.30 * (x - 3750) / 1250);
     }
     
-    return basePrice * multiplier;
+    // Return price with 6 decimal places of precision
+    return base * multiplier;
 }

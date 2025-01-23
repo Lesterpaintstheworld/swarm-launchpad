@@ -7,17 +7,18 @@ import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
 import { supportedTokens } from "@/data/tokens/supported";
 import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
-import { cn, IntlNumberFormat, IntlNumberFormatCompact } from "@/lib/utils";
+import { calculateSharePrice, cn, IntlNumberFormat, IntlNumberFormatCompact } from "@/lib/utils";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Link from "next/link";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 
 interface SwarmInvestCardProps {
     pool: string;
     className?: string;
 }
 
-const SwarmInvestCard = ({ className }: SwarmInvestCardProps) => {
+const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
 
     const { connected } = useWallet();
 
@@ -36,12 +37,11 @@ const SwarmInvestCard = ({ className }: SwarmInvestCardProps) => {
     const { poolAccount, purchaseShares } = useLaunchpadProgramAccount({ poolAddress: pool });
 
     useEffect(() => {
-        console.log(poolAccount.data);
+        console.log(poolAccount.data && poolAccount.data.feeRatio.toNumber());
         setData({
             totalSupply: poolAccount.data?.totalShares.toNumber(),
             remainingSupply: poolAccount.data?.availableShares.toNumber(),
-            // pricePerShare: calculateCostPerShareWithBondingCurve(poolAccount.data?.totalShares.toNumber() - poolAccount.data?.availableShares.toNumber())
-            pricePerShare: 250
+            pricePerShare: calculateSharePrice(poolAccount.data?.totalShares.toNumber() - poolAccount.data?.availableShares.toNumber()),
         })
     }, [poolAccount.data, pools.data]);
 
@@ -68,9 +68,9 @@ const SwarmInvestCard = ({ className }: SwarmInvestCardProps) => {
     return (
         <Card className={cn("w-full", className)}>
             <div className="w-full flex flex-row justify-between items-center">
-                <h4>Invest</h4>
+                <h4>Purchase Shares</h4>
                 <div className="flex flex-row items-center gap-1">
-                    <p className="text-muted">Total Shares: {IntlNumberFormatCompact(data.totalSupply) || 0}</p>
+                    <p className="text-muted">Available: <strong>{IntlNumberFormatCompact(data.remainingSupply) || 0}</strong></p>
                 </div>
             </div>
             <div className="flex flex-col gap-8 md:flex-row md:gap-none justify-between mt-6">
@@ -94,7 +94,7 @@ const SwarmInvestCard = ({ className }: SwarmInvestCardProps) => {
                     </div>
                     <div className="flex flex-row justify-between items-center px-4 mt-2">
                         <p className="text-sm text-muted">1 share = {IntlNumberFormat(data.pricePerShare)} $COMPUTE</p>
-                        <p className="text-sm text-muted">Remaining: {IntlNumberFormatCompact(data.remainingSupply)}</p>
+                        <p className="text-sm text-muted">Total supply: {IntlNumberFormatCompact(data.totalSupply)}</p>
                     </div>
                 </div>
                 <div className="flex flex-col basis-1/2 md:max-w-[48%]">

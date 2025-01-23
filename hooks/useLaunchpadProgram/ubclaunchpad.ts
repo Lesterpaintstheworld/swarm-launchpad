@@ -1185,16 +1185,16 @@ export type Ubclaunchpad = {
       "args": []
     },
     {
-      "name": "setCustodiaAccount",
+      "name": "setCustodialAccount",
       "discriminator": [
-        34,
-        44,
-        4,
-        75,
-        62,
-        251,
-        83,
-        42
+        244,
+        121,
+        199,
+        7,
+        101,
+        146,
+        152,
+        68
       ],
       "accounts": [
         {
@@ -1508,7 +1508,7 @@ export type Ubclaunchpad = {
     {
       "name": "upgradeAuthority",
       "type": "string",
-      "value": "\"4zP3QHUvTcosCEKgJzbGJNEjTN4vcnNCHeFsCYyezAbg\""
+      "value": "\"DKc63ukZvHo1vfQMYWxk27EconWJ5tMjYrEaFmhpejZf\""
     }
   ]
 };

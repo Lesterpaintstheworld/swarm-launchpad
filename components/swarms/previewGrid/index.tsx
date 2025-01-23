@@ -81,7 +81,7 @@ const SwarmsPreviewGrid = ({}: SwarmsPreviewGridProps) => {
     return (
         <TooltipProvider>
             <Search value={searchValue} onInputChange={setSearchValue} />
-            <div className="flex flex-col gap-12 mt-8">
+            <div className="flex flex-col gap-12 mt-8 sm:mb-20">
                 {showPartner && (
                     <div>
                     <SwarmTypeHeader type="partner" icon="🤝" title="Partner Swarms" />
