@@ -27,10 +27,6 @@ export default function Portfolio() {
 
     const poolIds: string[] = extractKey(SwarmData, 'pool') || [];
 
-    if(!connected) {
-        redirect('/invest')
-    }
-
     useEffect(() => {
 
         if (!connected || !publicKey || poolIds.length < 1) {
