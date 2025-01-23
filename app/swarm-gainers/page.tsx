@@ -3,13 +3,12 @@ import { BarChart } from '@/components/charts/bar';
 import Image from 'next/image';
 
 export default function SwarmGainersPage() {
-    // Sort swarms by multiple and take top 10
     const topGainers = [...previews]
         .sort((a, b) => (b.multiple || 0) - (a.multiple || 0))
         .slice(0, 10);
 
     const chartData = topGainers.map(swarm => ({
-        label: swarm.name,
+        label: '', // Empty label since we'll show images below
         value: swarm.multiple || 0,
         toolTipContent: (
             <div className="flex items-center gap-2 p-2">
@@ -39,14 +38,16 @@ export default function SwarmGainersPage() {
                             barColor="from-yellow-600 to-yellow-400"
                             showValues
                             valueFormat={(value) => `${value.toFixed(1)}%`}
+                            showAxis={true}
+                            yAxisLabel="Gain (%)"
                         />
                     </div>
 
-                    {/* Icons below the chart */}
-                    <div className="flex justify-between mt-8 px-12">
+                    {/* Images directly below each bar */}
+                    <div className="flex justify-between px-12 -mt-8">
                         {topGainers.map((swarm) => (
-                            <div key={swarm.id} className="flex flex-col items-center">
-                                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-yellow-400/50 bg-white">
+                            <div key={swarm.id} className="flex flex-col items-center w-16">
+                                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-yellow-400/50 bg-white shadow-lg shadow-yellow-400/20">
                                     <Image
                                         src={swarm.image}
                                         alt={swarm.name}
@@ -55,7 +56,9 @@ export default function SwarmGainersPage() {
                                         className="object-cover"
                                     />
                                 </div>
-                                <span className="text-yellow-400 text-xs mt-2">${swarm.name}</span>
+                                <span className="text-yellow-400 text-xs mt-2 text-center">
+                                    {swarm.name}
+                                </span>
                             </div>
                         ))}
                     </div>
