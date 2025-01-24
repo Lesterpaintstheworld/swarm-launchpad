@@ -85,11 +85,11 @@ export default function GetCompute() {
 
                 {/* Three boxes */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-[1000px]">
-                    {/* Public Sale */}
+                    {/* DEXScreener */}
                     <div className="flex flex-col gap-4 p-10 rounded-xl bg-black/20 border border-white/5 backdrop-blur-sm hover:border-white/10 transition-all h-full">
                         <div className="flex flex-col gap-2 flex-grow">
                             <div className="flex items-center gap-2">
-                                <h3 className="text-xl font-semibold">Public Sale (LBP)</h3>
+                                <h3 className="text-xl font-semibold">Price Chart</h3>
                                 <Tooltip>
                                     <TooltipTrigger>
                                         <span className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors inline-flex items-center justify-center rounded-full border border-muted-foreground/50">
@@ -97,20 +97,20 @@ export default function GetCompute() {
                                         </span>
                                     </TooltipTrigger>
                                     <TooltipContent className="max-w-[300px] p-4">
-                                        <p>A Liquidity Bootstrapping Pool (LBP) is a fair launch mechanism that prevents price manipulation and whale dominance. It starts at a higher price and gradually decreases, allowing for price discovery and equal participation opportunities for all investors.</p>
+                                        <p>View real-time price charts, trading volume, and market data for $COMPUTE token.</p>
                                     </TooltipContent>
                                 </Tooltip>
                             </div>
-                            <p className="text-sm text-muted-foreground">Purchase tokens directly from the public sale</p>
+                            <p className="text-sm text-muted-foreground">Track $COMPUTE market performance</p>
                         </div>
                         <div className="flex items-center gap-2 mb-4">
-                            <span className="text-lg"><span className="metallic-text">$COMPUTE</span> Opening: $0.0581</span>
+                            <span className="text-lg"><span className="metallic-text">$COMPUTE</span> Analytics</span>
                         </div>
                         <Button 
                             className="w-full bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none mt-auto"
-                            onClick={() => window.open('https://app.fjordfoundry.com/token-sales/4Jot2JtKav3Xd8tSQ2XdMErhnHFab2yushSfXF6BXwq6', '_blank')}
+                            onClick={() => window.open('https://dexscreener.com/solana/7evj9p1m9qenwlypwwbbgwrwdttcwo6r2a7j7xu19tnw', '_blank')}
                         >
-                            Buy Now
+                            View Chart
                         </Button>
                     </div>
 
