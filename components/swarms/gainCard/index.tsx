@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { captureElement } from '@/utils/captureElement';
 
@@ -12,7 +12,6 @@ interface SwarmGainCardProps {
 }
 
 export const SwarmGainCard = ({ name, multiple, image, className = '', launchMode = false }: SwarmGainCardProps) => {
-    const [imageLoaded, setImageLoaded] = useState(false);
     const priceInUSD = launchMode ? "0.007" : (multiple * 0.007).toFixed(3);
 
     const handleCapture = async (event: React.MouseEvent<HTMLDivElement>) => {
@@ -79,7 +78,6 @@ export const SwarmGainCard = ({ name, multiple, image, className = '', launchMod
                             width={144}
                             height={144}
                             className="object-cover"
-                            onLoad={() => setImageLoaded(true)}
                             unoptimized
                         />
                     </div>
