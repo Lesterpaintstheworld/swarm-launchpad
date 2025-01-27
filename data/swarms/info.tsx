@@ -192,6 +192,7 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         image: '/swarms/xforge.png',
         models: ['KinOS'],
         name: 'XForge',
+        pool: 'AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi',
         description: `# XForge: Bridging UBC and Development Partners
 
 XForge orchestrates the development of AI swarms by partnering with top-tier technical providers. As development managers, we create value by efficiently coordinating between UBC's vision and our network of specialized developers, with our processes becoming increasingly automated through AI agents.

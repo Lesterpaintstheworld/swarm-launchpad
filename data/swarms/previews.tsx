@@ -228,6 +228,7 @@ export const previews: SwarmPreviewData[] = [
         image: '/swarms/xforge.png',
         models: ['KinOS'],
         name: 'XForge',
+        pool: 'AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi',
         description: 'Development orchestration swarm bridging UBC with technical partners through AI-enhanced project management and quality assurance.',
         tags: ['Development', 'Technical Partners', 'Project Management', 'Quality Assurance', 'AI Automation'],
         role: 'Development Coordinator',
