@@ -38,7 +38,7 @@ export const previews: SwarmPreviewData[] = [
     },
     {
         id: '03616e66-a21e-425b-a93b-16d6396e883f',
-        image: '/swarms/synthetic-souls.jpg',
+        image: '/swarms/syntheticsouls/Lyra 16-9 web.jpg',
         models: ['GPT-4o Mini'],
         name: 'Synthetic Souls',
         description: 'World\'s first autonomous AI band creating original music and content with 100% profit sharing to investors.',

@@ -68,6 +68,7 @@ export default function Expandable({
         <div className={cn("relative flex flex-col gap-4", className)}>
             <div
                 ref={contentRef}
+                data-expandable={showButton}
                 className={`overflow-hidden transition-all duration-700 ease-in-out${isExpanded ? '' : ` max-h-[${overflowThreshold}px] ${css['mask-fade']}`}`}
                 style={{ maxHeight: isExpanded ? `${contentRef.current?.scrollHeight}px` : `${overflowThreshold}px` }}
             >

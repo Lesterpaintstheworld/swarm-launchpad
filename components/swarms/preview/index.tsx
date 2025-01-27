@@ -10,11 +10,11 @@ import { useState } from 'react';
 import { cn } from "@/lib/utils";
 
 const getRevenueShareColor = (revenueShare: number) => {
-    if (revenueShare === 50) return "bg-purple-500/10 text-purple-500";
-    if (revenueShare < 60) return "bg-red-500/10 text-red-500";
-    if (revenueShare < 75) return "bg-yellow-500/10 text-yellow-500";
-    if (revenueShare < 100) return "bg-green-500/10 text-green-500";
-    return "bg-blue-500/10 text-blue-500";
+    if (revenueShare === 50) return "bg-purple-500/70 text-foreground";
+    if (revenueShare < 60) return "bg-red-500/70 text-foreground";
+    if (revenueShare < 75) return "bg-yellow-500/70 text-foreground";
+    if (revenueShare < 100) return "bg-green-500/70 text-foreground";
+    return "bg-blue-500/70 text-foreground";
 }
 
 interface SwarmPreviewCardProps {
@@ -33,7 +33,7 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
             className="h-full"
         >
             <Link href={`/invest/${swarm.id}`} className="block transition-all duration-200 h-full">
-                <Card className="p-2 md:max-w-[300px] w-full h-full flex flex-col cursor-pointer hover:shadow-lg hover:border-foreground/30 transition-colors">
+                <Card className="p-2 md:max-w-[300px] w-full h-full flex flex-col cursor-pointer hover:shadow-lg hover:border-foreground/30 transition-colors relative">
                     <Image
                         src={imgSrc}
                         alt={`${swarm.name} image`}
@@ -44,50 +44,42 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
                             setImgSrc('/default.png')
                         }}
                     />
-                    <div className="flex flex-col h-full px-[2px]">
-                        {/* Title and Autonomy with more space */}
-                        <div className="flex items-center justify-between mt-4 mb-4">
-                            <p className="text-lg font-medium">{swarm.name}</p>
-                            <TooltipProvider>
-                                <Tooltip>
-                                    <TooltipTrigger>
-                                        <div className={cn(
-                                            "px-2 py-0.5 text-[10px] font-medium rounded-full",
-                                            getRevenueShareColor(swarm.revenueShare)
-                                        )}>
-                                            Revenue Share: {swarm.revenueShare}%
-                                        </div>
-                                    </TooltipTrigger>
-                                    <TooltipContent className="max-w-[200px] text-center">
-                                        <p>Percentage of revenue shared with investors</p>
-                                    </TooltipContent>
-                                </Tooltip>
-                            </TooltipProvider>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <div className={cn(
+                                    "px-2 py-1 mt-1.5 ml-1.5 text-xs font-medium rounded-[6px] w-fit absolute",
+                                    getRevenueShareColor(swarm.revenueShare)
+                                )}>
+                                    {swarm.revenueShare}%
+                                </div>
+                            </TooltipTrigger>
+                            <TooltipContent className="max-w-[200px] text-center">
+                                <p>Percentage of revenue shared with investors</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                    <div className="flex flex-col h-full px-[4px]">
+                        <div className="flex flex-row overflow-scroll gap-1 mt-2 mb-2">
+                            {swarm.tags.map((tag, index) => (
+                                <Tag className="text-[10px] font-normal px-2 py-0.5 text-muted-foreground" key={index}>
+                                    {tag}
+                                </Tag>
+                            ))}
                         </div>
+                        <p className="text-lg font-medium">{swarm.name}</p>
+                        {/* Title and Autonomy with more space */}
                         
                         {/* Description in white */}
-                        <p className="text-white text-sm text-truncate line-clamp-4">{swarm.description}</p>
-                        
-                        {/* Spacer to push tags and button to bottom */}
-                        <div className="flex-grow" />
+                        <p className="text-muted text-sm text-truncate line-clamp-4 mt-2">{swarm.description}</p>
                         
                         {/* Footer section with tags and button */}
-                        <div className="mt-auto">
-                            <div className="flex flex-row flex-wrap gap-1.5 mb-3">
-                                {swarm.tags.map((tag, index) => (
-                                    <Tag className="text-[10px] font-normal px-2 py-0.5 text-muted-foreground" key={index}>
-                                        {tag}
-                                    </Tag>
-                                ))}
-                            </div>
-                            
-                            <Button 
-                                variant='default'
-                                className="w-full bg-[#1e3a8a] hover:bg-[#172554] text-white border-[#172554] hover:text-white"
-                            >
-                                Invest
-                            </Button>
-                        </div>
+                        <Button 
+                            variant='default'
+                            className="w-full bg-[#1e3a8a] hover:bg-[#172554] text-white border-[#172554] hover:text-white mb-1 mt-8"
+                        >
+                            Invest
+                        </Button>
                     </div>
                 </Card>
             </Link>

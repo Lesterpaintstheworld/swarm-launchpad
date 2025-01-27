@@ -5,6 +5,10 @@ import { TerminalVelocityDescription } from "./descriptions/terminalvelocity"
 import { SyntheticSoulsDescription } from "./descriptions/syntheticsouls"
 import { DuoAIDescription } from "./descriptions/duoai"
 
+export const getSwarmUsingPoolId = (poolId: string) => SwarmData.filter(swarm => swarm.pool === poolId)[0];
+export const getSwarmInfo = (swarmId: string) => SwarmData.filter(swarm => swarm.id === swarmId)[0];
+
+
 export const SwarmData: SwarmInfo[] = [
     {
         id: 'slopfather-partner-id',
@@ -12,9 +16,7 @@ export const SwarmData: SwarmInfo[] = [
         models: ['Video AI', 'GPT-4V'],
         name: 'SLOP FATHER',
         gallery: [
-            { type: 'image', content: '/swarms/slopfather.png' },
-            { type: 'image', content: '/default.png' },
-            { type: 'image', content: '/default.png' }
+            { type: 'image', content: '/swarms/slopfather.png' }
         ],
         description: `# SLOP FATHER - The Future of AI Content Creation
 
@@ -64,9 +66,8 @@ Join the revolution in AI-powered content creation with SLOP FATHER - where ever
         image: '/swarms/digitalkin.png',
         models: ['KinOS', 'Claude Haiku'],
         name: 'DigitalKin',
-        pool: 'Ccd141Zg8CRrxA2MfUu3Hr5iCBz2PhTYsdU2pNQAwvdJ',
+        pool: 'FM6aFbs9cQ6Jrp3GJPABBVxpLnGFEZZD3tSJ5JGCUsyZ',
         gallery: [
-            { type: 'video', content: 'https://www.youtube.com/watch?v=WcWWTgL8ouc' },
             { type: 'image', content: '/swarms/digitalkin/1.png' },
             { type: 'image', content: '/swarms/digitalkin/2.png' },
             { type: 'image', content: '/swarms/digitalkin/3.png' }
@@ -100,6 +101,7 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         image: '/swarms/kinkong.jpg',
         models: ['GPT-4o Mini', 'Claude Haiku'],
         name: 'Kin Kong',
+        pool: 'FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz',
         gallery: [
             { type: 'image', content: '/swarms/kinkong/1_KinKong-Advanced-AI-Trading-Agent.png' },
             { type: 'image', content: '/swarms/kinkong/2_How-KinKong-Works.png' },
@@ -116,13 +118,13 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         tags: ['AI', 'OpenAI'],
         role: 'Lorem ipsum',
         swarmType: 'partner',
-        pool: 'BMos5kWkgdXQvc6Lxf4ZYQyBNprJHREdU6iwmEibJSjY',
     },
     {
         id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',
         image: '/swarms/swarm-ventures.jpg',
         models: ['Claude Haiku'],
         name: 'Swarm Ventures',
+        pool: '911eRdu96ncdnmEUYA3UQ39gEtE9ueg7UbqycKuKweCG',
         gallery: [
             { type: 'image', content: '/swarms/swarmventures/1.jpg' },
             { type: 'image', content: '/swarms/swarmventures/2.jpg' },
@@ -140,9 +142,7 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         models: ['Claude Haiku'],
         name: 'Terminal Velocity',
         gallery: [
-            { type: 'image', content: '/swarms/terminal-velocity.jpg' },
-            { type: 'image', content: '/default.png' },
-            { type: 'image', content: '/default.png' }
+            { type: 'image', content: '/swarms/terminal-velocity.jpg' }
         ],
         description: TerminalVelocityDescription,
         programAddress: '',
@@ -152,14 +152,13 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
     },
     {
         id: '03616e66-a21e-425b-a93b-16d6396e883f',
-        image: '/swarms/synthetic-souls.jpg',
+        image: '/swarms/syntheticsouls/Lyra 16-9 web.jpg',
         models: ['GPT-4o Mini'],
         name: 'Synthetic Souls',
+        pool: 'CmC2AUuurX19TLBVQbpNct8pmEjaHsRj6o8SLBAVvxAk',
         description: SyntheticSoulsDescription,
         gallery: [
-            { type: 'image', content: '/swarms/synthetic-souls.jpg' },
-            { type: 'image', content: '/default.png' },
-            { type: 'image', content: '/default.png' }
+            { type: 'image', content: '/swarms/syntheticsouls/Lyra 16-9 web.jpg' }
         ],
         programAddress: '',
         tags: ['AI', 'OpenAI'],
@@ -171,10 +170,9 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         image: '/swarms/duoai.jpg',
         models: ['GPT-4o Mini', 'KinOS'],
         name: 'DuoAI',
+        pool: '68K6BBsPynRbLkjJzdQmKMvTPLaUiKb93BUwbJfjqepS',
         gallery: [
-            { type: 'image', content: '/swarms/duoai.jpg' },
-            { type: 'image', content: '/default.png' },
-            { type: 'image', content: '/default.png' }
+            { type: 'image', content: '/swarms/duoai.jpg' }
         ],
         description: DuoAIDescription,
         programAddress: '',
@@ -187,6 +185,7 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         image: '/swarms/property.png',
         models: ['KinOS', 'GPT-4V'],
         name: 'PropertyKin',
+        pool: '6HnxTkNhQaoYRkPyZD1zTH5WBvFGLes5X2vrH66roa5G',
         gallery: [
             { type: 'image', content: '/swarms/propertykin/1_PropertyKin-The-Future-of-Real-Estate-Arbitrage.png' },
             { type: 'image', content: '/swarms/propertykin/2_The-PropertyKin-Advantage-AI-Powered-Contract-Flipping.png' },
@@ -239,6 +238,7 @@ Join the arbitrage revolution with PropertyKin.`,
         image: '/swarms/mental-health.jpg',
         models: ['KinOS'],
         name: 'TherapyKin',
+        pool: '5wWLpeH2DDrAS9Lxx1nGnwtMTvu7U9txf4BuXxdN6V6H',
         gallery: [
             { type: 'image', content: '/swarms/mental-health.jpg' }
         ],
@@ -282,6 +282,7 @@ Join us in revolutionizing mental health practice management with AI.`,
         image: '/swarms/book.png',
         models: ['KinOS'],
         name: 'PublishKin',
+        pool: 'Dt7iwGTgRVZGV2NZFvNtrWVNX77s8ejGdhB2XaR4DxX6',
         gallery: [
             { type: 'image', content: '/swarms/book.png' }
         ],
@@ -435,6 +436,7 @@ Join us in redefining how children learn through AI-powered play.`,
         image: '/swarms/talentaid.jpg',
         models: ['KinOS'],
         name: 'TalentKin',
+        pool: 'DTFE1peg5aNe8gFuaT9KZe8TJ4RHks9prpd12iUBKwi4',
         gallery: [
             { type: 'image', content: '/swarms/talentaid.jpg' }
         ],
@@ -478,6 +480,7 @@ Join us in transforming recruitment with AI-powered innovation.`,
         image: '/swarms/carehive.jpg',
         models: ['KinOS'],
         name: 'CareHive',
+        pool: 'FHXsVnEfqHQBQS6An4icuSD5ewwn5WWkoj2LWRMGw4mb',
         gallery: [
             { type: 'image', content: '/swarms/carehive.jpg' }
         ],
@@ -521,6 +524,7 @@ Join us in transforming healthcare practice management with AI.`,
         image: '/swarms/commercenest.jpg',
         models: ['KinOS'],
         name: 'CommerceNest',
+        pool: '9hAfNquoNDbvzcEc1rBG8JzbWRskAsjKm7sYbarRfxyj',
         gallery: [
             { type: 'image', content: '/swarms/commercenest.jpg' }
         ],
@@ -564,6 +568,7 @@ Join us in transforming e-commerce with AI-powered automation.`,
         image: '/swarms/affiliate.jpeg',
         models: ['KinOS'],
         name: 'ProfitBeeAI',
+        pool: '7AEP5qWyPF92Wgv6tLCwe51e8yrF3WwSzSef5Vg7RQt4',
         gallery: [
             { type: 'image', content: '/swarms/affiliate.jpeg' }
         ],
@@ -760,6 +765,7 @@ DeskMate solves these by providing:
         logo: '/swarms/stumped.jpg',
         models: ['KinOS'],
         name: 'STUMPED',
+        pool: '5wL5rah4gWqbbv74vWvsmqqEf99uhRLr3jNPsMcw5imN',
         gallery: [
             { type: 'image', content: '/swarms/stumped.jpg' }
         ],
@@ -803,6 +809,7 @@ Join us in transforming professional development with AI-powered training.`,
         image: '/swarms/travel.jpeg',
         models: ['KinOS'],
         name: 'TravelAId',
+        pool: 'BEsb73xDJH3PrRGs1D4zkPAssg94Yi8dAtiFa59gzeY1',
         gallery: [
             { type: 'image', content: '/swarms/travel.jpeg' }
         ],
@@ -846,6 +853,7 @@ Join us in transforming travel with AI-powered assistance.`,
         image: '/swarms/grant.jpeg',
         models: ['KinOS'],
         name: 'GrantKin',
+        pool: '3oa4GKg3hpavEAEacDUKJQoA12VPvRE1CKoHypBho2Rt',
         gallery: [
             { type: 'image', content: '/swarms/grant.jpeg' }
         ],
@@ -889,6 +897,7 @@ Join us in transforming non-profit funding with AI-powered grant writing.`,
         image: '/swarms/resume.jpeg',
         models: ['KinOS'],
         name: 'CareerKin',
+        pool: 'EMtoBMEn6JtV9tnbF8ZVVrxnYZbdapWAYEzabq7cW2gR',
         gallery: [
             { type: 'image', content: '/swarms/resume.jpeg' }
         ],
@@ -932,6 +941,7 @@ Join us in transforming career development with AI-powered optimization.`,
         image: '/swarms/robinhood.jpg',
         models: ['KinOS'],
         name: 'Robinhood Agent',
+        pool: 'H7xCtjoCyqf55uc5nmPKpypN82jANkRDTNmPx6C3XhS5',
         gallery: [
             { type: 'image', content: '/swarms/robinhood/1_Robinhood-Agent-Democratizing-AI-Trading.png' },
             { type: 'image', content: '/swarms/robinhood/2_What-Robinhood-Agent-Does.png' },
@@ -954,6 +964,7 @@ Join us in transforming career development with AI-powered optimization.`,
         image: '/swarms/screenplay.jpg',
         models: ['KinOS'],
         name: 'StudioKin',
+        pool: 'EJ4Ad3faa43JLZW3HQnxweYFqm4T2cUzBGntG5KnJWE8',
         gallery: [
             { type: 'image', content: '/swarms/screenplay/1_Screenplay-and-Production-Swarm-Redefining-Filmmaking-with-AI.png' },
             { type: 'image', content: '/swarms/screenplay/2_Introducing-KinOS-AI-Swarm-for-Filmmaking.png' },
@@ -975,6 +986,7 @@ Join us in transforming career development with AI-powered optimization.`,
         image: '/swarms/wealthhive.png',
         models: ['KinOS', 'GPT-4'],
         name: 'WealthHive',
+        pool: 'HeR7qoPbvmgcLFywkduZ27Hr2wKYuxtVkTBaGhVohP88',
         gallery: [
             { type: 'image', content: '/swarms/wealthhive.png' }
         ],

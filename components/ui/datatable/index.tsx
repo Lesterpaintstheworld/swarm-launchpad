@@ -84,8 +84,8 @@ export function DataTable<TData, TValue>({
             <div className="rounded-md">
                 <Table className="overflow-hidden">
                     <TableHeader>
-                        {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow key={headerGroup.id}>
+                        {table.getHeaderGroups().map((headerGroup, index) => (
+                            <TableRow key={index}>
                                 {headerGroup.headers.map((header) => {
                                     return (
                                         <TableHead key={header.id} style={{ width: header.getSize() }}>

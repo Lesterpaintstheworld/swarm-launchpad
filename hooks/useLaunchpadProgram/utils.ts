@@ -3,17 +3,27 @@ import { PublicKey } from "@solana/web3.js";
 import UbclaunchpadIDL from "@/data/programs/ubclaunchpad.json";
 import { Ubclaunchpad } from "./ubclaunchpad";
 
-export const getShareholderPDA = (programId: PublicKey, ownerPublicKey: PublicKey, poolPublicKey: PublicKey): PublicKey => {
-    const [shareholderPda] = PublicKey.findProgramAddressSync(
-        [
-            Buffer.from("shareholder"),
-            poolPublicKey.toBuffer(),
-            ownerPublicKey.toBuffer()
-        ],
-        programId
-    );
-    return shareholderPda;
-}
+export const getShareholderPDA = (programId: PublicKey, ownerPublicKey: PublicKey, poolPublicKey: PublicKey): PublicKey | null => {
+    if (!programId || !ownerPublicKey || !poolPublicKey) {
+        console.log("Missing required keys:", { programId: !!programId, ownerPublicKey: !!ownerPublicKey, poolPublicKey: !!poolPublicKey });
+        return null;
+    }
+
+    try {
+        const [shareholderPda] = PublicKey.findProgramAddressSync(
+            [
+                Buffer.from("shareholder"),
+                poolPublicKey.toBuffer(),
+                ownerPublicKey.toBuffer()
+            ],
+            programId
+        );
+        return shareholderPda;
+    } catch (error) {
+        console.error("Error generating shareholder PDA:", error);
+        return null;
+    }
+};
 
 export const getTokenAccountPDA = (owner: PublicKey, mint: PublicKey): PublicKey => {
     const [pda] = PublicKey.findProgramAddressSync(

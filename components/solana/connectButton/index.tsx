@@ -84,7 +84,8 @@ function ConnectButton({ className }: { className?: string }) {
                                 Portfolio
                                 <ChartPie className="ml-auto max-w-3" />
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => router.push('/invest/market')}>
+                            {/* <DropdownMenuItem onClick={() => router.push('/invest/market')}> */}
+                            <DropdownMenuItem disabled>
                                 Market
                                 <LucideArrowLeftRight className="ml-auto max-w-3 text-muted" />
                             </DropdownMenuItem>

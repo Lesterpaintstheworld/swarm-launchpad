@@ -2,10 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { ConnectButton } from "../solana/connectButton";
-import { Links } from "@/data/navigation/links";
-import { stakeMenuItems, buyMenuItems } from "@/data/navigation/menu";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -15,91 +12,121 @@ import {
   NavigationMenuTrigger,
 } from "@/components/shadcn/navigation-menu";
 import { cn } from "@/lib/utils";
-import { MenuItem } from "./navigation.types";
+import { forwardRef } from "react";
+import { WavesLadder } from "lucide-react";
 
 export function Navigation() {
-  const pathname = usePathname();
-
-  const getMenuItems = (type: string): MenuItem[] => {
-    switch(type.toLowerCase()) {
-      case 'stake':
-        return stakeMenuItems;
-      case 'buy':
-        return buyMenuItems;
-      default:
-        return [];
-    }
-  };
 
   return (
-    <div className="flex justify-between items-center w-full py-12 container">
-      <Link href="/" className="flex items-center">
-        <Image
-          src="/brand-assets/logo.jpg"
-          alt="UBC Logo"
-          width={52}
-          height={52}
-          className="rounded-full"
-        />
-      </Link>
+    <nav className="container w-full py-8 flex flex-row items-center">
+		<Link href="/" className="w-fit">
+			<Image
+				src="/brand-assets/logo.jpg"
+				alt="UBC Logo"
+				width={30}
+				height={30}
+				className="rounded-full w-[35px]"
+			/>
+		</Link>
+		<NavigationMenu className="ml-10 mr-auto">
+			<NavigationMenuList className="flex flex-row gap-6">
+				<NavigationMenuItem>
+					<NavigationMenuTrigger><Link href="/invest">Invest</Link></NavigationMenuTrigger>
+					<NavigationMenuContent>
+						<ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+							<ListItem
+								title="Explore Swarms"
+								href="/invest"
+							>
+								Discover partner swarms and invest in your future.
+							</ListItem>
+							<ListItem
+								title="Marketplace"
+								href="/invest/marketplace"
+							>
+								Discover partner swarms and invest in your future.
+							</ListItem>
+							<ListItem
+								title="Portfolio"
+								href="/invest/portfolio"
+							>
+								Manage your AI swarm investments, and track returns
+							</ListItem>
+						</ul>
+					</NavigationMenuContent>
+				</NavigationMenuItem>
+				<NavigationMenuItem>
+					<NavigationMenuTrigger>Stake UBC</NavigationMenuTrigger>
+					<NavigationMenuContent>
+						<ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+							<li className="row-span-3">
+								<NavigationMenuLink asChild>
+									<a
+										className="flex h-full w-full select-none flex-col justify-end transition-colors rounded-sm bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md hover:bg-foreground/5"
+										href="https://stake.smithii.io/ubc3"
+									>
+										<WavesLadder className="h-12 w-12" />
+										<div className="mb-2 mt-4 text-lg font-medium">
+											365 Day Pool
+										</div>
+										<p className="text-sm leading-tight text-muted">
+											Stake UBC for COMPUTE rewards
+										</p>
+									</a>
+								</NavigationMenuLink>
+							</li>
+							<ListItem href="https://stake.smithii.io/ubc2" title="165 Day Pool" className="flex flex-row flex-wrap">
+								For those looking for a more long term investment. 
+							</ListItem>
+							<ListItem href="https://stake.smithii.io/ubc" title="90 Day Pool">
+								Our most popular pool with over 55M UBC staked. 
+							</ListItem>
+							<ListItem href="" title="30 Day pool">
+								The shortest length pool for the quickest rewards.
+							</ListItem>
+						</ul>
+					</NavigationMenuContent>
+				</NavigationMenuItem>
+				<NavigationMenuItem asChild>
+					<Link href="get-compute" className="text-sm hover:bg-foreground/5 px-3 py-2 rounded-md">
+						Get <span className="metallic-text text-sm">$COMPUTE</span>
+					</Link>
+				</NavigationMenuItem>
+				<NavigationMenuItem asChild>
+					<Link href="lead" className="text-sm hover:bg-foreground/5 px-3 py-2 rounded-md">
+						Lead
+					</Link>
+				</NavigationMenuItem>
+			</NavigationMenuList>
+		</NavigationMenu>
+		<ConnectButton />
+    </nav>
+  )
 
-      <NavigationMenu className="px-12 justify-start">
-        <NavigationMenuList className="gap-8 justify-start">
-          {Links.map((link, index) => (
-            <NavigationMenuItem key={index}>
-              {link.hasDropdown ? (
-                <>
-                  <NavigationMenuTrigger className="bg-transparent hover:bg-transparent text-base font-normal tracking-wide text-yellow-500/80 hover:text-yellow-500 justify-start metallic-text">
-                    <span className="font-bold">{link.label}</span>
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-6">
-                      {getMenuItems(link.label).map((item, idx) => (
-                        <li key={idx}>
-                          <NavigationMenuLink asChild>
-                            <a
-                              href={item.url}
-                              target={item.target}
-                              className={cn(
-                                "block select-none p-4 no-underline outline-none transition-colors hover:text-accent-foreground text-left",
-                                "text-sm font-normal tracking-wide"
-                              )}
-                            >
-                              <div className="text-sm font-normal leading-none">{item.label}</div>
-                            </a>
-                          </NavigationMenuLink>
-                        </li>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                </>
-              ) : (
-                <Link href={link.url} legacyBehavior passHref>
-                  <NavigationMenuLink 
-                    className={cn(
-                      "text-base font-normal tracking-wide px-4 py-2 transition-colors text-left",
-                      "hover:text-accent-foreground bg-transparent justify-start",
-                      link.highlight && "text-yellow-500",
-                      link.disabled && "text-gray-500 pointer-events-none",
-                      pathname === link.url && "text-accent-foreground"
-                    )}
-                  >
-                    {link.label === 'Get $COMPUTE' ? (
-                      <span className="text-foreground">
-                        Get <span className="metallic-text">$COMPUTE</span>
-                      </span>
-                    ) : (
-                      link.label
-                    )}
-                  </NavigationMenuLink>
-                </Link>
-              )}
-            </NavigationMenuItem>
-          ))}
-        </NavigationMenuList>
-      </NavigationMenu>
-
-      <ConnectButton />
-    </div>
-  );
 }
+
+const ListItem = forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 gap-2 rounded-sm p-3 leading-none no-underline outline-none transition-colors hover:bg-foreground/5 hover:text-accent-foreground focus:bg-foreground/5 focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 mt-5 text-sm leading-snug text-muted">
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  )
+})
+ListItem.displayName = "ListItem"
