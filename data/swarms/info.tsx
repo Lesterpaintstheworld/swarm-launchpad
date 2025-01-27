@@ -182,7 +182,7 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
     },
     {
         id: 'forge-partner-id',
-        image: '/swarms/forge.png',
+        image: '/swarms/xforge.png',
         models: ['KinOS'],
         name: 'Forge',
         description: `# Forge: Bridging UBC and Development Partners

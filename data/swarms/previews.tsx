@@ -225,7 +225,7 @@ export const previews: SwarmPreviewData[] = [
     },
     {
         id: 'forge-partner-id',
-        image: '/swarms/forge.png',
+        image: '/swarms/xforge.png',
         models: ['KinOS'],
         name: 'Forge',
         description: 'Development orchestration swarm bridging UBC with technical partners through AI-enhanced project management and quality assurance.',
