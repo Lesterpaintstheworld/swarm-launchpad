@@ -187,7 +187,7 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         name: 'Forge',
         description: `# Forge: Bridging UBC and Development Partners
 
-Forge orchestrates the development of AI swarms by partnering with top-tier technical providers like [HelloMoon](https://hellomoon.io/). As development managers, we create value by efficiently coordinating between UBC's vision and our network of specialized developers, with our processes becoming increasingly automated through AI agents.
+Forge orchestrates the development of AI swarms by partnering with top-tier technical providers. As development managers, we create value by efficiently coordinating between UBC's vision and our network of specialized developers, with our processes becoming increasingly automated through AI agents.
 
 ## 🤝 Partner Network
 
