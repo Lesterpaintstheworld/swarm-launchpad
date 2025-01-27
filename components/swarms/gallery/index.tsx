@@ -18,12 +18,13 @@ export const SwarmGallery = ({ gallery, swarmName, className }: SwarmGalleryProp
     }, []);
 
     const prepareSlides = useCallback(() => {
-        // Guard clause - return empty array if gallery is undefined or empty
+        // Guard clause - return null if gallery is undefined or empty
         if (!gallery || gallery.length === 0) {
-            return [] as Slides;
+            return null;
         }
 
-        return gallery.map((item: GalleryItem, index: number) => {
+        // If we have less than 3 items, duplicate the first item to meet minimum requirement
+        let slides = gallery.map((item: GalleryItem, index: number) => {
             let content;
             if (item.type === 'image') {
                 content = <Image 
@@ -50,18 +51,25 @@ export const SwarmGallery = ({ gallery, swarmName, className }: SwarmGalleryProp
                 content = item.content;
             }
             return { id: index, content };
-        }) as Slides;
+        });
+
+        // If we have less than 3 items, duplicate the first item
+        while (slides.length < 3) {
+            slides.push({ ...slides[0], id: slides.length });
+        }
+
+        return slides as Slides;
     }, [gallery, swarmName, handleImageError]);
 
-    // Don't render anything if there's no gallery
-    if (!gallery || gallery.length === 0) {
+    // Don't render anything if there's no gallery or slides
+    if (!gallery || gallery.length === 0 || !prepareSlides()) {
         return null;
     }
 
     return (
         <InfiniteCarousel
             className={className}
-            slides={prepareSlides()}
+            slides={prepareSlides()!}
         />
     );
 }
