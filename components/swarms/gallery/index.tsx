@@ -23,8 +23,8 @@ export const SwarmGallery = ({ gallery, swarmName, className }: SwarmGalleryProp
             return null;
         }
 
-        // If we have less than 3 items, duplicate the first item to meet minimum requirement
-        let slides = gallery.map((item: GalleryItem, index: number) => {
+        // Create initial slides from gallery items
+        const slides = gallery.map((item: GalleryItem, index: number) => {
             let content;
             if (item.type === 'image') {
                 content = <Image 
@@ -53,12 +53,13 @@ export const SwarmGallery = ({ gallery, swarmName, className }: SwarmGalleryProp
             return { id: index, content };
         });
 
-        // If we have less than 3 items, duplicate the first item
-        while (slides.length < 3) {
-            slides.push({ ...slides[0], id: slides.length });
+        // Create a new array with padding if needed
+        const paddedSlides = [...slides];
+        while (paddedSlides.length < 3) {
+            paddedSlides.push({ ...slides[0], id: paddedSlides.length });
         }
 
-        return slides as Slides;
+        return paddedSlides as Slides;
     }, [gallery, swarmName, handleImageError]);
 
     // Don't render anything if there's no gallery or slides
