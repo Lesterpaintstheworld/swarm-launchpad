@@ -92,10 +92,24 @@ export function Navigation() {
 						Get <span className="metallic-text text-sm">$COMPUTE</span>
 					</Link>
 				</NavigationMenuItem>
-				<NavigationMenuItem asChild>
-					<Link href="lead" className="text-sm hover:bg-foreground/5 px-3 py-2 rounded-md">
-						Lead
-					</Link>
+				<NavigationMenuItem>
+					<NavigationMenuTrigger>Join</NavigationMenuTrigger>
+					<NavigationMenuContent>
+						<ul className="grid w-[400px] gap-3 p-4">
+							<ListItem
+								title="Lead a Swarm"
+								href="/lead"
+							>
+								Create and manage your own AI swarm
+							</ListItem>
+							<ListItem
+								title="Join the DAO"
+								href="/dao"
+							>
+								Participate in governance and shape the future
+							</ListItem>
+						</ul>
+					</NavigationMenuContent>
 				</NavigationMenuItem>
 			</NavigationMenuList>
 		</NavigationMenu>
