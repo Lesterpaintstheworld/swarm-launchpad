@@ -38,7 +38,6 @@ export const SwarmTopGainers = ({ swarms, className }: SwarmTopGainersProps) => 
                 <div className="h-[400px]">
                     <BarChart 
                         data={chartData}
-                        barColor="from-yellow-600 to-yellow-400"
                     />
                 </div>
             </div>
