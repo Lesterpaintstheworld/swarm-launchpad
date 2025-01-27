@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useCallback } from "react";
 
 interface SwarmGalleryProps {
-    gallery: GalleryItem[];
+    gallery?: GalleryItem[];  // Make gallery optional
     swarmName: string;
     className?: string;
 }
@@ -18,6 +18,11 @@ export const SwarmGallery = ({ gallery, swarmName, className }: SwarmGalleryProp
     }, []);
 
     const prepareSlides = useCallback(() => {
+        // Guard clause - return empty array if gallery is undefined or empty
+        if (!gallery || gallery.length === 0) {
+            return [] as Slides;
+        }
+
         return gallery.map((item: GalleryItem, index: number) => {
             let content;
             if (item.type === 'image') {
@@ -41,12 +46,17 @@ export const SwarmGallery = ({ gallery, swarmName, className }: SwarmGalleryProp
                     height="390"
                     src={`${item.content}?enablejsapi=1&origin=https://localhost:3000/invest/digitalkin-partner-id.com`}
                 ></iframe>
-            }else {
+            } else {
                 content = item.content;
             }
             return { id: index, content };
         }) as Slides;
     }, [gallery, swarmName, handleImageError]);
+
+    // Don't render anything if there's no gallery
+    if (!gallery || gallery.length === 0) {
+        return null;
+    }
 
     return (
         <InfiniteCarousel
