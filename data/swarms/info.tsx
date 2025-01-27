@@ -481,7 +481,8 @@ The ideal candidate brings:
 - Strong business development skills
 
 Join us in redefining how children learn through AI-powered play.`,
-        programAddress: '2iAarCWnsdFqddprxzUwmaLiozHarMTpzLdhJPbi2HRR',
+        programAddress: '',
+        pool: '2iAarCWnsdFqddprxzUwmaLiozHarMTpzLdhJPbi2HRR',
         tags: ['Education', 'Interactive Learning', 'Personalization', 'Child Development', 'EdTech'],
         role: 'Educational Assistant',
         swarmType: 'inception',
