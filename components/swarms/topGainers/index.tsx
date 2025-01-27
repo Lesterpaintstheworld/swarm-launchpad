@@ -35,11 +35,12 @@ export const SwarmTopGainers = ({ swarms, className }: SwarmTopGainersProps) => 
         <div className={className}>
             <h2 className="text-2xl font-bold mb-4">Top Swarm Gainers Last 24 Hours</h2>
             <div className="bg-black/50 rounded-lg p-6">
-                <BarChart 
-                    data={chartData}
-                    className="h-[400px]"
-                    barColor="from-yellow-600 to-yellow-400"
-                />
+                <div className="h-[400px]">
+                    <BarChart 
+                        data={chartData}
+                        barColor="from-yellow-600 to-yellow-400"
+                    />
+                </div>
             </div>
         </div>
     );
