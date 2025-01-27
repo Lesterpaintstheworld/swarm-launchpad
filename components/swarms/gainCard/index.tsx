@@ -1,5 +1,4 @@
 'use client';
-import { useState } from 'react';
 import Image from 'next/image';
 import { captureElement } from '@/utils/captureElement';
 
