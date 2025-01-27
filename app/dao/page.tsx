@@ -1,59 +1,121 @@
 import { Button } from "@/components/shadcn/button"
 import Link from "next/link"
+import Image from "next/image"
+import { ArrowRight, Users, Vote, LineChart, Shield } from "lucide-react"
 
 export default function DaoPage() {
     return (
-        <main className="container max-w-5xl mx-auto py-12">
-            <div className="space-y-8">
-                <div className="space-y-4">
-                    <h1 className="text-4xl font-bold tracking-tight">🏛 UBC Governance: Building Tomorrow's Society</h1>
-                    <p className="text-xl text-muted-foreground">Shape the future of AI development through democratic participation</p>
+        <main className="relative">
+            {/* Hero Section with Gradient Background */}
+            <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-background -z-10 h-[500px]" />
+            
+            <div className="container max-w-5xl mx-auto py-12 space-y-16">
+                {/* Hero Content */}
+                <div className="space-y-6 text-center pt-8">
+                    <h1 className="text-5xl font-bold tracking-tight bg-gradient-to-r from-primary/50 to-primary bg-clip-text text-transparent">
+                        🏛 UBC Governance
+                    </h1>
+                    <p className="text-2xl text-muted-foreground max-w-2xl mx-auto">
+                        Shape the future of AI development through democratic participation
+                    </p>
+                    <Button asChild size="lg" className="mt-8">
+                        <Link href="https://app.realms.today/dao/87z1mBbAEKeL4vcsdDyA2nahcCdX8kSgKvDadA33Cmrr" target="_blank">
+                            Join UBC Governance <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                    </Button>
                 </div>
 
-                <div className="prose prose-invert max-w-none space-y-6">
-                    <p className="text-lg">
-                        Friends, today we're opening the UBC DAO - creating the foundation for a future where humans remain in control of AI development, while sharing in its incredible wealth creation potential.
-                    </p>
-
-                    <h2 className="text-2xl font-semibold">Why This Matters</h2>
-                    <p>
-                        We're designing a system where humans decide what gets built and how it gets built. The alternative? A future where AI development is controlled by a handful of corporations, with regular people left behind. That's not the future we want.
-                    </p>
-
-                    <h2 className="text-2xl font-semibold">Your Voice Matters</h2>
-                    <p>
-                        That's why we're introducing governance carefully and thoughtfully. Our quadratic voting system is designed so everyone's voice matters - not just the biggest whales. If you own UBC, you have real power to shape decisions, even with a modest holding.
-                    </p>
-
-                    <div className="bg-foreground/5 p-6 rounded-lg">
-                        <h3 className="text-xl font-semibold mb-4">Getting Started</h3>
-                        <ul className="list-disc list-inside space-y-2">
-                            <li>Vote on active proposals that shape our ecosystem</li>
-                            <li>Submit your own proposals (100,000+ $UBC required)</li>
-                            <li>Participate in community discussions</li>
-                            <li>Help design the future of AI governance</li>
-                        </ul>
+                {/* Key Features Grid */}
+                <div className="grid md:grid-cols-2 gap-8">
+                    <div className="bg-foreground/5 rounded-xl p-8 space-y-4 hover:bg-foreground/10 transition-colors">
+                        <Users className="h-8 w-8 text-primary" />
+                        <h3 className="text-xl font-semibold">Community-Driven</h3>
+                        <p className="text-muted-foreground">
+                            Our quadratic voting system ensures everyone's voice matters - not just the biggest holders.
+                        </p>
                     </div>
+                    <div className="bg-foreground/5 rounded-xl p-8 space-y-4 hover:bg-foreground/10 transition-colors">
+                        <Vote className="h-8 w-8 text-primary" />
+                        <h3 className="text-xl font-semibold">Active Proposals</h3>
+                        <p className="text-muted-foreground">
+                            Vote on key decisions that shape the future of the ecosystem.
+                        </p>
+                    </div>
+                    <div className="bg-foreground/5 rounded-xl p-8 space-y-4 hover:bg-foreground/10 transition-colors">
+                        <LineChart className="h-8 w-8 text-primary" />
+                        <h3 className="text-xl font-semibold">Transparent Governance</h3>
+                        <p className="text-muted-foreground">
+                            All proposals and votes are recorded on-chain for complete transparency.
+                        </p>
+                    </div>
+                    <div className="bg-foreground/5 rounded-xl p-8 space-y-4 hover:bg-foreground/10 transition-colors">
+                        <Shield className="h-8 w-8 text-primary" />
+                        <h3 className="text-xl font-semibold">Secure Future</h3>
+                        <p className="text-muted-foreground">
+                            Help ensure AI development remains in the hands of the community.
+                        </p>
+                    </div>
+                </div>
 
-                    <p>
-                        Our vision is clear: progressively increase community control until we achieve complete decentralized governance, putting the future of AI in the hands of the people.
+                {/* Vision Section */}
+                <div className="relative bg-foreground/5 rounded-xl p-12 overflow-hidden">
+                    <div className="absolute inset-0 bg-[linear-gradient(to_right,transparent_0%,#ffffff08_50%,transparent_100%)] pattern-grid-lg opacity-10" />
+                    <div className="relative space-y-6 max-w-2xl">
+                        <h2 className="text-3xl font-bold">Our Vision</h2>
+                        <p className="text-lg text-muted-foreground">
+                            We're creating a foundation for a future where humans remain in control of AI development, while sharing in its incredible wealth creation potential.
+                        </p>
+                        <blockquote className="border-l-4 border-primary pl-6 italic text-lg">
+                            You're not just voting on protocol parameters. You're helping design how humanity will transition into an AI-powered future.
+                        </blockquote>
+                    </div>
+                </div>
+
+                {/* Getting Started Section */}
+                <div className="space-y-8">
+                    <h2 className="text-3xl font-bold text-center">Getting Started</h2>
+                    <div className="grid md:grid-cols-3 gap-6">
+                        <div className="p-6 rounded-lg border border-foreground/10 space-y-4">
+                            <div className="bg-primary/20 rounded-full w-12 h-12 flex items-center justify-center">
+                                <span className="text-2xl">1</span>
+                            </div>
+                            <h3 className="font-semibold">Hold UBC</h3>
+                            <p className="text-sm text-muted-foreground">
+                                Acquire and hold UBC tokens to participate in governance
+                            </p>
+                        </div>
+                        <div className="p-6 rounded-lg border border-foreground/10 space-y-4">
+                            <div className="bg-primary/20 rounded-full w-12 h-12 flex items-center justify-center">
+                                <span className="text-2xl">2</span>
+                            </div>
+                            <h3 className="font-semibold">Connect Wallet</h3>
+                            <p className="text-sm text-muted-foreground">
+                                Connect your wallet to the DAO platform
+                            </p>
+                        </div>
+                        <div className="p-6 rounded-lg border border-foreground/10 space-y-4">
+                            <div className="bg-primary/20 rounded-full w-12 h-12 flex items-center justify-center">
+                                <span className="text-2xl">3</span>
+                            </div>
+                            <h3 className="font-semibold">Start Voting</h3>
+                            <p className="text-sm text-muted-foreground">
+                                Review and vote on active proposals
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Call to Action */}
+                <div className="text-center space-y-6 py-8">
+                    <h2 className="text-3xl font-bold">Join the Movement</h2>
+                    <p className="text-muted-foreground max-w-2xl mx-auto">
+                        This is how great things start - with a community of people who see the bigger picture, making decisions together.
                     </p>
-
-                    <blockquote className="border-l-4 border-primary pl-4 italic">
-                        You're not just voting on protocol parameters. You're helping design how humanity will transition into an AI-powered future. A future where everyone can participate in and benefit from AI development.
-                    </blockquote>
-
-                    <div className="flex justify-center py-6">
-                        <Button asChild size="lg">
-                            <Link href="https://app.realms.today/dao/87z1mBbAEKeL4vcsdDyA2nahcCdX8kSgKvDadA33Cmrr" target="_blank">
-                                Join UBC Governance
-                            </Link>
-                        </Button>
-                    </div>
-
-                    <div className="text-sm text-muted-foreground text-center">
-                        This is how great things start - with a community of people who see the bigger picture, making decisions together. Your vote matters. Your voice matters. This is your invitation to help shape the future.
-                    </div>
+                    <Button asChild size="lg">
+                        <Link href="https://app.realms.today/dao/87z1mBbAEKeL4vcsdDyA2nahcCdX8kSgKvDadA33Cmrr" target="_blank">
+                            Enter DAO Portal <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                    </Button>
                 </div>
             </div>
         </main>
