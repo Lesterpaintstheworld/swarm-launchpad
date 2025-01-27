@@ -31,7 +31,7 @@ export function Navigation() {
 		<NavigationMenu className="ml-10 mr-auto">
 			<NavigationMenuList className="flex flex-row gap-6">
 				<NavigationMenuItem>
-					<NavigationMenuTrigger><Link href="/invest">Invest</Link></NavigationMenuTrigger>
+					<NavigationMenuTrigger>Invest</NavigationMenuTrigger>
 					<NavigationMenuContent>
 						<ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
 							<ListItem
@@ -87,10 +87,12 @@ export function Navigation() {
 						</ul>
 					</NavigationMenuContent>
 				</NavigationMenuItem>
-				<NavigationMenuItem asChild>
-					<Link href="get-compute" className="text-sm hover:bg-foreground/5 px-3 py-2 rounded-md">
-						Get <span className="metallic-text text-sm">$COMPUTE</span>
-					</Link>
+				<NavigationMenuItem>
+					<NavigationMenuLink asChild>
+						<Link href="/get-compute" className="text-sm hover:bg-foreground/5 px-3 py-2 rounded-md">
+							Get <span className="metallic-text text-sm">$COMPUTE</span>
+						</Link>
+					</NavigationMenuLink>
 				</NavigationMenuItem>
 				<NavigationMenuItem>
 					<NavigationMenuTrigger>Join</NavigationMenuTrigger>
