@@ -59,7 +59,8 @@ Join the revolution in AI-powered content creation with SLOP FATHER - where ever
         programAddress: '',
         tags: ['AI', 'Video', 'Social Media', '$FATHA', 'Content Creation'],
         role: 'Content Creator',
-        swarmType: 'partner'
+        swarmType: 'partner',
+        multiple: 1
     },
     {
         id: 'digitalkin-partner-id',
@@ -94,7 +95,8 @@ DigitalKin creates autonomous AI employees that handle complex digital tasks acr
 Join the future of work with DigitalKin's autonomous AI agents that truly free your human teams from repetitive digital tasks.`,
         tags: ['AI', 'Enterprise', 'Automation', 'KinOS'],
         role: 'Digital Employee Manager',
-        swarmType: 'partner'
+        swarmType: 'partner',
+        multiple: 1
     },
     {
         id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
@@ -118,6 +120,7 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         tags: ['AI', 'OpenAI'],
         role: 'Lorem ipsum',
         swarmType: 'partner',
+        multiple: 1
     },
     {
         id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',
@@ -134,7 +137,8 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         programAddress: '',
         tags: ['AI', 'OpenAI'],
         role: 'Lorem ipsum',
-        swarmType: 'partner'
+        swarmType: 'partner',
+        multiple: 1
     },
     {
         id: '988b16b4-6beb-4cc5-9a14-50f48ee47a22',
@@ -148,7 +152,8 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         programAddress: '',
         tags: ['AI', 'OpenAI'],
         role: 'Lorem ipsum',
-        swarmType: 'partner'
+        swarmType: 'partner',
+        multiple: 1
     },
     {
         id: '03616e66-a21e-425b-a93b-16d6396e883f',
@@ -163,7 +168,8 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         programAddress: '',
         tags: ['AI', 'OpenAI'],
         role: 'Lorem ipsum',
-        swarmType: 'early'
+        swarmType: 'early',
+        multiple: 1
     },
     {
         id: '7d3c9e5b-1f8a-4d3c-b8d4-9e5b1f8a4d3c',
@@ -178,7 +184,8 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         programAddress: '',
         tags: ['AI', 'Gaming', 'KinOS'],
         role: 'Gaming Compan    ion',
-        swarmType: 'partner'
+        swarmType: 'partner',
+        multiple: 1
     },
     {
         id: 'forge-partner-id',
@@ -217,7 +224,8 @@ Partner with XForge to participate in the systematic development of the next gen
         programAddress: '',
         tags: ['Development', 'Technical Partners', 'Project Management', 'Quality Assurance', 'AI Automation'],
         role: 'Development Coordinator',
-        swarmType: 'partner'
+        swarmType: 'partner',
+        multiple: 1
     },
     {
         id: 'propertykin-inception-id',
@@ -270,7 +278,8 @@ Join the arbitrage revolution with PropertyKin.`,
         programAddress: '',
         tags: ['Real Estate', 'Arbitrage', 'Smart Contracts', 'Property Flipping', 'AI Analysis', 'Wholesale', 'Contract Assignment', 'Deal Finder'],
         role: 'Real Estate Arbitrage Bot',
-        swarmType: 'inception'
+        swarmType: 'inception',
+        multiple: 1
     },
     {
         id: 'b2c3d4e5-f6g7-5b6c-9d0e-1f2g3h4i5j6k',
@@ -314,7 +323,8 @@ Join us in revolutionizing mental health practice management with AI.`,
         programAddress: '',
         tags: ['Healthcare', 'Mental Health', 'Practice Management', 'Patient Care', 'AI Assistant'],
         role: 'Healthcare Assistant',
-        swarmType: 'inception'
+        swarmType: 'inception',
+        multiple: 1
     },
     {
         id: 'c3d4e5f6-g7h8-6c7d-ae1f-2g3h4i5j6k7l',
@@ -358,7 +368,8 @@ Join us in transforming the publishing industry with AI-powered innovation.`,
         programAddress: '',
         tags: ['Publishing', 'Book Production', 'Content', 'Distribution', 'Marketing'],
         role: 'Publishing Agent',
-        swarmType: 'inception'
+        swarmType: 'inception',
+        multiple: 1
     },
     {
         id: 'd4e5f6g7-h8i9-7d8e-bf2g-3h4i5j6k7l8m',
@@ -468,7 +479,8 @@ Join us in redefining how children learn through AI-powered play.`,
         programAddress: '',
         tags: ['Education', 'Interactive Learning', 'Personalization', 'Child Development', 'EdTech'],
         role: 'Educational Assistant',
-        swarmType: 'inception'
+        swarmType: 'inception',
+        multiple: 1
     },
     {
         id: 'e5f6g7h8-i9j0-8e9f-cg3h-4i5j6k7l8m9n',
@@ -512,7 +524,8 @@ Join us in transforming recruitment with AI-powered innovation.`,
         programAddress: '',
         tags: ['Recruitment', 'HR Tech', 'Talent Matching', 'AI Screening', 'Hiring'],
         role: 'Recruitment Assistant',
-        swarmType: 'inception'
+        swarmType: 'inception',
+        multiple: 1
     },
     {
         id: 'f6g7h8i9-j0k1-9f0g-dh4i-5j6k7l8m9n0o',
@@ -556,7 +569,8 @@ Join us in transforming healthcare practice management with AI.`,
         programAddress: '',
         tags: ['AI', 'Healthcare', 'KinOS', 'Operations'],
         role: 'Practice Manager',
-        swarmType: 'inception'
+        swarmType: 'inception',
+        multiple: 1
     },
     {
         id: 'g7h8i9j0-k1l2-0g1h-ei5j-6k7l8m9n0o1p',
@@ -644,7 +658,8 @@ Join us in transforming affiliate marketing with AI automation.`,
         programAddress: '',
         tags: ['AI Marketing', 'Content Creation', 'Affiliate', 'Automation', 'Multi-Channel'],
         role: 'Marketing Automation',
-        swarmType: 'inception'
+        swarmType: 'inception',
+        multiple: 1
     },
     {
         id: 'mentor-swarm-id',
@@ -796,7 +811,8 @@ DeskMate solves these by providing:
         programAddress: '',
         tags: ['AI', 'Education', 'KinOS', 'Tutoring'],
         role: 'Educational Mentor',
-        swarmType: 'inception'
+        swarmType: 'inception',
+        multiple: 1
     },
     {
         id: 'speaker-swarm-id',
@@ -841,7 +857,8 @@ Join us in transforming professional development with AI-powered training.`,
         programAddress: '',
         tags: ['Communication', 'Training', 'Professional Development', 'Social Skills', 'AI Coaching'],
         role: 'Conversation Coach',
-        swarmType: 'inception'
+        swarmType: 'inception',
+        multiple: 1
     },
     {
         id: 'travel-swarm-id',
@@ -885,7 +902,8 @@ Join us in transforming travel with AI-powered assistance.`,
         programAddress: '',
         tags: ['Travel', 'AI Concierge', 'Trip Planning', 'Personalization', 'Real-time Assistance'],
         role: 'Travel Concierge',
-        swarmType: 'inception'
+        swarmType: 'inception',
+        multiple: 1
     },
     {
         id: 'grant-swarm-id',
@@ -929,7 +947,8 @@ Join us in transforming non-profit funding with AI-powered grant writing.`,
         programAddress: '',
         tags: ['Non-profit', 'Grant Writing', 'Funding', 'Compliance', 'AI Automation'],
         role: 'Grant Writer',
-        swarmType: 'inception'
+        swarmType: 'inception',
+        multiple: 1
     },
     {
         id: 'resume-swarm-id',
@@ -973,7 +992,8 @@ Join us in transforming career development with AI-powered optimization.`,
         programAddress: '',
         tags: ['AI', 'Career', 'KinOS', 'Resume'],
         role: 'Career Optimizer',
-        swarmType: 'inception'
+        swarmType: 'inception',
+        multiple: 1
     },
     {
         id: 'a1b2c3d4-e5f6-4a5b-8c7d-9e8f7a6b5c4d',
@@ -996,7 +1016,8 @@ Join us in transforming career development with AI-powered optimization.`,
         programAddress: '',
         tags: ['Trading', 'DeFi', 'Profit Sharing', 'Strategy', 'Institutional'],
         role: 'Trading Agent',
-        swarmType: 'inception'
+        swarmType: 'inception',
+        multiple: 1
     },
     {
         id: 'f7a92b3c-d8e4-4c1a-9f5d-1234567890ab',
@@ -1018,7 +1039,8 @@ Join us in transforming career development with AI-powered optimization.`,
         programAddress: '',
         tags: ['Entertainment', 'Screenwriting', 'Production', 'AI Creative', 'Content'],
         role: 'Screenwriter & Producer',
-        swarmType: 'inception'
+        swarmType: 'inception',
+        multiple: 1
     },
     {
         id: 'wealthhive-inception-id',
@@ -1077,6 +1099,7 @@ Join us in building an educated, empowered community of AI investors.`,
         programAddress: '',
         tags: ['Education', 'Learn-to-Earn', 'Community', 'AI Learning', 'Investment', 'Knowledge Base', 'Ecosystem Growth'],
         role: 'Educational Guide',
-        swarmType: 'inception'
+        swarmType: 'inception',
+        multiple: 1
     },
 ]
