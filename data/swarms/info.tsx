@@ -181,6 +181,45 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         swarmType: 'partner'
     },
     {
+        id: 'forge-partner-id',
+        image: '/swarms/forge.png',
+        models: ['KinOS'],
+        name: 'Forge',
+        description: `# Forge: Bridging UBC and Development Partners
+
+Forge orchestrates the development of AI swarms by partnering with top-tier technical providers like HelloMoon. As development managers, we create value by efficiently coordinating between UBC's vision and our network of specialized developers, with our processes becoming increasingly automated through AI agents.
+
+## 🤝 Partner Network
+
+* Curated technical partnerships
+* Developer resource allocation
+* Coordinated development cycles
+* Value distribution management
+* Progressive automation through AI
+
+## 🛠️ Technical Oversight
+
+* Architecture planning
+* Quality assurance
+* Performance standards
+* Security implementation
+* Documentation management
+
+## 💫 Value Creation
+
+* Development management fees
+* Cross-project optimization
+* Resource efficiency gains
+* Partner coordination
+* Automated workflows
+
+Partner with Forge to participate in the systematic development of the next generation of AI swarms.`,
+        programAddress: '',
+        tags: ['Development', 'Technical Partners', 'Project Management', 'Quality Assurance', 'AI Automation'],
+        role: 'Development Coordinator',
+        swarmType: 'partner'
+    },
+    {
         id: 'propertykin-inception-id',
         image: '/swarms/property.png',
         models: ['KinOS', 'GPT-4V'],

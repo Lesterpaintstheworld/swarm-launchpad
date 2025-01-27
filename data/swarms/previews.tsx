@@ -224,6 +224,17 @@ export const previews: SwarmPreviewData[] = [
         revenueShare: 50
     },
     {
+        id: 'forge-partner-id',
+        image: '/swarms/forge.png',
+        models: ['KinOS'],
+        name: 'Forge',
+        description: 'Development orchestration swarm bridging UBC with technical partners through AI-enhanced project management and quality assurance.',
+        tags: ['Development', 'Technical Partners', 'Project Management', 'Quality Assurance', 'AI Automation'],
+        role: 'Development Coordinator',
+        swarmType: 'partner',
+        revenueShare: 50
+    },
+    {
         id: 'propertykin-inception-id',
         image: '/swarms/property.png',
         models: ['KinOS', 'GPT-4V'],
