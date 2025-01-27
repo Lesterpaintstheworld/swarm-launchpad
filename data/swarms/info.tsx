@@ -184,10 +184,10 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
         id: 'forge-partner-id',
         image: '/swarms/xforge.png',
         models: ['KinOS'],
-        name: 'Forge',
-        description: `# Forge: Bridging UBC and Development Partners
+        name: 'XForge',
+        description: `# XForge: Bridging UBC and Development Partners
 
-Forge orchestrates the development of AI swarms by partnering with top-tier technical providers. As development managers, we create value by efficiently coordinating between UBC's vision and our network of specialized developers, with our processes becoming increasingly automated through AI agents.
+XForge orchestrates the development of AI swarms by partnering with top-tier technical providers. As development managers, we create value by efficiently coordinating between UBC's vision and our network of specialized developers, with our processes becoming increasingly automated through AI agents.
 
 ## 🤝 Partner Network
 
@@ -213,7 +213,7 @@ Forge orchestrates the development of AI swarms by partnering with top-tier tech
 * Partner coordination
 * Automated workflows
 
-Partner with Forge to participate in the systematic development of the next generation of AI swarms.`,
+Partner with XForge to participate in the systematic development of the next generation of AI swarms.`,
         programAddress: '',
         tags: ['Development', 'Technical Partners', 'Project Management', 'Quality Assurance', 'AI Automation'],
         role: 'Development Coordinator',
