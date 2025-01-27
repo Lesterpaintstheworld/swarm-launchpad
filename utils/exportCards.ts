@@ -48,12 +48,13 @@ export const exportCards = async (selector: string) => {
                 onclone: (_, element) => {
                     // Ensure all elements are visible
                     const elements = element.getElementsByTagName('*');
-                    for (let el of elements) {
+                    // Convert HTMLCollection to Array before using for...of
+                    Array.from(elements).forEach(el => {
                         if (el instanceof HTMLElement) {
                             el.style.opacity = '1';
                             el.style.transform = 'none';
                         }
-                    }
+                    });
                 }
             });
 
