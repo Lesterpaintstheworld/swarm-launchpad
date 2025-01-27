@@ -10,12 +10,12 @@ interface SwarmTopGainersProps {
 export const SwarmTopGainers = ({ swarms, className }: SwarmTopGainersProps) => {
     // Sort swarms by multiple in descending order and take top 10
     const topGainers = swarms
-        .sort((a, b) => b.multiple - a.multiple)
+        .sort((a, b) => (b.multiple || 0) - (a.multiple || 0))
         .slice(0, 10);
 
     const chartData = topGainers.map(swarm => ({
         label: swarm.name,
-        value: swarm.multiple,
+        value: swarm.multiple || 0,
         toolTipContent: (
             <div className="flex items-center gap-2">
                 <Image 
@@ -26,7 +26,7 @@ export const SwarmTopGainers = ({ swarms, className }: SwarmTopGainersProps) => 
                     className="rounded-full"
                 />
                 <span>{swarm.name}</span>
-                <span className="font-bold">{swarm.multiple.toFixed(1)}%</span>
+                <span className="font-bold">{(swarm.multiple || 0).toFixed(1)}%</span>
             </div>
         )
     }));
