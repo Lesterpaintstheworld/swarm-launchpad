@@ -815,7 +815,8 @@ DeskMate solves these by providing:
 - Development of critical thinking
 - Long-term learning benefits
 - Active engagement in learning`,
-        programAddress: 'Gucj554x7dRebtfUBxK1XTBUhQmq2Rqp4v2H6WtL7wNX',
+        programAddress: '',
+        pool: 'Gucj554x7dRebtfUBxK1XTBUhQmq2Rqp4v2H6WtL7wNX',
         tags: ['AI', 'Education', 'KinOS', 'Tutoring'],
         role: 'Educational Mentor',
         swarmType: 'inception',
