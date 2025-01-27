@@ -225,7 +225,7 @@ export const previews: SwarmPreviewData[] = [
     },
     {
         id: 'forge-partner-id',
-        image: '/swarms/xforge.png',
+        image: '/swarms/XForge/xforge.png',
         models: ['KinOS'],
         name: 'XForge',
         pool: 'AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi',
