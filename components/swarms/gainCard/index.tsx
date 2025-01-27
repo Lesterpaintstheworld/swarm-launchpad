@@ -71,13 +71,13 @@ export const SwarmGainCard = ({ name, multiple, image, className = '', launchMod
             <div className="flex-1 flex items-center justify-center w-full">
                 <div className="relative">
                     <div className="absolute inset-0 bg-yellow-400/20 blur-xl transform scale-110" />
-                    <div className="relative w-36 h-36 rounded-full overflow-hidden border-2 border-yellow-400/50 bg-gradient-to-b from-yellow-400/20 to-transparent backdrop-blur-sm">
+                    <div className="relative w-36 h-36 rounded-full overflow-hidden border-2 border-yellow-400/50 bg-gradient-to-b from-yellow-400/20 to-transparent backdrop-blur-sm flex items-center justify-center">
                         <Image
                             src={image}
                             alt={name}
                             width={144}
                             height={144}
-                            className="object-cover"
+                            className="object-contain p-2"
                             unoptimized
                         />
                     </div>
