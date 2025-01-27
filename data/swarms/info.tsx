@@ -189,7 +189,7 @@ Join the future of work with DigitalKin's autonomous AI agents that truly free y
     },
     {
         id: 'forge-partner-id',
-        image: '/swarms/XForge/xforge.png',
+        image: '/swarms/xforge.png',
         models: ['KinOS'],
         name: 'XForge',
         pool: 'AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi',
@@ -229,7 +229,7 @@ Partner with XForge to participate in the systematic development of the next gen
         programAddress: '',
         tags: ['Development', 'Technical Partners', 'Project Management', 'Quality Assurance', 'AI Automation'],
         role: 'Development Coordinator',
-        swarmType: 'partner',
+        swarmType: 'early',
         multiple: 1
     },
     {
@@ -378,7 +378,7 @@ Join us in transforming the publishing industry with AI-powered innovation.`,
     },
     {
         id: 'd4e5f6g7-h8i9-7d8e-bf2g-3h4i5j6k7l8m',
-        image: '/swarms/education.png',
+        image: '/swarms/toy.png',
         models: ['KinOS'],
         name: 'PlayWise',
         gallery: [
@@ -481,7 +481,7 @@ The ideal candidate brings:
 - Strong business development skills
 
 Join us in redefining how children learn through AI-powered play.`,
-        programAddress: '',
+        programAddress: '2iAarCWnsdFqddprxzUwmaLiozHarMTpzLdhJPbi2HRR',
         tags: ['Education', 'Interactive Learning', 'Personalization', 'Child Development', 'EdTech'],
         role: 'Educational Assistant',
         swarmType: 'inception',
@@ -619,7 +619,8 @@ Join us in transforming e-commerce with AI-powered automation.`,
         programAddress: '',
         tags: ['AI', 'E-commerce', 'KinOS', 'Sales'],
         role: 'E-commerce Manager',
-        swarmType: 'inception'
+        swarmType: 'inception',
+        multiple: 1
     },
     {
         id: 'h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q',
@@ -813,7 +814,7 @@ DeskMate solves these by providing:
 - Development of critical thinking
 - Long-term learning benefits
 - Active engagement in learning`,
-        programAddress: '',
+        programAddress: 'Gucj554x7dRebtfUBxK1XTBUhQmq2Rqp4v2H6WtL7wNX',
         tags: ['AI', 'Education', 'KinOS', 'Tutoring'],
         role: 'Educational Mentor',
         swarmType: 'inception',

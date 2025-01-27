@@ -23,7 +23,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['AI Trading', 'Token Markets', 'Profit Sharing', 'Weekly Rewards', 'KinOS', 'UBC'],
         role: 'Trading Specialist',
         swarmType: 'early',
-        revenueShare: 50
+        revenueShare: 60
     },
     {
         id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',
@@ -34,11 +34,11 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Venture Capital', 'Project Curation', 'Due Diligence', 'Portfolio Management', 'Community Value'],
         role: 'Investment Guardian',
         swarmType: 'early',
-        revenueShare: 50
+        revenueShare: 60
     },
     {
         id: '03616e66-a21e-425b-a93b-16d6396e883f',
-        image: '/swarms/syntheticsouls/Lyra 16-9 web.jpg',
+        image: '/swarms/syntheticsouls.jpg',
         models: ['GPT-4o Mini'],
         name: 'Synthetic Souls',
         description: 'World\'s first autonomous AI band creating original music and content with 100% profit sharing to investors.',
@@ -56,7 +56,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Gaming', 'AI Companion', 'Personalization', 'Adaptive Learning', 'KinOS'],
         role: 'Gaming Companion',
         swarmType: 'early',
-        revenueShare: 50
+        revenueShare: 60
     },
     {
         id: 'f7a92b3c-d8e4-4c1a-9f5d-1234567890ab',
@@ -67,7 +67,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Entertainment', 'Screenwriting', 'Production', 'AI Creative', 'Content'],
         role: 'Screenwriter & Producer',
         swarmType: 'inception',
-        revenueShare: 50
+        revenueShare: 60
     },
     {
         id: 'a1b2c3d4-e5f6-4a5b-8c7d-9e8f7a6b5c4d',
@@ -89,7 +89,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Healthcare', 'Mental Health', 'Practice Management', 'Patient Care', 'AI Assistant'],
         role: 'Healthcare Assistant',
         swarmType: 'inception',
-        revenueShare: 50
+        revenueShare: 60
     },
     {
         id: 'c3d4e5f6-g7h8-6c7d-ae1f-2g3h4i5j6k7l',
@@ -104,7 +104,7 @@ export const previews: SwarmPreviewData[] = [
     },
     {
         id: 'd4e5f6g7-h8i9-7d8e-bf2g-3h4i5j6k7l8m',
-        image: '/swarms/education.png',
+        image: '/swarms/toy.png',
         models: ['KinOS'],
         name: 'PlayWise',
         description: 'An AI-powered smart toy that helps children learn through conversation and play, adapting its teaching to each child\'s unique way of understanding.',
@@ -133,7 +133,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['AI', 'Healthcare', 'KinOS', 'Operations'],
         role: 'Practice Manager',
         swarmType: 'inception',
-        revenueShare: 50
+        revenueShare: 60
     },
     {
         id: 'g7h8i9j0-k1l2-0g1h-ei5j-6k7l8m9n0o1p',
@@ -144,7 +144,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['AI', 'E-commerce', 'KinOS', 'Sales'],
         role: 'E-commerce Manager',
         swarmType: 'inception',
-        revenueShare: 50
+        revenueShare: 60
     },
     {
         id: 'h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q',
@@ -177,11 +177,11 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Education', 'Learn-to-Earn', 'Community', 'AI Learning', 'Investment'],
         role: 'Educational Guide',
         swarmType: 'inception',
-        revenueShare: 50
+        revenueShare: 60
     },
     {
         id: 'speaker-swarm-id',
-        image: '/swarms/speaker.jpeg',
+        image: '/swarms/stumped.jpg',
         models: ['KinOS'],
         name: 'STUMPED',
         description: 'Never be caught off guard again. AI-powered training for mastering high-pressure conversations and social scenarios.',
@@ -199,7 +199,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Travel', 'AI Concierge', 'Trip Planning', 'Personalization', 'Real-time Assistance'],
         role: 'Travel Concierge',
         swarmType: 'inception',
-        revenueShare: 50
+        revenueShare: 60
     },
     {
         id: 'grant-swarm-id',
@@ -210,7 +210,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Non-profit', 'Grant Writing', 'Funding', 'Compliance', 'AI Automation'],
         role: 'Grant Writer',
         swarmType: 'inception',
-        revenueShare: 50
+        revenueShare: 60
     },
     {
         id: 'resume-swarm-id',
@@ -221,19 +221,18 @@ export const previews: SwarmPreviewData[] = [
         tags: ['AI', 'Career', 'KinOS', 'Resume'],
         role: 'Career Optimizer',
         swarmType: 'inception',
-        revenueShare: 50
+        revenueShare: 60
     },
     {
         id: 'forge-partner-id',
-        image: '/swarms/XForge/xforge.png',
+        image: '/swarms/xforge.png',
         models: ['KinOS'],
         name: 'XForge',
-        pool: 'AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi',
         description: 'Development orchestration swarm bridging UBC with technical partners through AI-enhanced project management and quality assurance.',
         tags: ['Development', 'Technical Partners', 'Project Management', 'Quality Assurance', 'AI Automation'],
         role: 'Development Coordinator',
         swarmType: 'partner',
-        revenueShare: 50
+        revenueShare: 60
     },
     {
         id: 'propertykin-inception-id',
@@ -244,6 +243,6 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Real Estate', 'Arbitrage', 'Smart Contracts', 'Property Flipping', 'AI Analysis', 'Wholesale'],
         role: 'Real Estate Arbitrage Bot',
         swarmType: 'inception',
-        revenueShare: 50
+        revenueShare: 60
     },
 ]
