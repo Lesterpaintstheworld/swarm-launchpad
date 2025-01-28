@@ -4,7 +4,7 @@ import { TokenTooltip } from "@/components/ui/tokenTooltip";
 import { SwarmData, getSwarmInfo } from "@/data/swarms/info";
 import { previews } from "@/data/swarms/previews";
 import { SwarmPreviewCard } from "@/components/swarms/preview";
-import { InfoCircled } from "@radix-ui/react-icons";
+import { Info } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/shadcn/tooltip";
 
 export default function Invest() {
@@ -49,7 +49,7 @@ export default function Invest() {
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger>
-                                    <InfoCircled className="w-5 h-5 text-muted-foreground" />
+                                    <Info className="w-5 h-5 text-muted-foreground" />
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p className="max-w-[300px]">
@@ -81,7 +81,7 @@ export default function Invest() {
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger>
-                                    <InfoCircled className="w-5 h-5 text-muted-foreground" />
+                                    <Info className="w-5 h-5 text-muted-foreground" />
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p className="max-w-[300px]">
@@ -113,7 +113,7 @@ export default function Invest() {
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger>
-                                    <InfoCircled className="w-5 h-5 text-muted-foreground" />
+                                    <Info className="w-5 h-5 text-muted-foreground" />
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p className="max-w-[300px]">
