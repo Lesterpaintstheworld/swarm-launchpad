@@ -13,8 +13,6 @@ import {
 } from "@/components/shadcn/navigation-menu";
 import { cn } from "@/lib/utils";
 import { forwardRef } from "react";
-import { WavesLadder } from "lucide-react";
-
 export function Navigation() {
 
   return (
@@ -41,48 +39,16 @@ export function Navigation() {
 								Discover partner swarms and invest in your future.
 							</ListItem>
 							<ListItem
-								title="Marketplace"
-								href="/invest/marketplace"
-							>
-								Discover partner swarms and invest in your future.
-							</ListItem>
-							<ListItem
 								title="Portfolio"
 								href="/invest/portfolio"
 							>
 								Manage your AI swarm investments, and track returns
 							</ListItem>
-						</ul>
-					</NavigationMenuContent>
-				</NavigationMenuItem>
-				<NavigationMenuItem>
-					<NavigationMenuTrigger>Stake UBC</NavigationMenuTrigger>
-					<NavigationMenuContent>
-						<ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-							<li className="row-span-3">
-								<NavigationMenuLink asChild>
-									<a
-										className="flex h-full w-full select-none flex-col justify-end transition-colors rounded-sm bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md hover:bg-foreground/5"
-										href="https://stake.smithii.io/ubc3"
-									>
-										<WavesLadder className="h-12 w-12" />
-										<div className="mb-2 mt-4 text-lg font-medium">
-											365 Day Pool
-										</div>
-										<p className="text-sm leading-tight text-muted">
-											Stake UBC for COMPUTE rewards
-										</p>
-									</a>
-								</NavigationMenuLink>
-							</li>
-							<ListItem href="https://stake.smithii.io/ubc2" title="165 Day Pool" className="flex flex-row flex-wrap">
-								For those looking for a more long term investment. 
-							</ListItem>
-							<ListItem href="https://stake.smithii.io/ubc" title="90 Day Pool">
-								Our most popular pool with over 55M UBC staked. 
-							</ListItem>
-							<ListItem href="" title="30 Day pool">
-								The shortest length pool for the quickest rewards.
+							<ListItem
+								title="Your Transition"
+								href="/invest/transition"
+							>
+								From worker today to investor tomorrow
 							</ListItem>
 						</ul>
 					</NavigationMenuContent>
