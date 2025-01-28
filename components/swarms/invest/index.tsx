@@ -21,15 +21,8 @@ interface SwarmInvestCardProps {
 }
 
 const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
-    // Return early if no pool address is provided
-    if (!pool) {
-        return null;
-    }
-
     const { connected } = useWallet();
-
     const sharesRef = useRef<HTMLParagraphElement>(null);
-
     const [numShares, setNumShares] = useState<number>(0);
     const [price, setPrice] = useState<number>(0);
     const [fee, setFee] = useState<number>(0);

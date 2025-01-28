@@ -96,7 +96,7 @@ const PriceCell = ({ poolAddress }: { poolAddress: string }) => {
             
             setPrice(sharePrice);
         }
-    }, [poolAccount.data, poolAddress]);
+    }, [poolAccount?.data, poolAccount?.isLoading, poolAccount?.error, poolAddress]);
 
     return (
         <p className="text-muted-foreground">

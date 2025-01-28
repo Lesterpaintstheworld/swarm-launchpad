@@ -2,6 +2,20 @@ import { Card } from "@/components/ui/card";
 import { Investment } from "../investments"
 import { cn, IntlNumberFormat } from "@/lib/utils";
 import { useEffect, useState } from "react";
+
+interface InvestmentDataItem {
+    name: string;
+    value: number;
+    valueInCompute: number;
+    percentage?: string;
+}
+
+interface TooltipProps {
+    active?: boolean;
+    payload?: Array<{
+        payload: InvestmentDataItem;
+    }>;
+}
 import { getSwarmUsingId } from "@/data/swarms/info";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { Props as RechartsProps } from 'recharts/types/component/DefaultLegendContent';
@@ -16,7 +30,7 @@ interface PortfolioOverviewProps {
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
 
 const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) => {
-    const [investmentData, setInvestmentData] = useState<any[]>([]);
+    const [investmentData, setInvestmentData] = useState<InvestmentDataItem[]>([]);
     const [totalValueInCompute, setTotalValueInCompute] = useState(0);
     const { program } = useLaunchpadProgram();
 
@@ -67,7 +81,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
         }
     }, [investments, program]);
 
-    const CustomTooltip = ({ active, payload }: any) => {
+    const CustomTooltip = ({ active, payload }: TooltipProps) => {
         if (active && payload && payload.length) {
             return (
                 <div className="bg-background/95 border border-border p-3 rounded-lg shadow-lg">
@@ -90,7 +104,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
         
         return (
             <ul className="flex flex-wrap gap-4 justify-center mt-4">
-                {payload.map((entry: any, index: number) => (
+                {(payload as Array<{value: string; payload: InvestmentDataItem}>).map((entry, index) => (
                     <li key={`item-${index}`} className="flex items-center gap-2">
                         <div 
                             className="w-3 h-3 rounded-full" 
