@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { InfoPanel } from "@/components/ui/infoPanel";
 import { SwarmInfo } from "@/components/swarms/swarm.types";
