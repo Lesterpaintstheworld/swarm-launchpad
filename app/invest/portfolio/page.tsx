@@ -79,7 +79,14 @@ export default function Portfolio() {
 
         const fetchData = async () => {
             // eslint-disable-next-line
-            const positions: any[] = [];
+            interface PositionData {
+                swarm_id: string;
+                number_of_shares: number;
+                total_shares: number;
+                last_dividend_payment: number;
+            }
+            
+            const positions: PositionData[] = [];
             for(let i = 0; i < poolIds.length; i++) {
                 const poolId = poolIds[i];
                 if(!poolId) { continue; }
