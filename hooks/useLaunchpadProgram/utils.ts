@@ -1,6 +1,7 @@
 import { Program as AnchorProgram } from "@coral-xyz/anchor";
 import { PublicKey as SolanaPublicKey } from "@solana/web3.js";
 import { AnchorProvider } from "@coral-xyz/anchor";
+import UbclaunchpadIDL from "../../data/programs/ubclaunchpad.json" assert { type: "json" };
 
 const getShareholderPDA = (
     programId: SolanaPublicKey, 
@@ -67,7 +68,6 @@ const getLaunchpadProgram = (
     provider: AnchorProvider, 
     address: SolanaPublicKey
 ): AnchorProgram => {
-    const UbclaunchpadIDL = require("../../data/programs/ubclaunchpad.json");
     return new AnchorProgram(
         { ...UbclaunchpadIDL, address: address ? address.toBase58() : UbclaunchpadIDL.address }, 
         provider
