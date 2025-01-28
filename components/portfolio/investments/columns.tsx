@@ -20,6 +20,36 @@ import {
 } from "@/components/shadcn/dropdown-menu";
 import { SellPositionModal } from "@/components/swarms/sellPositionModal";
 
+const PriceCell = ({ poolAddress, shares }: { poolAddress: string, shares: number }) => {
+    const { poolAccount } = useLaunchpadProgramAccount({ poolAddress });
+    const [price, setPrice] = useState<number>(0);
+
+    useEffect(() => {
+        try {
+            if (poolAccount?.data) {
+                const totalShares = poolAccount.data.totalShares.toNumber();
+                const availableShares = poolAccount.data.availableShares.toNumber();
+                const soldShares = totalShares - availableShares;
+                
+                const cycle = Math.floor(soldShares / 5000);
+                const base = Math.pow(1.35, cycle);
+                const sharePrice = Math.floor(base * 100) / 100;
+                
+                setPrice(sharePrice);
+            }
+        } catch (error) {
+            console.error('Error calculating price:', error);
+            setPrice(0);
+        }
+    }, [poolAccount?.data]);
+
+    return (
+        <p className="font-bold">
+            {IntlNumberFormat(price)} $COMPUTE
+        </p>
+    );
+};
+
 
 const ValueCell = ({ poolAddress, shares }: { poolAddress: string, shares: number }) => {
     const { poolAccount } = useLaunchpadProgramAccount({ poolAddress });
