@@ -53,26 +53,6 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
         setNumShares(value);
     }
 
-    const handleComputeInput = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = Number(e.target.value.replace(/,/g, '')); 
-        const calculatedShares = Math.round(value / data.pricePerShare);
-        if (isNaN(value) || value < 0 || calculatedShares > data.remainingSupply) return;
-        setNumShares(calculatedShares);
-        setPrice(value);
-    }
-
-    const handleQuickAmount = (amount: number) => {
-        if (amount > data.remainingSupply) return;
-        setNumShares(amount);
-        setPrice(Math.floor(amount * data.pricePerShare));
-    }
-
-    const validateInput = (shares: number) => {
-        if (shares <= 0) return "Amount must be greater than 0";
-        if (shares > data.remainingSupply) return "Amount exceeds available shares";
-        if (!Number.isInteger(shares)) return "Amount must be a whole number";
-        return null;
-    };
 
     const handleBuy = () => {
         if (!numShares || numShares <= 0) {
