@@ -64,13 +64,38 @@ const PriceCell = ({ poolAddress }: { poolAddress: string }) => {
     const [price, setPrice] = useState<number>(0);
 
     useEffect(() => {
+        console.log('PriceCell - Pool Account Data:', {
+            poolAddress,
+            poolAccountData: poolAccount?.data,
+            isLoading: poolAccount?.isLoading,
+            error: poolAccount?.error
+        });
+
         if (poolAccount?.data) {
             const totalShares = poolAccount.data.totalShares.toNumber();
             const availableShares = poolAccount.data.availableShares.toNumber();
             const soldShares = totalShares - availableShares;
-            setPrice(calculateSharePrice(soldShares));
+            
+            console.log('PriceCell - Calculation Values:', {
+                totalShares,
+                availableShares,
+                soldShares
+            });
+
+            // Calculate price based on bonding curve
+            const cycle = Math.floor(soldShares / 5000);
+            const base = Math.pow(1.35, cycle);
+            const sharePrice = Math.floor(base * 100); // Base price in COMPUTE
+            
+            console.log('PriceCell - Price Calculation:', {
+                cycle,
+                base,
+                sharePrice
+            });
+            
+            setPrice(sharePrice);
         }
-    }, [poolAccount.data]);
+    }, [poolAccount.data, poolAddress]);
 
     return (
         <p className="text-muted-foreground">
