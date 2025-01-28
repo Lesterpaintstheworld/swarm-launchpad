@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Investment } from "../investments"
 import { cn, IntlNumberFormat } from "@/lib/utils";
 import { useEffect, useState } from "react";
+import { Props as RechartsProps } from 'recharts/types/component/DefaultLegendContent';
 
 interface InvestmentDataItem {
     name: string;
@@ -15,6 +16,13 @@ interface TooltipProps {
     payload?: Array<{
         payload: InvestmentDataItem;
     }>;
+}
+
+interface LegendEntry {
+    value: string;
+    payload: InvestmentDataItem & {
+        strokeDasharray?: string | number;
+    };
 }
 import { getSwarmUsingId } from "@/data/swarms/info";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
