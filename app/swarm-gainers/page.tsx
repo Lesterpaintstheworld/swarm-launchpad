@@ -43,7 +43,7 @@ export default function SwarmGainersPage() {
             };
         })
         .sort((a, b) => b.value - a.value) // Sort by multiple in descending order
-        .slice(0, 10); // Take top 10 gainers
+        .slice(0, 7); // Take top 7 gainers
 
     return (
         <div className="min-h-screen bg-black relative">
