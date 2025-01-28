@@ -13,11 +13,11 @@ interface BarChartProps {
 
 const BarChart = ({ data }: BarChartProps) => {
     const maxValue = Math.max(...data.map(item => item.value));
-    const scalingFactor = 0.4; // Adjust this value to control maximum height
+    const scalingFactor = 0.15; // Reduced to 15% for much shorter bars
     
     return (
         <div className="flex flex-col gap-4">
-            <div className="flex flex-row w-full h-[200px]">
+            <div className="flex flex-row w-full h-[200px] items-end">
                 {data.length === 0 &&
                     <BarItem
                         data={{
@@ -29,15 +29,22 @@ const BarChart = ({ data }: BarChartProps) => {
                     />
                 }
                 {data.map((item, index) => {
-                    // Scale the percentage to be more reasonable
-                    const percentage = (item.value / maxValue * 100 * scalingFactor);
+                    // Calculate height percentage with a minimum of 10% and maximum of 80%
+                    const percentage = Math.min(
+                        80, // Maximum height percentage
+                        Math.max(
+                            10, // Minimum height percentage
+                            (item.value / maxValue * 100 * scalingFactor)
+                        )
+                    );
+                    
                     return (
                         <BarItem
                             data={item}
                             key={index}
                             className="min-w-[5%]"
                             style={{
-                                height: `${Math.min(percentage, 100)}%`
+                                height: `${percentage}%`
                             }}
                             colour={ChartColours[index]}
                         />
