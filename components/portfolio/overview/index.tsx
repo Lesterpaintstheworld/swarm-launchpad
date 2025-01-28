@@ -1,12 +1,10 @@
 import { Card } from "@/components/ui/card";
 import { Investment } from "../investments"
 import { cn, IntlNumberFormat } from "@/lib/utils";
-import { useCallback, useEffect, useState } from "react";
-import { PublicKey } from "@solana/web3.js";
+import { useEffect, useState } from "react";
 import { getSwarm } from "@/data/swarms/previews";
 import { getSwarmUsingId } from "@/data/swarms/info";
-import { calculateSharePrice } from '@/lib/utils';
-import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
+import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { Props as RechartsProps } from 'recharts/types/component/DefaultLegendContent';
 
@@ -53,44 +51,48 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
     const { program } = useLaunchpadProgram();
 
     useEffect(() => {
-        const data = investments.map((investment) => {
-            const { swarm_id, number_of_shares } = investment;
-            const swarm = getSwarm(swarm_id);
+        const calculateData = async () => {
+            const data = await Promise.all(investments.map(async (investment) => {
+                const { swarm_id, number_of_shares } = investment;
+                const swarm = getSwarm(swarm_id);
+                const swarmData = getSwarmUsingId(swarm_id);
+                if (!swarmData?.pool) return null;
+
+                const { poolAccount } = useLaunchpadProgramAccount({ poolAddress: swarmData.pool });
+                
+                if (!poolAccount?.data) return null;
+
+                const totalShares = poolAccount.data.totalShares.toNumber();
+                const availableShares = poolAccount.data.availableShares.toNumber();
+                const soldShares = totalShares - availableShares;
+                
+                const cycle = Math.floor(soldShares / 5000);
+                const base = Math.pow(1.35, cycle);
+                const sharePrice = Math.floor(base * 100) / 100;
+                const value = number_of_shares * sharePrice;
+
+                return {
+                    name: swarm.name,
+                    value: value,
+                    valueInCompute: value,
+                    sharePrice,
+                    percentage: 0 // We'll calculate this after getting total
+                };
+            }));
+
+            const filteredData = data.filter(Boolean);
+            const totalValue = filteredData.reduce((acc, item) => acc + (item?.value || 0), 0);
             
-            // Get the pool address from the swarm data
-            const swarmData = getSwarmUsingId(swarm_id);
-            if (!swarmData?.pool) return null;
+            const dataWithPercentages = filteredData.map(item => ({
+                ...item,
+                percentage: ((item?.value || 0) / totalValue * 100).toFixed(1)
+            }));
 
-            // Get the value from the ValueCell calculation
-            const totalShares = poolAccount.data?.totalShares.toNumber();
-            const availableShares = poolAccount.data?.availableShares.toNumber();
-            const soldShares = totalShares - availableShares;
-            
-            const cycle = Math.floor(soldShares / 5000);
-            const base = Math.pow(1.35, cycle);
-            const sharePrice = Math.floor(base * 100) / 100;
-            const value = number_of_shares * sharePrice;
+            setInvestmentData(dataWithPercentages);
+            setTotalValueInCompute(totalValue);
+        };
 
-            return {
-                name: swarm.name,
-                value: value,
-                valueInCompute: value,
-                sharePrice,
-                percentage: 0 // We'll calculate this after getting total
-            };
-        }).filter(Boolean);
-
-        // Get total from summing the values
-        const totalValue = data.reduce((acc, item) => acc + item.value, 0);
-        
-        // Now calculate percentages
-        const dataWithPercentages = data.map(item => ({
-            ...item,
-            percentage: ((item.value / totalValue) * 100).toFixed(1)
-        }));
-
-        setInvestmentData(dataWithPercentages);
-        setTotalValueInCompute(totalValue);
+        calculateData();
     }, [investments, total_owned_shares]);
 
 
