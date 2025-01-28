@@ -338,20 +338,22 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
             numberOfShares: number,
             calculatedCost: number
         }) => {
-            // Early validation
+            // Early validation with detailed logging
+            console.log('Purchase validation:', {
+                publicKey: !!publicKey,
+                pool: !!pool,
+                poolAccount: !!poolAccount.data,
+                programId: program.programId.toString(),
+                numberOfShares,
+                calculatedCost
+            });
+
             if (!publicKey) throw new Error('Wallet not connected');
             if (!pool) throw new Error('Pool address is undefined');
             if (!poolAccount.data) throw new Error('Pool data not loaded');
 
             try {
-                console.log('Purchase params:', {
-                    numberOfShares,
-                    calculatedCost,
-                    pool: pool.toString(),
-                    publicKey: publicKey.toString()
-                });
-
-                // Get token accounts
+                // Get token accounts with logging
                 const senderComputeAccount = await getAssociatedTokenAddress(
                     computeMint,
                     publicKey
@@ -368,6 +370,13 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                     ubcMint,
                     poolAccount.data.custodialAccount
                 );
+
+                console.log('Token accounts:', {
+                    senderCompute: senderComputeAccount.toString(),
+                    senderUbc: senderUbcAccount.toString(),
+                    custodialCompute: custodialComputeAccount.toString(),
+                    custodialUbc: custodialUbcAccount.toString()
+                });
 
                 // Generate the shareholder PDA
                 // Generate the shareholder PDA
