@@ -78,7 +78,7 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
         return null;
     };
 
-    const handleBuy = async () => {
+    const handleBuy = () => {
         if (!numShares || numShares <= 0) {
             setError("Please enter a valid number of shares");
             return;
@@ -88,17 +88,16 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
         setSuccessMessage(null);
         setIsLoading(true);
         
-        try {
-            const calculatedCostInBaseUnits = Math.floor(price * Math.pow(10, 6));
-            const result = await purchaseShares.mutateAsync({ 
-                numberOfShares: numShares, 
-                calculatedCost: calculatedCostInBaseUnits
-            });
-
-            // Webhook notification
-            try {
+        const calculatedCostInBaseUnits = Math.floor(price * Math.pow(10, 6));
+        
+        purchaseShares.mutate({ 
+            numberOfShares: numShares, 
+            calculatedCost: calculatedCostInBaseUnits
+        }, {
+            onSuccess: (result) => {
+                // Webhook notification
                 const swarm = getSwarm(pool);
-                await fetch('https://nlr.app.n8n.cloud/webhook/buybot', {
+                fetch('https://nlr.app.n8n.cloud/webhook/buybot', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -110,20 +109,21 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
                         timestamp: new Date().toISOString(),
                         transactionSignature: result
                     })
+                }).catch((webhookError) => {
+                    console.debug('Webhook notification failed:', webhookError);
                 });
-            } catch (webhookError) {
-                console.debug('Webhook notification failed:', webhookError);
-            }
 
-            setSuccessMessage(`Successfully purchased ${numShares} shares!`);
-            setNumShares(0);
-            setPrice(0);
-        } catch (error) {
-            setError(error instanceof Error ? error.message : 'Transaction failed');
-            console.error('Purchase error:', error);
-        } finally {
-            setIsLoading(false);
-        }
+                setSuccessMessage(`Successfully purchased ${numShares} shares!`);
+                setNumShares(0);
+                setPrice(0);
+                setIsLoading(false);
+            },
+            onError: (error) => {
+                setError(error instanceof Error ? error.message : 'Transaction failed');
+                console.error('Purchase error:', error);
+                setIsLoading(false);
+            }
+        });
     }
 
     useEffect(() => {
