@@ -13,10 +13,24 @@ interface SwarmInfo {
     [key: string]: any; // Allow other properties
 }
 
+// Program types
+interface PoolAccount {
+    totalShares: BN;
+    availableShares: BN;
+}
+
+interface ProgramAccounts {
+    pool: {
+        fetch(address: PublicKey): Promise<PoolAccount>;
+    };
+}
+
+interface UbclaunchpadProgram extends Program<Idl> {
+    account: ProgramAccounts;
+}
+
 // Import SwarmData directly from the file
-const SwarmData: SwarmInfo[] = [
-    // The data will be read from info.tsx
-];
+const SwarmData: SwarmInfo[] = [];
 
 try {
     const infoPath = path.join(__dirname, '../data/swarms/info.tsx');
@@ -65,7 +79,7 @@ async function main() {
     setProvider(provider);
 
     // Use the helper function to get the program
-    const program = getLaunchpadProgram(provider, PROGRAM_ID);
+    const program = getLaunchpadProgram(provider, PROGRAM_ID) as UbclaunchpadProgram;
 
     // Process each swarm
     for (const swarm of SwarmData) {
@@ -74,7 +88,7 @@ async function main() {
         try {
             // Fetch pool data
             const poolPubkey = new PublicKey(swarm.pool);
-            const poolData = await program.account.pool.fetch(poolPubkey) as unknown as PoolState;
+            const poolData = await program.account.pool.fetch(poolPubkey);
             
             // Calculate sold shares
             const totalShares = poolData.totalShares.toNumber();
