@@ -15,7 +15,7 @@ export const SwarmTopGainers = ({ swarms, className }: SwarmTopGainersProps) => 
 
     const chartData = topGainers.map(swarm => ({
         label: swarm.name,
-        value: swarm.multiple || 0,
+        value: Math.min(swarm.multiple || 0, 100), // Cap the value at 100
         toolTipContent: (
             <div className="flex items-center gap-2">
                 <Image 
@@ -26,7 +26,7 @@ export const SwarmTopGainers = ({ swarms, className }: SwarmTopGainersProps) => 
                     className="rounded-full"
                 />
                 <span>{swarm.name}</span>
-                <span className="font-bold">{(swarm.multiple || 0).toFixed(1)}%</span>
+                <span className="font-bold">{(swarm.multiple || 0).toFixed(1)}x</span>
             </div>
         )
     }));
@@ -35,10 +35,10 @@ export const SwarmTopGainers = ({ swarms, className }: SwarmTopGainersProps) => 
         <div className={className}>
             <h2 className="text-2xl font-bold mb-4">Top Swarm Gainers Last 24 Hours</h2>
             <div className="bg-black/50 rounded-lg p-6">
-                <div className="h-[300px]">
+                <div className="h-[200px]">
                     <BarChart 
                         data={chartData}
-                        maxValue={Math.max(...chartData.map(item => item.value)) * 1.2}
+                        maxValue={Math.min(Math.max(...chartData.map(item => item.value)) * 1.2, 120)}
                     />
                 </div>
             </div>
