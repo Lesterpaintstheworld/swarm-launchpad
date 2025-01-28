@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { InfoPanel } from "@/components/ui/infoPanel";
 import { SwarmData } from "@/data/swarms/info";
@@ -23,31 +23,24 @@ export default function Swarm({ params }: { params: { slug: string } }) {
         frozen: true,
     });
 
-    const swarm = useCallback(() => {
-        const found = SwarmData.find((swarm) => swarm.id === params.slug);
-        if (!found) {
-            redirect('/404');
-
-        }
-        return found;
-    }, [params.slug])();
-
+    const swarm = SwarmData.find((s) => s.id === params.slug);
     if (!swarm) {
-        return null; // Return null while redirecting
+        redirect('/404');
     }
 
-    const { poolAccount } = useLaunchpadProgramAccount({ poolAddress: swarm.pool as string });
-
-    useEffect(() => {
-        if (poolAccount.data) {
-            setData({
-                totalSupply: poolAccount.data.totalShares.toNumber(),
-                remainingSupply: poolAccount.data.availableShares.toNumber(),
-                pricePerShare: calculateSharePrice(poolAccount.data.totalShares.toNumber() - poolAccount.data.availableShares.toNumber()),
-                frozen: poolAccount.data.isFrozen || false,
-            });
+    const { poolAccount } = useLaunchpadProgramAccount({ 
+        poolAddress: swarm.pool as string,
+        onSuccess: (data) => {
+            if (data) {
+                setData({
+                    totalSupply: data.totalShares.toNumber(),
+                    remainingSupply: data.availableShares.toNumber(),
+                    pricePerShare: calculateSharePrice(data.totalShares.toNumber() - data.availableShares.toNumber()),
+                    frozen: data.isFrozen || false,
+                });
+            }
         }
-    }, [poolAccount.data]);
+    });
 
     return (
         <main className="container mb-6 md:mb-24 view">
