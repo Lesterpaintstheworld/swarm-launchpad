@@ -131,95 +131,129 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
     }, [price, poolAccount.data?.feeRatio]);
 
     return (
-        <Card className={cn("w-full bg-[var(--card)] text-[var(--card-foreground)]", className)}>
-            <div className="w-full flex flex-row justify-between items-center">
-                <h4>Purchase Shares</h4>
-                <div className="flex flex-row items-center gap-1">
-                    <p className="text-muted">Available: <strong>{IntlNumberFormatCompact(data.remainingSupply) || 0}</strong></p>
+        <Card className={cn("bg-[#0f172a] p-6", className)}>
+            {/* Header section */}
+            <div className="flex justify-between items-start mb-8">
+                <div>
+                    <h2 className="text-2xl font-bold text-white">Purchase Swarm Shares</h2>
+                    <p className="text-slate-300">Invest in AI-powered future</p>
+                </div>
+                <div className="text-right">
+                    <p className="text-xs text-green-400">CURRENT PRICE</p>
+                    <p className="text-2xl font-bold text-green-400">
+                        ${IntlNumberFormat(data.pricePerShare, 3)} <span className="text-sm">$COMPUTE</span>
+                    </p>
                 </div>
             </div>
-            <div className="flex flex-col gap-8 md:flex-row md:gap-none justify-between mt-6">
-                <div className="flex flex-col basis-1/2 md:max-w-[48%]">
-                    <div className="border border-border rounded-md bg-card p-4 pb-2 flex flex-col">
-                        <p className="text-muted text-sm">You&apos;ll receive</p>
-                        <div className="flex flex-row">
-                            <Input
-                                className="border-none rounded-none bg-transparent pl-0 text-4xl font-bold no-arrows text-[var(--foreground)]"
-                                style={{
-                                    width: `calc(${data.remainingSupply !== 0 ? IntlNumberFormat(numShares).length || 1 : 8}ch + ${connected ? 1 : 2}rem)`,
-                                    maxWidth: `calc(100% - ${sharesRef.current?.offsetWidth}px - 10px)`,
-                                }}
-                                placeholder={data.remainingSupply === 0 ? 'Sold out' : '0'}
-                                disabled={data.remainingSupply === 0}
-                                value={numShares !== 0 ? IntlNumberFormat(numShares) : ''}
-                                onChange={handleSharesInput}
-                            />
-                            {data.remainingSupply !== 0 && <p className="mt-auto mb-4" ref={sharesRef}>/ Shares</p>}
-                        </div>
+            <div className="space-y-6">
+                {/* Share input section */}
+                <div>
+                    <div className="flex justify-between mb-2">
+                        <label className="text-sm text-slate-300">Amount of Shares</label>
+                        <span className="text-sm text-slate-400">
+                            Available: {IntlNumberFormat(data.remainingSupply)}
+                        </span>
                     </div>
-                    <div className="flex flex-row justify-between items-center px-4 mt-2">
-                        <p className="text-sm text-muted">1 share = <span className="metallic-text">{IntlNumberFormat(data.pricePerShare)} $COMPUTE</span></p>
-                        <p className="text-sm text-muted">Total supply: {IntlNumberFormatCompact(data.totalSupply)}</p>
+                    
+                    <Input
+                        type="number"
+                        value={numShares || ''}
+                        onChange={handleSharesInput}
+                        className="w-full bg-slate-800/50 border-slate-700 text-white mb-3"
+                        placeholder="0"
+                    />
+
+                    {/* Quick amount buttons */}
+                    <div className="grid grid-cols-4 gap-2">
+                        {[10, 100, 500, 1000].map((amount) => (
+                            <Button
+                                key={amount}
+                                onClick={() => handleQuickAmount(amount)}
+                                variant="secondary"
+                                className="bg-slate-700 hover:bg-slate-600"
+                                disabled={amount > data.remainingSupply}
+                            >
+                                {amount}
+                            </Button>
+                        ))}
                     </div>
                 </div>
-                <div className="flex flex-col basis-1/2 md:max-w-[48%]">
-                    <div className="border border-border flex flex-row items-center rounded-md bg-card">
-                        <div className="p-4 pb-2 flex flex-col flex-grow">
-                            <p className="text-muted text-sm">You&apos;ll pay</p>
-                            <Input
-                                className="border-none bg-transparent px-0 text-4xl font-bold !text-foreground no-arrows"
-                                placeholder={data.remainingSupply === 0 ? 'Sold out' : '0'}
-                                disabled={data.remainingSupply === 0}
-                                value={price !== 0 ? IntlNumberFormat(price) : ''}
-                                onChange={handleComputeInput}
-                                min={0}
-                            />
-                        </div>
-                        <Token token={supportedTokens[1]} className="h-fit text-lg mr-6" />
+
+                {/* Cost breakdown */}
+                <div className="space-y-3 bg-slate-800/50 p-4 rounded-lg">
+                    <div className="flex justify-between">
+                        <span className="text-slate-300">Cost per Share</span>
+                        <span>{IntlNumberFormat(data.pricePerShare)} $COMPUTE</span>
                     </div>
-                    <p className="text-sm text-muted pl-4 mt-2">Minimum: {IntlNumberFormat(data.pricePerShare)} $COMPUTE</p>
+                    <div className="flex justify-between">
+                        <span className="text-slate-300">Total Cost</span>
+                        <span className="text-xl font-bold">
+                            {IntlNumberFormat(numShares * data.pricePerShare)} $COMPUTE
+                        </span>
+                    </div>
+                </div>
+
+                {/* Supply information */}
+                <div className="space-y-2">
+                    <div className="flex justify-between text-sm text-slate-400">
+                        <span>Remaining Supply</span>
+                        <span>{IntlNumberFormat(data.remainingSupply)}</span>
+                    </div>
+                    <div className="relative h-4 rounded-full bg-slate-800/50 overflow-hidden">
+                        <div 
+                            className="absolute h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full transition-all duration-300"
+                            style={{ 
+                                width: `${(data.remainingSupply / data.totalSupply) * 100}%`,
+                                boxShadow: '0 0 20px rgba(59, 130, 246, 0.5)'
+                            }} 
+                        />
+                        <div 
+                            className="absolute h-full w-[2px] bg-white/30 blur-[2px] animate-pulse"
+                            style={{ 
+                                left: `${(data.remainingSupply / data.totalSupply) * 100}%`,
+                                transform: 'translateX(-50%)'
+                            }}
+                        />
+                    </div>
+                    <div className="flex justify-between text-sm">
+                        <span className="text-slate-400">Total Supply</span>
+                        <div className="flex items-center gap-2">
+                            <span className="text-slate-400">{IntlNumberFormat(data.totalSupply)}</span>
+                            <div className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400">
+                                <span>{Math.round((data.remainingSupply / data.totalSupply) * 100)}%</span>
+                                <span>remaining</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            {fee > 0 &&
-                <div className="flex flex-row gap-2 items-center mt-6 pl-4">
-                    <p>+ Fee: <span className="metallic-text-ubc">{fee}</span></p>
-                    <Tag className="text-xs">UBC</Tag>
-                </div>
-            }
-            {data.remainingSupply === 0 &&
-                <Button
-                    className="mt-10 w-full md:max-w-40 bg-foreground text-background font-bold hover:bg-foreground/70"
-                    asChild
-                >
-                    <Link href="/invest/market">Go to market</Link>
-                </Button>
-            }
+            {/* Error/Success messages */}
             {error && (
-                <div className="mt-4 p-3 bg-[var(--destructive)]/20 border border-[var(--destructive)]/50 rounded-lg text-[var(--destructive)]">
+                <div className="mt-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-400">
                     {error}
                 </div>
             )}
 
             {successMessage && (
-                <div className="mt-4 p-3 bg-[var(--success)]/20 border border-[var(--success)]/50 rounded-lg text-[var(--success)] flex items-center justify-between">
+                <div className="mt-4 p-3 bg-green-500/20 border border-green-500/50 rounded-lg text-green-400 flex items-center justify-between">
                     <span>{successMessage}</span>
                     <Button 
                         variant="ghost" 
                         size="sm" 
                         onClick={() => setSuccessMessage(null)}
-                        className="hover:bg-[var(--success)]/10"
+                        className="hover:bg-green-500/10"
                     >
                         ✕
                     </Button>
                 </div>
             )}
 
-            {connected && data.remainingSupply !== 0 &&
+            {/* Action button */}
+            {connected ? (
                 <Button
-                    variant='success'
                     onClick={handleBuy}
-                    className="mt-10 w-full md:max-w-40 bg-[var(--success)] text-[var(--success-foreground)] hover:bg-[var(--success)]/90"
-                    disabled={!numShares || price <= 0 || isLoading}
+                    className="w-full mt-6"
+                    disabled={!numShares || numShares <= 0 || isLoading}
                 >
                     {isLoading ? (
                         <div className="flex items-center gap-2">
@@ -227,31 +261,12 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
                             Processing...
                         </div>
                     ) : (
-                        'BUY'
+                        'Purchase Shares'
                     )}
                 </Button>
-            }
-            {!connected && data.remainingSupply !== 0 && <ConnectButton className="mt-10 w-full md:max-w-40" />}
-
-            <div className="grid grid-cols-4 gap-2 mt-4">
-                {[10, 100, 500, 1000].map((amount) => (
-                    <Button
-                        key={amount}
-                        onClick={() => handleQuickAmount(amount)}
-                        variant="secondary"
-                        className="bg-[var(--accent-1)] hover:bg-[var(--accent-2)] relative group text-[var(--foreground)]"
-                        disabled={amount > data.remainingSupply}
-                        title={amount > data.remainingSupply ? "Exceeds available shares" : `Buy ${amount} shares`}
-                    >
-                        {amount}
-                        {amount > data.remainingSupply && (
-                            <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-slate-800 text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                                Exceeds available shares
-                            </span>
-                        )}
-                    </Button>
-                ))}
-            </div>
+            ) : (
+                <ConnectButton className="w-full mt-6" />
+            )}
         </Card>
     )
 }
