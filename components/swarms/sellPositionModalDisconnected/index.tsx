@@ -32,6 +32,9 @@ const SellPositionModalDisconnected = ({ isModalOpen, closeModal, swarmId }: Sel
     const [token, setToken] = useState<Token>();
 
     const swarm = getSwarmInfo(swarmID);
+    if (!swarm) {
+        return null;
+    }
     const sharesRef = useRef<HTMLParagraphElement>(null);
 
     const handleSharesInput = (e: ChangeEvent<HTMLInputElement>) => {
