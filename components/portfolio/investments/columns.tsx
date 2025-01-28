@@ -26,26 +26,31 @@ const ValueCell = ({ poolAddress, shares }: { poolAddress: string, shares: numbe
     const [value, setValue] = useState<number>(0);
 
     useEffect(() => {
-        if (poolAccount?.data) {
-            const totalShares = poolAccount.data.totalShares.toNumber();
-            const availableShares = poolAccount.data.availableShares.toNumber();
-            const soldShares = totalShares - availableShares;
-            
-            // Calculate price based on bonding curve
-            const cycle = Math.floor(soldShares / 5000);
-            const base = Math.pow(1.35, cycle);
-            const sharePrice = Math.floor(base * 100) / 100; // Divide by 100 to fix scaling
+        try {
+            if (poolAccount?.data) {
+                const totalShares = poolAccount.data.totalShares.toNumber();
+                const availableShares = poolAccount.data.availableShares.toNumber();
+                const soldShares = totalShares - availableShares;
+                
+                // Calculate price based on bonding curve
+                const cycle = Math.floor(soldShares / 5000);
+                const base = Math.pow(1.35, cycle);
+                const sharePrice = Math.floor(base * 100) / 100; // Divide by 100 to fix scaling
 
-            console.log('ValueCell data:', {
-                totalShares,
-                availableShares,
-                soldShares,
-                sharePrice,
-                shares,
-                calculatedValue: shares * sharePrice
-            });
+                console.log('ValueCell data:', {
+                    totalShares,
+                    availableShares,
+                    soldShares,
+                    sharePrice,
+                    shares,
+                    calculatedValue: shares * sharePrice
+                });
 
-            setValue(shares * sharePrice);
+                setValue(shares * sharePrice);
+            }
+        } catch (error) {
+            console.error('Error calculating value:', error);
+            setValue(0);
         }
     }, [poolAccount.data, shares]);
 

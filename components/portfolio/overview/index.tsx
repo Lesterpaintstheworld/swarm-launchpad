@@ -36,6 +36,8 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
 
     useEffect(() => {
         const calculateValues = async () => {
+            if (!program) return;
+
             const values = await Promise.all(investments.map(async (investment) => {
                 const swarm = getSwarmUsingId(investment.swarm_id);
                 if (!swarm?.pool) return null;

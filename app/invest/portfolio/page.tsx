@@ -19,18 +19,47 @@ type Investment = {
 }
 
 export default function Portfolio() {
-
     const { connected, publicKey } = useWallet();
     const { program } = useLaunchpadProgram();
     const [investments, setInvestments] = useState<Investment[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<Error | null>(null);
 
     const poolIds: string[] = extractKey(SwarmData, 'pool') || [];
 
     useEffect(() => {
-
         if (!connected || !publicKey || poolIds.length < 1) {
             return;
         }
+
+        const fetchData = async () => {
+            try {
+                setIsLoading(true);
+                const positions: any[] = [];
+                for(let i = 0; i < poolIds.length; i++) {
+                    const poolId = poolIds[i];
+                    if(!poolId) { continue; }
+                    const position = await getPosition(publicKey as PublicKey, poolId);
+                    if(!position) {
+                        continue;
+                    }
+                    const poolPubkey = new PublicKey(poolId);
+                    const poolData = await program.account.pool.fetch(poolPubkey);
+                    positions.push({
+                        swarm_id: getSwarmUsingId(poolId).id,
+                        number_of_shares: position?.shares.toNumber() || 0,
+                        total_shares: poolData.totalShares.toNumber() || 0,
+                        last_dividend_payment: 0
+                    });
+                }
+                setInvestments(positions);
+            } catch (err) {
+                setError(err as Error);
+                console.error('Error fetching portfolio data:', err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
 
         const getPosition = async (ownerPublicKey: PublicKey, poolId: string) => {
 
@@ -74,6 +103,25 @@ export default function Portfolio() {
         fetchData();
         // eslint-disable-next-line
     }, [publicKey, connected]);
+
+    if (isLoading) return (
+        <main className="container view">
+            <div className="h-80 flex flex-col items-center justify-center gap-1">
+                <h2 className="text-center">Loading portfolio...</h2>
+            </div>
+        </main>
+    );
+
+    if (error) return (
+        <main className="container view">
+            <div className="h-80 flex flex-col items-center justify-center gap-1">
+                <h2 className="text-center">Error loading portfolio</h2>
+                <p className="text-center text-balance text-muted text-lg">
+                    {error.message}
+                </p>
+            </div>
+        </main>
+    );
 
     return (
         <main className="container view">
