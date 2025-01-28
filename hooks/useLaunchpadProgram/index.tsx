@@ -345,7 +345,16 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                 poolAccount: !!poolAccount.data,
                 programId: program.programId.toString(),
                 numberOfShares,
-                calculatedCost
+                calculatedCost,
+                // Add more detailed pool data
+                poolData: poolAccount.data ? {
+                    totalShares: poolAccount.data.totalShares.toNumber(),
+                    availableShares: poolAccount.data.availableShares.toNumber(),
+                    isFrozen: poolAccount.data.isFrozen,
+                    computeMint: poolAccount.data.computeMint.toString(),
+                    ubcMint: poolAccount.data.ubcMint.toString(),
+                    custodialAccount: poolAccount.data.custodialAccount.toString()
+                } : null
             });
 
             if (!publicKey) throw new Error('Wallet not connected');
@@ -371,7 +380,15 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                     poolAccount.data.custodialAccount
                 );
 
-                console.log('Token accounts:', {
+                // Check if token accounts exist
+                const [senderComputeInfo, senderUbcInfo] = await Promise.all([
+                    connection.getAccountInfo(senderComputeAccount),
+                    connection.getAccountInfo(senderUbcAccount)
+                ]);
+
+                console.log('Token account info:', {
+                    senderComputeExists: !!senderComputeInfo,
+                    senderUbcExists: !!senderUbcInfo,
                     senderCompute: senderComputeAccount.toString(),
                     senderUbc: senderUbcAccount.toString(),
                     custodialCompute: custodialComputeAccount.toString(),
@@ -386,11 +403,21 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                     pool
                 );
 
-                console.log('Generated PDA:', {
-                    programId: program.programId.toString(),
-                    owner: publicKey.toString(),
-                    pool: pool.toString(),
-                    pda: shareholderPda.toString()
+                console.log('Transaction params:', {
+                    numberOfShares: numberOfShares.toString(),
+                    calculatedCost: calculatedCost.toString(),
+                    accounts: {
+                        pool: pool.toString(),
+                        shareholder: shareholderPda.toString(),
+                        computeMintAccount: poolAccount.data.computeMint.toString(),
+                        ubcMintAccount: poolAccount.data.ubcMint.toString(),
+                        senderComputeAccount: senderComputeAccount.toString(),
+                        senderUbcAccount: senderUbcAccount.toString(),
+                        custodialAccount: poolAccount.data.custodialAccount.toString(),
+                        custodialComputeAccount: custodialComputeAccount.toString(),
+                        custodialUbcAccount: custodialUbcAccount.toString(),
+                        buyer: publicKey.toString()
+                    }
                 });
 
                 console.log('Accounts:', {
@@ -431,6 +458,14 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
 
             } catch (error) {
                 console.error('Purchase shares error:', error);
+                // Try to get more detailed error information
+                if (error instanceof Error) {
+                    console.error('Error details:', {
+                        message: error.message,
+                        name: error.name,
+                        stack: error.stack
+                    });
+                }
                 toast.error('Transaction failed: ' + (error as Error).message);
                 throw error;
             }

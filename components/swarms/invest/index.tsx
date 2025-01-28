@@ -66,13 +66,20 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
 
     const handleBuy = async () => {
         try {
+            // Log the input values
+            console.log('Buy parameters:', {
+                numShares,
+                price,
+                priceInBaseUnits: Math.floor(price * Math.pow(10, 6))
+            });
+
             // Convert price to proper units (COMPUTE uses 6 decimals)
             const priceInBaseUnits = Math.floor(price * Math.pow(10, 6));
             
             // Execute the purchase with proper unit conversion
             await purchaseShares.mutateAsync({ 
                 numberOfShares: numShares, 
-                calculatedCost: priceInBaseUnits // Use base units
+                calculatedCost: priceInBaseUnits
             });
             
             // If purchase successful, call webhook
@@ -96,6 +103,13 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
             }
         } catch (purchaseError) {
             console.error('Purchase error:', purchaseError);
+            if (purchaseError instanceof Error) {
+                console.error('Error details:', {
+                    message: purchaseError.message,
+                    name: purchaseError.name,
+                    stack: purchaseError.stack
+                });
+            }
             throw purchaseError;
         }
     }
