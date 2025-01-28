@@ -14,7 +14,7 @@ interface SwarmRecentMarketListingsProps {
     className?: string;
 }
 
-const SwarmRecentMarketListings = ({ swarmId, listings, numberOfListings }: SwarmRecentMarketListingsProps) => {
+const SwarmRecentMarketListings = ({ swarmId, listings, numberOfListings, className }: SwarmRecentMarketListingsProps) => {
 
     return (
         <Card className={cn("w-full flex flex-col mt-6 md:mt-12", className)}>
