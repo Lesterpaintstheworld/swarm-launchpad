@@ -5,7 +5,8 @@ import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
 import { Investment } from "@/components/portfolio/investments";
 import Image from "next/image";
 import { IntlNumberFormat } from "@/lib/utils";
-import { getSwarm } from "@/data/swarms/previews";
+import { SwarmData, getSwarmUsingId } from "@/data/swarms/info";
+import { getSwarm } from "@/data/swarms/previews"; // Keep for other uses
 import Link from "next/link";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { useEffect, useState } from "react";
@@ -267,8 +268,7 @@ export const columns: ColumnDef<Investment>[] = [
             <DataTableColumnHeader column={column} title="Price per Share" />
         ),
         cell: ({ row }) => {
-            const swarm = getSwarm(row.getValue('swarm_id'));
-            // Add debug log
+            const swarm = getSwarmUsingId(row.getValue('swarm_id'));
             console.log('Swarm data:', {
                 swarmId: row.getValue('swarm_id'),
                 swarm,
@@ -284,8 +284,9 @@ export const columns: ColumnDef<Investment>[] = [
             <DataTableColumnHeader column={column} title="Value" />
         ),
         cell: ({ row }) => {
-            const swarm = getSwarm(row.getValue('swarm_id'));
-            return <ValueCell poolAddress={swarm.pool as string} shares={row.original.number_of_shares} />;
+            const swarm = getSwarmUsingId(row.getValue('swarm_id'));
+            if (!swarm?.pool) return null;
+            return <ValueCell poolAddress={swarm.pool} shares={row.original.number_of_shares} />;
         }
     },
     {
