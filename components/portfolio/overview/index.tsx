@@ -59,22 +59,28 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
             // Calculate price based on bonding curve
             const cycle = Math.floor(number_of_shares / 5000);
             const base = Math.pow(1.35, cycle);
-            const sharePrice = Math.floor(base * 100) / 100; // Divide by 100 to fix scaling
+            const sharePrice = Math.floor(base * 100) / 100;
 
             const valueInCompute = number_of_shares * sharePrice;
 
             return {
                 name: swarm.name,
-                value: valueInCompute, // Use value in COMPUTE for pie chart
+                value: valueInCompute,
                 valueInCompute,
-                percentage: (valueInCompute / totalValueInCompute * 100).toFixed(1),
                 sharePrice
             };
         });
 
+        // Calculate total first
         const totalValue = data.reduce((acc, item) => acc + item.valueInCompute, 0);
         
-        setInvestmentData(data);
+        // Then update percentages using the actual total
+        const dataWithCorrectPercentages = data.map(item => ({
+            ...item,
+            percentage: ((item.valueInCompute / totalValue) * 100).toFixed(1)
+        }));
+
+        setInvestmentData(dataWithCorrectPercentages);
         setTotalValueInCompute(totalValue);
     }, [investments, total_owned_shares]);
 
