@@ -8,7 +8,7 @@
     "build": "next build", 
     "start": "next start",
     "lint": "next lint",
-    "update-multiples": "node --loader ts-node/esm scripts/update-multiples.ts"
+    "update-multiples": "NODE_OPTIONS='--loader ts-node/esm' ts-node --project scripts/tsconfig.json scripts/update-multiples.ts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1",
