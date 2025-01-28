@@ -23,13 +23,15 @@ async function main() {
     // Setup connection and provider
     const connection = new Connection(RPC_URL);
     const wallet = new SimpleWallet(Keypair.generate()); // Read-only wallet
-    const provider = new AnchorProvider(connection, wallet, {});
+    const provider = new AnchorProvider(connection, wallet, {
+        commitment: 'confirmed'
+    });
     setProvider(provider);
 
     // Load the program with proper typing
-    const program = new Program<Ubclaunchpad>(
-        UbclaunchpadIDL as Ubclaunchpad,
-        new PublicKey(PROGRAM_ID),
+    const program = new Program(
+        UbclaunchpadIDL as any,
+        PROGRAM_ID,
         provider
     );
 
