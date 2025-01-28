@@ -26,6 +26,9 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
     const [numShares, setNumShares] = useState<number>(0);
     const [price, setPrice] = useState<number>(0);
     const [fee, setFee] = useState<number>(0);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [data, setData] = useState({
         totalSupply: 0,
         remainingSupply: 0,
@@ -64,63 +67,63 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
         setPrice(value);
     }
 
+    const validateInput = (shares: number) => {
+        if (shares <= 0) return "Amount must be greater than 0";
+        if (shares > data.remainingSupply) return "Amount exceeds available shares";
+        if (!Number.isInteger(shares)) return "Amount must be a whole number";
+        return null;
+    };
+
     const handleBuy = async () => {
+        const validationError = validateInput(numShares);
+        if (validationError) {
+            setError(validationError);
+            return;
+        }
+
+        setError(null);
+        setSuccessMessage(null);
+        setIsLoading(true);
+        
         try {
-            // Get the current number of sold shares
             const soldShares = data.totalSupply - data.remainingSupply;
-            
-            // Calculate price using same formula as program
             const pricePerShare = calculateSharePrice(soldShares);
-            
-            // Calculate total cost (this matches program's calculation)
             const totalCost = numShares * pricePerShare;
-            
-            // Convert to proper decimals for the transaction
             const calculatedCostInBaseUnits = Math.floor(totalCost * Math.pow(10, 6));
 
-            console.log('Buy parameters:', {
-                numShares,
-                soldShares,
-                pricePerShare,
-                totalCost,
-                calculatedCostInBaseUnits
-            });
-            
-            // Execute the purchase with exact calculated cost
-            await purchaseShares.mutateAsync({ 
+            const result = await purchaseShares.mutateAsync({ 
                 numberOfShares: numShares, 
                 calculatedCost: calculatedCostInBaseUnits
             });
-            
-            // If purchase successful, call webhook
+
+            // Webhook notification
             try {
                 const swarm = getSwarm(pool);
                 await fetch('https://nlr.app.n8n.cloud/webhook/buybot', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        swarmName: swarm?.name,
+                        swarmName: swarm?.name || 'Unknown Swarm',
                         numberOfShares: numShares,
                         pricePerShare: data.pricePerShare,
                         totalCost: price,
-                        poolAddress: pool
+                        poolAddress: pool,
+                        timestamp: new Date().toISOString(),
+                        transactionSignature: result
                     })
                 });
             } catch (webhookError) {
                 console.debug('Webhook notification failed:', webhookError);
             }
-        } catch (purchaseError) {
-            console.error('Purchase error:', purchaseError);
-            if (purchaseError instanceof Error) {
-                console.error('Error details:', {
-                    message: purchaseError.message,
-                    name: purchaseError.name,
-                    stack: purchaseError.stack
-                });
-            }
-            throw purchaseError;
+
+            setSuccessMessage(`Successfully purchased ${numShares} shares!`);
+            setNumShares(0);
+            setPrice(0);
+        } catch (error) {
+            setError(error instanceof Error ? error.message : 'Transaction failed');
+            console.error('Purchase error:', error);
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -192,14 +195,33 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
                     <Link href="/invest/market">Go to market</Link>
                 </Button>
             }
+            {error && (
+                <div className="mt-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-400">
+                    {error}
+                </div>
+            )}
+
+            {successMessage && (
+                <div className="mt-4 p-3 bg-green-500/20 border border-green-500/50 rounded-lg text-green-400">
+                    {successMessage}
+                </div>
+            )}
+
             {connected && data.remainingSupply !== 0 &&
                 <Button
                     variant='success'
                     onClick={handleBuy}
                     className="mt-10 w-full md:max-w-40"
-                    disabled={!numShares || price <= 0}
+                    disabled={!numShares || price <= 0 || isLoading}
                 >
-                    BUY
+                    {isLoading ? (
+                        <div className="flex items-center gap-2">
+                            <span className="animate-spin">⚪</span>
+                            Processing...
+                        </div>
+                    ) : (
+                        'BUY'
+                    )}
                 </Button>
             }
             {!connected && data.remainingSupply !== 0 && <ConnectButton className="mt-10 w-full md:max-w-40" />}
