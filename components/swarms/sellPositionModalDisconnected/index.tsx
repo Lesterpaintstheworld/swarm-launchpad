@@ -23,22 +23,16 @@ const data = {
 }
 
 const SellPositionModalDisconnected = ({ isModalOpen, closeModal, swarmId }: SellPositionProps) => {
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-
     const [swarmID, setSwarmID] = useState<string>(swarmId || 'digitalkin-partner-id');
     const [numShares, setNumShares] = useState<string>('');
     const [pricePerShare, setPricePerShare] = useState<number>(0);
     const [token, setToken] = useState<Token>();
-
-    const swarm = getSwarmInfo(swarmID);
-    if (!swarm) {
-        return null;
-    }
     const sharesRef = useRef<HTMLParagraphElement>(null);
 
+    const swarm = getSwarmInfo(swarmID);
+
     const handleSharesInput = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = Number(e.target.value); // Remove commas for calculation
+        const value = Number(e.target.value);
         if (isNaN(value) || value < 0 || value > data?.availableShares) return;
         setNumShares(String(value));
     }
@@ -48,6 +42,11 @@ const SellPositionModalDisconnected = ({ isModalOpen, closeModal, swarmId }: Sel
         if (isNaN(value) || value < 0) return;
         setPricePerShare(value);
     }
+
+    if (!swarm) {
+        return null; // Early return after hooks
+    }
+
 
     return (
         <Modal isOpen={isModalOpen} onClose={closeModal} className="p-6">
