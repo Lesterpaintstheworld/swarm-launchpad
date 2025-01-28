@@ -8,6 +8,7 @@ import { Expandable } from "@/components/ui/expandable";
 import { SwarmGallery } from "@/components/swarms/gallery";
 import { SwarmRecentMarketListings } from "@/components/market/recentListings";
 import { ManagePortfolioCard } from "@/components/cards/managePortfolio";
+import { IntlNumberFormat } from "@/lib/utils";
 
 export default function SwarmPage({ params }: { params: { slug: string } }) {
     const swarm = SwarmData.find((s) => s.id === params.slug);
@@ -24,8 +25,11 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
                         { label: swarm.name }
                     ]}
                 />
-                <div className="mt-2">
+                <div className="mt-2 flex justify-between items-center">
                     <h1 className="font-bold">{swarm.name}</h1>
+                    {swarm?.pool && (
+                        <SwarmMarketCap pool={swarm.pool} />
+                    )}
                 </div>
             </div>
             <SwarmGallery
@@ -72,5 +76,16 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
             />
             <ManagePortfolioCard className="mt-8" />
         </main>
+    );
+}
+
+const SwarmMarketCap = ({ pool }: { pool: string }) => {
+    return (
+        <div className="text-right">
+            <p className="text-xs text-muted-foreground">MARKET CAP</p>
+            <p className="text-lg font-semibold">
+                <SwarmInvestCard pool={pool} marketCapOnly />
+            </p>
+        </div>
     );
 }

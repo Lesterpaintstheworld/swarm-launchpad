@@ -18,6 +18,7 @@ import { Tag } from "@/components/ui/tag";
 interface SwarmInvestCardProps {
     pool: string;
     className?: string;
+    marketCapOnly?: boolean;
 }
 
 const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
@@ -129,6 +130,11 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
     useEffect(() => {
         setFee(price / poolAccount.data?.feeRatio.toNumber());
     }, [price, poolAccount.data?.feeRatio]);
+
+    if (marketCapOnly) {
+        const marketCap = (data.totalSupply - data.remainingSupply) * data.pricePerShare;
+        return <>${IntlNumberFormat(marketCap)} $COMPUTE</>;
+    }
 
     return (
         <Card className={cn("bg-[#0f172a] p-6", className)}>
