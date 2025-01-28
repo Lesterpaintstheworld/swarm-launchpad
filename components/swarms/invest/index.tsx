@@ -21,7 +21,7 @@ interface SwarmInvestCardProps {
     onMarketDataUpdate?: (data: { soldShares: number; pricePerShare: number; marketCap: number }) => void;
 }
 
-const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
+const SwarmInvestCard = ({ pool, className, onMarketDataUpdate }: SwarmInvestCardProps) => {
     const { connected } = useWallet();
     const sharesRef = useRef<HTMLParagraphElement>(null);
     const [numShares, setNumShares] = useState<number>(0);
