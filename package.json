@@ -8,7 +8,7 @@
     "build": "next build", 
     "start": "next start",
     "lint": "next lint",
-    "update-multiples": "NODE_OPTIONS='--loader ts-node/esm' ts-node --project scripts/tsconfig.json scripts/update-multiples.ts"
+    "update-multiples": "cross-env NODE_OPTIONS=\"--loader ts-node/esm\" ts-node --project scripts/tsconfig.json scripts/update-multiples.ts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1",
@@ -60,6 +60,7 @@
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5"
+    "typescript": "^5",
+    "cross-env": "^7.0.3"
   }
 }
