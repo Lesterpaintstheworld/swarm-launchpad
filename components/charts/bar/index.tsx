@@ -13,7 +13,7 @@ interface BarChartProps {
 
 const BarChart = ({ data }: BarChartProps) => {
     const maxValue = Math.max(...data.map(item => item.value));
-    const scalingFactor = 0.15; // Reduced to 15% for much shorter bars
+    const scalingFactor = 0; // Set to 0 to test
     
     return (
         <div className="flex flex-col gap-4">
