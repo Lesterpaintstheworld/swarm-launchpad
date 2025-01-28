@@ -1,9 +1,11 @@
-const { Connection, PublicKey, Keypair } = require("@solana/web3.js");
-const { Program, AnchorProvider, setProvider, BN } = require("@coral-xyz/anchor");
-const fs = require('fs');
-const path = require('path');
-const UbclaunchpadIDL = require("../data/programs/ubclaunchpad.json");
-const { getLaunchpadProgram } = require("../hooks/useLaunchpadProgram/utils");
+import { Connection, PublicKey, Keypair } from "@solana/web3.js";
+import { Program, AnchorProvider, setProvider, BN } from "@coral-xyz/anchor";
+import * as fs from 'fs';
+import * as path from 'path';
+import { getLaunchpadProgram } from "../hooks/useLaunchpadProgram/utils";
+
+// Import SwarmData and other dependencies
+import { SwarmData } from "../data/swarms/info";
 
 // Import descriptions directly from files
 const { KinKongDescription } = require("../data/swarms/descriptions/kinkong");
@@ -25,11 +27,7 @@ interface PoolAccount {
 
 // Simple wallet implementation
 class SimpleWallet {
-    payer: typeof Keypair;
-    
-    constructor(payer: typeof Keypair) {
-        this.payer = payer;
-    }
+    constructor(readonly payer: Keypair) {}
     async signTransaction(tx: any) { return tx; }
     async signAllTransactions(txs: any[]) { return txs; }
     get publicKey() { return this.payer.publicKey; }

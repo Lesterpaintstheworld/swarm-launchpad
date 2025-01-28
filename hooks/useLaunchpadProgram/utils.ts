@@ -1,7 +1,12 @@
-const { Program } = require("@coral-xyz/anchor");
-const { PublicKey } = require("@solana/web3.js");
+import { Program as AnchorProgram } from "@coral-xyz/anchor";
+import { PublicKey as SolanaPublicKey } from "@solana/web3.js";
+import { AnchorProvider } from "@coral-xyz/anchor";
 
-const getShareholderPDA = (programId, ownerPublicKey, poolPublicKey) => {
+const getShareholderPDA = (
+    programId: SolanaPublicKey, 
+    ownerPublicKey: SolanaPublicKey, 
+    poolPublicKey: SolanaPublicKey
+): SolanaPublicKey | null => {
     // Add detailed logging
     console.log('PDA Inputs:', {
         programId: programId?.toString(),
@@ -19,7 +24,7 @@ const getShareholderPDA = (programId, ownerPublicKey, poolPublicKey) => {
     }
 
     try {
-        const [shareholderPda] = PublicKey.findProgramAddressSync(
+        const [shareholderPda] = SolanaPublicKey.findProgramAddressSync(
             [
                 Buffer.from("shareholder"),
                 poolPublicKey.toBuffer(),
@@ -38,8 +43,11 @@ const getShareholderPDA = (programId, ownerPublicKey, poolPublicKey) => {
     }
 };
 
-const getTokenAccountPDA = (owner, mint) => {
-    const [pda] = PublicKey.findProgramAddressSync(
+const getTokenAccountPDA = (
+    owner: SolanaPublicKey, 
+    mint: SolanaPublicKey
+): SolanaPublicKey => {
+    const [pda] = SolanaPublicKey.findProgramAddressSync(
         [
             owner.toBuffer(),
             Buffer.from([
@@ -49,18 +57,24 @@ const getTokenAccountPDA = (owner, mint) => {
             ]),
             mint.toBuffer()
         ],
-        new PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA')
+        new SolanaPublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA')
     );
     return pda;
 };
 
 // This is a helper function to get the Ubclaunchpad Anchor program.
-function getLaunchpadProgram(provider, address) {
+const getLaunchpadProgram = (
+    provider: AnchorProvider, 
+    address: SolanaPublicKey
+): AnchorProgram => {
     const UbclaunchpadIDL = require("../../data/programs/ubclaunchpad.json");
-    return new Program({ ...UbclaunchpadIDL, address: address ? address.toBase58() : UbclaunchpadIDL.address }, provider);
+    return new AnchorProgram(
+        { ...UbclaunchpadIDL, address: address ? address.toBase58() : UbclaunchpadIDL.address }, 
+        provider
+    );
 }
 
-module.exports = {
+export {
     getShareholderPDA,
     getTokenAccountPDA,
     getLaunchpadProgram
