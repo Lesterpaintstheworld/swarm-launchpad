@@ -28,12 +28,12 @@ const BarChart = ({ data }: BarChartProps) => {
                     />
                 }
                 {data.map((item, index) => {
-                    // Calculate height percentage - max height will be 60% of container
+                    // Drastically reduced max height to 25% of container
                     const percentage = Math.min(
-                        60,
+                        25, // Maximum height reduced from 60% to 25%
                         Math.max(
-                            10, // Minimum height of 10%
-                            (item.value / maxValue) * 60 // Scale to max 60% of container height
+                            5, // Minimum height reduced from 10% to 5%
+                            (item.value / maxValue) * 25 // Scale to max 25% of container height
                         )
                     );
                     
