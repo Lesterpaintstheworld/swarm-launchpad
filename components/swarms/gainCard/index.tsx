@@ -99,10 +99,10 @@ export const SwarmGainCard = ({ name, multiple, image, className = '', launchMod
                 ) : (
                     <>
                         <div className="text-7xl font-bold text-white text-center">
-                            {multiple}x
+                            {Math.round(multiple)}x
                         </div>
                         <div className="text-gray-400 text-base font-medium">
-                            24 hour performance
+                            5 day performance
                         </div>
                     </>
                 )}
