@@ -5,8 +5,8 @@ import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
 import { Investment } from "@/components/portfolio/investments";
 import Image from "next/image";
 import { IntlNumberFormat } from "@/lib/utils";
-import { getSwarmUsingId } from "@/data/swarms/info";
 import { getSwarm } from "@/data/swarms/previews"; // Keep for other uses
+import { getSwarmUsingId } from "@/data/swarms/info";
 import Link from "next/link";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { useEffect, useState } from "react";
