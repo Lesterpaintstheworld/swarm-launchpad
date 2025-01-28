@@ -65,15 +65,6 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
         setPrice(value);
     }
 
-    const handleComputeInput = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = Number(e.target.value.replace(/,/g, '')); 
-        // Calculate shares based on correctly scaled price
-        const calculatedShares = Math.round(value / data.pricePerShare);
-        if (isNaN(value) || value < 0 || calculatedShares > 1000) return;
-        setNumShares(calculatedShares);
-        setPrice(value);
-    }
-
     const handleQuickAmount = (amount: number) => {
         if (amount > data.remainingSupply) return;
         setNumShares(amount);
