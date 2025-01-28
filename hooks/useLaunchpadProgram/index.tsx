@@ -416,7 +416,8 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                     })
                     .rpc();
 
-                toast(`Success! Transaction signature: ${tx}`);
+                console.log('Transaction successful:', tx);
+                toast.success(`Transaction successful: ${tx}`);
                 return tx;
 
             } catch (error) {
