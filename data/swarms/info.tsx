@@ -238,7 +238,7 @@ Partner with XForge to participate in the systematic development of the next gen
         tags: ['Development', 'Technical Partners', 'Project Management', 'Quality Assurance', 'AI Automation'],
         role: 'Development Coordinator',
         swarmType: 'early',
-        multiple: 1
+        multiple: 271
     },
     {
         id: 'propertykin-inception-id',
