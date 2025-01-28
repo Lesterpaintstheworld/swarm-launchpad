@@ -81,7 +81,7 @@ export default function SwarmGainersPage() {
                     {gainers.map((gainer) => (
                         <div key={gainer.name} className="flex flex-col items-center w-28">
                             <div className="text-white font-bold text-2xl mb-2">
-                                {gainer.value}x
+                                {Math.round(gainer.value)}x
                             </div>
                             
                             <div className="relative w-16">

@@ -66,7 +66,7 @@ export const CaptureCard = ({ name, multiple, image, launchMode = false }: Captu
                             {multiple}x
                         </div>
                         <div className="text-gray-400 text-base font-medium">
-                            24 hour performance
+                            5 day performance
                         </div>
                     </>
                 )}
