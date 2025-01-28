@@ -1,10 +1,11 @@
 import { Connection, PublicKey, Keypair } from "@solana/web3.js";
-import { Program, AnchorProvider, setProvider, Wallet, BN, Idl } from "@coral-xyz/anchor";
+import { Program, AnchorProvider, setProvider, Wallet, BN } from "@coral-xyz/anchor";
 import { SwarmData } from "../data/swarms/info";
 import * as fs from 'fs';
 import * as path from 'path';
 import { Ubclaunchpad } from "../hooks/useLaunchpadProgram/ubclaunchpad";
 import UbclaunchpadIDL from "../data/programs/ubclaunchpad.json";
+import { getLaunchpadProgram } from "../hooks/useLaunchpadProgram/utils";
 
 const PROGRAM_ID = new PublicKey("4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf");
 const RPC_URL = "https://api.mainnet-beta.solana.com";
@@ -33,12 +34,8 @@ async function main() {
     });
     setProvider(provider);
 
-    // Load the program with proper typing
-    const program = new Program<Ubclaunchpad>(
-        UbclaunchpadIDL as Ubclaunchpad,
-        PROGRAM_ID,
-        provider
-    );
+    // Use the helper function to get the program
+    const program = getLaunchpadProgram(provider, PROGRAM_ID);
 
     // Process each swarm
     for (const swarm of SwarmData) {
