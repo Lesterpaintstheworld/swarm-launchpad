@@ -20,6 +20,10 @@ import {
 } from "@/components/shadcn/dropdown-menu";
 import { SellPositionModal } from "@/components/swarms/sellPositionModal";
 
+import { useState, useEffect } from 'react';
+import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
+import { IntlNumberFormat } from "@/lib/utils";
+
 const PriceCell = ({ poolAddress, shares }: { poolAddress: string, shares: number }) => {
     const { poolAccount } = useLaunchpadProgramAccount({ poolAddress });
     const [price, setPrice] = useState<number>(0);

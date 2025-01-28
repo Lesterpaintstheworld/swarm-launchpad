@@ -11,12 +11,14 @@ import { getSwarmUsingPoolId, SwarmData } from "@/data/swarms/info";
 import { extractKey } from "@/lib/utils";
 import { getShareholderPDA } from "@/hooks/useLaunchpadProgram/utils";
 
-type Investment = {
+interface PositionData {
     swarm_id: string;
     number_of_shares: number;
     total_shares: number;
     last_dividend_payment: number;
 }
+
+type Investment = PositionData;
 
 export default function Portfolio() {
     const { connected, publicKey } = useWallet();
@@ -32,37 +34,7 @@ export default function Portfolio() {
             return;
         }
 
-        const fetchData = async () => {
-            try {
-                setIsLoading(true);
-                const positions: any[] = [];
-                for(let i = 0; i < poolIds.length; i++) {
-                    const poolId = poolIds[i];
-                    if(!poolId) { continue; }
-                    const position = await getPosition(publicKey as PublicKey, poolId);
-                    if(!position) {
-                        continue;
-                    }
-                    const poolPubkey = new PublicKey(poolId);
-                    const poolData = await program.account.pool.fetch(poolPubkey);
-                    positions.push({
-                        swarm_id: getSwarmUsingId(poolId).id,
-                        number_of_shares: position?.shares.toNumber() || 0,
-                        total_shares: poolData.totalShares.toNumber() || 0,
-                        last_dividend_payment: 0
-                    });
-                }
-                setInvestments(positions);
-            } catch (err) {
-                setError(err as Error);
-                console.error('Error fetching portfolio data:', err);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
         const getPosition = async (ownerPublicKey: PublicKey, poolId: string) => {
-
             const poolPubkey = new PublicKey(poolId);
             const pda = getShareholderPDA(program.programId, ownerPublicKey, poolPubkey);
             
@@ -78,33 +50,37 @@ export default function Portfolio() {
         };
 
         const fetchData = async () => {
-            // eslint-disable-next-line
-            interface PositionData {
-                swarm_id: string;
-                number_of_shares: number;
-                total_shares: number;
-                last_dividend_payment: number;
-            }
-            
-            const positions: PositionData[] = [];
-            for(let i = 0; i < poolIds.length; i++) {
-                const poolId = poolIds[i];
-                if(!poolId) { continue; }
-                const poolPubkey = new PublicKey(poolId);
-                const position = await getPosition(publicKey as PublicKey, poolId);
-                if(!position) {
-                    continue;
+            try {
+                setIsLoading(true);
+                const positions: PositionData[] = [];
+                
+                for(let i = 0; i < poolIds.length; i++) {
+                    const poolId = poolIds[i];
+                    if(!poolId) { continue; }
+                    
+                    const position = await getPosition(publicKey as PublicKey, poolId);
+                    if(!position) {
+                        continue;
+                    }
+                    
+                    const poolPubkey = new PublicKey(poolId);
+                    const poolData = await program.account.pool.fetch(poolPubkey);
+                    
+                    positions.push({
+                        swarm_id: getSwarmUsingId(poolId).id,
+                        number_of_shares: position?.shares.toNumber() || 0,
+                        total_shares: poolData.totalShares.toNumber() || 0,
+                        last_dividend_payment: 0
+                    });
                 }
-                const poolData = await program.account.pool.fetch(poolPubkey);
-                positions.push({
-                    swarm_id: getSwarmUsingPoolId(poolId).id,
-                    number_of_shares: position?.shares.toNumber() || 0,
-                    total_shares: poolData.totalShares.toNumber() || 0,
-                    last_dividend_payment: 0
-                });
-            };
-            setInvestments(positions);
-            
+                
+                setInvestments(positions);
+            } catch (err) {
+                setError(err as Error);
+                console.error('Error fetching portfolio data:', err);
+            } finally {
+                setIsLoading(false);
+            }
         };
 
         fetchData();
