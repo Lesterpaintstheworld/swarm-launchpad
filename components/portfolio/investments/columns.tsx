@@ -5,11 +5,24 @@ import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
 import { Investment } from "@/components/portfolio/investments";
 import Image from "next/image";
 import { IntlNumberFormat } from "@/lib/utils";
-import { calculateSharePrice } from '@/utils/price';
 import { getSwarm } from "@/data/swarms/previews";
 import Link from "next/link";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { useEffect, useState } from "react";
+
+const calculateSharePrice = (soldShares: number) => {
+    // Convert to f64 for floating point calculations
+    const n_f64 = soldShares as number;
+        
+    // Calculate cycle and position within cycle
+    const cycle = Math.floor(n_f64 / 5000);
+    const x = n_f64 % 5000;
+    
+    // Calculate base price with 35% growth per cycle
+    const base = Math.pow(1.35, cycle);
+    
+    return Math.floor(base * 100);
+};
 
 const SharePriceCell = ({ poolAddress }: { poolAddress: string }) => {
     const { poolAccount } = useLaunchpadProgramAccount({ poolAddress });
