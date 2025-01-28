@@ -303,11 +303,30 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
     const position = useQuery({
         queryKey: ['position', publicKey, pool.toBase58()],
         queryFn: async () => {
-            const pda = getShareholderPDA(program.programId, publicKey as PublicKey, pool);
-            const shareholderData = await program.account.shareholder.fetch(pda as PublicKey);
-            return shareholderData;
+            if (!publicKey) {
+                throw new Error('Wallet not connected');
+            }
+            
+            const pda = getShareholderPDA(program.programId, publicKey, pool);
+            if (!pda) {
+                throw new Error('Failed to generate shareholder PDA');
+            }
+
+            try {
+                const shareholderData = await program.account.shareholder.fetch(pda);
+                return shareholderData;
+            } catch (error) {
+                if ((error as Error).message.includes('Account does not exist')) {
+                    // Return a default state for new shareholders
+                    return {
+                        shares: new BN(0),
+                        availableShares: new BN(0)
+                    };
+                }
+                throw error;
+            }
         },
-        enabled: !!program
+        enabled: !!publicKey && !!program && !!pool // Only run query when wallet is connected
     })
 
     const purchaseShares = useMutation({
