@@ -3,6 +3,8 @@ import base64
 import time
 from typing import Optional
 import random
+import re
+import json
 
 # Constants
 PROGRAM_ID = "4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf"
@@ -71,6 +73,55 @@ def parse_pool_data(data: bytes) -> tuple[int, int]:
         print(f"Error parsing data: {e}")
         return 0, 0
 
+def update_info_file(multiples: dict):
+    file_path = 'data/swarms/info.tsx'
+    
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            content = file.read()
+            
+        # Find the SwarmData array
+        data_match = re.search(r'export const SwarmData: SwarmInfo\[\] = (\[[\s\S]*?\]);', content)
+        if not data_match:
+            raise Exception("Couldn't find SwarmData array in info.tsx")
+            
+        # Parse the existing data
+        data_str = data_match.group(1)
+        # Convert TypeScript to valid JSON
+        data_str = re.sub(r'(\w+):', r'"\1":', data_str)  # Quote keys
+        data_str = re.sub(r'`[\s\S]*?`', '""', data_str)  # Remove template literals
+        data_str = re.sub(r'//.*?\n', '\n', data_str)     # Remove comments
+        
+        try:
+            data = json.loads(data_str)
+        except json.JSONDecodeError as e:
+            print(f"Error parsing SwarmData: {e}")
+            return
+            
+        # Update multiples
+        for item in data:
+            if item.get('pool') in multiples:
+                item['multiple'] = multiples[item['pool']]
+                
+        # Convert back to TypeScript format
+        updated_data = json.dumps(data, indent=4)
+        updated_data = re.sub(r'"(\w+)":', r'\1:', updated_data)  # Unquote keys
+        
+        # Replace the array in the file
+        new_content = re.sub(
+            r'export const SwarmData: SwarmInfo\[\] = \[[\s\S]*?\];',
+            f'export const SwarmData: SwarmInfo[] = {updated_data};',
+            content
+        )
+        
+        with open(file_path, 'w', encoding='utf-8') as file:
+            file.write(new_content)
+            
+        print("\nSuccessfully updated info.tsx with new multiples!")
+        
+    except Exception as e:
+        print(f"\nError updating info.tsx: {e}")
+
 def main():
     # List of pools to check
     pools = {
@@ -102,6 +153,8 @@ def main():
     print("Name                  Multiple    Shares Sold")
     print("-" * 50)
 
+    multiples = {}  # Store multiples for file update
+
     for name, pool in pools.items():
         try:
             # Add random delay between requests
@@ -125,12 +178,18 @@ def main():
                 
             sold_shares = total_shares - available_shares
             cycle = sold_shares // 5000
-            multiple = pow(1.35, cycle)
+            multiple = round(pow(1.35, cycle), 2)  # Round to 2 decimal places
+            
+            # Store multiple for file update
+            multiples[pool] = multiple
             
             print(f"{name:<20} {multiple:>8.2f}x    {sold_shares:>10,}")
 
         except Exception as e:
             print(f"{name:<20} Error: {str(e)}")
+
+    # Update the info.tsx file
+    update_info_file(multiples)
 
 if __name__ == "__main__":
     main()
