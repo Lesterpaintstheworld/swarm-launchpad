@@ -1,13 +1,18 @@
 import { Connection, PublicKey, Keypair } from "@solana/web3.js";
-import { Program, AnchorProvider, setProvider, Wallet } from "@coral-xyz/anchor";
+import { Program, AnchorProvider, setProvider, Wallet, BN } from "@coral-xyz/anchor";
 import { SwarmData } from "../data/swarms/info";
 import * as fs from 'fs';
 import * as path from 'path';
 import { Ubclaunchpad } from "../hooks/useLaunchpadProgram/ubclaunchpad";
 import UbclaunchpadIDL from "../data/programs/ubclaunchpad.json";
 
-const PROGRAM_ID = "4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf";
+const PROGRAM_ID = new PublicKey("4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf");
 const RPC_URL = "https://api.mainnet-beta.solana.com";
+
+interface PoolAccount {
+    totalShares: BN;
+    availableShares: BN;
+}
 
 // Simple wallet implementation
 class SimpleWallet implements Wallet {
@@ -28,9 +33,9 @@ async function main() {
     });
     setProvider(provider);
 
-    // Load the program with proper typing
-    const program = new Program(
-        UbclaunchpadIDL as any,
+    // Load the program
+    const program = new Program<Ubclaunchpad>(
+        UbclaunchpadIDL as Ubclaunchpad,
         PROGRAM_ID,
         provider
     );
@@ -42,7 +47,7 @@ async function main() {
         try {
             // Fetch pool data
             const poolPubkey = new PublicKey(swarm.pool);
-            const poolData = await program.account.pool.fetch(poolPubkey);
+            const poolData = await program.account.pool.fetch(poolPubkey) as PoolAccount;
             
             // Calculate sold shares
             const totalShares = poolData.totalShares.toNumber();
