@@ -2,6 +2,7 @@ import json
 import requests
 from pathlib import Path
 import base64
+import re
 
 # Constants
 PROGRAM_ID = "4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf"
@@ -23,6 +24,31 @@ def get_account_info(pubkey: str):
     response = requests.post(RPC_URL, json=payload)
     return response.json()
 
+def convert_to_json(ts_object_str: str) -> str:
+    """Convert TypeScript object notation to valid JSON"""
+    # Replace single quotes with double quotes (but not within template literals)
+    in_template = False
+    result = []
+    i = 0
+    while i < len(ts_object_str):
+        if ts_object_str[i:i+1] == '`':
+            in_template = not in_template
+            result.append('"')  # Replace template literal with double quotes
+            i += 1
+        elif not in_template and ts_object_str[i] == "'":
+            result.append('"')
+            i += 1
+        else:
+            result.append(ts_object_str[i])
+            i += 1
+
+    json_str = ''.join(result)
+    
+    # Replace property names without quotes
+    json_str = re.sub(r'(\s*)(\w+):', r'\1"\2":', json_str)
+    
+    return json_str
+
 def main():
     # Load IDL
     script_dir = Path(__file__).parent
@@ -37,30 +63,28 @@ def main():
         
     # Find the SwarmData array
     start_marker = "export const SwarmData: SwarmInfo[] = ["
-    end_marker = "\n]"  # Changed to match actual file format
+    end_marker = "];"
     
     try:
         start_idx = content.index(start_marker) + len(start_marker)
-        end_idx = content.index(end_marker, start_idx)
-    except ValueError:
-        print("Content preview:", content[:500])  # Debug output
-        print("\nMarkers not found. Looking for alternative format...")
+        end_idx = content.rindex(end_marker)  # Use rindex to find the last occurrence
+        
+        # Extract the array content
+        array_content = content[start_idx:end_idx] + "]"
+        
+        # Convert to valid JSON
+        json_str = convert_to_json(array_content)
+        
         try:
-            # Try alternative format
-            alt_start = "SwarmData: SwarmInfo[] = ["
-            alt_end = "\n]"
-            start_idx = content.index(alt_start) + len(alt_start)
-            end_idx = content.index(alt_end, start_idx)
-        except ValueError:
-            raise Exception("Could not find SwarmData array in info.tsx")
-    
-    # Extract and parse the JSON array
-    json_str = content[start_idx:end_idx] + "]"
-    try:
-        swarm_data = json.loads(json_str)
-    except json.JSONDecodeError as e:
-        print("Error parsing JSON. Preview of content:")
-        print(json_str[:500])
+            swarm_data = json.loads(json_str)
+        except json.JSONDecodeError as e:
+            print("Error parsing JSON. Preview of converted content:")
+            print(json_str[:500])
+            raise e
+
+    except ValueError as e:
+        print("Error finding array in content. Content preview:")
+        print(content[:500])
         raise e
 
     # Process each swarm
