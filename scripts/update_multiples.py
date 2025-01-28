@@ -27,15 +27,27 @@ def get_account_info(pubkey: str):
 def extract_swarm_data(content: str) -> str:
     """Extract SwarmData array from TypeScript file content"""
     # Find the start of the SwarmData array
-    start_pattern = r"export const SwarmData: SwarmInfo\[\] = \["
-    end_pattern = r"\];\s*$"
+    start_marker = "export const SwarmData: SwarmInfo[] = ["
+    end_marker = "];\n\n"  # Changed to match actual file format
     
-    match = re.search(f"{start_pattern}(.*?){end_pattern}", content, re.DOTALL)
-    if not match:
-        raise ValueError("Could not find SwarmData array in content")
-    
-    array_content = match.group(1) + "]"
-    return array_content
+    try:
+        start_idx = content.index(start_marker) + len(start_marker)
+        end_idx = content.index(end_marker, start_idx)
+        array_content = content[start_idx:end_idx] + "]"
+        return array_content
+    except ValueError:
+        print("Content preview:", content[:1000])  # Show more content for debugging
+        print("\nMarkers not found. Looking for alternative format...")
+        try:
+            # Try alternative format
+            alt_start = "SwarmData: SwarmInfo[] = ["
+            alt_end = "];\n"
+            start_idx = content.index(alt_start) + len(alt_start)
+            end_idx = content.index(alt_end, start_idx)
+            array_content = content[start_idx:end_idx] + "]"
+            return array_content
+        except ValueError:
+            raise ValueError("Could not find SwarmData array in content")
 
 def convert_to_json(ts_object_str: str) -> str:
     """Convert TypeScript object notation to valid JSON"""
