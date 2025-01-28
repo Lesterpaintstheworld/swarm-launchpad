@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { DataTable } from "@/components/ui/datatable";
+import { cn } from "@/lib/utils";
 import { columns } from "./columns";
 import { Button } from "@/components/shadcn/button";
 import Link from "next/link";
@@ -16,7 +17,7 @@ interface SwarmRecentMarketListingsProps {
 const SwarmRecentMarketListings = ({ swarmId, listings, numberOfListings }: SwarmRecentMarketListingsProps) => {
 
     return (
-        <Card className="w-full flex flex-col mt-6 md:mt-12">
+        <Card className={cn("w-full flex flex-col mt-6 md:mt-12", className)}>
             <h4 className="mb-4 font-foreground font-semibold">P2P Market Listings</h4>
             <DataTable
                 columns={columns}
