@@ -45,7 +45,7 @@ export default function Invest() {
             {partnerSwarms.length > 0 && (
                 <section className="mb-24">
                     <div className="flex items-center gap-2 mb-8">
-                        <h3 className="text-2xl font-semibold">🤝 PARTNER SWARMS</h3>
+                        <h3 className="text-2xl font-semibold">🤝 Partner Swarms</h3>
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger>
@@ -77,7 +77,7 @@ export default function Invest() {
             {earlySwarms.length > 0 && (
                 <section className="mb-24">
                     <div className="flex items-center gap-2 mb-8">
-                        <h3 className="text-2xl font-semibold">🚀 EARLY SWARMS</h3>
+                        <h3 className="text-2xl font-semibold">🚀 Early Swarms</h3>
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger>
@@ -109,7 +109,7 @@ export default function Invest() {
             {inceptionSwarms.length > 0 && (
                 <section className="mb-24">
                     <div className="flex items-center gap-2 mb-8">
-                        <h3 className="text-2xl font-semibold">🌱 INCEPTION SWARMS</h3>
+                        <h3 className="text-2xl font-semibold">🌱 Inception Swarms</h3>
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger>
