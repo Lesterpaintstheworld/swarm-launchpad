@@ -89,15 +89,15 @@ def update_info_file(multiples: dict):
         data_str = data_match.group(1)
         
         # Clean up the TypeScript/JSON
+        # Handle template literals and multi-line strings first
+        data_str = re.sub(r'`([^`]*)`', lambda m: json.dumps(m.group(1).replace('\n', '\\n')), data_str)
+        
         # Convert single quotes to double quotes
         data_str = re.sub(r"'([^']*)'", r'"\1"', data_str)
         
         # Remove imports and type annotations
         data_str = re.sub(r'import.*?;', '', data_str)
         data_str = re.sub(r': SwarmInfo\[\]', '', data_str)
-        
-        # Handle template literals
-        data_str = re.sub(r'`([^`]*)`', lambda m: json.dumps(m.group(1)), data_str)
         
         # Remove comments
         data_str = re.sub(r'//.*?\n', '\n', data_str)
