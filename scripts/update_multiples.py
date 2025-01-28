@@ -1,10 +1,11 @@
 import json
 import re
 from solana.rpc.async_api import AsyncClient
+from solana.rpc.commitment import Commitment
 from solana.publickey import PublicKey
-from anchorpy import Provider, Program, Wallet
+import base58
 import asyncio
-import os
+import struct
 from pathlib import Path
 
 # Constants
@@ -29,10 +30,7 @@ async def main():
         swarm_data = json.loads(match.group(1))
 
     # Setup Solana connection
-    connection = AsyncClient(RPC_URL)
-    wallet = Wallet.local()  # Creates a dummy wallet for read-only operations
-    provider = Provider(connection, wallet)
-    program = Program(idl, PublicKey(PROGRAM_ID), provider)
+    connection = AsyncClient(RPC_URL, commitment=Commitment("confirmed"))
 
     # Process each swarm
     for swarm in swarm_data:
@@ -41,12 +39,22 @@ async def main():
 
         try:
             pool_pubkey = PublicKey(swarm['pool'])
-            pool_data = await program.account["Pool"].fetch(pool_pubkey)
+            account_info = await connection.get_account_info(pool_pubkey)
             
-            total_shares = pool_data.total_shares
-            available_shares = pool_data.available_shares
+            if not account_info.value:
+                print(f"No account info found for {swarm['name']}")
+                continue
+
+            # Parse account data - skip 8 byte discriminator
+            data = account_info.value.data[8:]
+            
+            # Parse total_shares and available_shares (both u64)
+            # Skip pool_name and admin_authority
+            offset = 32 + 32  # Skip string data and pubkey
+            total_shares = int.from_bytes(data[offset:offset+8], 'little')
+            available_shares = int.from_bytes(data[offset+8:offset+16], 'little')
+            
             sold_shares = total_shares - available_shares
-            
             cycle = sold_shares // 5000
             multiple = pow(1.35, cycle)
             
