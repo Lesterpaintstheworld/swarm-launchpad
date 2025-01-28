@@ -53,7 +53,22 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
                     const cycle = Math.floor(soldShares / 5000);
                     const base = Math.pow(1.35, cycle);
                     const sharePrice = Math.floor(base * 100) / 100;
+                    
+                    if (typeof investment.number_of_shares !== 'number') {
+                        console.error('Invalid number_of_shares:', investment.number_of_shares);
+                        return null;
+                    }
+
                     const value = investment.number_of_shares * sharePrice;
+
+                    if (isNaN(value)) {
+                        console.error('Invalid value calculation:', {
+                            shares: investment.number_of_shares,
+                            price: sharePrice,
+                            value
+                        });
+                        return null;
+                    }
 
                     return {
                         name: swarm.name,
@@ -67,7 +82,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
             }));
 
             const validValues = values.filter(Boolean);
-            const total = validValues.reduce((acc, item) => acc + item.value, 0);
+            const total = validValues.reduce((acc, item) => acc + (item?.value || 0), 0);
             
             const dataWithPercentages = validValues.map(item => ({
                 ...item,
