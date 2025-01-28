@@ -22,7 +22,6 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
     const { connected } = useWallet();
     const [numShares, setNumShares] = useState<number>(0);
     const [price, setPrice] = useState<number>(0);
-    const [fee, setFee] = useState<number>(0);
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState({
         totalSupply: 0,
@@ -104,10 +103,6 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
             }
         });
     }
-
-    useEffect(() => {
-        setFee(price / poolAccount.data?.feeRatio.toNumber());
-    }, [price, poolAccount.data?.feeRatio]);
 
     if (marketCapOnly) {
         const marketCap = (data.totalSupply - data.remainingSupply) * data.pricePerShare;
