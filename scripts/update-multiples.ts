@@ -4,7 +4,6 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { getLaunchpadProgram } from "../hooks/useLaunchpadProgram/utils.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -15,7 +14,7 @@ interface SwarmInfo {
     pool?: string;
     name: string;
     multiple: number;
-    [key: string]: any; // Allow other properties
+    [key: string]: any;
 }
 
 // Program types
@@ -34,57 +33,52 @@ interface UbclaunchpadProgram extends Program<Idl> {
     account: ProgramAccounts;
 }
 
-// Import SwarmData directly from the file
-const SwarmData: SwarmInfo[] = [];
-
-try {
-    const infoPath = path.join(__dirname, '../data/swarms/info.tsx');
-    const fileContent = fs.readFileSync(infoPath, 'utf8');
-    
-    // Extract SwarmData array using regex
-    const match = fileContent.match(/export const SwarmData: SwarmInfo\[\] = (\[[\s\S]*?\]);/);
-    if (match) {
-        // Parse the matched JSON array
-        const swarmDataString = match[1].replace(/\n/g, '');
-        Object.assign(SwarmData, JSON.parse(swarmDataString));
-    }
-} catch (error) {
-    console.error('Error loading SwarmData:', error);
-    process.exit(1);
-}
-
-const PROGRAM_ID = new PublicKey("4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf");
-const RPC_URL = "https://api.mainnet-beta.solana.com";
-
-interface PoolAccount {
-    totalShares: BN;
-    availableShares: BN;
-}
-
-interface PoolState {
-    totalShares: BN;
-    availableShares: BN;
-}
-
-// Simple wallet implementation
-class SimpleWallet {
-    constructor(readonly payer: Keypair) {}
-    async signTransaction(tx: any) { return tx; }
-    async signAllTransactions(txs: any[]) { return txs; }
-    get publicKey() { return this.payer.publicKey; }
-}
-
 async function main() {
+    // Dynamically import the IDL
+    const idlModule = await import('../data/programs/ubclaunchpad.json', {
+        assert: { type: 'json' }
+    });
+    const UbclaunchpadIDL = idlModule.default;
+
+    // Import SwarmData
+    const SwarmData: SwarmInfo[] = [];
+    try {
+        const infoPath = path.join(__dirname, '../data/swarms/info.tsx');
+        const fileContent = fs.readFileSync(infoPath, 'utf8');
+        const match = fileContent.match(/export const SwarmData: SwarmInfo\[\] = (\[[\s\S]*?\]);/);
+        if (match) {
+            const swarmDataString = match[1].replace(/\n/g, '');
+            Object.assign(SwarmData, JSON.parse(swarmDataString));
+        }
+    } catch (error) {
+        console.error('Error loading SwarmData:', error);
+        process.exit(1);
+    }
+
+    const PROGRAM_ID = new PublicKey("4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf");
+    const RPC_URL = "https://api.mainnet-beta.solana.com";
+
+    // Simple wallet implementation
+    class SimpleWallet {
+        constructor(readonly payer: Keypair) {}
+        async signTransaction(tx: any) { return tx; }
+        async signAllTransactions(txs: any[]) { return txs; }
+        get publicKey() { return this.payer.publicKey; }
+    }
+
     // Setup connection and provider
     const connection = new Connection(RPC_URL);
-    const wallet = new SimpleWallet(Keypair.generate()); // Read-only wallet
+    const wallet = new SimpleWallet(Keypair.generate());
     const provider = new AnchorProvider(connection, wallet, {
         commitment: 'confirmed'
     });
     setProvider(provider);
 
-    // Use the helper function to get the program
-    const program = getLaunchpadProgram(provider, PROGRAM_ID) as UbclaunchpadProgram;
+    // Create program
+    const program = new Program(
+        { ...UbclaunchpadIDL, address: PROGRAM_ID.toBase58() },
+        provider
+    ) as UbclaunchpadProgram;
 
     // Process each swarm
     for (const swarm of SwarmData) {
