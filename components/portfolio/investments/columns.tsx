@@ -38,7 +38,7 @@ const SharePriceCell = ({ poolAddress }: { poolAddress: string }) => {
             // Calculate price based on bonding curve
             const cycle = Math.floor(soldShares / 5000);
             const base = Math.pow(1.35, cycle);
-            const sharePrice = Math.floor(base * 100); // Base price in COMPUTE
+            const sharePrice = Math.floor(base * 0.1); // Divide by 1000 to fix scaling
             
             setPrice(sharePrice);
         }
