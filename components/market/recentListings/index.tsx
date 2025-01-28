@@ -10,6 +10,7 @@ interface SwarmRecentMarketListingsProps {
     swarmId: string;
     listings?: MarketListing[];
     numberOfListings: number;
+    className?: string;
 }
 
 const SwarmRecentMarketListings = ({ swarmId, listings, numberOfListings }: SwarmRecentMarketListingsProps) => {

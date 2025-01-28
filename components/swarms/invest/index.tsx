@@ -1,6 +1,5 @@
 'use client'
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button } from "@/components/shadcn/button";
 import { ConnectButton } from "@/components/solana/connectButton";
 import { Card } from "@/components/ui/card"
@@ -10,7 +9,7 @@ import { calculateSharePrice, cn, IntlNumberFormat, IntlNumberFormatCompact } fr
 import { useWallet } from "@solana/wallet-adapter-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
-import { Tag } from "@/components/ui/tag";
+import { toast } from 'sonner';
 
 interface SwarmInvestCardProps {
     pool: string;
