@@ -131,7 +131,7 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
     }, [price, poolAccount.data?.feeRatio]);
 
     return (
-        <Card className={cn("w-full", className)}>
+        <Card className={cn("w-full bg-[var(--card)] text-[var(--card-foreground)]", className)}>
             <div className="w-full flex flex-row justify-between items-center">
                 <h4>Purchase Shares</h4>
                 <div className="flex flex-row items-center gap-1">
@@ -144,7 +144,7 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
                         <p className="text-muted text-sm">You&apos;ll receive</p>
                         <div className="flex flex-row">
                             <Input
-                                className="border-none rounded-none bg-transparent pl-0 text-4xl font-bold no-arrows"
+                                className="border-none rounded-none bg-transparent pl-0 text-4xl font-bold no-arrows text-[var(--foreground)]"
                                 style={{
                                     width: `calc(${data.remainingSupply !== 0 ? IntlNumberFormat(numShares).length || 1 : 8}ch + ${connected ? 1 : 2}rem)`,
                                     maxWidth: `calc(100% - ${sharesRef.current?.offsetWidth}px - 10px)`,
@@ -158,7 +158,7 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
                         </div>
                     </div>
                     <div className="flex flex-row justify-between items-center px-4 mt-2">
-                        <p className="text-sm text-muted">1 share = {IntlNumberFormat(data.pricePerShare)} $COMPUTE</p>
+                        <p className="text-sm text-muted">1 share = <span className="metallic-text">{IntlNumberFormat(data.pricePerShare)} $COMPUTE</span></p>
                         <p className="text-sm text-muted">Total supply: {IntlNumberFormatCompact(data.totalSupply)}</p>
                     </div>
                 </div>
@@ -182,7 +182,7 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
             </div>
             {fee > 0 &&
                 <div className="flex flex-row gap-2 items-center mt-6 pl-4">
-                    <p>+ Fee: {fee}</p>
+                    <p>+ Fee: <span className="metallic-text-ubc">{fee}</span></p>
                     <Tag className="text-xs">UBC</Tag>
                 </div>
             }
@@ -195,19 +195,19 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
                 </Button>
             }
             {error && (
-                <div className="mt-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-400">
+                <div className="mt-4 p-3 bg-[var(--destructive)]/20 border border-[var(--destructive)]/50 rounded-lg text-[var(--destructive)]">
                     {error}
                 </div>
             )}
 
             {successMessage && (
-                <div className="mt-4 p-3 bg-green-500/20 border border-green-500/50 rounded-lg text-green-400 flex items-center justify-between">
+                <div className="mt-4 p-3 bg-[var(--success)]/20 border border-[var(--success)]/50 rounded-lg text-[var(--success)] flex items-center justify-between">
                     <span>{successMessage}</span>
                     <Button 
                         variant="ghost" 
                         size="sm" 
                         onClick={() => setSuccessMessage(null)}
-                        className="hover:bg-green-500/10"
+                        className="hover:bg-[var(--success)]/10"
                     >
                         ✕
                     </Button>
@@ -218,7 +218,7 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
                 <Button
                     variant='success'
                     onClick={handleBuy}
-                    className="mt-10 w-full md:max-w-40"
+                    className="mt-10 w-full md:max-w-40 bg-[var(--success)] text-[var(--success-foreground)] hover:bg-[var(--success)]/90"
                     disabled={!numShares || price <= 0 || isLoading}
                 >
                     {isLoading ? (
@@ -239,7 +239,7 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
                         key={amount}
                         onClick={() => handleQuickAmount(amount)}
                         variant="secondary"
-                        className="bg-slate-700 hover:bg-slate-600 relative group"
+                        className="bg-[var(--accent-1)] hover:bg-[var(--accent-2)] relative group text-[var(--foreground)]"
                         disabled={amount > data.remainingSupply}
                         title={amount > data.remainingSupply ? "Exceeds available shares" : `Buy ${amount} shares`}
                     >
