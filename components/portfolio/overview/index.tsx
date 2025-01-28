@@ -52,51 +52,34 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
     const { program } = useLaunchpadProgram();
 
     useEffect(() => {
-        const fetchData = async () => {
-            const data = await Promise.all(investments.map(async (investment) => {
-                const { swarm_id, number_of_shares } = investment;
-                const swarm = getSwarm(swarm_id);
-                
-                if (!swarm.pool || !program) return null;
+        const data = investments.map((investment) => {
+            const { swarm_id, number_of_shares } = investment;
+            const swarm = getSwarm(swarm_id);
+            
+            // Calculate price based on bonding curve
+            const cycle = Math.floor(number_of_shares / 5000);
+            const base = Math.pow(1.35, cycle);
+            const sharePrice = Math.floor(base * 100) / 100; // Divide by 100 to fix scaling
 
-                try {
-                    const poolAccount = await program.account.pool.fetch(new PublicKey(swarm.pool));
-                
-                    const totalShares = poolAccount.totalShares.toNumber();
-                    const availableShares = poolAccount.availableShares.toNumber();
-                    const soldShares = totalShares - availableShares;
-                
-                    // Calculate price based on bonding curve
-                    const cycle = Math.floor(soldShares / 5000);
-                    const base = Math.pow(1.35, cycle);
-                    const sharePrice = Math.floor(base * 100) / 100; // Divide by 100 to fix scaling
+            const valueInCompute = number_of_shares * sharePrice;
 
-                    const valueInCompute = number_of_shares * sharePrice;
+            return {
+                name: swarm.name,
+                value: number_of_shares,
+                valueInCompute,
+                percentage: (number_of_shares / total_owned_shares * 100).toFixed(1),
+                sharePrice
+            };
+        });
 
-                    return {
-                        name: swarm.name,
-                        value: number_of_shares,
-                        valueInCompute,
-                        percentage: (number_of_shares / total_owned_shares * 100).toFixed(1),
-                        sharePrice
-                    };
-                } catch (error) {
-                    console.error(`Error fetching pool account for ${swarm_id}:`, error);
-                    return null;
-                }
-            }));
-
-            const validData = data.filter(Boolean);
-            console.log('Portfolio data:', {
-                validData,
-                totalValue: validData.reduce((acc, item) => acc + item.valueInCompute, 0)
-            });
-            setInvestmentData(validData);
-            setTotalValueInCompute(validData.reduce((acc, item) => acc + item.valueInCompute, 0));
-        };
-
-        fetchData();
-    }, [investments, total_owned_shares, program]);
+        console.log('Portfolio data:', {
+            data,
+            totalValue: data.reduce((acc, item) => acc + item.valueInCompute, 0)
+        });
+        
+        setInvestmentData(data);
+        setTotalValueInCompute(data.reduce((acc, item) => acc + item.valueInCompute, 0));
+    }, [investments, total_owned_shares]);
 
 
     const CustomTooltip = ({ active, payload }: TooltipProps) => {
