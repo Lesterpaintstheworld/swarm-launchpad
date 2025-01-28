@@ -8,7 +8,7 @@ import { Expandable } from "@/components/ui/expandable";
 import { SwarmGallery } from "@/components/swarms/gallery";
 import { SwarmRecentMarketListings } from "@/components/market/recentListings";
 import { ManagePortfolioCard } from "@/components/cards/managePortfolio";
-import { IntlNumberFormat } from "@/lib/utils";
+import { IntlNumberFormat, IntlNumberFormatCompact } from "@/lib/utils";
 
 export default function SwarmPage({ params }: { params: { slug: string } }) {
     const swarm = SwarmData.find((s) => s.id === params.slug);
