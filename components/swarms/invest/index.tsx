@@ -55,23 +55,26 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
 
     const handleBuy = () => {
         if (!numShares || numShares <= 0) {
-            setError("Please enter a valid number of shares");
+            toast.error("Please enter a valid number of shares");
             return;
         }
 
-        setError(null);
-        setSuccessMessage(null);
         setIsLoading(true);
-        
         const calculatedCostInBaseUnits = Math.floor(price * Math.pow(10, 6));
         
-        purchaseShares.mutate({ 
+        const swarm = getSwarm(pool);
+        if (!swarm) {
+            toast.error("Invalid swarm");
+            return;
+        }
+
+        toast.promise(purchaseShares.mutateAsync({ 
             numberOfShares: numShares, 
             calculatedCost: calculatedCostInBaseUnits
-        }, {
-            onSuccess: (result) => {
+        }), {
+            loading: 'Transaction pending...',
+            success: (result) => {
                 // Webhook notification
-                const swarm = getSwarm(pool);
                 fetch('https://nlr.app.n8n.cloud/webhook/buybot', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -87,16 +90,15 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
                 }).catch((webhookError) => {
                     console.debug('Webhook notification failed:', webhookError);
                 });
-
-                setSuccessMessage(`Successfully purchased ${numShares} shares!`);
                 setNumShares(0);
                 setPrice(0);
                 setIsLoading(false);
+                return `Successfully purchased ${numShares} shares!`;
             },
-            onError: (error) => {
-                setError(error instanceof Error ? error.message : 'Transaction failed');
+            error: (error) => {
                 console.error('Purchase error:', error);
                 setIsLoading(false);
+                return error instanceof Error ? error.message : 'Transaction failed';
             }
         });
     }
