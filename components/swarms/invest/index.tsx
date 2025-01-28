@@ -51,13 +51,15 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
     const handleSharesInput = (e: ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value.replace(/,/g, ''));
         if (isNaN(value) || value < 0 || value > 1000) return;
-        setPrice(Math.floor((Number(value))) * (data.pricePerShare * 100));
+        // Price is now correctly scaled
+        setPrice(Math.floor(Number(value) * data.pricePerShare));
         setNumShares(value);
     }
 
     const handleComputeInput = (e: ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value.replace(/,/g, '')); 
-        const calculatedShares = Math.round(value / (data.pricePerShare * 100));
+        // Calculate shares based on correctly scaled price
+        const calculatedShares = Math.round(value / data.pricePerShare);
         if (isNaN(value) || value < 0 || calculatedShares > 1000) return;
         setNumShares(calculatedShares);
         setPrice(value);
@@ -66,8 +68,9 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
     const handleBuy = async () => {
         try {
             // Convert price to proper units (COMPUTE uses 6 decimals)
-            const priceInBaseUnits = Math.floor(price * Math.pow(10, 6));
-            const feeInBaseUnits = Math.floor(fee * Math.pow(10, 6));
+            // Multiply by 100 for the actual price, then by 1e6 for decimals
+            const priceInBaseUnits = Math.floor(price * 100 * Math.pow(10, 6));
+            const feeInBaseUnits = Math.floor(fee * 100 * Math.pow(10, 6));
 
             console.log('Buy parameters:', {
                 numShares,
