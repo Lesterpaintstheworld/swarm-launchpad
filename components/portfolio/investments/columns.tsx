@@ -10,6 +10,26 @@ import { getSwarm } from "@/data/swarms/previews";
 import Link from "next/link";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { useEffect, useState } from "react";
+
+const SharePriceCell = ({ poolAddress }: { poolAddress: string }) => {
+    const { poolAccount } = useLaunchpadProgramAccount({ poolAddress });
+    const [price, setPrice] = useState<number>(0);
+
+    useEffect(() => {
+        if (poolAccount?.data) {
+            const totalShares = poolAccount.data.totalShares.toNumber();
+            const availableShares = poolAccount.data.availableShares.toNumber();
+            const soldShares = totalShares - availableShares;
+            setPrice(calculateSharePrice(soldShares));
+        }
+    }, [poolAccount.data]);
+
+    return (
+        <p className="text-muted-foreground">
+            {IntlNumberFormat(price)} $COMPUTE
+        </p>
+    );
+};
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/shadcn/button";
 import {
@@ -189,6 +209,16 @@ export const columns: ColumnDef<Investment>[] = [
                     </div>
                 </div>
             )
+        }
+    },
+    {
+        accessorKey: 'share_price',
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Price per Share" />
+        ),
+        cell: ({ row }) => {
+            const swarm = getSwarm(row.getValue('swarm_id'));
+            return <SharePriceCell poolAddress={swarm.pool as string} />;
         }
     },
     {
