@@ -1,16 +1,27 @@
 'use client'
 
 import { TokenTooltip } from "@/components/ui/tokenTooltip";
-import { SwarmData } from "@/data/swarms/info";
+import { SwarmData, getSwarmInfo } from "@/data/swarms/info";
+import { previews } from "@/data/swarms/previews";
 import { SwarmPreviewCard } from "@/components/swarms/preview";
 
 export default function Invest() {
-    // Sort swarms by multiple in descending order
-    const sortedSwarms = [...SwarmData]
+    // Combine preview data with multiples from SwarmData
+    const combinedSwarms = previews.map(preview => {
+        const swarmInfo = getSwarmInfo(preview.id);
+        return {
+            ...preview,
+            multiple: swarmInfo?.multiple || 1,
+            pool: swarmInfo?.pool
+        };
+    });
+
+    // Sort and filter swarms
+    const sortedSwarms = combinedSwarms
         .filter(swarm => swarm.pool) // Only show swarms with pools
         .sort((a, b) => (b.multiple || 0) - (a.multiple || 0));
 
-    // Split swarms by type
+    // Split swarms by type using preview data
     const partnerSwarms = sortedSwarms.filter(swarm => swarm.swarmType === 'partner');
     const earlySwarms = sortedSwarms.filter(swarm => swarm.swarmType === 'early');
     const inceptionSwarms = sortedSwarms.filter(swarm => swarm.swarmType === 'inception');
