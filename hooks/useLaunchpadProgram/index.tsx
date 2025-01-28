@@ -271,6 +271,15 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
         };
     }
 
+    // Return early if pool is null
+    if (!pool) {
+        return {
+            poolAccount: { data: null, isLoading: false, error: new Error('No pool address provided') },
+            purchaseShares: { mutateAsync: async () => { throw new Error('No pool address provided'); } },
+            position: { data: null, isLoading: false, error: new Error('No pool address provided') }
+        };
+    }
+
     const { publicKey } = useWallet()
     const { program, programId, computeMint, ubcMint, connection, provider } = useLaunchpadProgram()
     const network = constants.environment === 'production' 
@@ -288,7 +297,7 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
             
             return program.account.pool.fetch(pool);
         },
-        enabled: !!program
+        enabled: !!program && !!pool
     })
     
     const position = useQuery({
