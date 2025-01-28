@@ -441,18 +441,18 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                     )
                     .accounts({
                         pool,
-                        shareholder: shareholderPda, // Now TypeScript knows this isn't null
-                        computeMintAccount: poolAccount.data.computeMint,
-                        ubcMintAccount: poolAccount.data.ubcMint,
-                        senderComputeAccount,
-                        senderUbcAccount,
-                        custodialAccount: poolAccount.data.custodialAccount,
-                        custodialComputeAccount,
-                        custodialUbcAccount,
+                        shareholder_pda: shareholderPda,
+                        compute_mint_account: poolAccount.data.computeMint,
+                        ubc_mint_account: poolAccount.data.ubcMint,
+                        sender_compute_account: senderComputeAccount,
+                        sender_ubc_account: senderUbcAccount,
+                        custodial_account: poolAccount.data.custodialAccount,
+                        custodial_compute_account: custodialComputeAccount,
+                        custodial_ubc_account: custodialUbcAccount,
                         buyer: publicKey,
-                        systemProgram: SystemProgram.programId,
-                        tokenProgram: TOKEN_PROGRAM_ID,
-                        associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID
+                        system_program: SystemProgram.programId,
+                        token_program: TOKEN_PROGRAM_ID,
+                        associated_token_program: ASSOCIATED_TOKEN_PROGRAM_ID
                     })
                     .rpc();
 
