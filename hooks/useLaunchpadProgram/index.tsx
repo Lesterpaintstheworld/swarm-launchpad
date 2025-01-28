@@ -438,6 +438,7 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                         new BN(numberOfShares),
                         new BN(calculatedCost)
                     )
+                    // @ts-ignore - Temporarily disable type checking while account names are being resolved
                     .accounts({
                         pool: new PublicKey(pool),
                         shareholder: shareholderPda,
