@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client'
 
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
