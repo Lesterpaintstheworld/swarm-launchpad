@@ -27,14 +27,6 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
                 />
                 <div className="mt-2 flex justify-between items-center">
                     <h1 className="font-bold">{swarm.name}</h1>
-                    {swarm?.pool && (
-                        <div className="text-right">
-                            <p className="text-xs text-muted-foreground">MARKET CAP</p>
-                            <p className="text-lg font-semibold">
-                                <SwarmInvestCard pool={swarm.pool} marketCapOnly />
-                            </p>
-                        </div>
-                    )}
                 </div>
             </div>
             <SwarmGallery
@@ -49,6 +41,14 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
                             <div className="flex-1">
                                 <div className="flex justify-between items-center mb-6">
                                     <h4 className="font-semibold">About {swarm.name}</h4>
+                                    {swarm?.pool && (
+                                        <div className="text-right">
+                                            <p className="text-xs text-muted-foreground">MARKET CAP</p>
+                                            <p className="text-lg font-semibold text-green-400">
+                                                ${IntlNumberFormatCompact(((data.totalSupply - data.remainingSupply) * data.pricePerShare))} $COMPUTE
+                                            </p>
+                                        </div>
+                                    )}
                                 </div>
                                 <hr className="mt-3" />
                                 <Expandable overflowThreshold={750}>
@@ -84,13 +84,3 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
     );
 }
 
-const SwarmMarketCap = ({ pool }: { pool: string }) => {
-    return (
-        <div className="text-right">
-            <p className="text-xs text-muted-foreground">MARKET CAP</p>
-            <p className="text-lg font-semibold">
-                <SwarmInvestCard pool={pool} marketCapOnly />
-            </p>
-        </div>
-    );
-}
