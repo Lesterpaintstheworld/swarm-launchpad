@@ -65,9 +65,15 @@ export default function Portfolio() {
                     
                     const poolPubkey = new PublicKey(poolId);
                     const poolData = await program.account.pool.fetch(poolPubkey);
-                    
+            
+                    const swarm = getSwarmUsingId(poolId);
+                    if (!swarm) {
+                        console.error(`No swarm found for pool ID: ${poolId}`);
+                        continue;
+                    }
+            
                     positions.push({
-                        swarm_id: getSwarmUsingId(poolId).id,
+                        swarm_id: swarm.id,
                         number_of_shares: position?.shares.toNumber() || 0,
                         total_shares: poolData.totalShares.toNumber() || 0,
                         last_dividend_payment: 0
