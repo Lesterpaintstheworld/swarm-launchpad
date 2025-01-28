@@ -1,7 +1,12 @@
-import { SwarmsPreviewGrid } from "@/components/swarms/previewGrid";
 import { TokenTooltip } from "@/components/ui/tokenTooltip";
+import { SwarmData } from "@/data/swarms/info";
+import { SwarmPreviewCard } from "@/components/swarms/preview";
 
 export default function Invest() {
+    // Sort swarms by multiple in descending order
+    const sortedSwarms = [...SwarmData]
+        .filter(swarm => swarm.pool) // Only show swarms with pools
+        .sort((a, b) => (b.multiple || 0) - (a.multiple || 0));
 
     return (
         <main className="container view">
@@ -15,8 +20,19 @@ export default function Invest() {
                     <p className="text-center text-nowrap">&ensp;tokens into our ai swarms.</p>
                 </div>
             </div>
-            <SwarmsPreviewGrid filterType="early" />
-        </main>
-    )
 
+            {/* Grid of sorted swarms */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {sortedSwarms.map((swarm) => (
+                    <SwarmPreviewCard 
+                        key={swarm.id}
+                        swarm={{
+                            ...swarm,
+                            revenueShare: 60, // Default value if not specified
+                        }}
+                    />
+                ))}
+            </div>
+        </main>
+    );
 }
