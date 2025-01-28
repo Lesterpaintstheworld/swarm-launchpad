@@ -6,7 +6,14 @@ import { SyntheticSoulsDescription } from "./descriptions/syntheticsouls"
 import { DuoAIDescription } from "./descriptions/duoai"
 
 export const getSwarmUsingId = (swarmId: string) => SwarmData.find(swarm => swarm.id === swarmId);
-export const getSwarmUsingPoolId = (poolId: string) => SwarmData.find(swarm => swarm.pool === poolId);
+export const getSwarmUsingPoolId = (poolId: string) => {
+    // First try direct pool match
+    const swarm = SwarmData.find(swarm => swarm.pool === poolId);
+    if (swarm) return swarm;
+
+    // If no direct match, try program.pool match
+    return SwarmData.find(swarm => swarm.program?.pool === poolId);
+};
 export const getSwarmInfo = (swarmId: string) => SwarmData.find(swarm => swarm.id === swarmId);
 
 

@@ -66,7 +66,7 @@ export default function Portfolio() {
                     const poolPubkey = new PublicKey(poolId);
                     const poolData = await program.account.pool.fetch(poolPubkey);
             
-                    const swarm = getSwarmUsingId(poolId);
+                    const swarm = getSwarmUsingPoolId(poolId);
                     if (!swarm) {
                         console.error(`No swarm found for pool ID: ${poolId}`);
                         continue;
