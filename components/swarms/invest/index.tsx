@@ -67,6 +67,12 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
         setPrice(value);
     }
 
+    const handleQuickAmount = (amount: number) => {
+        if (amount > data.remainingSupply) return;
+        setNumShares(amount);
+        setPrice(Math.floor(amount * data.pricePerShare));
+    }
+
     const validateInput = (shares: number) => {
         if (shares <= 0) return "Amount must be greater than 0";
         if (shares > data.remainingSupply) return "Amount exceeds available shares";
@@ -202,8 +208,16 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
             )}
 
             {successMessage && (
-                <div className="mt-4 p-3 bg-green-500/20 border border-green-500/50 rounded-lg text-green-400">
-                    {successMessage}
+                <div className="mt-4 p-3 bg-green-500/20 border border-green-500/50 rounded-lg text-green-400 flex items-center justify-between">
+                    <span>{successMessage}</span>
+                    <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => setSuccessMessage(null)}
+                        className="hover:bg-green-500/10"
+                    >
+                        ✕
+                    </Button>
                 </div>
             )}
 
@@ -225,6 +239,26 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
                 </Button>
             }
             {!connected && data.remainingSupply !== 0 && <ConnectButton className="mt-10 w-full md:max-w-40" />}
+
+            <div className="grid grid-cols-4 gap-2 mt-4">
+                {[10, 100, 500, 1000].map((amount) => (
+                    <Button
+                        key={amount}
+                        onClick={() => handleQuickAmount(amount)}
+                        variant="secondary"
+                        className="bg-slate-700 hover:bg-slate-600 relative group"
+                        disabled={amount > data.remainingSupply}
+                        title={amount > data.remainingSupply ? "Exceeds available shares" : `Buy ${amount} shares`}
+                    >
+                        {amount}
+                        {amount > data.remainingSupply && (
+                            <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-slate-800 text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                                Exceeds available shares
+                            </span>
+                        )}
+                    </Button>
+                ))}
+            </div>
         </Card>
     )
 }
