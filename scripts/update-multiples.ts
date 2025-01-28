@@ -1,10 +1,10 @@
 import { Connection, PublicKey, Keypair } from "@solana/web3.js";
 import { Program, AnchorProvider, setProvider, BN, Idl } from "@coral-xyz/anchor";
-import * as fs from 'fs';
-import * as path from 'path';
+import fs from 'fs';
+import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { getLaunchpadProgram } from "../hooks/useLaunchpadProgram/utils.ts";
+import { getLaunchpadProgram } from "../hooks/useLaunchpadProgram/utils.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
