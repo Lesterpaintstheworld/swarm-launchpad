@@ -66,23 +66,30 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
 
     const handleBuy = async () => {
         try {
-            // Convert price to proper units (COMPUTE uses 6 decimals)
-            // Multiply by 100 for the actual price, then by 1e6 for decimals
-            const priceInBaseUnits = Math.floor(price * 100 * Math.pow(10, 6));
-            const feeInBaseUnits = Math.floor(fee * 100 * Math.pow(10, 6));
+            // Get the current number of sold shares
+            const soldShares = data.totalSupply - data.remainingSupply;
+            
+            // Calculate price using same formula as program
+            const pricePerShare = calculateSharePrice(soldShares);
+            
+            // Calculate total cost (this matches program's calculation)
+            const totalCost = numShares * pricePerShare;
+            
+            // Convert to proper decimals for the transaction
+            const calculatedCostInBaseUnits = Math.floor(totalCost * Math.pow(10, 6));
 
             console.log('Buy parameters:', {
                 numShares,
-                rawPrice: price,
-                rawFee: fee,
-                priceInBaseUnits,
-                feeInBaseUnits
+                soldShares,
+                pricePerShare,
+                totalCost,
+                calculatedCostInBaseUnits
             });
             
-            // Execute the purchase with proper unit conversion
+            // Execute the purchase with exact calculated cost
             await purchaseShares.mutateAsync({ 
                 numberOfShares: numShares, 
-                calculatedCost: priceInBaseUnits
+                calculatedCost: calculatedCostInBaseUnits
             });
             
             // If purchase successful, call webhook
