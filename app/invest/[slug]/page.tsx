@@ -28,7 +28,12 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
                 <div className="mt-2 flex justify-between items-center">
                     <h1 className="font-bold">{swarm.name}</h1>
                     {swarm?.pool && (
-                        <SwarmMarketCap pool={swarm.pool} />
+                        <div className="text-right">
+                            <p className="text-xs text-muted-foreground">MARKET CAP</p>
+                            <p className="text-lg font-semibold">
+                                <SwarmInvestCard pool={swarm.pool} marketCapOnly />
+                            </p>
+                        </div>
                     )}
                 </div>
             </div>
