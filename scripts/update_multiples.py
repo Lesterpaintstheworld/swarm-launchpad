@@ -28,7 +28,7 @@ def extract_swarm_data(content: str) -> str:
     """Extract SwarmData array from TypeScript file content"""
     # Find the start of the SwarmData array
     start_marker = "export const SwarmData: SwarmInfo[] = ["
-    end_marker = "];\n\n"  # Changed to match actual file format
+    end_marker = "];\n\nexport"  # Changed to match actual file format
     
     try:
         start_idx = content.index(start_marker) + len(start_marker)
@@ -41,7 +41,7 @@ def extract_swarm_data(content: str) -> str:
         try:
             # Try alternative format
             alt_start = "SwarmData: SwarmInfo[] = ["
-            alt_end = "];\n"
+            alt_end = "];\n\nexport"  # Changed to match file format
             start_idx = content.index(alt_start) + len(alt_start)
             end_idx = content.index(alt_end, start_idx)
             array_content = content[start_idx:end_idx] + "]"
