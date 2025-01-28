@@ -2,8 +2,6 @@ import { Card } from "@/components/ui/card";
 import { Investment } from "../investments"
 import { cn, IntlNumberFormat } from "@/lib/utils";
 import { useEffect, useState } from "react";
-import { Props as RechartsProps } from 'recharts/types/component/DefaultLegendContent';
-
 interface InvestmentDataItem {
     name: string;
     value: number;
