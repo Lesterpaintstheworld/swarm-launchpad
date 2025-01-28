@@ -5,51 +5,11 @@ import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
 import { Investment } from "@/components/portfolio/investments";
 import Image from "next/image";
 import { IntlNumberFormat } from "@/lib/utils";
-import { SwarmData, getSwarmUsingId } from "@/data/swarms/info";
+import { getSwarmUsingId } from "@/data/swarms/info";
 import { getSwarm } from "@/data/swarms/previews"; // Keep for other uses
 import Link from "next/link";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { useEffect, useState } from "react";
-
-const calculateSharePrice = (soldShares: number) => {
-    // Convert to f64 for floating point calculations
-    const n_f64 = soldShares as number;
-        
-    // Calculate cycle and position within cycle
-    const cycle = Math.floor(n_f64 / 5000);
-    const x = n_f64 % 5000;
-    
-    // Calculate base price with 35% growth per cycle
-    const base = Math.pow(1.35, cycle);
-    
-    return Math.floor(base * 100);
-};
-
-const SharePriceCell = ({ poolAddress }: { poolAddress: string }) => {
-    const { poolAccount } = useLaunchpadProgramAccount({ poolAddress });
-    const [price, setPrice] = useState<number>(0);
-
-    useEffect(() => {
-        if (poolAccount?.data) {
-            const totalShares = poolAccount.data.totalShares.toNumber();
-            const availableShares = poolAccount.data.availableShares.toNumber();
-            const soldShares = totalShares - availableShares;
-            
-            // Calculate price based on bonding curve
-            const cycle = Math.floor(soldShares / 5000);
-            const base = Math.pow(1.35, cycle);
-            const sharePrice = Math.floor(base * 0.1); // Divide by 1000 to fix scaling
-            
-            setPrice(sharePrice);
-        }
-    }, [poolAccount.data]);
-
-    return (
-        <p className="text-muted-foreground">
-            {IntlNumberFormat(price)} $COMPUTE
-        </p>
-    );
-};
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/shadcn/button";
 import {

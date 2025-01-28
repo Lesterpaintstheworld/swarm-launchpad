@@ -38,13 +38,15 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
     const { poolAccount, purchaseShares } = useLaunchpadProgramAccount({ poolAddress: pool });
 
     useEffect(() => {
-        console.log(poolAccount.data && poolAccount.data.isFrozen);
-        setData({
-            totalSupply: poolAccount.data?.totalShares.toNumber(),
-            remainingSupply: poolAccount.data?.availableShares.toNumber(),
-            pricePerShare: calculateSharePrice(poolAccount.data?.totalShares.toNumber() - poolAccount.data?.availableShares.toNumber()) / 1000,
-            frozen: poolAccount.data?.isFrozen || true,
-        })
+        if (poolAccount.data) {
+            console.log(poolAccount.data && poolAccount.data.isFrozen);
+            setData({
+                totalSupply: poolAccount.data.totalShares.toNumber(),
+                remainingSupply: poolAccount.data.availableShares.toNumber(),
+                pricePerShare: calculateSharePrice(poolAccount.data.totalShares.toNumber() - poolAccount.data.availableShares.toNumber()) / 1000,
+                frozen: poolAccount.data.isFrozen || true,
+            });
+        }
     }, [poolAccount.data, pools.data]);
 
     const handleSharesInput = (e: ChangeEvent<HTMLInputElement>) => {
