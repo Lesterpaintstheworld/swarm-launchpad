@@ -12,6 +12,7 @@ import { SwarmInvestCard } from "@/components/swarms/invest";
 import { ManagePortfolioCard } from "@/components/cards/managePortfolio";
 import { SwarmRecentMarketListings } from "@/components/market/recentListings";
 import { SwarmGallery } from "@/components/swarms/gallery";
+import { IntlNumberFormat } from "@/lib/utils";
 
 interface MarketData {
     soldShares: number;
