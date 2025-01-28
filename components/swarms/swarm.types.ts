@@ -54,4 +54,7 @@ export interface SwarmInfo {
         discord?: string;
         dexscreener?: string;
     };
+    program?: {
+        pool?: string;
+    };
 }
