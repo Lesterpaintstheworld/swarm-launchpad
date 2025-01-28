@@ -8,7 +8,6 @@ const HELIUS_RPC = `https://mainnet.helius-rpc.com/?api-key=${atob('NGMzYTVmYzIt
 import { getAssociatedTokenAddress } from '@solana/spl-token';
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
-import { constants } from '@/lib/constants'
 import { useAnchorProvider } from '../useAnchor'
 import { WalletAdapterNetwork, WalletSignTransactionError } from '@solana/wallet-adapter-base'
 import { getLaunchpadProgram, getShareholderPDA } from './utils'
