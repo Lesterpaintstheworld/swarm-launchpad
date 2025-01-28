@@ -35,9 +35,10 @@ export const SwarmTopGainers = ({ swarms, className }: SwarmTopGainersProps) => 
         <div className={className}>
             <h2 className="text-2xl font-bold mb-4">Top Swarm Gainers Last 24 Hours</h2>
             <div className="bg-black/50 rounded-lg p-6">
-                <div className="h-[400px]">
+                <div className="h-[300px]">
                     <BarChart 
                         data={chartData}
+                        maxValue={Math.max(...chartData.map(item => item.value)) * 1.2}
                     />
                 </div>
             </div>
