@@ -69,7 +69,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
                     // Calculate price based on bonding curve
                     const cycle = Math.floor(soldShares / 5000);
                     const base = Math.pow(1.35, cycle);
-                    const sharePrice = Math.floor(base * 0.1); // Divide by 1000 to fix scaling
+                    const sharePrice = Math.floor(base * 100) / 1000; // Divide by 1000 to fix scaling
 
                     const valueInCompute = number_of_shares * sharePrice;
 
