@@ -14,23 +14,7 @@ import { SwarmRecentMarketListings } from "@/components/market/recentListings";
 import { SwarmGallery } from "@/components/swarms/gallery";
 import { IntlNumberFormat } from "@/lib/utils";
 
-interface MarketData {
-    soldShares: number;
-    pricePerShare: number;
-    marketCap: number;
-}
-
 export default function Swarm({ params }: { params: { slug: string } }) {
-    const [marketData, setMarketData] = useState<MarketData>({
-        soldShares: 0,
-        pricePerShare: 0,
-        marketCap: 0
-    });
-
-    const handleMarketDataUpdate = (data: MarketData) => {
-        setMarketData(data);
-    };
-    
     const swarm = useCallback(() => {
         const found = SwarmData.find((swarm) => swarm.id === params.slug);
         if (!found) {
@@ -78,14 +62,7 @@ export default function Swarm({ params }: { params: { slug: string } }) {
                                 <div className="flex justify-between items-center mb-6">
                                     <h4 className="font-semibold">About {swarm.name}</h4>
                                     <div className="text-right">
-                                        <p className="text-xs text-slate-400">TOTAL MARKET CAP</p>
-                                        <p className="text-2xl font-bold text-green-400">
-                                            ${IntlNumberFormat(marketData.marketCap)} 
-                                            <span className="text-sm">$COMPUTE</span>
-                                        </p>
-                                        <p className="text-xs text-slate-400">
-                                            {IntlNumberFormat(marketData.soldShares)} shares × ${IntlNumberFormat(marketData.pricePerShare)}
-                                        </p>
+                                        <p className="text-xs text-slate-400">ABOUT</p>
                                     </div>
                                 </div>
                                 <hr className="mt-3" />
@@ -107,7 +84,6 @@ export default function Swarm({ params }: { params: { slug: string } }) {
                         <div className="sticky top-6">
                             <SwarmInvestCard
                                 pool={swarm.pool as string}
-                                onMarketDataUpdate={handleMarketDataUpdate}
                             />
                         </div>
                     }

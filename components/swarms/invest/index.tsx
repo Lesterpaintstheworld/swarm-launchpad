@@ -18,10 +18,9 @@ import { Tag } from "@/components/ui/tag";
 interface SwarmInvestCardProps {
     pool: string;
     className?: string;
-    onMarketDataUpdate?: (data: { soldShares: number; pricePerShare: number; marketCap: number }) => void;
 }
 
-const SwarmInvestCard = ({ pool, className, onMarketDataUpdate }: SwarmInvestCardProps) => {
+const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
     const { connected } = useWallet();
     const sharesRef = useRef<HTMLParagraphElement>(null);
     const [numShares, setNumShares] = useState<number>(0);
@@ -41,19 +40,6 @@ const SwarmInvestCard = ({ pool, className, onMarketDataUpdate }: SwarmInvestCar
     const { poolAccount, purchaseShares } = useLaunchpadProgramAccount({ poolAddress: pool });
 
     useEffect(() => {
-        if (poolAccount.data && onMarketDataUpdate) {
-            const totalShares = poolAccount.data.totalShares.toNumber();
-            const availableShares = poolAccount.data.availableShares.toNumber();
-            const soldShares = totalShares - availableShares;
-            const pricePerShare = calculateSharePrice(soldShares);
-            const marketCap = soldShares * pricePerShare;
-            
-            onMarketDataUpdate({
-                soldShares,
-                pricePerShare,
-                marketCap
-            });
-        }
         if (poolAccount.data) {
             setData({
                 totalSupply: poolAccount.data.totalShares.toNumber(),
