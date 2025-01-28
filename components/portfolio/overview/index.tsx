@@ -82,13 +82,10 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
                 <div className="bg-background/95 border border-border p-3 rounded-lg shadow-lg">
                     <p className="font-medium">{payload[0].payload.name}</p>
                     <div className="text-muted-foreground space-y-1">
-                        <p>{IntlNumberFormat(payload[0].value)} shares ({payload[0].payload.percentage}%)</p>
                         <p className="text-green-400">
                             {IntlNumberFormat(payload[0].payload.valueInCompute)} $COMPUTE
                         </p>
-                        <p className="text-sm">
-                            Price per share: {IntlNumberFormat(payload[0].payload.sharePrice)} $COMPUTE
-                        </p>
+                        <p>{payload[0].payload.percentage}% of portfolio</p>
                     </div>
                 </div>
             );
