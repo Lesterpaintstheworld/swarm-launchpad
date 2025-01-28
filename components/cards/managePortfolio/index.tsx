@@ -5,6 +5,7 @@ import { ConnectButton } from "@/components/solana/connectButton"
 import { Card } from "@/components/ui/card"
 import { useWallet } from "@solana/wallet-adapter-react"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 
 interface ManagePortfolioCardProps {
     className?: string;
@@ -34,12 +35,3 @@ const ManagePortfolioCard = ({ className }: ManagePortfolioCardProps) => {
 
 export { ManagePortfolioCard }
 export type { ManagePortfolioCardProps }
-    return (
-        <Card className={cn("w-full", className)}>
-            {/* ... rest of the component ... */}
-        </Card>
-    );
-};
-
-export { ManagePortfolioCard };
-export type { ManagePortfolioCardProps };
