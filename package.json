@@ -2,12 +2,13 @@
   "name": "swarm-launchpad",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build", 
     "start": "next start",
     "lint": "next lint",
-    "update-multiples": "ts-node scripts/update-multiples.ts"
+    "update-multiples": "node --loader ts-node/esm scripts/update-multiples.ts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1",
