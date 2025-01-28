@@ -29,4 +29,17 @@ const ManagePortfolioCard = () => {
     )
 }
 
-export { ManagePortfolioCard }
+export { ManagePortfolioCard }interface ManagePortfolioCardProps {
+    className?: string;
+}
+
+const ManagePortfolioCard = ({ className }: ManagePortfolioCardProps) => {
+    return (
+        <Card className={cn("w-full", className)}>
+            {/* ... rest of the component ... */}
+        </Card>
+    );
+};
+
+export { ManagePortfolioCard };
+export type { ManagePortfolioCardProps };

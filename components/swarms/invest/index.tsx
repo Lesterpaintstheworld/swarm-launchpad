@@ -56,6 +56,7 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
         if (!numShares || numShares <= 0) {
             toast.error("Please enter a valid number of shares");
             return;
+            return;
         }
 
         setIsLoading(true);
