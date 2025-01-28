@@ -37,10 +37,20 @@ def main():
     with open(info_path, 'r', encoding='utf-8') as f:
         content = f.read()
         # Extract SwarmData array using regex
-        match = re.search(r'export const SwarmData: SwarmInfo\[\] = (\[[\s\S]*?\]);', content)
+        pattern = r'export const SwarmData: SwarmInfo\[\] = (\[[\s\S]*?\n\]);'
+        match = re.search(pattern, content, re.MULTILINE)
         if not match:
+            print("Content preview:", content[:500])  # Debug: show start of file
             raise Exception("Could not find SwarmData in info.tsx")
-        swarm_data = json.loads(match.group(1))
+        
+        # Clean the matched JSON string
+        json_str = match.group(1).strip()
+        try:
+            swarm_data = json.loads(json_str)
+        except json.JSONDecodeError as e:
+            print("JSON parsing error:", e)
+            print("JSON string preview:", json_str[:500])
+            raise
 
     # Process each swarm
     for swarm in swarm_data:
