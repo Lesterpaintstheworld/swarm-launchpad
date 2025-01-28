@@ -441,7 +441,7 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                     )
                     .accounts({
                         pool,
-                        shareholderPda,
+                        shareholder: shareholderPda,
                         compute_mint_account: poolAccount.data.computeMint,
                         ubc_mint_account: poolAccount.data.ubcMint,
                         sender_compute_account: senderComputeAccount,
