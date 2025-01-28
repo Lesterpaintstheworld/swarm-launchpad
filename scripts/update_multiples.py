@@ -1,18 +1,31 @@
 import json
 import re
-from solana.rpc.async_api import AsyncClient
-from solana.rpc.commitment import Commitment
-from solana.publickey import PublicKey
-import base58
-import asyncio
-import struct
+import requests
 from pathlib import Path
+import base64
+import struct
 
 # Constants
 PROGRAM_ID = "4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf"
 RPC_URL = "https://api.mainnet-beta.solana.com"
 
-async def main():
+def get_account_info(pubkey: str):
+    payload = {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "getAccountInfo",
+        "params": [
+            pubkey,
+            {
+                "encoding": "base64",
+                "commitment": "confirmed"
+            }
+        ]
+    }
+    response = requests.post(RPC_URL, json=payload)
+    return response.json()
+
+def main():
     # Load IDL
     script_dir = Path(__file__).parent
     idl_path = script_dir.parent / "data" / "programs" / "ubclaunchpad.json"
@@ -29,24 +42,26 @@ async def main():
             raise Exception("Could not find SwarmData in info.tsx")
         swarm_data = json.loads(match.group(1))
 
-    # Setup Solana connection
-    connection = AsyncClient(RPC_URL, commitment=Commitment("confirmed"))
-
     # Process each swarm
     for swarm in swarm_data:
         if not swarm.get('pool'):
             continue
 
         try:
-            pool_pubkey = PublicKey(swarm['pool'])
-            account_info = await connection.get_account_info(pool_pubkey)
-            
-            if not account_info.value:
+            response = get_account_info(swarm['pool'])
+            if 'error' in response:
+                print(f"Error fetching account info for {swarm['name']}: {response['error']}")
+                continue
+                
+            if not response['result']['value']:
                 print(f"No account info found for {swarm['name']}")
                 continue
 
+            # Decode base64 data
+            data = base64.b64decode(response['result']['value']['data'][0])
+            
             # Parse account data - skip 8 byte discriminator
-            data = account_info.value.data[8:]
+            data = data[8:]
             
             # Parse total_shares and available_shares (both u64)
             # Skip pool_name and admin_authority
@@ -90,7 +105,6 @@ export const SwarmData: SwarmInfo[] = {json.dumps(swarm_data, indent=2)};"""
         f.write(file_content)
 
     print('Multiples updated successfully!')
-    await connection.close()
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
