@@ -3,8 +3,6 @@ import { Investment } from "../investments"
 import { cn, IntlNumberFormat } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { getSwarm } from "@/data/swarms/previews";
-import { getSwarmUsingId } from "@/data/swarms/info";
-import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { Props as RechartsProps } from 'recharts/types/component/DefaultLegendContent';
 
@@ -42,58 +40,40 @@ interface TooltipProps {
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
 
 const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) => {
-    const total_owned_shares = investments.reduce((acc, item) => acc + item.number_of_shares, 0);
-
     const [investmentData, setInvestmentData] = useState<any[]>([]);
     const [totalValueInCompute, setTotalValueInCompute] = useState(0);
 
-    // Create a single program hook
-    const { program } = useLaunchpadProgram();
-
     useEffect(() => {
-        const calculateData = async () => {
-            const data = await Promise.all(investments.map(async (investment) => {
-                const { swarm_id, number_of_shares } = investment;
-                const swarm = getSwarm(swarm_id);
-                const swarmData = getSwarmUsingId(swarm_id);
-                if (!swarmData?.pool) return null;
-
-                const { poolAccount } = useLaunchpadProgramAccount({ poolAddress: swarmData.pool });
-                
-                if (!poolAccount?.data) return null;
-
-                const totalShares = poolAccount.data.totalShares.toNumber();
-                const availableShares = poolAccount.data.availableShares.toNumber();
-                const soldShares = totalShares - availableShares;
-                
-                const cycle = Math.floor(soldShares / 5000);
-                const base = Math.pow(1.35, cycle);
-                const sharePrice = Math.floor(base * 100) / 100;
-                const value = number_of_shares * sharePrice;
-
-                return {
-                    name: swarm.name,
-                    value: value,
-                    valueInCompute: value,
-                    sharePrice,
-                    percentage: 0 // We'll calculate this after getting total
-                };
-            }));
-
-            const filteredData = data.filter(Boolean);
-            const totalValue = filteredData.reduce((acc, item) => acc + (item?.value || 0), 0);
+        // Calculate values based on the bonding curve
+        const data = investments.map(investment => {
+            const { swarm_id, number_of_shares } = investment;
+            const swarm = getSwarm(swarm_id);
             
-            const dataWithPercentages = filteredData.map(item => ({
-                ...item,
-                percentage: ((item?.value || 0) / totalValue * 100).toFixed(1)
-            }));
+            // Calculate price based on number of shares
+            const cycle = Math.floor(number_of_shares / 5000);
+            const base = Math.pow(1.35, cycle);
+            const sharePrice = Math.floor(base * 100) / 100;
+            const value = number_of_shares * sharePrice;
 
-            setInvestmentData(dataWithPercentages);
-            setTotalValueInCompute(totalValue);
-        };
+            return {
+                name: swarm.name,
+                value: value,
+                valueInCompute: value,
+                sharePrice,
+                percentage: 0 // We'll calculate this after getting total
+            };
+        });
 
-        calculateData();
-    }, [investments, total_owned_shares]);
+        const totalValue = data.reduce((acc, item) => acc + item.value, 0);
+        
+        const dataWithPercentages = data.map(item => ({
+            ...item,
+            percentage: ((item.value / totalValue * 100).toFixed(1))
+        }));
+
+        setInvestmentData(dataWithPercentages);
+        setTotalValueInCompute(totalValue);
+    }, [investments]);
 
 
     const CustomTooltip = ({ active, payload }: TooltipProps) => {
