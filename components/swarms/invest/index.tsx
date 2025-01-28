@@ -33,7 +33,6 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
         frozen: true,
     });
 
-
     const { pools } = useLaunchpadProgram();
     const { poolAccount, purchaseShares } = useLaunchpadProgramAccount({ poolAddress: pool });
 
