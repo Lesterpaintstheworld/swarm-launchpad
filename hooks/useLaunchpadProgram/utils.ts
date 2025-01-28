@@ -4,8 +4,19 @@ import UbclaunchpadIDL from "@/data/programs/ubclaunchpad.json";
 import { Ubclaunchpad } from "./ubclaunchpad";
 
 export const getShareholderPDA = (programId: PublicKey, ownerPublicKey: PublicKey, poolPublicKey: PublicKey): PublicKey | null => {
+    // Add detailed logging
+    console.log('PDA Inputs:', {
+        programId: programId?.toString(),
+        ownerPublicKey: ownerPublicKey?.toString(),
+        poolPublicKey: poolPublicKey?.toString()
+    });
+
     if (!programId || !ownerPublicKey || !poolPublicKey) {
-        console.log("Missing required keys:", { programId: !!programId, ownerPublicKey: !!ownerPublicKey, poolPublicKey: !!poolPublicKey });
+        console.log("Missing required keys:", { 
+            programId: !!programId, 
+            ownerPublicKey: !!ownerPublicKey, 
+            poolPublicKey: !!poolPublicKey 
+        });
         return null;
     }
 
@@ -18,6 +29,10 @@ export const getShareholderPDA = (programId: PublicKey, ownerPublicKey: PublicKe
             ],
             programId
         );
+
+        // Log successful PDA generation
+        console.log('Generated PDA:', shareholderPda.toString());
+        
         return shareholderPda;
     } catch (error) {
         console.error("Error generating shareholder PDA:", error);
