@@ -56,10 +56,17 @@ const SellPositionModal = ({ isModalOpen, closeModal, swarmId }: SellPositionPro
     }
 
     const handleSale = () => {
+        if (!createListing) {
+            console.error('Create listing mutation not available');
+            return;
+        }
+
         createListing.mutateAsync({
             listingId: randomBytes(16).toString('hex'),      // Max 32 chars
             numberOfShares: 100,            
             pricePerShare: 250              // In base units
+        }).catch(error => {
+            console.error('Failed to create listing:', error);
         });
     }
 
