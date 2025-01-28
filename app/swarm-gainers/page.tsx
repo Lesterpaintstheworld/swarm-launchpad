@@ -88,7 +88,7 @@ export default function SwarmGainersPage() {
                                 <div 
                                     className="w-full bg-gradient-to-t from-yellow-600 to-yellow-400 
                                               rounded-t-sm backdrop-blur-sm overflow-hidden"
-                                    style={{ height: `${gainer.value * 2}px` }}
+                                    style={{ height: `${gainer.value * 0.5}px` }}
                                 >
                                     <div 
                                         className="absolute inset-0 bg-[linear-gradient(0deg,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] 
