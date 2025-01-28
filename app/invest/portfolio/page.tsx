@@ -7,7 +7,7 @@ import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import { useEffect, useState } from "react";
-import { SwarmData } from "@/data/swarms/info";
+import { SwarmData, getSwarmUsingId } from "@/data/swarms/info";
 import { extractKey } from "@/lib/utils";
 import { getShareholderPDA } from "@/hooks/useLaunchpadProgram/utils";
 
