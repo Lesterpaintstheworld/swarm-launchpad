@@ -12,9 +12,8 @@ interface BarChartProps {
 };
 
 const BarChart = ({ data }: BarChartProps) => {
-
-    const total_value = data.reduce((acc, item) => acc + item.value, 0) || 1;
     const maxValue = Math.max(...data.map(item => item.value));
+    const scalingFactor = 0.4; // Adjust this value to control maximum height
     
     return (
         <div className="flex flex-col gap-4">
@@ -30,14 +29,15 @@ const BarChart = ({ data }: BarChartProps) => {
                     />
                 }
                 {data.map((item, index) => {
-                    const percentage = (item.value / maxValue * 100);
+                    // Scale the percentage to be more reasonable
+                    const percentage = (item.value / maxValue * 100 * scalingFactor);
                     return (
                         <BarItem
                             data={item}
                             key={index}
                             className="min-w-[5%]"
                             style={{
-                                maxWidth: `${Math.floor(percentage)}%`
+                                height: `${Math.min(percentage, 100)}%`
                             }}
                             colour={ChartColours[index]}
                         />
