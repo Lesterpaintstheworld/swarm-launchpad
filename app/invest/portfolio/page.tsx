@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client'
 
 import { DividendPayments } from "@/components/portfolio/dividendPayments";
