@@ -39,10 +39,10 @@ export default function Portfolio() {
             const pda = getShareholderPDA(program.programId, ownerPublicKey, poolPubkey);
             
             try {
-                const shareholderData = await program.account.shareholder.fetch(pda as PublicKey);
+                const shareholderData = await program.account.shareholder.fetch(pda);
                 return shareholderData;
             } catch (error) {
-                if ((error as Error).message.includes('Account does not exist')) {
+                if (error.message.includes('Account does not exist')) {
                     return null;
                 }
                 throw error;
