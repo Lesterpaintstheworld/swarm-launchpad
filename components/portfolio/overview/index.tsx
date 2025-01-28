@@ -2,39 +2,14 @@ import { Card } from "@/components/ui/card";
 import { Investment } from "../investments"
 import { cn, IntlNumberFormat } from "@/lib/utils";
 import { useEffect, useState } from "react";
-import { getSwarm } from "@/data/swarms/previews";
+import { getSwarmUsingId } from "@/data/swarms/info";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { Props as RechartsProps } from 'recharts/types/component/DefaultLegendContent';
+import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 
 interface PortfolioOverviewProps {
     investments: Investment[];
     className?: string;
-}
-
-interface CustomLegendPayload {
-    value: string;
-    color: string;
-    payload: {
-        name: string;
-        value: number;
-        valueInCompute: number;
-        percentage: string;
-        sharePrice: number;
-    };
-}
-
-interface TooltipProps {
-    active?: boolean;
-    payload?: Array<{
-        value: number;
-        payload: {
-            name: string;
-            value: number;
-            valueInCompute: number;
-            percentage: string;
-            sharePrice: number;
-        };
-    }>;
 }
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
@@ -44,39 +19,46 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
     const [totalValueInCompute, setTotalValueInCompute] = useState(0);
 
     useEffect(() => {
-        // Calculate values based on the bonding curve
-        const data = investments.map(investment => {
-            const { swarm_id, number_of_shares } = investment;
-            const swarm = getSwarm(swarm_id);
+        const calculateValues = async () => {
+            const values = await Promise.all(investments.map(async (investment) => {
+                const swarm = getSwarmUsingId(investment.swarm_id);
+                if (!swarm?.pool) return null;
+
+                const { poolAccount } = useLaunchpadProgramAccount({ poolAddress: swarm.pool });
+                if (!poolAccount.data) return null;
+
+                const totalShares = poolAccount.data.totalShares.toNumber();
+                const availableShares = poolAccount.data.availableShares.toNumber();
+                const soldShares = totalShares - availableShares;
+                
+                const cycle = Math.floor(soldShares / 5000);
+                const base = Math.pow(1.35, cycle);
+                const sharePrice = Math.floor(base * 100) / 100;
+                const value = investment.number_of_shares * sharePrice;
+
+                return {
+                    name: swarm.name,
+                    value: value,
+                    valueInCompute: value,
+                };
+            }));
+
+            const validValues = values.filter(Boolean);
+            const total = validValues.reduce((acc, item) => acc + item.value, 0);
             
-            // Calculate price based on number of shares
-            const cycle = Math.floor(number_of_shares / 5000);
-            const base = Math.pow(1.35, cycle);
-            const sharePrice = Math.floor(base * 100) / 100;
-            const value = number_of_shares * sharePrice; // This is the COMPUTE value
+            const dataWithPercentages = validValues.map(item => ({
+                ...item,
+                percentage: ((item.value / total * 100).toFixed(1))
+            }));
 
-            return {
-                name: swarm.name,
-                value: value, // Use the COMPUTE value for the pie chart
-                valueInCompute: value,
-                sharePrice,
-                percentage: 0 // We'll calculate this after getting total
-            };
-        });
+            setInvestmentData(dataWithPercentages);
+            setTotalValueInCompute(total);
+        };
 
-        const totalValue = data.reduce((acc, item) => acc + item.value, 0);
-        
-        const dataWithPercentages = data.map(item => ({
-            ...item,
-            percentage: ((item.value / totalValue * 100).toFixed(1))
-        }));
-
-        setInvestmentData(dataWithPercentages);
-        setTotalValueInCompute(totalValue);
+        calculateValues();
     }, [investments]);
 
-
-    const CustomTooltip = ({ active, payload }: TooltipProps) => {
+    const CustomTooltip = ({ active, payload }: any) => {
         if (active && payload && payload.length) {
             return (
                 <div className="bg-background/95 border border-border p-3 rounded-lg shadow-lg">
@@ -99,20 +81,17 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
         
         return (
             <ul className="flex flex-wrap gap-4 justify-center mt-4">
-                {payload.map((entry, index) => {
-                    const typedEntry = entry as unknown as CustomLegendPayload;
-                    return (
-                        <li key={`item-${index}`} className="flex items-center gap-2">
-                            <div 
-                                className="w-3 h-3 rounded-full" 
-                                style={{ backgroundColor: typedEntry.color }}
-                            />
-                            <span className="text-sm">
-                                {typedEntry.value} ({typedEntry.payload.percentage}%)
-                            </span>
-                        </li>
-                    );
-                })}
+                {payload.map((entry: any, index: number) => (
+                    <li key={`item-${index}`} className="flex items-center gap-2">
+                        <div 
+                            className="w-3 h-3 rounded-full" 
+                            style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                        />
+                        <span className="text-sm">
+                            {entry.value} ({entry.payload.percentage}%)
+                        </span>
+                    </li>
+                ))}
             </ul>
         );
     };
@@ -141,7 +120,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
                             paddingAngle={5}
                             dataKey="value"
                         >
-                            {investmentData.map((entry, index) => (
+                            {investmentData.map((_, index) => (
                                 <Cell 
                                     key={`cell-${index}`} 
                                     fill={COLORS[index % COLORS.length]}
@@ -149,7 +128,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
                             ))}
                         </Pie>
                         <Tooltip content={<CustomTooltip />} />
-                        <Legend content={(props) => renderLegend(props as RechartsProps)} />
+                        <Legend content={renderLegend} />
                     </PieChart>
                 </ResponsiveContainer>
             </div>
