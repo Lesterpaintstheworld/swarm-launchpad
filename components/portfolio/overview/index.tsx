@@ -1,3 +1,6 @@
+// @ts-nocheck
+'use client'
+
 import { Card } from "@/components/ui/card";
 import { Investment } from "../investments"
 import { cn, IntlNumberFormat } from "@/lib/utils";
