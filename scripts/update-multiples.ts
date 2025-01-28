@@ -10,13 +10,15 @@ const PROGRAM_ID = new PublicKey("4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf")
 const RPC_URL = "https://api.mainnet-beta.solana.com";
 
 interface PoolAccount {
-    totalShares: BN;
-    availableShares: BN;
+    totalShares: typeof BN;
+    availableShares: typeof BN;
 }
 
 // Simple wallet implementation
 class SimpleWallet {
-    constructor(readonly payer: Keypair) {
+    payer: typeof Keypair;
+    
+    constructor(payer: typeof Keypair) {
         this.payer = payer;
     }
     async signTransaction(tx: any) { return tx; }
