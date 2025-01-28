@@ -27,7 +27,7 @@ export function useLaunchpadProgram() {
         wsEndpoint: undefined // Helius doesn't support websockets on this endpoint
     });
     const { publicKey } = useWallet()
-    const provider = useAnchorProvider()
+    const provider = useAnchorProvider(connection)
     const programId = useMemo(() => new PublicKey(constants.investmentProgram.id), [network])
     const computeMint = useMemo(() => new PublicKey(constants.investmentProgram.computeMint), [network])
     const ubcMint = useMemo(() => new PublicKey(constants.investmentProgram.ubcMint), [network])
@@ -87,7 +87,7 @@ export function useLaunchpadProgram() {
                 .transaction();
                 
                 // Add a recent blockhash
-                tx.recentBlockhash = (await program.provider.connection.getLatestBlockhash()).blockhash;
+                tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
                 tx.feePayer = publicKey;
                 
                 // Send and confirm
@@ -294,7 +294,7 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
     const poolAccount = useQuery({
         queryKey: ['pool', 'fetch', pool.toBase58()],
         queryFn: async () => {
-            const accountInfo = await program.provider.connection.getAccountInfo(pool);
+            const accountInfo = await connection.getAccountInfo(pool);
             if (!accountInfo) {
                 throw new Error('Pool account not found');
             }
