@@ -292,7 +292,7 @@ Join the arbitrage revolution with PropertyKin.`,
         tags: ['Real Estate', 'Arbitrage', 'Smart Contracts', 'Property Flipping', 'AI Analysis', 'Wholesale', 'Contract Assignment', 'Deal Finder'],
         role: 'Real Estate Arbitrage Bot',
         swarmType: 'inception',
-        multiple: 1
+        multiple: 9
     },
     {
         id: 'b2c3d4e5-f6g7-5b6c-9d0e-1f2g3h4i5j6k',
@@ -674,7 +674,7 @@ Join us in transforming affiliate marketing with AI automation.`,
         tags: ['AI Marketing', 'Content Creation', 'Affiliate', 'Automation', 'Multi-Channel'],
         role: 'Marketing Automation',
         swarmType: 'inception',
-        multiple: 1
+        multiple: 18
     },
     {
         id: 'mentor-swarm-id',
