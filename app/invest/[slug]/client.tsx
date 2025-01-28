@@ -26,19 +26,18 @@ export function SwarmPageClient({ swarm }: SwarmPageClientProps) {
         frozen: true,
     });
 
-    const { poolAccount } = useLaunchpadProgramAccount({ 
-        poolAddress: swarm.pool as string,
-        onSuccess: (data) => {
-            if (data) {
-                setData({
-                    totalSupply: data.totalShares.toNumber(),
-                    remainingSupply: data.availableShares.toNumber(),
-                    pricePerShare: calculateSharePrice(data.totalShares.toNumber() - data.availableShares.toNumber()),
-                    frozen: data.isFrozen || false,
-                });
-            }
+    const { poolAccount } = useLaunchpadProgramAccount({ poolAddress: swarm.pool as string });
+
+    useEffect(() => {
+        if (poolAccount.data) {
+            setData({
+                totalSupply: poolAccount.data.totalShares.toNumber(),
+                remainingSupply: poolAccount.data.availableShares.toNumber(),
+                pricePerShare: calculateSharePrice(poolAccount.data.totalShares.toNumber() - poolAccount.data.availableShares.toNumber()),
+                frozen: poolAccount.data.isFrozen || false,
+            });
         }
-    });
+    }, [poolAccount.data]);
 
     return (
         <main className="container mb-6 md:mb-24 view">
