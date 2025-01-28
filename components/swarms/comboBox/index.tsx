@@ -99,8 +99,10 @@ const SwarmComboBox = ({ className, defaultValue, onChange }: SwarmComboBoxProps
                         <CommandEmpty>No swarms found.</CommandEmpty>
                         <CommandGroup>
                             {swarms.map((swarm: SwarmPreviewData, index: number) => {
-                                const { pool } = getSwarmInfo(swarm.id);
-                                if(!pool) return;
+                                const swarmInfo = getSwarmInfo(swarm.id);
+                                // Early return if no swarm info or no pool
+                                if (!swarmInfo?.pool) return null;
+                                
                                 return (
                                     <CommandItem
                                         key={index}
@@ -115,8 +117,8 @@ const SwarmComboBox = ({ className, defaultValue, onChange }: SwarmComboBoxProps
                                             )}
                                         />
                                     </CommandItem>
-                                )
-                             })}
+                                );
+                            })}
                         </CommandGroup>
                     </CommandList>
                 </Command>
