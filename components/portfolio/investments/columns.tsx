@@ -20,7 +20,7 @@ import {
 } from "@/components/shadcn/dropdown-menu";
 import { SellPositionModal } from "@/components/swarms/sellPositionModal";
 
-const PriceCell = ({ poolAddress, shares }: { poolAddress: string, shares: number }) => {
+const PriceCell = ({ poolAddress }: { poolAddress: string }) => {
     const { poolAccount } = useLaunchpadProgramAccount({ poolAddress });
     const [price, setPrice] = useState<number>(0);
 
@@ -216,7 +216,7 @@ export const columns: ColumnDef<Investment>[] = [
                 pool: swarm?.pool
             });
             if (!swarm?.pool) return null;
-            return <PriceCell poolAddress={swarm.pool} shares={row.original.number_of_shares} />;
+            return <PriceCell poolAddress={swarm.pool} />;
         }
     },
     {
