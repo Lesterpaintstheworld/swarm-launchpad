@@ -38,12 +38,11 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
 
     useEffect(() => {
         if (poolAccount.data) {
-            console.log(poolAccount.data && poolAccount.data.isFrozen);
             setData({
                 totalSupply: poolAccount.data.totalShares.toNumber(),
                 remainingSupply: poolAccount.data.availableShares.toNumber(),
                 pricePerShare: (calculateSharePrice(poolAccount.data.totalShares.toNumber() - poolAccount.data.availableShares.toNumber()) / 1000) * 100,
-                frozen: poolAccount.data.isFrozen || true,
+                frozen: poolAccount.data.isFrozen || false,
             });
         }
     }, [poolAccount.data, pools.data]);
