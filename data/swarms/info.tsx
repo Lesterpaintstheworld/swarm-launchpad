@@ -77,7 +77,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Digital Employee Manager",
         swarmType: "partner",
-        multiple: 221.82
+        multiple: 222
     },
     {
         id: "eb76ae17-b9eb-476d-b272-4bde2d85c808",
@@ -134,7 +134,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Lorem ipsum",
         swarmType: "partner",
-        multiple: 221.82
+        multiple: 222
     },
     {
         id: "e8ffff3d-64d3-44d3-a8cf-f082c5c42234",
@@ -166,7 +166,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Lorem ipsum",
         swarmType: "partner",
-        multiple: 164.31
+        multiple: 164
     },
     {
         id: "988b16b4-6beb-4cc5-9a14-50f48ee47a22",
@@ -213,7 +213,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Lorem ipsum",
         swarmType: "early",
-        multiple: 90.16
+        multiple: 90
     },
     {
         id: "7d3c9e5b-1f8a-4d3c-b8d4-9e5b1f8a4d3c",
@@ -239,7 +239,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Gaming Compan    ion",
         swarmType: "partner",
-        multiple: 36.64
+        multiple: 37
     },
     {
         id: "forge-partner-id",
@@ -270,7 +270,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Development Coordinator",
         swarmType: "early",
-        multiple: 221.82
+        multiple: 222
     },
     {
         id: "propertykin-inception-id",
@@ -705,7 +705,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Trading Agent",
         swarmType: "inception",
-        multiple: 66.78
+        multiple: 67
     },
     {
         id: "f7a92b3c-d8e4-4c1a-9f5d-1234567890ab",
