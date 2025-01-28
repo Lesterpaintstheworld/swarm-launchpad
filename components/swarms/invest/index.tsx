@@ -3,6 +3,7 @@
 import { Button } from "@/components/shadcn/button";
 import { ConnectButton } from "@/components/solana/connectButton";
 import { Token } from "@/components/tokens/token";
+import { getSwarm } from "@/data/swarms/previews";
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
 import { supportedTokens } from "@/data/tokens/supported";
@@ -65,8 +66,35 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
         setPrice(value);
     }
 
-    const handleBuy = () => {
-        purchaseShares.mutateAsync({ numberOfShares: numShares, calculatedCost: price });
+    const handleBuy = async () => {
+        try {
+            // First execute the purchase
+            await purchaseShares.mutateAsync({ numberOfShares: numShares, calculatedCost: price });
+            
+            // If purchase successful, call webhook
+            try {
+                const swarm = getSwarm(pool); // Get swarm data using the pool address
+                await fetch('https://nlr.app.n8n.cloud/webhook/buybot', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        swarmName: swarm?.name,
+                        numberOfShares: numShares,
+                        pricePerShare: data.pricePerShare,
+                        totalCost: price,
+                        poolAddress: pool
+                    })
+                });
+            } catch (webhookError) {
+                // Silently continue if webhook fails
+                console.debug('Webhook notification failed:', webhookError);
+            }
+        } catch (purchaseError) {
+            // Handle purchase error as before
+            throw purchaseError;
+        }
     }
 
     useEffect(() => {
