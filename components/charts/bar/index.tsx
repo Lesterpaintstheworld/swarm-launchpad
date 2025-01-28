@@ -13,7 +13,6 @@ interface BarChartProps {
 
 const BarChart = ({ data }: BarChartProps) => {
     const maxValue = Math.max(...data.map(item => item.value));
-    const scalingFactor = 0; // Set to 0 to test
     
     return (
         <div className="flex flex-col gap-4">
@@ -29,12 +28,12 @@ const BarChart = ({ data }: BarChartProps) => {
                     />
                 }
                 {data.map((item, index) => {
-                    // Calculate height percentage with a minimum of 10% and maximum of 80%
+                    // Calculate height percentage - max height will be 60% of container
                     const percentage = Math.min(
-                        80, // Maximum height percentage
+                        60,
                         Math.max(
-                            10, // Minimum height percentage
-                            (item.value / maxValue * 100 * scalingFactor)
+                            10, // Minimum height of 10%
+                            (item.value / maxValue) * 60 // Scale to max 60% of container height
                         )
                     );
                     
