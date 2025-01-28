@@ -73,7 +73,7 @@ export default function SwarmGainersPage() {
 
                 <div className="text-center mb-16">
                     <h1 className="text-5xl font-bold text-yellow-400 mb-2">$UBC Top Gainer Swarms</h1>
-                    <h2 className="text-3xl font-bold text-white">Last 24 Hours</h2>
+                    <h2 className="text-3xl font-bold text-white">Last 5 Days</h2>
                 </div>
 
                 {/* Graph section */}
@@ -88,7 +88,7 @@ export default function SwarmGainersPage() {
                                 <div 
                                     className="w-full bg-gradient-to-t from-yellow-600 to-yellow-400 
                                               rounded-t-sm backdrop-blur-sm overflow-hidden"
-                                    style={{ height: `${gainer.value * 1.0}px` }}
+                                    style={{ height: `${gainer.value * 1.2}px` }}
                                 >
                                     <div 
                                         className="absolute inset-0 bg-[linear-gradient(0deg,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] 
