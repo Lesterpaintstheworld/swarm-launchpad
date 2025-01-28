@@ -80,22 +80,34 @@ def update_info_file(multiples: dict):
         with open(file_path, 'r', encoding='utf-8') as file:
             content = file.read()
             
-        # Find the SwarmData array
-        data_match = re.search(r'export const SwarmData: SwarmInfo\[\] = (\[[\s\S]*?\]);', content)
+        # Find the SwarmData array with a more flexible pattern
+        data_match = re.search(r'export const SwarmData: SwarmInfo\[\] = (\[[\s\S]*?\n\])', content)
         if not data_match:
             raise Exception("Couldn't find SwarmData array in info.tsx")
             
         # Parse the existing data
         data_str = data_match.group(1)
-        # Convert TypeScript to valid JSON
-        data_str = re.sub(r'(\w+):', r'"\1":', data_str)  # Quote keys
-        data_str = re.sub(r'`[\s\S]*?`', '""', data_str)  # Remove template literals
-        data_str = re.sub(r'//.*?\n', '\n', data_str)     # Remove comments
+        
+        # Clean up the TypeScript/JSON
+        # Remove imports and type annotations
+        data_str = re.sub(r'import.*?;', '', data_str)
+        data_str = re.sub(r': SwarmInfo\[\]', '', data_str)
+        
+        # Handle template literals
+        data_str = re.sub(r'`([^`]*)`', lambda m: json.dumps(m.group(1)), data_str)
+        
+        # Remove comments
+        data_str = re.sub(r'//.*?\n', '\n', data_str)
+        data_str = re.sub(r'/\*[\s\S]*?\*/', '', data_str)
+        
+        # Quote property names
+        data_str = re.sub(r'(\w+):', r'"\1":', data_str)
         
         try:
             data = json.loads(data_str)
         except json.JSONDecodeError as e:
             print(f"Error parsing SwarmData: {e}")
+            print("Data string:", data_str[:200])  # Print first 200 chars for debugging
             return
             
         # Update multiples
@@ -107,10 +119,10 @@ def update_info_file(multiples: dict):
         updated_data = json.dumps(data, indent=4)
         updated_data = re.sub(r'"(\w+)":', r'\1:', updated_data)  # Unquote keys
         
-        # Replace the array in the file
+        # Replace the array in the file while preserving imports and exports
         new_content = re.sub(
-            r'export const SwarmData: SwarmInfo\[\] = \[[\s\S]*?\];',
-            f'export const SwarmData: SwarmInfo[] = {updated_data};',
+            r'(export const SwarmData: SwarmInfo\[\] = )\[[\s\S]*?\n\]',
+            f'\\1{updated_data}',
             content
         )
         
@@ -121,6 +133,7 @@ def update_info_file(multiples: dict):
         
     except Exception as e:
         print(f"\nError updating info.tsx: {e}")
+        raise  # Re-raise to see full stack trace
 
 def main():
     # List of pools to check
