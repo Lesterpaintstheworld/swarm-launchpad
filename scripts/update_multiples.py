@@ -29,12 +29,12 @@ def main():
     # Load IDL
     script_dir = Path(__file__).parent
     idl_path = script_dir.parent / "data" / "programs" / "ubclaunchpad.json"
-    with open(idl_path) as f:
+    with open(idl_path, 'r', encoding='utf-8') as f:
         idl = json.load(f)
 
     # Load SwarmData from info.tsx
     info_path = script_dir.parent / "data" / "swarms" / "info.tsx"
-    with open(info_path, 'r') as f:
+    with open(info_path, 'r', encoding='utf-8') as f:
         content = f.read()
         # Extract SwarmData array using regex
         match = re.search(r'export const SwarmData: SwarmInfo\[\] = (\[[\s\S]*?\]);', content)
@@ -101,7 +101,7 @@ export const getSwarmInfo = (swarmId: string) => SwarmData.find(swarm => swarm.i
 
 export const SwarmData: SwarmInfo[] = {json.dumps(swarm_data, indent=2)};"""
 
-    with open(info_path, 'w') as f:
+    with open(info_path, 'w', encoding='utf-8') as f:
         f.write(file_content)
 
     print('Multiples updated successfully!')
