@@ -24,30 +24,37 @@ def get_account_info(pubkey: str):
     response = requests.post(RPC_URL, json=payload)
     return response.json()
 
+def extract_swarm_data(content: str) -> str:
+    """Extract SwarmData array from TypeScript file content"""
+    # Find the start of the SwarmData array
+    start_pattern = r"export const SwarmData: SwarmInfo\[\] = \["
+    end_pattern = r"\];\s*$"
+    
+    match = re.search(f"{start_pattern}(.*?){end_pattern}", content, re.DOTALL)
+    if not match:
+        raise ValueError("Could not find SwarmData array in content")
+    
+    array_content = match.group(1) + "]"
+    return array_content
+
 def convert_to_json(ts_object_str: str) -> str:
     """Convert TypeScript object notation to valid JSON"""
-    # Replace single quotes with double quotes (but not within template literals)
-    in_template = False
-    result = []
-    i = 0
-    while i < len(ts_object_str):
-        if ts_object_str[i:i+1] == '`':
-            in_template = not in_template
-            result.append('"')  # Replace template literal with double quotes
-            i += 1
-        elif not in_template and ts_object_str[i] == "'":
-            result.append('"')
-            i += 1
-        else:
-            result.append(ts_object_str[i])
-            i += 1
-
-    json_str = ''.join(result)
+    # Handle template literals
+    ts_object_str = re.sub(r'`([^`]*)`', lambda m: json.dumps(m.group(1)), ts_object_str)
     
-    # Replace property names without quotes
-    json_str = re.sub(r'(\s*)(\w+):', r'\1"\2":', json_str)
+    # Replace single quotes with double quotes (except in content)
+    ts_object_str = re.sub(r"'([^']*)'", r'"\1"', ts_object_str)
     
-    return json_str
+    # Handle property names without quotes
+    ts_object_str = re.sub(r'(\s*)(\w+):', r'\1"\2":', ts_object_str)
+    
+    # Remove trailing commas
+    ts_object_str = re.sub(r',(\s*[}\]])', r'\1', ts_object_str)
+    
+    # Handle imported constants
+    ts_object_str = re.sub(r':\s*\w+Description', ': ""', ts_object_str)
+    
+    return ts_object_str
 
 def main():
     # Load IDL
@@ -60,19 +67,10 @@ def main():
     info_path = script_dir.parent / "data" / "swarms" / "info.tsx"
     with open(info_path, 'r', encoding='utf-8') as f:
         content = f.read()
-        
-    # Find the SwarmData array
-    start_marker = "export const SwarmData: SwarmInfo[] = ["
-    end_marker = "];"
-    
+
     try:
-        start_idx = content.index(start_marker) + len(start_marker)
-        end_idx = content.rindex(end_marker)  # Use rindex to find the last occurrence
-        
-        # Extract the array content
-        array_content = content[start_idx:end_idx] + "]"
-        
-        # Convert to valid JSON
+        # Extract and convert SwarmData array
+        array_content = extract_swarm_data(content)
         json_str = convert_to_json(array_content)
         
         try:
@@ -80,6 +78,8 @@ def main():
         except json.JSONDecodeError as e:
             print("Error parsing JSON. Preview of converted content:")
             print(json_str[:500])
+            print("\nOriginal content:")
+            print(array_content[:500])
             raise e
 
     except ValueError as e:
