@@ -28,18 +28,21 @@ export default function SwarmGainersPage() {
             setIsCapturing(false);
         }
     };
-    const gainers = [
-        { name: 'DigitalKin', value: 25, image: '/swarms/digitalkin.png' },
-        { name: 'Kin Kong', value: 22, image: '/swarms/kinkong.jpg' },
-        { name: 'SwarmsVenture', value: 19, image: '/swarms/swarm-ventures.jpg' },
-        { name: 'Synthetic Souls', value: 17, image: '/swarms/synthetic-souls.jpg' },
-        { name: 'DuoAI', value: 15, image: '/swarms/duoai.jpg' },
-        { name: 'StudioKin', value: 13, image: '/swarms/screenplay.jpg' },
-        { name: 'Robinhood Agent', value: 11, image: '/swarms/robinhood.jpg' },
-        { name: 'TherapyKin', value: 9, image: '/swarms/mental-health.jpg' },
-        { name: 'PublishKin', value: 7, image: '/swarms/book.png' },
-        { name: 'PlayWise', value: 5, image: '/swarms/education.png' }
-    ];
+    const gainers = previews
+        .filter(swarm => {
+            const swarmInfo = getSwarmUsingId(swarm.id);
+            return swarmInfo && swarmInfo.multiple > 1;
+        })
+        .map(swarm => {
+            const swarmInfo = getSwarmUsingId(swarm.id);
+            return {
+                name: swarm.name,
+                value: swarmInfo?.multiple || 1,
+                image: swarm.image
+            };
+        })
+        .sort((a, b) => b.value - a.value) // Sort by multiple in descending order
+        .slice(0, 10); // Take top 10 gainers
 
     return (
         <div className="min-h-screen bg-black relative">
