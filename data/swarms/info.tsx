@@ -5,8 +5,9 @@ import { TerminalVelocityDescription } from "./descriptions/terminalvelocity"
 import { SyntheticSoulsDescription } from "./descriptions/syntheticsouls"
 import { DuoAIDescription } from "./descriptions/duoai"
 
-export const getSwarmUsingPoolId = (poolId: string) => SwarmData.filter(swarm => swarm.pool === poolId)[0];
-export const getSwarmInfo = (swarmId: string) => SwarmData.filter(swarm => swarm.id === swarmId)[0];
+export const getSwarmUsingId = (swarmId: string) => SwarmData.find(swarm => swarm.id === swarmId);
+export const getSwarmUsingPoolId = (poolId: string) => SwarmData.find(swarm => swarm.pool === poolId);
+export const getSwarmInfo = (swarmId: string) => SwarmData.find(swarm => swarm.id === swarmId);
 
 
 export const SwarmData: SwarmInfo[] = [
