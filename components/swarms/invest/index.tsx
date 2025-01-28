@@ -51,30 +51,31 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
     const handleSharesInput = (e: ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value.replace(/,/g, ''));
         if (isNaN(value) || value < 0 || value > 1000) return;
-        setPrice(Math.floor((Number(value))) * (data.pricePerShare));
+        setPrice(Math.floor((Number(value))) * (data.pricePerShare * 100));
         setNumShares(value);
     }
 
     const handleComputeInput = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = Number(e.target.value.replace(/,/g, '')); // Remove commas for calculation
-        const calculatedShares = Math.round(value / data.pricePerShare);
+        const value = Number(e.target.value.replace(/,/g, '')); 
+        const calculatedShares = Math.round(value / (data.pricePerShare * 100));
         if (isNaN(value) || value < 0 || calculatedShares > 1000) return;
-        // Calculate shares, rounding to nearest whole number
         setNumShares(calculatedShares);
         setPrice(value);
     }
 
     const handleBuy = async () => {
         try {
-            // Log the input values
-            console.log('Buy parameters:', {
-                numShares,
-                price,
-                priceInBaseUnits: Math.floor(price * Math.pow(10, 6))
-            });
-
             // Convert price to proper units (COMPUTE uses 6 decimals)
             const priceInBaseUnits = Math.floor(price * Math.pow(10, 6));
+            const feeInBaseUnits = Math.floor(fee * Math.pow(10, 6));
+
+            console.log('Buy parameters:', {
+                numShares,
+                rawPrice: price,
+                rawFee: fee,
+                priceInBaseUnits,
+                feeInBaseUnits
+            });
             
             // Execute the purchase with proper unit conversion
             await purchaseShares.mutateAsync({ 
