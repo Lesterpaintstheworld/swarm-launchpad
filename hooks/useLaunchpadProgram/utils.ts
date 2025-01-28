@@ -1,9 +1,7 @@
-import { AnchorProvider, Program } from "@coral-xyz/anchor";
-import { PublicKey } from "@solana/web3.js";
-import UbclaunchpadIDL from "@/data/programs/ubclaunchpad.json";
-import { Ubclaunchpad } from "./ubclaunchpad";
+const { Program } = require("@coral-xyz/anchor");
+const { PublicKey } = require("@solana/web3.js");
 
-export const getShareholderPDA = (programId: PublicKey, ownerPublicKey: PublicKey, poolPublicKey: PublicKey): PublicKey | null => {
+const getShareholderPDA = (programId, ownerPublicKey, poolPublicKey) => {
     // Add detailed logging
     console.log('PDA Inputs:', {
         programId: programId?.toString(),
@@ -40,7 +38,7 @@ export const getShareholderPDA = (programId: PublicKey, ownerPublicKey: PublicKe
     }
 };
 
-export const getTokenAccountPDA = (owner: PublicKey, mint: PublicKey): PublicKey => {
+const getTokenAccountPDA = (owner, mint) => {
     const [pda] = PublicKey.findProgramAddressSync(
         [
             owner.toBuffer(),
@@ -57,6 +55,13 @@ export const getTokenAccountPDA = (owner: PublicKey, mint: PublicKey): PublicKey
 };
 
 // This is a helper function to get the Ubclaunchpad Anchor program.
-export function getLaunchpadProgram(provider: AnchorProvider, address?: PublicKey) {
-    return new Program({ ...UbclaunchpadIDL, address: address ? address.toBase58() : UbclaunchpadIDL.address } as Ubclaunchpad, provider)
-  }
+function getLaunchpadProgram(provider, address) {
+    const UbclaunchpadIDL = require("../../data/programs/ubclaunchpad.json");
+    return new Program({ ...UbclaunchpadIDL, address: address ? address.toBase58() : UbclaunchpadIDL.address }, provider);
+}
+
+module.exports = {
+    getShareholderPDA,
+    getTokenAccountPDA,
+    getLaunchpadProgram
+};
