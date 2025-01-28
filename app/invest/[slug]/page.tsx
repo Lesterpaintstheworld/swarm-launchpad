@@ -1,3 +1,5 @@
+'use client'
+
 import { useCallback, useState } from "react";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { InfoPanel } from "@/components/ui/infoPanel";
