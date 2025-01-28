@@ -62,7 +62,7 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
         setIsLoading(true);
         const calculatedCostInBaseUnits = Math.floor(price * Math.pow(10, 6));
         
-        const swarm = getSwarm(pool);
+        const swarm = getSwarmUsingPoolId(pool);
         if (!swarm) {
             toast.error("Invalid swarm");
             return;
