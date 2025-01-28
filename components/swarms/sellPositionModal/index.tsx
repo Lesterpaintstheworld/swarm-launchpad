@@ -31,14 +31,17 @@ const SellPositionModal = ({ isModalOpen, closeModal, swarmId }: SellPositionPro
     const [token, setToken] = useState<Token>();
 
     const swarm = getSwarmInfo(swarmID);
+    const { position, createListing } = useLaunchpadProgramAccount({ 
+        poolAddress: swarm?.pool || '' 
+    });
+    const sharesRef = useRef<HTMLParagraphElement>(null);
+
+    // Early return after hooks
     if (!swarm?.pool) {
         return null; // Or show an error message in the modal
     }
 
-    const { position, createListing } = useLaunchpadProgramAccount({ poolAddress: swarm.pool });
     const data = position.data;
-
-    const sharesRef = useRef<HTMLParagraphElement>(null);
 
     const handleSharesInput = (e: ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value); // Remove commas for calculation
