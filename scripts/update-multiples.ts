@@ -1,11 +1,10 @@
-import { Connection, PublicKey, Keypair } from "@solana/web3.js";
-import { Program, AnchorProvider, setProvider, Wallet, BN } from "@coral-xyz/anchor";
-import { SwarmData } from "../data/swarms/info";
-import * as fs from 'fs';
-import * as path from 'path';
-import { Ubclaunchpad } from "../hooks/useLaunchpadProgram/ubclaunchpad";
-import UbclaunchpadIDL from "../data/programs/ubclaunchpad.json";
-import { getLaunchpadProgram } from "../hooks/useLaunchpadProgram/utils";
+const { Connection, PublicKey, Keypair } = require("@solana/web3.js");
+const { Program, AnchorProvider, setProvider, BN } = require("@coral-xyz/anchor");
+const fs = require('fs');
+const path = require('path');
+const { SwarmData } = require("../data/swarms/info");
+const UbclaunchpadIDL = require("../data/programs/ubclaunchpad.json");
+const { getLaunchpadProgram } = require("../hooks/useLaunchpadProgram/utils");
 
 const PROGRAM_ID = new PublicKey("4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf");
 const RPC_URL = "https://api.mainnet-beta.solana.com";
@@ -16,7 +15,7 @@ interface PoolAccount {
 }
 
 // Simple wallet implementation
-class SimpleWallet implements Wallet {
+class SimpleWallet {
     constructor(readonly payer: Keypair) {
         this.payer = payer;
     }
