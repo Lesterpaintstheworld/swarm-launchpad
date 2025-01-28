@@ -77,7 +77,7 @@ export default function SwarmGainersPage() {
                 </div>
 
                 {/* Graph section */}
-                <div className="flex items-end gap-4 h-[400px] mb-16">
+                <div className="flex items-end gap-4 h-[400px] mb-4">
                     {gainers.map((gainer) => (
                         <div key={gainer.name} className="flex flex-col items-center w-28">
                             <div className="text-white font-bold text-2xl mb-2">
