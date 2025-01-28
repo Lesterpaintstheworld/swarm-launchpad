@@ -45,7 +45,7 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
                                         <div className="text-right">
                                             <p className="text-xs text-muted-foreground">MARKET CAP</p>
                                             <p className="text-lg font-semibold text-green-400">
-                                                $<SwarmInvestCard pool={swarm.pool} marketCapOnly />
+                                                ${<SwarmInvestCard pool={swarm.pool} marketCapOnly />} $COMPUTE
                                             </p>
                                         </div>
                                     )}

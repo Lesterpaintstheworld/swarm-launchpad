@@ -133,7 +133,7 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
 
     if (marketCapOnly) {
         const marketCap = (data.totalSupply - data.remainingSupply) * data.pricePerShare;
-        return <>${IntlNumberFormat(marketCap)} $COMPUTE</>;
+        return `${IntlNumberFormatCompact(marketCap)}`;
     }
 
     return (
