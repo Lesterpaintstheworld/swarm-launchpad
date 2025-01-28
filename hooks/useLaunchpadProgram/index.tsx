@@ -439,25 +439,21 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                         new BN(numberOfShares),
                         new BN(calculatedCost)
                     )
-                    // @ts-ignore - Temporarily disable type checking while account names are being resolved
                     .accounts({
                         pool: new PublicKey(pool),
                         shareholder: shareholderPda,
-                        compute_mint: new PublicKey(poolAccount.data.computeMint),
-                        ubc_mint: new PublicKey(poolAccount.data.ubcMint),
-                        sender_compute: new PublicKey(senderComputeAccount),
-                        sender_ubc: new PublicKey(senderUbcAccount),
-                        custodial: new PublicKey(poolAccount.data.custodialAccount),
-                        custodial_compute: new PublicKey(custodialComputeAccount),
-                        custodial_ubc: new PublicKey(custodialUbcAccount),
+                        computeMintAccount: new PublicKey(poolAccount.data.computeMint),
+                        ubcMintAccount: new PublicKey(poolAccount.data.ubcMint),
+                        senderComputeAccount: new PublicKey(senderComputeAccount),
+                        senderUbcAccount: new PublicKey(senderUbcAccount),
+                        custodialAccount: new PublicKey(poolAccount.data.custodialAccount),
+                        custodialComputeAccount: new PublicKey(custodialComputeAccount),
+                        custodialUbcAccount: new PublicKey(custodialUbcAccount),
                         buyer: publicKey,
-                        system_program: SystemProgram.programId,
-                        token_program: TOKEN_PROGRAM_ID,
-                        associated_token_program: ASSOCIATED_TOKEN_PROGRAM_ID
+                        systemProgram: SystemProgram.programId,
+                        tokenProgram: TOKEN_PROGRAM_ID,
+                        associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID
                     })
-                    .signers([])
-                    .preInstructions([])
-                    .postInstructions([])
                     .rpc();
 
                 console.log('Transaction successful:', tx);
