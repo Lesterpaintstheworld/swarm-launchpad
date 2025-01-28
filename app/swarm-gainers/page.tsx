@@ -73,7 +73,7 @@ export default function SwarmGainersPage() {
 
                 <div className="text-center mb-16">
                     <h1 className="text-5xl font-bold text-yellow-400 mb-2">$UBC Top Gainer Swarms</h1>
-                    <h2 className="text-3xl font-bold text-white">Last 5 Days</h2>
+                    <h2 className="text-3xl font-bold text-white">Last 24 Hours</h2>
                 </div>
 
                 {/* Graph section */}
