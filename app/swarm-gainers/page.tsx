@@ -119,6 +119,12 @@ export default function SwarmGainersPage() {
                     ))}
                 </div>
 
+                {/* Added date and link */}
+                <div className="flex flex-col items-center text-gray-500 text-sm mb-16">
+                    <p>28/01/2025</p>
+                    <p>swarms.universalbasiccompute.ai</p>
+                </div>
+
                 <div className="fixed bottom-8 right-8 z-50 flex gap-4">
                     <button
                         onClick={handleDownloadAll}
