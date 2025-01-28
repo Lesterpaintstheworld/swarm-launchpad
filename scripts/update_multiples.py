@@ -1,9 +1,7 @@
 import json
-import re
 import requests
 from pathlib import Path
 import base64
-import struct
 
 # Constants
 PROGRAM_ID = "4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf"
@@ -36,21 +34,17 @@ def main():
     info_path = script_dir.parent / "data" / "swarms" / "info.tsx"
     with open(info_path, 'r', encoding='utf-8') as f:
         content = f.read()
-        # Extract SwarmData array using regex
-        pattern = r'export const SwarmData: SwarmInfo\[\] = (\[[\s\S]*?\n\]);'
-        match = re.search(pattern, content, re.MULTILINE)
-        if not match:
-            print("Content preview:", content[:500])  # Debug: show start of file
-            raise Exception("Could not find SwarmData in info.tsx")
         
-        # Clean the matched JSON string
-        json_str = match.group(1).strip()
-        try:
-            swarm_data = json.loads(json_str)
-        except json.JSONDecodeError as e:
-            print("JSON parsing error:", e)
-            print("JSON string preview:", json_str[:500])
-            raise
+    # Find the start and end of the SwarmData array
+    start_marker = "export const SwarmData: SwarmInfo[] = ["
+    end_marker = "];"
+    
+    start_idx = content.index(start_marker) + len(start_marker)
+    end_idx = content.index(end_marker, start_idx)
+    
+    # Extract and parse the JSON array
+    json_str = content[start_idx:end_idx] + "]"
+    swarm_data = json.loads(json_str)
 
     # Process each swarm
     for swarm in swarm_data:
