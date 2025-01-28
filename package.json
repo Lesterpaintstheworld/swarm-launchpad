@@ -8,7 +8,7 @@
     "build": "next build", 
     "start": "next start",
     "lint": "next lint",
-    "update-multiples": "cross-env NODE_OPTIONS=\"--loader ts-node/esm\" ts-node --project scripts/tsconfig.json scripts/update-multiples.ts"
+    "update-multiples": "cross-env NODE_OPTIONS=\"--experimental-specifier-resolution=node\" ts-node --esm --project scripts/tsconfig.json scripts/update-multiples.ts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1",
