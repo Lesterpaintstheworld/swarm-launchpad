@@ -75,6 +75,7 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
             loading: 'Transaction pending...',
             success: (result) => {
                 // Webhook notification
+                const swarm = getSwarmUsingPoolId(pool);
                 fetch('https://nlr.app.n8n.cloud/webhook/buybot', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
