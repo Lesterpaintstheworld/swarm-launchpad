@@ -157,7 +157,7 @@ export default function TransitionPage() {
                                 defaultValue={[100]}
                                 max={10000}
                                 min={0}
-                                step={500}
+                                step={250}
                                 className="mb-2 [&_[role=slider]]:h-6 [&_[role=slider]]:w-6 [&_[role=slider]]:bg-blue-500/20 [&_[role=slider]]:border-blue-500/50 [&_[role=slider]]:backdrop-blur-sm [&_[role=slider]]:hover:bg-blue-500/30 [&_[role=slider]]:transition-colors"
                                 onValueChange={(value) => setSwarmRevenue(value[0])}
                             />
@@ -179,7 +179,7 @@ export default function TransitionPage() {
                                 defaultValue={[20]}
                                 max={50}
                                 min={0}
-                                step={10}
+                                step={5}
                                 className="mb-2 [&_[role=slider]]:h-6 [&_[role=slider]]:w-6 [&_[role=slider]]:bg-purple-500/20 [&_[role=slider]]:border-purple-500/50 [&_[role=slider]]:backdrop-blur-sm [&_[role=slider]]:hover:bg-purple-500/30 [&_[role=slider]]:transition-colors"
                                 onValueChange={(value) => setRedistributionRate(value[0])}
                             />
@@ -202,7 +202,7 @@ export default function TransitionPage() {
                                 defaultValue={[100]}
                                 max={100000}
                                 min={0}
-                                step={10000}
+                                step={5000}
                                 className="mb-2 [&_[role=slider]]:h-6 [&_[role=slider]]:w-6 [&_[role=slider]]:bg-pink-500/20 [&_[role=slider]]:border-pink-500/50 [&_[role=slider]]:backdrop-blur-sm [&_[role=slider]]:hover:bg-pink-500/30 [&_[role=slider]]:transition-colors"
                                 onValueChange={(value) => setSharesOwned(value[0])}
                             />
