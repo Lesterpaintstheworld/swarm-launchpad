@@ -50,32 +50,45 @@ export default function Swarm({ params }: { params: { slug: string } }) {
                     className="mt-8 mb-4" 
                 />
             )}
-            {swarm?.pool &&
-                <SwarmInvestCard
-                    className="mt-16"
-                    pool={swarm.pool as string}
-                />
-            }
-            {swarm?.description &&
-                <div className="flex flex-col md:flex-row gap-8 mt-12">
-                    <div className="flex-1">
-                        <h4 className="font-semibold">About {swarm.name}</h4>
-                        <hr className="mt-3" />
-                        <Expandable overflowThreshold={750}>
-                            <Markdown markdown={swarm.description} />
-                        </Expandable>
-                    </div>
-                    <InfoPanel 
-                        socials={swarm.socials}
-                        achievements={swarm.achievements}
-                    />
+            {/* New layout structure */}
+            <div className="mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8">
+                {/* Left column - Description */}
+                <div className="lg:col-span-7">
+                    {swarm?.description &&
+                        <div className="flex flex-col gap-8">
+                            <div className="flex-1">
+                                <h4 className="font-semibold">About {swarm.name}</h4>
+                                <hr className="mt-3" />
+                                <Expandable overflowThreshold={750}>
+                                    <Markdown markdown={swarm.description} />
+                                </Expandable>
+                            </div>
+                            <InfoPanel 
+                                socials={swarm.socials}
+                                achievements={swarm.achievements}
+                            />
+                        </div>
+                    }
                 </div>
-            }
+                
+                {/* Right column - Investment Card */}
+                <div className="lg:col-span-5">
+                    {swarm?.pool &&
+                        <div className="sticky top-6">
+                            <SwarmInvestCard
+                                pool={swarm.pool as string}
+                            />
+                        </div>
+                    }
+                </div>
+            </div>
+
             <SwarmRecentMarketListings
                 swarmId={swarm.id}
                 numberOfListings={7}
+                className="mt-16"
             />
-            <ManagePortfolioCard />
+            <ManagePortfolioCard className="mt-8" />
         </main>
     )
 
