@@ -65,20 +65,17 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
 
             return {
                 name: swarm.name,
-                value: number_of_shares,
+                value: valueInCompute, // Use value in COMPUTE for pie chart
                 valueInCompute,
-                percentage: (number_of_shares / total_owned_shares * 100).toFixed(1),
+                percentage: (valueInCompute / totalValueInCompute * 100).toFixed(1),
                 sharePrice
             };
         });
 
-        console.log('Portfolio data:', {
-            data,
-            totalValue: data.reduce((acc, item) => acc + item.valueInCompute, 0)
-        });
+        const totalValue = data.reduce((acc, item) => acc + item.valueInCompute, 0);
         
         setInvestmentData(data);
-        setTotalValueInCompute(data.reduce((acc, item) => acc + item.valueInCompute, 0));
+        setTotalValueInCompute(totalValue);
     }, [investments, total_owned_shares]);
 
 
