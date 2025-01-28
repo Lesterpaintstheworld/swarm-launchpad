@@ -4,7 +4,7 @@ import { cn, IntlNumberFormat } from "@/lib/utils";
 import { useCallback, useEffect, useState } from "react";
 import { PublicKey } from "@solana/web3.js";
 import { getSwarm } from "@/data/swarms/previews";
-import { calculateSharePrice } from '@/utils/price';
+import { calculateSharePrice } from '@/lib/utils';
 import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { Props as RechartsProps } from 'recharts/types/component/DefaultLegendContent';
