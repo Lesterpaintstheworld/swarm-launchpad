@@ -351,14 +351,19 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                 );
 
                 // Generate the shareholder PDA
-                const [shareholderPda] = PublicKey.findProgramAddressSync(
-                    [
-                        Buffer.from("shareholder"),
-                        pool.toBuffer(),
-                        publicKey.toBuffer()
-                    ],
-                    program.programId
+                // Generate the shareholder PDA
+                const shareholderPda = getShareholderPDA(
+                    program.programId,
+                    publicKey,
+                    pool
                 );
+
+                console.log('Generated PDA:', {
+                    programId: program.programId.toString(),
+                    owner: publicKey.toString(),
+                    pool: pool.toString(),
+                    pda: shareholderPda.toString()
+                });
 
                 console.log('Accounts:', {
                     shareholderPda: shareholderPda.toString(),
