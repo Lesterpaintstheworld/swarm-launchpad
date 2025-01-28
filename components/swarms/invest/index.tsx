@@ -1,17 +1,14 @@
 'use client'
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button } from "@/components/shadcn/button";
 import { ConnectButton } from "@/components/solana/connectButton";
-import { Token } from "@/components/tokens/token";
-import { getSwarm } from "@/data/swarms/previews";
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
-import { supportedTokens } from "@/data/tokens/supported";
 import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
 import { calculateSharePrice, cn, IntlNumberFormat, IntlNumberFormatCompact } from "@/lib/utils";
 import { useWallet } from "@solana/wallet-adapter-react";
-import Link from "next/link";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { Tag } from "@/components/ui/tag";
 
@@ -23,10 +20,8 @@ interface SwarmInvestCardProps {
 
 const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProps) => {
     const { connected } = useWallet();
-    const sharesRef = useRef<HTMLParagraphElement>(null);
     const [numShares, setNumShares] = useState<number>(0);
     const [price, setPrice] = useState<number>(0);
-    const [fee, setFee] = useState<number>(0);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);

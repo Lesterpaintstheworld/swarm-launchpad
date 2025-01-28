@@ -1,7 +1,7 @@
 'use client'
 
 import { TokenTooltip } from "@/components/ui/tokenTooltip";
-import { SwarmData, getSwarmInfo } from "@/data/swarms/info";
+import { getSwarmInfo } from "@/data/swarms/info";
 import { previews } from "@/data/swarms/previews";
 import { SwarmPreviewCard } from "@/components/swarms/preview";
 import { Info } from "lucide-react";

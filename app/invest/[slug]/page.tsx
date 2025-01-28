@@ -1,4 +1,4 @@
-import { SwarmData, getSwarmInfo } from "@/data/swarms/info";
+import { getSwarmInfo } from "@/data/swarms/info";
 import { redirect } from 'next/navigation';
 import { SwarmInvestCard } from "@/components/swarms/invest";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
