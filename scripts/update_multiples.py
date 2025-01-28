@@ -6,11 +6,18 @@ import random
 
 # Constants
 PROGRAM_ID = "4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf"
-RPC_URL = "https://api.mainnet-beta.solana.com"
+RPC_URLS = [
+    "https://api.mainnet-beta.solana.com",
+    "https://solana-mainnet.g.alchemy.com/v2/demo",  # Replace with your key
+    "https://solana-api.projectserum.com"
+]
 MAX_RETRIES = 3
 RETRY_DELAY = 2  # seconds
 
 def get_account_info(pubkey: str, retries: int = 0) -> Optional[dict]:
+    # Try different RPC endpoints
+    rpc_url = RPC_URLS[retries % len(RPC_URLS)]
+    
     payload = {
         "jsonrpc": "2.0",
         "id": 1,
@@ -19,18 +26,22 @@ def get_account_info(pubkey: str, retries: int = 0) -> Optional[dict]:
             pubkey,
             {
                 "encoding": "base64",
-                "commitment": "confirmed"
+                "commitment": "confirmed",
+                "dataSlice": {
+                    "offset": 8,  # Skip discriminator
+                    "length": 80  # Just get the data we need
+                }
             }
         ]
     }
     
     try:
-        response = requests.post(RPC_URL, json=payload)
+        response = requests.post(rpc_url, json=payload)
         response.raise_for_status()
         data = response.json()
         
         if 'error' in data:
-            if retries < MAX_RETRIES and ('429' in str(data['error']) or 'too large' in str(data['error']).lower()):
+            if retries < MAX_RETRIES:
                 time.sleep(RETRY_DELAY * (retries + 1))
                 return get_account_info(pubkey, retries + 1)
             raise Exception(data['error'])
@@ -42,6 +53,23 @@ def get_account_info(pubkey: str, retries: int = 0) -> Optional[dict]:
             time.sleep(RETRY_DELAY * (retries + 1))
             return get_account_info(pubkey, retries + 1)
         raise e
+
+def parse_pool_data(data: bytes) -> tuple[int, int]:
+    """Parse pool data according to the Anchor account structure"""
+    try:
+        # Skip pool_name (string) and admin_authority (pubkey)
+        # The pool_name length is stored in the first 4 bytes
+        name_len = int.from_bytes(data[0:4], 'little')
+        offset = 4 + name_len + 32  # Skip name content and admin_authority
+        
+        # Read total_shares and available_shares
+        total_shares = int.from_bytes(data[offset:offset+8], 'little')
+        available_shares = int.from_bytes(data[offset+8:offset+16], 'little')
+        
+        return total_shares, available_shares
+    except Exception as e:
+        print(f"Error parsing data: {e}")
+        return 0, 0
 
 def main():
     # List of pools to check
@@ -87,16 +115,11 @@ def main():
             # Decode base64 data
             data = base64.b64decode(response['result']['value']['data'][0])
             
-            # Skip 8 byte discriminator
-            data = data[8:]
-            
-            # Skip pool_name and admin_authority
-            offset = 32 + 32
-            total_shares = int.from_bytes(data[offset:offset+8], 'little')
-            available_shares = int.from_bytes(data[offset+8:offset+16], 'little')
+            # Parse the data according to the account structure
+            total_shares, available_shares = parse_pool_data(data)
             
             # Validate the numbers
-            if total_shares < 0 or available_shares < 0 or available_shares > total_shares:
+            if total_shares <= 0 or available_shares < 0 or available_shares > total_shares:
                 print(f"{name:<20} Invalid share counts: total={total_shares}, available={available_shares}")
                 continue
                 
