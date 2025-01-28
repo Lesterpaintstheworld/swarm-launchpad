@@ -53,11 +53,11 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
             const cycle = Math.floor(number_of_shares / 5000);
             const base = Math.pow(1.35, cycle);
             const sharePrice = Math.floor(base * 100) / 100;
-            const value = number_of_shares * sharePrice;
+            const value = number_of_shares * sharePrice; // This is the COMPUTE value
 
             return {
                 name: swarm.name,
-                value: value,
+                value: value, // Use the COMPUTE value for the pie chart
                 valueInCompute: value,
                 sharePrice,
                 percentage: 0 // We'll calculate this after getting total
