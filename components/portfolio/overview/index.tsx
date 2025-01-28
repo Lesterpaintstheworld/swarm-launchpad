@@ -74,15 +74,15 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
                         name: swarm.name,
                         value: value,
                         valueInCompute: value,
-                    };
+                    } as InvestmentDataItem;
                 } catch (error) {
                     console.error(`Error fetching pool data for ${swarm.name}:`, error);
                     return null;
                 }
             }));
 
-            const validValues = values.filter(Boolean);
-            const total = validValues.reduce((acc, item) => acc + (item?.value || 0), 0);
+            const validValues = values.filter((item): item is InvestmentDataItem => item !== null);
+            const total = validValues.reduce((acc, item) => acc + item.value, 0);
             
             const dataWithPercentages = validValues.map(item => ({
                 ...item,
