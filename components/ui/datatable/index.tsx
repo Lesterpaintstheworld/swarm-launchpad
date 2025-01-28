@@ -106,7 +106,7 @@ export function DataTable<TData, TValue>({
                                     <motion.tr
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
-                                        transition={{ ease: "ease", duration: rowAnimationDuration }}
+                                        transition={{ ease: "easeInOut", duration: rowAnimationDuration }}
                                         className={cn("border-b border-border transition-colors hover:bg-foreground/[3%] data-[state=selected]:bg-muted", rowClassName)}
                                         key={row.id}
                                         data-state={row.getIsSelected() && "selected"}
