@@ -2,9 +2,18 @@ const { Connection, PublicKey, Keypair } = require("@solana/web3.js");
 const { Program, AnchorProvider, setProvider, BN } = require("@coral-xyz/anchor");
 const fs = require('fs');
 const path = require('path');
-const { SwarmData } = require("../data/swarms/info");
 const UbclaunchpadIDL = require("../data/programs/ubclaunchpad.json");
 const { getLaunchpadProgram } = require("../hooks/useLaunchpadProgram/utils");
+
+// Import descriptions directly from files
+const { KinKongDescription } = require("../data/swarms/descriptions/kinkong");
+const { SwarmVenturesDescription } = require("../data/swarms/descriptions/swarmventures");
+const { TerminalVelocityDescription } = require("../data/swarms/descriptions/terminalvelocity");
+const { SyntheticSoulsDescription } = require("../data/swarms/descriptions/syntheticsouls");
+const { DuoAIDescription } = require("../data/swarms/descriptions/duoai");
+
+// Import SwarmData directly from the file
+const SwarmData = require("../data/swarms/info").SwarmData;
 
 const PROGRAM_ID = new PublicKey("4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf");
 const RPC_URL = "https://api.mainnet-beta.solana.com";
