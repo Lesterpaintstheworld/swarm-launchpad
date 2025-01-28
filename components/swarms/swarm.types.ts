@@ -18,6 +18,7 @@ export interface SwarmPreviewData {
     swarmType: SwarmType;
     revenueShare: number;
     multiple?: number;
+    pool?: string;
     program?: {
         pool?: string;
     }
