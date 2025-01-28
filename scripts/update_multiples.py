@@ -80,7 +80,7 @@ def update_info_file(multiples: dict):
         with open(file_path, 'r', encoding='utf-8') as file:
             content = file.read()
             
-        # First extract just the array structure without the complex string content
+        # First extract just the array structure
         data_match = re.search(r'export const SwarmData: SwarmInfo\[\] = (\[[\s\S]*?\n\])', content)
         if not data_match:
             raise Exception("Couldn't find SwarmData array in info.tsx")
@@ -88,17 +88,28 @@ def update_info_file(multiples: dict):
         # Get the original array content
         original_data = data_match.group(1)
         
-        # Create a simplified version for parsing
+        # Create a simplified version for parsing by:
+        # 1. Replace template literals
         simplified_data = re.sub(
-            r'description: `[\s\S]*?`',
-            'description: "PLACEHOLDER"',
+            r'`[\s\S]*?`',
+            '"PLACEHOLDER"',
             original_data
         )
         
-        # Clean up the simplified data
+        # 2. Replace imported descriptions
+        simplified_data = re.sub(
+            r'description: \w+Description',
+            'description: "PLACEHOLDER"',
+            simplified_data
+        )
+        
+        # 3. Clean up the data for JSON parsing
         simplified_data = re.sub(r"'([^']*)'", r'"\1"', simplified_data)  # Convert single quotes
         simplified_data = re.sub(r'(\w+):', r'"\1":', simplified_data)    # Quote property names
         simplified_data = simplified_data.replace('undefined', 'null')     # Handle undefined
+        
+        # 4. Remove trailing commas
+        simplified_data = re.sub(r',(\s*[}\]])', r'\1', simplified_data)
         
         try:
             data = json.loads(simplified_data)
@@ -112,12 +123,8 @@ def update_info_file(multiples: dict):
             updated_data = json.dumps(data, indent=4)
             updated_data = re.sub(r'"(\w+)":', r'\1:', updated_data)  # Unquote keys
             
-            # Replace the array in the file while preserving the original descriptions
-            new_content = re.sub(
-                r'(export const SwarmData: SwarmInfo\[\] = )\[[\s\S]*?\n\]',
-                f'\\1{updated_data}',
-                content
-            )
+            # Preserve the original descriptions when replacing
+            new_content = content.replace(original_data, updated_data)
             
             # Write the updated content
             with open(file_path, 'w', encoding='utf-8') as file:
@@ -127,7 +134,7 @@ def update_info_file(multiples: dict):
             
         except json.JSONDecodeError as e:
             print(f"Error parsing SwarmData: {e}")
-            print("Simplified data:", simplified_data[:500])
+            print("Simplified data:", simplified_data[:2000])  # Show more context
             return
             
     except Exception as e:
