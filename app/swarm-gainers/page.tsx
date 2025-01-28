@@ -5,6 +5,7 @@ import { SwarmGainCard } from '@/components/swarms/gainCard';
 import { previews } from '@/data/swarms/previews';
 import { captureCards } from '@/utils/captureCards';
 import { exportCards } from '@/utils/exportCards';
+import { getSwarmUsingId } from "@/data/swarms/info";
 
 export default function SwarmGainersPage() {
     const [captures, setCaptures] = useState<string[]>([]);
