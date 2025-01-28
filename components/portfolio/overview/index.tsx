@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import { getSwarmUsingId } from "@/data/swarms/info";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { Props as RechartsProps } from 'recharts/types/component/DefaultLegendContent';
-import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
+import { PublicKey } from "@solana/web3.js";
+import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
 
 interface PortfolioOverviewProps {
     investments: Investment[];
@@ -17,6 +18,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'
 const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) => {
     const [investmentData, setInvestmentData] = useState<any[]>([]);
     const [totalValueInCompute, setTotalValueInCompute] = useState(0);
+    const { program } = useLaunchpadProgram();
 
     useEffect(() => {
         const calculateValues = async () => {
@@ -24,23 +26,28 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
                 const swarm = getSwarmUsingId(investment.swarm_id);
                 if (!swarm?.pool) return null;
 
-                const { poolAccount } = useLaunchpadProgramAccount({ poolAddress: swarm.pool });
-                if (!poolAccount.data) return null;
+                try {
+                    const poolPubkey = new PublicKey(swarm.pool);
+                    const poolData = await program.account.pool.fetch(poolPubkey);
+                    
+                    const totalShares = poolData.totalShares.toNumber();
+                    const availableShares = poolData.availableShares.toNumber();
+                    const soldShares = totalShares - availableShares;
+                    
+                    const cycle = Math.floor(soldShares / 5000);
+                    const base = Math.pow(1.35, cycle);
+                    const sharePrice = Math.floor(base * 100) / 100;
+                    const value = investment.number_of_shares * sharePrice;
 
-                const totalShares = poolAccount.data.totalShares.toNumber();
-                const availableShares = poolAccount.data.availableShares.toNumber();
-                const soldShares = totalShares - availableShares;
-                
-                const cycle = Math.floor(soldShares / 5000);
-                const base = Math.pow(1.35, cycle);
-                const sharePrice = Math.floor(base * 100) / 100;
-                const value = investment.number_of_shares * sharePrice;
-
-                return {
-                    name: swarm.name,
-                    value: value,
-                    valueInCompute: value,
-                };
+                    return {
+                        name: swarm.name,
+                        value: value,
+                        valueInCompute: value,
+                    };
+                } catch (error) {
+                    console.error(`Error fetching pool data for ${swarm.name}:`, error);
+                    return null;
+                }
             }));
 
             const validValues = values.filter(Boolean);
@@ -55,8 +62,10 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
             setTotalValueInCompute(total);
         };
 
-        calculateValues();
-    }, [investments]);
+        if (program && investments.length > 0) {
+            calculateValues();
+        }
+    }, [investments, program]);
 
     const CustomTooltip = ({ active, payload }: any) => {
         if (active && payload && payload.length) {
