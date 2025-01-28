@@ -1,11 +1,16 @@
 import requests
 import base64
+import time
+from typing import Optional
+import random
 
 # Constants
 PROGRAM_ID = "4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf"
 RPC_URL = "https://api.mainnet-beta.solana.com"
+MAX_RETRIES = 3
+RETRY_DELAY = 2  # seconds
 
-def get_account_info(pubkey: str):
+def get_account_info(pubkey: str, retries: int = 0) -> Optional[dict]:
     payload = {
         "jsonrpc": "2.0",
         "id": 1,
@@ -18,8 +23,25 @@ def get_account_info(pubkey: str):
             }
         ]
     }
-    response = requests.post(RPC_URL, json=payload)
-    return response.json()
+    
+    try:
+        response = requests.post(RPC_URL, json=payload)
+        response.raise_for_status()
+        data = response.json()
+        
+        if 'error' in data:
+            if retries < MAX_RETRIES and ('429' in str(data['error']) or 'too large' in str(data['error']).lower()):
+                time.sleep(RETRY_DELAY * (retries + 1))
+                return get_account_info(pubkey, retries + 1)
+            raise Exception(data['error'])
+            
+        return data
+        
+    except Exception as e:
+        if retries < MAX_RETRIES:
+            time.sleep(RETRY_DELAY * (retries + 1))
+            return get_account_info(pubkey, retries + 1)
+        raise e
 
 def main():
     # List of pools to check
@@ -54,12 +76,11 @@ def main():
 
     for name, pool in pools.items():
         try:
+            # Add random delay between requests
+            time.sleep(random.uniform(0.5, 1.5))
+            
             response = get_account_info(pool)
-            if 'error' in response:
-                print(f"{name:<20} Error: {response['error']}")
-                continue
-                
-            if not response['result']['value']:
+            if not response or not response.get('result') or not response['result'].get('value'):
                 print(f"{name:<20} No data found")
                 continue
 
@@ -74,6 +95,11 @@ def main():
             total_shares = int.from_bytes(data[offset:offset+8], 'little')
             available_shares = int.from_bytes(data[offset+8:offset+16], 'little')
             
+            # Validate the numbers
+            if total_shares < 0 or available_shares < 0 or available_shares > total_shares:
+                print(f"{name:<20} Invalid share counts: total={total_shares}, available={available_shares}")
+                continue
+                
             sold_shares = total_shares - available_shares
             cycle = sold_shares // 5000
             multiple = pow(1.35, cycle)
