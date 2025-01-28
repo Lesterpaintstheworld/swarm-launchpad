@@ -438,17 +438,16 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                         new BN(numberOfShares),
                         new BN(calculatedCost)
                     )
-                    // @ts-ignore - Temporarily disable type checking while fixing account names
                     .accounts({
                         pool: new PublicKey(pool),
-                        shareholder_account: shareholderPda,
-                        compute_mint_account: new PublicKey(poolAccount.data.computeMint),
-                        ubc_mint_account: new PublicKey(poolAccount.data.ubcMint),
-                        sender_compute_account: new PublicKey(senderComputeAccount),
-                        sender_ubc_account: new PublicKey(senderUbcAccount),
-                        custodial_account: new PublicKey(poolAccount.data.custodialAccount),
-                        custodial_compute_account: new PublicKey(custodialComputeAccount),
-                        custodial_ubc_account: new PublicKey(custodialUbcAccount),
+                        shareholder: shareholderPda,
+                        compute_mint: new PublicKey(poolAccount.data.computeMint),
+                        ubc_mint: new PublicKey(poolAccount.data.ubcMint),
+                        sender_compute: new PublicKey(senderComputeAccount),
+                        sender_ubc: new PublicKey(senderUbcAccount),
+                        custodial: new PublicKey(poolAccount.data.custodialAccount),
+                        custodial_compute: new PublicKey(custodialComputeAccount),
+                        custodial_ubc: new PublicKey(custodialUbcAccount),
                         buyer: publicKey,
                         system_program: SystemProgram.programId,
                         token_program: TOKEN_PROGRAM_ID,
