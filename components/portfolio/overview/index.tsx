@@ -61,26 +61,33 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
             const base = Math.pow(1.35, cycle);
             const sharePrice = Math.floor(base * 100) / 100;
 
+            // Calculate total value for this position
             const valueInCompute = number_of_shares * sharePrice;
 
             return {
                 name: swarm.name,
-                value: valueInCompute,
+                value: valueInCompute, // This is the actual COMPUTE value
                 valueInCompute,
                 sharePrice
             };
         });
 
-        // Calculate total first
-        const totalValue = data.reduce((acc, item) => acc + item.valueInCompute, 0);
+        // Calculate total by summing up all position values
+        const totalValue = data.reduce((acc, item) => acc + item.value, 0);
         
-        // Then update percentages using the actual total
-        const dataWithCorrectPercentages = data.map(item => ({
+        // Update percentages based on total
+        const dataWithPercentages = data.map(item => ({
             ...item,
-            percentage: ((item.valueInCompute / totalValue) * 100).toFixed(1)
+            percentage: ((item.value / totalValue) * 100).toFixed(1)
         }));
 
-        setInvestmentData(dataWithCorrectPercentages);
+        console.log('Portfolio calculation:', {
+            positions: data,
+            totalValue,
+            dataWithPercentages
+        });
+
+        setInvestmentData(dataWithPercentages);
         setTotalValueInCompute(totalValue);
     }, [investments, total_owned_shares]);
 
