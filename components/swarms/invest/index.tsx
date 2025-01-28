@@ -52,10 +52,17 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
 
     const handleSharesInput = (e: ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value.replace(/,/g, ''));
-        if (isNaN(value) || value < 0 || value > 1000) return;
-        // Price is now correctly scaled
-        setPrice(Math.floor(Number(value) * data.pricePerShare));
+        if (isNaN(value) || value < 0 || value > data.remainingSupply) return;
+        setPrice(Math.floor(value * data.pricePerShare));
         setNumShares(value);
+    }
+
+    const handleComputeInput = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = Number(e.target.value.replace(/,/g, '')); 
+        const calculatedShares = Math.round(value / data.pricePerShare);
+        if (isNaN(value) || value < 0 || calculatedShares > data.remainingSupply) return;
+        setNumShares(calculatedShares);
+        setPrice(value);
     }
 
     const handleComputeInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -81,9 +88,8 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
     };
 
     const handleBuy = async () => {
-        const validationError = validateInput(numShares);
-        if (validationError) {
-            setError(validationError);
+        if (!numShares || numShares <= 0) {
+            setError("Please enter a valid number of shares");
             return;
         }
 
@@ -92,11 +98,7 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
         setIsLoading(true);
         
         try {
-            const soldShares = data.totalSupply - data.remainingSupply;
-            const pricePerShare = calculateSharePrice(soldShares);
-            const totalCost = numShares * pricePerShare;
-            const calculatedCostInBaseUnits = Math.floor(totalCost * Math.pow(10, 6));
-
+            const calculatedCostInBaseUnits = Math.floor(price * Math.pow(10, 6));
             const result = await purchaseShares.mutateAsync({ 
                 numberOfShares: numShares, 
                 calculatedCost: calculatedCostInBaseUnits
