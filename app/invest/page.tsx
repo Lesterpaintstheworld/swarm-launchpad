@@ -53,7 +53,7 @@ export default function Invest() {
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p className="max-w-[300px]">
-                                        Established projects with proven revenue streams and active user bases. These swarms have integrated with UBC to offer revenue sharing to investors.
+                                        Established Projects - Active revenue streams and user bases integrated with UBC for investor revenue sharing.
                                     </p>
                                 </TooltipContent>
                             </Tooltip>
@@ -85,7 +85,7 @@ export default function Invest() {
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p className="max-w-[300px]">
-                                        Teams with working prototypes and proof of concept. These swarms are opening limited investment slots before full launch.
+                                        Teams & POC - Projects with working prototypes and proven leadership ready for early investment.
                                     </p>
                                 </TooltipContent>
                             </Tooltip>
@@ -117,7 +117,7 @@ export default function Invest() {
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p className="max-w-[300px]">
-                                        Innovative ideas led by experienced leaders. Get in early on these new AI projects for maximum growth potential.
+                                        Ideas & Leaders - New AI project concepts seeking leadership and development teams.
                                     </p>
                                 </TooltipContent>
                             </Tooltip>
