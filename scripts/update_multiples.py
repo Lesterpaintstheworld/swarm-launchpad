@@ -35,16 +35,33 @@ def main():
     with open(info_path, 'r', encoding='utf-8') as f:
         content = f.read()
         
-    # Find the start and end of the SwarmData array
+    # Find the SwarmData array
     start_marker = "export const SwarmData: SwarmInfo[] = ["
-    end_marker = "];"
+    end_marker = "\n]"  # Changed to match actual file format
     
-    start_idx = content.index(start_marker) + len(start_marker)
-    end_idx = content.index(end_marker, start_idx)
+    try:
+        start_idx = content.index(start_marker) + len(start_marker)
+        end_idx = content.index(end_marker, start_idx)
+    except ValueError:
+        print("Content preview:", content[:500])  # Debug output
+        print("\nMarkers not found. Looking for alternative format...")
+        try:
+            # Try alternative format
+            alt_start = "SwarmData: SwarmInfo[] = ["
+            alt_end = "\n]"
+            start_idx = content.index(alt_start) + len(alt_start)
+            end_idx = content.index(alt_end, start_idx)
+        except ValueError:
+            raise Exception("Could not find SwarmData array in info.tsx")
     
     # Extract and parse the JSON array
     json_str = content[start_idx:end_idx] + "]"
-    swarm_data = json.loads(json_str)
+    try:
+        swarm_data = json.loads(json_str)
+    except json.JSONDecodeError as e:
+        print("Error parsing JSON. Preview of content:")
+        print(json_str[:500])
+        raise e
 
     # Process each swarm
     for swarm in swarm_data:
