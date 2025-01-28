@@ -1,8 +1,10 @@
 // @ts-nocheck
 'use client'
 
-import { useConnection, useWallet } from '@solana/wallet-adapter-react'
-import { PublicKey, SystemProgram } from '@solana/web3.js'
+import { useWallet } from '@solana/wallet-adapter-react'
+import { PublicKey, SystemProgram, Connection } from '@solana/web3.js'
+import { constants } from '@/lib/constants'
+const HELIUS_RPC = `https://mainnet.helius-rpc.com/?api-key=${atob('NGMzYTVmYzItZWEzZi00NWViLTg1ZDUtMmYyODJhNmI0NDAx')}`;
 import { getAssociatedTokenAddress } from '@solana/spl-token';
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
@@ -21,7 +23,10 @@ export function useLaunchpadProgram() {
     const network = constants.environment === 'production' 
         ? WalletAdapterNetwork.Mainnet 
         : WalletAdapterNetwork.Devnet;
-    const { connection } = useConnection()
+    const connection = new Connection(HELIUS_RPC, {
+        commitment: 'confirmed',
+        wsEndpoint: undefined // Helius doesn't support websockets on this endpoint
+    });
     const { publicKey } = useWallet()
     const provider = useAnchorProvider()
     const programId = useMemo(() => new PublicKey(constants.investmentProgram.id), [network])
