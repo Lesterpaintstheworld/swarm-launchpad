@@ -1,28 +1,50 @@
 import { Connection, PublicKey, Keypair } from "@solana/web3.js";
-import { Program, AnchorProvider, setProvider, BN } from "@coral-xyz/anchor";
+import { Program, AnchorProvider, setProvider, BN, Idl } from "@coral-xyz/anchor";
 import * as fs from 'fs';
 import * as path from 'path';
 import { getLaunchpadProgram } from "../hooks/useLaunchpadProgram/utils";
 
-// Import SwarmData and other dependencies
-import { SwarmData } from "../data/swarms/info";
-
-// Import descriptions directly from files
-const { KinKongDescription } = require("../data/swarms/descriptions/kinkong");
-const { SwarmVenturesDescription } = require("../data/swarms/descriptions/swarmventures");
-const { TerminalVelocityDescription } = require("../data/swarms/descriptions/terminalvelocity");
-const { SyntheticSoulsDescription } = require("../data/swarms/descriptions/syntheticsouls");
-const { DuoAIDescription } = require("../data/swarms/descriptions/duoai");
+// Import SwarmData type
+interface SwarmInfo {
+    id: string;
+    pool?: string;
+    name: string;
+    multiple: number;
+    [key: string]: any; // Allow other properties
+}
 
 // Import SwarmData directly from the file
-const SwarmData = require("../data/swarms/info").SwarmData;
+const SwarmData: SwarmInfo[] = [
+    // The data will be read from info.tsx
+];
+
+try {
+    const infoPath = path.join(__dirname, '../data/swarms/info.tsx');
+    const fileContent = fs.readFileSync(infoPath, 'utf8');
+    
+    // Extract SwarmData array using regex
+    const match = fileContent.match(/export const SwarmData: SwarmInfo\[\] = (\[[\s\S]*?\]);/);
+    if (match) {
+        // Parse the matched JSON array
+        const swarmDataString = match[1].replace(/\n/g, '');
+        Object.assign(SwarmData, JSON.parse(swarmDataString));
+    }
+} catch (error) {
+    console.error('Error loading SwarmData:', error);
+    process.exit(1);
+}
 
 const PROGRAM_ID = new PublicKey("4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf");
 const RPC_URL = "https://api.mainnet-beta.solana.com";
 
 interface PoolAccount {
-    totalShares: typeof BN;
-    availableShares: typeof BN;
+    totalShares: BN;
+    availableShares: BN;
+}
+
+interface PoolState {
+    totalShares: BN;
+    availableShares: BN;
 }
 
 // Simple wallet implementation
@@ -52,7 +74,7 @@ async function main() {
         try {
             // Fetch pool data
             const poolPubkey = new PublicKey(swarm.pool);
-            const poolData = await program.account.pool.fetch(poolPubkey) as unknown as PoolAccount;
+            const poolData = await program.account.pool.fetch(poolPubkey) as unknown as PoolState;
             
             // Calculate sold shares
             const totalShares = poolData.totalShares.toNumber();
