@@ -14,10 +14,11 @@ interface BarChartProps {
 const BarChart = ({ data }: BarChartProps) => {
 
     const total_value = data.reduce((acc, item) => acc + item.value, 0) || 1;
-
+    const maxValue = Math.max(...data.map(item => item.value));
+    
     return (
         <div className="flex flex-col gap-4">
-            <div className="flex flex-row w-full">
+            <div className="flex flex-row w-full h-[200px]">
                 {data.length === 0 &&
                     <BarItem
                         data={{
@@ -29,7 +30,7 @@ const BarChart = ({ data }: BarChartProps) => {
                     />
                 }
                 {data.map((item, index) => {
-                    const percentage = item.value / total_value * 100;
+                    const percentage = (item.value / maxValue * 100);
                     return (
                         <BarItem
                             data={item}
