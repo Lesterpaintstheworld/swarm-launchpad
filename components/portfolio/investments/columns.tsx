@@ -86,7 +86,7 @@ const PriceCell = ({ poolAddress }: { poolAddress: string }) => {
             // Calculate price based on bonding curve
             const cycle = Math.floor(soldShares / 5000);
             const base = Math.pow(1.35, cycle);
-            const sharePrice = Math.floor(base * 100) / 1000; // Divide by 1000 to fix scaling
+            const sharePrice = Math.floor(base * 100) / 100; // Divide by 100 to fix scaling
             
             console.log('PriceCell - Price Calculation:', {
                 cycle,
@@ -118,7 +118,7 @@ const ValueCell = ({ poolAddress, shares }: { poolAddress: string, shares: numbe
             // Calculate price based on bonding curve
             const cycle = Math.floor(soldShares / 5000);
             const base = Math.pow(1.35, cycle);
-            const sharePrice = Math.floor(base * 100) / 1000; // Divide by 1000 to fix scaling
+            const sharePrice = Math.floor(base * 100) / 100; // Divide by 100 to fix scaling
 
             console.log('ValueCell data:', {
                 totalShares,
