@@ -268,7 +268,14 @@ export const columns: ColumnDef<Investment>[] = [
         ),
         cell: ({ row }) => {
             const swarm = getSwarm(row.getValue('swarm_id'));
-            return <PriceCell poolAddress={swarm.pool as string} shares={row.original.number_of_shares} />;
+            // Add debug log
+            console.log('Swarm data:', {
+                swarmId: row.getValue('swarm_id'),
+                swarm,
+                pool: swarm?.pool
+            });
+            if (!swarm?.pool) return null;
+            return <PriceCell poolAddress={swarm.pool} shares={row.original.number_of_shares} />;
         }
     },
     {
