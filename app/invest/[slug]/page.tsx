@@ -1,4 +1,4 @@
-import { SwarmData } from "@/data/swarms/info";
+import { SwarmData, getSwarmInfo } from "@/data/swarms/info";
 import { redirect } from 'next/navigation';
 import { SwarmInvestCard } from "@/components/swarms/invest";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
@@ -8,10 +8,22 @@ import { Expandable } from "@/components/ui/expandable";
 import { SwarmGallery } from "@/components/swarms/gallery";
 import { SwarmRecentMarketListings } from "@/components/market/recentListings";
 import { ManagePortfolioCard } from "@/components/cards/managePortfolio";
-import { IntlNumberFormat, IntlNumberFormatCompact } from "@/lib/utils";
+import { getSwarm } from "@/data/swarms/previews";
 
 export default function SwarmPage({ params }: { params: { slug: string } }) {
-    const swarm = SwarmData.find((s) => s.id === params.slug);
+    // Get data from both sources
+    const swarmInfo = getSwarmInfo(params.slug);
+    const swarmPreview = getSwarm(params.slug);
+
+    // Combine the data, preferring preview data for most fields
+    const swarm = swarmInfo ? {
+        ...swarmPreview,
+        ...swarmInfo,
+        // Keep preview data for these fields
+        description: swarmPreview?.description,
+        role: swarmPreview?.role,
+        tags: swarmPreview?.tags,
+    } : null;
     if (!swarm) {
         redirect('/404');
     }
