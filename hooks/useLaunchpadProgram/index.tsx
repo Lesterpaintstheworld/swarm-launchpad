@@ -64,7 +64,18 @@ export function useLaunchpadProgram() {
                 );
 
                 
-                // Get the transaction object first
+                // Add debug logging
+                console.log('Available accounts:', Object.keys(program.methods.purchaseShares));
+                console.log('Program IDL:', program.idl);
+
+                // Log the method structure
+                const method = program.methods.purchaseShares(
+                    new BN(numberOfShares),
+                    new BN(calculatedCost)
+                );
+                console.log('Method accounts:', method.accounts);
+
+                // Get the transaction object
                 const tx = await program.methods
                 .initialize(
                     poolName,
