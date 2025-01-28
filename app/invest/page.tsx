@@ -4,6 +4,8 @@ import { TokenTooltip } from "@/components/ui/tokenTooltip";
 import { SwarmData, getSwarmInfo } from "@/data/swarms/info";
 import { previews } from "@/data/swarms/previews";
 import { SwarmPreviewCard } from "@/components/swarms/preview";
+import { InfoCircled } from "@radix-ui/react-icons";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/shadcn/tooltip";
 
 export default function Invest() {
     // Combine preview data with multiples from SwarmData
@@ -42,7 +44,21 @@ export default function Invest() {
             {/* Partner Swarms */}
             {partnerSwarms.length > 0 && (
                 <section className="mb-24">
-                    <h3 className="text-2xl font-semibold mb-8">Partner Swarms</h3>
+                    <div className="flex items-center gap-2 mb-8">
+                        <h3 className="text-2xl font-semibold">🤝 Partner Swarms</h3>
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <InfoCircled className="w-5 h-5 text-muted-foreground" />
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p className="max-w-[300px]">
+                                        Partner swarms are established AI projects that have integrated with UBC to offer revenue sharing to investors.
+                                    </p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {partnerSwarms.map((swarm) => (
                             <SwarmPreviewCard 
@@ -60,7 +76,21 @@ export default function Invest() {
             {/* Early Access Swarms */}
             {earlySwarms.length > 0 && (
                 <section className="mb-24">
-                    <h3 className="text-2xl font-semibold mb-8">Early Access Swarms</h3>
+                    <div className="flex items-center gap-2 mb-8">
+                        <h3 className="text-2xl font-semibold">🚀 Early Access Swarms</h3>
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <InfoCircled className="w-5 h-5 text-muted-foreground" />
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p className="max-w-[300px]">
+                                        Early access swarms are proven AI systems opening limited investment slots before full launch.
+                                    </p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {earlySwarms.map((swarm) => (
                             <SwarmPreviewCard 
@@ -78,7 +108,21 @@ export default function Invest() {
             {/* Inception Swarms */}
             {inceptionSwarms.length > 0 && (
                 <section className="mb-24">
-                    <h3 className="text-2xl font-semibold mb-8">Inception Swarms</h3>
+                    <div className="flex items-center gap-2 mb-8">
+                        <h3 className="text-2xl font-semibold">💫 Inception Swarms</h3>
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <InfoCircled className="w-5 h-5 text-muted-foreground" />
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p className="max-w-[300px]">
+                                        Inception swarms are new AI projects in development. Get in early for maximum growth potential.
+                                    </p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {inceptionSwarms.map((swarm) => (
                             <SwarmPreviewCard 
