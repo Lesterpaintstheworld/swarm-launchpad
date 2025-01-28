@@ -56,36 +56,37 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
             const { swarm_id, number_of_shares } = investment;
             const swarm = getSwarm(swarm_id);
             
-            // Calculate price based on bonding curve
-            const cycle = Math.floor(number_of_shares / 5000);
+            // Get the pool address from the swarm data
+            const swarmData = getSwarmUsingId(swarm_id);
+            if (!swarmData?.pool) return null;
+
+            // Get the value from the ValueCell calculation
+            const totalShares = poolAccount.data?.totalShares.toNumber();
+            const availableShares = poolAccount.data?.availableShares.toNumber();
+            const soldShares = totalShares - availableShares;
+            
+            const cycle = Math.floor(soldShares / 5000);
             const base = Math.pow(1.35, cycle);
             const sharePrice = Math.floor(base * 100) / 100;
-
-            // Calculate total value for this position
-            const valueInCompute = number_of_shares * sharePrice;
+            const value = number_of_shares * sharePrice;
 
             return {
                 name: swarm.name,
-                value: valueInCompute, // This is the actual COMPUTE value
-                valueInCompute,
-                sharePrice
+                value: value,
+                valueInCompute: value,
+                sharePrice,
+                percentage: 0 // We'll calculate this after getting total
             };
-        });
+        }).filter(Boolean);
 
-        // Calculate total by summing up all position values
+        // Get total from summing the values
         const totalValue = data.reduce((acc, item) => acc + item.value, 0);
         
-        // Update percentages based on total
+        // Now calculate percentages
         const dataWithPercentages = data.map(item => ({
             ...item,
             percentage: ((item.value / totalValue) * 100).toFixed(1)
         }));
-
-        console.log('Portfolio calculation:', {
-            positions: data,
-            totalValue,
-            dataWithPercentages
-        });
 
         setInvestmentData(dataWithPercentages);
         setTotalValueInCompute(totalValue);
