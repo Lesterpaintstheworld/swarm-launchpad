@@ -61,11 +61,16 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
 
                 try {
                     const poolAccount = await program.account.pool.fetch(new PublicKey(swarm.pool));
-                    
+                
                     const totalShares = poolAccount.totalShares.toNumber();
                     const availableShares = poolAccount.availableShares.toNumber();
                     const soldShares = totalShares - availableShares;
-                    const sharePrice = calculateSharePrice(soldShares);
+                
+                    // Calculate price based on bonding curve
+                    const cycle = Math.floor(soldShares / 5000);
+                    const base = Math.pow(1.35, cycle);
+                    const sharePrice = Math.floor(base * 100); // Base price in COMPUTE
+
                     const valueInCompute = number_of_shares * sharePrice;
 
                     return {

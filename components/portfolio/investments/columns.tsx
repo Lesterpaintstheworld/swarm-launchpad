@@ -82,7 +82,11 @@ const ValueCell = ({ poolAddress, shares }: { poolAddress: string, shares: numbe
             const totalShares = poolAccount.data.totalShares.toNumber();
             const availableShares = poolAccount.data.availableShares.toNumber();
             const soldShares = totalShares - availableShares;
-            const sharePrice = calculateSharePrice(soldShares);
+            
+            // Calculate price based on bonding curve
+            const cycle = Math.floor(soldShares / 5000);
+            const base = Math.pow(1.35, cycle);
+            const sharePrice = Math.floor(base * 100); // Base price in COMPUTE
 
             console.log('ValueCell data:', {
                 totalShares,
