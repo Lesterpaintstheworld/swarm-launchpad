@@ -50,46 +50,71 @@ export default function Portfolio() {
         };
 
         const fetchData = async () => {
-            try {
-                setIsLoading(true);
-                const positions: PositionData[] = [];
-                
-                for(let i = 0; i < poolIds.length; i++) {
-                    const poolId = poolIds[i];
-                    if(!poolId) { continue; }
-                    
-                    const position = await getPosition(publicKey as PublicKey, poolId);
-                    if(!position) {
-                        continue;
-                    }
-                    
-                    const poolPubkey = new PublicKey(poolId);
-                    const poolData = await program.account.pool.fetch(poolPubkey);
-    
-                    const swarm = getSwarmUsingPoolId(poolId);
-                    if (!swarm) {
-                        console.error(`No swarm found for pool ID: ${poolId}`);
-                        continue;
-                    }
-    
-                    // Calculate sold shares instead of using total shares
-                    const soldShares = poolData.totalShares.toNumber() - poolData.availableShares.toNumber();
+            const MAX_RETRIES = 3;
+            const RETRY_DELAY = 1000; // 1 second
 
-                    positions.push({
-                        swarm_id: swarm.id,
-                        number_of_shares: position?.shares.toNumber() || 0,
-                        total_shares: soldShares, // Use sold shares instead of total shares
-                        last_dividend_payment: 0
-                    });
-                }
+            const fetchWithRetry = async (attempt = 0) => {
+                try {
+                    setIsLoading(true);
+                    const positions: PositionData[] = [];
+                    
+                    for(let i = 0; i < poolIds.length; i++) {
+                        const poolId = poolIds[i];
+                        if(!poolId) { continue; }
+                        
+                        try {
+                            const position = await getPosition(publicKey as PublicKey, poolId);
+                            if(!position) {
+                                continue;
+                            }
+                            
+                            const poolPubkey = new PublicKey(poolId);
+                            const poolData = await program.account.pool.fetch(poolPubkey);
                 
-                setInvestments(positions);
-            } catch (err) {
-                setError(err as Error);
-                console.error('Error fetching portfolio data:', err);
-            } finally {
-                setIsLoading(false);
-            }
+                            const swarm = getSwarmUsingPoolId(poolId);
+                            if (!swarm) {
+                                console.error(`No swarm found for pool ID: ${poolId}`);
+                                continue;
+                            }
+                
+                            const soldShares = poolData.totalShares.toNumber() - poolData.availableShares.toNumber();
+
+                            positions.push({
+                                swarm_id: swarm.id,
+                                number_of_shares: position?.shares.toNumber() || 0,
+                                total_shares: soldShares,
+                                last_dividend_payment: 0
+                            });
+                        } catch (err) {
+                            // Check if it's a rate limit error
+                            if (err.message?.includes('429') || err.message?.includes('exceeded limit')) {
+                                if (attempt < MAX_RETRIES) {
+                                    console.log(`Rate limit hit, retrying in ${RETRY_DELAY}ms...`);
+                                    await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
+                                    return fetchWithRetry(attempt + 1);
+                                }
+                            }
+                            throw err;
+                        }
+                    }
+                    
+                    setInvestments(positions);
+                    setIsLoading(false);
+                } catch (err) {
+                    if (err.message?.includes('429') || err.message?.includes('exceeded limit')) {
+                        if (attempt < MAX_RETRIES) {
+                            console.log(`Rate limit hit, retrying in ${RETRY_DELAY}ms...`);
+                            await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
+                            return fetchWithRetry(attempt + 1);
+                        }
+                    }
+                    console.error('Error fetching portfolio data:', err);
+                    setError(new Error("Unable to load portfolio data. Please try again later."));
+                    setIsLoading(false);
+                }
+            };
+
+            await fetchWithRetry();
         };
 
         fetchData();
