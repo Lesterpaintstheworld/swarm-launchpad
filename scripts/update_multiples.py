@@ -80,66 +80,59 @@ def update_info_file(multiples: dict):
         with open(file_path, 'r', encoding='utf-8') as file:
             content = file.read()
             
-        # Find the SwarmData array
+        # First extract just the array structure without the complex string content
         data_match = re.search(r'export const SwarmData: SwarmInfo\[\] = (\[[\s\S]*?\n\])', content)
         if not data_match:
             raise Exception("Couldn't find SwarmData array in info.tsx")
             
-        # Parse the existing data
-        data_str = data_match.group(1)
+        # Get the original array content
+        original_data = data_match.group(1)
         
-        # Clean up the TypeScript/JSON
-        # Handle template literals and multi-line strings first
-        data_str = re.sub(r'`([^`]*)`', lambda m: json.dumps(m.group(1).replace('\n', '\\n')), data_str)
-        
-        # Convert single quotes to double quotes
-        data_str = re.sub(r"'([^']*)'", r'"\1"', data_str)
-        
-        # Remove imports and type annotations
-        data_str = re.sub(r'import.*?;', '', data_str)
-        data_str = re.sub(r': SwarmInfo\[\]', '', data_str)
-        
-        # Remove comments
-        data_str = re.sub(r'//.*?\n', '\n', data_str)
-        data_str = re.sub(r'/\*[\s\S]*?\*/', '', data_str)
-        
-        # Quote property names
-        data_str = re.sub(r'(\w+):', r'"\1":', data_str)
-        
-        # Handle any remaining TypeScript-specific syntax
-        data_str = data_str.replace('undefined', 'null')
-        
-        try:
-            data = json.loads(data_str)
-        except json.JSONDecodeError as e:
-            print(f"Error parsing SwarmData: {e}")
-            print("Data string:", data_str[:500])  # Print first 500 chars for debugging
-            return
-            
-        # Update multiples
-        for item in data:
-            if item.get('pool') in multiples:
-                item['multiple'] = multiples[item['pool']]
-                
-        # Convert back to TypeScript format
-        updated_data = json.dumps(data, indent=4)
-        updated_data = re.sub(r'"(\w+)":', r'\1:', updated_data)  # Unquote keys
-        
-        # Replace the array in the file while preserving imports and exports
-        new_content = re.sub(
-            r'(export const SwarmData: SwarmInfo\[\] = )\[[\s\S]*?\n\]',
-            f'\\1{updated_data}',
-            content
+        # Create a simplified version for parsing
+        simplified_data = re.sub(
+            r'description: `[\s\S]*?`',
+            'description: "PLACEHOLDER"',
+            original_data
         )
         
-        with open(file_path, 'w', encoding='utf-8') as file:
-            file.write(new_content)
-            
-        print("\nSuccessfully updated info.tsx with new multiples!")
+        # Clean up the simplified data
+        simplified_data = re.sub(r"'([^']*)'", r'"\1"', simplified_data)  # Convert single quotes
+        simplified_data = re.sub(r'(\w+):', r'"\1":', simplified_data)    # Quote property names
+        simplified_data = simplified_data.replace('undefined', 'null')     # Handle undefined
         
+        try:
+            data = json.loads(simplified_data)
+            
+            # Update multiples
+            for item in data:
+                if item.get('pool') in multiples:
+                    item['multiple'] = multiples[item['pool']]
+            
+            # Convert back to TypeScript format
+            updated_data = json.dumps(data, indent=4)
+            updated_data = re.sub(r'"(\w+)":', r'\1:', updated_data)  # Unquote keys
+            
+            # Replace the array in the file while preserving the original descriptions
+            new_content = re.sub(
+                r'(export const SwarmData: SwarmInfo\[\] = )\[[\s\S]*?\n\]',
+                f'\\1{updated_data}',
+                content
+            )
+            
+            # Write the updated content
+            with open(file_path, 'w', encoding='utf-8') as file:
+                file.write(new_content)
+                
+            print("\nSuccessfully updated info.tsx with new multiples!")
+            
+        except json.JSONDecodeError as e:
+            print(f"Error parsing SwarmData: {e}")
+            print("Simplified data:", simplified_data[:500])
+            return
+            
     except Exception as e:
         print(f"\nError updating info.tsx: {e}")
-        raise  # Re-raise to see full stack trace
+        raise
 
 def main():
     # List of pools to check
