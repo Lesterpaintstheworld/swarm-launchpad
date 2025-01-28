@@ -9,7 +9,7 @@
     "build": "next build", 
     "start": "next start",
     "lint": "next lint",
-    "update-multiples": "node --loader ts-node/esm scripts/update-multiples.ts"
+    "update-multiples": "python scripts/update_multiples.py"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1",
