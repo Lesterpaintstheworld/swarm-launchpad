@@ -403,6 +403,10 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                     pool
                 );
 
+                if (!shareholderPda) {
+                    throw new Error('Failed to generate shareholder PDA');
+                }
+
                 console.log('Transaction params:', {
                     numberOfShares: numberOfShares.toString(),
                     calculatedCost: calculatedCost.toString(),
@@ -437,7 +441,7 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                     )
                     .accounts({
                         pool,
-                        shareholder: shareholderPda,
+                        shareholder: shareholderPda, // Now TypeScript knows this isn't null
                         computeMintAccount: poolAccount.data.computeMint,
                         ubcMintAccount: poolAccount.data.ubcMint,
                         senderComputeAccount,
