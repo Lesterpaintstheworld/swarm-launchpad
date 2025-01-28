@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { InfoPanel } from "@/components/ui/infoPanel";
 import { SwarmData } from "@/data/swarms/info";
@@ -11,7 +11,22 @@ import { ManagePortfolioCard } from "@/components/cards/managePortfolio";
 import { SwarmRecentMarketListings } from "@/components/market/recentListings";
 import { SwarmGallery } from "@/components/swarms/gallery";
 
+interface MarketData {
+    soldShares: number;
+    pricePerShare: number;
+    marketCap: number;
+}
+
 export default function Swarm({ params }: { params: { slug: string } }) {
+    const [marketData, setMarketData] = useState<MarketData>({
+        soldShares: 0,
+        pricePerShare: 0,
+        marketCap: 0
+    });
+
+    const handleMarketDataUpdate = (data: MarketData) => {
+        setMarketData(data);
+    };
     
     const swarm = useCallback(() => {
         const found = SwarmData.find((swarm) => swarm.id === params.slug);
@@ -57,7 +72,19 @@ export default function Swarm({ params }: { params: { slug: string } }) {
                     {swarm?.description &&
                         <div className="flex flex-col gap-8">
                             <div className="flex-1">
-                                <h4 className="font-semibold">About {swarm.name}</h4>
+                                <div className="flex justify-between items-center mb-6">
+                                    <h4 className="font-semibold">About {swarm.name}</h4>
+                                    <div className="text-right">
+                                        <p className="text-xs text-slate-400">TOTAL MARKET CAP</p>
+                                        <p className="text-2xl font-bold text-green-400">
+                                            ${IntlNumberFormat(marketData.marketCap)} 
+                                            <span className="text-sm">$COMPUTE</span>
+                                        </p>
+                                        <p className="text-xs text-slate-400">
+                                            {IntlNumberFormat(marketData.soldShares)} shares × ${IntlNumberFormat(marketData.pricePerShare)}
+                                        </p>
+                                    </div>
+                                </div>
                                 <hr className="mt-3" />
                                 <Expandable overflowThreshold={750}>
                                     <Markdown markdown={swarm.description} />
@@ -77,6 +104,7 @@ export default function Swarm({ params }: { params: { slug: string } }) {
                         <div className="sticky top-6">
                             <SwarmInvestCard
                                 pool={swarm.pool as string}
+                                onMarketDataUpdate={handleMarketDataUpdate}
                             />
                         </div>
                     }
