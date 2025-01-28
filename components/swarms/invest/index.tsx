@@ -66,12 +66,18 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
 
     const handleBuy = async () => {
         try {
-            // First execute the purchase
-            await purchaseShares.mutateAsync({ numberOfShares: numShares, calculatedCost: price });
+            // Convert price to proper units (COMPUTE uses 6 decimals)
+            const priceInBaseUnits = Math.floor(price * Math.pow(10, 6));
+            
+            // Execute the purchase with proper unit conversion
+            await purchaseShares.mutateAsync({ 
+                numberOfShares: numShares, 
+                calculatedCost: priceInBaseUnits // Use base units
+            });
             
             // If purchase successful, call webhook
             try {
-                const swarm = getSwarm(pool); // Get swarm data using the pool address
+                const swarm = getSwarm(pool);
                 await fetch('https://nlr.app.n8n.cloud/webhook/buybot', {
                     method: 'POST',
                     headers: {
@@ -86,11 +92,10 @@ const SwarmInvestCard = ({ pool, className }: SwarmInvestCardProps) => {
                     })
                 });
             } catch (webhookError) {
-                // Silently continue if webhook fails
                 console.debug('Webhook notification failed:', webhookError);
             }
         } catch (purchaseError) {
-            // Handle purchase error as before
+            console.error('Purchase error:', purchaseError);
             throw purchaseError;
         }
     }

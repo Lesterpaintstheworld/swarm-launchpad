@@ -323,8 +323,15 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
             if (!publicKey) throw new Error('Wallet not connected');
             if (!pool) throw new Error('Pool address is undefined');
             if (!poolAccount.data) throw new Error('Pool data not loaded');
-    
+
             try {
+                console.log('Purchase params:', {
+                    numberOfShares,
+                    calculatedCost,
+                    pool: pool.toString(),
+                    publicKey: publicKey.toString()
+                });
+
                 // Get token accounts
                 const senderComputeAccount = await getAssociatedTokenAddress(
                     computeMint,
@@ -335,14 +342,14 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                     publicKey
                 );
                 const custodialComputeAccount = await getAssociatedTokenAddress(
-                    computeMint,  // Use computeMint, not ubcMint
+                    computeMint,
                     poolAccount.data.custodialAccount
                 );
                 const custodialUbcAccount = await getAssociatedTokenAddress(
-                    ubcMint,  // Keep this as ubcMint
+                    ubcMint,
                     poolAccount.data.custodialAccount
                 );
-    
+
                 // Generate the shareholder PDA
                 const [shareholderPda] = PublicKey.findProgramAddressSync(
                     [
@@ -353,18 +360,23 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                     program.programId
                 );
 
-                toast(`Purchase transaction pending...`, { duration: 20000 });
+                console.log('Accounts:', {
+                    shareholderPda: shareholderPda.toString(),
+                    senderComputeAccount: senderComputeAccount.toString(),
+                    senderUbcAccount: senderUbcAccount.toString(),
+                    custodialComputeAccount: custodialComputeAccount.toString(),
+                    custodialUbcAccount: custodialUbcAccount.toString()
+                });
 
-                // Send the purchase transaction
-                // return await program.methods
+                toast(`Purchase transaction pending...`);
+
                 const tx = await program.methods
                     .purchaseShares(
-                        new BN(Math.floor(numberOfShares)),
-                        new BN(Math.floor(calculatedCost * Math.pow(10, 6)))
+                        new BN(numberOfShares),
+                        new BN(calculatedCost)
                     )
                     .accounts({
                         pool,
-                        // @ts-ignore
                         shareholder: shareholderPda,
                         computeMintAccount: poolAccount.data.computeMint,
                         ubcMintAccount: poolAccount.data.ubcMint,
@@ -380,10 +392,12 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                     })
                     .rpc();
 
-                    toast(`Success! Your transaction signature is: ${tx}`, { duration: 20000 });
+                toast(`Success! Transaction signature: ${tx}`);
+                return tx;
 
             } catch (error) {
                 console.error('Purchase shares error:', error);
+                toast.error('Transaction failed: ' + (error as Error).message);
                 throw error;
             }
         }
