@@ -80,7 +80,7 @@ def update_info_file(multiples: dict):
         with open(file_path, 'r', encoding='utf-8') as file:
             content = file.read()
             
-        # Find the SwarmData array with a more flexible pattern
+        # Find the SwarmData array
         data_match = re.search(r'export const SwarmData: SwarmInfo\[\] = (\[[\s\S]*?\n\])', content)
         if not data_match:
             raise Exception("Couldn't find SwarmData array in info.tsx")
@@ -89,6 +89,9 @@ def update_info_file(multiples: dict):
         data_str = data_match.group(1)
         
         # Clean up the TypeScript/JSON
+        # Convert single quotes to double quotes
+        data_str = re.sub(r"'([^']*)'", r'"\1"', data_str)
+        
         # Remove imports and type annotations
         data_str = re.sub(r'import.*?;', '', data_str)
         data_str = re.sub(r': SwarmInfo\[\]', '', data_str)
@@ -103,11 +106,14 @@ def update_info_file(multiples: dict):
         # Quote property names
         data_str = re.sub(r'(\w+):', r'"\1":', data_str)
         
+        # Handle any remaining TypeScript-specific syntax
+        data_str = data_str.replace('undefined', 'null')
+        
         try:
             data = json.loads(data_str)
         except json.JSONDecodeError as e:
             print(f"Error parsing SwarmData: {e}")
-            print("Data string:", data_str[:200])  # Print first 200 chars for debugging
+            print("Data string:", data_str[:500])  # Print first 500 chars for debugging
             return
             
         # Update multiples
