@@ -255,8 +255,21 @@ export function useLaunchpadProgram() {
 }
 
 export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: string }) {
-
-    const pool = new PublicKey(poolAddress);
+    // Add proper validation and error handling
+    let pool: PublicKey | null = null;
+    try {
+        if (poolAddress) {
+            pool = new PublicKey(poolAddress);
+        }
+    } catch (error) {
+        console.error('Invalid pool address:', error);
+        // Return safe defaults if pool address is invalid
+        return {
+            poolAccount: { data: null, isLoading: false, error },
+            purchaseShares: { mutateAsync: async () => { throw new Error('Invalid pool address'); } },
+            position: { data: null, isLoading: false, error }
+        };
+    }
 
     const { publicKey } = useWallet()
     const { program, programId, computeMint, ubcMint, connection, provider } = useLaunchpadProgram()
