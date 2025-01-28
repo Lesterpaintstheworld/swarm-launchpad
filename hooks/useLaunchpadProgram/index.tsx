@@ -440,18 +440,18 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                     )
                     .accounts({
                         pool: new PublicKey(pool),
-                        shareholder: shareholderPda,
-                        computeMintAccount: new PublicKey(poolAccount.data.computeMint),
-                        ubcMintAccount: new PublicKey(poolAccount.data.ubcMint), 
-                        senderComputeAccount: new PublicKey(senderComputeAccount),
-                        senderUbcAccount: new PublicKey(senderUbcAccount),
-                        custodialAccount: new PublicKey(poolAccount.data.custodialAccount),
-                        custodialComputeAccount: new PublicKey(custodialComputeAccount),
-                        custodialUbcAccount: new PublicKey(custodialUbcAccount),
+                        shareholder_account: shareholderPda,
+                        compute_mint_account: new PublicKey(poolAccount.data.computeMint),
+                        ubc_mint_account: new PublicKey(poolAccount.data.ubcMint),
+                        sender_compute_account: new PublicKey(senderComputeAccount),
+                        sender_ubc_account: new PublicKey(senderUbcAccount),
+                        custodial_account: new PublicKey(poolAccount.data.custodialAccount),
+                        custodial_compute_account: new PublicKey(custodialComputeAccount),
+                        custodial_ubc_account: new PublicKey(custodialUbcAccount),
                         buyer: publicKey,
-                        systemProgram: SystemProgram.programId,
-                        tokenProgram: TOKEN_PROGRAM_ID,
-                        associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID
+                        system_program: SystemProgram.programId,
+                        token_program: TOKEN_PROGRAM_ID,
+                        associated_token_program: ASSOCIATED_TOKEN_PROGRAM_ID
                     })
                     .signers([])
                     .preInstructions([])
