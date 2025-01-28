@@ -69,7 +69,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
                     // Calculate price based on bonding curve
                     const cycle = Math.floor(soldShares / 5000);
                     const base = Math.pow(1.35, cycle);
-                    const sharePrice = Math.floor(base * 100) / 1000; // Divide by 1000 to fix scaling
+                    const sharePrice = Math.floor(base * 100) / 100; // Divide by 100 to fix scaling
 
                     const valueInCompute = number_of_shares * sharePrice;
 
@@ -87,6 +87,10 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
             }));
 
             const validData = data.filter(Boolean);
+            console.log('Portfolio data:', {
+                validData,
+                totalValue: validData.reduce((acc, item) => acc + item.valueInCompute, 0)
+            });
             setInvestmentData(validData);
             setTotalValueInCompute(validData.reduce((acc, item) => acc + item.valueInCompute, 0));
         };
