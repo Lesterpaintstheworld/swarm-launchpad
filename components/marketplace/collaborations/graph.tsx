@@ -282,8 +282,8 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
     <div className="relative">
       <svg 
         ref={svgRef} 
-        className="w-full h-[800px] bg-black/20 rounded-xl"
-        style={{ minHeight: '800px' }}
+        className="w-full h-[600px] bg-black/20 rounded-xl"
+        style={{ minHeight: '600px' }}
       />
       
       {/* Zoom controls */}
