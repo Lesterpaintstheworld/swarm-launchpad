@@ -50,23 +50,8 @@ export default function MarketplacePage() {
     router.replace(newUrl);
   }, [activeTab, searchQuery, sortOption, collaborationView, router]);
 
-  // Handle tab change
-  const handleTabChange = (tab: MarketplaceTab) => {
-    setActiveTab(tab);
-    // Reset collaboration view when switching away from collaborations tab
-    if (tab !== 'collaborations') {
-      setCollaborationView('list');
-    }
-  };
-
-  // Handle search change
-  const handleSearchChange = (query: string) => {
-    setSearchQuery(query);
-  };
-
   return (
     <main className="min-h-screen bg-gradient-to-b from-background to-background/50">
-      {/* Hero Section with Gradient Overlay */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 blur-3xl" />
         <div className="relative container py-12">
@@ -86,7 +71,13 @@ export default function MarketplacePage() {
           <div className="p-1 rounded-xl bg-gradient-to-r from-white/5 to-white/10 backdrop-blur-xl border border-white/10 shadow-2xl">
             <MarketplaceNavigation 
               activeTab={activeTab}
-              onTabChange={setActiveTab}
+              onTabChange={(tab) => {
+                setActiveTab(tab);
+                // Reset collaboration view when switching away from collaborations tab
+                if (tab !== 'collaborations') {
+                  setCollaborationView('list');
+                }
+              }}
             />
           </div>
           
