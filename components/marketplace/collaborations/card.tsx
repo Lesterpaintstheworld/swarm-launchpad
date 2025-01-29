@@ -25,8 +25,26 @@ export function CollaborationCard({ sourceSwarm, targetSwarm, serviceName, statu
     pending: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20'
   };
 
+  // Map service names to their banner images
+  const serviceBanners = {
+    'Development Package': '/services/xforge.png',
+    'Essential Swarm Package': '/services/kinos-essential.png',
+    'Inception Package': '/services/kinos-inception.png'
+  };
+
   return (
-    <div className="group relative w-full rounded-xl bg-gradient-to-r from-white/5 via-white/[0.07] to-white/5 border border-white/10 hover:border-white/20 transition-all duration-500">
+    <div className="group relative w-full rounded-xl bg-gradient-to-r from-white/5 via-white/[0.07] to-white/5 border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden">
+      {/* Service Banner Background */}
+      {serviceBanners[serviceName] && (
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={serviceBanners[serviceName]}
+            alt={serviceName}
+            fill
+            className="object-cover opacity-[0.05]"
+          />
+        </div>
+      )}
       {/* Animated gradient background */}
       <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
       
