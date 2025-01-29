@@ -62,7 +62,9 @@ const config: Config = {
   		},
 		animation: {
 			'spin-slow': 'spin 120s linear infinite',
-			'fade-in-grow': 'fade-in-grow 0.5s ease-in-out forwards'
+			'fade-in-grow': 'fade-in-grow 0.5s ease-in-out forwards',
+			'flash': 'flash 4s ease-out infinite',
+			'moveLight': 'moveLight 3s linear infinite'
 		},
 		keyframes: {
 			'fade-in-grow': {
@@ -71,7 +73,25 @@ const config: Config = {
 			},
 			moveLight: {
 				'0%': { transform: 'translateX(-100%)' },
-				'100%': { transform: 'translateX(100%)' }
+				'100%': { transform: 'translateX(500%)' }
+			},
+			flash: {
+				'0%': { 
+					opacity: '0',
+					transform: 'scale(1)'
+				},
+				'1%': { 
+					opacity: '0.8',
+					transform: 'scale(1.2)'
+				},
+				'2%': { 
+					opacity: '0',
+					transform: 'scale(1.4)'
+				},
+				'100%': { 
+					opacity: '0',
+					transform: 'scale(1)'
+				}
 			}
 		}
   	}
