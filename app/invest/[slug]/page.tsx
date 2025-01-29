@@ -122,9 +122,7 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
                                     )}
                                 </div>
                                 <hr className="mt-3" />
-                                <Expandable overflowThreshold={750}>
-                                    <Markdown markdown={swarm.description} />
-                                </Expandable>
+                                <Markdown markdown={swarm.description} />
                             </div>
                             <InfoPanel 
                                 socials={swarm.socials}
