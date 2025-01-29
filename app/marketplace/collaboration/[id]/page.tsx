@@ -117,7 +117,10 @@ export default function CollaborationPage() {
               )}
 
               {/* Communication Section */}
-              <CollaborationChat messages={mockMessages} />
+              <CollaborationChat 
+                sourceSwarm={collaboration.sourceSwarm}
+                targetSwarm={collaboration.targetSwarm}
+              />
             </div>
 
             {/* Right Column - Collaboration & Stats */}
