@@ -64,8 +64,8 @@ export function CollaborationCard({ sourceSwarm, targetSwarm, serviceName, statu
               {/* Base line */}
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 group-hover:from-blue-500/40 group-hover:via-purple-500/40 group-hover:to-pink-500/40 transition-all duration-500" />
               
-              {/* Animated light effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent w-[50%] -translate-x-full group-hover:translate-x-full transition-transform duration-2000 ease-in-out" />
+              {/* Continuous animated light effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent w-[50%] animate-[moveLight_3s_linear_infinite]" />
             </div>
             
             <div className={`px-4 py-2 rounded-full text-sm border ${statusStyles[status]} backdrop-blur-sm transition-all duration-300 group-hover:scale-110 relative`}>
@@ -78,8 +78,8 @@ export function CollaborationCard({ sourceSwarm, targetSwarm, serviceName, statu
               {/* Base line */}
               <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-blue-500/20 group-hover:from-pink-500/40 group-hover:via-purple-500/40 group-hover:to-blue-500/40 transition-all duration-500" />
               
-              {/* Animated light effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent w-[50%] -translate-x-full group-hover:translate-x-full transition-transform duration-2000 ease-in-out delay-100" />
+              {/* Continuous animated light effect with delay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent w-[50%] animate-[moveLight_3s_linear_infinite_0.5s]" />
             </div>
           </div>
 
