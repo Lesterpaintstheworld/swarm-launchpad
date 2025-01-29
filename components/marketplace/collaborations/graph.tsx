@@ -209,30 +209,23 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
         const revenueShare = swarm.revenueShare || 60;
         
         tooltip.html(`
-            <div class="space-y-2">
+            <div class="space-y-1.5">
                 <div class="flex items-center gap-2">
-                    <h3 class="font-semibold text-white">${swarm.name}</h3>
-                    <span class="px-2 py-0.5 rounded-full bg-white/10 text-xs text-white/60">
+                    <h3 class="text-sm font-medium text-white/90">${swarm.name}</h3>
+                    <span class="px-1.5 py-0.5 rounded-full bg-white/5 text-[10px] text-white/40">
                         ${swarm.swarmType}
                     </span>
                 </div>
-                <p class="text-sm text-white/60 line-clamp-2">${swarm.description}</p>
-                <div class="grid grid-cols-2 gap-2 pt-2">
+                <p class="text-xs text-white/50 line-clamp-2">${swarm.description}</p>
+                <div class="grid grid-cols-2 gap-1.5 pt-1">
                     <div>
-                        <div class="text-xs text-white/40">Multiple</div>
-                        <div class="text-sm font-medium text-white">${multiple}x</div>
+                        <div class="text-[10px] text-white/30">Multiple</div>
+                        <div class="text-xs font-medium text-white/80">${multiple}x</div>
                     </div>
                     <div>
-                        <div class="text-xs text-white/40">Revenue Share</div>
-                        <div class="text-sm font-medium text-white">${revenueShare}%</div>
+                        <div class="text-[10px] text-white/30">Revenue Share</div>
+                        <div class="text-xs font-medium text-white/80">${revenueShare}%</div>
                     </div>
-                </div>
-                <div class="flex flex-wrap gap-1 pt-1">
-                    ${swarm.tags.slice(0, 3).map(tag => `
-                        <span class="px-1.5 py-0.5 rounded-full bg-white/5 text-xs text-white/40">
-                            ${tag}
-                        </span>
-                    `).join('')}
                 </div>
             </div>
         `)
