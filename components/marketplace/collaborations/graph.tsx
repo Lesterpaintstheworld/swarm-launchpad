@@ -45,23 +45,10 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
     const g = svg.append("g")
       .attr("transform", `scale(${zoom})`);
 
-    // Create definitions section for all markers and gradients
+    // Create definitions section for gradients and animations
     const defs = g.append("defs");
 
-    // Define arrow marker
-    defs.append("marker")
-      .attr("id", "arrow")
-      .attr("viewBox", "0 -5 10 10")
-      .attr("refX", 38)
-      .attr("refY", 0)
-      .attr("markerWidth", 6)
-      .attr("markerHeight", 6)
-      .attr("orient", "auto")
-      .append("path")
-      .attr("fill", "rgba(147, 51, 234, 0.7)")
-      .attr("d", "M0,-5L10,0L0,5");
-
-    // Create gradient for links in the same defs
+    // Create gradient for base links
     const gradient = defs.append("linearGradient")
       .attr("id", "link-gradient")
       .attr("gradientUnits", "userSpaceOnUse");
@@ -74,6 +61,31 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       .attr("offset", "100%")
       .attr("stop-color", "rgba(59, 130, 246, 0.7)");
 
+    // Create animated light gradient
+    const lightGradient = defs.append("linearGradient")
+      .attr("id", "light-gradient")
+      .attr("gradientUnits", "userSpaceOnUse");
+
+    lightGradient.append("stop")
+      .attr("offset", "0%")
+      .attr("stop-color", "rgba(255, 255, 255, 0)");
+
+    lightGradient.append("stop")
+      .attr("offset", "50%")
+      .attr("stop-color", "rgba(255, 255, 255, 0.5)");
+
+    lightGradient.append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color", "rgba(255, 255, 255, 0)");
+
+    // Create animation for the light
+    const animate = defs.append("animate")
+      .attr("id", "light-animation")
+      .attr("attributeName", "offset")
+      .attr("values", "-1;1")
+      .attr("dur", "3s")
+      .attr("repeatCount", "indefinite");
+
     const simulation = d3.forceSimulation(nodes as any)
       .force("link", d3.forceLink(links)
         .id((d: any) => d.id)
@@ -82,17 +94,54 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       .force("center", d3.forceCenter(width / 2, height / 2))
       .force("collision", d3.forceCollide().radius(60));
 
-    // Draw links with more differentiated widths
-    const link = g.append("g")
-      .attr("class", "links")
-      .selectAll("path")
+    // Draw links with animated lights
+    const linkGroup = g.append("g")
+      .attr("class", "links");
+
+    // Base links
+    const link = linkGroup.selectAll("path")
       .data(links)
       .join("path")
+      .attr("class", "link-path")
       .attr("stroke", "url(#link-gradient)")
       .attr("stroke-width", d => Math.sqrt(d.value) / 200 + 1)
       .attr("stroke-opacity", 0.8)
+      .attr("fill", "none");
+
+    // Animated lights
+    const lights = linkGroup.selectAll("path")
+      .data(links)
+      .join("path")
+      .attr("class", "link-light")
+      .attr("stroke", "url(#light-gradient)")
+      .attr("stroke-width", d => (Math.sqrt(d.value) / 200 + 1) * 2)
+      .attr("stroke-opacity", 0.6)
       .attr("fill", "none")
-      .attr("marker-end", "url(#arrow)");
+      .style("filter", "blur(2px)");
+
+    // Animation function for the lights
+    function animateLights() {
+      lights.each(function(d: any) {
+        const length = (this as SVGPathElement).getTotalLength();
+        d3.select(this)
+          .attr("stroke-dasharray", `${length * 0.1} ${length * 0.9}`)
+          .attr("stroke-dashoffset", length)
+          .transition()
+          .duration(3000)
+          .ease(d3.easeLinear)
+          .attr("stroke-dashoffset", 0)
+          .on("end", function() {
+            d3.select(this)
+              .attr("stroke-dashoffset", length)
+              .transition()
+              .duration(0)
+              .on("end", animateLights);
+          });
+      });
+    }
+
+    // Start the animation
+    animateLights();
 
     // Create node groups (after links)
     const node = g.append("g")
@@ -168,6 +217,8 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
 
     return () => {
       simulation.stop();
+      // Clean up animations
+      linkGroup.selectAll(".link-light").interrupt();
     };
   }, [collaborations, zoom]);
 
