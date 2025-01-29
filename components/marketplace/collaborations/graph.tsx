@@ -14,8 +14,6 @@ interface SimulationNode extends d3.SimulationNodeDatum {
   y: number;
 }
 
-type CollisionForceNode = SimulationNode & d3.SimulationNodeDatum;
-
 interface SimulationLink extends d3.SimulationLinkDatum<SimulationNode> {
   value: number;
   strength: number;
