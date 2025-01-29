@@ -116,9 +116,9 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
     }
 
     return (
-        <Card className={cn("bg-[#0f172a] p-6", className)}>
-            {/* Buy UI Section */}
-            <div className="border-b border-slate-800 pb-8 mb-8">
+        <div className={cn("space-y-6", className)}>
+            {/* Buy UI Card */}
+            <Card className="bg-[#0f172a] p-6">
                 {/* Header section */}
                 <div className="flex justify-between items-start mb-8">
                     <div>
@@ -235,10 +235,10 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
                 <ConnectButton className="w-full mt-6" />
             )}
 
-            </div>
+            </Card>
 
-            {/* Swarm Information Section */}
-            <div className="bg-slate-900/50 rounded-xl p-6">
+            {/* Swarm Information Card */}
+            <Card className="bg-[#0f172a] p-6">
                 <h3 className="text-lg font-semibold text-white mb-4">Swarm Information</h3>
                 
                 {/* Wallet Address */}
@@ -247,16 +247,18 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
                         <span className="text-sm text-slate-400">Swarm Wallet</span>
                         <div className="flex items-center gap-2">
                             <code className="text-sm text-slate-300 font-mono">
-                                {getSwarmUsingPoolId(pool)?.wallet || pool}
+                                {getSwarmUsingPoolId(pool)?.wallet || "Not available"}
                             </code>
                             <Button
                                 variant="ghost"
                                 size="sm"
                                 className="h-8 w-8 p-0"
                                 onClick={() => {
-                                    const wallet = getSwarmUsingPoolId(pool)?.wallet || pool;
-                                    navigator.clipboard.writeText(wallet);
-                                    toast.success('Wallet address copied to clipboard');
+                                    const wallet = getSwarmUsingPoolId(pool)?.wallet;
+                                    if (wallet) {
+                                        navigator.clipboard.writeText(wallet);
+                                        toast.success('Wallet address copied to clipboard');
+                                    }
                                 }}
                             >
                                 <Copy className="h-4 w-4" />
@@ -278,8 +280,8 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
                         </p>
                     </div>
                 </div>
-            </div>
-        </Card>
+            </Card>
+        </div>
     )
 }
 
