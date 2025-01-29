@@ -29,7 +29,7 @@ interface SwarmInvestCardProps {
     amountRaisedOnly?: boolean;
 }
 
-const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProps) => {
+const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: SwarmInvestCardProps) => {
     const { connected } = useWallet();
     const [numShares, setNumShares] = useState<number>(0);
     const [price, setPrice] = useState<number>(0);
