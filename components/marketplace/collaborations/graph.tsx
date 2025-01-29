@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { Collaboration } from '@/data/collaborations/collaborations';
 
@@ -10,6 +10,7 @@ interface CollaborationGraphProps {
 
 export function CollaborationGraph({ collaborations }: CollaborationGraphProps) {
   const svgRef = useRef<SVGSVGElement>(null);
+  const [zoom, setZoom] = useState(1);
 
   useEffect(() => {
     if (!svgRef.current) return;
@@ -31,48 +32,54 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       source: collab.sourceSwarm.id,
       target: collab.targetSwarm.id,
       value: collab.price,
-      strength: (collab.price / maxPrice) * 0.8 + 0.2, // Normalize between 0.2 and 1
+      strength: (collab.price / maxPrice) * 0.8 + 0.2,
       serviceName: collab.serviceName
     }));
 
     const width = svgRef.current.clientWidth;
     const height = svgRef.current.clientHeight;
 
-    const simulation = d3.forceSimulation(nodes as any)
-      .force("link", d3.forceLink(links)
-        .id((d: any) => d.id)
-        .strength((d: any) => d.strength * 0.1)) // Adjust link strength based on price
-      .force("charge", d3.forceManyBody().strength(-2000)) // Increased repulsion
-      .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius(60)); // Prevent node overlap
-
     const svg = d3.select(svgRef.current);
+    
+    // Create a group for zoom transformation
+    const g = svg.append("g")
+      .attr("transform", `scale(${zoom})`);
 
     // Create gradient definitions for links
-    const defs = svg.append("defs");
+    const defs = g.append("defs");
     const gradient = defs.append("linearGradient")
       .attr("id", "link-gradient")
       .attr("gradientUnits", "userSpaceOnUse");
 
     gradient.append("stop")
       .attr("offset", "0%")
-      .attr("stop-color", "rgba(147, 51, 234, 0.7)"); // More opaque purple
+      .attr("stop-color", "rgba(147, 51, 234, 0.7)");
 
     gradient.append("stop")
       .attr("offset", "100%")
-      .attr("stop-color", "rgba(59, 130, 246, 0.7)"); // More opaque blue
+      .attr("stop-color", "rgba(59, 130, 246, 0.7)");
 
-    // Draw links with increased width
-    const link = svg.append("g")
+    const simulation = d3.forceSimulation(nodes as any)
+      .force("link", d3.forceLink(links)
+        .id((d: any) => d.id)
+        .strength((d: any) => d.strength * 0.1))
+      .force("charge", d3.forceManyBody().strength(-500)) // Reduced repulsion
+      .force("center", d3.forceCenter(width / 2, height / 2))
+      .force("collision", d3.forceCollide().radius(60));
+
+    // Draw links first (so they appear below nodes)
+    const link = g.append("g")
+      .attr("class", "links")
       .selectAll("line")
       .data(links)
       .join("line")
       .attr("stroke", "url(#link-gradient)")
-      .attr("stroke-width", d => Math.sqrt(d.value) / 500 + 2) // Increased minimum width
-      .attr("stroke-opacity", 0.8); // More opaque lines
+      .attr("stroke-width", d => Math.sqrt(d.value) / 300 + 4) // Thicker lines
+      .attr("stroke-opacity", 0.8);
 
     // Create node groups
-    const node = svg.append("g")
+    const node = g.append("g")
+      .attr("class", "nodes")
       .selectAll("g")
       .data(nodes)
       .join("g")
@@ -83,8 +90,8 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
 
     // Add circles to nodes with glowing effect
     node.append("circle")
-      .attr("r", 30) // Larger radius
-      .attr("fill", "rgba(147, 51, 234, 0.2)") // Purple background
+      .attr("r", 30)
+      .attr("fill", "rgba(147, 51, 234, 0.2)")
       .attr("stroke", "rgba(147, 51, 234, 0.5)")
       .attr("stroke-width", 3)
       .style("filter", "drop-shadow(0 0 10px rgba(147, 51, 234, 0.3))");
@@ -98,13 +105,13 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       .attr("height", 50)
       .attr("clip-path", "circle(25px)");
 
-    // Add labels to nodes with purple text
+    // Add labels to nodes
     node.append("text")
       .text((d: any) => d.name)
       .attr("x", 0)
       .attr("y", 45)
       .attr("text-anchor", "middle")
-      .attr("fill", "rgb(147, 51, 234)") // Purple text
+      .attr("fill", "rgb(147, 51, 234)")
       .attr("font-size", "14px")
       .attr("font-weight", "bold")
       .style("text-shadow", "0 0 10px rgba(0,0,0,0.5)");
@@ -137,16 +144,45 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       event.subject.fy = null;
     }
 
+    // Update transform when zoom changes
+    g.attr("transform", `scale(${zoom})`);
+
     return () => {
       simulation.stop();
     };
-  }, [collaborations]);
+  }, [collaborations, zoom]);
+
+  const handleZoomIn = () => {
+    setZoom(prev => Math.min(prev + 0.2, 2));
+  };
+
+  const handleZoomOut = () => {
+    setZoom(prev => Math.max(prev - 0.2, 0.5));
+  };
 
   return (
-    <svg 
-      ref={svgRef} 
-      className="w-full h-[800px] bg-black/20 rounded-xl" // Increased height
-      style={{ minHeight: '800px' }}
-    />
+    <div className="relative">
+      <svg 
+        ref={svgRef} 
+        className="w-full h-[800px] bg-black/20 rounded-xl"
+        style={{ minHeight: '800px' }}
+      />
+      
+      {/* Zoom controls */}
+      <div className="absolute top-4 right-4 flex flex-col gap-2">
+        <button
+          onClick={handleZoomIn}
+          className="w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/80 hover:text-white transition-colors"
+        >
+          +
+        </button>
+        <button
+          onClick={handleZoomOut}
+          className="w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/80 hover:text-white transition-colors"
+        >
+          -
+        </button>
+      </div>
+    </div>
   );
 }
