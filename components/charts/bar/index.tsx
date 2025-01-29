@@ -9,10 +9,11 @@ type BarChartItem = {
 
 interface BarChartProps {
     data: BarChartItem[];
+    maxValue?: number;
 };
 
-const BarChart = ({ data }: BarChartProps) => {
-    const maxValue = Math.max(...data.map(item => item.value));
+const BarChart = ({ data, maxValue }: BarChartProps) => {
+    const effectiveMaxValue = maxValue || Math.max(...data.map(item => item.value));
     
     return (
         <div className="flex flex-col gap-4">
@@ -33,7 +34,7 @@ const BarChart = ({ data }: BarChartProps) => {
                         25, // Maximum height reduced from 60% to 25%
                         Math.max(
                             5, // Minimum height reduced from 10% to 5%
-                            (item.value / maxValue) * 25 // Scale to max 25% of container height
+                            (item.value / effectiveMaxValue) * 25 // Scale to max 25% of container height
                         )
                     );
                     
