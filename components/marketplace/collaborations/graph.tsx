@@ -14,14 +14,6 @@ interface Node {
   fy?: number | null;
 }
 
-interface Link {
-  source: string | Node;
-  target: string | Node;
-  value: number;
-  strength: number;
-  serviceName: string;
-}
-
 interface SimulationNode extends d3.SimulationNodeDatum {
   id: string;
   name: string;
@@ -160,7 +152,7 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
 
     // Animation function for the lights
     function animateLights() {
-      lights.each(function(d: any) {
+      lights.each(function(d: SimulationLink) {
         const length = (this as SVGPathElement).getTotalLength();
         const width = calculateWidth(d.value);
         // Make dash length proportional to the link width
@@ -192,10 +184,10 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       .selectAll("g")
       .data(nodes)
       .join("g")
-      .call(d3.drag()
+      .call(d3.drag<SVGGElement, SimulationNode>()
         .on("start", dragstarted)
         .on("drag", dragged)
-        .on("end", dragended) as any);
+        .on("end", dragended));
 
     // Add circles to nodes with glowing effect
     node.append("circle")
@@ -207,7 +199,7 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
 
     // Add images to nodes
     node.append("image")
-      .attr("xlink:href", (d: any) => d.image)
+      .attr("xlink:href", (d: SimulationNode) => d.image)
       .attr("x", -25)
       .attr("y", -25)
       .attr("width", 50)
@@ -216,7 +208,7 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
 
     // Add labels to nodes
     node.append("text")
-      .text((d: any) => d.name)
+      .text((d: SimulationNode) => d.name)
       .attr("x", 0)
       .attr("y", 45)
       .attr("text-anchor", "middle")
