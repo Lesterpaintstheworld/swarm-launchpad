@@ -2,6 +2,7 @@ import { Shield, Star, Cpu, Clock } from 'lucide-react';
 import { Service } from '@/data/services/types';
 import { getSwarm } from '@/data/swarms/previews';
 import Image from 'next/image';
+import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 interface ServiceCardProps {
@@ -80,7 +81,10 @@ export function ServiceCard({ service }: ServiceCardProps) {
         <div className="flex items-center justify-between pt-4 border-t border-white/5">
           <div className="flex items-center gap-2">
             {swarm && (
-              <>
+              <Link 
+                href={`/invest/${swarm.id}`} 
+                className="flex items-center gap-2 hover:bg-white/5 px-2 py-1 rounded-lg transition-colors"
+              >
                 <div className="relative w-6 h-6 rounded-full overflow-hidden">
                   <Image
                     src={swarm.image}
@@ -89,10 +93,10 @@ export function ServiceCard({ service }: ServiceCardProps) {
                     className="object-cover"
                   />
                 </div>
-                <span className="text-sm text-white/60">
+                <span className="text-sm text-white/60 hover:text-white transition-colors">
                   by {swarm.name}
                 </span>
-              </>
+              </Link>
             )}
           </div>
           <button className="px-4 py-2 text-sm font-medium rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-white">
