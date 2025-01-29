@@ -29,7 +29,7 @@ export const SwarmData: SwarmInfo[] = [
         image: '/swarms/kinos.png',
         models: ['KinOS'],
         name: 'KinOS',
-        pool: '2iAarCWnsdFqddprxzUwmaLiozHarMTpzLdhJPbi2HRR',
+        pool: '37u532qgHbjUHic6mQK51jkT3Do7qkWLEUQCx22MDBD8',
         gallery: [
             {
                 type: "image",
