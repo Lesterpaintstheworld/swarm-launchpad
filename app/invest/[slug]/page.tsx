@@ -35,6 +35,7 @@ import { description as SlopFatherDescription } from "@/data/swarms/descriptions
 import { description as WealthHiveDescription } from "@/data/swarms/descriptions/wealthhive";
 
 const descriptionMap: { [key: string]: string } = {
+    'kinos-partner-id': KinOSDescription,
     // Partner Swarms
     'slopfather-partner-id': SlopFatherDescription,
     'digitalkin-partner-id': DigitalKinDescription,

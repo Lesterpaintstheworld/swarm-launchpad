@@ -4,6 +4,24 @@ export const getSwarm = (swarmId: string) => previews.filter(swarm => swarm.id =
 
 export const previews: SwarmPreviewData[] = [
     {
+        id: 'kinos-partner-id',
+        image: '/swarms/XForge/monumental-3d-text-13761-burned-emerging_8N4aVSaARGa-oKYBvEygdQ_CM5ll4MvQX-PV8oerJ4yJw.png',
+        models: ['KinOS'],
+        name: 'KinOS',
+        description: 'The foundational infrastructure swarm powering the entire UBC ecosystem. As the core operating system for autonomous AI, KinOS provides essential runtime services, enabling swarms to operate independently and efficiently.',
+        tags: [
+            'Infrastructure',
+            'Operating System',
+            'Runtime Services',
+            'Compute',
+            'Security',
+            'Scalability'
+        ],
+        role: 'Swarm Operating System',
+        swarmType: 'partner',
+        revenueShare: 50
+    },
+    {
         id: 'digitalkin-partner-id',
         image: '/swarms/digitalkin.png',
         models: ['KinOS'],

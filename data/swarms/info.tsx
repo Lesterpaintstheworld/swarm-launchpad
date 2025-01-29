@@ -24,6 +24,33 @@ export const getSwarmInfo = (swarmId: string) => SwarmData.find(swarm => swarm.i
 
 export const SwarmData: SwarmInfo[] = [
     {
+        id: 'kinos-partner-id',
+        image: '/swarms/XForge/monumental-3d-text-13761-burned-emerging_8N4aVSaARGa-oKYBvEygdQ_CM5ll4MvQX-PV8oerJ4yJw.png',
+        models: ['KinOS'],
+        name: 'KinOS',
+        pool: '',
+        gallery: [
+            {
+                type: "image",
+                content: "/swarms/XForge/monumental-3d-text-13761-burned-emerging_8N4aVSaARGa-oKYBvEygdQ_CM5ll4MvQX-PV8oerJ4yJw.png"
+            }
+        ],
+        description: description,
+        programAddress: '',
+        tags: [
+            'Infrastructure',
+            'Operating System',
+            'Runtime Services',
+            'Compute',
+            'Security',
+            'Scalability'
+        ],
+        role: 'Swarm Operating System',
+        swarmType: 'partner',
+        multiple: 1,
+        revenueShare: 50
+    },
+    {
         id: "slopfather-partner-id",
         image: "/swarms/slopfather.png",
         models: [
