@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { Service } from '@/data/services/types';
 import { getSwarm } from '@/data/swarms/previews';
 import Image from 'next/image';
-import { cn } from '@/lib/utils';
 
 interface ServiceCardProps {
   service: Service;
@@ -14,7 +13,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
 
   const serviceTypeIcon = {
     'subscription': <Clock className="w-4 h-4 text-white/40" />,
-    'one-off': <Star className="w-4 h-4 text-white/40" />,
+    'one-off': <Cpu className="w-4 h-4 text-white/40" />,
     'pay-as-you-go': <Cpu className="w-4 h-4 text-white/40" />
   };
 
