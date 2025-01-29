@@ -77,8 +77,8 @@ export function CollaborationCard({ sourceSwarm, targetSwarm, serviceName, statu
             </div>
 
             {/* Price Below */}
-            <div className="mt-1 font-light text-white/90">
-              <span className="metallic-text text-3xl">{price.toLocaleString()} $COMPUTE</span>
+            <div className="mt-1 font-bold text-white/90">
+              <span className="metallic-text text-2xl">{price.toLocaleString()} $COMPUTE</span>
             </div>
           </div>
 
