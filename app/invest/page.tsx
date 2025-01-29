@@ -62,13 +62,14 @@ export default function Invest() {
                     </div>
                     
                     <div className="relative">
-                        {/* Glowing Background with fade-out edges */}
-                        <div className="absolute -inset-20 overflow-hidden">
+                        {/* Glowing Background with smooth fade-out */}
+                        <div className="absolute -inset-40 overflow-hidden">
                             <div className="absolute inset-0 bg-gradient-to-br from-orange-500/30 via-yellow-500/20 to-orange-500/30 blur-3xl animate-pulse" />
+                            <div className="absolute inset-0 bg-gradient-radial from-transparent to-background" />
                         </div>
 
-                        {/* Content grid with subtle border */}
-                        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6 rounded-xl border border-orange-500/10">
+                        {/* Content grid */}
+                        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 rounded-xl border border-orange-500/10">
                             {sortedSwarms
                                 .filter(swarm => swarm.launchDate)
                                 .map((swarm) => (
