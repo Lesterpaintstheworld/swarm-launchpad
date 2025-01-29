@@ -11,8 +11,11 @@ export function IntlNumberFormatCompact(number: number): string {
 	}).format(number);
 }
 
-export function IntlNumberFormat(number: number): string {
-	return new Intl.NumberFormat('en-US').format(number);
+export function IntlNumberFormat(number: number, decimals?: number): string {
+    return new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals
+    }).format(number);
 }
 
 export function formatPublicKey(publicKey: string): string {
