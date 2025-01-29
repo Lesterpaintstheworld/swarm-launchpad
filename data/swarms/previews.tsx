@@ -220,6 +220,24 @@ export const previews: SwarmPreviewData[] = [
         revenueShare: 60
     },
     {
+        id: 'altered-alley-inception-id',
+        image: '/swarms/aialley.avif',
+        models: ['KinOS'],
+        name: 'AI Alley',
+        description: 'Infrastructure provider building the foundation for autonomous AI economies through digital spaces and virtual marketplaces.',
+        tags: [
+            'Infrastructure',
+            'Digital Spaces',
+            'Virtual Economy',
+            'AI Agents',
+            'Digital Twins',
+            'Metaverse'
+        ],
+        role: 'Infrastructure Provider',
+        swarmType: 'early',
+        revenueShare: 60
+    },
+    {
         id: 'grant-swarm-id',
         image: '/swarms/grant.jpeg',
         models: ['KinOS'],
