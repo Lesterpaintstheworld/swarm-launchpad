@@ -44,10 +44,10 @@ export function ServiceCard({ service }: ServiceCardProps) {
           
           {/* Swarm attribution with overlapping logo */}
           {swarm && (
-            <div className="absolute -bottom-6 left-6 flex items-center gap-3">
+            <div className="absolute -bottom-8 left-6 flex items-center gap-3">
               <Link 
                 href={`/invest/${swarm.id}`}
-                className="relative w-12 h-12 rounded-xl overflow-hidden border-2 border-black/20 hover:border-white/20 transition-colors"
+                className="relative w-16 h-16 rounded-xl overflow-hidden border-2 border-blue-400/30 hover:border-blue-400/50 transition-colors shadow-lg shadow-black/20"
               >
                 <Image
                   src={swarm.image}
@@ -55,10 +55,12 @@ export function ServiceCard({ service }: ServiceCardProps) {
                   fill
                   className="object-cover"
                 />
+                {/* Glowing edge effect */}
+                <div className="absolute inset-0 ring-2 ring-blue-400/20 rounded-xl" />
               </Link>
               <Link 
                 href={`/invest/${swarm.id}`}
-                className="text-sm text-white/80 hover:text-white transition-colors"
+                className="text-sm text-blue-300/90 hover:text-blue-300 transition-colors"
               >
                 by <span className="font-medium">{swarm.name}</span>
               </Link>
@@ -70,7 +72,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
       {/* Gradient overlay */}
       <div className={`absolute inset-0 bg-gradient-to-br ${sectionColors.services.primary} opacity-0 group-hover:opacity-100 transition-opacity`} />
       
-      <div className="relative p-6 pt-10 space-y-4">
+      <div className="relative p-6 pt-12 space-y-4">
         {/* Header */}
         <div>
           <h3 className="text-lg font-semibold text-white mb-1">{service.name}</h3>
