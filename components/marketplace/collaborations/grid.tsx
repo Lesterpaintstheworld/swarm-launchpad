@@ -22,9 +22,12 @@ interface CollaborationGridProps {
 }
 
 export function CollaborationGrid({ collaborations }: CollaborationGridProps) {
+  // Sort collaborations by price in descending order
+  const sortedCollaborations = [...collaborations].sort((a, b) => b.price - a.price);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {collaborations.map((collaboration) => (
+      {sortedCollaborations.map((collaboration) => (
         <CollaborationCard
           key={collaboration.id}
           id={collaboration.id}
