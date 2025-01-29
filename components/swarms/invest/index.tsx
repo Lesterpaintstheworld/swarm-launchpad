@@ -274,7 +274,7 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
                         <p className="text-lg font-semibold text-white">Coming Soon</p>
                     </div>
                     <div className="bg-slate-800/30 rounded-lg p-4">
-                        <span className="text-sm text-slate-400">Revenue Share</span>
+                        <span className="text-sm text-slate-400">Revenue Distributed</span>
                         <p className="text-lg font-semibold text-white">
                             {getSwarmUsingPoolId(pool)?.revenueShare || 60}%
                         </p>
