@@ -26,6 +26,7 @@ interface SwarmInvestCardProps {
     pool: string;
     className?: string;
     marketCapOnly?: boolean;
+    amountRaisedOnly?: boolean;
 }
 
 const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProps) => {
@@ -122,6 +123,17 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
     if (marketCapOnly) {
         const marketCap = (data.totalSupply - data.remainingSupply) * data.pricePerShare;
         return `${IntlNumberFormatCompact(marketCap)}`;
+    }
+
+    if (amountRaisedOnly) {
+        const soldShares = data.totalSupply - data.remainingSupply;
+        let totalRaised = 0;
+        for (let i = 0; i < soldShares; i++) {
+            const cycle = Math.floor(i / 5000);
+            const base = Math.pow(1.35, cycle);
+            totalRaised += base;
+        }
+        return `${IntlNumberFormatCompact(Math.floor(totalRaised))}`;
     }
 
     return (
