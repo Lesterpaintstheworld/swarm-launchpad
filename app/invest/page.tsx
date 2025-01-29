@@ -42,7 +42,7 @@ export default function Invest() {
             </div>
 
             {/* Launching Swarms */}
-            {sortedSwarms.filter(swarm => swarm.launchDate).length > 0 && (
+            {sortedSwarms.filter(swarm => swarm.launchDate && new Date(swarm.launchDate) > new Date()).length > 0 && (
                 <section className="mb-24">
                     <div className="flex items-center gap-2 mb-8">
                         <h3 className="text-2xl font-semibold">🚀 Launching Now</h3>
@@ -65,7 +65,7 @@ export default function Invest() {
                         <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 via-orange-500/10 to-red-500/10 blur-3xl animate-pulse" />
                         <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             {sortedSwarms
-                                .filter(swarm => swarm.launchDate)
+                                .filter(swarm => swarm.launchDate && new Date(swarm.launchDate) > new Date())
                                 .map((swarm) => (
                                     <div key={swarm.id} className="group relative">
                                         {/* Add glow effect */}
