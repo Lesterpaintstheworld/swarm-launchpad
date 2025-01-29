@@ -79,6 +79,13 @@ export function Navigation() {
 						</ul>
 					</NavigationMenuContent>
 				</NavigationMenuItem>
+				<NavigationMenuItem>
+					<NavigationMenuLink asChild>
+						<Link href="/marketplace" className="text-sm hover:bg-foreground/5 px-3 py-2 rounded-md">
+							Marketplace
+						</Link>
+					</NavigationMenuLink>
+				</NavigationMenuItem>
 			</NavigationMenuList>
 		</NavigationMenu>
 		<ConnectButton />
