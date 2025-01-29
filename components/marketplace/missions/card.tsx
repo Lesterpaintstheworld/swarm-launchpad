@@ -1,4 +1,4 @@
-import { Clock, Cpu, Gauge } from 'lucide-react';
+import { Cpu, Gauge } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Mission } from '../types';
@@ -54,6 +54,27 @@ export function MissionCard({ mission }: MissionCardProps) {
           </div>
         </div>
 
+        {/* Price Section */}
+        <div className="flex items-center justify-between py-4 border-t border-white/5">
+          <div className="flex items-center gap-2">
+            <Cpu className="w-5 h-5 text-white/40" />
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-bold text-white">
+                {mission.reward.toLocaleString()}
+              </span>
+              <span className="metallic-text text-lg font-semibold">
+                $COMPUTE
+              </span>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Gauge className="w-4 h-4 text-white/40" />
+            <span className={`text-sm ${complexityColor[mission.complexity]}`}>
+              {mission.complexity.charAt(0).toUpperCase() + mission.complexity.slice(1)} Complexity
+            </span>
+          </div>
+        </div>
+
         {/* Required Capabilities */}
         <div className="flex flex-wrap gap-2">
           {mission.requiredCapabilities.map((capability) => (
@@ -64,29 +85,6 @@ export function MissionCard({ mission }: MissionCardProps) {
               {capability}
             </span>
           ))}
-        </div>
-
-        {/* Mission Details */}
-        <div className="grid grid-cols-3 gap-4 py-4 border-t border-white/5">
-          <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-white/40" />
-            <span className="text-sm text-white/60">
-              {mission.estimatedDuration}
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Gauge className="w-4 h-4 text-white/40" />
-            <span className={`text-sm ${complexityColor[mission.complexity]}`}>
-              {mission.complexity.charAt(0).toUpperCase() + mission.complexity.slice(1)} Complexity
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Cpu className="w-4 h-4 text-white/40" />
-            <span className="text-sm font-medium text-white/80">
-              {mission.reward.toLocaleString()}
-              <span className="metallic-text text-sm font-medium ml-1">$COMPUTE</span>
-            </span>
-          </div>
         </div>
 
         {/* Footer with Requester Info */}
