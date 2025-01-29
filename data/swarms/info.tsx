@@ -92,7 +92,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/digitalkin/1.png"
-            },
+            ,
+        wallet: "9PEHXookTVdhr4eFfar6RdGr1zPq1RfFxeoiRcR5XZwt"},
             {
                 type: "image",
                 content: "/swarms/digitalkin/2.png"
@@ -126,7 +127,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/kinkong/1_KinKong-Advanced-AI-Trading-Agent.png"
-            },
+            ,
+        wallet: "7wNok2HWJxNt8fS1aL9bhs4FvEu1jdPaNugSy65RsTcK"},
             {
                 type: "image",
                 content: "/swarms/kinkong/2_How-KinKong-Works.png"
@@ -182,7 +184,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/swarmventures/1.jpg"
-            },
+            ,
+        wallet: "8sUWjMiNsLvmCPerFdmgGJkyQitTXAbwXmQ2CejMPCbN"},
             {
                 type: "image",
                 content: "/swarms/swarmventures/2.jpg"
@@ -238,7 +241,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/syntheticsouls/Lyra 16-9 web.jpg"
-            }
+            ,
+        wallet: "AyJ2wV7UYHwkxvveyuwn2gzDrs9sK6grcyqjLFW3pcaF"}
         ],
         programAddress: "",
         tags: [
@@ -262,7 +266,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/duoai.jpg"
-            }
+            ,
+        wallet: "GkfRszY7B93QL6o8DSP2inVspBpDeZAHCjvYyLddyAo3"}
         ],
         description: "PLACEHOLDER",
         programAddress: "",
@@ -287,7 +292,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/XForge/monumental-3d-text-13761-burned-emerging_8N4aVSaARGa-oKYBvEygdQ_CM5ll4MvQX-PV8oerJ4yJw.png"
-            },
+            ,
+        wallet: "AFSr2ATJ244u1CY8JRKAK85uuW7VsjNiyKSycmVR4Vg9"},
             {
                 type: "image",
                 content: "/swarms/XForge/xforge.png"
@@ -319,7 +325,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/propertykin/1_PropertyKin-The-Future-of-Real-Estate-Arbitrage.png"
-            },
+            ,
+        wallet: "7y555firARY2tnQjYKfpy18Zu9vYYZwaftMohenyHuG"},
             {
                 type: "image",
                 content: "/swarms/propertykin/2_The-PropertyKin-Advantage-AI-Powered-Contract-Flipping.png"
@@ -373,7 +380,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/mental-health.jpg"
-            }
+            ,
+        wallet: "AyA5XS9NKQUoVroHkvZy6ppssAGQzU2n69PRfKxgvWtu"}
         ],
         description: "PLACEHOLDER",
         programAddress: "",
@@ -400,7 +408,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/book.png"
-            }
+            ,
+        wallet: "6eAG4RQkAHPFfKGkiXWXcBXou9QcEfxVxXrt8bYqY5PE"}
         ],
         description: "PLACEHOLDER",
         programAddress: "",
@@ -426,7 +435,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/toy.png"
-            }
+            ,
+        wallet: "3VvQGX8pozFdnfoTED6bAH9NkUJkzUyxjdPZdsSWEPce"}
         ],
         description: "PLACEHOLDER",
         programAddress: "",
@@ -454,7 +464,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/talentaid.jpg"
-            }
+            ,
+        wallet: "J7VQ5m9A66t6s4VZ463Yxgt3G5cDA2qhs6ztafB1p3P9"}
         ],
         description: "PLACEHOLDER",
         programAddress: "",
@@ -481,7 +492,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/carehive.jpg"
-            }
+            ,
+        wallet: "EU9nEKBFEcK2C6oBvTKwywhBpW2xkSatJ3c2eWLYuXm1"}
         ],
         description: "PLACEHOLDER",
         programAddress: "",
@@ -507,7 +519,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/commercenest.jpg"
-            }
+            ,
+        wallet: "3yiG4ftdPae7zfrPcm1x9Mpykh46Yqt6MJVWzPceVM1H"}
         ],
         description: "PLACEHOLDER",
         programAddress: "",
@@ -533,7 +546,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/affiliate.jpeg"
-            }
+            ,
+        wallet: "6t8QAg9SrsdD1SEt75iFLJDRzR8txZr3L6rBfuDHTqWW"}
         ],
         description: "PLACEHOLDER",
         programAddress: "",
@@ -559,7 +573,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/mentor.png"
-            }
+            ,
+        wallet: "GM3P3XTjhanEDFewwrfmUuoQUM7cei8ih1KPViHBb3E1"}
         ],
         description: "PLACEHOLDER",
         programAddress: "",
@@ -587,7 +602,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/stumped.jpg"
-            }
+            ,
+        wallet: "EXQfXLxMkMg6HX2ETo929VFoJc1dqoqyWdspZrPerFcX"}
         ],
         description: "PLACEHOLDER",
         programAddress: "",
@@ -614,7 +630,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/travel.jpeg"
-            }
+            ,
+        wallet: "7xvZiYwZD6mBRkeWYm1p93Zy936HYhjSecPa85K9r3Tz"}
         ],
         description: "PLACEHOLDER",
         programAddress: "",
@@ -641,7 +658,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/grant.jpeg"
-            }
+            ,
+        wallet: "EnUAJY8TKSyqcHwktZCCQ7ixvofcGN8si1N4g1rey6Vu"}
         ],
         description: "PLACEHOLDER",
         programAddress: "",
@@ -668,7 +686,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/resume.jpeg"
-            }
+            ,
+        wallet: "8KpUuw7eZQqKUu8byivvzoY1AUotPsabsEL48gKQNuRj"}
         ],
         description: "PLACEHOLDER",
         programAddress: "",
@@ -694,7 +713,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/robinhood/1_Robinhood-Agent-Democratizing-AI-Trading.png"
-            },
+            ,
+        wallet: "9StiTDrivvtbjFiM9z1J4Zg63ALS5vkUoGXZz7aCeNyD"},
             {
                 type: "image",
                 content: "/swarms/robinhood/2_What-Robinhood-Agent-Does.png"
@@ -753,7 +773,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/screenplay/1_Screenplay-and-Production-Swarm-Redefining-Filmmaking-with-AI.png"
-            },
+            ,
+        wallet: "6EfkPAoDDeRhDdzbsjYxYkfs5DysnR3ikzm5PK32uQqB"},
             {
                 type: "image",
                 content: "/swarms/screenplay/2_Introducing-KinOS-AI-Swarm-for-Filmmaking.png"
@@ -809,7 +830,8 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/wealthhive.png"
-            }
+            ,
+        wallet: "C1uvoRUhHj2o6swBMvgZsdzkaM3Po5J7WMtrcQxGcVJx"}
         ],
         description: "PLACEHOLDER",
         programAddress: "",
