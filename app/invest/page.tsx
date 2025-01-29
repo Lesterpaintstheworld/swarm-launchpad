@@ -54,7 +54,6 @@ export default function Invest() {
                                 </span>
                                 Launching Now
                             </h3>
-                            <div className="absolute -inset-4 bg-gradient-to-r from-orange-500/20 via-yellow-500/10 to-orange-500/20 blur-xl opacity-50" />
                         </div>
                         <TooltipProvider>
                             <Tooltip>
@@ -71,48 +70,36 @@ export default function Invest() {
                     </div>
                     
                     <div className="relative">
-                        {/* Enhanced background effect */}
+                        {/* Subtle background effect */}
                         <div className="absolute inset-0 -mx-8 -my-6">
-                            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-yellow-500/10 to-orange-500/20 blur-[120px] animate-pulse" />
-                            {/* Animated particles */}
-                            <div className="absolute inset-0 overflow-hidden">
-                                <div className="absolute h-2 w-2 rounded-full bg-yellow-500/50 top-1/4 left-1/4 animate-ping [animation-duration:3s]" />
-                                <div className="absolute h-2 w-2 rounded-full bg-orange-500/50 top-3/4 right-1/4 animate-ping [animation-duration:4s]" />
-                                <div className="absolute h-2 w-2 rounded-full bg-yellow-500/50 bottom-1/4 left-3/4 animate-ping [animation-duration:5s]" />
-                            </div>
+                            <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-orange-500/5 to-white/5 blur-[100px]" />
                         </div>
 
-                        {/* Content grid with enhanced container */}
-                        <div className="relative rounded-xl bg-black/30 backdrop-blur-md border border-white/5 group">
-                            {/* Animated border gradient */}
-                            <div className="absolute -inset-[1px] bg-gradient-to-r from-orange-500/50 via-yellow-500/50 to-orange-500/50 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur" />
-                            
-                            {/* Grid container */}
-                            <div className="relative rounded-xl bg-black/30 backdrop-blur-md">
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
-                                    {sortedSwarms
-                                        .filter(swarm => swarm.launchDate)
-                                        .map((swarm) => (
-                                            <div key={swarm.id} className="group/card">
-                                                <div className="relative">
-                                                    {/* Glow effect on hover */}
-                                                    <div className="absolute -inset-2 bg-gradient-to-r from-yellow-500/0 via-orange-500/0 to-red-500/0 rounded-xl opacity-0 group-hover/card:opacity-100 group-hover/card:via-orange-500/20 blur-xl transition-all duration-700" />
-                                                    
-                                                    <SwarmPreviewCard 
-                                                        swarm={{
-                                                            ...swarm,
-                                                            revenueShare: swarm.revenueShare || 60,
-                                                        }}
-                                                    />
-                                                    <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-red-500/20 border border-yellow-500/30 backdrop-blur-sm group-hover/card:border-yellow-500/50 transition-colors">
-                                                        <span className="text-xs font-medium bg-gradient-to-r from-yellow-300 via-orange-300 to-red-300 bg-clip-text text-transparent">
-                                                            Launching
-                                                        </span>
-                                                    </div>
+                        {/* Content grid with subtle container */}
+                        <div className="relative rounded-xl bg-black/40 backdrop-blur-sm border border-white/10">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
+                                {sortedSwarms
+                                    .filter(swarm => swarm.launchDate)
+                                    .map((swarm) => (
+                                        <div key={swarm.id} className="group/card">
+                                            <div className="relative">
+                                                {/* Subtle glow effect on hover */}
+                                                <div className="absolute -inset-2 bg-white/0 rounded-xl opacity-0 group-hover/card:opacity-100 group-hover/card:bg-white/5 blur-lg transition-all duration-700" />
+                                                
+                                                <SwarmPreviewCard 
+                                                    swarm={{
+                                                        ...swarm,
+                                                        revenueShare: swarm.revenueShare || 60,
+                                                    }}
+                                                />
+                                                <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/20 border border-orange-500/20 backdrop-blur-sm group-hover/card:border-orange-500/30 transition-colors">
+                                                    <span className="text-xs font-medium text-orange-200/90">
+                                                        Launching
+                                                    </span>
                                                 </div>
                                             </div>
-                                        ))}
-                                </div>
+                                        </div>
+                                    ))}
                             </div>
                         </div>
                     </div>
