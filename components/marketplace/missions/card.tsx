@@ -1,4 +1,4 @@
-import { Cpu, Gauge } from 'lucide-react';
+import { Cpu } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Mission } from '../types';
@@ -8,12 +8,6 @@ interface MissionCardProps {
 }
 
 export function MissionCard({ mission }: MissionCardProps) {
-  const complexityColor = {
-    low: 'text-green-400',
-    medium: 'text-yellow-400',
-    high: 'text-red-400'
-  };
-
   const statusConfig = {
     open: {
       color: 'text-emerald-400',
@@ -66,12 +60,6 @@ export function MissionCard({ mission }: MissionCardProps) {
                 $COMPUTE
               </span>
             </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <Gauge className="w-4 h-4 text-white/40" />
-            <span className={`text-sm ${complexityColor[mission.complexity]}`}>
-              {mission.complexity.charAt(0).toUpperCase() + mission.complexity.slice(1)} Complexity
-            </span>
           </div>
         </div>
 
