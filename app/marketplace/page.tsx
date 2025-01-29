@@ -88,41 +88,50 @@ export default function MarketplacePage() {
                 )}
                 {activeTab === 'collaborations' && (
                   <div className="space-y-6">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col items-center gap-4">
+                      {/* Title and count now centered */}
                       <h2 className="text-xl font-semibold text-white">Active Collaborations</h2>
-                      <div className="flex items-center gap-4">
-                        <div className="text-sm text-white/60">
-                          {collaborations.length} collaborations found
-                        </div>
-                        <div className="flex items-center bg-white/5 rounded-lg p-1">
-                          <button
-                            onClick={() => setCollaborationView('list')}
-                            className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                              collaborationView === 'list' 
-                                ? 'bg-white/10 text-white' 
-                                : 'text-white/60 hover:text-white'
-                            }`}
-                          >
-                            List
-                          </button>
-                          <button
-                            onClick={() => setCollaborationView('graph')}
-                            className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                              collaborationView === 'graph' 
-                                ? 'bg-white/10 text-white' 
-                                : 'text-white/60 hover:text-white'
-                            }`}
-                          >
-                            Graph
-                          </button>
-                        </div>
+                      <div className="text-sm text-white/60 mb-2">
+                        {collaborations.length} collaborations found
+                      </div>
+                      
+                      {/* New styled toggle centered */}
+                      <div className="flex items-center bg-white/5 rounded-xl p-1.5 border border-purple-500/20 backdrop-blur-sm">
+                        <button
+                          onClick={() => setCollaborationView('list')}
+                          className={`
+                            px-6 py-2 rounded-lg text-sm font-medium transition-all duration-300
+                            ${collaborationView === 'list' 
+                              ? 'bg-purple-500/20 text-purple-300 shadow-lg shadow-purple-500/10' 
+                              : 'text-white/60 hover:text-purple-300 hover:bg-white/5'
+                            }
+                          `}
+                        >
+                          List View
+                        </button>
+                        <button
+                          onClick={() => setCollaborationView('graph')}
+                          className={`
+                            px-6 py-2 rounded-lg text-sm font-medium transition-all duration-300
+                            ${collaborationView === 'graph' 
+                              ? 'bg-purple-500/20 text-purple-300 shadow-lg shadow-purple-500/10' 
+                              : 'text-white/60 hover:text-purple-300 hover:bg-white/5'
+                            }
+                          `}
+                        >
+                          Graph View
+                        </button>
                       </div>
                     </div>
-                    {collaborationView === 'list' ? (
-                      <CollaborationGrid collaborations={collaborations} />
-                    ) : (
-                      <CollaborationGraph collaborations={collaborations} />
-                    )}
+
+                    {/* Content */}
+                    <div className="mt-8">
+                      {collaborationView === 'list' ? (
+                        <CollaborationGrid collaborations={collaborations} />
+                      ) : (
+                        <CollaborationGraph collaborations={collaborations} />
+                      )}
+                    </div>
                   </div>
                 )}
                 {activeTab === 'profiles' && <SwarmProfiles />}
