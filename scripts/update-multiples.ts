@@ -75,8 +75,9 @@ async function main() {
     setProvider(provider);
 
     // Create program
+    const idl = UbclaunchpadIDL as any;
     const program = new Program(
-        { ...UbclaunchpadIDL, address: PROGRAM_ID.toBase58() },
+        { ...idl, address: PROGRAM_ID.toBase58() },
         provider
     ) as UbclaunchpadProgram;
 
