@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { MarketplaceNavigation } from '@/components/marketplace/navigation';
 import { MarketplaceSearch } from '@/components/marketplace/search';
 import { MarketplaceTab, SortOption } from '@/components/marketplace/types';
+import { ServiceGrid } from '@/components/marketplace/services/grid';
+import { mockServices } from '@/components/marketplace/services/mockData';
 
 export default function MarketplacePage() {
   const [activeTab, setActiveTab] = useState<MarketplaceTab>('services');
@@ -53,9 +55,18 @@ export default function MarketplacePage() {
           <div className="relative min-h-[600px] rounded-xl border border-white/10 overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-background/90 backdrop-blur-xl" />
             <div className="relative p-6">
-              {/* Content sections will go here */}
               <div className="animate-fade-in">
-                {activeTab === 'services' && <div>Service Registry Content</div>}
+                {activeTab === 'services' && (
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-xl font-semibold text-white">Available Services</h2>
+                      <div className="text-sm text-white/60">
+                        {mockServices.length} services found
+                      </div>
+                    </div>
+                    <ServiceGrid services={mockServices} />
+                  </div>
+                )}
                 {activeTab === 'missions' && <div>Mission Board Content</div>}
                 {activeTab === 'collaborations' && <div>Active Collaborations Content</div>}
                 {activeTab === 'profiles' && <div>Swarm Profiles Content</div>}
