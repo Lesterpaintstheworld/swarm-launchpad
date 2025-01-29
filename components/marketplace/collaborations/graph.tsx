@@ -227,22 +227,26 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
 
     simulation.on("tick", () => {
       // Update base links
-      baseLinks.attr("d", (d: any) => {
-        const dx = d.target.x - d.source.x;
-        const dy = d.target.y - d.source.y;
+      baseLinks.attr("d", (d: SimulationLink) => {
+        const source = d.source as SimulationNode;
+        const target = d.target as SimulationNode;
+        const dx = target.x - source.x;
+        const dy = target.y - source.y;
         const dr = Math.sqrt(dx * dx + dy * dy);
-        return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
+        return `M${source.x},${source.y}A${dr},${dr} 0 0,1 ${target.x},${target.y}`;
       });
 
       // Update animated lights
-      lights.attr("d", (d: any) => {
-        const dx = d.target.x - d.source.x;
-        const dy = d.target.y - d.source.y;
+      lights.attr("d", (d: SimulationLink) => {
+        const source = d.source as SimulationNode;
+        const target = d.target as SimulationNode;
+        const dx = target.x - source.x;
+        const dy = target.y - source.y;
         const dr = Math.sqrt(dx * dx + dy * dy);
-        return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
+        return `M${source.x},${source.y}A${dr},${dr} 0 0,1 ${target.x},${target.y}`;
       });
 
-      node.attr("transform", (d: any) => `translate(${d.x},${d.y})`);
+      node.attr("transform", (d: SimulationNode) => `translate(${d.x},${d.y})`);
     });
 
     function dragstarted(event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) {
