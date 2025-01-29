@@ -48,8 +48,9 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: 'Swarm Operating System',
         swarmType: 'early',
+        wallet: 'D1a6RtoptnG2U9gatDz5bQJ3QahKR3wiherDYipe98Vt',
         multiple: 1,
-        revenueShare: 50
+        revenueShare: 60
     },
     {
         id: "slopfather-partner-id",
@@ -76,6 +77,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Content Creator",
         swarmType: "partner",
+        wallet: "D1a6RtoptnG2U9gatDz5bQJ3QahKR3wiherDYipe98Vt",
         multiple: 1
     },
     {
@@ -110,6 +112,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Digital Employee Manager",
         swarmType: "partner",
+        wallet: "9PEHXookTVdhr4eFfar6RdGr1zPq1RfFxeoiRcR5XZwt",
         multiple: 222
     },
     {
@@ -167,6 +170,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Lorem ipsum",
         swarmType: "partner",
+        wallet: "7wNok2HWJxNt8fS1aL9bhs4FvEu1jdPaNugSy65RsTcK",
         multiple: 222
     },
     {
@@ -199,6 +203,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Lorem ipsum",
         swarmType: "partner",
+        wallet: "8sUWjMiNsLvmCPerFdmgGJkyQitTXAbwXmQ2CejMPCbN",
         multiple: 164
     },
     {
@@ -246,6 +251,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Lorem ipsum",
         swarmType: "early",
+        wallet: "AyJ2wV7UYHwkxvveyuwn2gzDrs9sK6grcyqjLFW3pcaF",
         multiple: 90
     },
     {
@@ -272,6 +278,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Gaming Compan    ion",
         swarmType: "partner",
+        wallet: "GkfRszY7B93QL6o8DSP2inVspBpDeZAHCjvYyLddyAo3",
         multiple: 37
     },
     {
@@ -303,6 +310,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Development Coordinator",
         swarmType: "early",
+        wallet: "AFSr2ATJ244u1CY8JRKAK85uuW7VsjNiyKSycmVR4Vg9",
         multiple: 222
     },
     {
@@ -358,6 +366,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Real Estate Arbitrage Bot",
         swarmType: "inception",
+        wallet: "7y555firARY2tnQjYKfpy18Zu9vYYZwaftMohenyHuG",
         multiple: 27.14
     },
     {
@@ -385,6 +394,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Healthcare Assistant",
         swarmType: "inception",
+        wallet: "AyA5XS9NKQUoVroHkvZy6ppssAGQzU2n69PRfKxgvWtu",
         multiple: 11.03
     },
     {
@@ -412,6 +422,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Publishing Agent",
         swarmType: "inception",
+        wallet: "6eAG4RQkAHPFfKGkiXWXcBXou9QcEfxVxXrt8bYqY5PE",
         multiple: 8.17
     },
     {
@@ -439,6 +450,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Educational Assistant",
         swarmType: "inception",
+        wallet: "3VvQGX8pozFdnfoTED6bAH9NkUJkzUyxjdPZdsSWEPce",
         multiple: 14.89
     },
     {
@@ -466,6 +478,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Recruitment Assistant",
         swarmType: "inception",
+        wallet: "J7VQ5m9A66t6s4VZ463Yxgt3G5cDA2qhs6ztafB1p3P9",
         multiple: 6.05
     },
     {
@@ -492,6 +505,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Practice Manager",
         swarmType: "inception",
+        wallet: "EU9nEKBFEcK2C6oBvTKwywhBpW2xkSatJ3c2eWLYuXm1",
         multiple: 8.17
     },
     {
@@ -518,6 +532,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "E-commerce Manager",
         swarmType: "inception",
+        wallet: "3yiG4ftdPae7zfrPcm1x9Mpykh46Yqt6MJVWzPceVM1H",
         multiple: 11.03
     },
     {
@@ -545,6 +560,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Marketing Automation",
         swarmType: "inception",
+        wallet: "6t8QAg9SrsdD1SEt75iFLJDRzR8txZr3L6rBfuDHTqWW",
         multiple: 27.14
     },
     {
@@ -571,6 +587,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Educational Mentor",
         swarmType: "inception",
+        wallet: "GM3P3XTjhanEDFewwrfmUuoQUM7cei8ih1KPViHBb3E1",
         multiple: 8.17
     },
     {
@@ -599,6 +616,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Conversation Coach",
         swarmType: "inception",
+        wallet: "EXQfXLxMkMg6HX2ETo929VFoJc1dqoqyWdspZrPerFcX",
         multiple: 8.17
     },
     {
@@ -626,6 +644,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Travel Concierge",
         swarmType: "inception",
+        wallet: "7xvZiYwZD6mBRkeWYm1p93Zy936HYhjSecPa85K9r3Tz",
         multiple: 8.17
     },
     {
@@ -653,6 +672,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Grant Writer",
         swarmType: "inception",
+        wallet: "EnUAJY8TKSyqcHwktZCCQ7ixvofcGN8si1N4g1rey6Vu",
         multiple: 3.32
     },
     {
@@ -679,6 +699,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Career Optimizer",
         swarmType: "inception",
+        wallet: "8KpUuw7eZQqKUu8byivvzoY1AUotPsabsEL48gKQNuRj",
         multiple: 6.05
     },
     {
@@ -738,6 +759,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Trading Agent",
         swarmType: "inception",
+        wallet: "9StiTDrivvtbjFiM9z1J4Zg63ALS5vkUoGXZz7aCeNyD",
         multiple: 67
     },
     {
@@ -793,6 +815,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Screenwriter & Producer",
         swarmType: "inception",
+        wallet: "6EfkPAoDDeRhDdzbsjYxYkfs5DysnR3ikzm5PK32uQqB",
         multiple: 11.03
     },
     {
@@ -823,6 +846,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Educational Guide",
         swarmType: "inception",
+        wallet: "C1uvoRUhHj2o6swBMvgZsdzkaM3Po5J7WMtrcQxGcVJx",
         multiple: 11.03
     }
 ]
