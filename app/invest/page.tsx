@@ -63,14 +63,40 @@ export default function Invest() {
                     
                     {/* Add animated background and special styling */}
                     <div className="relative">
-                        <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 via-orange-500/10 to-red-500/10 blur-3xl animate-pulse" />
+                        {/* Electric nodes background */}
+                        <div className="absolute inset-0 overflow-hidden">
+                            {/* Electric node 1 */}
+                            <div className="absolute w-[200px] h-[200px] -top-20 -left-20 bg-yellow-500/20 rounded-full blur-3xl animate-pulse" />
+                            {/* Electric node 2 */}
+                            <div className="absolute w-[300px] h-[300px] -bottom-32 -right-20 bg-orange-500/20 rounded-full blur-3xl animate-pulse [animation-delay:0.5s]" />
+                            {/* Electric node 3 */}
+                            <div className="absolute w-[250px] h-[250px] top-1/2 left-1/3 bg-red-500/20 rounded-full blur-3xl animate-pulse [animation-delay:1s]" />
+                            
+                            {/* Lightning lines */}
+                            <div className="absolute inset-0">
+                                <div className="absolute top-0 left-1/4 w-[2px] h-full bg-gradient-to-b from-yellow-500/0 via-yellow-500/20 to-yellow-500/0 animate-pulse" />
+                                <div className="absolute top-0 left-2/4 w-[2px] h-full bg-gradient-to-b from-orange-500/0 via-orange-500/20 to-orange-500/0 animate-pulse [animation-delay:0.3s]" />
+                                <div className="absolute top-0 left-3/4 w-[2px] h-full bg-gradient-to-b from-red-500/0 via-red-500/20 to-red-500/0 animate-pulse [animation-delay:0.6s]" />
+                            </div>
+                        </div>
+
+                        {/* Cards grid with enhanced hover effects */}
                         <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             {sortedSwarms
                                 .filter(swarm => swarm.launchDate && new Date(swarm.launchDate) > new Date())
                                 .map((swarm) => (
                                     <div key={swarm.id} className="group relative">
-                                        {/* Add glow effect */}
+                                        {/* Glow effect */}
                                         <div className="absolute -inset-1 bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-red-500/20 rounded-xl opacity-0 group-hover:opacity-100 blur transition-all duration-500" />
+                                        
+                                        {/* Electric corner accents */}
+                                        <div className="absolute -inset-[2px] rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden">
+                                            <div className="absolute top-0 left-0 w-[20px] h-[20px] border-l-2 border-t-2 border-yellow-500/50 rounded-tl-xl" />
+                                            <div className="absolute top-0 right-0 w-[20px] h-[20px] border-r-2 border-t-2 border-orange-500/50 rounded-tr-xl" />
+                                            <div className="absolute bottom-0 left-0 w-[20px] h-[20px] border-l-2 border-b-2 border-orange-500/50 rounded-bl-xl" />
+                                            <div className="absolute bottom-0 right-0 w-[20px] h-[20px] border-r-2 border-b-2 border-red-500/50 rounded-br-xl" />
+                                        </div>
+                                        
                                         <div className="relative">
                                             <SwarmPreviewCard 
                                                 swarm={{
@@ -78,9 +104,11 @@ export default function Invest() {
                                                     revenueShare: swarm.revenueShare || 60,
                                                 }}
                                             />
-                                            {/* Add "Launching" badge */}
-                                            <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-yellow-500/20 border border-yellow-500/30 backdrop-blur-sm">
-                                                <span className="text-xs font-medium text-yellow-300">Launching</span>
+                                            {/* Enhanced "Launching" badge */}
+                                            <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-red-500/20 border border-yellow-500/30 backdrop-blur-sm group-hover:border-yellow-500/50 transition-colors">
+                                                <span className="text-xs font-medium bg-gradient-to-r from-yellow-300 via-orange-300 to-red-300 bg-clip-text text-transparent">
+                                                    Launching
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
