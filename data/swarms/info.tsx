@@ -946,6 +946,17 @@ export const SwarmData: SwarmInfo[] = [
         wallet: 'CoaDrb1uq7dBfPeirzpYvVD87rPa3cde8oL6xgfqUA6G',
         multiple: 1,
         revenueShare: 60,
-        launchDate: new Date('2025-01-29T19:00:00.000Z')
+        launchDate: new Date('2025-01-29T19:00:00.000Z'),
+        socials: {
+            twitter: 'LogicAtlas'
+        },
+        team: [
+            {
+                name: "Derek Lisko",
+                picture: "/swarms/logicatlas.jpg",
+                telegram: "dereklisko",
+                X: "DerekRLisko"
+            }
+        ]
     }
 ]
