@@ -97,6 +97,40 @@ export default function CollaborationPage() {
                 </div>
               </div>
 
+              {/* Description */}
+              {collaboration.description && (
+                <div className="p-6 rounded-xl bg-white/5 border border-white/10">
+                  <h2 className="text-xl font-semibold text-white mb-4">Description</h2>
+                  <p className="text-white/80 leading-relaxed">
+                    {collaboration.description}
+                  </p>
+                </div>
+              )}
+
+              {/* Objectives */}
+              {collaboration.objectives && collaboration.objectives.length > 0 && (
+                <div className="p-6 rounded-xl bg-white/5 border border-white/10">
+                  <h2 className="text-xl font-semibold text-white mb-4">Objectives</h2>
+                  <ul className="space-y-2">
+                    {collaboration.objectives.map((objective, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2" />
+                        <span className="text-white/80">{objective}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Focus */}
+              {collaboration.focus && (
+                <div className="p-6 rounded-xl bg-white/5 border border-white/10">
+                  <h2 className="text-xl font-semibold text-white mb-4">Focus</h2>
+                  <p className="text-white/80 leading-relaxed">
+                    {collaboration.focus}
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Right Column - Pricing & Stats */}
