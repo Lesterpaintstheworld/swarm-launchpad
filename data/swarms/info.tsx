@@ -1,4 +1,8 @@
-import { SwarmInfo } from "@/components/swarms/swarm.types"
+import { SwarmInfo as BaseSwarmInfo } from "@/components/swarms/swarm.types"
+
+interface SwarmInfo extends BaseSwarmInfo {
+    wallet?: string;
+}
 import { description as KinKongDescription } from "./descriptions/kinkong"
 import { description as SwarmVenturesDescription } from "./descriptions/swarmventures"
 import { description as TerminalVelocityDescription } from "./descriptions/terminalvelocity"

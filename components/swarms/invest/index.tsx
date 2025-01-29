@@ -5,6 +5,7 @@ import { ConnectButton } from "@/components/solana/connectButton";
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
 import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
+import { Copy } from 'lucide-react';
 import { calculateSharePrice, cn, IntlNumberFormat, IntlNumberFormatCompact } from "@/lib/utils";
 import { toast } from 'sonner';
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -231,6 +232,53 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
             ) : (
                 <ConnectButton className="w-full mt-6" />
             )}
+
+            {/* Additional Swarm Information */}
+            <div className="mt-8 space-y-6">
+                <div className="border-t border-slate-800 pt-6">
+                    <h3 className="text-lg font-semibold text-white mb-4">Swarm Information</h3>
+                    
+                    {/* Wallet Address */}
+                    <div className="bg-slate-800/30 rounded-lg p-4">
+                        <div className="flex justify-between items-start mb-2">
+                            <span className="text-sm text-slate-400">Swarm Wallet</span>
+                            <div className="flex items-center gap-2">
+                                <code className="text-sm text-slate-300 font-mono">
+                                    {getSwarmUsingPoolId(pool)?.wallet || 'Not available'}
+                                </code>
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="h-8 w-8 p-0"
+                                    onClick={() => {
+                                        const wallet = getSwarmUsingPoolId(pool)?.wallet;
+                                        if (wallet) {
+                                            navigator.clipboard.writeText(wallet);
+                                            toast.success('Wallet address copied to clipboard');
+                                        }
+                                    }}
+                                >
+                                    <Copy className="h-4 w-4" />
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Additional stats */}
+                    <div className="grid grid-cols-2 gap-4 mt-4">
+                        <div className="bg-slate-800/30 rounded-lg p-4">
+                            <span className="text-sm text-slate-400">Total Investors</span>
+                            <p className="text-lg font-semibold text-white">Coming Soon</p>
+                        </div>
+                        <div className="bg-slate-800/30 rounded-lg p-4">
+                            <span className="text-sm text-slate-400">Revenue Share</span>
+                            <p className="text-lg font-semibold text-white">
+                                {getSwarmUsingPoolId(pool)?.revenueShare || 60}%
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </Card>
     )
 }

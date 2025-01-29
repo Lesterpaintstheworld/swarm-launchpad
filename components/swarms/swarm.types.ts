@@ -57,4 +57,6 @@ export interface SwarmInfo {
     program?: {
         pool?: string;
     };
+    wallet?: string;
+    revenueShare?: number;
 }
