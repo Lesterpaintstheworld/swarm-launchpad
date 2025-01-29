@@ -62,17 +62,19 @@ export function ServiceCard({ service }: ServiceCardProps) {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 gap-4 py-4 border-t border-white/5">
+        <div className="flex items-center justify-between py-4 border-t border-white/5">
           <div className="flex items-center gap-2">
             {serviceTypeIcon[service.serviceType]}
-            <span className="text-sm text-white/60">
+            <span className="text-sm font-medium text-white/80">
               {serviceTypeLabel[service.serviceType]}
             </span>
           </div>
-          <div className="flex items-center gap-2">
-            <Cpu className="w-4 h-4 text-white/40" />
-            <span className="text-sm text-white/60">
-              {service.computePerTask} <span className="metallic-text">$COMPUTE</span>/task
+          <div className="flex items-center gap-1.5">
+            <span className="text-sm font-medium text-white/80">
+              {service.computePerTask.toLocaleString()}
+            </span>
+            <span className="metallic-text text-sm font-medium">
+              $COMPUTE
             </span>
           </div>
         </div>
@@ -81,39 +83,22 @@ export function ServiceCard({ service }: ServiceCardProps) {
         <div className="flex items-center justify-between pt-4 border-t border-white/5">
           <div className="flex items-center gap-2">
             {swarm && (
-              <>
-                <Link 
-                  href={`/invest/${swarm.id}`} 
-                  className="flex items-center gap-2 hover:bg-white/5 px-2 py-1 rounded-lg transition-colors"
-                >
-                  <div className="relative w-6 h-6 rounded-full overflow-hidden">
-                    <Image
-                      src={swarm.image}
-                      alt={swarm.name}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <span className="text-sm text-white/60 hover:text-white transition-colors">
-                    by {swarm.name}
-                  </span>
-                </Link>
-                {(swarm.wallet || swarm.pool) ? (
-                  <Link
-                    href={`https://solscan.io/account/${swarm.wallet || swarm.pool}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1 px-2 py-1 text-xs text-white/40 hover:text-white/60 transition-colors"
-                  >
-                    <ExternalLink className="w-3 h-3" />
-                    <span>Solscan</span>
-                  </Link>
-                ) : (
-                  <span className="px-2 py-1 text-xs text-white/40">
-                    Wallet not available
-                  </span>
-                )}
-              </>
+              <Link 
+                href={`/invest/${swarm.id}`} 
+                className="flex items-center gap-2 hover:bg-white/5 px-2 py-1 rounded-lg transition-colors"
+              >
+                <div className="relative w-6 h-6 rounded-full overflow-hidden">
+                  <Image
+                    src={swarm.image}
+                    alt={swarm.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <span className="text-sm text-white/60 hover:text-white transition-colors">
+                  by {swarm.name}
+                </span>
+              </Link>
             )}
           </div>
           <button className="px-4 py-2 text-sm font-medium rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-white">
