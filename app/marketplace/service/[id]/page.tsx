@@ -167,6 +167,99 @@ export default function ServicePage() {
               ))}
             </div>
           </div>
+
+          {/* Service Stats Card */}
+          <div className="p-6 rounded-xl bg-white/5 border border-white/10 space-y-6">
+            <h3 className="text-lg font-semibold text-white">Service Stats</h3>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-white/5 rounded-lg p-4">
+                <div className="text-sm text-white/60 mb-1">Completions</div>
+                <div className="flex items-center gap-2">
+                  <div className="animate-pulse h-4 w-16 bg-white/10 rounded" />
+                  <span className="text-xs text-white/40">Coming Soon</span>
+                </div>
+              </div>
+              
+              <div className="bg-white/5 rounded-lg p-4">
+                <div className="text-sm text-white/60 mb-1">Avg. Rating</div>
+                <div className="flex items-center gap-2">
+                  <div className="animate-pulse h-4 w-12 bg-white/10 rounded" />
+                  <span className="text-xs text-white/40">Coming Soon</span>
+                </div>
+              </div>
+
+              <div className="bg-white/5 rounded-lg p-4">
+                <div className="text-sm text-white/60 mb-1">Response Time</div>
+                <div className="flex items-center gap-2">
+                  <div className="animate-pulse h-4 w-20 bg-white/10 rounded" />
+                  <span className="text-xs text-white/40">Coming Soon</span>
+                </div>
+              </div>
+
+              <div className="bg-white/5 rounded-lg p-4">
+                <div className="text-sm text-white/60 mb-1">Active Users</div>
+                <div className="flex items-center gap-2">
+                  <div className="animate-pulse h-4 w-14 bg-white/10 rounded" />
+                  <span className="text-xs text-white/40">Coming Soon</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Monthly Activity Chart */}
+            <div className="pt-4 border-t border-white/10">
+              <div className="text-sm text-white/60 mb-3">Monthly Activity</div>
+              <div className="h-32 bg-white/5 rounded-lg flex items-center justify-center">
+                <span className="text-sm text-white/40">Chart Coming Soon</span>
+              </div>
+            </div>
+
+            {/* Recent Transactions */}
+            <div className="pt-4 border-t border-white/10">
+              <div className="flex items-center justify-between mb-3">
+                <div className="text-sm text-white/60">Recent Transactions</div>
+                <span className="text-xs text-white/40">Coming Soon</span>
+              </div>
+              <div className="space-y-2">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="flex items-center gap-3 p-2 bg-white/5 rounded-lg">
+                    <div className="w-8 h-8 rounded-full bg-white/10 animate-pulse" />
+                    <div className="flex-1">
+                      <div className="h-3 w-24 bg-white/10 rounded animate-pulse mb-1" />
+                      <div className="h-2 w-16 bg-white/10 rounded animate-pulse" />
+                    </div>
+                    <div className="h-3 w-16 bg-white/10 rounded animate-pulse" />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Performance Metrics */}
+            <div className="pt-4 border-t border-white/10">
+              <div className="text-sm text-white/60 mb-3">Performance Metrics</div>
+              <div className="space-y-3">
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-white/60">Uptime</span>
+                    <span className="text-xs text-white/40">Coming Soon</span>
+                  </div>
+                  <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-full w-0 bg-gradient-to-r from-blue-500 to-blue-400 animate-pulse" />
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-white/60">Task Success Rate</span>
+                    <span className="text-xs text-white/40">Coming Soon</span>
+                  </div>
+                  <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-full w-0 bg-gradient-to-r from-green-500 to-green-400 animate-pulse" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
