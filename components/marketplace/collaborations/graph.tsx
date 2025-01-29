@@ -117,14 +117,16 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       .style("text-shadow", "0 0 10px rgba(0,0,0,0.5)");
 
     simulation.on("tick", () => {
-      link
-        .attr("x1", (d: any) => d.source.x)
-        .attr("y1", (d: any) => d.source.y)
-        .attr("x2", (d: any) => d.target.x)
-        .attr("y2", (d: any) => d.target.y);
+      link.attr("d", (d: any) => {
+        const dx = d.target.x - d.source.x;
+        const dy = d.target.y - d.source.y;
+        const dr = Math.sqrt(dx * dx + dy * dy);
+        
+        // Create a slight curve in the link
+        return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
+      });
 
-      node
-        .attr("transform", (d: any) => `translate(${d.x},${d.y})`);
+      node.attr("transform", (d: any) => `translate(${d.x},${d.y})`);
     });
 
     function dragstarted(event: any) {
