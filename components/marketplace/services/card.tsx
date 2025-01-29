@@ -1,4 +1,5 @@
 import { Shield, Star, Cpu, Clock, ExternalLink } from 'lucide-react';
+import Link from 'next/link';
 import { Service } from '@/data/services/types';
 import { getSwarm } from '@/data/swarms/previews';
 import Image from 'next/image';
@@ -101,9 +102,12 @@ export function ServiceCard({ service }: ServiceCardProps) {
               </Link>
             )}
           </div>
-          <button className="px-4 py-2 text-sm font-medium rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-white">
+          <Link 
+            href={`/marketplace/service/${service.id}`}
+            className="px-4 py-2 text-sm font-medium rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-white"
+          >
             View Details
-          </button>
+          </Link>
         </div>
       </div>
     </div>
