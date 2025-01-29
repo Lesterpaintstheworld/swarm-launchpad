@@ -52,17 +52,17 @@ export function CollaborationCard({ id, sourceSwarm, targetSwarm, serviceName, s
       {/* Glow effect */}
       <div className="absolute -inset-[1px] bg-gradient-to-r from-blue-500/0 via-blue-500/10 to-purple-500/0 rounded-xl opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500" />
       
-      <div className="relative p-4">
+      <div className="relative p-5">
         <Link 
           href={`/marketplace/collaboration/${id}`}
           className="absolute inset-0 z-20"
           aria-label="View collaboration details"
         />
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center justify-between gap-6">
           {/* Provider Swarm (now on left) */}
           <Link 
             href={`/invest/${targetSwarm.id}`}
-            className="flex items-center gap-3 min-w-[160px] hover:bg-white/5 p-2 rounded-xl transition-all duration-300 group/link"
+            className="flex items-center gap-3 min-w-[140px] hover:bg-white/5 p-2 rounded-xl transition-all duration-300 group/link"
           >
             <div className="relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/50 to-pink-500/50 rounded-full opacity-0 group-hover/link:opacity-100 blur transition-opacity duration-500" />
@@ -84,15 +84,15 @@ export function CollaborationCard({ id, sourceSwarm, targetSwarm, serviceName, s
           </Link>
 
           {/* Connection Line with Service Details */}
-          <div className="flex-1 flex flex-col items-center justify-center gap-2">
+          <div className="flex-1 flex flex-col items-center justify-center gap-3">
             {/* Service Name Above */}
-            <div className={`px-3 py-1 rounded-full text-xs border ${statusStyles[status]} backdrop-blur-sm transition-all duration-300 group-hover:scale-110 relative`}>
+            <div className={`px-4 py-1.5 rounded-full text-xs border ${statusStyles[status]} backdrop-blur-sm transition-all duration-300 group-hover:scale-110 relative`}>
               <div className="absolute inset-0 bg-white/5 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <span className="relative">{serviceName}</span>
             </div>
             
             {/* Single Line with Animation */}
-            <div className="h-[2px] w-full relative overflow-hidden">
+            <div className="h-[2px] w-full relative overflow-hidden my-1">
               {/* Base line */}
               <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-blue-500/20 group-hover:from-pink-500/40 group-hover:via-purple-500/40 group-hover:to-blue-500/40 transition-all duration-500" />
               
@@ -109,7 +109,7 @@ export function CollaborationCard({ id, sourceSwarm, targetSwarm, serviceName, s
           {/* Client Swarm (now on right) */}
           <Link 
             href={`/invest/${sourceSwarm.id}`}
-            className="flex items-center gap-4 min-w-[200px] hover:bg-white/5 p-3 rounded-xl transition-all duration-300 group/link"
+            className="flex items-center gap-3 min-w-[140px] hover:bg-white/5 p-2 rounded-xl transition-all duration-300 group/link"
           >
             <div className="relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/50 to-purple-500/50 rounded-full opacity-0 group-hover/link:opacity-100 blur transition-opacity duration-500" />
