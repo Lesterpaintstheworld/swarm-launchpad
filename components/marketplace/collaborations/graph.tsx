@@ -5,7 +5,6 @@ import * as d3 from 'd3';
 import { Collaboration } from '@/data/collaborations/collaborations';
 import { getSwarmUsingId } from "@/data/swarms/info";
 import { previews } from '@/data/swarms/previews';
-import { IntlNumberFormat } from "@/lib/utils";
 
 interface SimulationNode extends d3.SimulationNodeDatum {
   id: string;
