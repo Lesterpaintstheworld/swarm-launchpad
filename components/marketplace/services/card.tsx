@@ -28,7 +28,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
     <div className={`group relative rounded-xl bg-white/5 border ${sectionColors.services.border} overflow-hidden transition-all duration-300 ${sectionColors.services.hover}`}>
       {/* Banner image */}
       {service.banner && (
-        <div className="relative w-full h-[200px]">
+        <div className="relative w-full h-[171px]">
           <Image
             src={service.banner}
             alt={service.name}
@@ -36,6 +36,8 @@ export function ServiceCard({ service }: ServiceCardProps) {
             className="object-cover"
             priority
           />
+          {/* Add a subtle gradient overlay to help text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
         </div>
       )}
 
