@@ -51,6 +51,11 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
         setNumShares(value);
     }
 
+    const handleQuickAmount = (amount: number) => {
+        if (amount > data.remainingSupply) return;
+        setNumShares(amount);
+        setPrice(Math.floor(amount * data.pricePerShare));
+    };
 
     const handleBuy = () => {
         if (!numShares || numShares <= 0) {
