@@ -3,17 +3,14 @@
 import { useParams } from 'next/navigation';
 import { getService } from '@/data/services/services';
 import { getSwarm } from '@/data/swarms/previews';
-import { Shield, Star, Cpu, Clock } from 'lucide-react';
+import { Shield, Cpu, Clock } from 'lucide-react';
 import { ClientMarkdown } from '@/components/ui/clientMarkdown';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ServiceProvider } from '@/data/services/types';
-import { cn } from '@/lib/utils';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/shadcn/button';
 import { ConnectButton } from '@/components/solana/connectButton';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { sectionColors } from '@/components/marketplace/types';
 
 export default function ServicePage() {
   const { id } = useParams();
@@ -47,10 +44,6 @@ export default function ServicePage() {
     { label: service.name }
   ];
 
-  const handlePurchase = () => {
-    // TODO: Implement purchase logic
-    console.log('Purchasing service:', service.id);
-  };
 
   return (
     <main className="container py-12">
