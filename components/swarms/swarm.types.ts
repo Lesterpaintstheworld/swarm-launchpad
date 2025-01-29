@@ -22,6 +22,7 @@ export interface SwarmPreviewData {
     program?: {
         pool?: string;
     }
+    launchDate?: Date;
 }
 
 export type SwarmModel = 'KinOS' | 'Claude Haiku' | 'GPT-4o Mini';
@@ -59,4 +60,5 @@ export interface SwarmInfo {
     };
     wallet?: string;
     revenueShare?: number;
+    launchDate?: Date;
 }
