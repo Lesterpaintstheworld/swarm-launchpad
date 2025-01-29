@@ -81,7 +81,7 @@ export function Navigation() {
 				</NavigationMenuItem>
 				<NavigationMenuItem>
 					<NavigationMenuLink asChild>
-						<Link href="/marketplace" className="text-sm hover:bg-foreground/5 px-3 py-2 rounded-md">
+						<Link href="/marketplace-intro" className="text-sm hover:bg-foreground/5 px-3 py-2 rounded-md">
 							Marketplace <span className="italic text-muted-foreground">(alpha)</span>
 						</Link>
 					</NavigationMenuLink>
