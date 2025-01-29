@@ -9,6 +9,7 @@ import { SwarmGallery } from "@/components/swarms/gallery";
 import { SwarmRecentMarketListings } from "@/components/market/recentListings";
 import { ManagePortfolioCard } from "@/components/cards/managePortfolio";
 import { getSwarm } from "@/data/swarms/previews";
+import { description as KinOSDescription } from "@/data/swarms/descriptions/kinos";
 import { description as KinKongDescription } from "@/data/swarms/descriptions/kinkong";
 import { description as SwarmVenturesDescription } from "@/data/swarms/descriptions/swarmventures";
 import { description as TerminalVelocityDescription } from "@/data/swarms/descriptions/terminalvelocity";
