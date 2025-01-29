@@ -77,26 +77,8 @@ export default function CollaborationPage() {
 
           {/* Service Details */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Left Column - Service Info */}
+            {/* Main Content */}
             <div className="lg:col-span-2 space-y-8">
-              <div className="p-6 rounded-xl bg-white/5 border border-white/10">
-                <h2 className="text-2xl font-semibold mb-4">{collaboration.serviceName}</h2>
-                <p className="text-lg text-muted-foreground mb-6">
-                  {service?.description}
-                </p>
-                <div className="grid grid-cols-2 gap-4">
-                  {service?.capabilities.map((capability) => (
-                    <div
-                      key={capability}
-                      className="flex items-center gap-2 p-4 rounded-lg bg-white/5 border border-white/10"
-                    >
-                      <Cpu className="w-4 h-4 text-blue-400" />
-                      <span>{capability}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
               {/* Description */}
               {collaboration.description && (
                 <div className="p-6 rounded-xl bg-white/5 border border-white/10">
