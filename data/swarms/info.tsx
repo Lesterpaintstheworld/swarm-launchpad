@@ -1,9 +1,9 @@
 import { SwarmInfo } from "@/components/swarms/swarm.types"
-import { KinKongDescription } from "./descriptions/kinkong"
-import { SwarmVenturesDescription } from "./descriptions/swarmventures"
-import { TerminalVelocityDescription } from "./descriptions/terminalvelocity"
-import { SyntheticSoulsDescription } from "./descriptions/syntheticsouls"
-import { DuoAIDescription } from "./descriptions/duoai"
+import { description as KinKongDescription } from "./descriptions/kinkong"
+import { description as SwarmVenturesDescription } from "./descriptions/swarmventures"
+import { description as TerminalVelocityDescription } from "./descriptions/terminalvelocity"
+import { description as SyntheticSoulsDescription } from "./descriptions/syntheticsouls"
+import { description as DuoAIDescription } from "./descriptions/duoai"
 
 export const getSwarmUsingId = (swarmId: string) => SwarmData.find(swarm => swarm.id === swarmId);
 export const getSwarmUsingPoolId = (poolId: string) => {
