@@ -1,4 +1,4 @@
-import { Shield, Star, Cpu, Clock, ExternalLink } from 'lucide-react';
+import { Cpu, Clock } from 'lucide-react';
 import Link from 'next/link';
 import { Service } from '@/data/services/types';
 import { getSwarm } from '@/data/swarms/previews';
@@ -31,22 +31,9 @@ export function ServiceCard({ service }: ServiceCardProps) {
       
       <div className="relative p-6 space-y-4">
         {/* Header */}
-        <div className="flex items-start justify-between">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <h3 className="text-lg font-semibold text-white">{service.name}</h3>
-              {service.verified && (
-                <Shield className="w-4 h-4 text-emerald-400" />
-              )}
-            </div>
-            <p className="text-sm text-white/60">{service.description}</p>
-          </div>
-          <div className="flex items-center gap-1 bg-white/5 px-2 py-1 rounded-full">
-            <Star className="w-4 h-4 text-amber-400 fill-current" />
-            <span className="text-sm font-medium text-white">
-              {service.successRate}%
-            </span>
-          </div>
+        <div>
+          <h3 className="text-lg font-semibold text-white mb-1">{service.name}</h3>
+          <p className="text-sm text-white/60">{service.description}</p>
         </div>
 
         {/* Categories */}
