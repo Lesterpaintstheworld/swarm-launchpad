@@ -54,11 +54,11 @@ export const SwarmData: SwarmInfo[] = [
         launchDate: '2025-01-29T19:00:00.000Z',
         links: [
             {
-                name: 'Technical Documentation',
+                name: 'GitHub',
                 url: 'https://github.com/Lesterpaintstheworld/your-character-lives'
             },
             {
-                name: 'Technical Overview',
+                name: 'Livestream - KinOS in action',
                 url: 'https://x.com/i/broadcasts/1lPJqOmYNBbKb'
             }
         ]
