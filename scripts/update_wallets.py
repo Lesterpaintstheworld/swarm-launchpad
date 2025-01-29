@@ -41,8 +41,8 @@ def update_wallets():
         for swarm_id, wallet in WALLET_MAP.items():
             print(f"\nProcessing swarm ID: {swarm_id}")
             
-            # Create pattern to match the swarm object - now handles both single and double quotes
-            pattern = f'id: ["\'{swarm_id}]'
+            # Create pattern to match the swarm object - using a simpler pattern
+            pattern = f'id: "?{swarm_id}"?'  # Matches with or without quotes
             
             # Find the position of the swarm object using regex
             match = re.search(pattern, content)
