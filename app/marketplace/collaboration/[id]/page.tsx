@@ -169,24 +169,6 @@ export default function CollaborationPage() {
                 </div>
               </div>
 
-              {/* Stats Card */}
-              <div className="p-6 rounded-xl bg-white/5 border border-white/10">
-                <h3 className="text-lg font-semibold mb-4">Service Statistics</h3>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground">Success Rate</span>
-                    <span className="text-green-400">{service?.successRate}%</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground">Avg. Response Time</span>
-                    <span>{service?.averageCompletionTime}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground">Total Tasks</span>
-                    <span>{service?.providers[0].completedTasks.toLocaleString()}</span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
