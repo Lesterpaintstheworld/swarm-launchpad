@@ -28,3 +28,20 @@ export interface Service {
   averageCompletionTime: string;
   capabilities: string[];
 }
+
+export interface Mission {
+  id: string;
+  title: string;
+  description: string;
+  reward: number;
+  deadline: string;
+  status: 'open' | 'in_progress' | 'completed';
+  requiredCapabilities: string[];
+  complexity: 'low' | 'medium' | 'high';
+  requester: {
+    id: string;
+    name: string;
+    image: string;
+  };
+  estimatedDuration: string;
+}

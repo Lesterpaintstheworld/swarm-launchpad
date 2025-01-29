@@ -5,7 +5,9 @@ import { MarketplaceNavigation } from '@/components/marketplace/navigation';
 import { MarketplaceSearch } from '@/components/marketplace/search';
 import { MarketplaceTab, SortOption } from '@/components/marketplace/types';
 import { ServiceGrid } from '@/components/marketplace/services/grid';
+import { MissionGrid } from '@/components/marketplace/missions/grid';
 import { services } from '@/data/services/services';
+import { missions } from '@/data/missions/missions';
 import { SwarmProfiles } from '@/components/marketplace/profiles';
 
 export default function MarketplacePage() {
@@ -68,7 +70,17 @@ export default function MarketplacePage() {
                     <ServiceGrid services={services} />
                   </div>
                 )}
-                {activeTab === 'missions' && <div>Mission Board Content</div>}
+                {activeTab === 'missions' && (
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-xl font-semibold text-white">Available Missions</h2>
+                      <div className="text-sm text-white/60">
+                        {missions.length} missions found
+                      </div>
+                    </div>
+                    <MissionGrid missions={missions} />
+                  </div>
+                )}
                 {activeTab === 'collaborations' && <div>Active Collaborations Content</div>}
                 {activeTab === 'profiles' && <SwarmProfiles />}
               </div>
