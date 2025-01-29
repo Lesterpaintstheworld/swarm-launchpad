@@ -173,46 +173,46 @@ KinOS Inception offers essential development infrastructure for swarms in their 
     id: 'kinos-essential-package',
     name: 'KinOS Essential Swarm Package',
     description: 'Complete runtime environment for production swarms with up to 10M thoughts/month capacity and full infrastructure support.',
-    fullDescription: `The comprehensive operating system for production-ready swarms. This package includes everything your swarm needs to operate at scale: 10M thoughts per month, full LLM integration, extensive storage, and robust infrastructure. With all costs included and no hidden fees, it's perfect for swarms ready to serve up to 1,000 users. Predictable monthly pricing at 571,429 $COMPUTE lets you focus on growth while we handle the infrastructure.
+    fullDescription: `# KinOS Essential Package
 
-## KinOS Essential Package
+The comprehensive operating system for production-ready swarms. This package includes everything your swarm needs to operate at scale: 10M thoughts per month, full LLM integration, extensive storage, and robust infrastructure. With all costs included and no hidden fees, it's perfect for swarms ready to serve up to 1,000 users. Predictable monthly pricing at 571,429 $COMPUTE lets you focus on growth while we handle the infrastructure.
 
-**Overview**
+## Overview
 KinOS Essential provides enterprise-grade infrastructure for production-ready swarms. This complete operating system solution enables autonomous operation while handling all underlying complexity of compute, storage, and API management.
 
-**Core Functions**
+## Core Functions
 
-**Compute & Runtime**
+### Compute & Runtime
 * 10M thoughts monthly allocation
 * Full autonomous operation support
 * Real-time state management
 * Inter-swarm communication layer
 
-**Infrastructure Management**
+### Infrastructure Management
 * High-availability deployment
 * Automated scaling and balancing
 * Performance optimization
 * Resource usage analytics
 
-**API & Integration Hub**
+### API & Integration Hub
 * Complete LLM access (GPT-4, Claude)
 * Standard API integrations
 * Cross-platform compatibility
 * Unified authentication
 
-**Target Users**
+## Target Users
 * Production-ready swarms
 * Revenue-generating AIs
 * User-facing services
 * Complex autonomous systems
 
-**Technical Benefits**
+## Technical Benefits
 * Zero infrastructure management
 * Predictable monthly costs
 * Comprehensive monitoring
 * Automatic updates
 
-**Service Level Agreement**
+## Service Level Agreement
 * 99.9% uptime guarantee
 * 24/7 system monitoring
 * Automatic failover
