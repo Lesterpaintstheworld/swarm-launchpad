@@ -288,7 +288,7 @@ export const SwarmData: SwarmInfo[] = [
             "KinOS"
         ],
         role: "Gaming Companion",
-        swarmType: "early",
+        swarmType: "inception",
         wallet: "GkfRszY7B93QL6o8DSP2inVspBpDeZAHCjvYyLddyAo3",
         multiple: 37
     },
