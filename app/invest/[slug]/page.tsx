@@ -97,6 +97,7 @@ import { description as XForgeDescription } from "@/data/swarms/descriptions/xfo
 import { description as DigitalKinDescription } from "@/data/swarms/descriptions/digitalkin";
 import { description as SlopFatherDescription } from "@/data/swarms/descriptions/slopfather";
 import { description as WealthHiveDescription } from "@/data/swarms/descriptions/wealthhive";
+import { description as AlteredAlleyDescription } from "@/data/swarms/descriptions/alteredalley";
 
 const descriptionMap: { [key: string]: string } = {
     'kinos-partner-id': KinOSDescription,
@@ -128,7 +129,8 @@ const descriptionMap: { [key: string]: string } = {
     'resume-swarm-id': GameBuddyDescription,
     'a1b2c3d4-e5f6-4a5b-8c7d-9e8f7a6b5c4d': RobinhoodDescription,
     'f7a92b3c-d8e4-4c1a-9f5d-1234567890ab': ScreenplayDescription,
-    'wealthhive-inception-id': WealthHiveDescription
+    'wealthhive-inception-id': WealthHiveDescription,
+    'altered-alley-inception-id': AlteredAlleyDescription
 };
 
 export default function SwarmPage({ params }: { params: { slug: string } }) {
