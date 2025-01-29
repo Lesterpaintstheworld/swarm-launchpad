@@ -46,7 +46,7 @@ export default function Invest() {
             {sortedSwarms.filter(swarm => swarm.launchDate && new Date(swarm.launchDate) > new Date()).length > 0 && (
                 <section className="mb-24">
                     <div className="flex items-center gap-2 mb-8">
-                        <h3 className="text-2xl font-semibold">🚀 Launching Now</h3>
+                        <h3 className="text-2xl font-semibold">🔥 Launching Now</h3>
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger>
