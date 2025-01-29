@@ -4,7 +4,15 @@ import { getSwarmInfo } from "@/data/swarms/info";
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-function CountdownTimer({ launchDate }: { launchDate: Date }) {
+// Helper function for date comparison
+const isBeforeLaunchDate = (launchDate: string | Date | undefined) => {
+    if (!launchDate) return false;
+    const now = Date.now();
+    const launch = new Date(launchDate).getTime();
+    return now < launch;
+};
+
+function CountdownTimer({ launchDate }: { launchDate: string | Date }) {
     const [timeLeft, setTimeLeft] = useState<{
         days: number;
         hours: number;
@@ -14,7 +22,7 @@ function CountdownTimer({ launchDate }: { launchDate: Date }) {
 
     useEffect(() => {
         const calculateTimeLeft = () => {
-            const difference = launchDate.getTime() - new Date().getTime();
+            const difference = new Date(launchDate).getTime() - Date.now();
             
             if (difference <= 0) {
                 setTimeLeft(null);
@@ -29,10 +37,7 @@ function CountdownTimer({ launchDate }: { launchDate: Date }) {
             });
         };
 
-        // Calculate immediately
         calculateTimeLeft();
-        
-        // Then update every second
         const timer = setInterval(calculateTimeLeft, 1000);
 
         return () => clearInterval(timer);
