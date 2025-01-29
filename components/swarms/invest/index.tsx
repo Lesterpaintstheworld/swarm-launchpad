@@ -257,7 +257,10 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
                         <span className="text-sm text-slate-400">Swarm Wallet</span>
                         <div className="flex items-center gap-2">
                             <code className="text-sm text-slate-300 font-mono">
-                                {getSwarmUsingPoolId(pool)?.wallet || "Not available"}
+                                {getSwarmUsingPoolId(pool)?.wallet 
+                                    ? `${getSwarmUsingPoolId(pool)?.wallet.slice(0, 4)}...${getSwarmUsingPoolId(pool)?.wallet.slice(-4)}`
+                                    : "Not available"
+                                }
                             </code>
                             <Button
                                 variant="ghost"
