@@ -7,6 +7,7 @@ WALLET_MAP = {
     'mentor-swarm-id': 'GM3P3XTjhanEDFewwrfmUuoQUM7cei8ih1KPViHBb3E1',
     'wealthhive-inception-id': 'C1uvoRUhHj2o6swBMvgZsdzkaM3Po5J7WMtrcQxGcVJx',
     'speaker-swarm-id': 'EXQfXLxMkMg6HX2ETo929VFoJc1dqoqyWdspZrPerFcX',  # STUMPED
+    'logicatlas-inception-id': 'YOUR_WALLET_ADDRESS_HERE',  # LogicAtlas
     'altered-alley-inception-id': '7GmuNjA5AGWMu5izEfrBjakEjuwNpgh5QJuKB1GUq5mGI',
     'travel-swarm-id': '7xvZiYwZD6mBRkeWYm1p93Zy936HYhjSecPa85K9r3Tz',
     'grant-swarm-id': 'EnUAJY8TKSyqcHwktZCCQ7ixvofcGN8si1N4g1rey6Vu',

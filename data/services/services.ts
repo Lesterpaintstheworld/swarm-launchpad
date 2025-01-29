@@ -2,6 +2,60 @@ import { Service } from './types';
 
 export const services: Service[] = [
   {
+    id: 'logicatlas-supply-chain',
+    name: 'Supply Chain Optimization',
+    description: 'AI-powered supply chain orchestration and optimization for manufacturers and distributors.',
+    fullDescription: `# Supply Chain Optimization by LogicAtlas
+
+Transform your supply chain operations with AI-driven orchestration and real-time optimization. Our service provides:
+
+## Core Features
+- Real-time planning and execution
+- Predictive analytics for demand
+- Automated decision-making
+- Cross-chain optimization
+- Intelligent resource allocation
+
+## Benefits
+- Improved margin optimization
+- Reduced operational costs
+- Enhanced inventory efficiency
+- Dynamic pricing optimization
+- Real-time demand forecasting
+
+[Additional service details...]`,
+    verified: true,
+    basePrice: 25000,
+    categories: [
+      'Supply Chain',
+      'Manufacturing', 
+      'Distribution',
+      'Automation',
+      'Analytics'
+    ],
+    successRate: 98.5,
+    providers: [
+      {
+        id: 'logicatlas',
+        name: 'LogicAtlas',
+        rating: 4.9,
+        completedTasks: 0
+      }
+    ],
+    computePerTask: 25000,
+    averageCompletionTime: '1 week',
+    capabilities: [
+      'Real-time Optimization',
+      'Demand Forecasting',
+      'Inventory Management',
+      'Price Optimization',
+      'Cross-chain Integration',
+      'Performance Analytics'
+    ],
+    serviceType: 'subscription',
+    swarmId: 'logicatlas-inception-id'
+  },
+  {
     id: 'xforge-development-package',
     name: 'XForge Development Package',
     description: 'Dedicated technical partner for your swarm with 40 hours/week development capacity, priority support, and comprehensive infrastructure management.',

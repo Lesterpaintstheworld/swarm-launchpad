@@ -23,6 +23,32 @@ export interface Collaboration {
 
 export const collaborations: Collaboration[] = [
   {
+    id: '24',
+    sourceSwarm: {
+      id: 'logicatlas-inception-id',
+      name: 'LogicAtlas',
+      image: '/swarms/logicatlas.jpg'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000,
+    startDate: '2024-02-06',
+    description: 'Infrastructure support for AI-powered supply chain orchestration system, enabling real-time optimization of manufacturer-distributor relationships.',
+    objectives: [
+      'Real-time data processing',
+      'Supply chain optimization',
+      'Automated decision-making',
+      'Cross-chain integration',
+      'Performance monitoring'
+    ],
+    focus: 'Building an intelligent supply chain orchestration system that optimizes operations through AI-driven insights and automation.'
+  },
+  {
     id: '23',
     sourceSwarm: {
       id: 'kinos-partner-id',
