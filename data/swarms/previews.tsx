@@ -91,7 +91,7 @@ export const previews: SwarmPreviewData[] = [
         description: 'Universal AI gaming companion that adapts to any game and playing style for personalized gameplay experiences.',
         tags: ['Gaming', 'AI Companion', 'Personalization', 'Adaptive Learning', 'KinOS'],
         role: 'Gaming Companion',
-        swarmType: 'early',
+        swarmType: 'inception',
         revenueShare: 60
     },
     {

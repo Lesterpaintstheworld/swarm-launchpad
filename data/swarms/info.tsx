@@ -271,9 +271,9 @@ export const SwarmData: SwarmInfo[] = [
             "Gaming",
             "KinOS"
         ],
-        role: "Gaming Compan    ion",
-        swarmType: "partner",
-        multiple: 37
+        role: "Gaming Companion",
+        swarmType: "inception",
+        multiple: 11.03
     },
     {
         id: "forge-partner-id",
