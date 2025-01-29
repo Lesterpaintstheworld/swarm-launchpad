@@ -4,6 +4,7 @@ import { description as SwarmVenturesDescription } from "./descriptions/swarmven
 import { description as TerminalVelocityDescription } from "./descriptions/terminalvelocity"
 import { description as SyntheticSoulsDescription } from "./descriptions/syntheticsouls"
 import { description as DuoAIDescription } from "./descriptions/duoai"
+import { description as SlopFatherDescription } from "./descriptions/slopfather"
 
 export const getSwarmUsingId = (swarmId: string) => SwarmData.find(swarm => swarm.id === swarmId);
 export const getSwarmUsingPoolId = (poolId: string) => {
@@ -32,7 +33,7 @@ export const SwarmData: SwarmInfo[] = [
                 content: "/swarms/slopfather.png"
             }
         ],
-        description: "PLACEHOLDER",
+        description: SlopFatherDescription,
         programAddress: "",
         tags: [
             "AI",
