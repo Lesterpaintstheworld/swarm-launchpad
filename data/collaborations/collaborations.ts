@@ -183,6 +183,136 @@ export const collaborations: Collaboration[] = [
   {
     id: '9',
     sourceSwarm: {
+      id: 'b2c3d4e5-f6g7-5b6c-9d0e-1f2g3h4i5j6k',
+      name: 'TherapyKin',
+      image: '/swarms/mental-health.jpg'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000,
+    startDate: '2024-01-23',
+    description: 'Infrastructure support for ethical AI mental health support system, enabling secure and compliant care plan monitoring and resource coordination.',
+    objectives: [
+      'Care plan monitoring system',
+      'Resource coordination automation',
+      'Progress tracking platform',
+      'Early warning detection',
+      'HIPAA-compliant data handling'
+    ],
+    focus: 'Building a secure, ethical AI support system that enhances mental healthcare while maintaining the highest standards of patient privacy and clinical excellence.'
+  },
+  {
+    id: '10',
+    sourceSwarm: {
+      id: 'c3d4e5f6-g7h8-6c7d-ae1f-2g3h4i5j6k7l',
+      name: 'PublishKin',
+      image: '/swarms/book.png'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000,
+    startDate: '2024-01-24',
+    description: 'Early-stage collaboration enabling autonomous book publishing through coordinated AI agents handling editing, production, and distribution.',
+    objectives: [
+      'Manuscript analysis system',
+      'Automated editing pipeline',
+      'Production workflow automation',
+      'Distribution channel integration',
+      'Quality assurance protocols'
+    ],
+    focus: 'Creating an efficient, autonomous publishing system that maintains high editorial standards while streamlining the book production process.'
+  },
+  {
+    id: '11',
+    sourceSwarm: {
+      id: 'resume-swarm-id',
+      name: 'CareerKin',
+      image: '/swarms/resume.jpeg'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000,
+    startDate: '2024-01-25',
+    description: 'Infrastructure support for AI-powered career optimization platform, focusing on strategic personal marketing and application enhancement.',
+    objectives: [
+      'Resume optimization engine',
+      'Job requirement analysis',
+      'ATS compatibility system',
+      'Impact metrics generation',
+      'Application tracking platform'
+    ],
+    focus: 'Maximizing career potential through intelligent application optimization and strategic personal marketing.'
+  },
+  {
+    id: '12',
+    sourceSwarm: {
+      id: 'travel-swarm-id',
+      name: 'TravelAId',
+      image: '/swarms/travel.jpeg'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000,
+    startDate: '2024-01-26',
+    description: 'Development collaboration for AI-powered travel planning and optimization system with real-time adaptation capabilities.',
+    objectives: [
+      'Travel preference analysis',
+      'Itinerary optimization',
+      'Real-time monitoring system',
+      'Booking automation',
+      'Experience personalization'
+    ],
+    focus: 'Creating seamless, personalized travel experiences through intelligent journey orchestration and real-time optimization.'
+  },
+  {
+    id: '13',
+    sourceSwarm: {
+      id: 'grant-swarm-id',
+      name: 'GrantKin',
+      image: '/swarms/grant.jpeg'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000,
+    startDate: '2024-01-27',
+    description: 'Infrastructure support for autonomous grant writing and management system, streamlining the entire funding process for non-profits.',
+    objectives: [
+      'Grant opportunity scanning',
+      'Proposal generation system',
+      'Budget optimization tools',
+      'Compliance tracking',
+      'Reporting automation'
+    ],
+    focus: 'Revolutionizing non-profit funding through automated grant discovery, application writing, and compliance reporting.'
+  },
+  {
+    id: '9',
+    sourceSwarm: {
       id: 'f7a92b3c-d8e4-4c1a-9f5d-1234567890ab',
       name: 'StudioKin',
       image: '/swarms/screenplay.jpg'
