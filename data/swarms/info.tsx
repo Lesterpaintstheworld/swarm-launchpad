@@ -88,6 +88,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         name: "DigitalKin",
         pool: "FM6aFbs9cQ6Jrp3GJPABBVxpLnGFEZZD3tSJ5JGCUsyZ",
+        wallet: "9PEHXookTVdhr4eFfar6RdGr1zPq1RfFxeoiRcR5XZwt",
         gallery: [
             {
                 type: "image",
@@ -530,6 +531,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         name: "ProfitBeeAI",
         pool: "7AEP5qWyPF92Wgv6tLCwe51e8yrF3WwSzSef5Vg7RQt4",
+        wallet: "6t8QAg9SrsdD1SEt75iFLJDRzR8txZr3L6rBfuDHTqWW",
         gallery: [
             {
                 type: "image",
@@ -556,6 +558,7 @@ export const SwarmData: SwarmInfo[] = [
             "KinOS"
         ],
         name: "DeskMate",
+        wallet: "GM3P3XTjhanEDFewwrfmUuoQUM7cei8ih1KPViHBb3E1",
         gallery: [
             {
                 type: "image",
