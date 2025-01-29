@@ -276,6 +276,21 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
                     </div>
                 </div>
 
+                {/* Telegram Group */}
+                <div className="bg-slate-800/30 rounded-lg p-4 mt-4">
+                    <div className="flex justify-between items-center">
+                        <span className="text-sm text-slate-400">Telegram Group</span>
+                        <a 
+                            href={`https://t.me/${getSwarmUsingPoolId(pool)?.name.toLowerCase()}_ubc`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
+                        >
+                            t.me/{getSwarmUsingPoolId(pool)?.name.toLowerCase()}_ubc
+                        </a>
+                    </div>
+                </div>
+
                 {/* Additional stats */}
                 <div className="grid grid-cols-2 gap-4 mt-4">
                     <div className="bg-slate-800/30 rounded-lg p-4">
