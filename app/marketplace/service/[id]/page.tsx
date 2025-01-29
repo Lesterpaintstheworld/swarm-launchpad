@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import { getService } from '@/data/services/services';
 import { getSwarm } from '@/data/swarms/previews';
 import { Shield, Star, Cpu, Clock } from 'lucide-react';
-import { Markdown } from '@/components/ui/markdown';
+import { ClientMarkdown } from '@/components/ui/clientMarkdown';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ServiceProvider } from '@/data/services/types';
@@ -81,7 +81,7 @@ export default function ServicePage() {
           <div className="space-y-4">
             <h2 className="text-xl font-semibold">About this Service</h2>
             <div className="prose prose-invert max-w-none">
-              <Markdown markdown={service.fullDescription} />
+              <ClientMarkdown markdown={service.fullDescription} />
             </div>
           </div>
 
