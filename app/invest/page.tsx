@@ -63,34 +63,9 @@ export default function Invest() {
                     
                     {/* Add animated background and special styling */}
                     <div className="relative">
-                        {/* Network Graph Background */}
+                        {/* Glowing Background */}
                         <div className="absolute inset-0 overflow-hidden">
-                            {/* Static Nodes */}
-                            <div className="absolute w-2 h-2 top-[20%] left-[20%] bg-yellow-500/30 rounded-full" />
-                            <div className="absolute w-2 h-2 top-[60%] left-[30%] bg-yellow-500/30 rounded-full" />
-                            <div className="absolute w-2 h-2 top-[30%] left-[50%] bg-yellow-500/30 rounded-full" />
-                            <div className="absolute w-2 h-2 top-[70%] left-[70%] bg-yellow-500/30 rounded-full" />
-                            <div className="absolute w-2 h-2 top-[40%] left-[80%] bg-yellow-500/30 rounded-full" />
-                            <div className="absolute w-2 h-2 top-[20%] left-[90%] bg-yellow-500/30 rounded-full" />
-                            
-                            {/* Connecting Lines with Pulsing Light */}
-                            <div className="absolute top-[20%] left-[20%] w-[30%] h-[40%] overflow-hidden">
-                                <div className="absolute inset-0 border-t border-yellow-500/10" />
-                                <div className="absolute h-1 w-[20%] bg-gradient-to-r from-transparent via-yellow-500/50 to-transparent animate-[moveLight_3s_linear_infinite]" />
-                            </div>
-                            <div className="absolute top-[30%] left-[50%] w-[30%] h-[40%] overflow-hidden">
-                                <div className="absolute inset-0 border-t border-yellow-500/10 rotate-45 origin-left" />
-                                <div className="absolute h-1 w-[20%] bg-gradient-to-r from-transparent via-yellow-500/50 to-transparent animate-[moveLight_2.5s_linear_infinite]" />
-                            </div>
-                            <div className="absolute top-[60%] left-[30%] w-[40%] h-[10%] overflow-hidden">
-                                <div className="absolute inset-0 border-t border-yellow-500/10 -rotate-12 origin-left" />
-                                <div className="absolute h-1 w-[20%] bg-gradient-to-r from-transparent via-yellow-500/50 to-transparent animate-[moveLight_4s_linear_infinite]" />
-                            </div>
-                            
-                            {/* Random Flash Effects */}
-                            <div className="absolute w-4 h-4 top-[20%] left-[20%] bg-yellow-500/0 rounded-full animate-[flash_4s_ease-out_infinite]" />
-                            <div className="absolute w-4 h-4 top-[30%] left-[50%] bg-yellow-500/0 rounded-full animate-[flash_5s_ease-out_infinite_1s]" />
-                            <div className="absolute w-4 h-4 top-[70%] left-[70%] bg-yellow-500/0 rounded-full animate-[flash_3s_ease-out_infinite_2s]" />
+                            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-yellow-500/5 to-orange-500/10 blur-3xl animate-pulse" />
                         </div>
 
                         {/* Cards grid with enhanced hover effects */}
