@@ -1,4 +1,4 @@
-import { Shield, Star, Cpu, Clock } from 'lucide-react';
+import { Shield, Star, Cpu, Clock, ExternalLink } from 'lucide-react';
 import { Service } from '@/data/services/types';
 import { getSwarm } from '@/data/swarms/previews';
 import Image from 'next/image';
@@ -81,22 +81,39 @@ export function ServiceCard({ service }: ServiceCardProps) {
         <div className="flex items-center justify-between pt-4 border-t border-white/5">
           <div className="flex items-center gap-2">
             {swarm && (
-              <Link 
-                href={`/invest/${swarm.id}`} 
-                className="flex items-center gap-2 hover:bg-white/5 px-2 py-1 rounded-lg transition-colors"
-              >
-                <div className="relative w-6 h-6 rounded-full overflow-hidden">
-                  <Image
-                    src={swarm.image}
-                    alt={swarm.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <span className="text-sm text-white/60 hover:text-white transition-colors">
-                  by {swarm.name}
-                </span>
-              </Link>
+              <>
+                <Link 
+                  href={`/invest/${swarm.id}`} 
+                  className="flex items-center gap-2 hover:bg-white/5 px-2 py-1 rounded-lg transition-colors"
+                >
+                  <div className="relative w-6 h-6 rounded-full overflow-hidden">
+                    <Image
+                      src={swarm.image}
+                      alt={swarm.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <span className="text-sm text-white/60 hover:text-white transition-colors">
+                    by {swarm.name}
+                  </span>
+                </Link>
+                {swarm.wallet ? (
+                  <Link
+                    href={`https://solscan.io/account/${swarm.wallet}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1 px-2 py-1 text-xs text-white/40 hover:text-white/60 transition-colors"
+                  >
+                    <ExternalLink className="w-3 h-3" />
+                    <span>Solscan</span>
+                  </Link>
+                ) : (
+                  <span className="px-2 py-1 text-xs text-white/40">
+                    Wallet not available
+                  </span>
+                )}
+              </>
             )}
           </div>
           <button className="px-4 py-2 text-sm font-medium rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-white">
