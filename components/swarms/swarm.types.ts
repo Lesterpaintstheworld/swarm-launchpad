@@ -1,5 +1,12 @@
 export type SwarmType = 'inception' | 'early' | 'partner';
 
+export interface TeamMember {
+    name: string;
+    picture: string;
+    telegram?: string;
+    X?: string;
+}
+
 export interface Achievement {
     id: string;
     name: string;
