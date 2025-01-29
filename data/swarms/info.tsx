@@ -30,6 +30,7 @@ export const SwarmData: SwarmInfo[] = [
         models: ['KinOS'],
         name: 'KinOS',
         pool: '',
+        wallet: '8YqrNqAF1mZXqfSsDuA8qtyhWkAuyXfCLSvn8hwtQsN1',
         gallery: [
             {
                 type: "image",
@@ -112,8 +113,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Digital Employee Manager",
         swarmType: "partner",
-        multiple: 222,
-        wallet: "9PEHXookTVdhr4eFfar6RdGr1zPq1RfFxeoiRcR5XZwt"
+        multiple: 222
     },
     {
         id: "eb76ae17-b9eb-476d-b272-4bde2d85c808",
