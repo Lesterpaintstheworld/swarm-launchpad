@@ -1,6 +1,7 @@
 import { Collaboration } from '@/components/marketplace/types';
 
 export const collaborations: Collaboration[] = [
+  // Early Swarms
   {
     id: '1',
     sourceSwarm: {
@@ -48,6 +49,167 @@ export const collaborations: Collaboration[] = [
     serviceName: 'Essential Swarm Package',
     status: 'active',
     price: 100000
+  },
+  // Inception Swarms
+  {
+    id: '4',
+    sourceSwarm: {
+      id: 'a1b2c3d4-e5f6-4a5b-8c7d-9e8f7a6b5c4d',
+      name: 'Robinhood Agent',
+      image: '/swarms/robinhood.jpg'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000
+  },
+  {
+    id: '5',
+    sourceSwarm: {
+      id: '7d3c9e5b-1f8a-4d3c-b8d4-9e5b1f8a4d3c',
+      name: 'DuoAI',
+      image: '/swarms/duoai.jpg'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000
+  },
+  {
+    id: '6',
+    sourceSwarm: {
+      id: 'h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q',
+      name: 'ProfitBeeAI',
+      image: '/swarms/affiliate.jpeg'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000
+  },
+  {
+    id: '7',
+    sourceSwarm: {
+      id: 'propertykin-inception-id',
+      name: 'PropertyKin',
+      image: '/swarms/property.png'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000
+  },
+  {
+    id: '8',
+    sourceSwarm: {
+      id: 'd4e5f6g7-h8i9-7d8e-bf2g-3h4i5j6k7l8m',
+      name: 'PlayWise',
+      image: '/swarms/toy.png'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000
+  },
+  {
+    id: '9',
+    sourceSwarm: {
+      id: 'f7a92b3c-d8e4-4c1a-9f5d-1234567890ab',
+      name: 'StudioKin',
+      image: '/swarms/screenplay.jpg'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000
+  },
+  {
+    id: '10',
+    sourceSwarm: {
+      id: 'b2c3d4e5-f6g7-5b6c-9d0e-1f2g3h4i5j6k',
+      name: 'TherapyKin',
+      image: '/swarms/mental-health.jpg'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000
+  },
+  {
+    id: '11',
+    sourceSwarm: {
+      id: 'g7h8i9j0-k1l2-0g1h-ei5j-6k7l8m9n0o1p',
+      name: 'CommerceNest',
+      image: '/swarms/commercenest.jpg'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000
+  },
+  {
+    id: '12',
+    sourceSwarm: {
+      id: 'wealthhive-inception-id',
+      name: 'WealthHive',
+      image: '/swarms/wealthhive.png'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000
+  },
+  {
+    id: '13',
+    sourceSwarm: {
+      id: 'c3d4e5f6-g7h8-6c7d-ae1f-2g3h4i5j6k7l',
+      name: 'PublishKin',
+      image: '/swarms/book.png'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000
   }
 ];
 
