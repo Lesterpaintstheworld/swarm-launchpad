@@ -881,6 +881,14 @@ export const SwarmData: SwarmInfo[] = [
         {
             name: 'Pitch Deck',
             url: 'https://ai-alley-integration-5wrdhgu.gamma.site/'
+        },
+        {
+            name: 'Spatial Experience 1',
+            url: 'https://www.spatial.io/s/Ai-Agents-675f9c30a04dbb712f0e051d?share=2899369617154930294'
+        },
+        {
+            name: 'Spatial Experience 2',
+            url: 'https://www.spatial.io/s/AI-63c8a8898ab06ebb400f0d9f?share=5084343558932005183'
         }
     ]
     }
