@@ -41,7 +41,9 @@ export function CollaborationCard({ id, sourceSwarm, targetSwarm, serviceName, s
           className="absolute inset-0 z-20"
           aria-label="View collaboration details"
         />
-        <div className="flex items-center justify-between gap-6">
+        
+        {/* Service Provider */}
+        <div className="flex items-center gap-4 mb-4">
           {/* Provider Swarm */}
           <div className="flex flex-col items-center gap-3">
             <Link 
