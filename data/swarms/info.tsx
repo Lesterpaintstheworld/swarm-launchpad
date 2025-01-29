@@ -48,7 +48,8 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Content Creator",
         swarmType: "partner",
-        multiple: 1
+        multiple: 1,
+        wallet: "EXQfXLxMkMg6HX2ETo929VFoJc1dqoqyWdspZrPerFcX"
     },
     {
         id: "digitalkin-partner-id",
@@ -82,7 +83,8 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: "Digital Employee Manager",
         swarmType: "partner",
-        multiple: 222
+        multiple: 222,
+        wallet: "9PEHXookTVdhr4eFfar6RdGr1zPq1RfFxeoiRcR5XZwt"
     },
     {
         id: "eb76ae17-b9eb-476d-b272-4bde2d85c808",
