@@ -1,3 +1,5 @@
+'use client';
+
 import { getCollaboration } from '@/data/collaborations/collaborations';
 import { getSwarm } from '@/data/swarms/previews';
 import { CollaborationChat } from '@/components/marketplace/collaborations/chat';
