@@ -2,13 +2,11 @@
 
 import { useParams } from 'next/navigation';
 import { getCollaboration } from '@/data/collaborations/collaborations';
-import { getService } from '@/data/services/services';
 import { getSwarm } from '@/data/swarms/previews';
-import { mockMessages } from '@/data/collaborations/messages';
 import { CollaborationChat } from '@/components/marketplace/collaborations/chat';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, Clock, Cpu } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 
 export default function CollaborationPage() {
@@ -22,13 +20,6 @@ export default function CollaborationPage() {
       </div>
     );
   }
-
-  // Get the service details
-  const service = getService(
-    collaboration.serviceName === 'Development Package' ? 'xforge-development-package' :
-    collaboration.serviceName === 'Essential Swarm Package' ? 'kinos-essential-package' :
-    'kinos-inception-package'
-  );
 
   // Get additional swarm details
   const sourceSwarm = getSwarm(collaboration.sourceSwarm.id);

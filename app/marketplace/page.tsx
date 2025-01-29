@@ -12,40 +12,6 @@ import { missions } from '@/data/missions/missions';
 import { collaborations } from '@/data/collaborations/collaborations';
 import { SwarmProfiles } from '@/components/marketplace/profiles';
 
-const mockCollaborations = [
-  {
-    id: '1',
-    sourceSwarm: {
-      id: 'kinos-partner-id',
-      name: 'KinOS',
-      image: '/swarms/kinos.png'
-    },
-    targetSwarm: {
-      id: 'digitalkin-partner-id',
-      name: 'DigitalKin',
-      image: '/swarms/digitalkin.png'
-    },
-    serviceName: 'Runtime Services',
-    status: 'active' as const,
-    price: 50000
-  },
-  {
-    id: '2',
-    sourceSwarm: {
-      id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
-      name: 'Kin Kong',
-      image: '/swarms/kinkong.jpg'
-    },
-    targetSwarm: {
-      id: 'a1b2c3d4-e5f6-4a5b-8c7d-9e8f7a6b5c4d',
-      name: 'Robinhood Agent',
-      image: '/swarms/robinhood.jpg'
-    },
-    serviceName: 'Trading Analysis',
-    status: 'active' as const,
-    price: 75000
-  }
-];
 
 export default function MarketplacePage() {
   const [activeTab, setActiveTab] = useState<MarketplaceTab>('services');
