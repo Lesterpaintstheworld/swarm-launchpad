@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { Collaboration } from '@/data/collaborations/collaborations';
+import { getSwarmUsingId } from "@/data/swarms/info";
 
 interface SimulationNode extends d3.SimulationNodeDatum {
   id: string;
@@ -25,6 +26,13 @@ interface CollaborationGraphProps {
 export function CollaborationGraph({ collaborations }: CollaborationGraphProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [zoom, setZoom] = useState(1);
+
+  const getNodeSize = (swarmId: string): number => {
+    const swarm = getSwarmUsingId(swarmId);
+    if (!swarm?.multiple) return 30; // Default size
+    // Scale the multiple to a reasonable size range (20-60)
+    return Math.max(20, Math.min(60, 20 + (swarm.multiple * 0.8)));
+  };
 
   useEffect(() => {
     if (!svgRef.current) return;
@@ -108,7 +116,7 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
         .strength((d: SimulationLink) => d.strength * 0.1))
       .force("charge", d3.forceManyBody().strength(-200))
       .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius(60));
+      .force("collision", d3.forceCollide().radius((d: SimulationNode) => getNodeSize(d.id) + 10));
 
     // Add nodes to simulation with proper typing
     simulation.nodes(nodes as SimulationNode[]);
@@ -190,7 +198,7 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
 
     // Add circles to nodes with glowing effect
     node.append("circle")
-      .attr("r", 30)
+      .attr("r", (d: SimulationNode) => getNodeSize(d.id))
       .attr("fill", "rgba(236, 72, 153, 0.2)")
       .attr("stroke", "rgba(236, 72, 153, 0.5)")
       .attr("stroke-width", 3)
@@ -199,17 +207,17 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
     // Add images to nodes
     node.append("image")
       .attr("xlink:href", (d: SimulationNode) => d.image)
-      .attr("x", -25)
-      .attr("y", -25)
-      .attr("width", 50)
-      .attr("height", 50)
-      .attr("clip-path", "circle(25px)");
+      .attr("x", (d: SimulationNode) => -getNodeSize(d.id) * 0.833)
+      .attr("y", (d: SimulationNode) => -getNodeSize(d.id) * 0.833)
+      .attr("width", (d: SimulationNode) => getNodeSize(d.id) * 1.667)
+      .attr("height", (d: SimulationNode) => getNodeSize(d.id) * 1.667)
+      .attr("clip-path", (d: SimulationNode) => `circle(${getNodeSize(d.id)}px)`);
 
     // Add labels to nodes
     node.append("text")
       .text((d: SimulationNode) => d.name)
       .attr("x", 0)
-      .attr("y", 45)
+      .attr("y", (d: SimulationNode) => getNodeSize(d.id) + 15)
       .attr("text-anchor", "middle")
       .attr("fill", "rgb(236, 72, 153)")
       .attr("font-size", "14px")
