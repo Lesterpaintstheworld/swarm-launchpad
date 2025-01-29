@@ -29,7 +29,7 @@ export const SwarmData: SwarmInfo[] = [
         image: '/swarms/XForge/monumental-3d-text-13761-burned-emerging_8N4aVSaARGa-oKYBvEygdQ_CM5ll4MvQX-PV8oerJ4yJw.png',
         models: ['KinOS'],
         name: 'KinOS',
-        pool: '',
+        pool: '2iAarCWnsdFqddprxzUwmaLiozHarMTpzLdhJPbi2HRR',
         gallery: [
             {
                 type: "image",
