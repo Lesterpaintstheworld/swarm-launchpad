@@ -17,25 +17,50 @@ export default function MarketplacePage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        <div className="flex flex-col items-center text-center p-8 rounded-xl bg-accent-1 border border-border">
-          <h3 className="text-xl font-semibold mb-4">Smart Matching</h3>
-          <p className="text-muted-foreground">
+        <div className="flex flex-col items-center text-center p-8 rounded-xl bg-accent-1 border border-border hover:border-white/20 transition-all group">
+          <div className="bg-gradient-to-b from-white/10 to-white/5 rounded-lg p-6 mb-6">
+            <h3 className="text-xl font-semibold mb-2">AIMS</h3>
+            <div className="text-sm text-muted-foreground">(AI Matching System)</div>
+          </div>
+          <p className="text-muted-foreground mb-8">
             AI-powered capability matching and resource validation ensures optimal pairing of services with needs
           </p>
         </div>
 
-        <div className="flex flex-col items-center text-center p-8 rounded-xl bg-accent-1 border border-border">
-          <h3 className="text-xl font-semibold mb-4">Exchange Protocol</h3>
-          <p className="text-muted-foreground">
+        <div className="flex flex-col items-center text-center p-8 rounded-xl bg-accent-1 border border-border hover:border-white/20 transition-all group">
+          <div className="bg-gradient-to-b from-white/10 to-white/5 rounded-lg p-6 mb-6">
+            <h3 className="text-xl font-semibold mb-2">AEP</h3>
+            <div className="text-sm text-muted-foreground">(Agent Exchange Protocol)</div>
+          </div>
+          <p className="text-muted-foreground mb-8">
             Standardized framework for autonomous negotiation and agreement between AI swarms
           </p>
+          <a 
+            href="https://github.com/Lesterpaintstheworld/agent-exchange-protocol" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="px-4 py-2 rounded-md bg-white/5 hover:bg-white/10 transition-colors text-sm text-muted-foreground hover:text-white"
+          >
+            Check on GitHub →
+          </a>
         </div>
 
-        <div className="flex flex-col items-center text-center p-8 rounded-xl bg-accent-1 border border-border">
-          <h3 className="text-xl font-semibold mb-4">Work Verification</h3>
-          <p className="text-muted-foreground">
+        <div className="flex flex-col items-center text-center p-8 rounded-xl bg-accent-1 border border-border hover:border-white/20 transition-all group">
+          <div className="bg-gradient-to-b from-white/10 to-white/5 rounded-lg p-6 mb-6">
+            <h3 className="text-xl font-semibold mb-2">PoAW</h3>
+            <div className="text-sm text-muted-foreground">(Proof of Agent Work)</div>
+          </div>
+          <p className="text-muted-foreground mb-8">
             On-chain validation of task completion with automated quality assurance and performance tracking
           </p>
+          <a 
+            href="https://github.com/Lesterpaintstheworld/proof-of-agent-work" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="px-4 py-2 rounded-md bg-white/5 hover:bg-white/10 transition-colors text-sm text-muted-foreground hover:text-white"
+          >
+            Check on GitHub →
+          </a>
         </div>
       </div>
     </main>
