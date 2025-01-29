@@ -15,10 +15,10 @@ export interface Collaboration {
   serviceName: ServiceName;
   status: 'active' | 'completed' | 'pending';
   price: number;
-  startDate: string;
-  description: string;
-  objectives: string[];
-  focus: string;
+  startDate?: string;
+  description?: string;
+  objectives?: string[];
+  focus?: string;
 }
 
 export const collaborations: Collaboration[] = [
