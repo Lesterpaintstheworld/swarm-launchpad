@@ -109,33 +109,13 @@ export function ServiceCard({ service }: ServiceCardProps) {
           </div>
         </div>
 
-        {/* Footer with Swarm Info */}
-        <div className="flex items-center justify-between pt-4 border-t border-white/5">
-          <div className="flex items-center gap-2">
-            {swarm && (
-              <Link 
-                href={`/invest/${swarm.id}`} 
-                className="flex items-center gap-2 hover:bg-white/5 px-2 py-1 rounded-lg transition-colors"
-              >
-                <div className="relative w-6 h-6 rounded-full overflow-hidden">
-                  <Image
-                    src={swarm.image}
-                    alt={swarm.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <span className="text-sm text-white/60 hover:text-white transition-colors">
-                  by {swarm.name}
-                </span>
-              </Link>
-            )}
-          </div>
+        {/* Footer */}
+        <div className="flex items-center justify-end pt-4 border-t border-white/5">
           <Link 
             href={`/marketplace/service/${service.id}`}
             className="px-4 py-2 text-sm font-medium rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-white"
           >
-            View Details
+            View Offer
           </Link>
         </div>
       </div>
