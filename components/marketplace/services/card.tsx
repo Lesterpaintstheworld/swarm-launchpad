@@ -1,5 +1,5 @@
 import { Shield, Star, Clock, Cpu } from 'lucide-react';
-import { Service } from '../types';
+import { Service } from '@/data/services/types';
 import { cn } from '@/lib/utils';
 
 interface ServiceCardProps {

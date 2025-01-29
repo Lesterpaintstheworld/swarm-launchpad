@@ -1,4 +1,4 @@
-import { Service } from '../types';
+import { Service } from '@/data/services/types';
 import { ServiceCard } from './card';
 
 interface ServiceGridProps {

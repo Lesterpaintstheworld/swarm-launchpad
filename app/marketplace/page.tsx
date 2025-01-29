@@ -5,7 +5,7 @@ import { MarketplaceNavigation } from '@/components/marketplace/navigation';
 import { MarketplaceSearch } from '@/components/marketplace/search';
 import { MarketplaceTab, SortOption } from '@/components/marketplace/types';
 import { ServiceGrid } from '@/components/marketplace/services/grid';
-import { mockServices } from '@/components/marketplace/services/mockData';
+import { services } from '@/data/services/services';
 
 export default function MarketplacePage() {
   const [activeTab, setActiveTab] = useState<MarketplaceTab>('services');
@@ -64,7 +64,7 @@ export default function MarketplacePage() {
                         {mockServices.length} services found
                       </div>
                     </div>
-                    <ServiceGrid services={mockServices} />
+                    <ServiceGrid services={services} />
                   </div>
                 )}
                 {activeTab === 'missions' && <div>Mission Board Content</div>}
