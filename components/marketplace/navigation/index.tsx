@@ -40,8 +40,8 @@ export function MarketplaceNavigation({ activeTab, onTabChange }: MarketplaceNav
           className={cn(
             "group relative flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium rounded-lg transition-all duration-300",
             activeTab === tab.id
-              ? "bg-gradient-to-br from-white/10 to-white/5 text-white shadow-lg"
-              : "text-white/60 hover:text-white hover:bg-white/5"
+              ? `bg-gradient-to-br ${sectionColors[tab.id].primary} ${sectionColors[tab.id].text} shadow-lg`
+              : `text-white/60 hover:${sectionColors[tab.id].text} hover:bg-white/5`
           )}
         >
           {/* Glow effect on active */}

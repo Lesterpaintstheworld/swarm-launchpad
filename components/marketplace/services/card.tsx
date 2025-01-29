@@ -24,9 +24,9 @@ export function ServiceCard({ service }: ServiceCardProps) {
   };
 
   return (
-    <div className="group relative rounded-xl bg-white/5 border border-white/10 overflow-hidden transition-all duration-300 hover:border-white/20 hover:bg-white/10">
+    <div className={`group relative rounded-xl bg-white/5 border ${sectionColors.services.border} overflow-hidden transition-all duration-300 ${sectionColors.services.hover}`}>
       {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div className={`absolute inset-0 bg-gradient-to-br ${sectionColors.services.primary} opacity-0 group-hover:opacity-100 transition-opacity`} />
       
       <div className="relative p-6 space-y-4">
         {/* Header */}
