@@ -9,6 +9,25 @@ import { SwarmGallery } from "@/components/swarms/gallery";
 import { SwarmRecentMarketListings } from "@/components/market/recentListings";
 import { ManagePortfolioCard } from "@/components/cards/managePortfolio";
 import { getSwarm } from "@/data/swarms/previews";
+import { KinKongDescription } from "@/data/swarms/descriptions/kinkong";
+import { SwarmVenturesDescription } from "@/data/swarms/descriptions/swarmventures";
+import { TerminalVelocityDescription } from "@/data/swarms/descriptions/terminalvelocity";
+import { SyntheticSoulsDescription } from "@/data/swarms/descriptions/syntheticsouls";
+import { DuoAIDescription } from "@/data/swarms/descriptions/duoai";
+import { PropertyKinDescription } from "@/data/swarms/descriptions/propertykin";
+import { RobinhoodDescription } from "@/data/swarms/descriptions/robinhood";
+import { ScreenplayDescription } from "@/data/swarms/descriptions/screenplay";
+
+const descriptionMap: { [key: string]: string } = {
+    'eb76ae17-b9eb-476d-b272-4bde2d85c808': KinKongDescription,
+    'e8ffff3d-64d3-44d3-a8cf-f082c5c42234': SwarmVenturesDescription,
+    '988b16b4-6beb-4cc5-9a14-50f48ee47a22': TerminalVelocityDescription,
+    '03616e66-a21e-425b-a93b-16d6396e883f': SyntheticSoulsDescription,
+    '7d3c9e5b-1f8a-4d3c-b8d4-9e5b1f8a4d3c': DuoAIDescription,
+    'propertykin-inception-id': PropertyKinDescription,
+    'a1b2c3d4-e5f6-4a5b-8c7d-9e8f7a6b5c4d': RobinhoodDescription,
+    'f7a92b3c-d8e4-4c1a-9f5d-1234567890ab': ScreenplayDescription,
+};
 
 export default function SwarmPage({ params }: { params: { slug: string } }) {
     // Get data from both sources
@@ -22,6 +41,8 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
         // Keep preview data for these fields
         role: swarmPreview?.role,
         tags: swarmPreview?.tags,
+        // Use the full description from the descriptions folder if available
+        description: descriptionMap[swarmInfo.id] || swarmInfo.description
     } : null;
     if (!swarm) {
         redirect('/404');
