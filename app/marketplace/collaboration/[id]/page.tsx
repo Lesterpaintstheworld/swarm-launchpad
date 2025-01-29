@@ -4,6 +4,8 @@ import { useParams } from 'next/navigation';
 import { getCollaboration } from '@/data/collaborations/collaborations';
 import { getService } from '@/data/services/services';
 import { getSwarm } from '@/data/swarms/previews';
+import { mockMessages } from '@/data/collaborations/messages';
+import { CollaborationChat } from '@/components/marketplace/collaborations/chat';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, Clock, Cpu } from 'lucide-react';
@@ -113,6 +115,9 @@ export default function CollaborationPage() {
                   </p>
                 </div>
               )}
+
+              {/* Communication Section */}
+              <CollaborationChat messages={mockMessages} />
             </div>
 
             {/* Right Column - Collaboration & Stats */}
