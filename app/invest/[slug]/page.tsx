@@ -132,9 +132,9 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
                     }
                 </div>
                 
-                <div className="lg:col-span-5">
+                <div className="lg:col-span-5 w-full">
                     {swarm?.pool &&
-                        <div className="sticky top-6">
+                        <div className="sticky top-6 w-full">
                             <SwarmInvestCard
                                 pool={swarm.pool as string}
                             />

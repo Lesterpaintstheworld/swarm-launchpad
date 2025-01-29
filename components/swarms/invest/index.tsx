@@ -116,9 +116,9 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
     }
 
     return (
-        <div className={cn("space-y-6", className)}>
+        <div className={cn("space-y-6 w-full", className)}>
             {/* Buy UI Card */}
-            <Card className="bg-[#0f172a] p-6">
+            <Card className="bg-[#0f172a] p-6 w-full">
                 {/* Header section */}
                 <div className="flex justify-between items-start mb-8">
                     <div>
@@ -238,7 +238,7 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
             </Card>
 
             {/* Swarm Information Card */}
-            <Card className="bg-[#0f172a] p-6">
+            <Card className="bg-[#0f172a] p-6 w-full">
                 <h3 className="text-lg font-semibold text-white mb-4">Swarm Information</h3>
                 
                 {/* Wallet Address */}
