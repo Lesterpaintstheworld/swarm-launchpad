@@ -25,15 +25,15 @@ export const getSwarmInfo = (swarmId: string) => SwarmData.find(swarm => swarm.i
 
 export const SwarmData: SwarmInfo[] = [
     {
-        id: 'kinos-partner-id',
-        image: '/swarms/XForge/monumental-3d-text-13761-burned-emerging_8N4aVSaARGa-oKYBvEygdQ_CM5ll4MvQX-PV8oerJ4yJw.png',
+        id: 'kinos-early-id',
+        image: '/swarms/kinos.png',
         models: ['KinOS'],
         name: 'KinOS',
-        pool: '',
+        pool: 'HRJ8PuGzGhyKmqH9YwxPxvFtqNgXUBgBx5Kz7TaLWzQu',
         gallery: [
             {
                 type: "image",
-                content: "/swarms/XForge/monumental-3d-text-13761-burned-emerging_8N4aVSaARGa-oKYBvEygdQ_CM5ll4MvQX-PV8oerJ4yJw.png"
+                content: "/swarms/kinos.png"
             }
         ],
         description: KinOSDescription,
@@ -47,9 +47,10 @@ export const SwarmData: SwarmInfo[] = [
             'Scalability'
         ],
         role: 'Swarm Operating System',
-        swarmType: 'partner',
-        multiple: 1,
-        revenueShare: 50
+        swarmType: 'early',
+        multiple: 222,
+        revenueShare: 60,
+        wallet: '9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin'
     },
     {
         id: "slopfather-partner-id",
