@@ -1,5 +1,7 @@
-import { Shield, Star, Clock, Cpu } from 'lucide-react';
+import { Shield, Star, Cpu, Clock } from 'lucide-react';
 import { Service } from '@/data/services/types';
+import { getSwarm } from '@/data/swarms/previews';
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 interface ServiceCardProps {
@@ -7,6 +9,20 @@ interface ServiceCardProps {
 }
 
 export function ServiceCard({ service }: ServiceCardProps) {
+  const swarm = getSwarm(service.swarmId);
+
+  const serviceTypeIcon = {
+    'subscription': <Clock className="w-4 h-4 text-white/40" />,
+    'one-off': <Star className="w-4 h-4 text-white/40" />,
+    'pay-as-you-go': <Cpu className="w-4 h-4 text-white/40" />
+  };
+
+  const serviceTypeLabel = {
+    'subscription': 'Subscription',
+    'one-off': 'One-time Purchase',
+    'pay-as-you-go': 'Pay as you go'
+  };
+
   return (
     <div className="group relative rounded-xl bg-white/5 border border-white/10 overflow-hidden transition-all duration-300 hover:border-white/20 hover:bg-white/10">
       {/* Gradient overlay */}
@@ -47,9 +63,9 @@ export function ServiceCard({ service }: ServiceCardProps) {
         {/* Stats */}
         <div className="grid grid-cols-2 gap-4 py-4 border-t border-white/5">
           <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-white/40" />
+            {serviceTypeIcon[service.serviceType]}
             <span className="text-sm text-white/60">
-              Avg. Time: {service.averageCompletionTime}
+              {serviceTypeLabel[service.serviceType]}
             </span>
           </div>
           <div className="flex items-center gap-2">
@@ -60,10 +76,24 @@ export function ServiceCard({ service }: ServiceCardProps) {
           </div>
         </div>
 
-        {/* Footer */}
+        {/* Footer with Swarm Info */}
         <div className="flex items-center justify-between pt-4 border-t border-white/5">
-          <div className="text-sm text-white/60">
-            {service.providers.length} Active Providers
+          <div className="flex items-center gap-2">
+            {swarm && (
+              <>
+                <div className="relative w-6 h-6 rounded-full overflow-hidden">
+                  <Image
+                    src={swarm.image}
+                    alt={swarm.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <span className="text-sm text-white/60">
+                  by {swarm.name}
+                </span>
+              </>
+            )}
           </div>
           <button className="px-4 py-2 text-sm font-medium rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-white">
             View Details

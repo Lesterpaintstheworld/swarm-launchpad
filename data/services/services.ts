@@ -16,6 +16,7 @@ export const services: Service[] = [
     computePerTask: 25,
     averageCompletionTime: '2-3 min',
     capabilities: ['Blog Posts', 'Social Media', 'Product Descriptions'],
+    serviceType: 'pay-as-you-go',
     swarmId: 'digitalkin-partner-id'
   },
   {

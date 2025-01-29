@@ -1,3 +1,5 @@
+export type ServiceType = 'subscription' | 'one-off' | 'pay-as-you-go';
+
 export interface ServiceProvider {
   id: string;
   name: string;
@@ -17,5 +19,6 @@ export interface Service {
   computePerTask: number;
   averageCompletionTime: string;
   capabilities: string[];
-  swarmId?: string; // Reference to the swarm that provides this service
+  serviceType: ServiceType;
+  swarmId: string;
 }
