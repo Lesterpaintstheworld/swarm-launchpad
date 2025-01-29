@@ -116,143 +116,148 @@ export default function CollaborationPage() {
             </div>
 
             {/* Right Column - Collaboration & Stats */}
-            <div className="lg:col-span-5 space-y-6">
+            <div className="lg:col-span-5 w-full">
               {/* Collaboration Section */}
-              <div className="p-6 rounded-xl bg-white/5 border border-white/10">
-                <h3 className="text-xl font-semibold mb-4">Collaboration</h3>
-                <div className="grid grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="text-sm text-muted-foreground mb-2">Service Provider</h4>
-                    <Link 
-                      href={`/invest/${targetSwarm?.id}`}
-                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors"
-                    >
-                      <div className="relative w-12 h-12 rounded-full overflow-hidden border border-white/20">
-                        <Image
-                          src={collaboration.targetSwarm.image}
-                          alt={collaboration.targetSwarm.name}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div>
-                        <div className="font-medium">{collaboration.targetSwarm.name}</div>
-                        <div className="text-sm text-muted-foreground">{targetSwarm?.role}</div>
-                      </div>
-                    </Link>
-                  </div>
-                  <div>
-                    <h4 className="text-sm text-muted-foreground mb-2">Client</h4>
-                    <Link 
-                      href={`/invest/${sourceSwarm?.id}`}
-                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors"
-                    >
-                      <div className="relative w-12 h-12 rounded-full overflow-hidden border border-white/20">
-                        <Image
-                          src={collaboration.sourceSwarm.image}
-                          alt={collaboration.sourceSwarm.name}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div>
-                        <div className="font-medium">{collaboration.sourceSwarm.name}</div>
-                        <div className="text-sm text-muted-foreground">{sourceSwarm?.role}</div>
-                      </div>
-                    </Link>
+              <div className="sticky top-6 w-full space-y-6">
+                {/* Collaboration Box */}
+                <div className="p-6 rounded-xl bg-white/5 border border-white/10">
+                  <h3 className="text-xl font-semibold mb-4">Collaboration</h3>
+                  
+                  {/* Participants */}
+                  <div className="grid grid-cols-2 gap-6">
+                    <div>
+                      <h4 className="text-sm text-muted-foreground mb-2">Service Provider</h4>
+                      <Link 
+                        href={`/invest/${targetSwarm?.id}`}
+                        className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors"
+                      >
+                        <div className="relative w-12 h-12 rounded-full overflow-hidden border border-white/20">
+                          <Image
+                            src={collaboration.targetSwarm.image}
+                            alt={collaboration.targetSwarm.name}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <div>
+                          <div className="font-medium">{collaboration.targetSwarm.name}</div>
+                          <div className="text-sm text-muted-foreground">{targetSwarm?.role}</div>
+                        </div>
+                      </Link>
+                    </div>
+                    <div>
+                      <h4 className="text-sm text-muted-foreground mb-2">Client</h4>
+                      <Link 
+                        href={`/invest/${sourceSwarm?.id}`}
+                        className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors"
+                      >
+                        <div className="relative w-12 h-12 rounded-full overflow-hidden border border-white/20">
+                          <Image
+                            src={collaboration.sourceSwarm.image}
+                            alt={collaboration.sourceSwarm.name}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <div>
+                          <div className="font-medium">{collaboration.sourceSwarm.name}</div>
+                          <div className="text-sm text-muted-foreground">{sourceSwarm?.role}</div>
+                        </div>
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Pricing Card */}
-              <div className="p-6 rounded-xl bg-white/5 border border-white/10">
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">Weekly Subscription</span>
+                {/* Pricing Card */}
+                <div className="p-6 rounded-xl bg-white/5 border border-white/10">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">Weekly Subscription</span>
+                    </div>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-3xl font-bold">
+                        {collaboration.price.toLocaleString()}
+                      </span>
+                      <span className="metallic-text text-xl">$COMPUTE</span>
+                    </div>
+                    {collaboration.startDate && (
+                      <div className="pt-4 border-t border-white/10">
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-4 h-4 text-green-400" />
+                          <span>Active since {new Date(collaboration.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-bold">
-                      {collaboration.price.toLocaleString()}
-                    </span>
-                    <span className="metallic-text text-xl">$COMPUTE</span>
-                  </div>
-                  {collaboration.startDate && (
-                    <div className="pt-4 border-t border-white/10">
+                </div>
+
+                {/* On-chain Info Card */}
+                <div className="p-6 rounded-xl bg-white/5 border border-white/10">
+                  <h3 className="text-xl font-semibold mb-4">On-chain Info</h3>
+                  <div className="space-y-4">
+                    {/* $UBC Burned */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">$UBC Burned</span>
                       <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-green-400" />
-                        <span>Active since {new Date(collaboration.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>
+                        <span className="text-sm">-</span>
+                        <Link 
+                          href="#"
+                          className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
+                        >
+                          [→]
+                        </Link>
                       </div>
                     </div>
-                  )}
-                </div>
-              </div>
 
-              {/* On-chain Info Card */}
-              <div className="p-6 rounded-xl bg-white/5 border border-white/10">
-                <h3 className="text-xl font-semibold mb-4">On-chain Info</h3>
-                <div className="space-y-4">
-                  {/* $UBC Burned */}
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">$UBC Burned</span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">-</span>
-                      <Link 
-                        href="#"
-                        className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
-                      >
-                        [→]
-                      </Link>
+                    {/* $COMPUTE Burned */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">$COMPUTE Burned</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm">-</span>
+                        <Link 
+                          href="#"
+                          className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
+                        >
+                          [→]
+                        </Link>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* $COMPUTE Burned */}
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">$COMPUTE Burned</span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">-</span>
-                      <Link 
-                        href="#"
-                        className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
-                      >
-                        [→]
-                      </Link>
+                    {/* $UBC Redistributed */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">$UBC Redistributed</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm">-</span>
+                        <Link 
+                          href="#"
+                          className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
+                        >
+                          [→]
+                        </Link>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* $UBC Redistributed */}
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">$UBC Redistributed</span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">-</span>
-                      <Link 
-                        href="#"
-                        className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
-                      >
-                        [→]
-                      </Link>
+                    {/* $COMPUTE Redistributed */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">$COMPUTE Redistributed</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm">-</span>
+                        <Link 
+                          href="#"
+                          className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
+                        >
+                          [→]
+                        </Link>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* $COMPUTE Redistributed */}
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">$COMPUTE Redistributed</span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">-</span>
-                      <Link 
-                        href="#"
-                        className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
-                      >
-                        [→]
-                      </Link>
+                    {/* Coming Soon Notice */}
+                    <div className="pt-4 border-t border-white/10">
+                      <p className="text-sm text-center text-muted-foreground">
+                        On-chain tracking coming soon
+                      </p>
                     </div>
-                  </div>
-
-                  {/* Coming Soon Notice */}
-                  <div className="pt-4 border-t border-white/10">
-                    <p className="text-sm text-center text-muted-foreground">
-                      On-chain tracking coming soon
-                    </p>
                   </div>
                 </div>
               </div>
