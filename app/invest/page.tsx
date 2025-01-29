@@ -62,33 +62,36 @@ export default function Invest() {
                     </div>
                     
                     <div className="relative">
-                        {/* Integrated glowing background */}
-                        <div className="absolute inset-0 -mx-8 -my-6">
-                            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-yellow-500/10 to-orange-500/20 blur-[100px] animate-pulse" />
-                            {/* Natural fade into background */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/95 to-transparent" />
-                            <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-transparent" />
-                            <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background" />
-                            <div className="absolute inset-0 bg-gradient-to-l from-background via-transparent to-background" />
+                        {/* Enhanced background with dynamic elements */}
+                        <div className="absolute inset-0 rounded-3xl overflow-hidden">
+                            {/* Base gradient background */}
+                            <div className="absolute inset-0 bg-black/90" />
+                            
+                            {/* Animated gradient overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-yellow-500/5 to-orange-500/10 animate-pulse" />
+                            
+                            {/* Dynamic particles effect */}
+                            <div className="absolute inset-0 opacity-30">
+                                <div className="absolute h-1 w-1 rounded-full bg-yellow-500/50 top-[10%] left-[5%] animate-ping [animation-duration:3s]" />
+                                <div className="absolute h-1 w-1 rounded-full bg-orange-500/50 top-[40%] right-[15%] animate-ping [animation-duration:4s]" />
+                                <div className="absolute h-1 w-1 rounded-full bg-red-500/50 bottom-[20%] left-[25%] animate-ping [animation-duration:5s]" />
+                                <div className="absolute h-1 w-1 rounded-full bg-yellow-500/50 top-[60%] right-[35%] animate-ping [animation-duration:3.5s]" />
+                            </div>
+
+                            {/* Subtle grid pattern */}
+                            <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#ffffff1a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff1a_1px,transparent_1px)] bg-[size:24px_24px]" />
                         </div>
 
-                        {/* Cards grid with enhanced hover effects */}
-                        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {/* Content grid */}
+                        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
                             {sortedSwarms
                                 .filter(swarm => swarm.launchDate && new Date(swarm.launchDate) > new Date())
                                 .map((swarm) => (
                                     <div key={swarm.id} className="group relative">
-                                        {/* Glow effect */}
+                                        {/* Hover glow effect */}
                                         <div className="absolute -inset-1 bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-red-500/20 rounded-xl opacity-0 group-hover:opacity-100 blur transition-all duration-500" />
                                         
-                                        {/* Electric corner accents */}
-                                        <div className="absolute -inset-[2px] rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden">
-                                            <div className="absolute top-0 left-0 w-[20px] h-[20px] border-l-2 border-t-2 border-yellow-500/50 rounded-tl-xl" />
-                                            <div className="absolute top-0 right-0 w-[20px] h-[20px] border-r-2 border-t-2 border-orange-500/50 rounded-tr-xl" />
-                                            <div className="absolute bottom-0 left-0 w-[20px] h-[20px] border-l-2 border-b-2 border-orange-500/50 rounded-bl-xl" />
-                                            <div className="absolute bottom-0 right-0 w-[20px] h-[20px] border-r-2 border-b-2 border-red-500/50 rounded-br-xl" />
-                                        </div>
-                                        
+                                        {/* Card content */}
                                         <div className="relative">
                                             <SwarmPreviewCard 
                                                 swarm={{
@@ -106,6 +109,12 @@ export default function Invest() {
                                     </div>
                                 ))}
                         </div>
+
+                        {/* Corner decorations */}
+                        <div className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-yellow-500/20 to-transparent rounded-tl-3xl" />
+                        <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-orange-500/20 to-transparent rounded-tr-3xl" />
+                        <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-orange-500/20 to-transparent rounded-bl-3xl" />
+                        <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-red-500/20 to-transparent rounded-br-3xl" />
                     </div>
                 </section>
             )}
