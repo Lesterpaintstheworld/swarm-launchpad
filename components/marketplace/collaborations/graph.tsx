@@ -4,16 +4,6 @@ import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { Collaboration } from '@/data/collaborations/collaborations';
 
-interface Node {
-  id: string;
-  name: string;
-  image: string;
-  x?: number;
-  y?: number;
-  fx?: number | null;
-  fy?: number | null;
-}
-
 interface SimulationNode extends d3.SimulationNodeDatum {
   id: string;
   name: string;
@@ -112,13 +102,22 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       .attr("offset", "100%")
       .attr("stop-color", "rgba(255, 255, 255, 0)");
 
-    const simulation = d3.forceSimulation(nodes as SimulationNode[])
-      .force("link", d3.forceLink(links)
-        .id((d: any) => d.id)
-        .strength((d: any) => d.strength * 0.1))
+    const simulation = d3.forceSimulation<SimulationNode>()
+      .force("link", d3.forceLink<SimulationNode, SimulationLink>()
+        .id((d: SimulationNode) => d.id)
+        .strength((d: SimulationLink) => d.strength * 0.1))
       .force("charge", d3.forceManyBody().strength(-200))
       .force("center", d3.forceCenter(width / 2, height / 2))
       .force("collision", d3.forceCollide().radius(60));
+
+    // Add nodes to simulation with proper typing
+    simulation.nodes(nodes as SimulationNode[]);
+
+    // Add links to simulation with proper typing
+    const linkForce = simulation.force<d3.ForceLink<SimulationNode, SimulationLink>>("link");
+    if (linkForce) {
+      linkForce.links(links as SimulationLink[]);
+    }
 
     // Draw links with animated lights
     const linkGroup = g.append("g")
