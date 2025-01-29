@@ -80,7 +80,7 @@ export default function ServicePage() {
           {/* Full Description */}
           <div className="space-y-4">
             <h2 className="text-xl font-semibold">About this Service</h2>
-            <div className="prose prose-invert max-w-none">
+            <div className="prose prose-invert prose-lg max-w-none">
               <ClientMarkdown markdown={service.fullDescription} />
             </div>
           </div>
