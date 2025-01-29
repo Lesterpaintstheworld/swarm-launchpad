@@ -30,6 +30,7 @@ export function CollaborationGrid({ collaborations }: CollaborationGridProps) {
           targetSwarm={collaboration.targetSwarm}
           serviceName={collaboration.serviceName}
           status={collaboration.status}
+          price={collaboration.price}
         />
       ))}
     </div>

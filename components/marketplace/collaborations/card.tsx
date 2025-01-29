@@ -18,7 +18,7 @@ interface CollaborationCardProps {
   price: number;
 }
 
-export function CollaborationCard({ sourceSwarm, targetSwarm, serviceName, status }: CollaborationCardProps) {
+export function CollaborationCard({ sourceSwarm, targetSwarm, serviceName, status, price }: CollaborationCardProps) {
   const statusStyles = {
     active: 'text-green-400 bg-green-500/10 border-green-500/20',
     completed: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
