@@ -55,11 +55,11 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
 
     gradient.append("stop")
       .attr("offset", "0%")
-      .attr("stop-color", "rgba(147, 51, 234, 0.7)");
+      .attr("stop-color", "rgba(147, 51, 234, 0.3)");
 
     gradient.append("stop")
       .attr("offset", "100%")
-      .attr("stop-color", "rgba(59, 130, 246, 0.7)");
+      .attr("stop-color", "rgba(147, 51, 234, 0.3)");
 
     // Create animated light gradient
     const lightGradient = defs.append("linearGradient")
@@ -72,7 +72,7 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
 
     lightGradient.append("stop")
       .attr("offset", "50%")
-      .attr("stop-color", "rgba(255, 255, 255, 0.5)");
+      .attr("stop-color", "rgba(147, 51, 234, 0.8)");
 
     lightGradient.append("stop")
       .attr("offset", "100%")
@@ -104,8 +104,8 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       .join("path")
       .attr("class", "link-path")
       .attr("stroke", "url(#link-gradient)")
-      .attr("stroke-width", d => Math.sqrt(d.value) / 200 + 1)
-      .attr("stroke-opacity", 0.8)
+      .attr("stroke-width", d => Math.sqrt(d.value) / 200 + 2)
+      .attr("stroke-opacity", 1)
       .attr("fill", "none");
 
     // Animated lights
@@ -114,20 +114,20 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       .join("path")
       .attr("class", "link-light")
       .attr("stroke", "url(#light-gradient)")
-      .attr("stroke-width", d => (Math.sqrt(d.value) / 200 + 1) * 2)
-      .attr("stroke-opacity", 0.6)
+      .attr("stroke-width", d => (Math.sqrt(d.value) / 200 + 2) * 2)
+      .attr("stroke-opacity", 0.8)
       .attr("fill", "none")
-      .style("filter", "blur(2px)");
+      .style("filter", "blur(3px)");
 
     // Animation function for the lights
     function animateLights() {
       lights.each(function(d: any) {
         const length = (this as SVGPathElement).getTotalLength();
         d3.select(this)
-          .attr("stroke-dasharray", `${length * 0.1} ${length * 0.9}`)
+          .attr("stroke-dasharray", `${length * 0.15} ${length * 0.85}`)
           .attr("stroke-dashoffset", length)
           .transition()
-          .duration(3000)
+          .duration(4000)
           .ease(d3.easeLinear)
           .attr("stroke-dashoffset", 0)
           .on("end", function() {
@@ -157,10 +157,10 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
     // Add circles to nodes with glowing effect
     node.append("circle")
       .attr("r", 30)
-      .attr("fill", "rgba(147, 51, 234, 0.2)")
-      .attr("stroke", "rgba(147, 51, 234, 0.5)")
+      .attr("fill", "rgba(236, 72, 153, 0.2)")
+      .attr("stroke", "rgba(236, 72, 153, 0.5)")
       .attr("stroke-width", 3)
-      .style("filter", "drop-shadow(0 0 10px rgba(147, 51, 234, 0.3))");
+      .style("filter", "drop-shadow(0 0 10px rgba(236, 72, 153, 0.3))");
 
     // Add images to nodes
     node.append("image")
@@ -177,7 +177,7 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       .attr("x", 0)
       .attr("y", 45)
       .attr("text-anchor", "middle")
-      .attr("fill", "rgb(147, 51, 234)")
+      .attr("fill", "rgb(236, 72, 153)")
       .attr("font-size", "14px")
       .attr("font-weight", "bold")
       .style("text-shadow", "0 0 10px rgba(0,0,0,0.5)");
