@@ -60,9 +60,9 @@ export function CollaborationCard({ sourceSwarm, targetSwarm, serviceName, statu
           </Link>
 
           {/* Connection Line with Service Details */}
-          <div className="flex-1 flex flex-col items-center justify-center">
+          <div className="flex-1 flex flex-col items-center justify-center gap-6">
             {/* Service Name Above */}
-            <div className={`px-4 py-2 mb-2 rounded-full text-sm border ${statusStyles[status]} backdrop-blur-sm transition-all duration-300 group-hover:scale-110 relative`}>
+            <div className={`px-4 py-2 rounded-full text-sm border ${statusStyles[status]} backdrop-blur-sm transition-all duration-300 group-hover:scale-110 relative`}>
               <div className="absolute inset-0 bg-white/5 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <span className="relative">{serviceName}</span>
             </div>
@@ -77,8 +77,8 @@ export function CollaborationCard({ sourceSwarm, targetSwarm, serviceName, statu
             </div>
 
             {/* Price Below */}
-            <div className="mt-2 text-sm font-medium text-white/60">
-              <span className="metallic-text">{price.toLocaleString()} $COMPUTE</span>
+            <div className="mt-2 font-medium text-white/80">
+              <span className="metallic-text text-xl">{price.toLocaleString()} $COMPUTE</span>
             </div>
           </div>
 
