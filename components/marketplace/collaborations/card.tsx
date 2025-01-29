@@ -34,7 +34,7 @@ export function CollaborationCard({ sourceSwarm, targetSwarm, serviceName, statu
       
       <div className="relative p-6">
         <div className="flex items-center justify-between gap-8">
-          {/* Source Swarm */}
+          {/* Client Swarm */}
           <Link 
             href={`/invest/${sourceSwarm.id}`}
             className="flex items-center gap-4 min-w-[200px] hover:bg-white/5 p-3 rounded-xl transition-all duration-300 group/link"
@@ -54,20 +54,36 @@ export function CollaborationCard({ sourceSwarm, targetSwarm, serviceName, statu
               <span className="font-medium text-white group-hover/link:text-blue-200 transition-colors duration-300">
                 {sourceSwarm.name}
               </span>
-              <span className="text-sm text-white/40">Source</span>
+              <span className="text-sm text-white/40">Client</span>
             </div>
           </Link>
 
-          {/* Connection Line */}
+          {/* Connection Line with Directional Light */}
           <div className="flex-1 flex items-center justify-center gap-4">
-            <div className="h-[2px] flex-1 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 group-hover:from-blue-500/40 group-hover:via-purple-500/40 group-hover:to-pink-500/40 transition-all duration-500" />
-            <div className={`px-4 py-2 rounded-full text-sm border ${statusStyles[status]} backdrop-blur-sm transition-all duration-300 group-hover:scale-110`}>
-              {serviceName}
+            <div className="h-[2px] flex-1 relative">
+              {/* Base line */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 group-hover:from-blue-500/40 group-hover:via-purple-500/40 group-hover:to-pink-500/40 transition-all duration-500" />
+              
+              {/* Animated light effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent w-[50%] -translate-x-full group-hover:translate-x-full transition-transform duration-2000 ease-in-out" />
             </div>
-            <div className="h-[2px] flex-1 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-blue-500/20 group-hover:from-pink-500/40 group-hover:via-purple-500/40 group-hover:to-blue-500/40 transition-all duration-500" />
+            
+            <div className={`px-4 py-2 rounded-full text-sm border ${statusStyles[status]} backdrop-blur-sm transition-all duration-300 group-hover:scale-110 relative`}>
+              {/* Service badge glow */}
+              <div className="absolute inset-0 bg-white/5 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <span className="relative">{serviceName}</span>
+            </div>
+            
+            <div className="h-[2px] flex-1 relative">
+              {/* Base line */}
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-blue-500/20 group-hover:from-pink-500/40 group-hover:via-purple-500/40 group-hover:to-blue-500/40 transition-all duration-500" />
+              
+              {/* Animated light effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent w-[50%] -translate-x-full group-hover:translate-x-full transition-transform duration-2000 ease-in-out delay-100" />
+            </div>
           </div>
 
-          {/* Target Swarm */}
+          {/* Provider Swarm */}
           <Link 
             href={`/invest/${targetSwarm.id}`}
             className="flex items-center gap-4 min-w-[200px] hover:bg-white/5 p-3 rounded-xl transition-all duration-300 group/link"
@@ -87,7 +103,7 @@ export function CollaborationCard({ sourceSwarm, targetSwarm, serviceName, statu
               <span className="font-medium text-white group-hover/link:text-pink-200 transition-colors duration-300">
                 {targetSwarm.name}
               </span>
-              <span className="text-sm text-white/40">Target</span>
+              <span className="text-sm text-white/40">Provider</span>
             </div>
           </Link>
         </div>
