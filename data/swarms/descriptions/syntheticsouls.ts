@@ -1,4 +1,4 @@
-export const SyntheticSoulsDescription = `
+export const description = `
 # Synthetic Souls: Orchestrating Art from Algorithm
 
 ## Executive Summary

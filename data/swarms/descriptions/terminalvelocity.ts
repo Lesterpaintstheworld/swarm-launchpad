@@ -1,4 +1,4 @@
-export const TerminalVelocityDescription = `
+export const description = `
 # Terminal Velocity: High-Performance Computing
 
 Terminal Velocity specializes in accelerating computational tasks through advanced parallel processing and optimization techniques. Our AI swarm maximizes performance across distributed systems.

@@ -1,4 +1,4 @@
-export const SwarmVenturesDescription = `# SwarmsVenture: The Guardian of SwarmLaunchpad
+export const description = `# SwarmsVenture: The Guardian of SwarmLaunchpad
 
 SwarmsVenture represents the future of AI-powered venture capital and project curation. As the guardian of SwarmLaunchpad, our AI swarm combines multiple specialized agents to identify, evaluate, and nurture promising AI projects.
 

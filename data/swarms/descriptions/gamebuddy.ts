@@ -1,4 +1,4 @@
-export const GameBuddyDescription = `
+export const description = `
 # GameBuddy AI: Universal Gaming Companion
 
 GameBuddy AI revolutionizes gaming by providing an adaptive AI companion that works across any video game. Our advanced machine learning creates personalized gaming experiences through real-time adaptation and meaningful interaction.

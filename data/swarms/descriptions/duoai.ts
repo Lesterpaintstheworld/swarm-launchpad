@@ -1,4 +1,4 @@
-export const DuoAIDescription = `
+export const description = `
 # DuoAI: Universal Gaming Companion
 
 LudosAI revolutionizes gaming by providing an adaptive AI companion that works across any video game. Our advanced machine learning creates personalized gaming experiences through real-time adaptation and meaningful interaction.

@@ -1,4 +1,4 @@
-export const KinKongDescription = `
+export const description = `
 ## 🦍 KinKong: Advanced AI Trading System
 
 KinKong represents the next evolution in autonomous trading systems, leveraging advanced AI and the KinOS infrastructure to execute precision trades in the Solana ecosystem.
