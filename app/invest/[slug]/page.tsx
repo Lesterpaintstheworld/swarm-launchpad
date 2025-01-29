@@ -1,17 +1,8 @@
 'use client';
 
-import Image from 'next/image';
 import { getSwarmInfo } from "@/data/swarms/info";
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
-
-// Helper function for date comparison
-const isBeforeLaunchDate = (launchDate: string | Date | undefined) => {
-    if (!launchDate) return false;
-    const now = Date.now();
-    const launch = new Date(launchDate).getTime();
-    return now < launch;
-};
 
 function CountdownTimer({ launchDate }: { launchDate: string | Date }) {
     const [timeLeft, setTimeLeft] = useState<{
