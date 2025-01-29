@@ -98,9 +98,9 @@ export function ServiceCard({ service }: ServiceCardProps) {
                     by {swarm.name}
                   </span>
                 </Link>
-                {swarm.wallet ? (
+                {(swarm.wallet || swarm.pool) ? (
                   <Link
-                    href={`https://solscan.io/account/${swarm.wallet}`}
+                    href={`https://solscan.io/account/${swarm.wallet || swarm.pool}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-1 px-2 py-1 text-xs text-white/40 hover:text-white/60 transition-colors"
