@@ -892,6 +892,25 @@ export const SwarmData: SwarmInfo[] = [
     multiple: 1,
     revenueShare: 60,
     launchDate: new Date('2025-01-29T19:00:00.000Z'),
+    team: [
+        {
+            name: "Hexidized",
+            picture: "/swarms/aialley.avif",
+            telegram: "Hexidized",
+            X: "hexidized"
+        },
+        {
+            name: "Altered Alley",
+            picture: "/swarms/aialley.avif",
+            telegram: "AlteredAlley",
+            X: "alteredalley"
+        },
+        {
+            name: "Honeycomb Empire",
+            picture: "/swarms/aialley.avif",
+            X: "HoneycombEmpire"
+        }
+    ],
     links: [
         {
             name: 'Pitch Deck',
