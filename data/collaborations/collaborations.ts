@@ -20,6 +20,214 @@ export interface Collaboration {
 }
 
 export const collaborations: Collaboration[] = [
+  {
+    id: '14',
+    sourceSwarm: {
+      id: 'wealthhive-inception-id',
+      name: 'WealthHive',
+      image: '/swarms/wealthhive.png'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000,
+    startDate: '2024-01-28',
+    description: 'Infrastructure support for educational AI swarm focused on democratizing investment knowledge through interactive learning.',
+    objectives: [
+      'Knowledge mining system',
+      'Interactive learning platform',
+      'Community engagement tools',
+      'Progress tracking analytics',
+      'Reward distribution automation'
+    ],
+    focus: 'Building a comprehensive educational platform that combines AI learning with community-driven growth to democratize investment knowledge.'
+  },
+  {
+    id: '15',
+    sourceSwarm: {
+      id: 'propertykin-inception-id',
+      name: 'PropertyKin',
+      image: '/swarms/property.png'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000,
+    startDate: '2024-01-29',
+    description: 'Development support for AI-powered real estate arbitrage system focused on contract flipping and deal optimization.',
+    objectives: [
+      'Property scanning system',
+      'Deal analysis automation',
+      'Smart contract integration',
+      'Buyer matching platform',
+      'Transaction automation'
+    ],
+    focus: 'Creating an efficient real estate arbitrage system that identifies undervalued properties and connects them with buyers through smart contracts.'
+  },
+  {
+    id: '16',
+    sourceSwarm: {
+      id: 'h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q',
+      name: 'ProfitBeeAI',
+      image: '/swarms/affiliate.jpeg'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000,
+    startDate: '2024-01-30',
+    description: 'Infrastructure support for autonomous affiliate marketing system with multi-channel content creation and campaign management.',
+    objectives: [
+      'Content generation engine',
+      'Link optimization system',
+      'Campaign automation',
+      'Performance analytics',
+      'Multi-channel distribution'
+    ],
+    focus: 'Revolutionizing affiliate marketing through AI-powered content creation and automated campaign management across multiple channels.'
+  },
+  {
+    id: '17',
+    sourceSwarm: {
+      id: 'g7h8i9j0-k1l2-0g1h-ei5j-6k7l8m9n0o1p',
+      name: 'CommerceNest',
+      image: '/swarms/commercenest.jpg'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000,
+    startDate: '2024-01-31',
+    description: 'Development collaboration for AI-powered e-commerce intelligence system focused on trend detection and market optimization.',
+    objectives: [
+      'Trend analysis system',
+      'Market intelligence platform',
+      'Automated store generation',
+      'Inventory optimization',
+      'Marketing automation'
+    ],
+    focus: 'Building an intelligent e-commerce system that identifies market trends and automates store operations for optimal performance.'
+  },
+  {
+    id: '18',
+    sourceSwarm: {
+      id: 'f7a92b3c-d8e4-4c1a-9f5d-1234567890ab',
+      name: 'StudioKin',
+      image: '/swarms/screenplay.jpg'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000,
+    startDate: '2024-02-01',
+    description: 'Infrastructure support for AI-powered filmmaking system, handling everything from screenplay development to production planning.',
+    objectives: [
+      'Script generation system',
+      'Production planning tools',
+      'Budget optimization',
+      'Resource allocation',
+      'Timeline management'
+    ],
+    focus: 'Creating an end-to-end AI filmmaking system that transforms story concepts into production-ready screenplays and detailed production plans.'
+  },
+  {
+    id: '19',
+    sourceSwarm: {
+      id: 'd4e5f6g7-h8i9-7d8e-bf2g-3h4i5j6k7l8m',
+      name: 'PlayWise',
+      image: '/swarms/toy.png'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000,
+    startDate: '2024-02-02',
+    description: 'Development support for AI-powered educational toy system focused on personalized learning through interactive play.',
+    objectives: [
+      'Learning style analysis',
+      'Content adaptation system',
+      'Progress tracking',
+      'Safety protocols',
+      'Engagement optimization'
+    ],
+    focus: 'Developing an intelligent toy system that adapts its teaching methods to each child\'s unique learning style while maintaining engagement through play.'
+  },
+  {
+    id: '20',
+    sourceSwarm: {
+      id: 'mentor-swarm-id',
+      name: 'DeskMate',
+      image: '/swarms/mentor.png'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000,
+    startDate: '2024-02-03',
+    description: 'Infrastructure support for AI tutoring system that guides students through problem-solving with Socratic questioning.',
+    objectives: [
+      'Question generation system',
+      'Learning path optimization',
+      'Progress assessment',
+      'Concept mapping',
+      'Engagement tracking'
+    ],
+    focus: 'Creating an intelligent tutoring system that helps students develop genuine understanding through guided discovery and personalized learning paths.'
+  },
+  {
+    id: '21',
+    sourceSwarm: {
+      id: 'speaker-swarm-id',
+      name: 'STUMPED',
+      image: '/swarms/stumped.jpg'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000,
+    startDate: '2024-02-04',
+    description: 'Development collaboration for AI-powered conversation training system focused on mastering high-pressure social scenarios.',
+    objectives: [
+      'Scenario generation',
+      'Response analysis',
+      'Feedback system',
+      'Progress tracking',
+      'Skill assessment'
+    ],
+    focus: 'Building an intelligent training system that helps users master difficult conversations through realistic scenario practice and personalized feedback.'
+  },
   // Early Swarms
   {
     id: '1',
