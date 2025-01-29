@@ -338,7 +338,7 @@ export default function Lead() {
                         size="lg"
                         variant="secondary"
                         className="group"
-                        onClick={() => window.open('https://t.me/Lesterpaintstheworld', '_blank')}
+                        onClick={() => window.open('https://k2mobei34z9.typeform.com/to/mqeVv9zF', '_blank')}
                     >
                         Claim an existing Swarm
                     </Button>
