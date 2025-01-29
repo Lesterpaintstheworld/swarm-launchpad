@@ -77,10 +77,10 @@ export default function CollaborationPage() {
             </div>
           </div>
 
-          {/* Service Details */}
+          {/* Main Content */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Main Content */}
-            <div className="lg:col-span-2 space-y-8">
+            {/* Left Column - Description & Content */}
+            <div className="lg:col-span-2">
               {/* Description */}
               {collaboration.description && (
                 <div className="p-6 rounded-xl bg-white/5 border border-white/10">
@@ -124,7 +124,7 @@ export default function CollaborationPage() {
             </div>
 
             {/* Right Column - Collaboration & Stats */}
-            <div className="lg:col-span-4 w-full">
+            <div className="lg:col-span-1">
               {/* Collaboration Section */}
               <div className="sticky top-6 w-full space-y-6">
                 {/* Collaboration Box */}
