@@ -197,17 +197,18 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
                     </div>
                     <div className="relative h-4 rounded-full bg-slate-800/50 overflow-hidden">
                         <div 
-                            className="absolute h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full transition-all duration-300"
+                            className="absolute h-full bg-gradient-to-l from-blue-500 to-blue-400 rounded-full transition-all duration-300"
                             style={{ 
                                 width: `${(data.remainingSupply / data.totalSupply) * 100}%`,
+                                right: '0',
                                 boxShadow: '0 0 20px rgba(59, 130, 246, 0.5)'
                             }} 
                         />
                         <div 
                             className="absolute h-full w-[2px] bg-white/30 blur-[2px] animate-pulse"
                             style={{ 
-                                left: `${(data.remainingSupply / data.totalSupply) * 100}%`,
-                                transform: 'translateX(-50%)'
+                                right: `${(data.remainingSupply / data.totalSupply) * 100}%`,
+                                transform: 'translateX(50%)'
                             }}
                         />
                     </div>
