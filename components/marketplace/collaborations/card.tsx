@@ -15,6 +15,7 @@ interface CollaborationCardProps {
   };
   serviceName: string;
   status: 'active' | 'completed' | 'pending';
+  price: number;
 }
 
 export function CollaborationCard({ sourceSwarm, targetSwarm, serviceName, status }: CollaborationCardProps) {
@@ -58,28 +59,26 @@ export function CollaborationCard({ sourceSwarm, targetSwarm, serviceName, statu
             </div>
           </Link>
 
-          {/* Connection Line with Directional Light */}
-          <div className="flex-1 flex items-center justify-center gap-4">
-            <div className="h-[2px] flex-1 relative overflow-hidden">
+          {/* Connection Line with Service Details */}
+          <div className="flex-1 flex flex-col items-center justify-center">
+            {/* Service Name Above */}
+            <div className={`px-4 py-2 mb-2 rounded-full text-sm border ${statusStyles[status]} backdrop-blur-sm transition-all duration-300 group-hover:scale-110 relative`}>
+              <div className="absolute inset-0 bg-white/5 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <span className="relative">{serviceName}</span>
+            </div>
+            
+            {/* Single Line with Animation */}
+            <div className="h-[2px] w-full relative overflow-hidden">
               {/* Base line */}
               <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-blue-500/20 group-hover:from-pink-500/40 group-hover:via-purple-500/40 group-hover:to-blue-500/40 transition-all duration-500" />
               
               {/* Continuous animated light effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent w-[50%] animate-[moveLight_3s_linear_infinite] -translate-x-[100%]" />
             </div>
-            
-            <div className={`px-4 py-2 rounded-full text-sm border ${statusStyles[status]} backdrop-blur-sm transition-all duration-300 group-hover:scale-110 relative`}>
-              {/* Service badge glow */}
-              <div className="absolute inset-0 bg-white/5 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <span className="relative">{serviceName}</span>
-            </div>
-            
-            <div className="h-[2px] flex-1 relative overflow-hidden">
-              {/* Base line */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 group-hover:from-blue-500/40 group-hover:via-purple-500/40 group-hover:to-pink-500/40 transition-all duration-500" />
-              
-              {/* Continuous animated light effect with delay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent w-[50%] animate-[moveLight_3s_linear_infinite_0.5s] -translate-x-[100%]" />
+
+            {/* Price Below */}
+            <div className="mt-2 text-sm font-medium text-white/60">
+              <span className="metallic-text">{price.toLocaleString()} $COMPUTE</span>
             </div>
           </div>
 

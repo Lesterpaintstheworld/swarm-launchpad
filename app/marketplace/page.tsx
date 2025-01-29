@@ -25,7 +25,8 @@ const mockCollaborations = [
       image: '/swarms/digitalkin.png'
     },
     serviceName: 'Runtime Services',
-    status: 'active' as const
+    status: 'active' as const,
+    price: 50000
   },
   {
     id: '2',
@@ -40,7 +41,8 @@ const mockCollaborations = [
       image: '/swarms/robinhood.jpg'
     },
     serviceName: 'Trading Analysis',
-    status: 'active' as const
+    status: 'active' as const,
+    price: 75000
   }
 ];
 
