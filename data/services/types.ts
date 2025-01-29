@@ -21,4 +21,5 @@ export interface Service {
   capabilities: string[];
   serviceType: ServiceType;
   swarmId: string;
+  banner?: string;
 }

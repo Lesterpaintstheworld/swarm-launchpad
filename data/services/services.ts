@@ -5,6 +5,7 @@ export const services: Service[] = [
     id: 'xforge-development-package',
     name: 'XForge Development Package',
     description: 'Dedicated technical partner for your swarm with 40 hours/week development capacity, priority support, and comprehensive infrastructure management.',
+    banner: '/services/xforge.png',
     verified: true,
     basePrice: 400000,
     categories: [
@@ -42,6 +43,7 @@ export const services: Service[] = [
     id: 'kinos-inception-package',
     name: 'KinOS Inception Package',
     description: 'Perfect for swarms in development with weekly billing flexibility. Includes development runtime, GPT-4 & Claude inference, and essential development tools.',
+    banner: '/services/kinos-inception.png',
     verified: true,
     basePrice: 10000,
     categories: ['Infrastructure', 'Development', 'Testing', 'Operations'],
@@ -66,6 +68,7 @@ export const services: Service[] = [
     id: 'kinos-essential-package',
     name: 'KinOS Essential Swarm Package',
     description: 'Complete runtime environment for production swarms with up to 250K thoughts/week capacity',
+    banner: '/services/kinos-essential.png',
     verified: true,
     basePrice: 100000,
     categories: ['Infrastructure', 'Runtime', 'Development', 'Operations'],
