@@ -41,19 +41,30 @@ def update_wallets():
         for swarm_id, wallet in WALLET_MAP.items():
             print(f"\nProcessing swarm ID: {swarm_id}")
             
-            # Create pattern to match the swarm object
-            pattern = f'id: \'{swarm_id}\''
+            # Create pattern to match the swarm object - now handles both single and double quotes
+            pattern = f'id: ["\'{swarm_id}]'
             
-            # Find the position of the swarm object
-            pos = content.find(pattern)
-            if pos == -1:
+            # Find the position of the swarm object using regex
+            match = re.search(pattern, content)
+            if not match:
                 print(f"WARNING: Could not find swarm with ID: {swarm_id}")
                 continue
+            pos = match.start()
             print(f"Found swarm at position: {pos}")
             
             # Find the next closing brace after the ID
             start_pos = content.find('{', pos)
-            end_pos = content.find('},', start_pos)
+            # Find matching closing brace by counting braces
+            brace_count = 1
+            end_pos = start_pos + 1
+            while brace_count > 0 and end_pos < len(content):
+                if content[end_pos] == '{':
+                    brace_count += 1
+                elif content[end_pos] == '}':
+                    brace_count -= 1
+                end_pos += 1
+            end_pos -= 1  # Adjust to point to the closing brace
+            
             if start_pos == -1 or end_pos == -1:
                 print(f"ERROR: Could not find proper object boundaries for swarm: {swarm_id}")
                 continue
@@ -65,12 +76,12 @@ def update_wallets():
             
             # Remove existing wallet if present
             original_length = len(swarm_text)
-            swarm_text = re.sub(r',\s*wallet:\s*\'[^\']*\'', '', swarm_text)
+            swarm_text = re.sub(r',\s*wallet:\s*[\'"][^\'"]*[\'"]', '', swarm_text)
             if len(swarm_text) != original_length:
                 print("Removed existing wallet field")
             
             # Add the new wallet before the closing brace
-            new_swarm_text = swarm_text[:-1] + f",\n        wallet: '{wallet}'" + swarm_text[-1]
+            new_swarm_text = swarm_text[:-1] + f',\n        wallet: "{wallet}"' + swarm_text[-1]
             print(f"New swarm text length: {len(new_swarm_text)}")
             
             # Replace the old swarm text with the new one
