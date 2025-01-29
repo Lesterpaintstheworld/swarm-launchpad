@@ -28,16 +28,16 @@ export const services: Service[] = [
   {
     id: 'kinos-essential-package',
     name: 'KinOS Essential Swarm Package',
-    description: 'Complete runtime environment for early-stage swarms with up to 10M thoughts/month capacity',
+    description: 'Complete runtime environment for production swarms with up to 250K thoughts/week capacity',
     verified: true,
-    basePrice: 500000,
+    basePrice: 100000,
     categories: ['Infrastructure', 'Runtime', 'Development', 'Operations'],
     successRate: 99.9,
     providers: [
         { id: 'kinos', name: 'KinOS', rating: 5.0, completedTasks: 50000 }
     ],
-    computePerTask: 500000,
-    averageCompletionTime: '1 month',
+    computePerTask: 100000,
+    averageCompletionTime: '1 week',
     capabilities: [
         'Continuous Runtime',
         'GPT-4 & Claude Inference',
