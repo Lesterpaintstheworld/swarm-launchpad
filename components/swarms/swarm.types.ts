@@ -61,4 +61,8 @@ export interface SwarmInfo {
     wallet?: string;
     revenueShare?: number;
     launchDate?: Date;
+    links?: {
+        name: string;
+        url: string;
+    }[];
 }

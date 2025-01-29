@@ -359,6 +359,43 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                     </div>
                 </div>
 
+                {/* Links Section */}
+                {swarm?.links && swarm.links.length > 0 && (
+                    <div className="mt-4">
+                        <div className="bg-slate-800/30 rounded-lg p-4">
+                            <div className="flex flex-col gap-2">
+                                <span className="text-sm text-slate-400">Additional Resources</span>
+                                {swarm.links.map((link, index) => (
+                                    <a
+                                        key={index}
+                                        href={link.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center justify-between px-3 py-2 rounded-lg bg-slate-800/30 hover:bg-slate-800/50 transition-colors"
+                                    >
+                                        <span className="text-sm text-blue-400 hover:text-blue-300">
+                                            {link.name}
+                                        </span>
+                                        <svg
+                                            className="w-4 h-4 text-slate-400"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                            />
+                                        </svg>
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 <div className="mt-6">
                     <h4 className="text-sm text-slate-400 mb-4">Development Stage</h4>
                     <div className="relative flex flex-col gap-8">

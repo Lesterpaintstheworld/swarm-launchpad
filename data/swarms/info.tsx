@@ -876,6 +876,12 @@ export const SwarmData: SwarmInfo[] = [
     swarmType: 'inception',
     wallet: 'YOUR_WALLET_ADDRESS_HERE',
     multiple: 1,
-    revenueShare: 60
+    revenueShare: 60,
+    links: [
+        {
+            name: 'Pitch Deck',
+            url: 'https://ai-alley-integration-5wrdhgu.gamma.site/'
+        }
+    ]
     }
 ]
