@@ -31,16 +31,33 @@ def update_wallets():
     with open('data/swarms/info.tsx', 'r', encoding='utf-8') as file:
         content = file.read()
 
-    # First remove all existing wallet properties
-    content = re.sub(r',\s*wallet:\s*[\'"][^\'"]+[\'"]', '', content)
-
-    # Then add new wallet properties after each matching ID
+    # For each swarm ID and wallet in the map
     for swarm_id, wallet in WALLET_MAP.items():
-        # Pattern to match the ID line
+        # Create pattern to match the swarm object
         pattern = f'id: \'{swarm_id}\''
-        # Replace with ID line plus wallet
-        replacement = f'id: \'{swarm_id}\',\n        wallet: \'{wallet}\''
-        content = content.replace(pattern, replacement)
+        
+        # Find the position of the swarm object
+        pos = content.find(pattern)
+        if pos == -1:
+            continue
+            
+        # Find the next closing brace after the ID
+        start_pos = content.find('{', pos)
+        end_pos = content.find('},', start_pos)
+        if start_pos == -1 or end_pos == -1:
+            continue
+            
+        # Get the swarm object text
+        swarm_text = content[start_pos:end_pos+1]
+        
+        # Remove existing wallet if present
+        swarm_text = re.sub(r',\s*wallet:\s*\'[^\']*\'', '', swarm_text)
+        
+        # Add the new wallet before the closing brace
+        new_swarm_text = swarm_text[:-1] + f",\n        wallet: '{wallet}'" + swarm_text[-1]
+        
+        # Replace the old swarm text with the new one
+        content = content.replace(swarm_text, new_swarm_text)
 
     # Write the updated content back to the file
     with open('data/swarms/info.tsx', 'w', encoding='utf-8') as file:
