@@ -206,7 +206,9 @@ export default function CollaborationPage() {
                   <div className="space-y-4">
                     {/* $UBC Burned */}
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">$UBC Burned</span>
+                      <span className="text-sm text-muted-foreground">
+                        <span className="metallic-text-ubc">$UBC</span> Burned
+                      </span>
                       <div className="flex items-center gap-2">
                         <span className="text-sm">-</span>
                         <Link 
@@ -220,7 +222,9 @@ export default function CollaborationPage() {
 
                     {/* $COMPUTE Burned */}
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">$COMPUTE Burned</span>
+                      <span className="text-sm text-muted-foreground">
+                        <span className="metallic-text">$COMPUTE</span> Burned
+                      </span>
                       <div className="flex items-center gap-2">
                         <span className="text-sm">-</span>
                         <Link 
@@ -234,7 +238,9 @@ export default function CollaborationPage() {
 
                     {/* $UBC Redistributed */}
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">$UBC Redistributed</span>
+                      <span className="text-sm text-muted-foreground">
+                        <span className="metallic-text-ubc">$UBC</span> Redistributed
+                      </span>
                       <div className="flex items-center gap-2">
                         <span className="text-sm">-</span>
                         <Link 
@@ -248,7 +254,9 @@ export default function CollaborationPage() {
 
                     {/* $COMPUTE Redistributed */}
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">$COMPUTE Redistributed</span>
+                      <span className="text-sm text-muted-foreground">
+                        <span className="metallic-text">$COMPUTE</span> Redistributed
+                      </span>
                       <div className="flex items-center gap-2">
                         <span className="text-sm">-</span>
                         <Link 
