@@ -30,8 +30,8 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
   const getNodeSize = (swarmId: string): number => {
     const swarm = getSwarmUsingId(swarmId);
     if (!swarm?.multiple) return 30; // Default size
-    // Scale the multiple to a reasonable size range (20-60)
-    return Math.max(20, Math.min(60, 20 + (swarm.multiple * 0.8)));
+    // More subtle scaling - changed from 0.8 to 0.2 for less dramatic difference
+    return Math.max(25, Math.min(40, 25 + (swarm.multiple * 0.2)));
   };
 
   useEffect(() => {
