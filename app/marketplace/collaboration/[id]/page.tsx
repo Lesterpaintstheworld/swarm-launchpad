@@ -115,8 +115,8 @@ export default function CollaborationPage() {
               )}
             </div>
 
-            {/* Right Column - Pricing & Stats */}
-            <div className="space-y-6">
+            {/* Right Column - Collaboration & Stats */}
+            <div className="lg:col-span-5 space-y-6">
               {/* Collaboration Section */}
               <div className="p-6 rounded-xl bg-white/5 border border-white/10">
                 <h3 className="text-xl font-semibold mb-4">Collaboration</h3>
@@ -185,6 +185,75 @@ export default function CollaborationPage() {
                       </div>
                     </div>
                   )}
+                </div>
+              </div>
+
+              {/* On-chain Info Card */}
+              <div className="p-6 rounded-xl bg-white/5 border border-white/10">
+                <h3 className="text-xl font-semibold mb-4">On-chain Info</h3>
+                <div className="space-y-4">
+                  {/* $UBC Burned */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">$UBC Burned</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm">-</span>
+                      <Link 
+                        href="#"
+                        className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
+                      >
+                        [→]
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* $COMPUTE Burned */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">$COMPUTE Burned</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm">-</span>
+                      <Link 
+                        href="#"
+                        className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
+                      >
+                        [→]
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* $UBC Redistributed */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">$UBC Redistributed</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm">-</span>
+                      <Link 
+                        href="#"
+                        className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
+                      >
+                        [→]
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* $COMPUTE Redistributed */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">$COMPUTE Redistributed</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm">-</span>
+                      <Link 
+                        href="#"
+                        className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
+                      >
+                        [→]
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Coming Soon Notice */}
+                  <div className="pt-4 border-t border-white/10">
+                    <p className="text-sm text-center text-muted-foreground">
+                      On-chain tracking coming soon
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
