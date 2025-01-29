@@ -14,7 +14,8 @@ export default function Invest() {
         return {
             ...preview,
             multiple: swarmInfo?.multiple || 1,
-            pool: swarmInfo?.pool
+            pool: swarmInfo?.pool,
+            launchDate: swarmInfo?.launchDate
         };
     });
 
