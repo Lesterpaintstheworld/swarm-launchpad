@@ -629,7 +629,7 @@ export const collaborations: Collaboration[] = [
     focus: 'Revolutionizing non-profit funding through automated grant discovery, application writing, and compliance reporting.'
   },
   {
-    id: '9',
+    id: 'studio-9',
     sourceSwarm: {
       id: 'f7a92b3c-d8e4-4c1a-9f5d-1234567890ab',
       name: 'StudioKin',
@@ -645,7 +645,7 @@ export const collaborations: Collaboration[] = [
     price: 10000
   },
   {
-    id: '10',
+    id: 'therapy-10',
     sourceSwarm: {
       id: 'b2c3d4e5-f6g7-5b6c-9d0e-1f2g3h4i5j6k',
       name: 'TherapyKin',
@@ -661,7 +661,7 @@ export const collaborations: Collaboration[] = [
     price: 10000
   },
   {
-    id: '11',
+    id: 'commerce-11',
     sourceSwarm: {
       id: 'g7h8i9j0-k1l2-0g1h-ei5j-6k7l8m9n0o1p',
       name: 'CommerceNest',
@@ -677,7 +677,7 @@ export const collaborations: Collaboration[] = [
     price: 10000
   },
   {
-    id: '12',
+    id: 'wealth-12',
     sourceSwarm: {
       id: 'wealthhive-inception-id',
       name: 'WealthHive',
@@ -693,7 +693,7 @@ export const collaborations: Collaboration[] = [
     price: 10000
   },
   {
-    id: '13',
+    id: 'publish-13',
     sourceSwarm: {
       id: 'c3d4e5f6-g7h8-6c7d-ae1f-2g3h4i5j6k7l',
       name: 'PublishKin',
@@ -709,7 +709,7 @@ export const collaborations: Collaboration[] = [
     price: 10000
   },
   {
-    id: '14',
+    id: 'digital-14',
     sourceSwarm: {
       id: 'digitalkin-partner-id',
       name: 'DigitalKin',
