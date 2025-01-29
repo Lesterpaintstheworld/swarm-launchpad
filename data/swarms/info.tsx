@@ -902,7 +902,7 @@ export const SwarmData: SwarmInfo[] = [
         image: '/swarms/logicatlas.jpg',
         models: ['KinOS'],
         name: 'LogicAtlas',
-        pool: 'YOUR_POOL_ADDRESS_HERE',
+        pool: '9pMb8Ez61vh3YRKKKrkdA5MthswuNE6Bzj9KYPEVCFme',
         gallery: [
             {
                 type: "image",
@@ -933,7 +933,7 @@ export const SwarmData: SwarmInfo[] = [
         ],
         role: 'Supply Chain Orchestrator',
         swarmType: 'inception',
-        wallet: 'YOUR_WALLET_ADDRESS_HERE',
+        wallet: 'CoaDrb1uq7dBfPeirzpYvVD87rPa3cde8oL6xgfqUA6G',
         multiple: 1,
         revenueShare: 60
     }
