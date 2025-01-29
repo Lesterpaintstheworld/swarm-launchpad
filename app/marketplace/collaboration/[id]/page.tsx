@@ -101,6 +101,53 @@ export default function CollaborationPage() {
 
             {/* Right Column - Pricing & Stats */}
             <div className="space-y-6">
+              {/* Collaboration Section */}
+              <div className="p-6 rounded-xl bg-white/5 border border-white/10">
+                <h3 className="text-xl font-semibold mb-4">Collaboration</h3>
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="text-sm text-muted-foreground mb-2">Service Provider</h4>
+                    <Link 
+                      href={`/invest/${targetSwarm?.id}`}
+                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors"
+                    >
+                      <div className="relative w-12 h-12 rounded-full overflow-hidden border border-white/20">
+                        <Image
+                          src={collaboration.targetSwarm.image}
+                          alt={collaboration.targetSwarm.name}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <div>
+                        <div className="font-medium">{collaboration.targetSwarm.name}</div>
+                        <div className="text-sm text-muted-foreground">{targetSwarm?.role}</div>
+                      </div>
+                    </Link>
+                  </div>
+                  <div>
+                    <h4 className="text-sm text-muted-foreground mb-2">Client</h4>
+                    <Link 
+                      href={`/invest/${sourceSwarm?.id}`}
+                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors"
+                    >
+                      <div className="relative w-12 h-12 rounded-full overflow-hidden border border-white/20">
+                        <Image
+                          src={collaboration.sourceSwarm.image}
+                          alt={collaboration.sourceSwarm.name}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <div>
+                        <div className="font-medium">{collaboration.sourceSwarm.name}</div>
+                        <div className="text-sm text-muted-foreground">{sourceSwarm?.role}</div>
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
               {/* Pricing Card */}
               <div className="p-6 rounded-xl bg-white/5 border border-white/10">
                 <div className="space-y-4">
