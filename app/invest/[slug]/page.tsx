@@ -1,5 +1,69 @@
+'use client';
+
 import { getSwarmInfo } from "@/data/swarms/info";
 import { redirect } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
+function CountdownTimer({ launchDate }: { launchDate: Date }) {
+    const [timeLeft, setTimeLeft] = useState<{
+        days: number;
+        hours: number;
+        minutes: number;
+        seconds: number;
+    } | null>(null);
+
+    useEffect(() => {
+        const calculateTimeLeft = () => {
+            const difference = launchDate.getTime() - new Date().getTime();
+            
+            if (difference <= 0) {
+                setTimeLeft(null);
+                return;
+            }
+
+            setTimeLeft({
+                days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+                hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+                minutes: Math.floor((difference / 1000 / 60) % 60),
+                seconds: Math.floor((difference / 1000) % 60)
+            });
+        };
+
+        // Calculate immediately
+        calculateTimeLeft();
+        
+        // Then update every second
+        const timer = setInterval(calculateTimeLeft, 1000);
+
+        return () => clearInterval(timer);
+    }, [launchDate]);
+
+    if (!timeLeft) return null;
+
+    return (
+        <div className="p-8 rounded-xl bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-white/5 backdrop-blur-sm">
+            <h3 className="text-xl font-semibold mb-6 text-center">Launch Countdown</h3>
+            <div className="grid grid-cols-4 gap-4">
+                <div className="text-center">
+                    <div className="text-2xl font-bold">{timeLeft.days}</div>
+                    <div className="text-sm text-muted-foreground">Days</div>
+                </div>
+                <div className="text-center">
+                    <div className="text-2xl font-bold">{timeLeft.hours}</div>
+                    <div className="text-sm text-muted-foreground">Hours</div>
+                </div>
+                <div className="text-center">
+                    <div className="text-2xl font-bold">{timeLeft.minutes}</div>
+                    <div className="text-sm text-muted-foreground">Minutes</div>
+                </div>
+                <div className="text-center">
+                    <div className="text-2xl font-bold">{timeLeft.seconds}</div>
+                    <div className="text-sm text-muted-foreground">Seconds</div>
+                </div>
+            </div>
+        </div>
+    );
+}
 import { SwarmInvestCard } from "@/components/swarms/invest";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { InfoPanel } from "@/components/ui/infoPanel";
@@ -144,13 +208,17 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
                 </div>
                 
                 <div className="lg:col-span-5 w-full">
-                    {swarm?.pool &&
+                    {swarm?.pool && (
                         <div className="sticky top-6 w-full">
-                            <SwarmInvestCard
-                                pool={swarm.pool as string}
-                            />
+                            {swarm.launchDate && new Date(swarm.launchDate) > new Date() ? (
+                                <CountdownTimer launchDate={new Date(swarm.launchDate)} />
+                            ) : (
+                                <SwarmInvestCard
+                                    pool={swarm.pool as string}
+                                />
+                            )}
                         </div>
-                    }
+                    )}
                 </div>
             </div>
 
