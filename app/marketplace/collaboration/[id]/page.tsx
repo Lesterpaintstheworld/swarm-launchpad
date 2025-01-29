@@ -1,6 +1,3 @@
-'use client';
-
-import { useParams } from 'next/navigation';
 import { getCollaboration } from '@/data/collaborations/collaborations';
 import { getSwarm } from '@/data/swarms/previews';
 import { CollaborationChat } from '@/components/marketplace/collaborations/chat';
@@ -9,9 +6,16 @@ import Link from 'next/link';
 import { Clock } from 'lucide-react';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 
-export default function CollaborationPage() {
-  const { id } = useParams();
-  const collaboration = getCollaboration(id as string);
+type ServiceName = 'Development Package' | 'Essential Swarm Package' | 'Inception Package';
+
+const serviceBanners: Record<ServiceName, string> = {
+  'Development Package': '/services/xforge.png',
+  'Essential Swarm Package': '/services/kinos-essential.png',
+  'Inception Package': '/services/kinos-inception.png'
+};
+
+export default function CollaborationPage({ params }: { params: { id: string } }) {
+  const collaboration = getCollaboration(params.id);
   
   if (!collaboration) {
     return (
@@ -25,13 +29,6 @@ export default function CollaborationPage() {
   const sourceSwarm = getSwarm(collaboration.sourceSwarm.id);
   const targetSwarm = getSwarm(collaboration.targetSwarm.id);
 
-  type ServiceName = 'Development Package' | 'Essential Swarm Package' | 'Inception Package';
-
-  const serviceBanners: Record<ServiceName, string> = {
-    'Development Package': '/services/xforge.png',
-    'Essential Swarm Package': '/services/kinos-essential.png',
-    'Inception Package': '/services/kinos-inception.png'
-  };
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-background to-background/50">
