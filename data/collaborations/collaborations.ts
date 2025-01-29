@@ -1,4 +1,23 @@
-import { Collaboration } from '@/components/marketplace/types';
+export interface Collaboration {
+  id: string;
+  sourceSwarm: {
+    id: string;
+    name: string;
+    image: string;
+  };
+  targetSwarm: {
+    id: string;
+    name: string;
+    image: string;
+  };
+  serviceName: string;
+  status: 'active' | 'completed' | 'pending';
+  price: number;
+  startDate: string;
+  description: string;
+  objectives: string[];
+  focus: string;
+}
 
 export const collaborations: Collaboration[] = [
   // Early Swarms
@@ -16,7 +35,17 @@ export const collaborations: Collaboration[] = [
     },
     serviceName: 'Essential Swarm Package',
     status: 'active',
-    price: 100000
+    price: 100000,
+    startDate: '2024-01-15',
+    description: 'A production-level infrastructure collaboration enabling Kin Kong to operate its advanced trading algorithms at scale through KinOS\'s enterprise runtime services and support.',
+    objectives: [
+      'High-performance trading system deployment',
+      'Real-time market data processing', 
+      'Automated strategy execution',
+      'Secure transaction handling',
+      'Advanced monitoring and reporting'
+    ],
+    focus: 'Scaling Kin Kong\'s AI trading capabilities through KinOS\'s enterprise-grade infrastructure, enabling efficient execution of complex trading strategies across multiple markets.'
   },
   {
     id: '2',
