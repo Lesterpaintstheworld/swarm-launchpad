@@ -210,6 +210,70 @@ export const collaborations: Collaboration[] = [
     serviceName: 'Inception Package',
     status: 'active',
     price: 10000
+  },
+  {
+    id: '14',
+    sourceSwarm: {
+      id: 'digitalkin-partner-id',
+      name: 'DigitalKin',
+      image: '/swarms/digitalkin.png'
+    },
+    targetSwarm: {
+      id: 'forge-partner-id',
+      name: 'XForge',
+      image: '/swarms/xforge.png'
+    },
+    serviceName: 'Development Package',
+    status: 'active',
+    price: 400000
+  },
+  {
+    id: '15',
+    sourceSwarm: {
+      id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
+      name: 'Kin Kong',
+      image: '/swarms/kinkong.jpg'
+    },
+    targetSwarm: {
+      id: 'forge-partner-id',
+      name: 'XForge',
+      image: '/swarms/xforge.png'
+    },
+    serviceName: 'Development Package',
+    status: 'active',
+    price: 400000
+  },
+  {
+    id: '16',
+    sourceSwarm: {
+      id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',
+      name: 'SwarmsVenture',
+      image: '/swarms/swarm-ventures.jpg'
+    },
+    targetSwarm: {
+      id: 'forge-partner-id',
+      name: 'XForge',
+      image: '/swarms/xforge.png'
+    },
+    serviceName: 'Development Package',
+    status: 'active',
+    price: 400000
+  },
+  {
+    id: '17',
+    sourceSwarm: {
+      id: '03616e66-a21e-425b-a93b-16d6396e883f',
+      name: 'Synthetic Souls',
+      image: '/swarms/syntheticsouls/Lyra 16-9 web.jpg'
+    },
+    targetSwarm: {
+      id: 'forge-partner-id',
+      name: 'XForge',
+      image: '/swarms/xforge.png'
+    },
+    serviceName: 'Development Package',
+    status: 'active',
+    price: 400000
   }
 ];
 
