@@ -34,6 +34,7 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
     const [numShares, setNumShares] = useState<number>(0);
     const [price, setPrice] = useState<number>(0);
     const [isLoading, setIsLoading] = useState(false);
+    const swarm = getSwarmUsingPoolId(pool);
     const [data, setData] = useState({
         totalSupply: 0,
         remainingSupply: 0,
@@ -269,13 +270,13 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                         <span className="text-sm text-slate-400">Swarm Wallet</span>
                         <div className="flex items-center gap-2">
                             <a 
-                                href={`https://solscan.io/account/${getSwarmUsingPoolId(pool)?.wallet}`}
+                                href={`https://solscan.io/account/${swarm?.wallet}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-sm text-slate-300 font-mono hover:text-blue-400 transition-colors"
                             >
-                                {getSwarmUsingPoolId(pool)?.wallet 
-                                    ? `${getSwarmUsingPoolId(pool)?.wallet.slice(0, 4)}...${getSwarmUsingPoolId(pool)?.wallet.slice(-4)}`
+                                {swarm?.wallet 
+                                    ? `${swarm.wallet.slice(0, 4)}...${swarm.wallet.slice(-4)}`
                                     : "Not available"
                                 }
                             </a>
