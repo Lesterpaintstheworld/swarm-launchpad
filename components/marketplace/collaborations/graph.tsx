@@ -28,6 +28,16 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
 
     // Create links array with normalized strengths based on price
     const maxPrice = Math.max(...collaborations.map(c => c.price));
+    const minPrice = Math.min(...collaborations.map(c => c.price));
+
+    // Helper function to calculate width based on value
+    const calculateWidth = (value: number) => {
+      const minWidth = 1;  // Minimum width for smallest values
+      const maxWidth = 8;  // Maximum width for largest values
+      const scale = (Math.log(value) - Math.log(minPrice)) / (Math.log(maxPrice) - Math.log(minPrice));
+      return minWidth + (scale * (maxWidth - minWidth));
+    };
+
     const links = collaborations.map(collab => ({
       source: collab.sourceSwarm.id,
       target: collab.targetSwarm.id,
@@ -106,7 +116,7 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       .join("path")
       .attr("class", "link-path")
       .attr("stroke", "url(#link-gradient)")
-      .attr("stroke-width", d => Math.sqrt(d.value) / 200 + 2)
+      .attr("stroke-width", d => calculateWidth(d.value))
       .attr("stroke-opacity", 1)
       .attr("fill", "none");
 
@@ -119,7 +129,7 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       .join("path")
       .attr("class", "link-light")
       .attr("stroke", "url(#light-gradient)")
-      .attr("stroke-width", d => (Math.sqrt(d.value) / 200 + 2) * 2)
+      .attr("stroke-width", d => calculateWidth(d.value) * 2)
       .attr("stroke-opacity", 0.8)
       .attr("fill", "none")
       .style("filter", "blur(3px)");
@@ -128,8 +138,12 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
     function animateLights() {
       lights.each(function(d: any) {
         const length = (this as SVGPathElement).getTotalLength();
+        const width = calculateWidth(d.value);
+        // Make dash length proportional to the link width
+        const dashLength = Math.max(width * 5, length * 0.1);
+        
         d3.select(this)
-          .attr("stroke-dasharray", `${length * 0.15} ${length * 0.85}`)
+          .attr("stroke-dasharray", `${dashLength} ${length - dashLength}`)
           .attr("stroke-dashoffset", length)
           .transition()
           .duration(4000)
