@@ -1,7 +1,7 @@
 import { Cpu } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Mission } from '../types';
+import { Mission, sectionColors } from '../types';
 
 interface MissionCardProps {
   mission: Mission;

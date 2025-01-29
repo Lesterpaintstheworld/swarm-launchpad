@@ -1,6 +1,6 @@
 import { Cpu, GitBranch, Network, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { TabItem, MarketplaceTab } from '../types';
+import { TabItem, MarketplaceTab, sectionColors } from '../types';
 
 const tabs: TabItem[] = [
   {

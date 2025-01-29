@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Service } from '@/data/services/types';
 import { getSwarm } from '@/data/swarms/previews';
 import Image from 'next/image';
+import { sectionColors } from '../types';
 
 interface ServiceCardProps {
   service: Service;
