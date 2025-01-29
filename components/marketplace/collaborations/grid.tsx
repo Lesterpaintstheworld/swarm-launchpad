@@ -14,6 +14,7 @@ interface Collaboration {
   };
   serviceName: string;
   status: 'active' | 'completed' | 'pending';
+  price: number;
 }
 
 interface CollaborationGridProps {
@@ -22,7 +23,7 @@ interface CollaborationGridProps {
 
 export function CollaborationGrid({ collaborations }: CollaborationGridProps) {
   return (
-    <div className="space-y-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {collaborations.map((collaboration) => (
         <CollaborationCard
           key={collaboration.id}
