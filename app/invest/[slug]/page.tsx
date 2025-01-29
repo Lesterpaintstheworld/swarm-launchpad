@@ -31,26 +31,35 @@ import { description as TalentDescription } from "@/data/swarms/descriptions/tal
 import { description as TravelDescription } from "@/data/swarms/descriptions/travel";
 
 const descriptionMap: { [key: string]: string } = {
+    // Partner Swarms
+    'slopfather-partner-id': SlopFatherDescription,
+    'digitalkin-partner-id': DigitalKinDescription,
+    'forge-partner-id': XForgeDescription,
+    
+    // Early Swarms
     'eb76ae17-b9eb-476d-b272-4bde2d85c808': KinKongDescription,
     'e8ffff3d-64d3-44d3-a8cf-f082c5c42234': SwarmVenturesDescription,
     '988b16b4-6beb-4cc5-9a14-50f48ee47a22': TerminalVelocityDescription,
     '03616e66-a21e-425b-a93b-16d6396e883f': SyntheticSoulsDescription,
     '7d3c9e5b-1f8a-4d3c-b8d4-9e5b1f8a4d3c': DuoAIDescription,
+    
+    // Inception Swarms
     'propertykin-inception-id': PropertyKinDescription,
-    'a1b2c3d4-e5f6-4a5b-8c7d-9e8f7a6b5c4d': RobinhoodDescription,
-    'f7a92b3c-d8e4-4c1a-9f5d-1234567890ab': ScreenplayDescription,
-    'h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q': AffiliateDescription,
+    'b2c3d4e5-f6g7-5b6c-9d0e-1f2g3h4i5j6k': MentalHealthDescription,
+    'c3d4e5f6-g7h8-6c7d-ae1f-2g3h4i5j6k7l': PublishingDescription,
+    'd4e5f6g7-h8i9-7d8e-bf2g-3h4i5j6k7l8m': EducativeDescription,
+    'e5f6g7h8-i9j0-8e9f-cg3h-4i5j6k7l8m9n': TalentDescription,
     'f6g7h8i9-j0k1-9f0g-dh4i-5j6k7l8m9n0o': CareHiveDescription,
     'g7h8i9j0-k1l2-0g1h-ei5j-6k7l8m9n0o1p': CommerceNestDescription,
-    'd4e5f6g7-h8i9-7d8e-bf2g-3h4i5j6k7l8m': EducativeDescription,
-    'gamebuddy-id': GameBuddyDescription,
-    'grant-swarm-id': GrantDescription,
-    'b2c3d4e5-f6g7-5b6c-9d0e-1f2g3h4i5j6k': MentalHealthDescription,
+    'h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q': AffiliateDescription,
     'mentor-swarm-id': MentorDescription,
-    'c3d4e5f6-g7h8-6c7d-ae1f-2g3h4i5j6k7l': PublishingDescription,
     'speaker-swarm-id': SpeakerDescription,
-    'e5f6g7h8-i9j0-8e9f-cg3h-4i5j6k7l8m9n': TalentDescription,
     'travel-swarm-id': TravelDescription,
+    'grant-swarm-id': GrantDescription,
+    'resume-swarm-id': GameBuddyDescription,
+    'a1b2c3d4-e5f6-4a5b-8c7d-9e8f7a6b5c4d': RobinhoodDescription,
+    'f7a92b3c-d8e4-4c1a-9f5d-1234567890ab': ScreenplayDescription,
+    'wealthhive-inception-id': WealthHiveDescription
 };
 
 export default function SwarmPage({ params }: { params: { slug: string } }) {
