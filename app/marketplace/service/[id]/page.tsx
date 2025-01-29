@@ -123,24 +123,14 @@ export default function ServicePage() {
             {connected ? (
               <Button 
                 className="w-full"
-                onClick={handlePurchase}
+                disabled={true}
               >
-                Purchase Service
+                Coming Soon
               </Button>
             ) : (
               <ConnectButton className="w-full" />
             )}
 
-            <div className="pt-6 border-t border-white/10 space-y-4">
-              <div className="flex items-center gap-2">
-                <Star className="w-4 h-4 text-yellow-400" />
-                <span>{service.successRate}% Success Rate</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-green-400" />
-                <span>Avg. {service.averageCompletionTime}</span>
-              </div>
-            </div>
           </div>
 
           {/* Provider Card */}
