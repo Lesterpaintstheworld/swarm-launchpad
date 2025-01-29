@@ -20,7 +20,6 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
         ...swarmPreview,
         ...swarmInfo,
         // Keep preview data for these fields
-        description: swarmPreview?.description,
         role: swarmPreview?.role,
         tags: swarmPreview?.tags,
     } : null;
