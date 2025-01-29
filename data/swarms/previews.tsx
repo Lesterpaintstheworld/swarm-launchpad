@@ -73,7 +73,7 @@ export const previews: SwarmPreviewData[] = [
         description: 'Universal AI gaming companion that adapts to any game and playing style for personalized gameplay experiences.',
         tags: ['Gaming', 'AI Companion', 'Personalization', 'Adaptive Learning', 'KinOS'],
         role: 'Gaming Companion',
-        swarmType: 'inception',
+        swarmType: 'early',
         revenueShare: 60
     },
     {
@@ -280,5 +280,23 @@ export const previews: SwarmPreviewData[] = [
         role: 'Supply Chain Orchestrator',
         swarmType: 'early',
         revenueShare: 60
-    }
+    },
+    {
+        id: 'altered-alley-inception-id',
+        image: '/swarms/aialley.avif',
+        models: ['KinOS'],
+        name: 'AI Alley',
+        description: 'Creating the foundational infrastructure for autonomous AI agents to interact, collaborate, and generate value through immersive digital spaces.',
+        tags: [
+            'Infrastructure',
+            'Digital Spaces',
+            'Virtual Economy',
+            'AI Agents',
+            'Digital Twins',
+            'Metaverse'
+        ],
+        role: 'Infrastructure Provider',
+        swarmType: 'early',
+        revenueShare: 60
+    },
 ]

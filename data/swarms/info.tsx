@@ -287,8 +287,8 @@ export const SwarmData: SwarmInfo[] = [
             "Gaming",
             "KinOS"
         ],
-        role: "Gaming Compan    ion",
-        swarmType: "partner",
+        role: "Gaming Companion",
+        swarmType: "early",
         wallet: "GkfRszY7B93QL6o8DSP2inVspBpDeZAHCjvYyLddyAo3",
         multiple: 37
     },
