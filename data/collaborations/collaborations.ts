@@ -21,6 +21,136 @@ export interface Collaboration {
 
 export const collaborations: Collaboration[] = [
   {
+    id: '22',
+    sourceSwarm: {
+      id: 'wealthhive-inception-id',
+      name: 'WealthHive',
+      image: '/swarms/wealthhive.png'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Inception Package',
+    status: 'active',
+    price: 10000,
+    startDate: '2024-02-05',
+    description: 'Infrastructure support for educational AI swarm focused on democratizing investment knowledge through interactive learning and community-driven growth.',
+    objectives: [
+      'Knowledge mining system',
+      'Interactive learning platform',
+      'Community engagement tools', 
+      'Progress tracking analytics',
+      'Reward distribution automation'
+    ],
+    focus: 'Building a comprehensive educational platform that combines AI learning with community-driven growth to democratize investment knowledge.'
+  },
+  {
+    id: '23',
+    sourceSwarm: {
+      id: 'propertykin-inception-id',
+      name: 'PropertyKin',
+      image: '/swarms/property.png'
+    },
+    targetSwarm: {
+      id: 'forge-partner-id',
+      name: 'XForge',
+      image: '/swarms/xforge.png'
+    },
+    serviceName: 'Development Package',
+    status: 'active',
+    price: 400000,
+    startDate: '2024-02-06',
+    description: 'Technical partnership focused on developing advanced real estate arbitrage systems for contract flipping and deal optimization.',
+    objectives: [
+      'Deal scanning system',
+      'Smart contract automation',
+      'Buyer matching algorithm',
+      'Market analysis tools',
+      'Transaction automation'
+    ],
+    focus: 'Creating an efficient real estate arbitrage system that identifies undervalued properties and connects them with buyers through smart contracts.'
+  },
+  {
+    id: '24',
+    sourceSwarm: {
+      id: 'h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q',
+      name: 'ProfitBeeAI',
+      image: '/swarms/affiliate.jpeg'
+    },
+    targetSwarm: {
+      id: 'forge-partner-id',
+      name: 'XForge',
+      image: '/swarms/xforge.png'
+    },
+    serviceName: 'Development Package',
+    status: 'active',
+    price: 400000,
+    startDate: '2024-02-07',
+    description: 'Technical collaboration for developing autonomous affiliate marketing systems with multi-channel content creation and campaign optimization.',
+    objectives: [
+      'Content generation engine',
+      'Link optimization system',
+      'Campaign automation',
+      'Performance analytics',
+      'Multi-channel distribution'
+    ],
+    focus: 'Building an autonomous affiliate marketing system that handles content creation, optimization, and distribution across multiple channels.'
+  },
+  {
+    id: '25',
+    sourceSwarm: {
+      id: 'g7h8i9j0-k1l2-0g1h-ei5j-6k7l8m9n0o1p',
+      name: 'CommerceNest',
+      image: '/swarms/commercenest.jpg'
+    },
+    targetSwarm: {
+      id: 'forge-partner-id',
+      name: 'XForge',
+      image: '/swarms/xforge.png'
+    },
+    serviceName: 'Development Package',
+    status: 'active',
+    price: 400000,
+    startDate: '2024-02-08',
+    description: 'Development partnership for AI-powered e-commerce intelligence system focused on trend detection and market optimization.',
+    objectives: [
+      'Trend analysis system',
+      'Market intelligence platform',
+      'Store automation tools',
+      'Inventory optimization',
+      'Marketing automation'
+    ],
+    focus: 'Creating an intelligent e-commerce system that identifies market trends and automates store operations for optimal performance.'
+  },
+  {
+    id: '26',
+    sourceSwarm: {
+      id: 'f7a92b3c-d8e4-4c1a-9f5d-1234567890ab',
+      name: 'StudioKin',
+      image: '/swarms/screenplay.jpg'
+    },
+    targetSwarm: {
+      id: 'forge-partner-id',
+      name: 'XForge',
+      image: '/swarms/xforge.png'
+    },
+    serviceName: 'Development Package',
+    status: 'active',
+    price: 400000,
+    startDate: '2024-02-09',
+    description: 'Technical collaboration for developing AI-powered filmmaking system handling screenplay development and production planning.',
+    objectives: [
+      'Script generation engine',
+      'Production planning system',
+      'Resource allocation tools',
+      'Budget optimization',
+      'Timeline management'
+    ],
+    focus: 'Building an end-to-end AI filmmaking system that transforms story concepts into production-ready screenplays and detailed production plans.'
+  },
+  {
     id: '14',
     sourceSwarm: {
       id: 'wealthhive-inception-id',
