@@ -183,12 +183,18 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       .style("text-shadow", "0 0 10px rgba(0,0,0,0.5)");
 
     simulation.on("tick", () => {
+      // Update both base links and lights
       link.attr("d", (d: any) => {
         const dx = d.target.x - d.source.x;
         const dy = d.target.y - d.source.y;
         const dr = Math.sqrt(dx * dx + dy * dy);
-        
-        // Create a slight curve in the link
+        return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
+      });
+
+      lights.attr("d", (d: any) => {
+        const dx = d.target.x - d.source.x;
+        const dy = d.target.y - d.source.y;
+        const dr = Math.sqrt(dx * dx + dy * dy);
         return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
       });
 
