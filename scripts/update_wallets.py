@@ -68,8 +68,8 @@ def update_wallets():
         for swarm_id, wallet in WALLET_MAP.items():
             print(f"\nProcessing swarm ID: {swarm_id}")
             
-            # Find the swarm object
-            pattern = f'id:\\s*["\'{swarm_id}]'
+            # Find the swarm object with fixed pattern
+            pattern = f'id:\\s*["\']?{swarm_id}["\']?'
             match = re.search(pattern, content)
             
             if not match:
