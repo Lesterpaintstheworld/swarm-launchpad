@@ -70,8 +70,8 @@ const config: Config = {
 				'100%': { scale: '1', }
 			},
 			moveLight: {
-				'0%': { transform: 'translateX(-200%)' },
-				'100%': { transform: 'translateX(200%)' }
+				'0%': { transform: 'translateX(-100%)' },
+				'100%': { transform: 'translateX(100%)' }
 			}
 		}
   	}
