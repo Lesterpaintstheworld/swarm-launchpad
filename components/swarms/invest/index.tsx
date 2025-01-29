@@ -23,8 +23,6 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
     const [numShares, setNumShares] = useState<number>(0);
     const [price, setPrice] = useState<number>(0);
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-    const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [data, setData] = useState({
         totalSupply: 0,
         remainingSupply: 0,
