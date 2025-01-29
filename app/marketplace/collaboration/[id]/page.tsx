@@ -6,7 +6,12 @@ import Link from 'next/link';
 import { Clock } from 'lucide-react';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 
-type ServiceName = 'Development Package' | 'Essential Swarm Package' | 'Inception Package';
+import { ServiceName } from '@/data/collaborations/collaborations';
+
+// Type guard to validate service names
+function isServiceName(name: string): name is ServiceName {
+  return ['Development Package', 'Essential Swarm Package', 'Inception Package'].includes(name);
+}
 
 const serviceBanners: Record<ServiceName, string> = {
   'Development Package': '/services/xforge.png',
@@ -24,6 +29,18 @@ export default function CollaborationPage({ params }: { params: { id: string } }
       </div>
     );
   }
+
+  // Validate the service name
+  if (!isServiceName(collaboration.serviceName)) {
+    return (
+      <div className="container py-12">
+        <h1 className="text-2xl font-bold">Invalid service type</h1>
+      </div>
+    );
+  }
+
+  // Now TypeScript knows collaboration.serviceName is a valid ServiceName
+  const bannerSrc = serviceBanners[collaboration.serviceName];
 
   // Get additional swarm details
   const sourceSwarm = getSwarm(collaboration.sourceSwarm.id);
@@ -47,7 +64,7 @@ export default function CollaborationPage({ params }: { params: { id: string } }
           {/* Service Banner */}
           <div className="relative w-full h-[300px] rounded-xl overflow-hidden">
             <Image
-              src={serviceBanners[collaboration.serviceName]}
+              src={bannerSrc}
               alt={collaboration.serviceName}
               fill
               className="object-cover"

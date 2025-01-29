@@ -1,3 +1,5 @@
+export type ServiceName = 'Development Package' | 'Essential Swarm Package' | 'Inception Package';
+
 export interface Collaboration {
   id: string;
   sourceSwarm: {
@@ -10,7 +12,7 @@ export interface Collaboration {
     name: string;
     image: string;
   };
-  serviceName: string;
+  serviceName: ServiceName;
   status: 'active' | 'completed' | 'pending';
   price: number;
   startDate: string;
