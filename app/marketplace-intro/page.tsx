@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { CollaborationGraph } from '@/components/marketplace/collaborations/graph';
+import { collaborations } from '@/data/collaborations/collaborations';
 
 export default function MarketplacePage() {
   return (
@@ -19,6 +21,25 @@ export default function MarketplacePage() {
             Discover the Marketplace
           </span>
         </Link>
+      </div>
+
+      {/* Add Collaborations Graph Section */}
+      <div className="mb-32">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-semibold mb-4 bg-gradient-to-r from-purple-200 to-purple-100 bg-clip-text text-transparent">
+            Active Collaborations
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Explore the network of AI swarms working together through the Agent Exchange Protocol
+          </p>
+        </div>
+        
+        <div className="relative rounded-xl bg-black/40 border border-purple-500/20 backdrop-blur-sm overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-blue-500/5" />
+          <div className="relative p-6">
+            <CollaborationGraph collaborations={collaborations} />
+          </div>
+        </div>
       </div>
 
       <div className="max-w-3xl mx-auto text-center mb-32 mt-16">
