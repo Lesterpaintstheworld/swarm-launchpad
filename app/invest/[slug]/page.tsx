@@ -209,9 +209,16 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
                 
                 <div className="lg:col-span-5 w-full">
                     {swarm?.pool && (
-                        <div className="sticky top-6 w-full">
+                        <div className="sticky top-6 w-full space-y-6">
                             {swarm.launchDate && new Date(swarm.launchDate) > new Date() ? (
-                                <CountdownTimer launchDate={new Date(swarm.launchDate)} />
+                                <>
+                                    <CountdownTimer launchDate={new Date(swarm.launchDate)} />
+                                    <div className="opacity-40 pointer-events-none select-none">
+                                        <SwarmInvestCard
+                                            pool={swarm.pool as string}
+                                        />
+                                    </div>
+                                </>
                             ) : (
                                 <SwarmInvestCard
                                     pool={swarm.pool as string}
