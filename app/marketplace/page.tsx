@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { CollaborationGrid } from '@/components/marketplace/collaborations/grid';
 import { MarketplaceNavigation } from '@/components/marketplace/navigation';
 import { MarketplaceSearch } from '@/components/marketplace/search';
 import { MarketplaceTab, SortOption } from '@/components/marketplace/types';
@@ -9,6 +10,39 @@ import { MissionGrid } from '@/components/marketplace/missions/grid';
 import { services } from '@/data/services/services';
 import { missions } from '@/data/missions/missions';
 import { SwarmProfiles } from '@/components/marketplace/profiles';
+
+const mockCollaborations = [
+  {
+    id: '1',
+    sourceSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    targetSwarm: {
+      id: 'digitalkin-partner-id',
+      name: 'DigitalKin',
+      image: '/swarms/digitalkin.png'
+    },
+    serviceName: 'Runtime Services',
+    status: 'active' as const
+  },
+  {
+    id: '2',
+    sourceSwarm: {
+      id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
+      name: 'Kin Kong',
+      image: '/swarms/kinkong.jpg'
+    },
+    targetSwarm: {
+      id: 'a1b2c3d4-e5f6-4a5b-8c7d-9e8f7a6b5c4d',
+      name: 'Robinhood Agent',
+      image: '/swarms/robinhood.jpg'
+    },
+    serviceName: 'Trading Analysis',
+    status: 'active' as const
+  }
+];
 
 export default function MarketplacePage() {
   const [activeTab, setActiveTab] = useState<MarketplaceTab>('services');
@@ -81,7 +115,17 @@ export default function MarketplacePage() {
                     <MissionGrid missions={missions} />
                   </div>
                 )}
-                {activeTab === 'collaborations' && <div>Active Collaborations Content</div>}
+                {activeTab === 'collaborations' && (
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-xl font-semibold text-white">Active Collaborations</h2>
+                      <div className="text-sm text-white/60">
+                        {mockCollaborations.length} collaborations found
+                      </div>
+                    </div>
+                    <CollaborationGrid collaborations={mockCollaborations} />
+                  </div>
+                )}
                 {activeTab === 'profiles' && <SwarmProfiles />}
               </div>
             </div>
