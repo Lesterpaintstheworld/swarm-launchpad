@@ -26,6 +26,32 @@ WALLET_MAP = {
     'forge-partner-id': 'AFSr2ATJ244u1CY8JRKAK85uuW7VsjNiyKSycmVR4Vg9'  # XForge
 }
 
+def find_matching_brace(content: str, start_pos: int) -> int:
+    """Find the matching closing brace for an object, handling nested objects correctly"""
+    brace_count = 1
+    pos = start_pos + 1
+    in_string = False
+    escape_char = False
+    
+    while pos < len(content) and brace_count > 0:
+        char = content[pos]
+        
+        if escape_char:
+            escape_char = False
+        elif char == '\\':
+            escape_char = True
+        elif char == '"' and not escape_char:
+            in_string = not in_string
+        elif not in_string:
+            if char == '{':
+                brace_count += 1
+            elif char == '}':
+                brace_count -= 1
+                
+        pos += 1
+        
+    return pos - 1 if brace_count == 0 else -1
+
 def update_wallets():
     print("Starting wallet update process...")
     
@@ -37,56 +63,59 @@ def update_wallets():
         print(f"File read successfully. Content length: {len(content)} characters")
 
         changes_made = 0
+        
         # For each swarm ID and wallet in the map
         for swarm_id, wallet in WALLET_MAP.items():
             print(f"\nProcessing swarm ID: {swarm_id}")
             
-            # Create pattern to match the swarm object - using a simpler pattern
-            pattern = f'id: "?{swarm_id}"?'  # Matches with or without quotes
-            
-            # Find the position of the swarm object using regex
+            # Find the swarm object
+            pattern = f'id:\\s*["\'{swarm_id}]'
             match = re.search(pattern, content)
+            
             if not match:
                 print(f"WARNING: Could not find swarm with ID: {swarm_id}")
                 continue
+                
             pos = match.start()
             print(f"Found swarm at position: {pos}")
             
-            # Find the next closing brace after the ID
-            start_pos = content.find('{', pos)
-            # Find matching closing brace by counting braces
-            brace_count = 1
-            end_pos = start_pos + 1
-            while brace_count > 0 and end_pos < len(content):
-                if content[end_pos] == '{':
-                    brace_count += 1
-                elif content[end_pos] == '}':
-                    brace_count -= 1
-                end_pos += 1
-            end_pos -= 1  # Adjust to point to the closing brace
-            
-            if start_pos == -1 or end_pos == -1:
-                print(f"ERROR: Could not find proper object boundaries for swarm: {swarm_id}")
+            # Find the object boundaries
+            start_pos = content.rfind('{', 0, pos)
+            if start_pos == -1:
+                print(f"ERROR: Could not find opening brace for swarm: {swarm_id}")
                 continue
+                
+            end_pos = find_matching_brace(content, start_pos)
+            if end_pos == -1:
+                print(f"ERROR: Could not find closing brace for swarm: {swarm_id}")
+                continue
+                
             print(f"Object boundaries: {start_pos} to {end_pos}")
             
             # Get the swarm object text
-            swarm_text = content[start_pos:end_pos+1]
+            swarm_text = content[start_pos:end_pos + 1]
             print(f"Current swarm text length: {len(swarm_text)}")
             
             # Remove existing wallet if present
-            original_length = len(swarm_text)
-            swarm_text = re.sub(r',\s*wallet:\s*[\'"][^\'"]*[\'"]', '', swarm_text)
-            if len(swarm_text) != original_length:
-                print("Removed existing wallet field")
+            swarm_text = re.sub(r',\s*wallet:\s*["\'][^"\']*["\']', '', swarm_text)
             
             # Add the new wallet before the closing brace
-            new_swarm_text = swarm_text[:-1] + f',\n        wallet: "{wallet}"' + swarm_text[-1]
-            print(f"New swarm text length: {len(new_swarm_text)}")
+            # First find the last property
+            last_prop_match = re.search(r',\s*[a-zA-Z]+:\s*[^,}]+\s*}$', swarm_text)
+            if last_prop_match:
+                insert_pos = last_prop_match.start() + 1
+                new_swarm_text = (
+                    swarm_text[:insert_pos] +
+                    f'\n        wallet: "{wallet}",' +
+                    swarm_text[insert_pos:]
+                )
+            else:
+                # Fallback: insert before closing brace
+                new_swarm_text = swarm_text[:-1] + f',\n        wallet: "{wallet}"\n    }}'
             
             # Replace the old swarm text with the new one
             if swarm_text != new_swarm_text:
-                content = content.replace(swarm_text, new_swarm_text)
+                content = content[:start_pos] + new_swarm_text + content[end_pos + 1:]
                 changes_made += 1
                 print(f"Updated wallet for swarm: {swarm_id}")
             else:
