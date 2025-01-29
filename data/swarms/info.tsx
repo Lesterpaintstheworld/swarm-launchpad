@@ -826,12 +826,12 @@ export const SwarmData: SwarmInfo[] = [
         ],
         name: "WealthHive",
         pool: "HeR7qoPbvmgcLFywkduZ27Hr2wKYuxtVkTBaGhVohP88",
+        wallet: "C1uvoRUhHj2o6swBMvgZsdzkaM3Po5J7WMtrcQxGcVJx",
         gallery: [
             {
                 type: "image",
                 content: "/swarms/wealthhive.png"
-            ,
-        wallet: "C1uvoRUhHj2o6swBMvgZsdzkaM3Po5J7WMtrcQxGcVJx"}
+            }
         ],
         description: "PLACEHOLDER",
         programAddress: "",
