@@ -45,23 +45,10 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
     const g = svg.append("g")
       .attr("transform", `scale(${zoom})`);
 
-    // Create gradient definitions for links
+    // Create definitions section for all markers and gradients
     const defs = g.append("defs");
-    const gradient = defs.append("linearGradient")
-      .attr("id", "link-gradient")
-      .attr("gradientUnits", "userSpaceOnUse");
-
-    gradient.append("stop")
-      .attr("offset", "0%")
-      .attr("stop-color", "rgba(147, 51, 234, 0.7)");
-
-    gradient.append("stop")
-      .attr("offset", "100%")
-      .attr("stop-color", "rgba(59, 130, 246, 0.7)");
 
     // Define arrow marker
-    const defs = g.append("defs");
-    
     defs.append("marker")
       .attr("id", "arrow")
       .attr("viewBox", "0 -5 10 10")
@@ -74,7 +61,7 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       .attr("fill", "rgba(147, 51, 234, 0.7)")
       .attr("d", "M0,-5L10,0L0,5");
 
-    // Create gradient for links
+    // Create gradient for links in the same defs
     const gradient = defs.append("linearGradient")
       .attr("id", "link-gradient")
       .attr("gradientUnits", "userSpaceOnUse");
