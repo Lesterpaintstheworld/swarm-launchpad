@@ -98,8 +98,10 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
     const linkGroup = g.append("g")
       .attr("class", "links");
 
-    // Base links
-    const link = linkGroup.selectAll("path")
+    // Base links - create a separate group for the static links
+    const baseLinks = linkGroup.append("g")
+      .attr("class", "base-links")
+      .selectAll("path")
       .data(links)
       .join("path")
       .attr("class", "link-path")
@@ -108,8 +110,11 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       .attr("stroke-opacity", 1)
       .attr("fill", "none");
 
-    // Animated lights
-    const lights = linkGroup.selectAll("path")
+    // Animated lights - create a separate group for the animated lights  
+    const lightsGroup = linkGroup.append("g")
+      .attr("class", "animated-lights");
+
+    const lights = lightsGroup.selectAll("path")
       .data(links)
       .join("path")
       .attr("class", "link-light")
@@ -183,14 +188,15 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       .style("text-shadow", "0 0 10px rgba(0,0,0,0.5)");
 
     simulation.on("tick", () => {
-      // Update both base links and lights
-      link.attr("d", (d: any) => {
+      // Update base links
+      baseLinks.attr("d", (d: any) => {
         const dx = d.target.x - d.source.x;
         const dy = d.target.y - d.source.y;
         const dr = Math.sqrt(dx * dx + dy * dy);
         return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
       });
 
+      // Update animated lights
       lights.attr("d", (d: any) => {
         const dx = d.target.x - d.source.x;
         const dy = d.target.y - d.source.y;
@@ -224,7 +230,7 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
     return () => {
       simulation.stop();
       // Clean up animations
-      linkGroup.selectAll(".link-light").interrupt();
+      lightsGroup.selectAll(".link-light").interrupt();
     };
   }, [collaborations, zoom]);
 
