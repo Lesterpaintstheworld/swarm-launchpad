@@ -877,10 +877,11 @@ export const SwarmData: SwarmInfo[] = [
         'Metaverse'
     ],
     role: 'Infrastructure Provider',
-    swarmType: 'inception',
+    swarmType: 'early',
     wallet: '7GmuNjA5AGWMu5izEfrBjakEjuwNpgh5QJuKB1GUq5mGI',
     multiple: 1,
     revenueShare: 60,
+    launchDate: new Date('2025-01-29T19:00:00.000Z'),
     links: [
         {
             name: 'Pitch Deck',
