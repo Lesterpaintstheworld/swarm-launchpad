@@ -35,6 +35,7 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
     const [price, setPrice] = useState<number>(0);
     const [isLoading, setIsLoading] = useState(false);
     const swarm = getSwarmUsingPoolId(pool);
+    const isBeforeLaunch = swarm?.launchDate && new Date(swarm.launchDate) > new Date();
     const [data, setData] = useState({
         totalSupply: 0,
         remainingSupply: 0,
@@ -243,13 +244,15 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                 <Button
                     onClick={handleBuy}
                     className="w-full mt-6"
-                    disabled={!numShares || numShares <= 0 || isLoading}
+                    disabled={!numShares || numShares <= 0 || isLoading || isBeforeLaunch}
                 >
                     {isLoading ? (
                         <div className="flex items-center gap-2">
                             <span className="animate-spin">⚪</span>
                             Processing...
                         </div>
+                    ) : isBeforeLaunch ? (
+                        'Launching Soon'
                     ) : (
                         'Purchase Shares'
                     )}
