@@ -98,6 +98,7 @@ import { description as DigitalKinDescription } from "@/data/swarms/descriptions
 import { description as SlopFatherDescription } from "@/data/swarms/descriptions/slopfather";
 import { description as WealthHiveDescription } from "@/data/swarms/descriptions/wealthhive";
 import { description as AlteredAlleyDescription } from "@/data/swarms/descriptions/alteredalley";
+import { description as LogicAtlasDescription } from "@/data/swarms/descriptions/logicatlas";
 
 const descriptionMap: { [key: string]: string } = {
     'kinos-partner-id': KinOSDescription,
