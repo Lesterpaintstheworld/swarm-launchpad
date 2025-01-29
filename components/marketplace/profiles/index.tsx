@@ -1,4 +1,6 @@
-import { SwarmPreviewGrid } from '@/components/swarms/previewGrid';
+'use client';
+
+import { SwarmPreviewCard } from '@/components/swarms/preview';
 import { SwarmTopGainers } from '@/components/swarms/topGainers';
 import { previews } from '@/data/swarms/previews';
 
@@ -19,10 +21,14 @@ export function SwarmProfiles() {
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-white">All Swarms</h3>
           <div className="flex items-center gap-4">
-            {/* You can add filters here if needed */}
+            {/* Filters can be added here */}
           </div>
         </div>
-        <SwarmPreviewGrid />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {previews.map((swarm) => (
+            <SwarmPreviewCard key={swarm.id} swarm={swarm} />
+          ))}
+        </div>
       </div>
     </div>
   );
