@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { Service } from '@/data/services/types';
 import { getSwarm } from '@/data/swarms/previews';
 import Image from 'next/image';
-import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 interface ServiceCardProps {
