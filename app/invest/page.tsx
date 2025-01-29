@@ -41,6 +41,54 @@ export default function Invest() {
                 </div>
             </div>
 
+            {/* Launching Swarms */}
+            {sortedSwarms.filter(swarm => swarm.launchDate).length > 0 && (
+                <section className="mb-24">
+                    <div className="flex items-center gap-2 mb-8">
+                        <h3 className="text-2xl font-semibold">🚀 Launching Now</h3>
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <Info className="w-5 h-5 text-muted-foreground" />
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p className="max-w-[300px]">
+                                        These swarms are actively launching! Get in early to maximize your potential returns.
+                                    </p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    </div>
+                    
+                    {/* Add animated background and special styling */}
+                    <div className="relative">
+                        <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 via-orange-500/10 to-red-500/10 blur-3xl animate-pulse" />
+                        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {sortedSwarms
+                                .filter(swarm => swarm.launchDate)
+                                .map((swarm) => (
+                                    <div key={swarm.id} className="group relative">
+                                        {/* Add glow effect */}
+                                        <div className="absolute -inset-1 bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-red-500/20 rounded-xl opacity-0 group-hover:opacity-100 blur transition-all duration-500" />
+                                        <div className="relative">
+                                            <SwarmPreviewCard 
+                                                swarm={{
+                                                    ...swarm,
+                                                    revenueShare: swarm.revenueShare || 60,
+                                                }}
+                                            />
+                                            {/* Add "Launching" badge */}
+                                            <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-yellow-500/20 border border-yellow-500/30 backdrop-blur-sm">
+                                                <span className="text-xs font-medium text-yellow-300">Launching</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
             {/* Partner Swarms */}
             {partnerSwarms.length > 0 && (
                 <section className="mb-24">
