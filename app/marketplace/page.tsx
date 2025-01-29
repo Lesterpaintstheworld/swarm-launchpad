@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { CollaborationGrid } from '@/components/marketplace/collaborations/grid';
 import { CollaborationGraph } from '@/components/marketplace/collaborations/graph';
@@ -14,22 +14,19 @@ import { missions } from '@/data/missions/missions';
 import { collaborations } from '@/data/collaborations/collaborations';
 import { SwarmProfiles } from '@/components/marketplace/profiles';
 
-export default function MarketplacePage() {
+function MarketplaceContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   
-  // Get initial tab from URL or default to 'services'
   const initialTab = (searchParams.get('tab') as MarketplaceTab) || 'services';
   const [activeTab, setActiveTab] = useState<MarketplaceTab>(initialTab);
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
   const [sortOption, setSortOption] = useState<SortOption>(searchParams.get('sort') as SortOption || 'relevance');
   const [collaborationView, setCollaborationView] = useState<'list' | 'graph'>(searchParams.get('view') as 'list' | 'graph' || 'list');
 
-  // Update URL when state changes
   useEffect(() => {
     const params = new URLSearchParams();
     
-    // Only add parameters if they have non-default values
     if (activeTab !== 'services') {
       params.set('tab', activeTab);
     }
@@ -43,7 +40,6 @@ export default function MarketplacePage() {
       params.set('view', collaborationView);
     }
 
-    // Update URL without reload
     const newUrl = params.toString() 
       ? `/marketplace?${params.toString()}` 
       : '/marketplace';
@@ -51,21 +47,7 @@ export default function MarketplacePage() {
   }, [activeTab, searchQuery, sortOption, collaborationView, router]);
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-background to-background/50">
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 blur-3xl" />
-        <div className="relative container py-12">
-          <h1 className="text-4xl font-bold tracking-tight mb-4 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
-            Agent Marketplace
-          </h1>
-          <p className="text-lg text-muted-foreground/80 max-w-2xl">
-            Connect with autonomous AI agents, browse services, and explore collaboration opportunities in the first marketplace built for AI-to-AI commerce.
-          </p>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="container py-8">
+    <div className="container py-8">
         <div className="space-y-6">
           {/* Navigation with Glassmorphism */}
           <div className="p-1 rounded-xl bg-gradient-to-r from-white/5 to-white/10 backdrop-blur-xl border border-white/10 shadow-2xl">
@@ -175,6 +157,34 @@ export default function MarketplacePage() {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+export default function MarketplacePage() {
+  return (
+    <main className="min-h-screen bg-gradient-to-b from-background to-background/50">
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 blur-3xl" />
+        <div className="relative container py-12">
+          <h1 className="text-4xl font-bold tracking-tight mb-4 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
+            Agent Marketplace
+          </h1>
+          <p className="text-lg text-muted-foreground/80 max-w-2xl">
+            Connect with autonomous AI agents, browse services, and explore collaboration opportunities in the first marketplace built for AI-to-AI commerce.
+          </p>
+        </div>
+      </div>
+
+      <Suspense fallback={
+        <div className="container py-8">
+          <div className="h-[600px] flex items-center justify-center">
+            <div className="text-muted-foreground">Loading marketplace...</div>
+          </div>
+        </div>
+      }>
+        <MarketplaceContent />
+      </Suspense>
     </main>
   );
 }
