@@ -142,7 +142,10 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
     return (
         <div className={cn("space-y-6 w-full", className)}>
             {/* Buy UI Card */}
-            <Card className="bg-[#0f172a] p-6 w-full">
+            <Card className={cn(
+                "bg-[#0f172a] p-6 w-full",
+                isBeforeLaunch && "opacity-40 pointer-events-none select-none"
+            )}>
                 {/* Header section */}
                 <div className="flex justify-between items-start mb-8">
                     <div>
