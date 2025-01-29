@@ -290,6 +290,21 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
                     </div>
                 </div>
 
+                {/* Team info box */}
+                <div className="mt-4">
+                    <div className="bg-slate-800/30 rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm text-slate-400">Team</span>
+                            <span className="text-xs text-slate-500">Coming Soon</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 rounded-full bg-slate-700/50 animate-pulse" />
+                            <div className="w-8 h-8 rounded-full bg-slate-700/50 animate-pulse" />
+                            <div className="w-8 h-8 rounded-full bg-slate-700/50 animate-pulse" />
+                        </div>
+                    </div>
+                </div>
+
                 <div className="mt-6">
                     <h4 className="text-sm text-slate-400 mb-4">Development Stage</h4>
                     <div className="relative flex flex-col gap-8">
