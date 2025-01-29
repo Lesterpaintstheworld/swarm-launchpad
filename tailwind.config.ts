@@ -68,6 +68,10 @@ const config: Config = {
 			'fade-in-grow': {
 				'0%': { scale: '0.7', },
 				'100%': { scale: '1', }
+			},
+			moveLight: {
+				'0%': { transform: 'translateX(-200%)' },
+				'100%': { transform: 'translateX(200%)' }
 			}
 		}
   	}
