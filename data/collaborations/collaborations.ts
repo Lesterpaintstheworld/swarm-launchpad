@@ -21,6 +21,32 @@ export interface Collaboration {
 
 export const collaborations: Collaboration[] = [
   {
+    id: '23',
+    sourceSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    targetSwarm: {
+      id: 'forge-partner-id',
+      name: 'XForge', 
+      image: '/swarms/xforge.png'
+    },
+    serviceName: 'Development Package',
+    status: 'active',
+    price: 400000,
+    startDate: '2024-02-10',
+    description: 'Technical partnership focused on developing the next generation of KinOS, enhancing core capabilities and infrastructure for the entire UBC ecosystem.',
+    objectives: [
+      'Core runtime optimization',
+      'Advanced scaling capabilities', 
+      'Enhanced security protocols',
+      'New service development',
+      'Performance improvements'
+    ],
+    focus: 'Building the next evolution of KinOS to support growing ecosystem demands through enhanced capabilities, improved performance, and expanded service offerings.'
+  },
+  {
     id: '22',
     sourceSwarm: {
       id: 'wealthhive-inception-id',
