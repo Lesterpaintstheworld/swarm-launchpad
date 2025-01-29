@@ -97,20 +97,20 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
                         { label: swarm.name }
                     ]}
                 />
-                <div className="mt-2 flex items-center gap-8">
-                    <h1 className="font-bold">{swarm.name}</h1>
+                <div className="mt-8 mb-12 flex justify-between items-start">
+                    <h1 className="font-bold text-4xl">{swarm.name}</h1>
                     {swarm?.pool && (
-                        <div className="flex gap-8">
+                        <div className="flex gap-12 text-right">
                             <div>
-                                <p className="text-xs text-muted-foreground">MARKET CAP</p>
-                                <p className="text-2xl font-semibold text-green-400">
-                                    ${<SwarmInvestCard pool={swarm.pool} marketCapOnly />} $COMPUTE
+                                <p className="text-sm text-muted-foreground mb-1">MARKET CAP</p>
+                                <p className="text-3xl font-semibold text-green-400">
+                                    ${<SwarmInvestCard pool={swarm.pool} marketCapOnly />} <span className="text-xl">$COMPUTE</span>
                                 </p>
                             </div>
                             <div>
-                                <p className="text-xs text-muted-foreground">AMOUNT RAISED</p>
-                                <p className="text-2xl font-semibold text-blue-400">
-                                    ${<SwarmInvestCard pool={swarm.pool} amountRaisedOnly />} $COMPUTE
+                                <p className="text-sm text-muted-foreground mb-1">AMOUNT RAISED</p>
+                                <p className="text-3xl font-semibold text-blue-400">
+                                    ${<SwarmInvestCard pool={swarm.pool} amountRaisedOnly />} <span className="text-xl">$COMPUTE</span>
                                 </p>
                             </div>
                         </div>
