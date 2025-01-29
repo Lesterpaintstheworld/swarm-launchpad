@@ -3,6 +3,7 @@ import { SwarmInfo as BaseSwarmInfo } from "@/components/swarms/swarm.types"
 interface SwarmInfo extends BaseSwarmInfo {
     wallet?: string;
 }
+import { description as KinOSDescription } from "./descriptions/kinos"
 import { description as KinKongDescription } from "./descriptions/kinkong"
 import { description as SwarmVenturesDescription } from "./descriptions/swarmventures"
 import { description as TerminalVelocityDescription } from "./descriptions/terminalvelocity"
@@ -35,7 +36,7 @@ export const SwarmData: SwarmInfo[] = [
                 content: "/swarms/XForge/monumental-3d-text-13761-burned-emerging_8N4aVSaARGa-oKYBvEygdQ_CM5ll4MvQX-PV8oerJ4yJw.png"
             }
         ],
-        description: description,
+        description: KinOSDescription,
         programAddress: '',
         tags: [
             'Infrastructure',
