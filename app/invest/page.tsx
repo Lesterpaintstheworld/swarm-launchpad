@@ -62,15 +62,14 @@ export default function Invest() {
                     </div>
                     
                     <div className="relative">
-                        {/* Subtle background glow */}
+                        {/* Enhanced background effect */}
                         <div className="absolute inset-0 -mx-8 -my-6">
-                            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-yellow-500/5 to-orange-500/10 blur-[100px]" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/95 to-transparent" />
-                            <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-transparent" />
+                            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-yellow-500/10 to-orange-500/20 blur-[120px]" />
                         </div>
 
-                        {/* Content grid */}
-                        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        {/* Content grid with transparent backdrop */}
+                        <div className="relative rounded-xl bg-black/30 backdrop-blur-md border border-white/5">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
                             {sortedSwarms
                                 .filter(swarm => swarm.launchDate)
                                 .map((swarm) => (
@@ -90,6 +89,7 @@ export default function Invest() {
                                         </div>
                                     </div>
                                 ))}
+                            </div>
                         </div>
                     </div>
                 </section>
