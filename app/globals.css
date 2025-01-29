@@ -38,6 +38,96 @@
 	}
 }
 
+/* Markdown styling */
+.prose {
+  @apply text-white/80;
+}
+
+.prose h1 {
+  @apply text-3xl font-bold text-white mt-8 mb-4;
+}
+
+.prose h2 {
+  @apply text-2xl font-semibold text-white mt-8 mb-4;
+}
+
+.prose h3 {
+  @apply text-xl font-semibold text-white mt-6 mb-3;
+}
+
+.prose h4 {
+  @apply text-lg font-semibold text-white mt-6 mb-3;
+}
+
+.prose p {
+  @apply mb-4 leading-relaxed;
+}
+
+.prose ul {
+  @apply mb-4 ml-4 space-y-2;
+}
+
+.prose li {
+  @apply relative pl-6;
+}
+
+.prose li::before {
+  content: "•";
+  @apply absolute left-0 text-blue-400;
+}
+
+.prose strong {
+  @apply text-white font-semibold;
+}
+
+.prose em {
+  @apply text-white/90 italic;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-blue-400/30 pl-4 my-4 italic text-white/70;
+}
+
+.prose code {
+  @apply bg-white/5 px-1.5 py-0.5 rounded text-blue-300;
+}
+
+.prose pre {
+  @apply bg-white/5 p-4 rounded-lg my-4 overflow-x-auto;
+}
+
+.prose pre code {
+  @apply bg-transparent p-0 text-white/80;
+}
+
+.prose hr {
+  @apply my-8 border-white/10;
+}
+
+.prose a {
+  @apply text-blue-400 hover:text-blue-300 transition-colors;
+}
+
+/* Add spacing between sections */
+.prose > * + * {
+  @apply mt-4;
+}
+
+.prose > h2 + *,
+.prose > h3 + * {
+  @apply mt-2;
+}
+
+/* Special styling for lists within lists */
+.prose ul ul {
+  @apply mt-2 mb-0;
+}
+
+/* Improve spacing around bullet points */
+.prose ul {
+  @apply pl-2;
+}
+
 .export-card {
     transform: none !important;
     opacity: 1 !important;
