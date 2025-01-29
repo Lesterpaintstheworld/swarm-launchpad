@@ -59,25 +59,55 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       .attr("offset", "100%")
       .attr("stop-color", "rgba(59, 130, 246, 0.7)");
 
+    // Define arrow marker
+    const defs = g.append("defs");
+    
+    defs.append("marker")
+      .attr("id", "arrow")
+      .attr("viewBox", "0 -5 10 10")
+      .attr("refX", 38)
+      .attr("refY", 0)
+      .attr("markerWidth", 6)
+      .attr("markerHeight", 6)
+      .attr("orient", "auto")
+      .append("path")
+      .attr("fill", "rgba(147, 51, 234, 0.7)")
+      .attr("d", "M0,-5L10,0L0,5");
+
+    // Create gradient for links
+    const gradient = defs.append("linearGradient")
+      .attr("id", "link-gradient")
+      .attr("gradientUnits", "userSpaceOnUse");
+
+    gradient.append("stop")
+      .attr("offset", "0%")
+      .attr("stop-color", "rgba(147, 51, 234, 0.7)");
+
+    gradient.append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color", "rgba(59, 130, 246, 0.7)");
+
     const simulation = d3.forceSimulation(nodes as any)
       .force("link", d3.forceLink(links)
         .id((d: any) => d.id)
         .strength((d: any) => d.strength * 0.1))
-      .force("charge", d3.forceManyBody().strength(-500)) // Reduced repulsion
+      .force("charge", d3.forceManyBody().strength(-200))
       .force("center", d3.forceCenter(width / 2, height / 2))
       .force("collision", d3.forceCollide().radius(60));
 
-    // Draw links first (so they appear below nodes)
+    // Draw links with more differentiated widths
     const link = g.append("g")
       .attr("class", "links")
-      .selectAll("line")
+      .selectAll("path")
       .data(links)
-      .join("line")
+      .join("path")
       .attr("stroke", "url(#link-gradient)")
-      .attr("stroke-width", d => Math.sqrt(d.value) / 300 + 4) // Thicker lines
-      .attr("stroke-opacity", 0.8);
+      .attr("stroke-width", d => Math.sqrt(d.value) / 200 + 1)
+      .attr("stroke-opacity", 0.8)
+      .attr("fill", "none")
+      .attr("marker-end", "url(#arrow)");
 
-    // Create node groups
+    // Create node groups (after links)
     const node = g.append("g")
       .attr("class", "nodes")
       .selectAll("g")
