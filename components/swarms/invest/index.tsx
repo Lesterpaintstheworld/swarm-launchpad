@@ -4,6 +4,15 @@ import { Button } from "@/components/shadcn/button";
 import { ConnectButton } from "@/components/solana/connectButton";
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
+
+const getSwarmStage = (swarmType: string) => {
+    switch (swarmType) {
+        case 'inception': return 0; // Idea stage
+        case 'early': return 2;     // Prototype stage
+        case 'partner': return 4;    // Scaling stage
+        default: return 0;
+    }
+};
 import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
 import { Copy } from 'lucide-react';
 import { calculateSharePrice, cn, IntlNumberFormat, IntlNumberFormatCompact } from "@/lib/utils";
@@ -278,6 +287,55 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
                         <p className="text-lg font-semibold text-white">
                             {getSwarmUsingPoolId(pool)?.revenueShare || 60}%
                         </p>
+                    </div>
+                </div>
+
+                <div className="mt-6">
+                    <h4 className="text-sm text-slate-400 mb-4">Development Stage</h4>
+                    <div className="relative flex flex-col gap-8">
+                        {/* Timeline line */}
+                        <div className="absolute left-[11px] top-[24px] bottom-4 w-[2px] bg-slate-700" />
+                            
+                        {/* Timeline nodes */}
+                        {[
+                            { label: 'Idea', description: 'Initial concept and planning' },
+                            { label: 'POC', description: 'Proof of concept development' },
+                            { label: 'Prototype', description: 'Working prototype and testing' },
+                            { label: 'First Sale', description: 'Market validation and revenue' },
+                            { label: 'Scaling', description: 'Growth and expansion' }
+                        ].map((stage, index) => {
+                            const swarm = getSwarmUsingPoolId(pool);
+                            const currentStage = getSwarmStage(swarm?.swarmType || 'inception');
+                            const isActive = index <= currentStage;
+                            const isCurrent = index === currentStage;
+
+                            return (
+                                <div key={stage.label} className="flex items-start gap-4">
+                                    <div className="relative">
+                                        {/* Node */}
+                                        <div className={cn(
+                                            "w-6 h-6 rounded-full border-2 z-10 relative",
+                                            isCurrent ? "border-blue-500 bg-blue-500/20" : 
+                                            isActive ? "border-slate-400 bg-slate-400/20" : 
+                                            "border-slate-700 bg-slate-800"
+                                        )}>
+                                            {isCurrent && (
+                                                <div className="absolute inset-0 rounded-full bg-blue-500/20 animate-ping" />
+                                            )}
+                                        </div>
+                                    </div>
+                                        
+                                    {/* Content */}
+                                    <div className={cn(
+                                        "flex-1",
+                                        isActive ? "text-slate-200" : "text-slate-600"
+                                    )}>
+                                        <h5 className="text-sm font-medium mb-1">{stage.label}</h5>
+                                        <p className="text-xs opacity-80">{stage.description}</p>
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </Card>
