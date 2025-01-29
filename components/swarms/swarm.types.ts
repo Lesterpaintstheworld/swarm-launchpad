@@ -72,4 +72,5 @@ export interface SwarmInfo {
         name: string;
         url: string;
     }[];
+    team?: TeamMember[];
 }
