@@ -855,7 +855,7 @@ export const SwarmData: SwarmInfo[] = [
     image: '/swarms/altered-alley.jpg',
     models: ['KinOS'],
     name: 'AI Alley',
-    pool: 'YOUR_POOL_ADDRESS_HERE',
+    pool: 'DmdtWBcEwWr15MCm9Wa8iB8EJhHPK9NydiuLptuvMBxj',
     gallery: [
         {
             type: "image",
@@ -874,7 +874,7 @@ export const SwarmData: SwarmInfo[] = [
     ],
     role: 'Infrastructure Provider',
     swarmType: 'inception',
-    wallet: 'YOUR_WALLET_ADDRESS_HERE',
+    wallet: '7GmuNjA5AGWMu5izEfrBjakEjuwNpgh5QJuKB1GUq5mGI',
     multiple: 1,
     revenueShare: 60,
     links: [
