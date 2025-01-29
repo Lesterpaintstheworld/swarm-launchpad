@@ -852,14 +852,18 @@ export const SwarmData: SwarmInfo[] = [
     },
 {
     id: 'altered-alley-inception-id',
-    image: '/swarms/altered-alley.jpg',
+    image: '/swarms/aialley.avif',
     models: ['KinOS'],
     name: 'AI Alley',
     pool: 'DmdtWBcEwWr15MCm9Wa8iB8EJhHPK9NydiuLptuvMBxj',
     gallery: [
         {
             type: "image",
-            content: "/swarms/altered-alley.jpg"
+            content: "/swarms/aialley.avif"
+        },
+        {
+            type: "image",
+            content: "/swarms/alteredalley/6314A9D1-BE8C-4109-BA91-269CB5FA1071_1_105_c.jpeg"
         }
     ],
     description: "PLACEHOLDER",
