@@ -207,10 +207,10 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
     // Add images to nodes
     node.append("image")
       .attr("xlink:href", (d: SimulationNode) => d.image)
-      .attr("x", (d: SimulationNode) => -getNodeSize(d.id) * 0.95)
-      .attr("y", (d: SimulationNode) => -getNodeSize(d.id) * 0.95)
-      .attr("width", (d: SimulationNode) => getNodeSize(d.id) * 1.9)
-      .attr("height", (d: SimulationNode) => getNodeSize(d.id) * 1.9)
+      .attr("x", (d: SimulationNode) => -getNodeSize(d.id) * 1.1)
+      .attr("y", (d: SimulationNode) => -getNodeSize(d.id) * 1.1)
+      .attr("width", (d: SimulationNode) => getNodeSize(d.id) * 2.2)
+      .attr("height", (d: SimulationNode) => getNodeSize(d.id) * 2.2)
       .attr("clip-path", (d: SimulationNode) => `circle(${getNodeSize(d.id)}px)`);
 
     // Add labels to nodes
