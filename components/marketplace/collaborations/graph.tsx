@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { Collaboration } from '@/data/collaborations/collaborations';
 import { getSwarmUsingId } from "@/data/swarms/info";
+import { IntlNumberFormat } from "@/lib/utils";
 
 interface SimulationNode extends d3.SimulationNodeDatum {
   id: string;
@@ -72,6 +73,11 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
     const height = svgRef.current.clientHeight;
 
     const svg = d3.select(svgRef.current);
+    
+    // Add a tooltip div
+    const tooltip = d3.select("body").append("div")
+        .attr("class", "absolute hidden p-4 rounded-lg bg-black/90 border border-white/10 backdrop-blur-sm shadow-xl z-50 pointer-events-none")
+        .style("max-width", "280px");
     
     // Create a group for zoom transformation
     const g = svg.append("g")
@@ -194,7 +200,54 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       .call(d3.drag<SVGGElement, SimulationNode>()
         .on("start", dragstarted)
         .on("drag", dragged)
-        .on("end", dragended));
+        .on("end", dragended))
+      .on("mouseover", (event, d) => {
+        const swarm = getSwarmUsingId(d.id);
+        if (!swarm) return;
+
+        const multiple = swarm.multiple || 1;
+        const revenueShare = swarm.revenueShare || 60;
+        
+        tooltip.html(`
+            <div class="space-y-2">
+                <div class="flex items-center gap-2">
+                    <h3 class="font-semibold text-white">${swarm.name}</h3>
+                    <span class="px-2 py-0.5 rounded-full bg-white/10 text-xs text-white/60">
+                        ${swarm.swarmType}
+                    </span>
+                </div>
+                <p class="text-sm text-white/60 line-clamp-2">${swarm.description}</p>
+                <div class="grid grid-cols-2 gap-2 pt-2">
+                    <div>
+                        <div class="text-xs text-white/40">Multiple</div>
+                        <div class="text-sm font-medium text-white">${multiple}x</div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-white/40">Revenue Share</div>
+                        <div class="text-sm font-medium text-white">${revenueShare}%</div>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-1 pt-1">
+                    ${swarm.tags.slice(0, 3).map(tag => `
+                        <span class="px-1.5 py-0.5 rounded-full bg-white/5 text-xs text-white/40">
+                            ${tag}
+                        </span>
+                    `).join('')}
+                </div>
+            </div>
+        `)
+        .style("left", (event.pageX + 10) + "px")
+        .style("top", (event.pageY - 10) + "px")
+        .classed("hidden", false);
+      })
+      .on("mousemove", (event) => {
+        tooltip
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 10) + "px");
+      })
+      .on("mouseout", () => {
+        tooltip.classed("hidden", true);
+      });
 
     // Add circles to nodes with glowing effect
     node.append("circle")
@@ -275,6 +328,7 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       simulation.stop();
       // Clean up animations
       lightsGroup.selectAll(".link-light").interrupt();
+      tooltip.remove(); // Remove tooltip when component unmounts
     };
   }, [collaborations, zoom]);
 
