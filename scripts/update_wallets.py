@@ -27,43 +27,73 @@ WALLET_MAP = {
 }
 
 def update_wallets():
-    # Read the file
-    with open('data/swarms/info.tsx', 'r', encoding='utf-8') as file:
-        content = file.read()
+    print("Starting wallet update process...")
+    
+    try:
+        # Read the file
+        print("Reading data/swarms/info.tsx...")
+        with open('data/swarms/info.tsx', 'r', encoding='utf-8') as file:
+            content = file.read()
+        print(f"File read successfully. Content length: {len(content)} characters")
 
-    # For each swarm ID and wallet in the map
-    for swarm_id, wallet in WALLET_MAP.items():
-        # Create pattern to match the swarm object
-        pattern = f'id: \'{swarm_id}\''
-        
-        # Find the position of the swarm object
-        pos = content.find(pattern)
-        if pos == -1:
-            continue
+        changes_made = 0
+        # For each swarm ID and wallet in the map
+        for swarm_id, wallet in WALLET_MAP.items():
+            print(f"\nProcessing swarm ID: {swarm_id}")
             
-        # Find the next closing brace after the ID
-        start_pos = content.find('{', pos)
-        end_pos = content.find('},', start_pos)
-        if start_pos == -1 or end_pos == -1:
-            continue
+            # Create pattern to match the swarm object
+            pattern = f'id: \'{swarm_id}\''
             
-        # Get the swarm object text
-        swarm_text = content[start_pos:end_pos+1]
-        
-        # Remove existing wallet if present
-        swarm_text = re.sub(r',\s*wallet:\s*\'[^\']*\'', '', swarm_text)
-        
-        # Add the new wallet before the closing brace
-        new_swarm_text = swarm_text[:-1] + f",\n        wallet: '{wallet}'" + swarm_text[-1]
-        
-        # Replace the old swarm text with the new one
-        content = content.replace(swarm_text, new_swarm_text)
+            # Find the position of the swarm object
+            pos = content.find(pattern)
+            if pos == -1:
+                print(f"WARNING: Could not find swarm with ID: {swarm_id}")
+                continue
+            print(f"Found swarm at position: {pos}")
+            
+            # Find the next closing brace after the ID
+            start_pos = content.find('{', pos)
+            end_pos = content.find('},', start_pos)
+            if start_pos == -1 or end_pos == -1:
+                print(f"ERROR: Could not find proper object boundaries for swarm: {swarm_id}")
+                continue
+            print(f"Object boundaries: {start_pos} to {end_pos}")
+            
+            # Get the swarm object text
+            swarm_text = content[start_pos:end_pos+1]
+            print(f"Current swarm text length: {len(swarm_text)}")
+            
+            # Remove existing wallet if present
+            original_length = len(swarm_text)
+            swarm_text = re.sub(r',\s*wallet:\s*\'[^\']*\'', '', swarm_text)
+            if len(swarm_text) != original_length:
+                print("Removed existing wallet field")
+            
+            # Add the new wallet before the closing brace
+            new_swarm_text = swarm_text[:-1] + f",\n        wallet: '{wallet}'" + swarm_text[-1]
+            print(f"New swarm text length: {len(new_swarm_text)}")
+            
+            # Replace the old swarm text with the new one
+            if swarm_text != new_swarm_text:
+                content = content.replace(swarm_text, new_swarm_text)
+                changes_made += 1
+                print(f"Updated wallet for swarm: {swarm_id}")
+            else:
+                print(f"No changes needed for swarm: {swarm_id}")
 
-    # Write the updated content back to the file
-    with open('data/swarms/info.tsx', 'w', encoding='utf-8') as file:
-        file.write(content)
+        print(f"\nTotal changes made: {changes_made}")
 
-    print("Wallet addresses have been updated successfully!")
+        # Write the updated content back to the file
+        print("\nWriting updated content back to file...")
+        with open('data/swarms/info.tsx', 'w', encoding='utf-8') as file:
+            file.write(content)
+        print("File written successfully!")
+
+    except Exception as e:
+        print(f"ERROR: An exception occurred: {str(e)}")
+        raise
+
+    print("\nWallet update process completed!")
 
 if __name__ == "__main__":
     update_wallets()
