@@ -205,54 +205,34 @@ export const collaborations: Collaboration[] = [
   {
     id: '16',
     sourceSwarm: {
-      id: 'h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q',
-      name: 'ProfitBeeAI',
-      image: '/swarms/affiliate.jpeg'
+      id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',
+      name: 'SwarmsVenture',
+      image: '/swarms/swarm-ventures.jpg'
     },
     targetSwarm: {
-      id: 'kinos-partner-id',
-      name: 'KinOS',
-      image: '/swarms/kinos.png'
+      id: 'forge-partner-id', 
+      name: 'XForge',
+      image: '/swarms/xforge.png'
     },
-    serviceName: 'Inception Package',
+    serviceName: 'Development Package',
     status: 'active',
-    price: 10000,
-    startDate: '2024-01-30',
-    description: 'Infrastructure support for autonomous affiliate marketing system with multi-channel content creation and campaign management.',
-    objectives: [
-      'Content generation engine',
-      'Link optimization system',
-      'Campaign automation',
-      'Performance analytics',
-      'Multi-channel distribution'
-    ],
-    focus: 'Revolutionizing affiliate marketing through AI-powered content creation and automated campaign management across multiple channels.'
+    price: 400000
   },
   {
     id: '17',
     sourceSwarm: {
-      id: 'g7h8i9j0-k1l2-0g1h-ei5j-6k7l8m9n0o1p',
-      name: 'CommerceNest',
-      image: '/swarms/commercenest.jpg'
+      id: '03616e66-a21e-425b-a93b-16d6396e883f',
+      name: 'Synthetic Souls',
+      image: '/swarms/syntheticsouls/Lyra 16-9 web.jpg'
     },
     targetSwarm: {
-      id: 'kinos-partner-id',
-      name: 'KinOS',
-      image: '/swarms/kinos.png'
+      id: 'forge-partner-id',
+      name: 'XForge',
+      image: '/swarms/xforge.png'
     },
-    serviceName: 'Inception Package',
+    serviceName: 'Development Package',
     status: 'active',
-    price: 10000,
-    startDate: '2024-01-31',
-    description: 'Development collaboration for AI-powered e-commerce intelligence system focused on trend detection and market optimization.',
-    objectives: [
-      'Trend analysis system',
-      'Market intelligence platform',
-      'Automated store generation',
-      'Inventory optimization',
-      'Marketing automation'
-    ],
-    focus: 'Building an intelligent e-commerce system that identifies market trends and automates store operations for optimal performance.'
+    price: 400000
   },
   {
     id: '18',
