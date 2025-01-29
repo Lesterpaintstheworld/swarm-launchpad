@@ -4,6 +4,38 @@ import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { Collaboration } from '@/data/collaborations/collaborations';
 
+interface Node {
+  id: string;
+  name: string;
+  image: string;
+  x?: number;
+  y?: number;
+  fx?: number | null;
+  fy?: number | null;
+}
+
+interface Link {
+  source: string | Node;
+  target: string | Node;
+  value: number;
+  strength: number;
+  serviceName: string;
+}
+
+interface SimulationNode extends d3.SimulationNodeDatum {
+  id: string;
+  name: string;
+  image: string;
+  x: number;
+  y: number;
+}
+
+interface SimulationLink extends d3.SimulationLinkDatum<SimulationNode> {
+  value: number;
+  strength: number;
+  serviceName: string;
+}
+
 interface CollaborationGraphProps {
   collaborations: Collaboration[];
 }
@@ -88,15 +120,7 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       .attr("offset", "100%")
       .attr("stop-color", "rgba(255, 255, 255, 0)");
 
-    // Create animation for the light
-    const animate = defs.append("animate")
-      .attr("id", "light-animation")
-      .attr("attributeName", "offset")
-      .attr("values", "-1;1")
-      .attr("dur", "3s")
-      .attr("repeatCount", "indefinite");
-
-    const simulation = d3.forceSimulation(nodes as any)
+    const simulation = d3.forceSimulation(nodes as SimulationNode[])
       .force("link", d3.forceLink(links)
         .id((d: any) => d.id)
         .strength((d: any) => d.strength * 0.1))
@@ -221,18 +245,18 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       node.attr("transform", (d: any) => `translate(${d.x},${d.y})`);
     });
 
-    function dragstarted(event: any) {
+    function dragstarted(event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) {
       if (!event.active) simulation.alphaTarget(0.3).restart();
       event.subject.fx = event.subject.x;
       event.subject.fy = event.subject.y;
     }
 
-    function dragged(event: any) {
+    function dragged(event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) {
       event.subject.fx = event.x;
       event.subject.fy = event.y;
     }
 
-    function dragended(event: any) {
+    function dragended(event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) {
       if (!event.active) simulation.alphaTarget(0);
       event.subject.fx = null;
       event.subject.fy = null;
