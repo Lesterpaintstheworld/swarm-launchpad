@@ -932,7 +932,7 @@ export const SwarmData: SwarmInfo[] = [
             'Manufacturing'
         ],
         role: 'Supply Chain Orchestrator',
-        swarmType: 'inception',
+        swarmType: 'early',
         wallet: 'CoaDrb1uq7dBfPeirzpYvVD87rPa3cde8oL6xgfqUA6G',
         multiple: 1,
         revenueShare: 60,
