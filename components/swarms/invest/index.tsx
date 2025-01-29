@@ -347,20 +347,110 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                     </div>
                 </div>
 
-                {/* Team info box */}
-                <div className="mt-4">
-                    <div className="bg-slate-800/30 rounded-lg p-4">
-                        <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm text-slate-400">Team</span>
-                            <span className="text-xs text-slate-500">Coming Soon</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-full bg-slate-700/50 animate-pulse" />
-                            <div className="w-8 h-8 rounded-full bg-slate-700/50 animate-pulse" />
-                            <div className="w-8 h-8 rounded-full bg-slate-700/50 animate-pulse" />
+                {/* Team Section */}
+                {swarm?.team && swarm.team.length > 0 ? (
+                    <div className="mt-4">
+                        <div className="bg-slate-800/30 rounded-lg p-4">
+                            <div className="flex items-center justify-between mb-2">
+                                <span className="text-sm text-slate-400">Team</span>
+                            </div>
+                            <div className="space-y-4">
+                                {swarm.team.map((member, index) => (
+                                    <div key={index} className="flex items-center gap-3">
+                                        <div className="relative w-10 h-10 rounded-full overflow-hidden border border-slate-700">
+                                            <Image
+                                                src={member.picture}
+                                                alt={member.name}
+                                                fill
+                                                className="object-cover"
+                                            />
+                                        </div>
+                                        <div className="flex-1">
+                                            <div className="font-medium text-sm">{member.name}</div>
+                                            <div className="flex items-center gap-2 mt-1">
+                                                {member.telegram && (
+                                                    <a
+                                                        href={`https://t.me/${member.telegram}`}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="text-blue-400 hover:text-blue-300 transition-colors"
+                                                    >
+                                                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.717-.962 3.845-1.362 5.452-.168.676-.336 1.363-.48 1.957-.169.687-.318 1.288-.467 1.81-.151.527-.302.983-.468 1.362-.151.345-.259.527-.366.628-.108.101-.194.151-.259.151-.13 0-.26-.075-.39-.226-.13-.151-.26-.377-.39-.678-.13-.301-.26-.653-.39-1.057-.13-.404-.26-.854-.39-1.349-.13-.495-.26-1.019-.39-1.57-.13-.551-.26-1.127-.39-1.727-.13-.6-.26-1.214-.39-1.84-.13-.626-.26-1.253-.39-1.879-.13-.626-.26-1.24-.39-1.84-.13-.6-.26-1.165-.39-1.694-.13-.529-.26-1.006-.39-1.432-.13-.426-.26-.795-.39-1.108-.13-.313-.26-.551-.39-.714-.13-.163-.26-.244-.39-.244-.065 0-.13.025-.195.075-.065.05-.13.126-.195.226-.065.1-.13.226-.195.377-.065.151-.13.327-.195.527-.065.2-.13.426-.195.677-.065.251-.13.527-.195.828-.065.301-.13.628-.195.983-.065.355-.13.729-.195 1.121-.065.392-.13.804-.195 1.235-.065.431-.13.881-.195 1.349-.065.468-.13.954-.195 1.457-.065.503-.13 1.019-.195 1.547-.065.528-.13 1.069-.195 1.622-.065.553-.13 1.114-.195 1.684-.065.57-.13 1.146-.195 1.728-.065.582-.13 1.165-.195 1.748-.065.583-.13 1.159-.195 1.728-.065.569-.13 1.127-.195 1.674-.065.547-.13 1.082-.195 1.604-.065.522-.13 1.032-.195 1.529-.065.497-.13.982-.195 1.454-.065.472-.13.932-.195 1.38-.065.448-.13.884-.195 1.308-.065.424-.13.836-.195 1.235-.065.399-.13.786-.195 1.159-.065.373-.13.734-.195 1.083-.065.349-.13.686-.195 1.011-.065.325-.13.638-.195.939-.065.301-.13.59-.195.867-.065.277-.13.542-.195.795-.065.253-.13.494-.195.723-.065.229-.13.446-.195.651-.065.205-.13.398-.195.579-.065.181-.13.349-.195.505-.065.156-.13.301-.195.434-.065.133-.13.253-.195.361-.065.108-.13.205-.195.29-.065.085-.13.156-.195.214-.065.058-.13.104-.195.138-.065.034-.13.051-.195.051z"/>
+                                                        </svg>
+                                                    </a>
+                                                )}
+                                                {member.X && (
+                                                    <a
+                                                        href={`https://x.com/${member.X}`}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="text-blue-400 hover:text-blue-300 transition-colors"
+                                                    >
+                                                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                                                        </svg>
+                                                    </a>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
-                </div>
+                ) : (
+                    <div className="mt-4">
+                        <div className="bg-slate-800/30 rounded-lg p-4">
+                            <div className="flex items-center justify-between mb-2">
+                                <span className="text-sm text-slate-400">Team</span>
+                                <span className="text-xs text-slate-500">Coming Soon</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className="w-8 h-8 rounded-full bg-slate-700/50 animate-pulse" />
+                                <div className="w-8 h-8 rounded-full bg-slate-700/50 animate-pulse" />
+                                <div className="w-8 h-8 rounded-full bg-slate-700/50 animate-pulse" />
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Links Section */}
+                {swarm?.links && swarm.links.length > 0 && (
+                    <div className="mt-4">
+                        <div className="bg-slate-800/30 rounded-lg p-4">
+                            <div className="flex flex-col gap-2">
+                                <span className="text-sm text-slate-400">Additional Resources</span>
+                                {swarm.links.map((link, index) => (
+                                    <a
+                                        key={index}
+                                        href={link.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center justify-between px-3 py-2 rounded-lg bg-slate-800/30 hover:bg-slate-800/50 transition-colors"
+                                    >
+                                        <span className="text-sm text-blue-400 hover:text-blue-300">
+                                            {link.name}
+                                        </span>
+                                        <svg
+                                            className="w-4 h-4 text-slate-400"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                            />
+                                        </svg>
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {/* Links Section */}
                 {swarm?.links && swarm.links.length > 0 && (
