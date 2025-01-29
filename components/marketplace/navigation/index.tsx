@@ -32,20 +32,33 @@ interface MarketplaceNavigationProps {
 
 export function MarketplaceNavigation({ activeTab, onTabChange }: MarketplaceNavigationProps) {
   return (
-    <div className="flex items-center space-x-1 bg-background/95 p-1 rounded-lg backdrop-blur supports-[backdrop-filter]:bg-background/60 border border-border">
+    <div className="flex items-center space-x-2 p-1">
       {tabs.map((tab) => (
         <button
           key={tab.id}
           onClick={() => onTabChange(tab.id)}
           className={cn(
-            "flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors",
+            "group relative flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium rounded-lg transition-all duration-300",
             activeTab === tab.id
-              ? "bg-foreground/10 text-foreground"
-              : "text-muted-foreground hover:bg-foreground/5 hover:text-foreground"
+              ? "bg-gradient-to-br from-white/10 to-white/5 text-white shadow-lg"
+              : "text-white/60 hover:text-white hover:bg-white/5"
           )}
         >
-          {tab.icon}
-          {tab.label}
+          {/* Glow effect on active */}
+          {activeTab === tab.id && (
+            <div className="absolute inset-0 rounded-lg bg-white/5 blur-sm" />
+          )}
+          
+          {/* Icon with transition */}
+          <div className={cn(
+            "transition-transform duration-300",
+            activeTab === tab.id ? "scale-110" : "group-hover:scale-110"
+          )}>
+            {tab.icon}
+          </div>
+          
+          {/* Label */}
+          <span className="relative z-10">{tab.label}</span>
         </button>
       ))}
     </div>
