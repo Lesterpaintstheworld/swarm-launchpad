@@ -72,7 +72,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
           <div className="flex items-center gap-2">
             <Cpu className="w-4 h-4 text-white/40" />
             <span className="text-sm text-white/60">
-              {service.computePerTask} $COMPUTE/task
+              {service.computePerTask} <span className="metallic-text">$COMPUTE</span>/task
             </span>
           </div>
         </div>
