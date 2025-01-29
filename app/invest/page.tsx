@@ -61,11 +61,15 @@ export default function Invest() {
                         </TooltipProvider>
                     </div>
                     
-                    {/* Add animated background and special styling */}
                     <div className="relative">
-                        {/* Glowing Background */}
-                        <div className="absolute inset-0 overflow-hidden">
-                            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-yellow-500/5 to-orange-500/10 blur-3xl animate-pulse" />
+                        {/* Glowing Background with fade-out edges */}
+                        <div className="absolute -inset-20 overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/30 via-yellow-500/20 to-orange-500/30 blur-3xl animate-pulse" />
+                            {/* Fade-out edges */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background" />
+                            <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
+                            <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background" />
+                            <div className="absolute inset-0 bg-gradient-to-l from-background via-transparent to-background" />
                         </div>
 
                         {/* Cards grid with enhanced hover effects */}
