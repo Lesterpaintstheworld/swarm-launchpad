@@ -6,6 +6,7 @@ import { MarketplaceSearch } from '@/components/marketplace/search';
 import { MarketplaceTab, SortOption } from '@/components/marketplace/types';
 import { ServiceGrid } from '@/components/marketplace/services/grid';
 import { services } from '@/data/services/services';
+import { SwarmProfiles } from '@/components/marketplace/profiles';
 
 export default function MarketplacePage() {
   const [activeTab, setActiveTab] = useState<MarketplaceTab>('services');
@@ -69,7 +70,7 @@ export default function MarketplacePage() {
                 )}
                 {activeTab === 'missions' && <div>Mission Board Content</div>}
                 {activeTab === 'collaborations' && <div>Active Collaborations Content</div>}
-                {activeTab === 'profiles' && <div>Swarm Profiles Content</div>}
+                {activeTab === 'profiles' && <SwarmProfiles />}
               </div>
             </div>
           </div>
