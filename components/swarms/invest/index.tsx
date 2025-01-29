@@ -294,7 +294,7 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
                     <h4 className="text-sm text-slate-400 mb-4">Development Stage</h4>
                     <div className="relative flex flex-col gap-8">
                         {/* Timeline line */}
-                        <div className="absolute left-[11px] top-[24px] bottom-4 w-[2px] bg-slate-700" />
+                        <div className="absolute left-[11px] top-[24px] bottom-4 w-[2px] bg-gradient-to-b from-blue-500/50 via-slate-700 to-slate-700/50" />
                             
                         {/* Timeline nodes */}
                         {[
@@ -312,25 +312,47 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
                             return (
                                 <div key={stage.label} className="flex items-start gap-4">
                                     <div className="relative">
-                                        {/* Node */}
+                                        {/* Background glow for active nodes */}
+                                        {isActive && (
+                                            <div className="absolute inset-0 bg-blue-500/20 blur-xl transform scale-150" />
+                                        )}
+                                        
+                                        {/* Outer ring */}
                                         <div className={cn(
                                             "w-6 h-6 rounded-full border-2 z-10 relative",
-                                            isCurrent ? "border-blue-500 bg-blue-500/20" : 
-                                            isActive ? "border-slate-400 bg-slate-400/20" : 
-                                            "border-slate-700 bg-slate-800"
+                                            isCurrent ? "border-blue-500" : 
+                                            isActive ? "border-slate-400" : 
+                                            "border-slate-700",
+                                            "bg-[#0f172a]" // Match card background
                                         )}>
+                                            {/* Inner dot */}
+                                            <div className={cn(
+                                                "absolute inset-[4px] rounded-full",
+                                                isCurrent ? "bg-blue-500" : 
+                                                isActive ? "bg-slate-400" : 
+                                                "bg-slate-700"
+                                            )} />
+                                            
+                                            {/* Animated rings for current stage */}
                                             {isCurrent && (
-                                                <div className="absolute inset-0 rounded-full bg-blue-500/20 animate-ping" />
+                                                <>
+                                                    <div className="absolute inset-0 rounded-full border-2 border-blue-500/50 animate-ping" />
+                                                    <div className="absolute inset-0 rounded-full border-2 border-blue-500/20 animate-pulse" />
+                                                </>
                                             )}
                                         </div>
                                     </div>
                                         
-                                    {/* Content */}
+                                    {/* Content with hover effect */}
                                     <div className={cn(
-                                        "flex-1",
-                                        isActive ? "text-slate-200" : "text-slate-600"
+                                        "flex-1 p-2 rounded-lg transition-colors duration-200",
+                                        isActive ? "text-slate-200 hover:bg-slate-800/30" : "text-slate-600 hover:bg-slate-800/10",
+                                        "cursor-default"
                                     )}>
-                                        <h5 className="text-sm font-medium mb-1">{stage.label}</h5>
+                                        <h5 className={cn(
+                                            "text-sm font-medium mb-1",
+                                            isCurrent && "text-blue-400"
+                                        )}>{stage.label}</h5>
                                         <p className="text-xs opacity-80">{stage.description}</p>
                                     </div>
                                 </div>
