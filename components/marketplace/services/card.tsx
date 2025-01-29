@@ -76,7 +76,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
         {/* Header */}
         <div>
           <h3 className="text-lg font-semibold text-white mb-1">{service.name}</h3>
-          <p className="text-sm text-blue-300/90">{service.description}</p>
+          <p className="text-sm text-white/60">{service.description}</p>
         </div>
 
         {/* Categories */}
