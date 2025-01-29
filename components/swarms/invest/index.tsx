@@ -117,19 +117,21 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
 
     return (
         <Card className={cn("bg-[#0f172a] p-6", className)}>
-            {/* Header section */}
-            <div className="flex justify-between items-start mb-8">
-                <div>
-                    <h2 className="text-2xl font-bold text-white">Purchase Swarm Shares</h2>
-                    <p className="text-slate-300">Invest in AI-powered future</p>
+            {/* Buy UI Section */}
+            <div className="border-b border-slate-800 pb-8 mb-8">
+                {/* Header section */}
+                <div className="flex justify-between items-start mb-8">
+                    <div>
+                        <h2 className="text-2xl font-bold text-white">Purchase Swarm Shares</h2>
+                        <p className="text-slate-300">Invest in AI-powered future</p>
+                    </div>
+                    <div className="text-right">
+                        <p className="text-xs text-green-400">CURRENT PRICE</p>
+                        <p className="text-2xl font-bold text-green-400">
+                            ${IntlNumberFormat(data.pricePerShare, 3)} <span className="text-sm">$COMPUTE</span>
+                        </p>
+                    </div>
                 </div>
-                <div className="text-right">
-                    <p className="text-xs text-green-400">CURRENT PRICE</p>
-                    <p className="text-2xl font-bold text-green-400">
-                        ${IntlNumberFormat(data.pricePerShare, 3)} <span className="text-sm">$COMPUTE</span>
-                    </p>
-                </div>
-            </div>
             <div className="space-y-6">
                 {/* Share input section */}
                 <div>
@@ -233,49 +235,47 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
                 <ConnectButton className="w-full mt-6" />
             )}
 
-            {/* Additional Swarm Information */}
-            <div className="mt-8 space-y-6">
-                <div className="border-t border-slate-800 pt-6">
-                    <h3 className="text-lg font-semibold text-white mb-4">Swarm Information</h3>
-                    
-                    {/* Wallet Address */}
-                    <div className="bg-slate-800/30 rounded-lg p-4">
-                        <div className="flex justify-between items-start mb-2">
-                            <span className="text-sm text-slate-400">Swarm Wallet</span>
-                            <div className="flex items-center gap-2">
-                                <code className="text-sm text-slate-300 font-mono">
-                                    {getSwarmUsingPoolId(pool)?.wallet || 'Not available'}
-                                </code>
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    className="h-8 w-8 p-0"
-                                    onClick={() => {
-                                        const wallet = getSwarmUsingPoolId(pool)?.wallet;
-                                        if (wallet) {
-                                            navigator.clipboard.writeText(wallet);
-                                            toast.success('Wallet address copied to clipboard');
-                                        }
-                                    }}
-                                >
-                                    <Copy className="h-4 w-4" />
-                                </Button>
-                            </div>
+            </div>
+
+            {/* Swarm Information Section */}
+            <div className="bg-slate-900/50 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-white mb-4">Swarm Information</h3>
+                
+                {/* Wallet Address */}
+                <div className="bg-slate-800/30 rounded-lg p-4">
+                    <div className="flex justify-between items-start mb-2">
+                        <span className="text-sm text-slate-400">Swarm Wallet</span>
+                        <div className="flex items-center gap-2">
+                            <code className="text-sm text-slate-300 font-mono">
+                                {getSwarmUsingPoolId(pool)?.wallet || pool}
+                            </code>
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-8 w-8 p-0"
+                                onClick={() => {
+                                    const wallet = getSwarmUsingPoolId(pool)?.wallet || pool;
+                                    navigator.clipboard.writeText(wallet);
+                                    toast.success('Wallet address copied to clipboard');
+                                }}
+                            >
+                                <Copy className="h-4 w-4" />
+                            </Button>
                         </div>
                     </div>
+                </div>
 
-                    {/* Additional stats */}
-                    <div className="grid grid-cols-2 gap-4 mt-4">
-                        <div className="bg-slate-800/30 rounded-lg p-4">
-                            <span className="text-sm text-slate-400">Total Investors</span>
-                            <p className="text-lg font-semibold text-white">Coming Soon</p>
-                        </div>
-                        <div className="bg-slate-800/30 rounded-lg p-4">
-                            <span className="text-sm text-slate-400">Revenue Share</span>
-                            <p className="text-lg font-semibold text-white">
-                                {getSwarmUsingPoolId(pool)?.revenueShare || 60}%
-                            </p>
-                        </div>
+                {/* Additional stats */}
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                    <div className="bg-slate-800/30 rounded-lg p-4">
+                        <span className="text-sm text-slate-400">Total Investors</span>
+                        <p className="text-lg font-semibold text-white">Coming Soon</p>
+                    </div>
+                    <div className="bg-slate-800/30 rounded-lg p-4">
+                        <span className="text-sm text-slate-400">Revenue Share</span>
+                        <p className="text-lg font-semibold text-white">
+                            {getSwarmUsingPoolId(pool)?.revenueShare || 60}%
+                        </p>
                     </div>
                 </div>
             </div>
