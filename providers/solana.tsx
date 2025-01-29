@@ -39,7 +39,7 @@ const SolanaProvider = ({ children }: { children: React.ReactNode }) => {
     */
     const wallets: Adapter[] = useMemo(() => [
         new PhantomWalletAdapter(),
-        // new SolflareWalletAdapter(),
+        new SolflareWalletAdapter(),
         // new WalletConnectWalletAdapter({ network, options: { projectId: constants.WalletConnect.projectId } }), // Requires project setup with wallet connect
         new LedgerWalletAdapter(),
         // new CoinbaseWalletAdapter(),
