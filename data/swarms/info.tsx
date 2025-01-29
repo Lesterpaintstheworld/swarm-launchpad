@@ -896,5 +896,33 @@ export const SwarmData: SwarmInfo[] = [
             url: 'https://www.spatial.io/s/AI-63c8a8898ab06ebb400f0d9f?share=5084343558932005183'
         }
     ]
+    },
+    {
+        id: 'logicatlas-inception-id',
+        image: '/swarms/logicatlas.jpg',
+        models: ['KinOS'],
+        name: 'LogicAtlas',
+        pool: 'YOUR_POOL_ADDRESS_HERE',
+        gallery: [
+            {
+                type: "image",
+                content: "/swarms/logicatlas.jpg"
+            }
+        ],
+        description: "PLACEHOLDER",
+        programAddress: "",
+        tags: [
+            'Supply Chain',
+            'AI Orchestration',
+            'Process Automation',
+            'Real-time Analytics',
+            'Distribution',
+            'Manufacturing'
+        ],
+        role: 'Supply Chain Orchestrator',
+        swarmType: 'inception',
+        wallet: 'YOUR_WALLET_ADDRESS_HERE',
+        multiple: 1,
+        revenueShare: 60
     }
 ]

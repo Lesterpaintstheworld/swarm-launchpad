@@ -130,7 +130,8 @@ const descriptionMap: { [key: string]: string } = {
     'a1b2c3d4-e5f6-4a5b-8c7d-9e8f7a6b5c4d': RobinhoodDescription,
     'f7a92b3c-d8e4-4c1a-9f5d-1234567890ab': ScreenplayDescription,
     'wealthhive-inception-id': WealthHiveDescription,
-    'altered-alley-inception-id': AlteredAlleyDescription
+    'altered-alley-inception-id': AlteredAlleyDescription,
+    'logicatlas-inception-id': LogicAtlasDescription
 };
 
 export default function SwarmPage({ params }: { params: { slug: string } }) {
