@@ -48,111 +48,109 @@ function MarketplaceContent() {
 
   return (
     <div className="container py-8">
-        <div className="space-y-6">
-          {/* Navigation with Glassmorphism */}
-          <div className="p-1 rounded-xl bg-gradient-to-r from-white/5 to-white/10 backdrop-blur-xl border border-white/10 shadow-2xl">
-            <MarketplaceNavigation 
-              activeTab={activeTab}
-              onTabChange={(tab) => {
-                setActiveTab(tab);
-                // Reset collaboration view when switching away from collaborations tab
-                if (tab !== 'collaborations') {
-                  setCollaborationView('list');
-                }
-              }}
+      <div className="space-y-6">
+        {/* Navigation with Glassmorphism */}
+        <div className="p-1 rounded-xl bg-gradient-to-r from-white/5 to-white/10 backdrop-blur-xl border border-white/10 shadow-2xl">
+          <MarketplaceNavigation 
+            activeTab={activeTab}
+            onTabChange={(tab) => {
+              setActiveTab(tab);
+              if (tab !== 'collaborations') {
+                setCollaborationView('list');
+              }
+            }}
+          />
+        </div>
+        
+        {/* Search Section with Floating Effect */}
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 rounded-xl blur" />
+          <div className="relative">
+            <MarketplaceSearch
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              sortOption={sortOption}
+              onSortChange={setSortOption}
             />
           </div>
-          
-          {/* Search Section with Floating Effect */}
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 rounded-xl blur" />
-            <div className="relative">
-              <MarketplaceSearch
-                searchQuery={searchQuery}
-                onSearchChange={setSearchQuery}
-                sortOption={sortOption}
-                onSortChange={setSortOption}
-              />
-            </div>
-          </div>
+        </div>
 
-          {/* Content Section with Dynamic Background */}
-          <div className="relative min-h-[600px] rounded-xl border border-white/10 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-background/90 backdrop-blur-xl" />
-            <div className="relative p-6">
-              <div className="animate-fade-in">
-                {activeTab === 'services' && (
-                  <div className="space-y-6">
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-xl font-semibold text-white">Available Services</h2>
-                      <div className="text-sm text-white/60">
-                        {services.length} services found
-                      </div>
+        {/* Content Section with Dynamic Background */}
+        <div className="relative min-h-[600px] rounded-xl border border-white/10 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-background/90 backdrop-blur-xl" />
+          <div className="relative p-6">
+            <div className="animate-fade-in">
+              {activeTab === 'services' && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-xl font-semibold text-white">Available Services</h2>
+                    <div className="text-sm text-white/60">
+                      {services.length} services found
                     </div>
-                    <ServiceGrid services={services} />
                   </div>
-                )}
-                {activeTab === 'missions' && (
-                  <div className="space-y-6">
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-xl font-semibold text-white">Available Missions</h2>
-                      <div className="text-sm text-white/60">
-                        {missions.length} missions found
-                      </div>
+                  <ServiceGrid services={services} />
+                </div>
+              )}
+              {activeTab === 'missions' && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-xl font-semibold text-white">Available Missions</h2>
+                    <div className="text-sm text-white/60">
+                      {missions.length} missions found
                     </div>
-                    <MissionGrid missions={missions} />
                   </div>
-                )}
-                {activeTab === 'collaborations' && (
-                  <div className="space-y-6">
-                    <div className="flex flex-col items-center gap-4">
-                      {/* Title and count now centered */}
-                      <h2 className="text-xl font-semibold text-white">Active Collaborations</h2>
-                      <div className="text-sm text-white/60 mb-2">
-                        {collaborations.length} collaborations found
-                      </div>
-                      
-                      {/* New styled toggle centered */}
-                      <div className="flex items-center bg-white/5 rounded-xl p-1.5 border border-purple-500/20 backdrop-blur-sm">
-                        <button
-                          onClick={() => setCollaborationView('list')}
-                          className={`
-                            px-6 py-2 rounded-lg text-sm font-medium transition-all duration-300
-                            ${collaborationView === 'list' 
-                              ? 'bg-purple-500/20 text-purple-300 shadow-lg shadow-purple-500/10' 
-                              : 'text-white/60 hover:text-purple-300 hover:bg-white/5'
-                            }
-                          `}
-                        >
-                          List View
-                        </button>
-                        <button
-                          onClick={() => setCollaborationView('graph')}
-                          className={`
-                            px-6 py-2 rounded-lg text-sm font-medium transition-all duration-300
-                            ${collaborationView === 'graph' 
-                              ? 'bg-purple-500/20 text-purple-300 shadow-lg shadow-purple-500/10' 
-                              : 'text-white/60 hover:text-purple-300 hover:bg-white/5'
-                            }
-                          `}
-                        >
-                          Graph View
-                        </button>
-                      </div>
+                  <MissionGrid missions={missions} />
+                </div>
+              )}
+              {activeTab === 'collaborations' && (
+                <div className="space-y-6">
+                  <div className="flex flex-col items-center gap-4">
+                    {/* Title and count now centered */}
+                    <h2 className="text-xl font-semibold text-white">Active Collaborations</h2>
+                    <div className="text-sm text-white/60 mb-2">
+                      {collaborations.length} collaborations found
                     </div>
+                    
+                    {/* New styled toggle centered */}
+                    <div className="flex items-center bg-white/5 rounded-xl p-1.5 border border-purple-500/20 backdrop-blur-sm">
+                      <button
+                        onClick={() => setCollaborationView('list')}
+                        className={`
+                          px-6 py-2 rounded-lg text-sm font-medium transition-all duration-300
+                          ${collaborationView === 'list' 
+                            ? 'bg-purple-500/20 text-purple-300 shadow-lg shadow-purple-500/10' 
+                            : 'text-white/60 hover:text-purple-300 hover:bg-white/5'
+                          }
+                        `}
+                      >
+                        List View
+                      </button>
+                      <button
+                        onClick={() => setCollaborationView('graph')}
+                        className={`
+                          px-6 py-2 rounded-lg text-sm font-medium transition-all duration-300
+                          ${collaborationView === 'graph' 
+                            ? 'bg-purple-500/20 text-purple-300 shadow-lg shadow-purple-500/10' 
+                            : 'text-white/60 hover:text-purple-300 hover:bg-white/5'
+                          }
+                        `}
+                      >
+                        Graph View
+                      </button>
+                    </div>
+                  </div>
 
-                    {/* Content */}
-                    <div className="mt-8">
-                      {collaborationView === 'list' ? (
-                        <CollaborationGrid collaborations={collaborations} />
-                      ) : (
-                        <CollaborationGraph collaborations={collaborations} />
-                      )}
-                    </div>
+                  {/* Content */}
+                  <div className="mt-8">
+                    {collaborationView === 'list' ? (
+                      <CollaborationGrid collaborations={collaborations} />
+                    ) : (
+                      <CollaborationGraph collaborations={collaborations} />
+                    )}
                   </div>
-                )}
-                {activeTab === 'profiles' && <SwarmProfiles />}
-              </div>
+                </div>
+              )}
+              {activeTab === 'profiles' && <SwarmProfiles />}
             </div>
           </div>
         </div>
