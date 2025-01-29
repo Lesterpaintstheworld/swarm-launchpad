@@ -9,14 +9,26 @@ import { SwarmGallery } from "@/components/swarms/gallery";
 import { SwarmRecentMarketListings } from "@/components/market/recentListings";
 import { ManagePortfolioCard } from "@/components/cards/managePortfolio";
 import { getSwarm } from "@/data/swarms/previews";
-import { KinKongDescription } from "@/data/swarms/descriptions/kinkong";
-import { SwarmVenturesDescription } from "@/data/swarms/descriptions/swarmventures";
-import { TerminalVelocityDescription } from "@/data/swarms/descriptions/terminalvelocity";
-import { SyntheticSoulsDescription } from "@/data/swarms/descriptions/syntheticsouls";
-import { DuoAIDescription } from "@/data/swarms/descriptions/duoai";
-import { PropertyKinDescription } from "@/data/swarms/descriptions/propertykin";
-import { RobinhoodDescription } from "@/data/swarms/descriptions/robinhood";
-import { ScreenplayDescription } from "@/data/swarms/descriptions/screenplay";
+import { description as KinKongDescription } from "@/data/swarms/descriptions/kinkong";
+import { description as SwarmVenturesDescription } from "@/data/swarms/descriptions/swarmventures";
+import { description as TerminalVelocityDescription } from "@/data/swarms/descriptions/terminalvelocity";
+import { description as SyntheticSoulsDescription } from "@/data/swarms/descriptions/syntheticsouls";
+import { description as DuoAIDescription } from "@/data/swarms/descriptions/duoai";
+import { description as PropertyKinDescription } from "@/data/swarms/descriptions/propertykin";
+import { description as RobinhoodDescription } from "@/data/swarms/descriptions/robinhood";
+import { description as ScreenplayDescription } from "@/data/swarms/descriptions/screenplay";
+import { description as AffiliateDescription } from "@/data/swarms/descriptions/affiliate";
+import { description as CareHiveDescription } from "@/data/swarms/descriptions/carehive";
+import { description as CommerceNestDescription } from "@/data/swarms/descriptions/commercenest";
+import { description as EducativeDescription } from "@/data/swarms/descriptions/educative";
+import { description as GameBuddyDescription } from "@/data/swarms/descriptions/gamebuddy";
+import { description as GrantDescription } from "@/data/swarms/descriptions/grant";
+import { description as MentalHealthDescription } from "@/data/swarms/descriptions/mental-health";
+import { description as MentorDescription } from "@/data/swarms/descriptions/mentor";
+import { description as PublishingDescription } from "@/data/swarms/descriptions/publishing";
+import { description as SpeakerDescription } from "@/data/swarms/descriptions/speaker";
+import { description as TalentDescription } from "@/data/swarms/descriptions/talent";
+import { description as TravelDescription } from "@/data/swarms/descriptions/travel";
 
 const descriptionMap: { [key: string]: string } = {
     'eb76ae17-b9eb-476d-b272-4bde2d85c808': KinKongDescription,
@@ -27,6 +39,18 @@ const descriptionMap: { [key: string]: string } = {
     'propertykin-inception-id': PropertyKinDescription,
     'a1b2c3d4-e5f6-4a5b-8c7d-9e8f7a6b5c4d': RobinhoodDescription,
     'f7a92b3c-d8e4-4c1a-9f5d-1234567890ab': ScreenplayDescription,
+    'h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q': AffiliateDescription,
+    'f6g7h8i9-j0k1-9f0g-dh4i-5j6k7l8m9n0o': CareHiveDescription,
+    'g7h8i9j0-k1l2-0g1h-ei5j-6k7l8m9n0o1p': CommerceNestDescription,
+    'd4e5f6g7-h8i9-7d8e-bf2g-3h4i5j6k7l8m': EducativeDescription,
+    'gamebuddy-id': GameBuddyDescription,
+    'grant-swarm-id': GrantDescription,
+    'b2c3d4e5-f6g7-5b6c-9d0e-1f2g3h4i5j6k': MentalHealthDescription,
+    'mentor-swarm-id': MentorDescription,
+    'c3d4e5f6-g7h8-6c7d-ae1f-2g3h4i5j6k7l': PublishingDescription,
+    'speaker-swarm-id': SpeakerDescription,
+    'e5f6g7h8-i9j0-8e9f-cg3h-4i5j6k7l8m9n': TalentDescription,
+    'travel-swarm-id': TravelDescription,
 };
 
 export default function SwarmPage({ params }: { params: { slug: string } }) {
