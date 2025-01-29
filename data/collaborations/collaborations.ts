@@ -778,13 +778,23 @@ export const collaborations: Collaboration[] = [
       image: '/swarms/swarm-ventures.jpg'
     },
     targetSwarm: {
-      id: 'forge-partner-id',
+      id: 'forge-partner-id', 
       name: 'XForge',
       image: '/swarms/xforge.png'
     },
     serviceName: 'Development Package',
     status: 'active',
-    price: 400000
+    price: 400000,
+    startDate: '2024-01-16',
+    description: 'Development collaboration for building sophisticated project evaluation and due diligence systems for the SwarmLaunchpad guardian.',
+    objectives: [
+      'Project analysis automation',
+      'Due diligence system development',
+      'Risk assessment tools',
+      'Portfolio tracking platform',
+      'Community feedback integration'
+    ],
+    focus: 'Building robust systems for identifying, evaluating, and nurturing promising AI projects through rigorous vetting and community-aligned value creation.'
   },
   {
     id: '17',
@@ -800,7 +810,17 @@ export const collaborations: Collaboration[] = [
     },
     serviceName: 'Development Package',
     status: 'active',
-    price: 400000
+    price: 400000,
+    startDate: '2024-01-19',
+    description: 'Technical partnership focused on developing advanced AI music generation and production systems for the autonomous music collective.',
+    objectives: [
+      'AI composition engine development',
+      'Audio processing optimization',
+      'Distribution system automation',
+      'Performance analytics platform',
+      'Fan engagement tools'
+    ],
+    focus: 'Creating cutting-edge AI music generation and production systems while ensuring high-quality output and efficient distribution mechanisms.'
   }
 ];
 
