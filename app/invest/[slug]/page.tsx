@@ -29,6 +29,10 @@ import { description as PublishingDescription } from "@/data/swarms/descriptions
 import { description as SpeakerDescription } from "@/data/swarms/descriptions/speaker";
 import { description as TalentDescription } from "@/data/swarms/descriptions/talent";
 import { description as TravelDescription } from "@/data/swarms/descriptions/travel";
+import { description as XForgeDescription } from "@/data/swarms/descriptions/xforge";
+import { description as DigitalKinDescription } from "@/data/swarms/descriptions/digitalkin";
+import { description as SlopFatherDescription } from "@/data/swarms/descriptions/slopfather";
+import { description as WealthHiveDescription } from "@/data/swarms/descriptions/wealthhive";
 
 const descriptionMap: { [key: string]: string } = {
     // Partner Swarms
