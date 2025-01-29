@@ -124,7 +124,11 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
         .strength((d: SimulationLink) => d.strength * 0.1))
       .force("charge", d3.forceManyBody().strength(-200))
       .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius((d: CollisionForceNode) => getNodeSize(d.id) + 10));
+      .force("collision", d3.forceCollide().radius((d: d3.SimulationNodeDatum) => {
+        // Assert the node to our custom type
+        const node = d as SimulationNode;
+        return getNodeSize(node.id) + 10;
+      }));
 
     // Add nodes to simulation with proper typing
     simulation.nodes(nodes as SimulationNode[]);
