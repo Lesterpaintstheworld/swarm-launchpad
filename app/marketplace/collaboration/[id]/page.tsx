@@ -121,7 +121,7 @@ export default function CollaborationPage() {
             </div>
 
             {/* Right Column - Collaboration & Stats */}
-            <div className="lg:col-span-5 w-full">
+            <div className="lg:col-span-4 w-full">
               {/* Collaboration Section */}
               <div className="sticky top-6 w-full space-y-6">
                 {/* Collaboration Box */}
