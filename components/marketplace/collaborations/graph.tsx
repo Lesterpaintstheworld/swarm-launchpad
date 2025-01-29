@@ -242,19 +242,22 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
 
     function dragstarted(event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) {
       if (!event.active) simulation.alphaTarget(0.3).restart();
-      event.subject.fx = event.subject.x;
-      event.subject.fy = event.subject.y;
+      const subject = event.subject as SimulationNode;
+      subject.fx = subject.x;
+      subject.fy = subject.y;
     }
 
     function dragged(event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) {
-      event.subject.fx = event.x;
-      event.subject.fy = event.y;
+      const subject = event.subject as SimulationNode;
+      subject.fx = event.x;
+      subject.fy = event.y;
     }
 
     function dragended(event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) {
       if (!event.active) simulation.alphaTarget(0);
-      event.subject.fx = null;
-      event.subject.fy = null;
+      const subject = event.subject as SimulationNode;
+      subject.fx = null;
+      subject.fy = null;
     }
 
     // Update transform when zoom changes
