@@ -23,6 +23,8 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
     const [numShares, setNumShares] = useState<number>(0);
     const [price, setPrice] = useState<number>(0);
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [data, setData] = useState({
         totalSupply: 0,
         remainingSupply: 0,
@@ -211,26 +213,6 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
                     </div>
                 </div>
             </div>
-            {/* Error/Success messages */}
-            {error && (
-                <div className="mt-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-400">
-                    {error}
-                </div>
-            )}
-
-            {successMessage && (
-                <div className="mt-4 p-3 bg-green-500/20 border border-green-500/50 rounded-lg text-green-400 flex items-center justify-between">
-                    <span>{successMessage}</span>
-                    <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        onClick={() => setSuccessMessage(null)}
-                        className="hover:bg-green-500/10"
-                    >
-                        ✕
-                    </Button>
-                </div>
-            )}
 
             {/* Action button */}
             {connected ? (
