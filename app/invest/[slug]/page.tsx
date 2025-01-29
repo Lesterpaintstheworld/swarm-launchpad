@@ -128,25 +128,9 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
                         <div className="flex flex-col gap-8">
                             <div className="flex-1">
                                 <div className="flex flex-col gap-4">
-                                    {/* Title and Metrics */}
+                                    {/* Title */}
                                     <div className="flex items-center gap-8">
                                         <h4 className="font-semibold">About {swarm.name}</h4>
-                                        {swarm?.pool && (
-                                            <div className="flex gap-8">
-                                                <div>
-                                                    <p className="text-xs text-muted-foreground">MARKET CAP</p>
-                                                    <p className="text-2xl font-semibold text-green-400">
-                                                        $<SwarmInvestCard pool={swarm.pool} marketCapOnly /> $COMPUTE
-                                                    </p>
-                                                </div>
-                                                <div>
-                                                    <p className="text-xs text-muted-foreground">AMOUNT RAISED</p>
-                                                    <p className="text-2xl font-semibold text-blue-400">
-                                                        $<SwarmInvestCard pool={swarm.pool} amountRaisedOnly /> $COMPUTE
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        )}
                                     </div>
                                     <hr className="mt-3" />
                                     <Markdown markdown={swarm.description} />
