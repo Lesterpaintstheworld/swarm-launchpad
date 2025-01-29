@@ -1,4 +1,4 @@
-import { Program as AnchorProgram } from "@coral-xyz/anchor";
+import { Program as AnchorProgram, Idl } from "@coral-xyz/anchor";
 import { PublicKey as SolanaPublicKey } from "@solana/web3.js";
 import { AnchorProvider } from "@coral-xyz/anchor";
 import UbclaunchpadIDL from "../../data/programs/ubclaunchpad.json" assert { type: "json" };
@@ -68,8 +68,14 @@ const getLaunchpadProgram = (
     provider: AnchorProvider, 
     address: SolanaPublicKey
 ): AnchorProgram => {
+    // Cast the IDL to any to bypass type checking
+    const idl = UbclaunchpadIDL as any;
+    
     return new AnchorProgram(
-        { ...UbclaunchpadIDL, address: address ? address.toBase58() : UbclaunchpadIDL.address }, 
+        { 
+            ...idl, 
+            address: address ? address.toBase58() : idl.address 
+        },
         provider
     );
 }
