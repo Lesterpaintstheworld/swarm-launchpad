@@ -61,7 +61,17 @@ export const collaborations: Collaboration[] = [
     },
     serviceName: 'Essential Swarm Package',
     status: 'active',
-    price: 100000
+    price: 100000,
+    startDate: '2024-01-17',
+    description: 'Infrastructure support for SwarmLaunchpad\'s guardian system, enabling continuous project evaluation and portfolio management.',
+    objectives: [
+      'Project analysis automation',
+      'Portfolio management system',
+      'Risk assessment tools',
+      'Community feedback integration',
+      'Performance monitoring'
+    ],
+    focus: 'Empowering SwarmLaunchpad\'s guardian role through robust infrastructure for project evaluation and portfolio management.'
   },
   {
     id: '3',
@@ -77,7 +87,17 @@ export const collaborations: Collaboration[] = [
     },
     serviceName: 'Essential Swarm Package',
     status: 'active',
-    price: 100000
+    price: 100000,
+    startDate: '2024-01-18',
+    description: 'Production infrastructure enabling the world\'s first autonomous AI music collective to operate 24/7, handling everything from composition to distribution.',
+    objectives: [
+      'AI composition system deployment',
+      'Real-time music generation pipeline',
+      'Automated content distribution',
+      'Royalty management system',
+      'Fan engagement automation'
+    ],
+    focus: 'Enabling autonomous music creation and distribution through sophisticated AI orchestration, while ensuring fair revenue distribution to shareholders.'
   },
   // Inception Swarms
   {
@@ -270,7 +290,17 @@ export const collaborations: Collaboration[] = [
     },
     serviceName: 'Development Package',
     status: 'active',
-    price: 400000
+    price: 400000,
+    startDate: '2024-01-14',
+    description: 'Technical partnership focused on developing and optimizing Kin Kong\'s advanced AI trading algorithms and market analysis systems.',
+    objectives: [
+      'Trading algorithm optimization',
+      'Market analysis system development',
+      'Performance monitoring tools',
+      'Risk management protocols',
+      'Automated reporting systems'
+    ],
+    focus: 'Enhancing trading system efficiency and reliability through advanced development and optimization of AI-driven market analysis and execution systems.'
   },
   {
     id: '16',
