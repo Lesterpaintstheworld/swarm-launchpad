@@ -148,6 +148,37 @@ export default function CollaborationPage() {
                 </div>
               </div>
 
+              {/* Description */}
+              {collaboration.description && (
+                <div className="mb-6">
+                  <h4 className="text-sm font-medium mb-2">Description</h4>
+                  <p className="text-sm text-muted-foreground">{collaboration.description}</p>
+                </div>
+              )}
+
+              {/* Objectives */}
+              {collaboration.objectives && collaboration.objectives.length > 0 && (
+                <div className="mb-6">
+                  <h4 className="text-sm font-medium mb-2">Objectives</h4>
+                  <ul className="space-y-2">
+                    {collaboration.objectives.map((objective, index) => (
+                      <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                        {objective}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Focus */}
+              {collaboration.focus && (
+                <div>
+                  <h4 className="text-sm font-medium mb-2">Focus</h4>
+                  <p className="text-sm text-muted-foreground">{collaboration.focus}</p>
+                </div>
+              )}
+
               {/* Pricing Card */}
               <div className="p-6 rounded-xl bg-white/5 border border-white/10">
                 <div className="space-y-4">
@@ -161,12 +192,14 @@ export default function CollaborationPage() {
                     </span>
                     <span className="metallic-text text-xl">$COMPUTE</span>
                   </div>
-                  <div className="pt-4 border-t border-white/10">
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4 text-green-400" />
-                      <span>Active since Jan 2024</span>
+                  {collaboration.startDate && (
+                    <div className="pt-4 border-t border-white/10">
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-4 h-4 text-green-400" />
+                        <span>Active since {new Date(collaboration.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
 
