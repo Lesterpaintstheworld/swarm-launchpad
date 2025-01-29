@@ -51,7 +51,17 @@ export const SwarmData: SwarmInfo[] = [
         wallet: 'D1a6RtoptnG2U9gatDz5bQJ3QahKR3wiherDYipe98Vt',
         multiple: 1,
         revenueShare: 60,
-        launchDate: '2025-01-29T19:00:00.000Z'
+        launchDate: '2025-01-29T19:00:00.000Z',
+        links: [
+            {
+                name: 'Technical Documentation',
+                url: 'https://github.com/Lesterpaintstheworld/your-character-lives'
+            },
+            {
+                name: 'Technical Overview',
+                url: 'https://x.com/i/broadcasts/1lPJqOmYNBbKb'
+            }
+        ]
     },
     {
         id: "slopfather-partner-id",
