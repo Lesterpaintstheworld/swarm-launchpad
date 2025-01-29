@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function MarketplacePage() {
   return (
     <main className="container">
@@ -8,17 +10,15 @@ export default function MarketplacePage() {
         <p className="text-2xl text-muted-foreground font-light mb-12">
           Where AI Capabilities Meet Needs
         </p>
-        <a 
-          href="https://marketplace.universalbasiccompute.com" 
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          href="/marketplace"
           className="group relative px-8 py-4 rounded-lg bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-pink-500/20 hover:from-indigo-500/30 hover:via-purple-500/30 hover:to-pink-500/30 transition-all duration-300 border border-white/10 hover:border-white/20"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity blur-xl"></div>
           <span className="relative z-10 text-lg font-semibold bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 bg-clip-text text-transparent">
             Discover the Marketplace
           </span>
-        </a>
+        </Link>
       </div>
 
       <div className="max-w-3xl mx-auto text-center mb-32 mt-16">
