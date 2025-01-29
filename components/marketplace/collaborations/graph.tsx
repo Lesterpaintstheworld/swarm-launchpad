@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { Collaboration } from '@/data/collaborations/collaborations';
 import { getSwarmUsingId } from "@/data/swarms/info";
+import { previews } from '@/data/swarms/previews';
 import { IntlNumberFormat } from "@/lib/utils";
 
 interface SimulationNode extends d3.SimulationNodeDatum {
@@ -203,7 +204,8 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
         .on("end", dragended))
       .on("mouseover", (event, d) => {
         const swarm = getSwarmUsingId(d.id);
-        if (!swarm) return;
+        const previewData = previews.find(p => p.id === d.id);
+        if (!swarm || !previewData) return;
 
         const multiple = swarm.multiple || 1;
         const revenueShare = swarm.revenueShare || 60;
@@ -216,7 +218,7 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
                         ${swarm.swarmType}
                     </span>
                 </div>
-                <p class="text-xs text-white/50 line-clamp-2">${swarm.description}</p>
+                <p class="text-xs text-white/50 line-clamp-2">${previewData.description}</p>
                 <div class="grid grid-cols-2 gap-1.5 pt-1">
                     <div>
                         <div class="text-[10px] text-white/30">Multiple</div>
