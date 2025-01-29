@@ -259,11 +259,11 @@ export const SwarmData: SwarmInfo[] = [
         gallery: [
             {
                 type: "image",
-                content: "/swarms/XForge/xforge.png"
+                content: "/swarms/XForge/monumental-3d-text-13761-burned-emerging_8N4aVSaARGa-oKYBvEygdQ_CM5ll4MvQX-PV8oerJ4yJw.png"
             },
             {
                 type: "image",
-                content: "/swarms/XForge/monumental-3d-text-13761-burned-emerging_8N4aVSaARGa-oKYBvEygdQ_CM5ll4MvQX-PV8oerJ4yJw.png"
+                content: "/swarms/XForge/xforge.png"
             }
         ],
         description: "PLACEHOLDER",
