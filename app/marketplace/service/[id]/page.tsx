@@ -166,3 +166,176 @@ export default function ServicePage() {
     </main>
   );
 }
+'use client';
+
+import { getService } from '@/data/services/services';
+import { getSwarm } from '@/data/swarms/previews';
+import { notFound } from 'next/navigation';
+import Image from 'next/image';
+import { Breadcrumb } from '@/components/ui/breadcrumb';
+import { Cpu, Clock } from 'lucide-react';
+import { Button } from '@/components/shadcn/button';
+import { ConnectButton } from '@/components/solana/connectButton';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { sectionColors } from '@/components/marketplace/types';
+
+export default function ServiceDetailsPage({ params }: { params: { id: string } }) {
+  const service = getService(params.id);
+  const { connected } = useWallet();
+
+  if (!service) {
+    notFound();
+  }
+
+  const swarm = getSwarm(service.swarmId);
+  const crumbs = [
+    { label: 'Marketplace', href: '/marketplace' },
+    { label: 'Services', href: '/marketplace?tab=services' },
+    { label: service.name }
+  ];
+
+  const serviceTypeLabel = {
+    'subscription': 'Weekly Subscription',
+    'one-off': 'One-time Purchase',
+    'pay-as-you-go': 'Pay as you go'
+  };
+
+  const handlePurchase = () => {
+    // TODO: Implement purchase logic
+    console.log('Purchasing service:', service.id);
+  };
+
+  return (
+    <main className="container py-8 space-y-6">
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb crumbs={crumbs} />
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Main Content */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Service Banner & Header */}
+          <div className="rounded-xl bg-white/5 border border-white/10 overflow-hidden">
+            {service.banner && (
+              <div className="relative h-[200px]">
+                <Image
+                  src={service.banner}
+                  alt={service.name}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              </div>
+            )}
+            <div className="p-6 space-y-4">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h1 className="text-2xl font-bold text-white">{service.name}</h1>
+                  <p className="text-lg text-white/60 mt-4">{service.fullDescription}</p>
+                </div>
+                {service.verified && (
+                  <div className={`px-3 py-1 h-fit rounded-full ${sectionColors.services.accent} border ${sectionColors.services.border}`}>
+                    <span className={`text-sm font-medium ${sectionColors.services.text}`}>
+                      Verified
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Capabilities */}
+          <div className="rounded-xl bg-white/5 border border-white/10 p-6">
+            <h2 className="text-lg font-semibold text-white mb-4">Service Capabilities</h2>
+            <div className="grid grid-cols-2 gap-4">
+              {service.capabilities.map((capability) => (
+                <div 
+                  key={capability}
+                  className="flex items-center gap-3 p-3 rounded-lg bg-white/5"
+                >
+                  <div className={`w-2 h-2 rounded-full ${sectionColors.services.text}`} />
+                  <span className="text-white/80">{capability}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Provider Information */}
+          <div className="rounded-xl bg-white/5 border border-white/10 p-6">
+            <h2 className="text-lg font-semibold text-white mb-4">About the Provider</h2>
+            {swarm && (
+              <div className="flex items-center gap-4">
+                <div className="relative w-12 h-12 rounded-full overflow-hidden">
+                  <Image
+                    src={swarm.image}
+                    alt={swarm.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-white font-medium">{swarm.name}</h3>
+                  <p className="text-white/60 text-sm">{swarm.role}</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Sidebar */}
+        <div className="space-y-6">
+          {/* Service Purchase Card */}
+          <div className="rounded-xl bg-white/5 border border-white/10 p-6 sticky top-6">
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-lg font-semibold text-white mb-2">Service Price</h2>
+                <div className="flex items-baseline gap-2">
+                  <Cpu className="w-5 h-5 text-white/40" />
+                  <span className="text-3xl font-bold text-white">
+                    {service.computePerTask.toLocaleString()}
+                  </span>
+                  <span className="metallic-text text-xl font-semibold">
+                    $COMPUTE
+                  </span>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex justify-between text-sm">
+                  <span className="text-white/60">Service Type</span>
+                  <div className="flex items-center gap-2">
+                    {service.serviceType === 'subscription' ? <Clock className="w-4 h-4" /> : <Cpu className="w-4 h-4" />}
+                    <span className="text-white">{serviceTypeLabel[service.serviceType]}</span>
+                  </div>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-white/60">Average Completion</span>
+                  <span className="text-white">{service.averageCompletionTime}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-white/60">Success Rate</span>
+                  <span className="text-white">{service.successRate}%</span>
+                </div>
+              </div>
+
+              {connected ? (
+                <Button 
+                  className="w-full"
+                  onClick={handlePurchase}
+                >
+                  Purchase Service
+                </Button>
+              ) : (
+                <ConnectButton className="w-full" />
+              )}
+
+              <p className="text-xs text-white/40 text-center">
+                By purchasing this service, you agree to the terms and conditions
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}
