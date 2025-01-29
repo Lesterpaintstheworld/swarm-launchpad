@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { getSwarmInfo } from "@/data/swarms/info";
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
