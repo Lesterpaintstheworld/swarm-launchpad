@@ -43,7 +43,7 @@ export default function Invest() {
             </div>
 
             {/* Launching Swarms */}
-            {sortedSwarms.filter(swarm => swarm.launchDate && new Date(swarm.launchDate) > new Date()).length > 0 && (
+            {sortedSwarms.filter(swarm => swarm.launchDate).length > 0 && (
                 <section className="mb-24">
                     <div className="flex items-center gap-2 mb-8">
                         <h3 className="text-2xl font-semibold">🔥 Launching Now</h3>
@@ -62,30 +62,15 @@ export default function Invest() {
                     </div>
                     
                     <div className="relative">
-                        {/* Enhanced background with dynamic elements */}
-                        <div className="absolute inset-0 rounded-3xl overflow-hidden">
-                            {/* Base gradient background */}
-                            <div className="absolute inset-0 bg-black/90" />
-                            
-                            {/* Animated gradient overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-yellow-500/5 to-orange-500/10 animate-pulse" />
-                            
-                            {/* Dynamic particles effect */}
-                            <div className="absolute inset-0 opacity-30">
-                                <div className="absolute h-1 w-1 rounded-full bg-yellow-500/50 top-[10%] left-[5%] animate-ping [animation-duration:3s]" />
-                                <div className="absolute h-1 w-1 rounded-full bg-orange-500/50 top-[40%] right-[15%] animate-ping [animation-duration:4s]" />
-                                <div className="absolute h-1 w-1 rounded-full bg-red-500/50 bottom-[20%] left-[25%] animate-ping [animation-duration:5s]" />
-                                <div className="absolute h-1 w-1 rounded-full bg-yellow-500/50 top-[60%] right-[35%] animate-ping [animation-duration:3.5s]" />
-                            </div>
-
-                            {/* Subtle grid pattern */}
-                            <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#ffffff1a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff1a_1px,transparent_1px)] bg-[size:24px_24px]" />
+                        {/* Glowing Background with fade-out edges */}
+                        <div className="absolute -inset-20 overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/30 via-yellow-500/20 to-orange-500/30 blur-3xl animate-pulse" />
                         </div>
 
-                        {/* Content grid */}
-                        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+                        {/* Content grid with subtle border */}
+                        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6 rounded-xl border border-orange-500/10">
                             {sortedSwarms
-                                .filter(swarm => swarm.launchDate && new Date(swarm.launchDate) > new Date())
+                                .filter(swarm => swarm.launchDate)
                                 .map((swarm) => (
                                     <div key={swarm.id} className="group relative">
                                         {/* Hover glow effect */}
@@ -109,12 +94,6 @@ export default function Invest() {
                                     </div>
                                 ))}
                         </div>
-
-                        {/* Corner decorations */}
-                        <div className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-yellow-500/20 to-transparent rounded-tl-3xl" />
-                        <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-orange-500/20 to-transparent rounded-tr-3xl" />
-                        <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-orange-500/20 to-transparent rounded-bl-3xl" />
-                        <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-red-500/20 to-transparent rounded-br-3xl" />
                     </div>
                 </section>
             )}
