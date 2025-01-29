@@ -26,6 +26,7 @@ export function CollaborationGrid({ collaborations }: CollaborationGridProps) {
       {collaborations.map((collaboration) => (
         <CollaborationCard
           key={collaboration.id}
+          id={collaboration.id}
           sourceSwarm={collaboration.sourceSwarm}
           targetSwarm={collaboration.targetSwarm}
           serviceName={collaboration.serviceName}

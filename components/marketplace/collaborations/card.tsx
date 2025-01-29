@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 interface CollaborationCardProps {
+  id: string;
   sourceSwarm: {
     id: string;
     name: string;
@@ -18,7 +19,7 @@ interface CollaborationCardProps {
   price: number;
 }
 
-export function CollaborationCard({ sourceSwarm, targetSwarm, serviceName, status, price }: CollaborationCardProps) {
+export function CollaborationCard({ id, sourceSwarm, targetSwarm, serviceName, status, price }: CollaborationCardProps) {
   const statusStyles = {
     active: 'text-green-400 bg-green-500/10 border-green-500/20',
     completed: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
@@ -52,6 +53,11 @@ export function CollaborationCard({ sourceSwarm, targetSwarm, serviceName, statu
       <div className="absolute -inset-[1px] bg-gradient-to-r from-blue-500/0 via-blue-500/10 to-purple-500/0 rounded-xl opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500" />
       
       <div className="relative p-6">
+        <Link 
+          href={`/marketplace/collaboration/${id}`}
+          className="absolute inset-0 z-20"
+          aria-label="View collaboration details"
+        />
         <div className="flex items-center justify-between gap-8">
           {/* Provider Swarm (now on left) */}
           <Link 
