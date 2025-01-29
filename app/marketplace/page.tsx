@@ -61,7 +61,7 @@ export default function MarketplacePage() {
                     <div className="flex items-center justify-between">
                       <h2 className="text-xl font-semibold text-white">Available Services</h2>
                       <div className="text-sm text-white/60">
-                        {mockServices.length} services found
+                        {services.length} services found
                       </div>
                     </div>
                     <ServiceGrid services={services} />
