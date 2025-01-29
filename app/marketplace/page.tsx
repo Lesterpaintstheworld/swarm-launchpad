@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { CollaborationGrid } from '@/components/marketplace/collaborations/grid';
+import { CollaborationGraph } from '@/components/marketplace/collaborations/graph';
 import { MarketplaceNavigation } from '@/components/marketplace/navigation';
 import { MarketplaceSearch } from '@/components/marketplace/search';
 import { MarketplaceTab, SortOption } from '@/components/marketplace/types';
@@ -17,6 +18,7 @@ export default function MarketplacePage() {
   const [activeTab, setActiveTab] = useState<MarketplaceTab>('services');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOption, setSortOption] = useState<SortOption>('relevance');
+  const [collaborationView, setCollaborationView] = useState<'list' | 'graph'>('list');
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-background to-background/50">
@@ -88,11 +90,39 @@ export default function MarketplacePage() {
                   <div className="space-y-6">
                     <div className="flex items-center justify-between">
                       <h2 className="text-xl font-semibold text-white">Active Collaborations</h2>
-                      <div className="text-sm text-white/60">
-                        {collaborations.length} collaborations found
+                      <div className="flex items-center gap-4">
+                        <div className="text-sm text-white/60">
+                          {collaborations.length} collaborations found
+                        </div>
+                        <div className="flex items-center bg-white/5 rounded-lg p-1">
+                          <button
+                            onClick={() => setCollaborationView('list')}
+                            className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                              collaborationView === 'list' 
+                                ? 'bg-white/10 text-white' 
+                                : 'text-white/60 hover:text-white'
+                            }`}
+                          >
+                            List
+                          </button>
+                          <button
+                            onClick={() => setCollaborationView('graph')}
+                            className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                              collaborationView === 'graph' 
+                                ? 'bg-white/10 text-white' 
+                                : 'text-white/60 hover:text-white'
+                            }`}
+                          >
+                            Graph
+                          </button>
+                        </div>
                       </div>
                     </div>
-                    <CollaborationGrid collaborations={collaborations} />
+                    {collaborationView === 'list' ? (
+                      <CollaborationGrid collaborations={collaborations} />
+                    ) : (
+                      <CollaborationGraph collaborations={collaborations} />
+                    )}
                   </div>
                 )}
                 {activeTab === 'profiles' && <SwarmProfiles />}
