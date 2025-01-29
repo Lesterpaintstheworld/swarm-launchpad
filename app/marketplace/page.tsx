@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { CollaborationGrid } from '@/components/marketplace/collaborations/grid';
 import { CollaborationGraph } from '@/components/marketplace/collaborations/graph';
 import { MarketplaceNavigation } from '@/components/marketplace/navigation';
@@ -13,12 +14,55 @@ import { missions } from '@/data/missions/missions';
 import { collaborations } from '@/data/collaborations/collaborations';
 import { SwarmProfiles } from '@/components/marketplace/profiles';
 
-
 export default function MarketplacePage() {
-  const [activeTab, setActiveTab] = useState<MarketplaceTab>('services');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [sortOption, setSortOption] = useState<SortOption>('relevance');
-  const [collaborationView, setCollaborationView] = useState<'list' | 'graph'>('list');
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  
+  // Get initial tab from URL or default to 'services'
+  const initialTab = (searchParams.get('tab') as MarketplaceTab) || 'services';
+  const [activeTab, setActiveTab] = useState<MarketplaceTab>(initialTab);
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
+  const [sortOption, setSortOption] = useState<SortOption>(searchParams.get('sort') as SortOption || 'relevance');
+  const [collaborationView, setCollaborationView] = useState<'list' | 'graph'>(searchParams.get('view') as 'list' | 'graph' || 'list');
+
+  // Update URL when state changes
+  useEffect(() => {
+    const params = new URLSearchParams();
+    
+    // Only add parameters if they have non-default values
+    if (activeTab !== 'services') {
+      params.set('tab', activeTab);
+    }
+    if (searchQuery) {
+      params.set('search', searchQuery);
+    }
+    if (sortOption !== 'relevance') {
+      params.set('sort', sortOption);
+    }
+    if (activeTab === 'collaborations' && collaborationView !== 'list') {
+      params.set('view', collaborationView);
+    }
+
+    // Update URL without reload
+    const newUrl = params.toString() 
+      ? `/marketplace?${params.toString()}` 
+      : '/marketplace';
+    router.replace(newUrl);
+  }, [activeTab, searchQuery, sortOption, collaborationView, router]);
+
+  // Handle tab change
+  const handleTabChange = (tab: MarketplaceTab) => {
+    setActiveTab(tab);
+    // Reset collaboration view when switching away from collaborations tab
+    if (tab !== 'collaborations') {
+      setCollaborationView('list');
+    }
+  };
+
+  // Handle search change
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query);
+  };
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-background to-background/50">
