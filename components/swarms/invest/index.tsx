@@ -256,12 +256,17 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly }: SwarmInvestCardProp
                     <div className="flex justify-between items-start mb-2">
                         <span className="text-sm text-slate-400">Swarm Wallet</span>
                         <div className="flex items-center gap-2">
-                            <code className="text-sm text-slate-300 font-mono">
+                            <a 
+                                href={`https://solscan.io/account/${getSwarmUsingPoolId(pool)?.wallet}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-sm text-slate-300 font-mono hover:text-blue-400 transition-colors"
+                            >
                                 {getSwarmUsingPoolId(pool)?.wallet 
                                     ? `${getSwarmUsingPoolId(pool)?.wallet.slice(0, 4)}...${getSwarmUsingPoolId(pool)?.wallet.slice(-4)}`
                                     : "Not available"
                                 }
-                            </code>
+                            </a>
                             <Button
                                 variant="ghost"
                                 size="sm"
