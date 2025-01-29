@@ -113,7 +113,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
         <div className="flex items-center justify-end pt-4 border-t border-white/5">
           <Link 
             href={`/marketplace/service/${service.id}`}
-            className="px-4 py-2 text-sm font-medium rounded-lg bg-white/5 hover:bg-white/10 transition-colors text-white"
+            className="w-full px-4 py-2 text-sm font-semibold rounded-lg bg-blue-500/10 hover:bg-blue-500/20 transition-colors text-blue-400 hover:text-blue-300 text-center"
           >
             View Offer
           </Link>
