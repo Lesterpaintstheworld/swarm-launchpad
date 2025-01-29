@@ -25,7 +25,9 @@ export default function CollaborationPage() {
   const sourceSwarm = getSwarm(collaboration.sourceSwarm.id);
   const targetSwarm = getSwarm(collaboration.targetSwarm.id);
 
-  const serviceBanners = {
+  type ServiceName = 'Development Package' | 'Essential Swarm Package' | 'Inception Package';
+
+  const serviceBanners: Record<ServiceName, string> = {
     'Development Package': '/services/xforge.png',
     'Essential Swarm Package': '/services/kinos-essential.png',
     'Inception Package': '/services/kinos-inception.png'
