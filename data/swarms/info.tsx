@@ -51,7 +51,7 @@ export const SwarmData: SwarmInfo[] = [
         wallet: 'D1a6RtoptnG2U9gatDz5bQJ3QahKR3wiherDYipe98Vt',
         multiple: 1,
         revenueShare: 60,
-        launchDate: new Date('2025-01-29T19:00:00.000Z')
+        launchDate: '2025-01-29T19:00:00.000Z'
     },
     {
         id: "slopfather-partner-id",
@@ -881,7 +881,7 @@ export const SwarmData: SwarmInfo[] = [
     wallet: '7GmuNjA5AGWMu5izEfrBjakEjuwNpgh5QJuKB1GUq5mGI',
     multiple: 1,
     revenueShare: 60,
-    launchDate: new Date('2025-01-29T19:00:00.000Z'),
+    launchDate: '2025-01-29T19:00:00.000Z',
     links: [
         {
             name: 'Pitch Deck',
@@ -936,6 +936,6 @@ export const SwarmData: SwarmInfo[] = [
         wallet: 'CoaDrb1uq7dBfPeirzpYvVD87rPa3cde8oL6xgfqUA6G',
         multiple: 1,
         revenueShare: 60,
-        launchDate: new Date('2025-01-29T19:00:00.000Z')
+        launchDate: '2025-01-29T19:00:00.000Z'
     }
 ]
