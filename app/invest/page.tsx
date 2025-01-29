@@ -62,22 +62,19 @@ export default function Invest() {
                     </div>
                     
                     <div className="relative">
-                        {/* Glowing Background with smooth fade-out */}
-                        <div className="absolute -inset-40 overflow-hidden">
-                            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/30 via-yellow-500/20 to-orange-500/30 blur-3xl animate-pulse" />
-                            <div className="absolute inset-0 bg-gradient-radial from-transparent to-background" />
+                        {/* Subtle background glow */}
+                        <div className="absolute inset-0 -mx-8 -my-6">
+                            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-yellow-500/5 to-orange-500/10 blur-[100px]" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/95 to-transparent" />
+                            <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-transparent" />
                         </div>
 
                         {/* Content grid */}
-                        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 rounded-xl border border-orange-500/10">
+                        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                             {sortedSwarms
                                 .filter(swarm => swarm.launchDate)
                                 .map((swarm) => (
-                                    <div key={swarm.id} className="group relative">
-                                        {/* Hover glow effect */}
-                                        <div className="absolute -inset-1 bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-red-500/20 rounded-xl opacity-0 group-hover:opacity-100 blur transition-all duration-500" />
-                                        
-                                        {/* Card content */}
+                                    <div key={swarm.id} className="group">
                                         <div className="relative">
                                             <SwarmPreviewCard 
                                                 swarm={{
@@ -85,8 +82,7 @@ export default function Invest() {
                                                     revenueShare: swarm.revenueShare || 60,
                                                 }}
                                             />
-                                            {/* Enhanced "Launching" badge */}
-                                            <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-red-500/20 border border-yellow-500/30 backdrop-blur-sm group-hover:border-yellow-500/50 transition-colors">
+                                            <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-red-500/20 border border-yellow-500/30 backdrop-blur-sm">
                                                 <span className="text-xs font-medium bg-gradient-to-r from-yellow-300 via-orange-300 to-red-300 bg-clip-text text-transparent">
                                                     Launching
                                                 </span>
