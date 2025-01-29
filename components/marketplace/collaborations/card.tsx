@@ -1,4 +1,3 @@
-import { ArrowDown } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -24,13 +23,6 @@ export function CollaborationCard({ id, sourceSwarm, targetSwarm, serviceName, s
     active: 'text-green-400 bg-green-500/10 border-green-500/20',
     completed: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
     pending: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20'
-  };
-
-  // Map service names to their banner images
-  const serviceBanners = {
-    'Development Package': '/services/xforge.png',
-    'Essential Swarm Package': '/services/kinos-essential.png',
-    'Inception Package': '/services/kinos-inception.png'
   };
 
   return (
