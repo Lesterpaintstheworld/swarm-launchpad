@@ -907,6 +907,18 @@ export const SwarmData: SwarmInfo[] = [
             {
                 type: "image",
                 content: "/swarms/logicatlas.jpg"
+            },
+            {
+                type: "image",
+                content: "/swarms/logicatlas/photo_2025-01-27_18-47-51.jpg"
+            },
+            {
+                type: "image",
+                content: "/swarms/logicatlas/photo_2025-01-27_18-47-51 (2).jpg"
+            },
+            {
+                type: "image",
+                content: "/swarms/logicatlas/photo_2025-01-27_18-47-51 (3).jpg"
             }
         ],
         description: "PLACEHOLDER",
