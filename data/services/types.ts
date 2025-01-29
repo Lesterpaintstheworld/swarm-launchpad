@@ -11,6 +11,7 @@ export interface Service {
   id: string;
   name: string;
   description: string;
+  fullDescription: string;
   verified: boolean;
   basePrice: number;
   categories: string[];
