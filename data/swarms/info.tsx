@@ -51,7 +51,7 @@ export const SwarmData: SwarmInfo[] = [
         wallet: 'D1a6RtoptnG2U9gatDz5bQJ3QahKR3wiherDYipe98Vt',
         multiple: 1,
         revenueShare: 60,
-        launchDate: new Date('2025-01-29T21:00:00.000Z')
+        launchDate: new Date('2025-01-29T19:00:00.000Z')
     },
     {
         id: "slopfather-partner-id",
