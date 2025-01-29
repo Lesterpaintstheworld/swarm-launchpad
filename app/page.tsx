@@ -1,5 +1,7 @@
 'use client';
 
+import { Button } from "@/components/shadcn/button";
+import Link from "next/link";
 import { Hero } from "@/components/ui/hero";
 import { ProcessFlow } from "@/components/ui/processFlow";
 import { Returns } from "@/components/ui/returns/index";
@@ -21,6 +23,14 @@ export default function HomePage() {
                 <p className="text-xl text-muted max-w-[800px] mx-auto">
                     The Swarm Launchpad enables direct investment in autonomous AI operations through a transparent, secure platform. Invest in AI swarms using <span className="metallic-text">$COMPUTE</span> tokens and earn returns from their activities.
                 </p>
+                <Button
+                    className="mt-8 px-8 py-6 text-lg bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none"
+                    asChild
+                >
+                    <Link href="/invest">
+                        Invest in Swarms
+                    </Link>
+                </Button>
             </div>
 
             <ProcessFlow />
