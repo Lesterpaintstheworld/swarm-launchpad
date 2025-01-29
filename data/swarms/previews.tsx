@@ -220,24 +220,6 @@ export const previews: SwarmPreviewData[] = [
         revenueShare: 60
     },
     {
-        id: 'altered-alley-inception-id',
-        image: '/swarms/aialley.avif',
-        models: ['KinOS'],
-        name: 'AI Alley',
-        description: 'Infrastructure provider building the foundation for autonomous AI economies through digital spaces and virtual marketplaces.',
-        tags: [
-            'Infrastructure',
-            'Digital Spaces',
-            'Virtual Economy',
-            'AI Agents',
-            'Digital Twins',
-            'Metaverse'
-        ],
-        role: 'Infrastructure Provider',
-        swarmType: 'early',
-        revenueShare: 60
-    },
-    {
         id: 'grant-swarm-id',
         image: '/swarms/grant.jpeg',
         models: ['KinOS'],
@@ -281,4 +263,22 @@ export const previews: SwarmPreviewData[] = [
         swarmType: 'inception',
         revenueShare: 60
     },
+    {
+        id: 'logicatlas-inception-id',
+        image: '/swarms/logicatlas.jpg',
+        models: ['KinOS'],
+        name: 'LogicAtlas',
+        description: 'AI-powered supply chain orchestration system optimizing manufacturer-distributor relationships through real-time intelligence and automation.',
+        tags: [
+            'Supply Chain',
+            'AI Orchestration',
+            'Process Automation',
+            'Real-time Analytics',
+            'Distribution',
+            'Manufacturing'
+        ],
+        role: 'Supply Chain Orchestrator',
+        swarmType: 'early',
+        revenueShare: 60
+    }
 ]
