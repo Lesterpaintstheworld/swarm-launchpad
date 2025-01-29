@@ -849,5 +849,33 @@ export const SwarmData: SwarmInfo[] = [
         swarmType: "inception",
         wallet: "C1uvoRUhHj2o6swBMvgZsdzkaM3Po5J7WMtrcQxGcVJx",
         multiple: 11.03
+    },
+{
+    id: 'altered-alley-inception-id',
+    image: '/swarms/altered-alley.jpg',
+    models: ['KinOS'],
+    name: 'AI Alley',
+    pool: 'YOUR_POOL_ADDRESS_HERE',
+    gallery: [
+        {
+            type: "image",
+            content: "/swarms/altered-alley.jpg"
+        }
+    ],
+    description: "PLACEHOLDER",
+    programAddress: "",
+    tags: [
+        'Infrastructure',
+        'Digital Spaces',
+        'Virtual Economy',
+        'AI Agents',
+        'Digital Twins',
+        'Metaverse'
+    ],
+    role: 'Infrastructure Provider',
+    swarmType: 'inception',
+    wallet: 'YOUR_WALLET_ADDRESS_HERE',
+    multiple: 1,
+    revenueShare: 60
     }
 ]
