@@ -150,7 +150,7 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                     <div className="text-right">
                         <p className="text-xs text-green-400">CURRENT PRICE</p>
                         <p className="text-2xl font-bold text-green-400">
-                            ${IntlNumberFormat(data.pricePerShare, 3)} <span className="text-sm">$COMPUTE</span>
+                            {IntlNumberFormat(data.pricePerShare, 3)} <span className="text-sm">$COMPUTE</span>
                         </p>
                     </div>
                 </div>

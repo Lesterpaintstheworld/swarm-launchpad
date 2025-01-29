@@ -167,13 +167,13 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
                             <div>
                                 <p className="text-sm text-muted-foreground mb-1">MARKET CAP</p>
                                 <p className="text-3xl font-semibold text-green-400">
-                                    ${<SwarmInvestCard pool={swarm.pool} marketCapOnly />} <span className="text-xl">$COMPUTE</span>
+                                    <SwarmInvestCard pool={swarm.pool} marketCapOnly /> <span className="text-xl">$COMPUTE</span>
                                 </p>
                             </div>
                             <div>
                                 <p className="text-sm text-muted-foreground mb-1">AMOUNT RAISED</p>
                                 <p className="text-3xl font-semibold text-blue-400">
-                                    ${<SwarmInvestCard pool={swarm.pool} amountRaisedOnly />} <span className="text-xl">$COMPUTE</span>
+                                    <SwarmInvestCard pool={swarm.pool} amountRaisedOnly /> <span className="text-xl">$COMPUTE</span>
                                 </p>
                             </div>
                         </div>
