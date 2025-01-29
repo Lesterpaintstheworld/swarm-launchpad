@@ -83,6 +83,7 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
         // Use the full description from the descriptions folder if available
         description: descriptionMap[swarmInfo.id] || swarmInfo.description
     } : null;
+
     if (!swarm) {
         redirect('/404');
     }
@@ -119,20 +120,21 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
                                                 <div>
                                                     <p className="text-xs text-muted-foreground">MARKET CAP</p>
                                                     <p className="text-2xl font-semibold text-green-400">
-                                                        ${<SwarmInvestCard pool={swarm.pool} marketCapOnly />} $COMPUTE
+                                                        $<SwarmInvestCard pool={swarm.pool} marketCapOnly /> $COMPUTE
                                                     </p>
                                                 </div>
                                                 <div>
                                                     <p className="text-xs text-muted-foreground">AMOUNT RAISED</p>
                                                     <p className="text-2xl font-semibold text-blue-400">
-                                                        ${<SwarmInvestCard pool={swarm.pool} amountRaisedOnly />} $COMPUTE
+                                                        $<SwarmInvestCard pool={swarm.pool} amountRaisedOnly /> $COMPUTE
                                                     </p>
                                                 </div>
                                             </div>
                                         )}
                                     </div>
-                                <hr className="mt-3" />
-                                <Markdown markdown={swarm.description} />
+                                    <hr className="mt-3" />
+                                    <Markdown markdown={swarm.description} />
+                                </div>
                             </div>
                             <InfoPanel 
                                 socials={swarm.socials}
