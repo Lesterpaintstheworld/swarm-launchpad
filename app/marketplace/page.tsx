@@ -9,6 +9,7 @@ import { ServiceGrid } from '@/components/marketplace/services/grid';
 import { MissionGrid } from '@/components/marketplace/missions/grid';
 import { services } from '@/data/services/services';
 import { missions } from '@/data/missions/missions';
+import { collaborations } from '@/data/collaborations/collaborations';
 import { SwarmProfiles } from '@/components/marketplace/profiles';
 
 const mockCollaborations = [
@@ -122,10 +123,10 @@ export default function MarketplacePage() {
                     <div className="flex items-center justify-between">
                       <h2 className="text-xl font-semibold text-white">Active Collaborations</h2>
                       <div className="text-sm text-white/60">
-                        {mockCollaborations.length} collaborations found
+                        {collaborations.length} collaborations found
                       </div>
                     </div>
-                    <CollaborationGrid collaborations={mockCollaborations} />
+                    <CollaborationGrid collaborations={collaborations} />
                   </div>
                 )}
                 {activeTab === 'profiles' && <SwarmProfiles />}
