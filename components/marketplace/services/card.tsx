@@ -26,25 +26,51 @@ export function ServiceCard({ service }: ServiceCardProps) {
 
   return (
     <div className={`group relative rounded-xl bg-white/5 border ${sectionColors.services.border} overflow-hidden transition-all duration-300 ${sectionColors.services.hover}`}>
-      {/* Banner image */}
+      {/* Banner image and swarm attribution */}
       {service.banner && (
-        <div className="relative w-full h-[120px]">
-          <Image
-            src={service.banner}
-            alt={service.name}
-            fill
-            className="object-cover"
-            priority
-          />
-          {/* Gradient overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+        <div className="relative">
+          {/* Banner */}
+          <div className="relative w-full h-[120px]">
+            <Image
+              src={service.banner}
+              alt={service.name}
+              fill
+              className="object-cover"
+              priority
+            />
+            {/* Gradient overlay for text readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+          </div>
+          
+          {/* Swarm attribution with overlapping logo */}
+          {swarm && (
+            <div className="absolute -bottom-6 left-6 flex items-center gap-3">
+              <Link 
+                href={`/invest/${swarm.id}`}
+                className="relative w-12 h-12 rounded-xl overflow-hidden border-2 border-black/20 hover:border-white/20 transition-colors"
+              >
+                <Image
+                  src={swarm.image}
+                  alt={swarm.name}
+                  fill
+                  className="object-cover"
+                />
+              </Link>
+              <Link 
+                href={`/invest/${swarm.id}`}
+                className="text-sm text-white/80 hover:text-white transition-colors"
+              >
+                by <span className="font-medium">{swarm.name}</span>
+              </Link>
+            </div>
+          )}
         </div>
       )}
 
       {/* Gradient overlay */}
       <div className={`absolute inset-0 bg-gradient-to-br ${sectionColors.services.primary} opacity-0 group-hover:opacity-100 transition-opacity`} />
       
-      <div className="relative p-6 space-y-4">
+      <div className="relative p-6 pt-10 space-y-4">
         {/* Header */}
         <div>
           <h3 className="text-lg font-semibold text-white mb-1">{service.name}</h3>
