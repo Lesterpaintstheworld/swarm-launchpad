@@ -30,6 +30,7 @@ export interface SwarmPreviewData {
         pool?: string;
     }
     launchDate?: Date;
+    weeklyRevenue?: number;
 }
 
 export type SwarmModel = 'KinOS' | 'Claude Haiku' | 'GPT-4o Mini';
@@ -73,4 +74,5 @@ export interface SwarmInfo {
         url: string;
     }[];
     team?: TeamMember[];
+    weeklyRevenue?: number;
 }
