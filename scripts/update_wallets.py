@@ -56,86 +56,58 @@ def find_matching_brace(content: str, start_pos: int) -> int:
     return pos - 1 if brace_count == 0 else -1
 
 def update_info_file(multiples: dict):
+    # The order of pools must match exactly with SwarmData order
+    pool_order = [
+        '37u532qgHbjUHic6mQK51jkT3Do7qkWLEUQCx22MDBD8',  # KinOS
+        None,  # SLOP FATHER (no pool)
+        'FM6aFbs9cQ6Jrp3GJPABBVxpLnGFEZZD3tSJ5JGCUsyZ',  # DigitalKin
+        'FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz',  # Kin Kong
+        '911eRdu96ncdnmEUYA3UQ39gEtE9ueg7UbqycKuKweCG',  # Swarm Ventures
+        None,  # Terminal Velocity (no pool)
+        'CmC2AUuurX19TLBVQbpNct8pmEjaHsRj6o8SLBAVvxAk',  # Synthetic Souls
+        '68K6BBsPynRbLkjJzdQmKMvTPLaUiKb93BUwbJfjqepS',  # DuoAI
+        'AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi',  # XForge
+        '6HnxTkNhQaoYRkPyZD1zTH5WBvFGLes5X2vrH66roa5G',  # PropertyKin
+        '5wWLpeH2DDrAS9Lxx1nGnwtMTvu7U9txf4BuXxdN6V6H',  # TherapyKin
+        'Dt7iwGTgRVZGV2NZFvNtrWVNX77s8ejGdhB2XaR4DxX6',  # PublishKin
+        '2iAarCWnsdFqddprxzUwmaLiozHarMTpzLdhJPbi2HRR',  # PlayWise
+        'DTFE1peg5aNe8gFuaT9KZe8TJ4RHks9prpd12iUBKwi4',  # TalentKin
+        'FHXsVnEfqHQBQS6An4icuSD5ewwn5WWkoj2LWRMGw4mb',  # CareHive
+        '9hAfNquoNDbvzcEc1rBG8JzbWRskAsjKm7sYbarRfxyj',  # CommerceNest
+        '7AEP5qWyPF92Wgv6tLCwe51e8yrF3WwSzSef5Vg7RQt4',  # ProfitBeeAI
+        'Gucj554x7dRebtfUBxK1XTBUhQmq2Rqp4v2H6WtL7wNX',  # DeskMate
+        '5wL5rah4gWqbbv74vWvsmqqEf99uhRLr3jNPsMcw5imN',  # STUMPED
+        'BEsb73xDJH3PrRGs1D4zkPAssg94Yi8dAtiFa59gzeY1',  # TravelAId
+        '3oa4GKg3hpavEAEacDUKJQoA12VPvRE1CKoHypBho2Rt',  # GrantKin
+        'EMtoBMEn6JtV9tnbF8ZVVrxnYZbdapWAYEzabq7cW2gR',  # CareerKin
+        'H7xCtjoCyqf55uc5nmPKpypN82jANkRDTNmPx6C3XhS5',  # Robinhood Agent
+        'EJ4Ad3faa43JLZW3HQnxweYFqm4T2cUzBGntG5KnJWE8',  # StudioKin
+        'HeR7qoPbvmgcLFywkduZ27Hr2wKYuxtVkTBaGhVohP88',  # WealthHive
+        'DmdtWBcEwWr15MCm9Wa8iB8EJhHPK9NydiuLptuvMBxj',  # AI Alley
+        '9pMb8Ez61vh3YRKKKrkdA5MthswuNE6Bzj9KYPEVCFme',  # LogicAtlas
+    ]
+
     file_path = 'data/swarms/info.tsx'
     
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             content = file.read()
-            
-        # First extract just the array structure
-        data_match = re.search(r'export const SwarmData: SwarmInfo\[\] = (\[[\s\S]*?\n\])', content)
-        if not data_match:
-            raise Exception("Couldn't find SwarmData array in info.tsx")
-            
-        # Get the original array content
-        original_data = data_match.group(1)
-        
-        # Step 1: Fix date strings
-        simplified_data = re.sub(
-            r'"(\d{4}-\d{2}-)"(\d{2})T(\d{2})":"(\d{2})":"(\d{2}\.\d{3}Z)"',
-            r'"\1\2T\3:\4:\5"',
-            original_data
-        )
-        
-        # Step 2: Fix URLs with double quotes and colons
-        simplified_data = re.sub(
-            r'""https"://',
-            r'"https://',
-            simplified_data
-        )
-        simplified_data = re.sub(
-            r'://"([^"]+)"',
-            r'://\1',
-            simplified_data
-        )
-        
-        # Step 3: Handle new Date() expressions
-        simplified_data = re.sub(
-            r'new Date\([\'"]([^\'"]+)[\'"]\)',
-            r'"\1"',
-            simplified_data
-        )
-        
-        # Step 4: Replace template literals and descriptions
-        simplified_data = re.sub(
-            r'`[\s\S]*?`',
-            '"PLACEHOLDER"',
-            simplified_data
-        )
-        simplified_data = re.sub(
-            r'description: \w+Description',
-            'description: "PLACEHOLDER"',
-            simplified_data
-        )
-        
-        # Step 5: Clean up for JSON parsing
-        simplified_data = re.sub(r"'([^']*)'", r'"\1"', simplified_data)  # Convert single quotes
-        simplified_data = re.sub(r'(\w+):', r'"\1":', simplified_data)    # Quote property names
-        simplified_data = simplified_data.replace('undefined', 'null')     # Handle undefined
-        simplified_data = re.sub(r',(\s*[}\]])', r'\1', simplified_data)  # Remove trailing commas
-        
-        try:
-            data = json.loads(simplified_data)
-            
-            # Update multiples
-            for item in data:
-                if item.get('pool') in multiples:
-                    item['multiple'] = multiples[item['pool']]
-            
-            # Convert back to TypeScript format
-            updated_data = json.dumps(data, indent=4)
-            updated_data = re.sub(r'"(\w+)":', r'\1:', updated_data)  # Unquote keys
-            
-            # Write the updated content
-            with open(file_path, 'w', encoding='utf-8') as file:
-                file.write(content.replace(original_data, updated_data))
+
+        # For each pool in order
+        for pool in pool_order:
+            if pool and pool in multiples:
+                # Create regex pattern to match the multiple value for this swarm
+                pattern = rf'(multiple:\s*)[0-9.]+([,\n])'
+                replacement = rf'\g<1>{multiples[pool]}\2'
                 
-            print("\nSuccessfully updated info.tsx with new multiples!")
+                # Replace first occurrence only (maintains order)
+                content = re.sub(pattern, replacement, content, count=1)
+
+        # Write updated content
+        with open(file_path, 'w', encoding='utf-8') as file:
+            file.write(content)
             
-        except json.JSONDecodeError as e:
-            print(f"Error parsing SwarmData: {e}")
-            print("Simplified data:", simplified_data[:2000])
-            return
+        print("\nSuccessfully updated info.tsx with new multiples!")
             
     except Exception as e:
         print(f"\nError updating info.tsx: {e}")
