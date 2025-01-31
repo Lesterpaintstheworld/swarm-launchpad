@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "update-multiples": "python scripts/update_multiples.py",
-    "get-holders": "ts-node scripts/get_holders.ts"
+    "get-holders": "ts-node -P ./scripts/tsconfig.json scripts/get_holders.ts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1",

@@ -1,22 +1,15 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "NodeNext",
-    "target": "ESNext",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "target": "ES2020",
     "outDir": "../dist",
     "rootDir": "..",
     "allowJs": true,
     "esModuleInterop": true,
     "paths": {
       "@/*": ["../*"]
-    }
-  },
-  "ts-node": {
-    "esm": true,
-    "experimentalSpecifiers": true,
-    "moduleTypes": {
-      "**/*": "esm"
     }
   },
   "include": [
