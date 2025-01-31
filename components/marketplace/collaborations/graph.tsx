@@ -75,7 +75,7 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       source: collab.sourceSwarm.id,
       target: collab.targetSwarm.id,
       value: collab.price,
-      strength: (collab.price / maxPrice) * 0.8 + 0.2,
+      strength: (collab.price / maxPrice) * 0.3 + 0.7,
       serviceName: collab.serviceName
     }));
 
