@@ -264,7 +264,7 @@ export const columns: ColumnDef<DividendPayment>[] = [
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Date" />
         ),
-        cell: ({ row }) => (
+        cell: () => (
             <p className="text-muted whitespace-nowrap">30/01/2025</p>
         )
     },
