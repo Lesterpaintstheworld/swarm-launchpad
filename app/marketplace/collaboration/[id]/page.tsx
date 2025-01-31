@@ -18,7 +18,8 @@ function isServiceName(name: string): name is ServiceName {
 const serviceBanners: Record<ServiceName, string> = {
   'Development Package': '/services/xforge.png',
   'Essential Swarm Package': '/services/kinos-essential.png',
-  'Inception Package': '/services/kinos-inception.png'
+  'Inception Package': '/services/kinos-inception.png',
+  'Active AI Tokens Trading': '/services/kinkong-trading.png'
 };
 
 export default function CollaborationPage({ params }: { params: { id: string } }) {
