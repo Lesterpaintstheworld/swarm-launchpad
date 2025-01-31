@@ -177,6 +177,30 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
                                     <SwarmInvestCard pool={swarm.pool} amountRaisedOnly /> <span className="text-xl">$COMPUTE</span>
                                 </p>
                             </div>
+                            <div>
+                                <p className="text-sm text-muted-foreground mb-1">WEEKLY REVENUE</p>
+                                <p className="text-3xl font-semibold text-purple-400">
+                                    {swarm.weeklyRevenue ? (
+                                        <>
+                                            {swarm.weeklyRevenue.toLocaleString()} <span className="text-xl">$COMPUTE</span>
+                                        </>
+                                    ) : (
+                                        "-"
+                                    )}
+                                </p>
+                            </div>
+                            <div>
+                                <p className="text-sm text-muted-foreground mb-1">TOTAL REVENUE</p>
+                                <p className="text-3xl font-semibold text-pink-400">
+                                    {swarm.totalRevenue ? (
+                                        <>
+                                            {swarm.totalRevenue.toLocaleString()} <span className="text-xl">$COMPUTE</span>
+                                        </>
+                                    ) : (
+                                        "-"
+                                    )}
+                                </p>
+                            </div>
                         </div>
                     )}
                 </div>
