@@ -1,9 +1,6 @@
 import { Connection, PublicKey } from '@solana/web3.js';
 import { Program } from '@coral-xyz/anchor';
-import fs from 'fs/promises';
-import path from 'path';
 import { SwarmData } from '../data/swarms/info';
-import { getShareholderPDA } from '../hooks/useLaunchpadProgram/utils';
 
 const HELIUS_RPC = `https://mainnet.helius-rpc.com/?api-key=${atob('NGMzYTVmYzItZWEzZi00NWViLTg1ZDUtMmYyODJhNmI0NDAx')}`;
 
@@ -33,7 +30,7 @@ async function main() {
         if (!swarm.pool) continue;
 
         try {
-            console.log(`Processing ${swarm.name}...`);
+            console.log(`\nProcessing ${swarm.name}...`);
 
             // Get all program accounts for this pool
             const accounts = await connection.getProgramAccounts(
@@ -85,25 +82,27 @@ async function main() {
                 holders
             });
 
-            // Log progress with holder count
-            console.log(`${swarm.name}: ${holders.length} holders found`);
+            // Log detailed info for each swarm
+            console.log(`${swarm.name}:`);
+            console.log(`Total Shares: ${totalShares.toLocaleString()}`);
+            console.log(`Holder Count: ${holders.length}`);
+            console.log('\nTop 10 Holders:');
+            holders.slice(0, 10).forEach((holder, index) => {
+                console.log(`${index + 1}. ${holder.wallet}`);
+                console.log(`   Shares: ${holder.shares.toLocaleString()} (${holder.percentage.toFixed(2)}%)`);
+            });
+            console.log('-----------------------------------');
 
         } catch (error) {
             console.error(`Error processing ${swarm.name}:`, error);
         }
     }
-
-    // Write results to file
-    const outputPath = path.join(process.cwd(), 'app/api/claim/holders.json');
-    await fs.writeFile(outputPath, JSON.stringify(results, null, 2));
     
     // Log final summary
     console.log('\nFinal Summary:');
     results.forEach(result => {
         console.log(`${result.swarmName}: ${result.holderCount} holders, ${result.totalShares.toLocaleString()} total shares`);
     });
-    
-    console.log('\nDone! Results written to holders.json');
 }
 
 main().catch(console.error);
