@@ -1,6 +1,6 @@
-const { Connection, PublicKey } = require('@solana/web3.js');
-const { Program } = require('@coral-xyz/anchor');
-const { SwarmData } = require('../data/swarms/info');
+import { Connection, PublicKey } from '@solana/web3.js';
+import { Program } from '@coral-xyz/anchor';
+import { SwarmData } from '../data/swarms/info';
 
 const HELIUS_RPC = `https://mainnet.helius-rpc.com/?api-key=${atob('NGMzYTVmYzItZWEzZi00NWViLTg1ZDUtMmYyODJhNmI0NDAx')}`;
 
