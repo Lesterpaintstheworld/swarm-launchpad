@@ -5,6 +5,7 @@ import { Button } from "@/components/shadcn/button";
 import { ConnectButton } from "@/components/solana/connectButton";
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 
 const getSwarmStage = (swarmType: string) => {
     switch (swarmType) {
@@ -109,6 +110,12 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
         setNumShares(amount);
         setPrice(totalPrice);
     };
+
+    const revenueData = [
+        { name: 'Revenue Burned', value: 50, color: '#ef4444' },
+        { name: 'Revenue Distributed', value: swarm?.revenueShare || 40, color: '#22c55e' },
+        { name: 'Team', value: 100 - (50 + (swarm?.revenueShare || 40)), color: '#3b82f6' }
+    ];
 
     const handleBuy = () => {
         if (!numShares || numShares <= 0) {
@@ -394,20 +401,73 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
 
                 {/* Additional stats */}
                 <div className="grid grid-cols-2 gap-4 mt-4">
-                    {/* Revenue Distributed */}
-                    <div className="bg-slate-800/30 rounded-lg p-4">
-                        <span className="text-sm text-slate-400">Revenue Distributed</span>
-                        <p className="text-lg font-semibold text-white">
-                            {getSwarmUsingPoolId(pool)?.revenueShare || 50}%
-                        </p>
-                        <p className="text-xs text-slate-500">in $UBC & $COMPUTE</p>
-                    </div>
-                    
-                    {/* Revenue Burned */}
-                    <div className="bg-slate-800/30 rounded-lg p-4">
-                        <span className="text-sm text-slate-400">Revenue Burned</span>
-                        <p className="text-lg font-semibold text-white">50%</p>
-                        <p className="text-xs text-slate-500">in $UBC & $COMPUTE</p>
+                    {/* Revenue Distribution Chart */}
+                    <div className="bg-slate-800/30 rounded-lg p-4 col-span-2">
+                        <span className="text-sm text-slate-400 mb-2 block">Revenue Distribution</span>
+                        <div className="h-[200px] w-full">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <PieChart>
+                                    <Pie
+                                        data={revenueData}
+                                        cx="50%"
+                                        cy="50%"
+                                        innerRadius={60}
+                                        outerRadius={80}
+                                        paddingAngle={5}
+                                        dataKey="value"
+                                    >
+                                        {revenueData.map((entry, index) => (
+                                            <Cell 
+                                                key={`cell-${index}`} 
+                                                fill={entry.color}
+                                                className="stroke-transparent hover:opacity-80 transition-opacity"
+                                            />
+                                        ))}
+                                    </Pie>
+                                    <Tooltip
+                                        content={({ active, payload }) => {
+                                            if (active && payload && payload.length) {
+                                                return (
+                                                    <div className="bg-slate-900/95 border border-white/10 px-3 py-2 rounded-lg shadow-xl backdrop-blur-sm">
+                                                        <p className="text-white font-medium">
+                                                            {payload[0].name}
+                                                        </p>
+                                                        <p className="text-white/60">
+                                                            {payload[0].value}%
+                                                        </p>
+                                                    </div>
+                                                );
+                                            }
+                                            return null;
+                                        }}
+                                    />
+                                    <Legend 
+                                        verticalAlign="bottom" 
+                                        height={36}
+                                        content={({ payload }) => {
+                                            if (payload && payload.length) {
+                                                return (
+                                                    <div className="flex justify-center gap-4 mt-4">
+                                                        {payload.map((entry, index) => (
+                                                            <div key={`legend-${index}`} className="flex items-center gap-2">
+                                                                <div 
+                                                                    className="w-3 h-3 rounded-full"
+                                                                    style={{ backgroundColor: entry.color }}
+                                                                />
+                                                                <span className="text-sm text-white/60">
+                                                                    {entry.value}: {revenueData[index].value}%
+                                                                </span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                );
+                                            }
+                                            return null;
+                                        }}
+                                    />
+                                </PieChart>
+                            </ResponsiveContainer>
+                        </div>
                     </div>
                     
                     {/* Weekly Revenue */}
