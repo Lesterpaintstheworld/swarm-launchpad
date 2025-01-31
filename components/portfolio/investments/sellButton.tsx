@@ -189,7 +189,7 @@ export const columns: ColumnDef<DividendPayment>[] = [
             <DataTableColumnHeader column={column} title="Swarm" />
         ),
         minSize: 200,
-        cell: () => {
+        cell: ({ row }) => {
             const swarm = getSwarm(row.getValue('swarm_id'));
             return (
                 <div className="flex items-center min-w-[200px] gap-4 py-1">
