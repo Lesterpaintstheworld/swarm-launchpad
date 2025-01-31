@@ -702,6 +702,58 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                     </div>
                 </div>
             </Card>
+
+            {/* Risk Disclosures */}
+            <Card className="bg-[#0f172a] p-6 w-full mt-6">
+                <h3 className="text-lg font-semibold text-white mb-4">Important Risk Disclosures</h3>
+                
+                <div className="space-y-6">
+                    {/* Market Risks */}
+                    <div>
+                        <h4 className="text-sm font-semibold text-white/80 mb-2">Market Risks</h4>
+                        <ul className="space-y-1 text-sm text-white/60">
+                            <li>• Share prices may be volatile and can fluctuate significantly</li>
+                            <li>• Market liquidity may affect ability to buy or sell shares</li>
+                            <li>• Past revenue performance does not guarantee future results</li>
+                        </ul>
+                    </div>
+
+                    {/* Technical Risks */}
+                    <div>
+                        <h4 className="text-sm font-semibold text-white/80 mb-2">Technical Risks</h4>
+                        <ul className="space-y-1 text-sm text-white/60">
+                            <li>• System downtime may affect service delivery and revenue generation</li>
+                            <li>• Technological changes could impact service competitiveness</li>
+                            <li>• Cybersecurity incidents could affect system operations</li>
+                        </ul>
+                    </div>
+
+                    {/* Regulatory Risks */}
+                    <div>
+                        <h4 className="text-sm font-semibold text-white/80 mb-2">Regulatory Risks</h4>
+                        <ul className="space-y-1 text-sm text-white/60">
+                            <li>• Changes in AI regulations may affect operations</li>
+                            <li>• Cryptocurrency regulations may impact token value</li>
+                            <li>• Tax treatment of revenue distributions may vary by jurisdiction</li>
+                        </ul>
+                    </div>
+
+                    {/* Investment Terms */}
+                    <div>
+                        <h4 className="text-sm font-semibold text-white/80 mb-2">Investment Terms</h4>
+                        <ul className="space-y-1 text-sm text-white/60">
+                            <li>• 30-day minimum holding period for revenue distribution eligibility</li>
+                            <li>• 5% transaction fee applies to all purchases and sales</li>
+                            <li>• Revenue distributions subject to available liquidity</li>
+                        </ul>
+                    </div>
+                </div>
+
+                {/* Additional disclaimer */}
+                <p className="mt-6 text-xs text-white/40 italic">
+                    This is not an exhaustive list of risks. Please conduct your own research and consider consulting with financial and legal advisors before investing.
+                </p>
+            </Card>
         </div>
     )
 }
