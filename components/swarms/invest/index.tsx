@@ -448,7 +448,7 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                                             if (payload && payload.length) {
                                                 return (
                                                     <ul className="flex flex-wrap justify-center gap-2 mt-4">
-                                                        {payload.map((entry, index) => (
+                                                        {(payload as LegendEntry[]).map((entry, index) => (
                                                             <li key={`legend-${index}`} className="flex items-center gap-1 text-xs">
                                                                 <div 
                                                                     className="w-2 h-2 rounded-full"
@@ -467,6 +467,41 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                                     />
                                 </PieChart>
                             </ResponsiveContainer>
+                        </div>
+
+                        {/* Revenue Stats */}
+                        <div className="grid grid-cols-2 gap-4 mt-4 pt-4 border-t border-white/10">
+                            <div className="bg-slate-800/50 rounded-lg p-3">
+                                <div className="text-sm text-white/60 mb-1">Weekly Revenue</div>
+                                <div className="flex items-center gap-2">
+                                    {swarm?.weeklyRevenue ? (
+                                        <>
+                                            <p className="text-lg font-semibold text-white">
+                                                {swarm.weeklyRevenue.toLocaleString()}
+                                            </p>
+                                            <span className="text-xs metallic-text">$COMPUTE</span>
+                                        </>
+                                    ) : (
+                                        <p className="text-lg font-semibold text-white">-</p>
+                                    )}
+                                </div>
+                            </div>
+                            
+                            <div className="bg-slate-800/50 rounded-lg p-3">
+                                <div className="text-sm text-white/60 mb-1">Total Revenue</div>
+                                <div className="flex items-center gap-2">
+                                    {swarm?.totalRevenue ? (
+                                        <>
+                                            <p className="text-lg font-semibold text-white">
+                                                {swarm.totalRevenue.toLocaleString()}
+                                            </p>
+                                            <span className="text-xs metallic-text">$COMPUTE</span>
+                                        </>
+                                    ) : (
+                                        <p className="text-lg font-semibold text-white">-</p>
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
