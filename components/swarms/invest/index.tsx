@@ -50,7 +50,7 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
     useEffect(() => {
         console.log('Pool Account Data:', poolAccount);
         
-        if (poolAccount.isError) {
+        if (poolAccount.error) {
             console.error('Pool Account Error:', poolAccount.error);
         }
         
