@@ -70,26 +70,33 @@ def update_info_file(multiples: dict):
         # Get the original array content
         original_data = data_match.group(1)
         
-        # Create a simplified version for parsing:
-        # First handle the new Date() expressions
+        # Step 1: Fix date strings
         simplified_data = re.sub(
-            r'new Date\([\'"](\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z)[\'"]\)',
-            r'"\1"',
+            r'"(\d{4}-\d{2}-)"(\d{2})T(\d{2})":"(\d{2})":"(\d{2}\.\d{3}Z)"',
+            r'"\1\2T\3:\4:\5"',
             original_data
         )
         
-        # Fix malformed date strings - more precise pattern
+        # Step 2: Fix URLs with double quotes and colons
         simplified_data = re.sub(
-            r'"(\d{4}-\d{2}-)"(\d{2})T(\d{2})":"(\d{2})":"(\d{2}\.\d{3}Z)"',
-            lambda m: f'"{m.group(1)}{m.group(2)}T{m.group(3)}:{m.group(4)}:{m.group(5)}"',
+            r'""https"://',
+            r'"https://',
+            simplified_data
+        )
+        simplified_data = re.sub(
+            r'://"([^"]+)"',
+            r'://\1',
             simplified_data
         )
         
-        # Fix URLs - handle each case separately
-        simplified_data = simplified_data.replace('""https":', '"https:')
-        simplified_data = simplified_data.replace('://"', '://')
+        # Step 3: Handle new Date() expressions
+        simplified_data = re.sub(
+            r'new Date\([\'"]([^\'"]+)[\'"]\)',
+            r'"\1"',
+            simplified_data
+        )
         
-        # Replace template literals and descriptions
+        # Step 4: Replace template literals and descriptions
         simplified_data = re.sub(
             r'`[\s\S]*?`',
             '"PLACEHOLDER"',
@@ -101,7 +108,7 @@ def update_info_file(multiples: dict):
             simplified_data
         )
         
-        # Clean up for JSON parsing
+        # Step 5: Clean up for JSON parsing
         simplified_data = re.sub(r"'([^']*)'", r'"\1"', simplified_data)  # Convert single quotes
         simplified_data = re.sub(r'(\w+):', r'"\1":', simplified_data)    # Quote property names
         simplified_data = simplified_data.replace('undefined', 'null')     # Handle undefined
