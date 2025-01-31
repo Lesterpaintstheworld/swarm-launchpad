@@ -19,7 +19,6 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
 
     useEffect(() => {
         const calculateDividends = () => {
-            const data = [];
             const now = new Date();
             
             // Helper function to calculate ownership percentage
@@ -28,41 +27,32 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
                 return position.shares.toNumber() / totalShares;
             };
 
-            // KinKong dividends
-            const kinKongOwnership = calculateOwnership(kinKongPosition?.data, 100000);
-            if (kinKongOwnership > 0) {
-                data.push({
+            const data = [
+                // XForge dividends
+                {
                     id: '1',
-                    swarm: 'Kin Kong',
-                    amount: Math.floor(12000 * kinKongOwnership),
-                    date: now.toISOString(),
-                    status: 'pending'
-                });
-            }
-
-            // XForge dividends
-            const xForgeOwnership = calculateOwnership(xForgePosition?.data, 100000);
-            if (xForgeOwnership > 0) {
-                data.push({
-                    id: '2',
                     swarm: 'XForge',
-                    amount: Math.floor(160000 * xForgeOwnership),
+                    amount: Math.floor(160000 * calculateOwnership(xForgePosition?.data, 100000)),
                     date: now.toISOString(),
                     status: 'pending'
-                });
-            }
-
-            // KinOS dividends
-            const kinOSOwnership = calculateOwnership(kinOSPosition?.data, 100000);
-            if (kinOSOwnership > 0) {
-                data.push({
-                    id: '3',
+                },
+                // KinOS dividends
+                {
+                    id: '2',
                     swarm: 'KinOS',
-                    amount: Math.floor(46000 * kinOSOwnership),
+                    amount: Math.floor(46000 * calculateOwnership(kinOSPosition?.data, 100000)),
                     date: now.toISOString(),
                     status: 'pending'
-                });
-            }
+                },
+                // KinKong dividends
+                {
+                    id: '3',
+                    swarm: 'Kin Kong',
+                    amount: Math.floor(12000 * calculateOwnership(kinKongPosition?.data, 100000)),
+                    date: now.toISOString(),
+                    status: 'pending'
+                }
+            ];
 
             setDividends(data);
         };
