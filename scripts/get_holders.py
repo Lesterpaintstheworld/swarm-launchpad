@@ -91,8 +91,10 @@ def parse_account_data(data: str) -> int:
     try:
         # Decode base64 data
         raw_data = base64.b64decode(data)
-        # Extract shares (8 bytes starting at offset 8)
-        shares = int.from_bytes(raw_data[8:16], 'little')
+        
+        # The shareholder account structure should have shares at offset 40
+        # This is after: discriminator (8 bytes) + pool (32 bytes)
+        shares = int.from_bytes(raw_data[40:48], 'little')
         return shares
     except Exception as e:
         print(f"Error parsing account data: {e}")
