@@ -333,10 +333,18 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                         </p>
                     </div>
                     <div className="bg-slate-800/30 rounded-lg p-4">
-                        <span className="text-sm text-slate-400">Revenue to Date</span>
+                        <span className="text-sm text-slate-400">Weekly Revenue</span>
                         <div className="flex items-center gap-2">
-                            <p className="text-lg font-semibold text-white">-</p>
-                            <span className="text-xs metallic-text">$COMPUTE</span>
+                            {swarm?.weeklyRevenue ? (
+                                <>
+                                    <p className="text-lg font-semibold text-white">
+                                        {swarm.weeklyRevenue.toLocaleString()}
+                                    </p>
+                                    <span className="text-xs metallic-text">$COMPUTE</span>
+                                </>
+                            ) : (
+                                <p className="text-lg font-semibold text-white">-</p>
+                            )}
                         </div>
                     </div>
                     <div className="bg-slate-800/30 rounded-lg p-4">
