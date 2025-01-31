@@ -88,39 +88,45 @@ def update_info_file(multiples: dict):
         # Get the original array content
         original_data = data_match.group(1)
         
-        # Create a simplified version for parsing by:
-        # 1. Replace template literals and dates
+        # Create a simplified version for parsing:
+        # 1. Replace new Date() expressions first
         simplified_data = re.sub(
-            r'`[\s\S]*?`',
-            '"PLACEHOLDER"',
+            r'new Date\([\'"]([^\'"]+)[\'"]\)',
+            r'"\1"',
             original_data
         )
         
-        # 2. Replace new Date() expressions
+        # 2. Fix malformed date strings
         simplified_data = re.sub(
-            r'new Date\([^)]+\)',
-            '"2025-01-29T19:00:00.000Z"',  # Replace with a standard date string
+            r'"(\d{4}-\d{2}-)"(\d{2})T(\d{2})":"(\d{2})":"(\d{2}\.\d{3}Z)"',
+            r'"\1\2T\3:\4:\5"',
             simplified_data
         )
         
-        # 3. Replace imported descriptions
+        # 3. Fix double-quoted URLs
+        simplified_data = re.sub(
+            r'""(https?://[^"]+)""',
+            r'"\1"',
+            simplified_data
+        )
+        
+        # 4. Replace template literals and descriptions
+        simplified_data = re.sub(
+            r'`[\s\S]*?`',
+            '"PLACEHOLDER"',
+            simplified_data
+        )
         simplified_data = re.sub(
             r'description: \w+Description',
             'description: "PLACEHOLDER"',
             simplified_data
         )
         
-        # 4. Clean up the data for JSON parsing
+        # 5. Clean up for JSON parsing
         simplified_data = re.sub(r"'([^']*)'", r'"\1"', simplified_data)  # Convert single quotes
         simplified_data = re.sub(r'(\w+):', r'"\1":', simplified_data)    # Quote property names
         simplified_data = simplified_data.replace('undefined', 'null')     # Handle undefined
-        
-        # 5. Remove trailing commas
-        simplified_data = re.sub(r',(\s*[}\]])', r'\1', simplified_data)
-        
-        # 6. Handle escaped URLs
-        simplified_data = re.sub(r'"https":', '"https:', simplified_data)
-        simplified_data = re.sub(r'([^\\])":', r'\1":', simplified_data)
+        simplified_data = re.sub(r',(\s*[}\]])', r'\1', simplified_data)  # Remove trailing commas
         
         try:
             data = json.loads(simplified_data)
