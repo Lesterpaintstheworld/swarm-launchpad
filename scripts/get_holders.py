@@ -3,6 +3,7 @@ import base64
 import time
 from typing import Dict, List, Optional
 import random
+from collections import defaultdict
 
 # Constants
 PROGRAM_ID = "4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf"
@@ -40,10 +41,10 @@ POOLS = {
 }
 
 class SwarmHolder:
-    def __init__(self, wallet: str, shares: int, percentage: float):
+    def __init__(self, wallet: str):
         self.wallet = wallet
-        self.shares = shares
-        self.percentage = percentage
+        self.shares = 0
+        self.percentage = 0.0
 
 def get_program_accounts(pool_address: str, retries: int = 0) -> List[Dict]:
     payload = {
@@ -111,22 +112,26 @@ def main():
             
             accounts = get_program_accounts(pool)
             
-            holders = []
+            # Use defaultdict to aggregate shares by wallet
+            wallet_shares = defaultdict(int)
             total_shares = 0
             
             for account in accounts:
                 shares = parse_account_data(account['account']['data'][0])
                 if shares > 0:
+                    wallet = account['pubkey']
+                    wallet_shares[wallet] += shares
                     total_shares += shares
-                    holders.append(SwarmHolder(
-                        wallet=account['pubkey'],
-                        shares=shares,
-                        percentage=0  # Will calculate after
-                    ))
 
-            # Calculate percentages and sort
-            for holder in holders:
-                holder.percentage = (holder.shares / total_shares * 100) if total_shares > 0 else 0
+            # Convert to list of SwarmHolder objects
+            holders = []
+            for wallet, shares in wallet_shares.items():
+                holder = SwarmHolder(wallet)
+                holder.shares = shares
+                holder.percentage = (shares / total_shares * 100) if total_shares > 0 else 0
+                holders.append(holder)
+
+            # Sort by percentage descending
             holders.sort(key=lambda x: x.percentage, reverse=True)
 
             # Print summary
