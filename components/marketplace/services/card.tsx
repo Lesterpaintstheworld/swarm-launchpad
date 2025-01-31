@@ -38,7 +38,8 @@ export function ServiceCard({ service }: ServiceCardProps) {
   const serviceTypeLabel = {
     'subscription': 'Subscription',
     'one-off': 'One-time Purchase',
-    'pay-as-you-go': 'Pay as you go'
+    'pay-as-you-go': 'Pay as you go',
+    'financial': 'Financial Service'
   };
 
   return (
