@@ -10,7 +10,21 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-const ActionCell = ({ row }: { row: any }) => {
+interface RowData {
+    amount: number;
+    swarm_id: string;
+    ubcAmount: number;
+    timestamp: string;
+}
+
+interface ActionCellProps {
+    row: {
+        getValue: (key: keyof RowData) => RowData[keyof RowData];
+        original: RowData;
+    };
+}
+
+const ActionCell = ({ row }: ActionCellProps) => {
     const { publicKey } = useWallet();
     const [isClaimed, setIsClaimed] = useState(false);
     const computeAmount = row.getValue('amount') as number;
