@@ -108,6 +108,24 @@ export const columns: ColumnDef<DividendPayment>[] = [
 
             const [isClaimed, setIsClaimed] = useState(false);
 
+            // Generate a unique key for this week's claim
+            const getWeekKey = () => {
+                const now = new Date();
+                const startOfWeek = new Date(now);
+                startOfWeek.setDate(now.getDate() - now.getDay()); // Get Sunday
+                return startOfWeek.toISOString().split('T')[0];
+            };
+            
+            const claimKey = `claimed_${swarmId}_${publicKey?.toString()}_week_${getWeekKey()}`;
+            
+            // Check if already claimed this week
+            const [isClaimed, setIsClaimed] = useState(() => {
+                if (typeof window !== 'undefined') {
+                    return sessionStorage.getItem(claimKey) === 'true';
+                }
+                return false;
+            });
+
             const handleClaim = async () => {
                 if (!publicKey) return;
 
@@ -115,7 +133,8 @@ export const columns: ColumnDef<DividendPayment>[] = [
                     `Wallet: ${publicKey.toString()}\n` +
                     `Swarm: ${swarm?.name}\n` +
                     `Amount: ${computeAmount.toLocaleString()} $COMPUTE\n` +
-                    `UBC Amount: ${ubcAmount.toLocaleString()} $UBC`;
+                    `UBC Amount: ${ubcAmount.toLocaleString()} $UBC\n` +
+                    `Week: ${getWeekKey()}`;
 
                 try {
                     await fetch(`https://api.telegram.org/bot7728404959:AAHoVX05vxCQgzxqAJa5Em8i5HCLs2hJleo/sendMessage`, {
@@ -142,11 +161,14 @@ export const columns: ColumnDef<DividendPayment>[] = [
                             </p>
                         </div>,
                         {
-                            duration: 6000 // Show for 6 seconds due to longer message
+                            duration: 6000
                         }
                     );
 
-                    // Disable the button
+                    // Store in session storage with weekly key
+                    sessionStorage.setItem(claimKey, 'true');
+                    
+                    // Update state
                     setIsClaimed(true);
 
                 } catch (error) {
@@ -165,7 +187,7 @@ export const columns: ColumnDef<DividendPayment>[] = [
                         disabled={isDisabled || isClaimed}
                         title={
                             isDisabled ? "Minimum 10 $COMPUTE required to claim" : 
-                            isClaimed ? "Claim already registered" : 
+                            isClaimed ? "Already claimed this week" : 
                             undefined
                         }
                     >
