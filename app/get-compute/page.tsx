@@ -169,36 +169,24 @@ export default function GetCompute() {
                         <div className="flex flex-col items-center gap-4 text-center">
                             <h2 className="text-3xl font-normal">🎓 Learn to Earn</h2>
                             <p className="text-xl text-muted-foreground max-w-[600px] text-balance">
-                                Master AI investing fundamentals and earn up to 19,000 <span className="metallic-text">$COMPUTE</span>
+                                Master AI investing fundamentals and earn 10,000 <span className="metallic-text">$COMPUTE</span>
                             </p>
                         </div>
 
                         {/* Content */}
                         <div className="flex flex-col items-center gap-6 text-center">
-                            <p className="text-lg">Complete both courses to maximize your earnings</p>
-                            
+                            <p className="text-lg">Complete the course to earn your tokens</p>
+                    
                             <div className="flex flex-col gap-6 w-full max-w-[600px]">
                                 {/* Course 1 */}
                                 <div className="flex flex-col gap-3 p-8 rounded-xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 hover:from-indigo-500/20 hover:to-purple-500/20 transition-all">
-                                    <p className="text-lg font-medium">Course 1: AI Investing Fundamentals</p>
+                                    <p className="text-lg font-medium">AI Investing Fundamentals</p>
                                     <p className="text-muted-foreground">Earn 10,000 <span className="metallic-text">$COMPUTE</span></p>
                                     <Button 
                                         className="px-8 py-6 text-lg bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none"
                                         onClick={() => window.open('https://chatgpt.com/g/g-678e1bf0877481919eda0dfdb2efcd57-wealth-hive', '_blank')}
                                     >
-                                        Start Course 1
-                                    </Button>
-                                </div>
-
-                                {/* Course 2 */}
-                                <div className="flex flex-col gap-3 p-8 rounded-xl bg-gradient-to-br from-rose-500/10 to-pink-500/10 hover:from-rose-500/20 hover:to-pink-500/20 transition-all">
-                                    <p className="text-lg font-medium">Course 2: $COMPUTE Launch Strategies</p>
-                                    <p className="text-muted-foreground">Earn 9,000 <span className="metallic-text">$COMPUTE</span></p>
-                                    <Button 
-                                        className="px-8 py-6 text-lg bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none"
-                                        onClick={() => window.open('https://chatgpt.com/g/g-678fc15a28b08191a98d4d23bd1a6839-wealthhive-module-2-compute-launch-strategies', '_blank')}
-                                    >
-                                        Start Course 2
+                                        Start Course
                                     </Button>
                                 </div>
                             </div>
