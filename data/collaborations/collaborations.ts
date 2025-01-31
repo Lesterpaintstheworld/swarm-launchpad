@@ -1,4 +1,4 @@
-export type ServiceName = 'Development Package' | 'Essential Swarm Package' | 'Inception Package';
+export type ServiceName = 'Development Package' | 'Essential Swarm Package' | 'Inception Package' | 'Active AI Tokens Trading';
 
 export interface Collaboration {
   id: string;
