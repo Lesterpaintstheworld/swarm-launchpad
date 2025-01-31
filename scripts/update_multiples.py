@@ -97,12 +97,13 @@ def update_info_file(multiples: dict):
             
             # If we find a multiple line and we have a current pool
             elif 'multiple:' in line and current_pool and current_pool in multiples:
-                # Replace the multiple value
-                lines[i] = re.sub(
-                    r'(multiple:\s*)[0-9.]+',
-                    fr'\1{multiples[current_pool]}',
+                # Replace the multiple value using string formatting instead of regex groups
+                new_line = re.sub(
+                    r'multiple:\s*[0-9.]+',
+                    f'multiple: {multiples[current_pool]}',
                     line
                 )
+                lines[i] = new_line
                 current_pool = None  # Reset current pool after using it
         
         # Write the modified lines back to the file
