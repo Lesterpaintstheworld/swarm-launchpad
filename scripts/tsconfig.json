@@ -1,19 +1,21 @@
 {
-  "extends": "../tsconfig.json",
   "compilerOptions": {
+    "target": "ES2020",
     "module": "CommonJS",
     "moduleResolution": "node",
-    "target": "ES2020",
+    "esModuleInterop": true,
     "outDir": "../dist",
     "rootDir": "..",
-    "allowJs": true,
-    "esModuleInterop": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "baseUrl": "..",
     "paths": {
-      "@/*": ["../*"]
+      "@/*": ["./*"]
     }
   },
   "include": [
     "./**/*.ts",
-    "../hooks/**/*.ts"
+    "../hooks/**/*.ts",
+    "../data/**/*.ts"
   ]
 }
