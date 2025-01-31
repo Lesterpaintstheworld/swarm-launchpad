@@ -1,3 +1,5 @@
+'use client';
+
 import { Card } from "@/components/ui/card"
 import Image from "next/image";
 import { Tag } from "@/components/ui/tag";
@@ -5,7 +7,6 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { SwarmPreviewData } from "../swarm.types";
 import { useState } from 'react';
-
 
 interface SwarmPreviewCardProps {
     swarm: SwarmPreviewData;
@@ -43,18 +44,11 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
                             ))}
                         </div>
                         <p className="text-lg font-medium">{swarm.name}</p>
-                        {/* Title and Autonomy with more space */}
-                        
-                        {/* Description in white */}
                         <p className="text-muted text-sm text-truncate line-clamp-4 mt-2">{swarm.description}</p>
                         
-                        {/* Footer section with tags and button */}
-                        <Button 
-                            variant='default'
-                            className="w-full bg-[#1e3a8a] hover:bg-[#172554] text-white border-[#172554] hover:text-white mb-1 mt-8"
-                        >
+                        <div className="w-full bg-[#1e3a8a] hover:bg-[#172554] text-white border-[#172554] hover:text-white mb-1 mt-8 px-4 py-2 rounded-lg text-center">
                             Invest
-                        </Button>
+                        </div>
                     </div>
                 </Card>
             </Link>
@@ -63,4 +57,5 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
 }
 
 export { SwarmPreviewCard }
+export type { SwarmPreviewCardProps }
 export type { }
