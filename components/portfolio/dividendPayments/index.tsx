@@ -33,38 +33,48 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
             // Helper function to calculate ownership percentage
             const calculateOwnership = (position: { shares?: { toNumber: () => number } } | undefined, totalShares: number) => {
                 if (!position?.shares) return 0;
-                return position.shares.toNumber() / totalShares;
+                const shares = position.shares.toNumber();
+                return shares > 0 ? shares / totalShares : 0;
             };
 
-            const data: DividendPayment[] = [
-                // XForge dividends
-                {
+            const data: DividendPayment[] = [];
+
+            // Only add dividend entries if there is actual ownership
+            const xForgeOwnership = calculateOwnership(xForgePosition?.data, 100000);
+            if (xForgeOwnership > 0) {
+                data.push({
                     id: '1',
                     swarm_id: 'forge-partner-id',
-                    amount: Math.floor(160000 * 0.90 * calculateOwnership(xForgePosition?.data, 100000)), // 90% COMPUTE
-                    ubcAmount: Math.floor(160000 * 0.10 * calculateOwnership(xForgePosition?.data, 100000)), // 10% UBC
+                    amount: Math.floor(160000 * 0.90 * xForgeOwnership),
+                    ubcAmount: Math.floor(160000 * 0.10 * xForgeOwnership),
                     timestamp: now.toISOString(),
                     status: 'pending'
-                },
-                // KinOS dividends
-                {
+                });
+            }
+
+            const kinOSOwnership = calculateOwnership(kinOSPosition?.data, 100000);
+            if (kinOSOwnership > 0) {
+                data.push({
                     id: '2',
                     swarm_id: 'kinos-partner-id',
-                    amount: Math.floor(46000 * 0.90 * calculateOwnership(kinOSPosition?.data, 100000)), // 90% COMPUTE
-                    ubcAmount: Math.floor(46000 * 0.10 * calculateOwnership(kinOSPosition?.data, 100000)), // 10% UBC
+                    amount: Math.floor(46000 * 0.90 * kinOSOwnership),
+                    ubcAmount: Math.floor(46000 * 0.10 * kinOSOwnership),
                     timestamp: now.toISOString(),
                     status: 'pending'
-                },
-                // KinKong dividends
-                {
+                });
+            }
+
+            const kinKongOwnership = calculateOwnership(kinKongPosition?.data, 100000);
+            if (kinKongOwnership > 0) {
+                data.push({
                     id: '3',
                     swarm_id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
-                    amount: Math.floor(12000 * 0.90 * calculateOwnership(kinKongPosition?.data, 100000)), // 90% COMPUTE
-                    ubcAmount: Math.floor(12000 * 0.10 * calculateOwnership(kinKongPosition?.data, 100000)), // 10% UBC
+                    amount: Math.floor(12000 * 0.90 * kinKongOwnership),
+                    ubcAmount: Math.floor(12000 * 0.10 * kinKongOwnership),
                     timestamp: now.toISOString(),
                     status: 'pending'
-                }
-            ];
+                });
+            }
 
             setDividends(data);
         };
