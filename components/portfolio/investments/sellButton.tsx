@@ -2,7 +2,16 @@ import { Button } from "@/components/shadcn/button";
 import { SellPositionModal } from "@/components/swarms/sellPositionModal";
 import { useState } from "react";
 
-const ClaimButton = ({ row }: { row: any }) => {
+interface ClaimButtonProps {
+    data: {
+        getValue: (key: string) => any;
+        original: {
+            ubcAmount: number;
+        };
+    };
+}
+
+const ClaimButton = ({ data }: ClaimButtonProps) => {
     const { publicKey } = useWallet();
     const computeAmount = row.getValue('amount') as number;
     const ubcAmount = row.original.ubcAmount;
