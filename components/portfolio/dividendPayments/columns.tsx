@@ -9,7 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/shadcn/button";
 import { useWallet } from '@solana/wallet-adapter-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 
 // First define the ActionCell component outside and before the columns definition
