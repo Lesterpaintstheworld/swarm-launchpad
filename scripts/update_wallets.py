@@ -54,88 +54,84 @@ def find_matching_brace(content: str, start_pos: int) -> int:
         
     return pos - 1 if brace_count == 0 else -1
 
-def update_wallets():
-    print("Starting wallet update process...")
+def update_info_file(multiples: dict):
+    file_path = 'data/swarms/info.tsx'
     
     try:
-        # Read the file
-        print("Reading data/swarms/info.tsx...")
-        with open('data/swarms/info.tsx', 'r', encoding='utf-8') as file:
+        with open(file_path, 'r', encoding='utf-8') as file:
             content = file.read()
-        print(f"File read successfully. Content length: {len(content)} characters")
-
-        changes_made = 0
+            
+        # First extract just the array structure
+        data_match = re.search(r'export const SwarmData: SwarmInfo\[\] = (\[[\s\S]*?\n\])', content)
+        if not data_match:
+            raise Exception("Couldn't find SwarmData array in info.tsx")
+            
+        # Get the original array content
+        original_data = data_match.group(1)
         
-        # For each swarm ID and wallet in the map
-        for swarm_id, wallet in WALLET_MAP.items():
-            print(f"\nProcessing swarm ID: {swarm_id}")
+        # Create a simplified version for parsing:
+        # First handle the new Date() expressions
+        simplified_data = re.sub(
+            r'new Date\([\'"](\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z)[\'"]\)',
+            r'"\1"',
+            original_data
+        )
+        
+        # Fix malformed date strings - more precise pattern
+        simplified_data = re.sub(
+            r'"(\d{4}-\d{2}-)"(\d{2})T(\d{2})":"(\d{2})":"(\d{2}\.\d{3}Z)"',
+            lambda m: f'"{m.group(1)}{m.group(2)}T{m.group(3)}:{m.group(4)}:{m.group(5)}"',
+            simplified_data
+        )
+        
+        # Fix URLs - handle each case separately
+        simplified_data = simplified_data.replace('""https":', '"https:')
+        simplified_data = simplified_data.replace('://"', '://')
+        
+        # Replace template literals and descriptions
+        simplified_data = re.sub(
+            r'`[\s\S]*?`',
+            '"PLACEHOLDER"',
+            simplified_data
+        )
+        simplified_data = re.sub(
+            r'description: \w+Description',
+            'description: "PLACEHOLDER"',
+            simplified_data
+        )
+        
+        # Clean up for JSON parsing
+        simplified_data = re.sub(r"'([^']*)'", r'"\1"', simplified_data)  # Convert single quotes
+        simplified_data = re.sub(r'(\w+):', r'"\1":', simplified_data)    # Quote property names
+        simplified_data = simplified_data.replace('undefined', 'null')     # Handle undefined
+        simplified_data = re.sub(r',(\s*[}\]])', r'\1', simplified_data)  # Remove trailing commas
+        
+        try:
+            data = json.loads(simplified_data)
             
-            # Find the swarm object with fixed pattern
-            pattern = f'id:\\s*["\']?{swarm_id}["\']?'
-            match = re.search(pattern, content)
+            # Update multiples
+            for item in data:
+                if item.get('pool') in multiples:
+                    item['multiple'] = multiples[item['pool']]
             
-            if not match:
-                print(f"WARNING: Could not find swarm with ID: {swarm_id}")
-                continue
+            # Convert back to TypeScript format
+            updated_data = json.dumps(data, indent=4)
+            updated_data = re.sub(r'"(\w+)":', r'\1:', updated_data)  # Unquote keys
+            
+            # Write the updated content
+            with open(file_path, 'w', encoding='utf-8') as file:
+                file.write(content.replace(original_data, updated_data))
                 
-            pos = match.start()
-            print(f"Found swarm at position: {pos}")
+            print("\nSuccessfully updated info.tsx with new multiples!")
             
-            # Find the object boundaries
-            start_pos = content.rfind('{', 0, pos)
-            if start_pos == -1:
-                print(f"ERROR: Could not find opening brace for swarm: {swarm_id}")
-                continue
-                
-            end_pos = find_matching_brace(content, start_pos)
-            if end_pos == -1:
-                print(f"ERROR: Could not find closing brace for swarm: {swarm_id}")
-                continue
-                
-            print(f"Object boundaries: {start_pos} to {end_pos}")
+        except json.JSONDecodeError as e:
+            print(f"Error parsing SwarmData: {e}")
+            print("Simplified data:", simplified_data[:2000])
+            return
             
-            # Get the swarm object text
-            swarm_text = content[start_pos:end_pos + 1]
-            print(f"Current swarm text length: {len(swarm_text)}")
-            
-            # Remove existing wallet if present
-            swarm_text = re.sub(r',\s*wallet:\s*["\'][^"\']*["\']', '', swarm_text)
-            
-            # Add the new wallet before the closing brace
-            # First find the last property
-            last_prop_match = re.search(r',\s*[a-zA-Z]+:\s*[^,}]+\s*}$', swarm_text)
-            if last_prop_match:
-                insert_pos = last_prop_match.start() + 1
-                new_swarm_text = (
-                    swarm_text[:insert_pos] +
-                    f'\n        wallet: "{wallet}",' +
-                    swarm_text[insert_pos:]
-                )
-            else:
-                # Fallback: insert before closing brace
-                new_swarm_text = swarm_text[:-1] + f',\n        wallet: "{wallet}"\n    }}'
-            
-            # Replace the old swarm text with the new one
-            if swarm_text != new_swarm_text:
-                content = content[:start_pos] + new_swarm_text + content[end_pos + 1:]
-                changes_made += 1
-                print(f"Updated wallet for swarm: {swarm_id}")
-            else:
-                print(f"No changes needed for swarm: {swarm_id}")
-
-        print(f"\nTotal changes made: {changes_made}")
-
-        # Write the updated content back to the file
-        print("\nWriting updated content back to file...")
-        with open('data/swarms/info.tsx', 'w', encoding='utf-8') as file:
-            file.write(content)
-        print("File written successfully!")
-
     except Exception as e:
-        print(f"ERROR: An exception occurred: {str(e)}")
+        print(f"\nError updating info.tsx: {e}")
         raise
 
-    print("\nWallet update process completed!")
-
 if __name__ == "__main__":
-    update_wallets()
+    update_info_file()
