@@ -89,9 +89,9 @@ def update_info_file(multiples: dict):
         original_data = data_match.group(1)
         
         # Create a simplified version for parsing:
-        # 1. Replace new Date() expressions first
+        # 1. Handle new Date() expressions
         simplified_data = re.sub(
-            r'new Date\([\'"]([^\'"]+)[\'"]\)',
+            r'new Date\(["\'](\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z)["\']\)',
             r'"\1"',
             original_data
         )
@@ -103,10 +103,20 @@ def update_info_file(multiples: dict):
             simplified_data
         )
         
-        # 3. Fix double-quoted URLs
+        # 3. Fix URLs with escaped quotes and colons
         simplified_data = re.sub(
-            r'""(https?://[^"]+)""',
-            r'"\1"',
+            r'""https"://',
+            r'"https://',
+            simplified_data
+        )
+        simplified_data = re.sub(
+            r'://"',
+            r'://',
+            simplified_data
+        )
+        simplified_data = re.sub(
+            r'([^\\])"(https?://[^"]+)"',
+            r'\1"\2"',
             simplified_data
         )
         
