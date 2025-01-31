@@ -331,6 +331,93 @@ export function Returns() {
                                 </div>
                             </div>
                         </div>
+
+                        {/* Fee Breakdown Details */}
+                        <div className="mt-8 space-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {/* Fee Allocation */}
+                                <div className="bg-white/5 rounded-xl p-6 border border-white/10">
+                                    <h4 className="text-lg font-medium mb-4">Fee Allocation</h4>
+                                    <div className="space-y-4">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-3 h-3 rounded-full bg-blue-500" />
+                                            <h6 className="font-medium">Partner Fee (2.5% in $UBC)</h6>
+                                        </div>
+                                        <ul className="list-disc pl-6 text-white/60 space-y-2">
+                                            <li>Collected in $UBC</li>
+                                            <li>Weekly distribution to partners</li>
+                                            <li>Rewards ecosystem contributors</li>
+                                        </ul>
+
+                                        <div className="flex items-center gap-2 mt-6">
+                                            <div className="w-3 h-3 rounded-full bg-green-500" />
+                                            <h6 className="font-medium">Platform Fee (2.5% in $UBC)</h6>
+                                        </div>
+                                        <ul className="list-disc pl-6 text-white/60 space-y-2">
+                                            <li>Funds platform operations</li>
+                                            <li>Supports technical development</li>
+                                            <li>Maintains infrastructure</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                {/* Fee Mechanics */}
+                                <div className="bg-white/5 rounded-xl p-6 border border-white/10">
+                                    <h4 className="text-lg font-medium mb-4">Fee Mechanics</h4>
+                                    <div className="space-y-4">
+                                        <p className="text-white/60">
+                                            Fees are calculated using a fixed $COMPUTE to $UBC ratio that determines 
+                                            the $UBC fee amount. This ratio is regularly updated and starts at 1:1.
+                                        </p>
+                                        
+                                        <div className="bg-black/20 p-4 rounded-lg">
+                                            <p className="text-sm text-white/60">
+                                                Example: When investing 1000 $COMPUTE with a 5% total fee at 1:1 ratio:
+                                                <br />
+                                                Fee = 50 $UBC (5% of 1000)
+                                            </p>
+                                        </div>
+
+                                        <div className="bg-yellow-500/10 border border-yellow-500/20 p-4 rounded-lg">
+                                            <p className="text-yellow-500 text-sm">
+                                                <strong>Important:</strong> Investors must have sufficient $UBC in their 
+                                                wallet to cover fees when investing. This mechanism provides utility to 
+                                                the $UBC token while helping project leads and the ecosystem build 
+                                                diversified portfolios.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Additional Information */}
+                            <div className="bg-white/5 rounded-xl p-6 border border-white/10">
+                                <h4 className="text-lg font-medium mb-4">Key Points</h4>
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <div>
+                                        <h6 className="font-medium text-white/80 mb-2">Transparency</h6>
+                                        <p className="text-sm text-white/60">
+                                            All fees and distributions are handled through smart contracts with 
+                                            complete on-chain transparency and verification.
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <h6 className="font-medium text-white/80 mb-2">Automation</h6>
+                                        <p className="text-sm text-white/60">
+                                            Fee collection and distribution processes are fully automated, ensuring 
+                                            timely and accurate execution.
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <h6 className="font-medium text-white/80 mb-2">Sustainability</h6>
+                                        <p className="text-sm text-white/60">
+                                            The fee structure is designed to support long-term ecosystem growth 
+                                            while maintaining fair costs for investors.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
