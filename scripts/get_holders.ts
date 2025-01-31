@@ -1,8 +1,10 @@
 import { Connection, PublicKey } from '@solana/web3.js';
-import { Program } from '@coral-xyz/anchor';
+import { Program, AnchorProvider } from '@coral-xyz/anchor';
 import { SwarmData } from '../data/swarms/info';
+import { IDL } from '../hooks/useLaunchpadProgram/ubclaunchpad';
 
 const HELIUS_RPC = "https://mainnet.helius-rpc.com/?api-key=4c3a5fc2-ea3f-45eb-85d5-2f282a6b4401";
+const PROGRAM_ID = new PublicKey('4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf');
 
 interface HolderInfo {
     wallet: string;
@@ -22,6 +24,20 @@ interface SwarmHolders {
 async function main() {
     // Connect to Solana
     const connection = new Connection(HELIUS_RPC, 'confirmed');
+    
+    // Create a dummy provider since we're only reading data
+    const provider = new AnchorProvider(
+        connection,
+        {
+            publicKey: PublicKey.default,
+            signTransaction: async () => { throw new Error('not implemented') },
+            signAllTransactions: async () => { throw new Error('not implemented') },
+        },
+        { commitment: 'confirmed' }
+    );
+
+    // Initialize the program
+    const program = new Program(IDL, PROGRAM_ID, provider);
     
     const results: SwarmHolders[] = [];
 
@@ -52,7 +68,7 @@ async function main() {
 
             // Process each shareholder account
             for (const account of accounts) {
-                const shareholderData = await Program.account.shareholder.fetch(account.pubkey);
+                const shareholderData = await program.account.shareholder.fetch(account.pubkey);
                 const shares = shareholderData.shares.toNumber();
                 
                 if (shares > 0) {
