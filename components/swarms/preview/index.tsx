@@ -10,10 +10,10 @@ import { useState } from 'react';
 import { cn } from "@/lib/utils";
 
 const getRevenueShareColor = (revenueShare: number) => {
-    if (revenueShare === 50) return "bg-purple-500/70 text-foreground";
-    if (revenueShare < 60) return "bg-red-500/70 text-foreground";
-    if (revenueShare < 75) return "bg-yellow-500/70 text-foreground";
-    if (revenueShare < 100) return "bg-green-500/70 text-foreground";
+    if (revenueShare === 0) return "bg-purple-500/70 text-foreground";
+    if (revenueShare < 10) return "bg-red-500/70 text-foreground";
+    if (revenueShare < 25) return "bg-yellow-500/70 text-foreground";
+    if (revenueShare < 50) return "bg-green-500/70 text-foreground";
     return "bg-blue-500/70 text-foreground";
 }
 
