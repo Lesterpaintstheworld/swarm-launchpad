@@ -128,10 +128,7 @@ export default function Invest() {
                         {partnerSwarms.map((swarm) => (
                             <SwarmPreviewCard 
                                 key={swarm.id}
-                                swarm={{
-                                    ...swarm,
-                                    revenueShare: swarm.revenueShare || 60,
-                                }}
+                                swarm={swarm}
                             />
                         ))}
                     </div>
@@ -160,10 +157,7 @@ export default function Invest() {
                         {earlySwarms.map((swarm) => (
                             <SwarmPreviewCard 
                                 key={swarm.id}
-                                swarm={{
-                                    ...swarm,
-                                    revenueShare: swarm.revenueShare || 60,
-                                }}
+                                swarm={swarm}
                             />
                         ))}
                     </div>
@@ -192,10 +186,7 @@ export default function Invest() {
                         {inceptionSwarms.map((swarm) => (
                             <SwarmPreviewCard 
                                 key={swarm.id}
-                                swarm={{
-                                    ...swarm,
-                                    revenueShare: swarm.revenueShare || 60,
-                                }}
+                                swarm={swarm}
                             />
                         ))}
                     </div>

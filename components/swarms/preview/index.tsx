@@ -9,13 +9,6 @@ import { SwarmPreviewData } from "../swarm.types";
 import { useState } from 'react';
 import { cn } from "@/lib/utils";
 
-const getRevenueShareColor = (revenueShare: number) => {
-    if (revenueShare === 0) return "bg-purple-500/70 text-foreground";
-    if (revenueShare < 10) return "bg-red-500/70 text-foreground";
-    if (revenueShare < 25) return "bg-yellow-500/70 text-foreground";
-    if (revenueShare < 50) return "bg-green-500/70 text-foreground";
-    return "bg-blue-500/70 text-foreground";
-}
 
 interface SwarmPreviewCardProps {
     swarm: SwarmPreviewData;
@@ -44,21 +37,6 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
                             setImgSrc('/default.png')
                         }}
                     />
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <div className={cn(
-                                    "px-2 py-1 mt-1.5 ml-1.5 text-xs font-medium rounded-[6px] w-fit absolute",
-                                    getRevenueShareColor(swarm.revenueShare)
-                                )}>
-                                    {swarm.revenueShare}%
-                                </div>
-                            </TooltipTrigger>
-                            <TooltipContent className="max-w-[200px] text-center">
-                                <p>Percentage of revenue shared with investors</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
                     <div className="flex flex-col h-full px-[4px]">
                         <div className="flex flex-row overflow-scroll gap-1 mt-2 mb-2">
                             {swarm.tags.map((tag, index) => (
