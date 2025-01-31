@@ -85,17 +85,19 @@ export const columns: ColumnDef<DividendPayment>[] = [
         header: () => null,
         cell: ({ row }) => {
             return (
-                <Button 
-                    variant="secondary" 
-                    size="sm"
-                    className="bg-purple-500/10 hover:bg-purple-500/20 text-purple-400"
-                    onClick={() => {
-                        // Add claim functionality here
-                        console.log('Claiming dividend:', row.original);
-                    }}
-                >
-                    Claim
-                </Button>
+                <div className="w-full flex justify-end">
+                    <Button 
+                        variant="secondary" 
+                        size="sm"
+                        className="bg-violet-500/10 hover:bg-violet-500/20 text-violet-400 hover:text-violet-300"
+                        onClick={() => {
+                            // Add claim functionality here
+                            console.log('Claiming dividend:', row.original);
+                        }}
+                    >
+                        Claim
+                    </Button>
+                </div>
             )
         }
     }
