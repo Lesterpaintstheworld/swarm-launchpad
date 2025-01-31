@@ -2,7 +2,7 @@ import { Connection, PublicKey } from '@solana/web3.js';
 import { Program } from '@coral-xyz/anchor';
 import { SwarmData } from '../data/swarms/info';
 
-const HELIUS_RPC = `https://rpc.helius-rpc.com/?api-key=${atob('NGMzYTVmYzItZWEzZi00NWViLTg1ZDUtMmYyODJhNmI0NDAx')}`;
+const HELIUS_RPC = `https://mainnet.helius-rpc.com/?api-key=${atob('NGMzYTVmYzItZWEzZi00NWViLTg1ZDUtMmYyODJhNmI0NDAx')}`;
 
 interface HolderInfo {
     wallet: string;
