@@ -1,16 +1,6 @@
-'use client'
-
-import { ColumnDef } from "@tanstack/react-table";
-import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
-import { IntlNumberFormat } from "@/lib/utils";
-import { getSwarm } from "@/data/swarms/previews";
-import { DividendPayment } from ".";
-import Image from "next/image";
-import Link from "next/link";
 import { Button } from "@/components/shadcn/button";
-import { useWallet } from '@solana/wallet-adapter-react';
-import { useState } from 'react';
-import { toast } from 'sonner';
+import { SellPositionModal } from "@/components/swarms/sellPositionModal";
+import { useState } from "react";
 
 const ClaimButton = ({ row }: { row: any }) => {
     const { publicKey } = useWallet();
