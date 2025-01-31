@@ -40,7 +40,11 @@ async function main() {
     );
 
     // Initialize the program with proper typing
-    const program = new Program<Idl>(IDL, PROGRAM_ID, provider);
+    const program = new Program(
+        IDL as Idl,
+        new PublicKey(PROGRAM_ID),
+        provider
+    );
     
     const results: SwarmHolders[] = [];
 
