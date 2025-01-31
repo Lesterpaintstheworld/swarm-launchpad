@@ -10,6 +10,14 @@ const ClaimButton = ({ row }: { row: any }) => {
     const swarm = getSwarm(swarmId);
     const isDisabled = computeAmount < 10;
 
+    // Check if already claimed this week
+    const [isClaimed, setIsClaimed] = useState(() => {
+        if (typeof window !== 'undefined') {
+            return sessionStorage.getItem(claimKey) === 'true';
+        }
+        return false;
+    });
+
     // Generate a unique key for this week's claim
     const getWeekKey = () => {
         const now = new Date();

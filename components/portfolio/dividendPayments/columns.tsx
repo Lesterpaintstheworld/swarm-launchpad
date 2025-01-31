@@ -108,7 +108,6 @@ export const columns: ColumnDef<DividendPayment>[] = [
 
             const [isClaimed, setIsClaimed] = useState(false);
 
-            // Generate a unique key for this week's claim
             const getWeekKey = () => {
                 const now = new Date();
                 const startOfWeek = new Date(now);
@@ -118,14 +117,6 @@ export const columns: ColumnDef<DividendPayment>[] = [
             
             const claimKey = `claimed_${swarmId}_${publicKey?.toString()}_week_${getWeekKey()}`;
             
-            // Check if already claimed this week
-            const [isClaimed, setIsClaimed] = useState(() => {
-                if (typeof window !== 'undefined') {
-                    return sessionStorage.getItem(claimKey) === 'true';
-                }
-                return false;
-            });
-
             const handleClaim = async () => {
                 if (!publicKey) return;
 
