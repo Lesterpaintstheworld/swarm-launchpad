@@ -158,7 +158,7 @@ export function Returns() {
                             <div className="min-w-0">
                                 <h4 className="text-xl font-bold truncate">Fee Structure</h4>
                                 <p className="text-muted-foreground truncate">
-                                    A simple 5% fee structure for all transactions
+                                    Simple 5% platform fee in $UBC
                                 </p>
                             </div>
                         </div>
@@ -166,179 +166,55 @@ export function Returns() {
                             <div className="absolute inset-0 bg-gradient-to-r from-chart-3 to-chart-4 rounded-lg blur opacity-30 group-hover:opacity-40 transition-opacity" />
                             <div className="relative bg-background/40 backdrop-blur-sm p-6 rounded-lg border border-border/50">
 
-                                {/* Two-column layout */}
-                                <div className="grid md:grid-cols-2 gap-8">
-                                    {/* Left Column - Fee Mechanics */}
-                                    <div className="space-y-4">
-                                        <div className="p-6 bg-black/20 border border-white/5 backdrop-blur-sm rounded-lg">
-                                            <h6 className="text-lg font-semibold mb-4">Fee Calculation Mechanics</h6>
-                                            <div className="space-y-4">
-                                                <p className="text-muted-foreground">
-                                                    Fees are calculated using a fixed $COMPUTE to $UBC ratio that determines the $UBC fee amount. 
-                                                    This ratio is regularly updated and starts at 1:1.
-                                                </p>
-                                                <div className="bg-black/20 p-4 rounded-lg">
-                                                    <p className="text-sm text-muted-foreground">
-                                                        Example: When investing 1000 $COMPUTE with a 5% total fee at 1:1 ratio:
-                                                        <br />
-                                                        Fee = 50 $UBC (5% of 1000)
-                                                    </p>
-                                                </div>
-                                                <div className="bg-yellow-500/10 border border-yellow-500/20 p-4 rounded-lg">
-                                                    <p className="text-yellow-500 text-sm">
-                                                        <strong>Important:</strong> Investors must have sufficient $UBC in their wallet to cover fees when investing.
-                                                        This mechanism provides utility to the $UBC token while helping project leads and the ecosystem build diversified portfolios.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Right Column - Pie Chart and Fee Breakdown */}
-                                    <div className="space-y-8">
-                                        {/* Pie Chart */}
-                                        <div className="h-64">
-                                            <ResponsiveContainer width="100%" height="100%">
-                                                <PieChart>
-                                                    <Pie
-                                                        data={[
-                                                            { name: 'Partner Fee', value: 2.5, color: '#3b82f6' },
-                                                            { name: 'Platform Fee', value: 2.5, color: '#22c55e' }
-                                                        ]}
-                                                        cx="50%"
-                                                        cy="50%"
-                                                        innerRadius={60}
-                                                        outerRadius={90}
-                                                        paddingAngle={2}
-                                                        dataKey="value"
-                                                    >
-                                                        {[
-                                                            { color: '#3b82f6' },
-                                                            { color: '#22c55e' }
-                                                        ].map((entry, index) => (
-                                                            <Cell key={`cell-${index}`} fill={entry.color} />
-                                                        ))}
-                                                    </Pie>
-                                                </PieChart>
-                                            </ResponsiveContainer>
-                                        </div>
-
-                                        {/* Fee Breakdown */}
-                                        <div className="grid gap-6">
-                                            <div className="space-y-4">
-                                                <div className="flex items-center gap-2">
-                                                    <div className="w-3 h-3 rounded-full bg-blue-500" />
-                                                    <h6 className="font-medium">Partner Fee (2.5% in $UBC)</h6>
-                                                </div>
-                                                <ul className="list-disc pl-6 text-muted-foreground space-y-2">
-                                                    <li>Collected in $UBC</li>
-                                                    <li>Weekly distribution to partners</li>
-                                                    <li>Rewards ecosystem contributors</li>
-                                                </ul>
-                                            </div>
-                                            <div className="space-y-4">
-                                                <div className="flex items-center gap-2">
-                                                    <div className="w-3 h-3 rounded-full bg-green-500" />
-                                                    <h6 className="font-medium">Platform Fee (2.5% in $UBC)</h6>
-                                                </div>
-                                                <ul className="list-disc pl-6 text-muted-foreground space-y-2">
-                                                    <li>Funds platform operations</li>
-                                                    <li>Supports technical development</li>
-                                                    <li>Maintains infrastructure</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Fee Breakdown Details */}
-                        <div className="mt-8 space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {/* Fee Allocation */}
-                                <div className="bg-white/5 rounded-xl p-6 border border-white/10">
-                                    <h4 className="text-lg font-medium mb-4">Fee Allocation</h4>
-                                    <div className="space-y-4">
-                                        <div className="flex items-center gap-2">
-                                            <div className="w-3 h-3 rounded-full bg-blue-500" />
-                                            <h6 className="font-medium">Partner Fee (2.5% in $UBC)</h6>
-                                        </div>
-                                        <ul className="list-disc pl-6 text-white/60 space-y-2">
-                                            <li>Collected in $UBC</li>
-                                            <li>Weekly distribution to partners</li>
-                                            <li>Rewards ecosystem contributors</li>
-                                        </ul>
-
-                                        <div className="flex items-center gap-2 mt-6">
-                                            <div className="w-3 h-3 rounded-full bg-green-500" />
-                                            <h6 className="font-medium">Platform Fee (2.5% in $UBC)</h6>
-                                        </div>
-                                        <ul className="list-disc pl-6 text-white/60 space-y-2">
-                                            <li>Funds platform operations</li>
-                                            <li>Supports technical development</li>
-                                            <li>Maintains infrastructure</li>
-                                        </ul>
-                                    </div>
-                                </div>
-
                                 {/* Fee Mechanics */}
-                                <div className="bg-white/5 rounded-xl p-6 border border-white/10">
-                                    <h4 className="text-lg font-medium mb-4">Fee Mechanics</h4>
-                                    <div className="space-y-4">
-                                        <p className="text-white/60">
-                                            Fees are calculated using a fixed $COMPUTE to $UBC ratio that determines 
-                                            the $UBC fee amount. This ratio is regularly updated and starts at 1:1.
+                                <div className="space-y-4">
+                                    <h6 className="text-lg font-semibold mb-4">Fee Mechanics</h6>
+                                    <p className="text-muted-foreground">
+                                        A straightforward 5% platform fee is charged in $UBC tokens for all transactions. 
+                                        This fee helps maintain platform infrastructure and support ongoing development.
+                                    </p>
+                                    
+                                    <div className="bg-black/20 p-4 rounded-lg">
+                                        <p className="text-sm text-muted-foreground">
+                                            Example: When investing 1000 $COMPUTE:
+                                            <br />
+                                            Fee = 50 $UBC (5% of 1000)
                                         </p>
-                                        
-                                        <div className="bg-black/20 p-4 rounded-lg">
-                                            <p className="text-sm text-white/60">
-                                                Example: When investing 1000 $COMPUTE with a 5% total fee at 1:1 ratio:
-                                                <br />
-                                                Fee = 50 $UBC (5% of 1000)
-                                            </p>
-                                        </div>
+                                    </div>
 
-                                        <div className="bg-yellow-500/10 border border-yellow-500/20 p-4 rounded-lg">
-                                            <p className="text-yellow-500 text-sm">
-                                                <strong>Important:</strong> Investors must have sufficient $UBC in their 
-                                                wallet to cover fees when investing. This mechanism provides utility to 
-                                                the $UBC token while helping project leads and the ecosystem build 
-                                                diversified portfolios.
-                                            </p>
-                                        </div>
+                                    <div className="bg-yellow-500/10 border border-yellow-500/20 p-4 rounded-lg">
+                                        <p className="text-yellow-500 text-sm">
+                                            <strong>Important:</strong> Investors must have sufficient $UBC in their 
+                                            wallet to cover fees when investing. This mechanism provides utility to 
+                                            the $UBC token while supporting platform operations.
+                                        </p>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Additional Information */}
-                            <div className="bg-white/5 rounded-xl p-6 border border-white/10">
-                                <h4 className="text-lg font-medium mb-4">Key Points</h4>
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                {/* Key Points */}
+                                <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
                                     <div>
                                         <h6 className="font-medium text-white/80 mb-2">Transparency</h6>
                                         <p className="text-sm text-white/60">
-                                            All fees and distributions are handled through smart contracts with 
-                                            complete on-chain transparency and verification.
+                                            All fees are handled through smart contracts with complete on-chain transparency.
                                         </p>
                                     </div>
                                     <div>
                                         <h6 className="font-medium text-white/80 mb-2">Automation</h6>
                                         <p className="text-sm text-white/60">
-                                            Fee collection and distribution processes are fully automated, ensuring 
-                                            timely and accurate execution.
+                                            Fee collection process is fully automated, ensuring consistent execution.
                                         </p>
                                     </div>
                                     <div>
-                                        <h6 className="font-medium text-white/80 mb-2">Sustainability</h6>
+                                        <h6 className="font-medium text-white/80 mb-2">Simplicity</h6>
                                         <p className="text-sm text-white/60">
-                                            The fee structure is designed to support long-term ecosystem growth 
-                                            while maintaining fair costs for investors.
+                                            One simple fee covers all platform operations and maintenance.
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
