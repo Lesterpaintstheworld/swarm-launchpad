@@ -80,7 +80,8 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
 
         setIsLoading(true);
         const calculatedCostInBaseUnits = Math.floor(price * Math.pow(10, 6));
-        
+        const calculatedUbcFeeInBaseUnits = Math.floor(price * 0.05 * Math.pow(10, 6));
+            
         const swarm = getSwarmUsingPoolId(pool);
         if (!swarm) {
             toast.error("Invalid swarm");
@@ -89,7 +90,8 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
 
         toast.promise(purchaseShares.mutateAsync({ 
             numberOfShares: numShares, 
-            calculatedCost: calculatedCostInBaseUnits
+            calculatedCost: calculatedCostInBaseUnits,
+            ubcFee: calculatedUbcFeeInBaseUnits
         }), {
             loading: 'Transaction pending...',
             success: (result) => {
@@ -154,8 +156,9 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                     </div>
                     <div className="text-right">
                         <p className="text-xs text-green-400">CURRENT PRICE</p>
-                        <p className="text-2xl font-bold text-green-400">
-                            {IntlNumberFormat(data.pricePerShare, 3)} <span className="text-sm">$COMPUTE</span>
+                        <p className="text-2xl font-bold flex items-center gap-1">
+                            <span className="text-green-400">{IntlNumberFormat(data.pricePerShare, 3)}</span>
+                            <span className="text-sm metallic-text">$COMPUTE</span>
                         </p>
                     </div>
                 </div>
@@ -197,13 +200,39 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                 <div className="space-y-3 bg-slate-800/50 p-4 rounded-lg">
                     <div className="flex justify-between">
                         <span className="text-slate-300">Cost per Share</span>
-                        <span>{IntlNumberFormat(data.pricePerShare)} $COMPUTE</span>
+                        <div className="flex items-center gap-1">
+                            <span>{IntlNumberFormat(data.pricePerShare)}</span>
+                            <span className="metallic-text">$COMPUTE</span>
+                        </div>
                     </div>
                     <div className="flex justify-between">
-                        <span className="text-slate-300">Total Cost</span>
-                        <span className="text-xl font-bold">
-                            {IntlNumberFormat(numShares * data.pricePerShare)} $COMPUTE
-                        </span>
+                        <span className="text-slate-300">Total COMPUTE Cost</span>
+                        <div className="flex items-center gap-1">
+                            <span className="text-lg font-bold">{IntlNumberFormat(numShares * data.pricePerShare)}</span>
+                            <span className="metallic-text">$COMPUTE</span>
+                        </div>
+                    </div>
+                    <div className="flex justify-between">
+                        <span className="text-slate-300">UBC Fee (5%)</span>
+                        <div className="flex items-center gap-1">
+                            <span className="text-lg font-bold">{IntlNumberFormat(numShares * data.pricePerShare * 0.05)}</span>
+                            <span className="metallic-text-ubc">$UBC</span>
+                        </div>
+                    </div>
+                    <div className="pt-2 border-t border-white/10">
+                        <div className="flex justify-between">
+                            <span className="text-slate-300">Total Required</span>
+                            <div className="flex flex-col items-end gap-1">
+                                <div className="flex items-center gap-1">
+                                    <span className="text-lg font-bold">{IntlNumberFormat(numShares * data.pricePerShare)}</span>
+                                    <span className="metallic-text">$COMPUTE</span>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                    <span className="text-lg font-bold">{IntlNumberFormat(numShares * data.pricePerShare * 0.05)}</span>
+                                    <span className="metallic-text-ubc">$UBC</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
