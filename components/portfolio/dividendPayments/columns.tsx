@@ -142,7 +142,7 @@ export const columns: ColumnDef<DividendPayment>[] = [
 
                     // Show success message with details
                     toast.success(
-                        <div className="relative transform transition-all">
+                        <div className="relative transform transition-all cursor-pointer">
                             {/* Background glow effect */}
                             <div className="absolute inset-0 bg-gradient-to-r from-violet-500/20 via-purple-500/20 to-pink-500/20 blur-xl animate-pulse" />
                             
@@ -216,6 +216,10 @@ export const columns: ColumnDef<DividendPayment>[] = [
                             duration: 8000,
                             className: "transform-gpu",
                             position: "top-center",
+                            dismissible: true,
+                            onClick: () => {
+                                toast.dismiss();
+                            },
                             style: {
                                 background: "rgba(0, 0, 0, 0.8)",
                                 backdropFilter: "blur(8px)",
@@ -223,7 +227,8 @@ export const columns: ColumnDef<DividendPayment>[] = [
                                 borderRadius: "1rem",
                                 padding: "1rem",
                                 minWidth: "380px",
-                                animation: "custom-bounce 0.5s ease-out"
+                                animation: "custom-bounce 0.5s ease-out",
+                                cursor: "pointer"
                             }
                         }
                     );
