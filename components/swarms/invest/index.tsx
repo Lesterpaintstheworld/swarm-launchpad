@@ -205,14 +205,11 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
             )}>
                 {/* Header section */}
                 <div className="flex justify-between items-start mb-8">
-                    <div>
-                        <h2 className="text-2xl font-bold text-white">Purchase Swarm Shares</h2>
-                        <p className="text-slate-300">Invest in AI-powered future</p>
-                    </div>
+                    <h2 className="text-2xl font-bold text-white">Purchase Swarm Shares</h2>
                     <div className="text-right">
-                        <p className="text-xs text-green-400">CURRENT PRICE</p>
+                        <p className="text-xs text-slate-400 mb-1">CURRENT PRICE</p>
                         <p className="text-2xl font-bold flex items-center gap-1">
-                            <span className="text-green-400">{IntlNumberFormat(data.pricePerShare, 3)}</span>
+                            <span className="text-violet-400">{IntlNumberFormat(data.pricePerShare, 3)}</span>
                             <span className="text-sm metallic-text">$COMPUTE</span>
                         </p>
                     </div>
@@ -252,9 +249,9 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                 </div>
 
                 {/* Cost breakdown */}
-                <div className="space-y-3 bg-slate-800/50 p-4 rounded-lg">
+                <div className="space-y-4 bg-slate-800/50 p-6 rounded-lg">
                     {/* Cost per Share */}
-                    <div className="flex justify-between">
+                    <div className="flex justify-between mb-2">
                         <span className="text-slate-300">Cost per Share</span>
                         <div className="flex items-center gap-1">
                             <span>{IntlNumberFormat(data.pricePerShare)}</span>
@@ -262,8 +259,8 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                         </div>
                     </div>
 
-                    {/* Total Cost - Make this bigger */}
-                    <div className="flex justify-between items-baseline">
+                    {/* Total Cost */}
+                    <div className="flex justify-between items-baseline mb-2">
                         <span className="text-slate-300">Total Cost</span>
                         <div className="flex items-center gap-1">
                             <span className="text-2xl font-bold">{IntlNumberFormat(numShares * data.pricePerShare)}</span>
@@ -271,9 +268,9 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                         </div>
                     </div>
 
-                    {/* Fee - Make this smaller and more subtle */}
-                    <div className="flex justify-between text-sm">
-                        <span className="text-slate-400">UBC Fee (5%)</span>
+                    {/* Tx Fee */}
+                    <div className="flex justify-between text-sm pt-2 border-t border-white/10">
+                        <span className="text-slate-400">Tx Fee (5%)</span>
                         <div className="flex items-center gap-1">
                             <span className="text-slate-300">{IntlNumberFormat(numShares * data.pricePerShare * 0.05)}</span>
                             <span className="metallic-text-ubc">$UBC</span>
