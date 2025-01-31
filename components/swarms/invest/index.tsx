@@ -472,22 +472,40 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                     
                     {/* Weekly Revenue */}
                     <div className="bg-slate-800/30 rounded-lg p-4">
-                        <span className="text-sm text-slate-400">Weekly Revenue</span>
-                        <div className="flex items-center gap-2">
-                            {swarm?.weeklyRevenue ? (
-                                <>
-                                    <p className="text-lg font-semibold text-white">
-                                        {swarm.weeklyRevenue.toLocaleString()}
-                                    </p>
-                                    <span className="text-xs metallic-text">$COMPUTE</span>
-                                </>
-                            ) : (
-                                <p className="text-lg font-semibold text-white">-</p>
-                            )}
+                        <span className="text-sm text-white/60">Weekly Revenue</span>
+                        <div className="flex flex-col gap-2">
+                            {/* Total amount */}
+                            <div className="flex items-center gap-2">
+                                {swarm?.weeklyRevenue ? (
+                                    <>
+                                        <p className="text-lg font-semibold text-white">
+                                            {swarm.weeklyRevenue.toLocaleString()}
+                                        </p>
+                                        <span className="text-xs metallic-text">$COMPUTE</span>
+                                    </>
+                                ) : (
+                                    <p className="text-lg font-semibold text-white">-</p>
+                                )}
+                            </div>
+                            
+                            {/* Per 1000 shares breakdown */}
+                            <div className="px-3 py-2 rounded-lg bg-slate-800/50 border border-white/5">
+                                <p className="text-xs text-white/40 mb-2">Per 1,000 shares:</p>
+                                <div className="space-y-1">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-xs text-white/60">800</span>
+                                        <span className="text-xs metallic-text">$COMPUTE</span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-xs text-white/60">200</span>
+                                        <span className="text-xs metallic-text-ubc">$UBC</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
-                    {/* Total Revenue with per-1000 shares breakdown */}
+                    {/* Total Revenue */}
                     <div className="bg-slate-800/30 rounded-lg p-4">
                         <span className="text-sm text-white/60">Total Revenue</span>
                         <div className="flex flex-col gap-2">
