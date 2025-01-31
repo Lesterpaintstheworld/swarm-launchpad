@@ -78,7 +78,7 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                 console.error('Error processing pool data:', error);
             }
         }
-    }, [poolAccount.data, poolAccount.error]);
+    }, [poolAccount]);
 
     const handleSharesInput = (e: ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value.replace(/,/g, ''));
