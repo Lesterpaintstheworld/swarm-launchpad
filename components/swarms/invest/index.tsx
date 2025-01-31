@@ -33,7 +33,7 @@ interface SwarmInvestCardProps {
 }
 
 const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: SwarmInvestCardProps) => {
-    const { program, programId, connection, computeMint, ubcMint } = useLaunchpadProgram();
+    const { programId, connection, computeMint, ubcMint } = useLaunchpadProgram();
     const { connected } = useWallet();
     const [numShares, setNumShares] = useState<number>(0);
     const [price, setPrice] = useState<number>(0);
@@ -47,7 +47,6 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
         frozen: true,
     });
 
-    const { pools } = useLaunchpadProgram();
     const { poolAccount, purchaseShares } = useLaunchpadProgramAccount({ poolAddress: pool });
 
     useEffect(() => {
