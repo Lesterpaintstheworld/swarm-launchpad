@@ -117,13 +117,14 @@ def update_info_file(multiples: dict):
         raise
 
 def main():
-    # List of pools to check
+    # List of pools in exact order from SwarmData array
     pools = {
+        'KinOS': '37u532qgHbjUHic6mQK51jkT3Do7qkWLEUQCx22MDBD8',
+        'SLOP FATHER': None,  # No pool
         'DigitalKin': 'FM6aFbs9cQ6Jrp3GJPABBVxpLnGFEZZD3tSJ5JGCUsyZ',
         'Kin Kong': 'FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz',
         'Swarm Ventures': '911eRdu96ncdnmEUYA3UQ39gEtE9ueg7UbqycKuKweCG',
-        'LogicAtlas': '9pMb8Ez61vh3YRKKKrkdA5MthswuNE6Bzj9KYPEVCFme',
-        'AI Alley': 'DmdtWBcEwWr15MCm9Wa8iB8EJhHPK9NydiuLptuvMBxj',
+        'Terminal Velocity': None,  # No pool
         'Synthetic Souls': 'CmC2AUuurX19TLBVQbpNct8pmEjaHsRj6o8SLBAVvxAk',
         'DuoAI': '68K6BBsPynRbLkjJzdQmKMvTPLaUiKb93BUwbJfjqepS',
         'XForge': 'AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi',
@@ -142,7 +143,9 @@ def main():
         'CareerKin': 'EMtoBMEn6JtV9tnbF8ZVVrxnYZbdapWAYEzabq7cW2gR',
         'Robinhood Agent': 'H7xCtjoCyqf55uc5nmPKpypN82jANkRDTNmPx6C3XhS5',
         'StudioKin': 'EJ4Ad3faa43JLZW3HQnxweYFqm4T2cUzBGntG5KnJWE8',
-        'WealthHive': 'HeR7qoPbvmgcLFywkduZ27Hr2wKYuxtVkTBaGhVohP88'
+        'WealthHive': 'HeR7qoPbvmgcLFywkduZ27Hr2wKYuxtVkTBaGhVohP88',
+        'AI Alley': 'DmdtWBcEwWr15MCm9Wa8iB8EJhHPK9NydiuLptuvMBxj',
+        'LogicAtlas': '9pMb8Ez61vh3YRKKKrkdA5MthswuNE6Bzj9KYPEVCFme'
     }
 
     print("\nSwarm Multiples:\n")
