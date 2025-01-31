@@ -1,13 +1,10 @@
-import { Button } from "@/components/shadcn/button";
 import { Card } from "@/components/ui/card"
 import Image from "next/image";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/shadcn/tooltip";
 import { Tag } from "@/components/ui/tag";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { SwarmPreviewData } from "../swarm.types";
 import { useState } from 'react';
-import { cn } from "@/lib/utils";
 
 
 interface SwarmPreviewCardProps {

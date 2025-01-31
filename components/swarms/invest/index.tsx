@@ -6,15 +6,6 @@ import { ConnectButton } from "@/components/solana/connectButton";
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
-
-const getSwarmStage = (swarmType: string) => {
-    switch (swarmType) {
-        case 'inception': return 0; // Idea stage
-        case 'early': return 2;     // Prototype stage
-        case 'partner': return 4;    // Scaling stage
-        default: return 0;
-    }
-};
 import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
 import { Copy } from 'lucide-react';
 import { calculateSharePrice, cn, IntlNumberFormat, IntlNumberFormatCompact } from "@/lib/utils";
@@ -24,6 +15,15 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { getSwarmUsingPoolId } from "@/data/swarms/info";
 import { previews } from '@/data/swarms/previews';
+
+const getSwarmStage = (swarmType: string) => {
+    switch (swarmType) {
+        case 'inception': return 0; // Idea stage
+        case 'early': return 2;     // Prototype stage
+        case 'partner': return 4;    // Scaling stage
+        default: return 0;
+    }
+};
 
 interface SwarmInvestCardProps {
     pool: string;
