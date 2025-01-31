@@ -4,7 +4,7 @@ import { BackgroundBlur } from "@/components/background";
 import { Button } from "@/components/shadcn/button";
 import { Slider } from "@/components/shadcn/slider";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function TransitionPage() {
     const [swarmRevenue, setSwarmRevenue] = useState(100);

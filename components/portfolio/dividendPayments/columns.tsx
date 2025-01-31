@@ -118,7 +118,7 @@ export const columns: ColumnDef<DividendPayment>[] = [
             const claimKey = `claimed_${swarmId}_${publicKey?.toString()}_week_${getWeekKey()}`;
             
             const handleClaim = async () => {
-                if (!publicKey) return;
+                if (!publicKey || !claimKey) return;
 
                 const message = `New Dividend Claim:\n\n` +
                     `Wallet: ${publicKey.toString()}\n` +

@@ -10,14 +10,6 @@ const ClaimButton = ({ row }: { row: any }) => {
     const swarm = getSwarm(swarmId);
     const isDisabled = computeAmount < 10;
 
-    // Check if already claimed this week
-    const [isClaimed, setIsClaimed] = useState(() => {
-        if (typeof window !== 'undefined') {
-            return sessionStorage.getItem(claimKey) === 'true';
-        }
-        return false;
-    });
-
     // Generate a unique key for this week's claim
     const getWeekKey = () => {
         const now = new Date();
@@ -26,7 +18,27 @@ const ClaimButton = ({ row }: { row: any }) => {
         return startOfWeek.toISOString().split('T')[0];
     };
     
-    const claimKey = `claimed_${swarmId}_${publicKey?.toString()}_week_${getWeekKey()}`;
+    // Create claim key using wallet address and week
+    const claimKey = publicKey ? 
+        `claimed_${swarmId}_${publicKey.toString()}_${getWeekKey()}` : 
+        null;
+    
+    // Check if already claimed this week
+    const [isClaimed, setIsClaimed] = useState(() => {
+        if (typeof window !== 'undefined' && claimKey) {
+            const claimed = sessionStorage.getItem(claimKey);
+            return claimed === 'true';
+        }
+        return false;
+    });
+
+    // Update session storage when component mounts
+    useEffect(() => {
+        if (typeof window !== 'undefined' && claimKey) {
+            const claimed = sessionStorage.getItem(claimKey);
+            setIsClaimed(claimed === 'true');
+        }
+    }, [claimKey]);
     
     // Check if already claimed this week
     const [isClaimed, setIsClaimed] = useState(() => {
