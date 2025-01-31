@@ -5,8 +5,18 @@ import { Button } from "@/components/shadcn/button";
 import { ConnectButton } from "@/components/solana/connectButton";
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, Props as RechartsProps } from 'recharts';
 import { Copy } from 'lucide-react';
+
+interface LegendEntry {
+    value: string;
+    payload: {
+        name: string;
+        value: number;
+        color: string;
+        percentage: string;
+    };
+}
 import { calculateSharePrice, cn, IntlNumberFormat, IntlNumberFormatCompact } from "@/lib/utils";
 import { toast } from 'sonner';
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -441,11 +451,12 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                                     <Legend 
                                         verticalAlign="bottom" 
                                         height={36}
-                                        content={({ payload }) => {
+                                        content={(props: RechartsProps) => {
+                                            const { payload } = props;
                                             if (payload && payload.length) {
                                                 return (
                                                     <ul className="flex flex-wrap justify-center gap-2 mt-4">
-                                                        {(payload as LegendEntry[]).map((entry, index) => (
+                                                        {(payload as unknown as LegendEntry[]).map((entry, index) => (
                                                             <li key={`legend-${index}`} className="flex items-center gap-1 text-xs">
                                                                 <div 
                                                                     className="w-2 h-2 rounded-full"
