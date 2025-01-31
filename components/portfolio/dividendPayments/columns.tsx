@@ -19,9 +19,25 @@ export const columns: ColumnDef<DividendPayment>[] = [
         cell: ({ row }) => {
             // Get swarm ID from the row
             const swarmId = row.getValue('swarm_id') as string;
+            console.log('Looking up swarm with ID:', swarmId); // Debug log
+            
             // Look up the swarm using the correct ID
             const swarm = getSwarm(swarmId);
+            console.log('Found swarm:', swarm); // Debug log
             
+            if (!swarm) {
+                console.error('Swarm not found for ID:', swarmId);
+                return (
+                    <div className="flex items-center min-w-[200px] gap-4 py-1">
+                        <div className="w-8 h-8 rounded-full bg-white/10" />
+                        <div className="flex flex-col">
+                            <span className="text-lg mb-0 leading-1 truncate text-white/60">
+                                Unknown Swarm
+                            </span>
+                        </div>
+                    </div>
+                );
+            }
 
             return (
                 <div className="flex items-center min-w-[200px] gap-4 py-1">
