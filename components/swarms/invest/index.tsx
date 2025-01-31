@@ -113,8 +113,8 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
 
     const revenueData = [
         { name: 'Revenue Burned', value: 50, color: '#ef4444' },  // red-500
-        { name: 'Revenue Distributed', value: swarm?.revenueShare || 40, color: '#22c55e' }, // green-500
-        { name: 'Team', value: 100 - (50 + (swarm?.revenueShare || 40)), color: '#3b82f6' }  // blue-500
+        { name: 'Revenue Distributed', value: swarm?.revenueShare || 10, color: '#22c55e' }, // green-500
+        { name: 'Team', value: 50 - (swarm?.revenueShare || 10), color: '#3b82f6' }  // blue-500
     ];
 
     const handleBuy = () => {
@@ -521,21 +521,6 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                                 ) : (
                                     <p className="text-lg font-semibold text-white">-</p>
                                 )}
-                            </div>
-                            
-                            {/* Per 1000 shares breakdown */}
-                            <div className="px-3 py-2 rounded-lg bg-slate-800/50 border border-white/5">
-                                <p className="text-xs text-white/40 mb-2">Per 1,000 shares:</p>
-                                <div className="space-y-1">
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-xs text-white/60">800</span>
-                                        <span className="text-xs metallic-text">$COMPUTE</span>
-                                    </div>
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-xs text-white/60">200</span>
-                                        <span className="text-xs metallic-text-ubc">$UBC</span>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
