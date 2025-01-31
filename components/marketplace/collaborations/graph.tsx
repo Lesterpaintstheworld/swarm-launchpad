@@ -41,17 +41,27 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
     // Clear previous graph
     d3.select(svgRef.current).selectAll("*").remove();
 
+    // Filter out ecosystem nodes and create set of ecosystem targets
+    const filteredCollaborations = collaborations.filter(
+      collab => collab.sourceSwarm.id !== 'ecosystem'
+    );
+    const ecosystemTargets = new Set(
+      collaborations
+        .filter(collab => collab.sourceSwarm.id === 'ecosystem')
+        .map(collab => collab.targetSwarm.id)
+    );
+
     // Create nodes array (unique swarms)
     const swarms = new Set();
-    collaborations.forEach(collab => {
+    filteredCollaborations.forEach(collab => {
       swarms.add(JSON.stringify(collab.sourceSwarm));
       swarms.add(JSON.stringify(collab.targetSwarm));
     });
     const nodes = Array.from(swarms).map(s => JSON.parse(s as string));
 
     // Create links array with normalized strengths based on price
-    const maxPrice = Math.max(...collaborations.map(c => c.price));
-    const minPrice = Math.min(...collaborations.map(c => c.price));
+    const maxPrice = Math.max(...filteredCollaborations.map(c => c.price));
+    const minPrice = Math.min(...filteredCollaborations.map(c => c.price));
 
     // Helper function to calculate width based on value
     const calculateWidth = (value: number) => {
@@ -61,7 +71,7 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       return minWidth + (scale * (maxWidth - minWidth));
     };
 
-    const links = collaborations.map(collab => ({
+    const links = filteredCollaborations.map(collab => ({
       source: collab.sourceSwarm.id,
       target: collab.targetSwarm.id,
       value: collab.price,
@@ -247,6 +257,26 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
         tooltip.classed("hidden", true);
       });
 
+    // Add style for ecosystem glow animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes pulse {
+        0% {
+          stroke-opacity: 0.4;
+          stroke-width: 4;
+        }
+        50% {
+          stroke-opacity: 0.8;
+          stroke-width: 6;
+        }
+        100% {
+          stroke-opacity: 0.4;
+          stroke-width: 4;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
     // Add circles to nodes with glowing effect
     node.append("circle")
       .attr("r", (d: SimulationNode) => getNodeSize(d.id))
@@ -254,6 +284,17 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       .attr("stroke", "rgba(236, 72, 153, 0.5)")
       .attr("stroke-width", 3)
       .style("filter", "drop-shadow(0 0 10px rgba(236, 72, 153, 0.3))");
+
+    // Add pulsing yellow glow for ecosystem targets
+    node.filter((d: SimulationNode) => ecosystemTargets.has(d.id))
+      .append("circle")
+      .attr("r", (d: SimulationNode) => getNodeSize(d.id) + 5)
+      .attr("fill", "none")
+      .attr("stroke", "rgba(250, 204, 21, 0.4)")
+      .attr("stroke-width", 4)
+      .attr("class", "ecosystem-glow")
+      .style("filter", "drop-shadow(0 0 8px rgba(250, 204, 21, 0.6))")
+      .style("animation", "pulse 2s ease-in-out infinite");
 
     // Add images to nodes
     node.append("image")
