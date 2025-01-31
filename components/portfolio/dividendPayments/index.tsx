@@ -32,7 +32,8 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
                 {
                     id: '1',
                     swarm_id: 'forge-partner-id',
-                    amount: Math.floor(160000 * calculateOwnership(xForgePosition?.data, 100000)),
+                    amount: Math.floor(160000 * 0.09 * calculateOwnership(xForgePosition?.data, 100000)), // 9% of weekly revenue
+                    ubcAmount: Math.floor(160000 * 0.01 * calculateOwnership(xForgePosition?.data, 100000)), // 1% of weekly revenue
                     date: now.toISOString(),
                     status: 'pending'
                 },
@@ -40,7 +41,8 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
                 {
                     id: '2',
                     swarm_id: 'kinos-partner-id',
-                    amount: Math.floor(46000 * calculateOwnership(kinOSPosition?.data, 100000)),
+                    amount: Math.floor(46000 * 0.09 * calculateOwnership(kinOSPosition?.data, 100000)), // 9% of weekly revenue
+                    ubcAmount: Math.floor(46000 * 0.01 * calculateOwnership(kinOSPosition?.data, 100000)), // 1% of weekly revenue
                     date: now.toISOString(),
                     status: 'pending'
                 },
@@ -48,7 +50,8 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
                 {
                     id: '3',
                     swarm_id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
-                    amount: Math.floor(12000 * calculateOwnership(kinKongPosition?.data, 100000)),
+                    amount: Math.floor(12000 * 0.09 * calculateOwnership(kinKongPosition?.data, 100000)), // 9% of weekly revenue
+                    ubcAmount: Math.floor(12000 * 0.01 * calculateOwnership(kinKongPosition?.data, 100000)), // 1% of weekly revenue
                     date: now.toISOString(),
                     status: 'pending'
                 }

@@ -71,9 +71,15 @@ export const columns: ColumnDef<DividendPayment>[] = [
             <DataTableColumnHeader column={column} title="Amount" />
         ),
         cell: ({ row }) => (
-            <div className="flex items-center gap-2">
-                <span className="font-bold">{IntlNumberFormat(row.getValue('amount'))}</span>
-                <span className="metallic-text">$COMPUTE</span>
+            <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-2">
+                    <span className="font-bold">{IntlNumberFormat(row.getValue('amount'))}</span>
+                    <span className="metallic-text">$COMPUTE</span>
+                </div>
+                <div className="flex items-center gap-2">
+                    <span className="font-bold">{IntlNumberFormat(row.original.ubcAmount)}</span>
+                    <span className="metallic-text-ubc">$UBC</span>
+                </div>
             </div>
         )
     },
