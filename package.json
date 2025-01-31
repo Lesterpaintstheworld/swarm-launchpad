@@ -5,10 +5,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build", 
     "start": "next start",
     "lint": "next lint",
-    "update-multiples": "python scripts/update_multiples.py"
+    "update-multiples": "python scripts/update_multiples.py",
+    "get-holders": "ts-node scripts/get_holders.ts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1",
