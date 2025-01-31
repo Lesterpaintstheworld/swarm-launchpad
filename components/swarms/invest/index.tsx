@@ -112,9 +112,9 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
     };
 
     const revenueData = [
-        { name: 'Revenue Burned', value: 50, color: '#ef4444' },
-        { name: 'Revenue Distributed', value: swarm?.revenueShare || 40, color: '#22c55e' },
-        { name: 'Team', value: 100 - (50 + (swarm?.revenueShare || 40)), color: '#3b82f6' }
+        { name: 'Revenue Burned', value: 50, color: '#ef4444' },  // red-500
+        { name: 'Revenue Distributed', value: swarm?.revenueShare || 40, color: '#22c55e' }, // green-500
+        { name: 'Team', value: 100 - (50 + (swarm?.revenueShare || 40)), color: '#3b82f6' }  // blue-500
     ];
 
     const handleBuy = () => {
