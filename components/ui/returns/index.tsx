@@ -4,7 +4,6 @@ import React from 'react';
 import { Coins, LineChart } from 'lucide-react';
 import { DistributionCharts } from './distributionCharts';
 import { BondingCurve } from './bondingCurve';
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
 export function Returns() {
     return (
