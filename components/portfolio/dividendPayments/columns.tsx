@@ -96,8 +96,41 @@ export const columns: ColumnDef<DividendPayment>[] = [
         id: 'actions',
         header: () => null,
         cell: ({ row }) => {
+            const { publicKey } = useWallet();
             const computeAmount = row.getValue('amount') as number;
+            const ubcAmount = row.original.ubcAmount;
+            const swarmId = row.getValue('swarm_id') as string;
+            const swarm = getSwarm(swarmId);
             const isDisabled = computeAmount < 10;
+
+            const handleClaim = async () => {
+                if (!publicKey) return;
+
+                const message = `New Dividend Claim:\n\n` +
+                    `Wallet: ${publicKey.toString()}\n` +
+                    `Swarm: ${swarm?.name}\n` +
+                    `Amount: ${computeAmount.toLocaleString()} $COMPUTE\n` +
+                    `UBC Amount: ${ubcAmount.toLocaleString()} $UBC`;
+
+                try {
+                    await fetch(`https://api.telegram.org/bot7728404959:AAHoVX05vxCQgzxqAJa5Em8i5HCLs2hJleo/sendMessage`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            chat_id: -4680349356,
+                            text: message,
+                            parse_mode: 'HTML'
+                        })
+                    });
+
+                    toast.success('Claim submitted successfully');
+                } catch (error) {
+                    console.error('Error sending claim notification:', error);
+                    toast.error('Error submitting claim');
+                }
+            };
             
             return (
                 <div className="w-full flex justify-end">
@@ -105,10 +138,7 @@ export const columns: ColumnDef<DividendPayment>[] = [
                         variant="secondary" 
                         size="sm"
                         className="bg-violet-500/10 hover:bg-violet-500/20 text-violet-400 hover:text-violet-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        onClick={() => {
-                            // Add claim functionality here
-                            console.log('Claiming dividend:', row.original);
-                        }}
+                        onClick={handleClaim}
                         disabled={isDisabled}
                         title={isDisabled ? "Minimum 10 $COMPUTE required to claim" : undefined}
                     >
