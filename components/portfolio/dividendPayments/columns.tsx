@@ -17,18 +17,11 @@ export const columns: ColumnDef<DividendPayment>[] = [
         ),
         minSize: 250,
         cell: ({ row }) => {
-            const swarm = getSwarm(row.getValue('swarm_id'));
+            // Get swarm ID from the row
+            const swarmId = row.getValue('swarm_id') as string;
+            // Look up the swarm using the correct ID
+            const swarm = getSwarm(swarmId);
             
-            if (!swarm) {
-                return (
-                    <div className="flex items-center min-w-[200px] gap-4 py-1">
-                        <div className="w-8 h-8 rounded-full bg-white/10" />
-                        <div className="flex flex-col">
-                            <span className="text-lg text-muted-foreground">Unknown Swarm</span>
-                        </div>
-                    </div>
-                );
-            }
 
             return (
                 <div className="flex items-center min-w-[200px] gap-4 py-1">
