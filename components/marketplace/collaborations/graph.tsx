@@ -293,8 +293,8 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
       .attr("stroke", "rgba(250, 204, 21, 0.4)")
       .attr("stroke-width", 4)
       .attr("class", "ecosystem-glow")
-      .style("filter", "drop-shadow(0 0 8px rgba(250, 204, 21, 0.6))")
-      .style("animation", "pulse 2s ease-in-out infinite");
+      .style("filter", "drop-shadow(0 0 8px rgba(250, 204, 21, 0.6)) blur(3px)")
+      .style("animation", "pulse 4s ease-in-out infinite");
 
     // Add images to nodes
     node.append("image")
