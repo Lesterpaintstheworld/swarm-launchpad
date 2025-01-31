@@ -102,15 +102,15 @@ const ActionCell = ({ row }: ActionCellProps) => {
 
                         <div className="bg-white/5 rounded-lg p-3 space-y-2 backdrop-blur-sm border border-white/10">
                             <div className="flex items-center justify-between">
-                                <span className="text-sm text-white/60">$COMPUTE</span>
-                                <span className="font-semibold text-green-400">
-                                    {computeAmount.toLocaleString()}
-                                </span>
-                            </div>
-                            <div className="flex items-center justify-between">
                                 <span className="text-sm text-white/60">$UBC</span>
                                 <span className="font-semibold text-yellow-400">
                                     {ubcAmount.toLocaleString()}
+                                </span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <span className="text-sm text-white/60">$COMPUTE</span>
+                                <span className="font-semibold text-green-400">
+                                    {computeAmount.toLocaleString()}
                                 </span>
                             </div>
                         </div>
