@@ -89,27 +89,38 @@ def update_info_file(multiples: dict):
         original_data = data_match.group(1)
         
         # Create a simplified version for parsing by:
-        # 1. Replace template literals
+        # 1. Replace template literals and dates
         simplified_data = re.sub(
             r'`[\s\S]*?`',
             '"PLACEHOLDER"',
             original_data
         )
         
-        # 2. Replace imported descriptions
+        # 2. Replace new Date() expressions
+        simplified_data = re.sub(
+            r'new Date\([^)]+\)',
+            '"2025-01-29T19:00:00.000Z"',  # Replace with a standard date string
+            simplified_data
+        )
+        
+        # 3. Replace imported descriptions
         simplified_data = re.sub(
             r'description: \w+Description',
             'description: "PLACEHOLDER"',
             simplified_data
         )
         
-        # 3. Clean up the data for JSON parsing
+        # 4. Clean up the data for JSON parsing
         simplified_data = re.sub(r"'([^']*)'", r'"\1"', simplified_data)  # Convert single quotes
         simplified_data = re.sub(r'(\w+):', r'"\1":', simplified_data)    # Quote property names
         simplified_data = simplified_data.replace('undefined', 'null')     # Handle undefined
         
-        # 4. Remove trailing commas
+        # 5. Remove trailing commas
         simplified_data = re.sub(r',(\s*[}\]])', r'\1', simplified_data)
+        
+        # 6. Handle escaped URLs
+        simplified_data = re.sub(r'"https":', '"https:', simplified_data)
+        simplified_data = re.sub(r'([^\\])":', r'\1":', simplified_data)
         
         try:
             data = json.loads(simplified_data)
