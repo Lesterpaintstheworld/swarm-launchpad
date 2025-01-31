@@ -19,24 +19,36 @@ export const columns: ColumnDef<DividendPayment>[] = [
         ),
         minSize: 250,
         cell: ({ row }) => {
-
             const swarm = getSwarm(row.getValue('swarm_id'));
+            
+            if (!swarm) {
+                return <div>Unknown Swarm</div>;
+            }
 
             return (
                 <div className="flex items-center min-w-[200px] gap-4 py-1">
                     <Image
-                        src={swarm?.image}
-                        alt={`${swarm?.name} avatar`}
+                        src={swarm.image}
+                        alt={`${swarm.name} avatar`}
                         width={32}
                         height={32}
                         className="rounded-full"
                     />
                     <div className="flex flex-col">
-                        <Link className="text-lg mb-0 leading-1 truncate hover:underline" href={`/invest/${swarm.id}`}>{swarm?.name}</Link>
-                        {swarm?.role && <p className="text-sm text-muted truncate">{swarm?.role}</p>}
+                        <Link 
+                            className="text-lg mb-0 leading-1 truncate hover:underline" 
+                            href={`/invest/${swarm.id}`}
+                        >
+                            {swarm.name}
+                        </Link>
+                        {swarm.role && (
+                            <p className="text-sm text-muted truncate">
+                                {swarm.role}
+                            </p>
+                        )}
                     </div>
                 </div>
-            )
+            );
         }
     },
     {
