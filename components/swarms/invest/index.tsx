@@ -1,7 +1,6 @@
 'use client'
 
 import Image from "next/image";
-import Link from "next/link";
 import { Button } from "@/components/shadcn/button";
 import { ConnectButton } from "@/components/solana/connectButton";
 import { Card } from "@/components/ui/card"
