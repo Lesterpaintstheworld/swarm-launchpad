@@ -77,7 +77,7 @@ export const columns: ColumnDef<DividendPayment>[] = [
                     <span className="metallic-text">$COMPUTE</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <span className="font-bold">{IntlNumberFormat(row.original.ubcAmount)}</span>
+                    <span className="font-bold">{IntlNumberFormat(row.original.ubcAmount || 0)}</span>
                     <span className="metallic-text-ubc">$UBC</span>
                 </div>
             </div>

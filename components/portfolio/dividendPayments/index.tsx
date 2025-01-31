@@ -7,12 +7,21 @@ import { DataTable } from "@/components/ui/datatable";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { useEffect, useState } from "react";
 
+export interface DividendPayment {
+    id: string;
+    swarm_id: string;
+    amount: number;
+    ubcAmount: number;
+    timestamp: string;
+    status: 'pending' | 'claimed';
+}
+
 interface DividendPaymentsProps {
     className?: string;
 }
 
 const DividendPayments = ({ className }: DividendPaymentsProps) => {
-    const [dividends, setDividends] = useState<any[]>([]);
+    const [dividends, setDividends] = useState<DividendPayment[]>([]);
     const { position: kinKongPosition } = useLaunchpadProgramAccount({ poolAddress: 'FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz' });
     const { position: xForgePosition } = useLaunchpadProgramAccount({ poolAddress: 'AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi' });
     const { position: kinOSPosition } = useLaunchpadProgramAccount({ poolAddress: '37u532qgHbjUHic6mQK51jkT3Do7qkWLEUQCx22MDBD8' });
@@ -20,39 +29,39 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
     useEffect(() => {
         const calculateDividends = () => {
             const now = new Date();
-            
+        
             // Helper function to calculate ownership percentage
             const calculateOwnership = (position: any, totalShares: number) => {
                 if (!position?.shares) return 0;
                 return position.shares.toNumber() / totalShares;
             };
 
-            const data = [
+            const data: DividendPayment[] = [
                 // XForge dividends
                 {
                     id: '1',
                     swarm_id: 'forge-partner-id',
-                    amount: Math.floor(160000 * 0.09 * calculateOwnership(xForgePosition?.data, 100000)), // 9% of weekly revenue
-                    ubcAmount: Math.floor(160000 * 0.01 * calculateOwnership(xForgePosition?.data, 100000)), // 1% of weekly revenue
-                    date: now.toISOString(),
+                    amount: Math.floor(160000 * 0.09 * calculateOwnership(xForgePosition?.data, 100000)),
+                    ubcAmount: Math.floor(160000 * 0.01 * calculateOwnership(xForgePosition?.data, 100000)),
+                    timestamp: now.toISOString(),
                     status: 'pending'
                 },
                 // KinOS dividends
                 {
                     id: '2',
                     swarm_id: 'kinos-partner-id',
-                    amount: Math.floor(46000 * 0.09 * calculateOwnership(kinOSPosition?.data, 100000)), // 9% of weekly revenue
-                    ubcAmount: Math.floor(46000 * 0.01 * calculateOwnership(kinOSPosition?.data, 100000)), // 1% of weekly revenue
-                    date: now.toISOString(),
+                    amount: Math.floor(46000 * 0.09 * calculateOwnership(kinOSPosition?.data, 100000)),
+                    ubcAmount: Math.floor(46000 * 0.01 * calculateOwnership(kinOSPosition?.data, 100000)),
+                    timestamp: now.toISOString(),
                     status: 'pending'
                 },
                 // KinKong dividends
                 {
                     id: '3',
                     swarm_id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
-                    amount: Math.floor(12000 * 0.09 * calculateOwnership(kinKongPosition?.data, 100000)), // 9% of weekly revenue
-                    ubcAmount: Math.floor(12000 * 0.01 * calculateOwnership(kinKongPosition?.data, 100000)), // 1% of weekly revenue
-                    date: now.toISOString(),
+                    amount: Math.floor(12000 * 0.09 * calculateOwnership(kinKongPosition?.data, 100000)),
+                    ubcAmount: Math.floor(12000 * 0.01 * calculateOwnership(kinKongPosition?.data, 100000)),
+                    timestamp: now.toISOString(),
                     status: 'pending'
                 }
             ];
