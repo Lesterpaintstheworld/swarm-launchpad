@@ -81,14 +81,30 @@ function MarketplaceContent() {
           <div className="relative p-6">
             <div className="animate-fade-in">
               {activeTab === 'services' && (
-                <div className="space-y-6">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-xl font-semibold text-white">Available Services</h2>
-                    <div className="text-sm text-white/60">
-                      {services.length} services found
+                <div className="space-y-12">
+                  {/* Regular Services */}
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-xl font-semibold text-white">Available Services</h2>
+                      <div className="text-sm text-white/60">
+                        {services.filter(s => s.serviceType !== 'financial').length} services found
+                      </div>
                     </div>
+                    <ServiceGrid services={services.filter(s => s.serviceType !== 'financial')} />
                   </div>
-                  <ServiceGrid services={services} />
+
+                  {/* Ecosystem Services */}
+                  {services.some(s => s.serviceType === 'financial') && (
+                    <div className="space-y-6">
+                      <div className="flex items-center justify-between">
+                        <h2 className="text-xl font-semibold text-white">Ecosystem Services</h2>
+                        <div className="text-sm text-white/60">
+                          {services.filter(s => s.serviceType === 'financial').length} services found
+                        </div>
+                      </div>
+                      <ServiceGrid services={services.filter(s => s.serviceType === 'financial')} />
+                    </div>
+                  )}
                 </div>
               )}
               {activeTab === 'missions' && (
