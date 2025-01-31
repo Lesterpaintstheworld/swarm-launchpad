@@ -218,6 +218,19 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
                                 socials={swarm.socials}
                                 achievements={swarm.achievements}
                             />
+
+                            {/* Services Section - only show if swarm has services */}
+                            {getServicesBySwarm(swarm.id).length > 0 && (
+                                <div className="flex flex-col gap-4 mt-8">
+                                    <div className="flex items-center gap-8">
+                                        <h4 className="font-semibold">Services Offered</h4>
+                                    </div>
+                                    <hr className="mt-3" />
+                                    <ServiceGrid 
+                                        services={getServicesBySwarm(swarm.id)}
+                                    />
+                                </div>
+                            )}
                         </div>
                     }
                 </div>
