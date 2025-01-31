@@ -48,29 +48,37 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
     const { poolAccount, purchaseShares } = useLaunchpadProgramAccount({ poolAddress: pool });
 
     useEffect(() => {
-        console.log('Pool Account Data:', poolAccount.data);
+        console.log('Pool Account Data:', poolAccount);
+        
+        if (poolAccount.isError) {
+            console.error('Pool Account Error:', poolAccount.error);
+        }
         
         if (poolAccount.data) {
-            const totalSupply = poolAccount.data.totalShares.toNumber();
-            const remainingSupply = poolAccount.data.availableShares.toNumber();
-            const soldShares = totalSupply - remainingSupply;
-            const currentPrice = calculateSharePrice(soldShares);
-            
-            console.log('Price calculation:', {
-                totalSupply,
-                remainingSupply,
-                soldShares,
-                currentPrice
-            });
-            
-            setData({
-                totalSupply: totalSupply,
-                remainingSupply: remainingSupply,
-                pricePerShare: currentPrice,
-                frozen: poolAccount.data.isFrozen || false,
-            });
+            try {
+                const totalSupply = poolAccount.data.totalShares.toNumber();
+                const remainingSupply = poolAccount.data.availableShares.toNumber();
+                const soldShares = totalSupply - remainingSupply;
+                const currentPrice = calculateSharePrice(soldShares);
+                
+                console.log('Price calculation:', {
+                    totalSupply,
+                    remainingSupply,
+                    soldShares,
+                    currentPrice
+                });
+                
+                setData({
+                    totalSupply: totalSupply,
+                    remainingSupply: remainingSupply,
+                    pricePerShare: currentPrice,
+                    frozen: poolAccount.data.isFrozen || false,
+                });
+            } catch (error) {
+                console.error('Error processing pool data:', error);
+            }
         }
-    }, [poolAccount.data, pools.data]);
+    }, [poolAccount.data, poolAccount.error]);
 
     const handleSharesInput = (e: ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value.replace(/,/g, ''));
@@ -169,6 +177,23 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
             totalRaised += base;
         }
         return `${IntlNumberFormatCompact(Math.floor(totalRaised))}`;
+    }
+
+    if (poolAccount.isLoading) {
+        return (
+            <div className="animate-pulse space-y-4">
+                <div className="h-8 bg-white/5 rounded" />
+                <div className="h-32 bg-white/5 rounded" />
+            </div>
+        );
+    }
+
+    if (poolAccount.isError) {
+        return (
+            <div className="text-red-400 p-4 rounded-lg bg-red-500/10 border border-red-500/20">
+                Error loading pool data. Please try again later.
+            </div>
+        );
     }
 
     return (

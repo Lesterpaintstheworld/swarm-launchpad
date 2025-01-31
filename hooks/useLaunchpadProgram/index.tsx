@@ -4,7 +4,7 @@
 import { useWallet } from '@solana/wallet-adapter-react'
 import { PublicKey, SystemProgram, Connection } from '@solana/web3.js'
 import { constants } from '@/lib/constants'
-const HELIUS_RPC = `https://rpc-mainnet.helius.xyz/?api-key=${atob('NGMzYTVmYzItZWEzZi00NWViLTg1ZDUtMmYyODJhNmI0NDAx')}`;
+const HELIUS_RPC = "https://mainnet.helius-rpc.com/?api-key=4c3a5fc2-ea3f-45eb-85d5-2f282a6b4401";
 import { getAssociatedTokenAddress } from '@solana/spl-token';
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
@@ -294,14 +294,22 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
     const poolAccount = useQuery({
         queryKey: ['pool', 'fetch', pool.toBase58()],
         queryFn: async () => {
-            const accountInfo = await connection.getAccountInfo(pool);
-            if (!accountInfo) {
-                throw new Error('Pool account not found');
+            try {
+                const accountInfo = await connection.getAccountInfo(pool);
+                if (!accountInfo) {
+                    throw new Error('Pool account not found');
+                }
+                
+                return program.account.pool.fetch(pool);
+            } catch (error) {
+                console.error('Error fetching pool account:', error);
+                throw error;
             }
-            
-            return program.account.pool.fetch(pool);
         },
-        enabled: !!program && !!pool
+        enabled: !!program && !!pool,
+        retry: 3,
+        retryDelay: 1000,
+        staleTime: 30000 // Cache for 30 seconds
     })
     
     const position = useQuery({
