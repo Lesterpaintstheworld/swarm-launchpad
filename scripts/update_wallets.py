@@ -1,4 +1,5 @@
 import re
+import json
 
 # Map of swarm IDs to wallet addresses
 WALLET_MAP = {
