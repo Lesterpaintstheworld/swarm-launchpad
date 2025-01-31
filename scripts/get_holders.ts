@@ -18,6 +18,7 @@ interface SwarmHolders {
     swarmName: string;
     pool: string;
     totalShares: number;
+    holderCount: number;
     holders: HolderInfo[];
 }
 
@@ -36,13 +37,13 @@ async function main() {
 
             // Get all program accounts for this pool
             const accounts = await connection.getProgramAccounts(
-                new PublicKey('4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf'), // Your program ID
+                new PublicKey('4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf'),
                 {
                     filters: [
                         {
                             memcmp: {
-                                offset: 8, // Skip discriminator
-                                bytes: swarm.pool // Pool address
+                                offset: 8,
+                                bytes: swarm.pool
                             }
                         }
                     ]
@@ -62,7 +63,7 @@ async function main() {
                     holders.push({
                         wallet: account.pubkey.toString(),
                         shares,
-                        percentage: 0 // Will calculate after getting total
+                        percentage: 0
                     });
                 }
             }
@@ -80,8 +81,12 @@ async function main() {
                 swarmName: swarm.name,
                 pool: swarm.pool,
                 totalShares,
+                holderCount: holders.length,
                 holders
             });
+
+            // Log progress with holder count
+            console.log(`${swarm.name}: ${holders.length} holders found`);
 
         } catch (error) {
             console.error(`Error processing ${swarm.name}:`, error);
@@ -92,7 +97,13 @@ async function main() {
     const outputPath = path.join(process.cwd(), 'app/api/claim/holders.json');
     await fs.writeFile(outputPath, JSON.stringify(results, null, 2));
     
-    console.log('Done! Results written to holders.json');
+    // Log final summary
+    console.log('\nFinal Summary:');
+    results.forEach(result => {
+        console.log(`${result.swarmName}: ${result.holderCount} holders, ${result.totalShares.toLocaleString()} total shares`);
+    });
+    
+    console.log('\nDone! Results written to holders.json');
 }
 
 main().catch(console.error);
