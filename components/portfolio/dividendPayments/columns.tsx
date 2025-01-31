@@ -8,6 +8,9 @@ import { DividendPayment } from ".";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/shadcn/button";
+import { useWallet } from '@solana/wallet-adapter-react';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
 export const columns: ColumnDef<DividendPayment>[] = [
     {
