@@ -21,7 +21,7 @@ export const previews: SwarmPreviewData[] = [
         ],
         role: 'Swarm Operating System',
         swarmType: 'early',
-        revenueShare: 60
+        revenueShare: 10
     },
     {
         id: 'digitalkin-partner-id',
@@ -32,7 +32,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Enterprise AI', 'Automation', 'R&D', 'Finance', 'Admin', '24/7 Operations', 'KinOS'],
         role: 'Digital Employee Manager',
         swarmType: 'partner',
-        revenueShare: 50
+        revenueShare: 0
     },
     {
         id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
@@ -45,7 +45,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['AI Trading', 'Token Markets', 'Profit Sharing', 'Weekly Rewards', 'KinOS', 'UBC'],
         role: 'Trading Specialist',
         swarmType: 'early',
-        revenueShare: 60
+        revenueShare: 10
     },
     {
         id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',
@@ -56,7 +56,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Venture Capital', 'Project Curation', 'Due Diligence', 'Portfolio Management', 'Community Value'],
         role: 'Investment Guardian',
         swarmType: 'early',
-        revenueShare: 60
+        revenueShare: 10
     },
     {
         id: '03616e66-a21e-425b-a93b-16d6396e883f',
@@ -67,7 +67,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['AI Music', 'Content Creation', 'Profit Sharing', 'Entertainment', 'Royalties'],
         role: 'Music Creator',
         swarmType: 'early',
-        revenueShare: 75
+        revenueShare: 25
     },
     {
         id: '7d3c9e5b-1f8a-4d3c-b8d4-9e5b1f8a4d3c',
@@ -78,7 +78,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Gaming', 'AI Companion', 'Personalization', 'Adaptive Learning', 'KinOS'],
         role: 'Gaming Companion',
         swarmType: 'inception',
-        revenueShare: 60
+        revenueShare: 10
     },
     {
         id: 'f7a92b3c-d8e4-4c1a-9f5d-1234567890ab',
@@ -89,7 +89,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Entertainment', 'Screenwriting', 'Production', 'AI Creative', 'Content'],
         role: 'Screenwriter & Producer',
         swarmType: 'inception',
-        revenueShare: 60
+        revenueShare: 10
     },
     {
         id: 'a1b2c3d4-e5f6-4a5b-8c7d-9e8f7a6b5c4d',
@@ -100,7 +100,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Trading', 'DeFi', 'Profit Sharing', 'Strategy', 'Institutional'],
         role: 'Trading Agent',
         swarmType: 'inception',
-        revenueShare: 100
+        revenueShare: 50
     },
     {
         id: 'b2c3d4e5-f6g7-5b6c-9d0e-1f2g3h4i5j6k',
@@ -111,7 +111,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Healthcare', 'Mental Health', 'Practice Management', 'Patient Care', 'AI Assistant'],
         role: 'Healthcare Assistant',
         swarmType: 'inception',
-        revenueShare: 60
+        revenueShare: 10
     },
     {
         id: 'c3d4e5f6-g7h8-6c7d-ae1f-2g3h4i5j6k7l',
@@ -122,7 +122,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Publishing', 'Book Production', 'Content', 'Distribution', 'Marketing'],
         role: 'Publishing Agent',
         swarmType: 'inception',
-        revenueShare: 60
+        revenueShare: 10
     },
     {
         id: 'd4e5f6g7-h8i9-7d8e-bf2g-3h4i5j6k7l8m',
@@ -133,7 +133,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Education', 'Interactive Learning', 'Personalization', 'Child Development', 'EdTech'],
         role: 'Educational Assistant',
         swarmType: 'inception',
-        revenueShare: 60
+        revenueShare: 10
     },
     {
         id: 'e5f6g7h8-i9j0-8e9f-cg3h-4i5j6k7l8m9n',
@@ -144,7 +144,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Recruitment', 'HR Tech', 'Talent Matching', 'AI Screening', 'Hiring'],
         role: 'Recruitment Assistant',
         swarmType: 'inception',
-        revenueShare: 60
+        revenueShare: 10
     },
     {
         id: 'f6g7h8i9-j0k1-9f0g-dh4i-5j6k7l8m9n0o',
@@ -155,7 +155,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['AI', 'Healthcare', 'KinOS', 'Operations'],
         role: 'Practice Manager',
         swarmType: 'inception',
-        revenueShare: 60
+        revenueShare: 10
     },
     {
         id: 'g7h8i9j0-k1l2-0g1h-ei5j-6k7l8m9n0o1p',
@@ -166,7 +166,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['AI', 'E-commerce', 'KinOS', 'Sales'],
         role: 'E-commerce Manager',
         swarmType: 'inception',
-        revenueShare: 60
+        revenueShare: 10
     },
     {
         id: 'h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q',
@@ -177,7 +177,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['AI Marketing', 'Content Creation', 'Affiliate', 'Automation', 'Multi-Channel'],
         role: 'Marketing Automation',
         swarmType: 'inception',
-        revenueShare: 100
+        revenueShare: 50
     },
     {
         id: 'mentor-swarm-id',
@@ -188,7 +188,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['AI', 'Education', 'KinOS', 'Tutoring'],
         role: 'Educational Mentor',
         swarmType: 'inception',
-        revenueShare: 60
+        revenueShare: 10
     },
     {
         id: 'wealthhive-inception-id',
@@ -199,7 +199,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Education', 'Learn-to-Earn', 'Community', 'AI Learning', 'Investment'],
         role: 'Educational Guide',
         swarmType: 'inception',
-        revenueShare: 60
+        revenueShare: 10
     },
     {
         id: 'speaker-swarm-id',
@@ -210,7 +210,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Communication', 'Training', 'Professional Development', 'Social Skills', 'AI Coaching'],
         role: 'Conversation Coach',
         swarmType: 'inception',
-        revenueShare: 75
+        revenueShare: 25
     },
     {
         id: 'travel-swarm-id',
@@ -221,7 +221,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Travel', 'AI Concierge', 'Trip Planning', 'Personalization', 'Real-time Assistance'],
         role: 'Travel Concierge',
         swarmType: 'inception',
-        revenueShare: 60
+        revenueShare: 10
     },
     {
         id: 'grant-swarm-id',
@@ -232,7 +232,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Non-profit', 'Grant Writing', 'Funding', 'Compliance', 'AI Automation'],
         role: 'Grant Writer',
         swarmType: 'inception',
-        revenueShare: 60
+        revenueShare: 10
     },
     {
         id: 'resume-swarm-id',
@@ -243,7 +243,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['AI', 'Career', 'KinOS', 'Resume'],
         role: 'Career Optimizer',
         swarmType: 'inception',
-        revenueShare: 60
+        revenueShare: 10
     },
     {
         id: 'forge-partner-id',
@@ -256,7 +256,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Development', 'Technical Partners', 'Project Management', 'Quality Assurance', 'AI Automation'],
         role: 'Development Coordinator',
         swarmType: 'partner',
-        revenueShare: 60
+        revenueShare: 10
     },
     {
         id: 'propertykin-inception-id',
@@ -267,7 +267,7 @@ export const previews: SwarmPreviewData[] = [
         tags: ['Real Estate', 'Arbitrage', 'Smart Contracts', 'Property Flipping', 'AI Analysis', 'Wholesale'],
         role: 'Real Estate Arbitrage Bot',
         swarmType: 'inception',
-        revenueShare: 60
+        revenueShare: 10
     },
     {
         id: 'logicatlas-inception-id',
@@ -285,7 +285,7 @@ export const previews: SwarmPreviewData[] = [
         ],
         role: 'Supply Chain Orchestrator',
         swarmType: 'early',
-        revenueShare: 60
+        revenueShare: 10
     },
     {
         id: 'altered-alley-inception-id',
@@ -303,6 +303,6 @@ export const previews: SwarmPreviewData[] = [
         ],
         role: 'Infrastructure Provider',
         swarmType: 'early',
-        revenueShare: 60
+        revenueShare: 10
     },
 ]

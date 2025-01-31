@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build", 
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "update-multiples": "python scripts/update_multiples.py",
@@ -47,7 +47,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-markdown": "^9.0.3",
-    "recharts": "^2.15.0",
+    "recharts": "^2.15.1",
     "remark-gfm": "^4.0.0",
     "sonner": "^1.7.1",
     "tailwind-merge": "^2.5.5",
