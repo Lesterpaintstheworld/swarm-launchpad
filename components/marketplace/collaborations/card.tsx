@@ -1,6 +1,31 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+const getGradientColors = (sourceId: string) => {
+  if (sourceId === 'ecosystem') {
+    return {
+      from: 'from-yellow-500/20',
+      via: 'via-amber-500/20',
+      to: 'to-orange-500/20',
+      hover: {
+        from: 'from-yellow-500/40',
+        via: 'via-amber-500/40',
+        to: 'to-orange-500/40'
+      }
+    };
+  }
+  return {
+    from: 'from-pink-500/20',
+    via: 'via-purple-500/20',
+    to: 'to-blue-500/20',
+    hover: {
+      from: 'from-pink-500/40',
+      via: 'via-purple-500/40',
+      to: 'to-blue-500/40'
+    }
+  };
+};
+
 interface CollaborationCardProps {
   id: string;
   sourceSwarm: {
