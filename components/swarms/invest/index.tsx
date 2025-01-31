@@ -394,16 +394,23 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
 
                 {/* Additional stats */}
                 <div className="grid grid-cols-2 gap-4 mt-4">
-                    <div className="bg-slate-800/30 rounded-lg p-4">
-                        <span className="text-sm text-slate-400">Total Investors</span>
-                        <p className="text-lg font-semibold text-white">Coming Soon</p>
-                    </div>
+                    {/* Revenue Distributed */}
                     <div className="bg-slate-800/30 rounded-lg p-4">
                         <span className="text-sm text-slate-400">Revenue Distributed</span>
                         <p className="text-lg font-semibold text-white">
-                            {getSwarmUsingPoolId(pool)?.revenueShare || 60}%
+                            {getSwarmUsingPoolId(pool)?.revenueShare || 50}%
                         </p>
+                        <p className="text-xs text-slate-500">in $UBC & $COMPUTE</p>
                     </div>
+                    
+                    {/* Revenue Burned */}
+                    <div className="bg-slate-800/30 rounded-lg p-4">
+                        <span className="text-sm text-slate-400">Revenue Burned</span>
+                        <p className="text-lg font-semibold text-white">50%</p>
+                        <p className="text-xs text-slate-500">in $UBC & $COMPUTE</p>
+                    </div>
+                    
+                    {/* Weekly Revenue */}
                     <div className="bg-slate-800/30 rounded-lg p-4">
                         <span className="text-sm text-slate-400">Weekly Revenue</span>
                         <div className="flex items-center gap-2">
@@ -419,6 +426,8 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                             )}
                         </div>
                     </div>
+                    
+                    {/* Total Revenue */}
                     <div className="bg-slate-800/30 rounded-lg p-4">
                         <span className="text-sm text-white/60">Total Revenue</span>
                         <div className="flex items-center gap-2">
