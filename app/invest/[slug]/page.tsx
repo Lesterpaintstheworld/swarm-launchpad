@@ -3,6 +3,8 @@
 import { getSwarmInfo } from "@/data/swarms/info";
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { ServiceGrid } from "@/components/marketplace/services/grid";
+import { getServicesBySwarm } from "@/data/services/services";
 
 function CountdownTimer({ launchDate }: { launchDate: string | Date }) {
     const [timeLeft, setTimeLeft] = useState<{
