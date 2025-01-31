@@ -411,8 +411,8 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                                         data={revenueData}
                                         cx="50%"
                                         cy="50%"
-                                        innerRadius={60}
-                                        outerRadius={80}
+                                        innerRadius={45}
+                                        outerRadius={65}
                                         paddingAngle={5}
                                         dataKey="value"
                                     >
@@ -447,19 +447,19 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                                         content={({ payload }) => {
                                             if (payload && payload.length) {
                                                 return (
-                                                    <div className="flex justify-center gap-4 mt-4">
+                                                    <ul className="flex flex-wrap justify-center gap-2 mt-4">
                                                         {payload.map((entry, index) => (
-                                                            <div key={`legend-${index}`} className="flex items-center gap-2">
+                                                            <li key={`legend-${index}`} className="flex items-center gap-1 text-xs">
                                                                 <div 
-                                                                    className="w-3 h-3 rounded-full"
+                                                                    className="w-2 h-2 rounded-full"
                                                                     style={{ backgroundColor: entry.color }}
                                                                 />
-                                                                <span className="text-sm text-white/60">
+                                                                <span className="text-white/60">
                                                                     {entry.value}: {revenueData[index].value}%
                                                                 </span>
-                                                            </div>
+                                                            </li>
                                                         ))}
-                                                    </div>
+                                                    </ul>
                                                 );
                                             }
                                             return null;
