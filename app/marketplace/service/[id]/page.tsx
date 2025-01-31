@@ -29,13 +29,15 @@ export default function ServicePage() {
   const serviceTypeIcon = {
     'subscription': <Clock className="w-4 h-4" />,
     'one-off': <Cpu className="w-4 h-4" />,
-    'pay-as-you-go': <Cpu className="w-4 h-4" />
+    'pay-as-you-go': <Cpu className="w-4 h-4" />,
+    'financial': <Cpu className="w-4 h-4" />
   };
 
   const serviceTypeLabel = {
     'subscription': 'Subscription',
     'one-off': 'One-time Purchase',
-    'pay-as-you-go': 'Pay as you go'
+    'pay-as-you-go': 'Pay as you go',
+    'financial': 'Financial Service'
   };
 
   const crumbs = [
