@@ -195,6 +195,21 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
                             </div>
                         </div>
                     )}
+
+                    {/* Active Collaborations Section */}
+                    {getCollaborationsBySwarm(swarm.id).length > 0 && (
+                        <div className="flex flex-col gap-4 mt-8">
+                            <div className="flex items-center gap-8">
+                                <h4 className="font-semibold">Active Collaborations</h4>
+                            </div>
+                            <hr className="mt-3" />
+                            <div className="bg-black/20 rounded-xl p-6 border border-white/10">
+                                <CollaborationGrid 
+                                    collaborations={getCollaborationsBySwarm(swarm.id)}
+                                />
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
             <SwarmGallery
