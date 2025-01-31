@@ -4,6 +4,7 @@ import base64
 import time
 from typing import Dict, List, Optional
 import random
+import re
 
 # Constants
 PROGRAM_ID = "4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf"
@@ -102,18 +103,41 @@ def parse_account_data(data: str) -> int:
         print(f"Error parsing account data: {e}")
         return 0
 
+def extract_swarm_data(content: str) -> List[Dict]:
+    """Extract and parse SwarmData from TypeScript content"""
+    # Find the array content
+    start = content.find('SwarmData: SwarmInfo[] = [') + len('SwarmData: SwarmInfo[] = [')
+    end = content.rfind(']')
+    data = content[start:end].strip()
+    
+    # Remove TypeScript-specific syntax
+    data = re.sub(r'new Date\([\'"]([^\'"]+)[\'"]\)', r'"\1"', data)  # Convert Date objects
+    data = re.sub(r'`[\s\S]*?`', '"PLACEHOLDER"', data)  # Replace template literals
+    data = re.sub(r'description: \w+Description', 'description: "PLACEHOLDER"', data)  # Replace description references
+    
+    # Fix property names and values
+    data = re.sub(r'(\w+):', r'"\1":', data)  # Quote property names
+    data = data.replace("'", '"')  # Convert single quotes to double quotes
+    data = data.replace('undefined', 'null')  # Convert undefined to null
+    data = re.sub(r',(\s*[}\]])', r'\1', data)  # Remove trailing commas
+    
+    # Wrap in array brackets and parse
+    try:
+        return json.loads(f"[{data}]")
+    except json.JSONDecodeError as e:
+        print(f"Error parsing data: {str(e)}")
+        print("Problematic data:", data[:200])  # Show start of problematic data
+        return []
+
 def main():
     # Load SwarmData from info.tsx
     with open('data/swarms/info.tsx', 'r', encoding='utf-8') as f:
         content = f.read()
-        # Extract the array part (this is a simple approach - might need adjustment)
-        start = content.find('SwarmData: SwarmInfo[] = [') + len('SwarmData: SwarmInfo[] = [')
-        end = content.rfind(']')
-        data = content[start:end].strip()
-        # Convert to valid JSON
-        data = data.replace("'", '"')
-        data = f"[{data}]"
-        swarm_data = json.loads(data)
+        swarm_data = extract_swarm_data(content)
+
+    if not swarm_data:
+        print("Failed to parse swarm data")
+        return
 
     print("\nSwarm Holders Analysis:\n")
     print("Name                  Holders    Total Shares    Top Holder %")
