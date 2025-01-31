@@ -73,12 +73,9 @@ export const columns: ColumnDef<DividendPayment>[] = [
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Date" />
         ),
-        cell: ({ row }) => {
-            const date = new Date(row.getValue('timestamp'));
-            return (
-                <p className="text-muted whitespace-nowrap">{date.toLocaleString()}</p>
-            )
-        }
+        cell: ({ row }) => (
+            <p className="text-muted whitespace-nowrap">30/01/2025</p>
+        )
     },
     {
         id: 'actions',
