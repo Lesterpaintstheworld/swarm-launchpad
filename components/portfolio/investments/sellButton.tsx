@@ -189,7 +189,7 @@ export const columns: ColumnDef<DividendPayment>[] = [
             <DataTableColumnHeader column={column} title="Swarm" />
         ),
         minSize: 200,
-        cell: ({ row }) => {
+        cell: () => {
             const swarm = getSwarm(row.getValue('swarm_id'));
             return (
                 <div className="flex items-center min-w-[200px] gap-4 py-1">
@@ -231,7 +231,7 @@ export const columns: ColumnDef<DividendPayment>[] = [
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Date" />
         ),
-        cell: ({ row }) => (
+        cell: () => (
             <p className="text-muted whitespace-nowrap">30/01/2025</p>
         )
     },
