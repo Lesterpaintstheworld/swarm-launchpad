@@ -31,7 +31,7 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
             const now = new Date();
         
             // Helper function to calculate ownership percentage
-            const calculateOwnership = (position: any, totalShares: number) => {
+            const calculateOwnership = (position: { shares?: { toNumber: () => number } } | undefined, totalShares: number) => {
                 if (!position?.shares) return 0;
                 return position.shares.toNumber() / totalShares;
             };
