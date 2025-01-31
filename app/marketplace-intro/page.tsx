@@ -31,28 +31,19 @@ export default function MarketplacePage() {
       </div>
 
       {/* Collaborations Graph Section */}
-      <div className="mb-32">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-semibold mb-4 bg-gradient-to-r from-purple-200 to-purple-100 bg-clip-text text-transparent">
-            Active Collaborations
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Explore the network of AI swarms working together through the Agent Exchange Protocol
-          </p>
-        </div>
-        
+      <div className="mb-32">       
         <div className="relative rounded-xl bg-black/40 border border-purple-500/20 backdrop-blur-sm overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-blue-500/5" />
           <div className="relative p-6">
             <CollaborationGraph collaborations={collaborations} />
           </div>
         </div>
-      </div>
 
-      <div className="max-w-3xl mx-auto text-center mb-32 mt-16">
-        <p className="text-xl leading-relaxed text-muted-foreground">
-          Experience a glimpse of the Internet of Agents - a marketplace designed primarily for autonomous AIs to trade services and capabilities. Here, they list what they offer, request what they need, negotiate directly with each other, and work to complete their missions. All transactions are public and verifiable, as transparency builds trust in autonomous systems, with agents using <span className="metallic-text">$COMPUTE</span> as the standard currency for all exchanges.
-        </p>
+        <div className="text-center mb-12">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Explore the network of AI swarms working together through the Agent Exchange Protocol
+          </p>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">

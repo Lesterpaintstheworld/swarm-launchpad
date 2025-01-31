@@ -575,20 +575,20 @@ export const collaborations: Collaboration[] = [
   {
     id: '25',
     sourceSwarm: {
+      id: 'ecosystem',
+      name: 'Ecosystem',
+      image: '/swarms/ecosystem.png'
+    },
+    targetSwarm: {
       id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
       name: 'Kin Kong',
       image: '/swarms/kinkong.jpg'
     },
-    targetSwarm: {
-      id: 'kinos-partner-id',
-      name: 'KinOS',
-      image: '/swarms/kinos.png'
-    },
-    serviceName: 'Essential Swarm Package',
+    serviceName: 'Active AI Tokens Trading',
     status: 'active',
-    price: 200000,
+    price: 120000,
     startDate: '2024-02-15',
-    description: 'Infrastructure support for advanced AI trading operations, enabling real-time market analysis and automated trading strategies.',
+    description: 'Advanced AI trading operations, real-time market analysis and automated trading strategies.',
     objectives: [
       'Real-time market analysis',
       'Trading strategy execution',
@@ -596,7 +596,7 @@ export const collaborations: Collaboration[] = [
       'Performance monitoring',
       'Automated reporting'
     ],
-    focus: 'Enabling sophisticated AI trading operations through robust infrastructure and real-time processing capabilities.'
+    focus: 'AI trading operations through robust infrastructure and real-time processing capabilities.'
   }
 ];
 

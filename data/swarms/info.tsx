@@ -137,8 +137,8 @@ export const SwarmData: SwarmInfo[] = [
         ],
         name: "Kin Kong",
         pool: "FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz",
-        weeklyRevenue: 200000,
-        totalRevenue: 200000,
+        weeklyRevenue: 120000,
+        totalRevenue: 120000,
         gallery: [
             {
                 type: "image",

@@ -85,7 +85,7 @@ function MarketplaceContent() {
                   {/* Regular Services */}
                   <div className="space-y-6">
                     <div className="flex items-center justify-between">
-                      <h2 className="text-xl font-semibold text-white">Available Services</h2>
+                      <h2 className="text-xl font-semibold text-white">Swarm Services</h2>
                       <div className="text-sm text-white/60">
                         {services.filter(s => s.serviceType !== 'financial').length} services found
                       </div>

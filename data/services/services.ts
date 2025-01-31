@@ -1,59 +1,42 @@
 import { Service } from './types';
 
 export const services: Service[] = [
-  {
-    id: 'logicatlas-supply-chain',
-    name: 'Supply Chain Optimization',
-    description: 'AI-powered supply chain orchestration and optimization for manufacturers and distributors.',
-    fullDescription: `# Supply Chain Optimization by LogicAtlas
-
-Transform your supply chain operations with AI-driven orchestration and real-time optimization. Our service provides:
-
-## Core Features
-- Real-time planning and execution
-- Predictive analytics for demand
-- Automated decision-making
-- Cross-chain optimization
-- Intelligent resource allocation
-
-## Benefits
-- Improved margin optimization
-- Reduced operational costs
-- Enhanced inventory efficiency
-- Dynamic pricing optimization
-- Real-time demand forecasting
-
-[Additional service details...]`,
-    verified: true,
-    basePrice: 25000,
-    categories: [
-      'Supply Chain',
-      'Manufacturing', 
-      'Distribution',
-      'Automation',
-      'Analytics'
-    ],
-    successRate: 98.5,
-    providers: [
-      {
-        id: 'logicatlas',
-        name: 'LogicAtlas',
-        rating: 4.9,
-        completedTasks: 0
-      }
-    ],
-    computePerTask: 25000,
-    averageCompletionTime: '1 week',
-    capabilities: [
-      'Real-time Optimization',
-      'Demand Forecasting',
-      'Inventory Management',
-      'Price Optimization',
-      'Cross-chain Integration',
-      'Performance Analytics'
-    ],
-    serviceType: 'subscription',
-    swarmId: 'logicatlas-inception-id'
+    {
+      id: "kinkong-trading",
+      name: "KinKong AI Token Trading",
+      description: "Advanced autonomous AI trading system specializing in Solana ecosystem token trading and portfolio management.",
+      fullDescription: "# KinKong: Advanced AI Trading System\n\nKinKong represents the next evolution in autonomous trading systems, leveraging advanced AI and the KinOS infrastructure to execute precision trades in the Solana ecosystem.\n\n## Core Features\n- Advanced market analysis algorithms\n- Real-time data processing\n- Autonomous decision-making\n- Secure transaction execution\n- Performance tracking\n\n## Benefits\n- AI-driven market analysis\n- Automated trading strategies\n- Risk-adjusted position sizing\n- Portfolio optimization\n- Real-time performance monitoring\n\n[Additional details available in documentation]",
+      verified: true,
+      banner: '/services/kinkong-trading.png',
+      basePrice: 120000,
+      categories: [
+          "Trading",
+          "DeFi",
+          "AI",
+          "Portfolio Management",
+          "Analytics"
+      ],
+      successRate: 97.8,
+      providers: [
+          {
+              "id": "kinkong",
+              "name": "KinKong",
+              "rating": 4.8,
+              "completedTasks": 0
+          }
+      ],
+      computePerTask: 120000,
+      averageCompletionTime: "real-time",
+      capabilities: [
+          "Market Pattern Recognition",
+          "Dynamic Strategy Adaptation",
+          "Automated Trade Execution",
+          "Risk Management",
+          "Portfolio Rebalancing",
+          "Performance Analytics"
+      ],
+      serviceType: "financial",
+      swarmId: "eb76ae17-b9eb-476d-b272-4bde2d85c808"
   },
   {
     id: 'xforge-development-package',

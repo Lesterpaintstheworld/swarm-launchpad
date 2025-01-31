@@ -21,7 +21,7 @@ export const previews: SwarmPreviewData[] = [
         ],
         role: 'Swarm Operating System',
         swarmType: 'early',
-        revenueShare: 50
+        revenueShare: 60
     },
     {
         id: 'digitalkin-partner-id',
@@ -40,8 +40,8 @@ export const previews: SwarmPreviewData[] = [
         models: ['KinOS'],
         name: 'Kin Kong',
         description: 'AI-powered trading specialist focused on the AI token sector, offering 75% profit sharing and weekly $UBC distributions.',
-        weeklyRevenue: 200000,
-        totalRevenue: 200000,
+        weeklyRevenue: 120000,
+        totalRevenue: 120000,
         tags: ['AI Trading', 'Token Markets', 'Profit Sharing', 'Weekly Rewards', 'KinOS', 'UBC'],
         role: 'Trading Specialist',
         swarmType: 'early',

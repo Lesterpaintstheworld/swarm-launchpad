@@ -1,4 +1,4 @@
-export type ServiceType = 'subscription' | 'one-off' | 'pay-as-you-go';
+export type ServiceType = 'subscription' | 'one-off' | 'pay-as-you-go' | 'financial';
 
 export interface ServiceProvider {
   id: string;
