@@ -171,22 +171,22 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
                         <div className="flex gap-12 text-right">
                             <div>
                                 <p className="text-sm text-muted-foreground mb-1">MARKET CAP</p>
-                                <p className="text-3xl font-semibold text-green-400">
-                                    <SwarmInvestCard pool={swarm.pool} marketCapOnly /> <span className="text-xl">$COMPUTE</span>
+                                <p className="text-3xl font-semibold">
+                                    <SwarmInvestCard pool={swarm.pool} marketCapOnly /> <span className="text-xl metallic-text">$COMPUTE</span>
                                 </p>
                             </div>
                             <div>
                                 <p className="text-sm text-muted-foreground mb-1">AMOUNT RAISED</p>
-                                <p className="text-3xl font-semibold text-blue-400">
-                                    <SwarmInvestCard pool={swarm.pool} amountRaisedOnly /> <span className="text-xl">$COMPUTE</span>
+                                <p className="text-3xl font-semibold">
+                                    <SwarmInvestCard pool={swarm.pool} amountRaisedOnly /> <span className="text-xl metallic-text">$COMPUTE</span>
                                 </p>
                             </div>
                             <div>
                                 <p className="text-sm text-muted-foreground mb-1">WEEKLY REVENUE</p>
-                                <p className="text-3xl font-semibold text-purple-400">
+                                <p className="text-3xl font-semibold">
                                     {swarm.weeklyRevenue ? (
                                         <>
-                                            {swarm.weeklyRevenue.toLocaleString()} <span className="text-xl">$COMPUTE</span>
+                                            {swarm.weeklyRevenue.toLocaleString()} <span className="text-xl metallic-text">$COMPUTE</span>
                                         </>
                                     ) : (
                                         "-"
