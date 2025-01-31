@@ -31,6 +31,8 @@ export async function sleep(ms: number) {
 }
 
 export function calculateSharePrice(n: number): number {
+    console.log('calculateSharePrice input:', n);
+    
     // Calculate cycle and position within cycle
     const cycle = Math.floor(n / 5000);
     const x = n % 5000;
@@ -54,8 +56,16 @@ export function calculateSharePrice(n: number): number {
         multiplier = 0.70 + (0.30 * (x - 3750) / 1250);
     }
     
-    // Return price with 6 decimal places of precision
-    return base * multiplier;
+    const price = base * multiplier;
+    console.log('calculateSharePrice result:', {
+        cycle,
+        x,
+        base,
+        multiplier,
+        price
+    });
+    
+    return price;
 }
 
 // eslint-disable-next-line

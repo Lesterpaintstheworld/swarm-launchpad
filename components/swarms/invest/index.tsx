@@ -48,11 +48,20 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
     const { poolAccount, purchaseShares } = useLaunchpadProgramAccount({ poolAddress: pool });
 
     useEffect(() => {
+        console.log('Pool Account Data:', poolAccount.data);
+        
         if (poolAccount.data) {
             const totalSupply = poolAccount.data.totalShares.toNumber();
             const remainingSupply = poolAccount.data.availableShares.toNumber();
             const soldShares = totalSupply - remainingSupply;
             const currentPrice = calculateSharePrice(soldShares);
+            
+            console.log('Price calculation:', {
+                totalSupply,
+                remainingSupply,
+                soldShares,
+                currentPrice
+            });
             
             setData({
                 totalSupply: totalSupply,
@@ -68,6 +77,12 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
         if (isNaN(value) || value < 0 || value > data.remainingSupply) return;
         
         const totalPrice = value * data.pricePerShare;
+        console.log('Share input calculation:', {
+            shares: value,
+            pricePerShare: data.pricePerShare,
+            totalPrice
+        });
+        
         setPrice(totalPrice);
         setNumShares(value);
     };
@@ -75,6 +90,13 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
     const handleQuickAmount = (amount: number) => {
         if (amount > data.remainingSupply) return;
         const totalPrice = amount * data.pricePerShare;
+        
+        console.log('Quick amount calculation:', {
+            amount,
+            pricePerShare: data.pricePerShare,
+            totalPrice
+        });
+        
         setNumShares(amount);
         setPrice(totalPrice);
     };
