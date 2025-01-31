@@ -120,12 +120,10 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
         if (!numShares || numShares <= 0) {
             toast.error("Please enter a valid number of shares");
             return;
-            return;
         }
 
         setIsLoading(true);
         const calculatedCostInBaseUnits = Math.floor(price * Math.pow(10, 6));
-        const calculatedUbcFeeInBaseUnits = Math.floor(price * 0.05 * Math.pow(10, 6));
             
         const swarm = getSwarmUsingPoolId(pool);
         if (!swarm) {
@@ -135,8 +133,7 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
 
         toast.promise(purchaseShares.mutateAsync({ 
             numberOfShares: numShares, 
-            calculatedCost: calculatedCostInBaseUnits,
-            ubcFee: calculatedUbcFeeInBaseUnits
+            calculatedCost: calculatedCostInBaseUnits
         }), {
             loading: 'Transaction pending...',
             success: (result) => {
