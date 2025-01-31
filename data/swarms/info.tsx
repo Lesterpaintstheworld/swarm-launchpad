@@ -304,6 +304,8 @@ export const SwarmData: SwarmInfo[] = [
         ],
         name: "XForge",
         pool: "AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi",
+        weeklyRevenue: 1600000,
+        totalRevenue: 1600000,
         gallery: [
             {
                 type: "image",
