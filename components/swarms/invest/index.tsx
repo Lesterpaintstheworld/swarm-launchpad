@@ -49,10 +49,15 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
 
     useEffect(() => {
         if (poolAccount.data) {
+            const totalSupply = poolAccount.data.totalShares.toNumber();
+            const remainingSupply = poolAccount.data.availableShares.toNumber();
+            const soldShares = totalSupply - remainingSupply;
+            const currentPrice = calculateSharePrice(soldShares);
+            
             setData({
-                totalSupply: poolAccount.data.totalShares.toNumber(),
-                remainingSupply: poolAccount.data.availableShares.toNumber(),
-                pricePerShare: calculateSharePrice(poolAccount.data.totalShares.toNumber() - poolAccount.data.availableShares.toNumber()),
+                totalSupply: totalSupply,
+                remainingSupply: remainingSupply,
+                pricePerShare: currentPrice,
                 frozen: poolAccount.data.isFrozen || false,
             });
         }
@@ -61,14 +66,17 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
     const handleSharesInput = (e: ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value.replace(/,/g, ''));
         if (isNaN(value) || value < 0 || value > data.remainingSupply) return;
-        setPrice(Math.floor(value * data.pricePerShare));
+        
+        const totalPrice = value * data.pricePerShare;
+        setPrice(totalPrice);
         setNumShares(value);
-    }
+    };
 
     const handleQuickAmount = (amount: number) => {
         if (amount > data.remainingSupply) return;
+        const totalPrice = amount * data.pricePerShare;
         setNumShares(amount);
-        setPrice(Math.floor(amount * data.pricePerShare));
+        setPrice(totalPrice);
     };
 
     const handleBuy = () => {
@@ -198,6 +206,7 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
 
                 {/* Cost breakdown */}
                 <div className="space-y-3 bg-slate-800/50 p-4 rounded-lg">
+                    {/* Cost per Share */}
                     <div className="flex justify-between">
                         <span className="text-slate-300">Cost per Share</span>
                         <div className="flex items-center gap-1">
@@ -205,33 +214,22 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                             <span className="metallic-text">$COMPUTE</span>
                         </div>
                     </div>
-                    <div className="flex justify-between">
-                        <span className="text-slate-300">Total COMPUTE Cost</span>
+
+                    {/* Total Cost - Make this bigger */}
+                    <div className="flex justify-between items-baseline">
+                        <span className="text-slate-300">Total Cost</span>
                         <div className="flex items-center gap-1">
-                            <span className="text-lg font-bold">{IntlNumberFormat(numShares * data.pricePerShare)}</span>
-                            <span className="metallic-text">$COMPUTE</span>
+                            <span className="text-2xl font-bold">{IntlNumberFormat(numShares * data.pricePerShare)}</span>
+                            <span className="metallic-text text-lg">$COMPUTE</span>
                         </div>
                     </div>
-                    <div className="flex justify-between">
-                        <span className="text-slate-300">UBC Fee (5%)</span>
+
+                    {/* Fee - Make this smaller and more subtle */}
+                    <div className="flex justify-between text-sm">
+                        <span className="text-slate-400">UBC Fee (5%)</span>
                         <div className="flex items-center gap-1">
-                            <span className="text-lg font-bold">{IntlNumberFormat(numShares * data.pricePerShare * 0.05)}</span>
+                            <span className="text-slate-300">{IntlNumberFormat(numShares * data.pricePerShare * 0.05)}</span>
                             <span className="metallic-text-ubc">$UBC</span>
-                        </div>
-                    </div>
-                    <div className="pt-2 border-t border-white/10">
-                        <div className="flex justify-between">
-                            <span className="text-slate-300">Total Required</span>
-                            <div className="flex flex-col items-end gap-1">
-                                <div className="flex items-center gap-1">
-                                    <span className="text-lg font-bold">{IntlNumberFormat(numShares * data.pricePerShare)}</span>
-                                    <span className="metallic-text">$COMPUTE</span>
-                                </div>
-                                <div className="flex items-center gap-1">
-                                    <span className="text-lg font-bold">{IntlNumberFormat(numShares * data.pricePerShare * 0.05)}</span>
-                                    <span className="metallic-text-ubc">$UBC</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
