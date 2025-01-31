@@ -4,13 +4,13 @@ import Link from 'next/link';
 const getGradientColors = (sourceId: string) => {
   if (sourceId === 'ecosystem') {
     return {
-      from: 'from-yellow-500/20',
-      via: 'via-amber-500/20',
-      to: 'to-orange-500/20',
+      from: 'from-yellow-300/30',  // Brighter yellow
+      via: 'via-yellow-400/30',    // Mid yellow
+      to: 'to-yellow-500/30',      // Deeper yellow
       hover: {
-        from: 'from-yellow-500/40',
-        via: 'via-amber-500/40',
-        to: 'to-orange-500/40'
+        from: 'from-yellow-300/50',
+        via: 'via-yellow-400/50',
+        to: 'to-yellow-500/50'
       }
     };
   }
