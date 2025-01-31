@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build", 
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "update-multiples": "python scripts/update_multiples.py",
@@ -56,7 +56,7 @@
   },
   "devDependencies": {
     "@types/d3": "^7.4.3",
-    "@types/node": "^20",
+    "@types/node": "^20.17.16",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "cross-env": "^7.0.3",
@@ -65,6 +65,7 @@
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5"
   }
 }
