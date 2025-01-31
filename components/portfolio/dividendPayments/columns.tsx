@@ -96,18 +96,23 @@ export const columns: ColumnDef<DividendPayment>[] = [
         id: 'actions',
         header: () => null,
         cell: ({ row }) => {
+            const computeAmount = row.getValue('amount') as number;
+            const isDisabled = computeAmount < 10;
+            
             return (
                 <div className="w-full flex justify-end">
                     <Button 
                         variant="secondary" 
                         size="sm"
-                        className="bg-violet-500/10 hover:bg-violet-500/20 text-violet-400 hover:text-violet-300 transition-colors"
+                        className="bg-violet-500/10 hover:bg-violet-500/20 text-violet-400 hover:text-violet-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         onClick={() => {
                             // Add claim functionality here
                             console.log('Claiming dividend:', row.original);
                         }}
+                        disabled={isDisabled}
+                        title={isDisabled ? "Minimum 10 $COMPUTE required to claim" : undefined}
                     >
-                        Claim
+                        {isDisabled ? "Below Minimum" : "Claim"}
                     </Button>
                 </div>
             )

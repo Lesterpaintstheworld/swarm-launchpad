@@ -73,7 +73,7 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
     }, [kinKongPosition?.data, xForgePosition?.data, kinOSPosition?.data]);
 
     return (
-        <Card className={cn("p-6", className)}>
+        <Card className={cn("w-full p-6", className)}>
             <div className="flex items-center justify-between mb-6">
                 <div>
                     <h3 className="font-semibold">Dividend Payments</h3>
