@@ -162,7 +162,7 @@ export function Returns() {
                         </div>
                     </div>
 
-                    {/* Fee Structure Section - Modified Layout */}
+                    {/* Fee Structure Section */}
                     <div className="space-y-6">
                         <div className="flex items-center gap-3 mb-8">
                             <div className="h-12 w-12 shrink-0 rounded-xl bg-chart-3/20 flex items-center justify-center">
@@ -171,44 +171,13 @@ export function Returns() {
                             <div className="min-w-0">
                                 <h4 className="text-xl font-bold truncate">Fee Structure</h4>
                                 <p className="text-muted-foreground truncate">
-                                    A 5% fee structure that varies between primary and secondary markets
+                                    A simple 5% fee structure for all transactions
                                 </p>
                             </div>
                         </div>
                         <div className="relative group">
                             <div className="absolute inset-0 bg-gradient-to-r from-chart-3 to-chart-4 rounded-lg blur opacity-30 group-hover:opacity-40 transition-opacity" />
                             <div className="relative bg-background/40 backdrop-blur-sm p-6 rounded-lg border border-border/50">
-                                {/* Market Toggle */}
-                                <div className="flex justify-center mb-8">
-                                    <div className="inline-flex items-center p-1 rounded-full bg-black/40 backdrop-blur-sm">
-                                        <Toggle
-                                            variant="outline"
-                                            size="sm"
-                                            pressed={marketType === 'primary'}
-                                            onPressedChange={() => setMarketType('primary')}
-                                            className={`px-6 py-2 rounded-full transition-all duration-200 border-0 ${
-                                                marketType === 'primary' 
-                                                ? 'bg-white/10 text-white' 
-                                                : 'text-white/60 hover:text-white/80'
-                                            }`}
-                                        >
-                                            Primary Market
-                                        </Toggle>
-                                        <Toggle
-                                            variant="outline"
-                                            size="sm"
-                                            pressed={marketType === 'secondary'}
-                                            onPressedChange={() => setMarketType('secondary')}
-                                            className={`px-6 py-2 rounded-full transition-all duration-200 border-0 ${
-                                                marketType === 'secondary' 
-                                                ? 'bg-white/10 text-white' 
-                                                : 'text-white/60 hover:text-white/80'
-                                            }`}
-                                        >
-                                            Secondary Market
-                                        </Toggle>
-                                    </div>
-                                </div>
 
                                 {/* Two-column layout */}
                                 <div className="grid md:grid-cols-2 gap-8">
@@ -245,7 +214,10 @@ export function Returns() {
                                             <ResponsiveContainer width="100%" height="100%">
                                                 <PieChart>
                                                     <Pie
-                                                        data={marketType === 'primary' ? primaryMarketData : secondaryMarketData}
+                                                        data={[
+                                                            { name: 'Partner Fee', value: 2.5, color: '#3b82f6' },
+                                                            { name: 'Platform Fee', value: 2.5, color: '#22c55e' }
+                                                        ]}
                                                         cx="50%"
                                                         cy="50%"
                                                         innerRadius={60}
@@ -253,9 +225,11 @@ export function Returns() {
                                                         paddingAngle={2}
                                                         dataKey="value"
                                                     >
-                                                        {(marketType === 'primary' ? primaryMarketData : secondaryMarketData)
-                                                            .map((entry, index) => (
-                                                                <Cell key={`cell-${index}`} fill={entry.color} />
+                                                        {[
+                                                            { color: '#3b82f6' },
+                                                            { color: '#22c55e' }
+                                                        ].map((entry, index) => (
+                                                            <Cell key={`cell-${index}`} fill={entry.color} />
                                                         ))}
                                                     </Pie>
                                                 </PieChart>
@@ -264,68 +238,28 @@ export function Returns() {
 
                                         {/* Fee Breakdown */}
                                         <div className="grid gap-6">
-                                            {marketType === 'primary' ? (
-                                                <>
-                                                    <div className="space-y-4">
-                                                        <div className="flex items-center gap-2">
-                                                            <div className="w-3 h-3 rounded-full bg-blue-500" />
-                                                            <h6 className="font-medium">Partner Fee (2.5% in $UBC)</h6>
-                                                        </div>
-                                                        <ul className="list-disc pl-6 text-muted-foreground space-y-2">
-                                                            <li>Collected in $UBC</li>
-                                                            <li>Weekly distribution to partners</li>
-                                                            <li>Rewards ecosystem contributors</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div className="space-y-4">
-                                                        <div className="flex items-center gap-2">
-                                                            <div className="w-3 h-3 rounded-full bg-green-500" />
-                                                            <h6 className="font-medium">Platform Fee (2.5% in $UBC)</h6>
-                                                        </div>
-                                                        <ul className="list-disc pl-6 text-muted-foreground space-y-2">
-                                                            <li>Funds platform operations</li>
-                                                            <li>Supports technical development</li>
-                                                            <li>Maintains infrastructure</li>
-                                                        </ul>
-                                                    </div>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <div className="space-y-4">
-                                                        <div className="flex items-center gap-2">
-                                                            <div className="w-3 h-3 rounded-full bg-blue-500" />
-                                                            <h6 className="font-medium">Partner Fee (2% in $UBC)</h6>
-                                                        </div>
-                                                        <ul className="list-disc pl-6 text-muted-foreground space-y-2">
-                                                            <li>Collected directly in $UBC on every trade</li>
-                                                            <li>Distributed to partners weekly</li>
-                                                            <li>Rewards ecosystem contributors</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div className="space-y-4">
-                                                        <div className="flex items-center gap-2">
-                                                            <div className="w-3 h-3 rounded-full bg-green-500" />
-                                                            <h6 className="font-medium">Platform Fee (2% in $UBC)</h6>
-                                                        </div>
-                                                        <ul className="list-disc pl-6 text-muted-foreground space-y-2">
-                                                            <li>Collected in $UBC from each transaction</li>
-                                                            <li>Funds essential platform operations</li>
-                                                            <li>Supports ongoing development</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div className="space-y-4">
-                                                        <div className="flex items-center gap-2">
-                                                            <div className="w-3 h-3 rounded-full bg-orange-500" />
-                                                            <h6 className="font-medium">Investor Redistribution (1% in $UBC)</h6>
-                                                        </div>
-                                                        <ul className="list-disc pl-6 text-muted-foreground space-y-2">
-                                                            <li>Collected in $UBC from every trade</li>
-                                                            <li>Claimable by active UBC traders/holders</li>
-                                                            <li>30-day window for reward claims</li>
-                                                        </ul>
-                                                    </div>
-                                                </>
-                                            )}
+                                            <div className="space-y-4">
+                                                <div className="flex items-center gap-2">
+                                                    <div className="w-3 h-3 rounded-full bg-blue-500" />
+                                                    <h6 className="font-medium">Partner Fee (2.5% in $UBC)</h6>
+                                                </div>
+                                                <ul className="list-disc pl-6 text-muted-foreground space-y-2">
+                                                    <li>Collected in $UBC</li>
+                                                    <li>Weekly distribution to partners</li>
+                                                    <li>Rewards ecosystem contributors</li>
+                                                </ul>
+                                            </div>
+                                            <div className="space-y-4">
+                                                <div className="flex items-center gap-2">
+                                                    <div className="w-3 h-3 rounded-full bg-green-500" />
+                                                    <h6 className="font-medium">Platform Fee (2.5% in $UBC)</h6>
+                                                </div>
+                                                <ul className="list-disc pl-6 text-muted-foreground space-y-2">
+                                                    <li>Funds platform operations</li>
+                                                    <li>Supports technical development</li>
+                                                    <li>Maintains infrastructure</li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
