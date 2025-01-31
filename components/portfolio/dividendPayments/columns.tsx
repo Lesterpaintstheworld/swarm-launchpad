@@ -29,7 +29,6 @@ interface ActionCellProps {
 
 const ActionCell = ({ row }: ActionCellProps) => {
     const { publicKey } = useWallet();
-    const [isClaimed, setIsClaimed] = useState(false);
     const computeAmount = row.getValue('amount') as number;
     const ubcAmount = row.original.ubcAmount;
     const swarmId = row.getValue('swarm_id') as string;
@@ -45,6 +44,22 @@ const ActionCell = ({ row }: ActionCellProps) => {
     
     const claimKey = `claimed_${swarmId}_${publicKey?.toString()}_week_${getWeekKey()}`;
     
+    // Initialize claimed state from session storage
+    const [isClaimed, setIsClaimed] = useState(() => {
+        if (typeof window !== 'undefined') {
+            return sessionStorage.getItem(claimKey) === 'true';
+        }
+        return false;
+    });
+    
+    // Effect to check session storage when publicKey changes
+    useEffect(() => {
+        if (typeof window !== 'undefined' && publicKey) {
+            const claimed = sessionStorage.getItem(claimKey) === 'true';
+            setIsClaimed(claimed);
+        }
+    }, [claimKey, publicKey]);
+
     const handleClaim = async () => {
         if (!publicKey || !claimKey) return;
 
@@ -67,6 +82,8 @@ const ActionCell = ({ row }: ActionCellProps) => {
                     parse_mode: 'HTML'
                 })
             });
+
+            // Set session storage before showing toast
 
             toast.success(
                 <div className="relative transform transition-all cursor-pointer">
