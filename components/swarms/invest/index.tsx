@@ -11,11 +11,12 @@ import { Copy } from 'lucide-react';
 
 interface LegendEntry {
     value: string;
+    color: string;
     payload: {
         name: string;
         value: number;
         color: string;
-        percentage: string;
+        percentage?: string;
     };
 }
 import { calculateSharePrice, cn, IntlNumberFormat, IntlNumberFormatCompact } from "@/lib/utils";
