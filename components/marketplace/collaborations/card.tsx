@@ -68,7 +68,7 @@ export function CollaborationCard({ id, sourceSwarm, targetSwarm, serviceName, s
             </div>
             
             <div className="h-[2px] w-full relative overflow-hidden my-1">
-              <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-blue-500/20 group-hover:from-pink-500/40 group-hover:via-purple-500/40 group-hover:to-blue-500/40 transition-all duration-500" />
+              <div className={`absolute inset-0 bg-gradient-to-r ${getGradientColors(sourceSwarm.id).from} ${getGradientColors(sourceSwarm.id).via} ${getGradientColors(sourceSwarm.id).to} group-hover:${getGradientColors(sourceSwarm.id).hover.from} group-hover:${getGradientColors(sourceSwarm.id).hover.via} group-hover:${getGradientColors(sourceSwarm.id).hover.to} transition-all duration-500`} />
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent w-[50%] animate-[moveLight_3s_linear_infinite] -translate-x-[100%]" />
             </div>
 
