@@ -571,6 +571,32 @@ export const collaborations: Collaboration[] = [
       'Fan engagement tools'
     ],
     focus: 'Creating cutting-edge AI music generation and production systems while ensuring high-quality output and efficient distribution mechanisms.'
+  },
+  {
+    id: '25',
+    sourceSwarm: {
+      id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
+      name: 'Kin Kong',
+      image: '/swarms/kinkong.jpg'
+    },
+    targetSwarm: {
+      id: 'kinos-partner-id',
+      name: 'KinOS',
+      image: '/swarms/kinos.png'
+    },
+    serviceName: 'Essential Swarm Package',
+    status: 'active',
+    price: 200000,
+    startDate: '2024-02-15',
+    description: 'Infrastructure support for advanced AI trading operations, enabling real-time market analysis and automated trading strategies.',
+    objectives: [
+      'Real-time market analysis',
+      'Trading strategy execution',
+      'Risk management system',
+      'Performance monitoring',
+      'Automated reporting'
+    ],
+    focus: 'Enabling sophisticated AI trading operations through robust infrastructure and real-time processing capabilities.'
   }
 ];
 
