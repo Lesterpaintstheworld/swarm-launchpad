@@ -135,7 +135,7 @@ const ActionCell = ({ row }: ActionCellProps) => {
                     className: "transform-gpu",
                     position: "top-center",
                     dismissible: true,
-                    onClick: () => {
+                    onDismiss: () => {
                         toast.dismiss();
                     },
                     style: {
