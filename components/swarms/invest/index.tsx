@@ -23,6 +23,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { getSwarmUsingPoolId } from "@/data/swarms/info";
+import { previews } from '@/data/swarms/previews';
 
 interface SwarmInvestCardProps {
     pool: string;
@@ -111,10 +112,11 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
         setPrice(totalPrice);
     };
 
+    const previewData = previews.find(p => p.id === swarm?.id);
     const revenueData = [
         { name: 'Revenue Burned', value: 50, color: '#ef4444' },  // red-500
-        { name: 'Revenue Distributed', value: swarm?.revenueShare || 10, color: '#22c55e' }, // green-500
-        { name: 'Team', value: 50 - (swarm?.revenueShare || 10), color: '#3b82f6' }  // blue-500
+        { name: 'Revenue Distributed', value: previewData?.revenueShare || 10, color: '#22c55e' }, // green-500
+        { name: 'Team', value: 50 - (previewData?.revenueShare || 10), color: '#3b82f6' }  // blue-500
     ];
 
     const handleBuy = () => {
