@@ -31,7 +31,7 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
                 // XForge dividends
                 {
                     id: '1',
-                    swarm: 'XForge',
+                    swarm_id: 'forge-partner-id',
                     amount: Math.floor(160000 * calculateOwnership(xForgePosition?.data, 100000)),
                     date: now.toISOString(),
                     status: 'pending'
@@ -39,7 +39,7 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
                 // KinOS dividends
                 {
                     id: '2',
-                    swarm: 'KinOS',
+                    swarm_id: 'kinos-partner-id',
                     amount: Math.floor(46000 * calculateOwnership(kinOSPosition?.data, 100000)),
                     date: now.toISOString(),
                     status: 'pending'
@@ -47,7 +47,7 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
                 // KinKong dividends
                 {
                     id: '3',
-                    swarm: 'Kin Kong',
+                    swarm_id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
                     amount: Math.floor(12000 * calculateOwnership(kinKongPosition?.data, 100000)),
                     date: now.toISOString(),
                     status: 'pending'
