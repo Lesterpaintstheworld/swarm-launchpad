@@ -270,6 +270,22 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
                 </div>
             </div>
 
+            {/* Active Collaborations - Full Width */}
+            {getCollaborationsBySwarm(swarm.id).length > 0 && (
+                <div className="mt-16">
+                    <div className="flex items-center gap-8 mb-4">
+                        <h4 className="font-semibold">Active Collaborations</h4>
+                    </div>
+                    <hr className="mb-6" />
+                    <div className="bg-black/20 rounded-xl p-6 border border-white/10">
+                        <CollaborationGrid 
+                            collaborations={getCollaborationsBySwarm(swarm.id)}
+                        />
+                    </div>
+                </div>
+            )}
+
+            {/* Market Listings */}
             <SwarmRecentMarketListings
                 swarmId={swarm.id}
                 numberOfListings={7}
