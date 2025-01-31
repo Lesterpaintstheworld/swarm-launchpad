@@ -2,14 +2,12 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
-import { formatSignature, IntlNumberFormat } from "@/lib/utils";
+import { IntlNumberFormat } from "@/lib/utils";
 import { getSwarm } from "@/data/swarms/previews";
-import { Tag } from "@/components/ui/tag";
 import { DividendPayment } from ".";
 import Image from "next/image";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/shadcn/tooltip";
 import Link from "next/link";
-import { Copy } from "@/components/ui/copy";
+import { Button } from "@/components/shadcn/button";
 
 export const columns: ColumnDef<DividendPayment>[] = [
     {
@@ -22,7 +20,14 @@ export const columns: ColumnDef<DividendPayment>[] = [
             const swarm = getSwarm(row.getValue('swarm_id'));
             
             if (!swarm) {
-                return <div>Unknown Swarm</div>;
+                return (
+                    <div className="flex items-center min-w-[200px] gap-4 py-1">
+                        <div className="w-8 h-8 rounded-full bg-white/10" />
+                        <div className="flex flex-col">
+                            <span className="text-lg text-muted-foreground">Unknown Swarm</span>
+                        </div>
+                    </div>
+                );
             }
 
             return (
@@ -57,9 +62,9 @@ export const columns: ColumnDef<DividendPayment>[] = [
             <DataTableColumnHeader column={column} title="Amount" />
         ),
         cell: ({ row }) => (
-            <div className="flex flex-row items-center gap-2">
-                <p className="font-bold">{IntlNumberFormat(row.getValue('amount'))}</p>
-                <Tag>{row.original.token}</Tag>
+            <div className="flex items-center gap-2">
+                <span className="font-bold">{IntlNumberFormat(row.getValue('amount'))}</span>
+                <span className="metallic-text">$COMPUTE</span>
             </div>
         )
     },
@@ -69,32 +74,29 @@ export const columns: ColumnDef<DividendPayment>[] = [
             <DataTableColumnHeader column={column} title="Date" />
         ),
         cell: ({ row }) => {
-
-            const date = new Date(Number(row.getValue('timestamp')) * 1000);
-
+            const date = new Date(row.getValue('timestamp'));
             return (
                 <p className="text-muted whitespace-nowrap">{date.toLocaleString()}</p>
             )
         }
     },
     {
-        accessorKey: 'signature',
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Signature" />
-        ),
+        id: 'actions',
+        header: () => null,
         cell: ({ row }) => {
             return (
-                <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger>
-                            <Copy label={formatSignature(row.getValue('signature'))} value={row.getValue('signature')} />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            <p>Copy</p>
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
+                <Button 
+                    variant="secondary" 
+                    size="sm"
+                    className="bg-purple-500/10 hover:bg-purple-500/20 text-purple-400"
+                    onClick={() => {
+                        // Add claim functionality here
+                        console.log('Claiming dividend:', row.original);
+                    }}
+                >
+                    Claim
+                </Button>
             )
         }
-    },
+    }
 ];
