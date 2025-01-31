@@ -149,6 +149,7 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         swarmName: swarm?.name || 'Unknown Swarm',
+                        swarmId: swarm?.id || 'unknown',
                         numberOfShares: numShares,
                         pricePerShare: data.pricePerShare,
                         totalCost: price,
