@@ -5,17 +5,34 @@ import { getSwarm } from '@/data/swarms/previews';
 import Image from 'next/image';
 import { sectionColors } from '../types';
 
+const getCardStyles = (serviceType: string) => {
+  if (serviceType === 'financial') {
+    return {
+      border: 'border-yellow-500/30',
+      hover: 'hover:border-yellow-500/50',
+      gradient: 'from-yellow-500/10 via-yellow-400/5 to-yellow-600/10'
+    };
+  }
+  return {
+    border: sectionColors.services.border,
+    hover: sectionColors.services.hover,
+    gradient: sectionColors.services.primary
+  };
+};
+
 interface ServiceCardProps {
   service: Service;
 }
 
 export function ServiceCard({ service }: ServiceCardProps) {
   const swarm = getSwarm(service.swarmId);
+  const styles = getCardStyles(service.serviceType);
 
   const serviceTypeIcon = {
     'subscription': <Clock className="w-4 h-4 text-white/40" />,
     'one-off': <Cpu className="w-4 h-4 text-white/40" />,
-    'pay-as-you-go': <Cpu className="w-4 h-4 text-white/40" />
+    'pay-as-you-go': <Cpu className="w-4 h-4 text-white/40" />,
+    'financial': <Cpu className="w-4 h-4 text-yellow-400/60" />
   };
 
   const serviceTypeLabel = {
@@ -25,7 +42,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
   };
 
   return (
-    <div className={`group relative rounded-xl bg-white/5 border ${sectionColors.services.border} overflow-hidden transition-all duration-300 ${sectionColors.services.hover}`}>
+    <div className={`group relative rounded-xl bg-white/5 border ${styles.border} overflow-hidden transition-all duration-300 ${styles.hover}`}>
       {/* Banner image and swarm attribution */}
       {service.banner && (
         <div className="relative">
