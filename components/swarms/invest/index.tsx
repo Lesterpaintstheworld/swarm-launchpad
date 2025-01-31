@@ -5,7 +5,8 @@ import { Button } from "@/components/shadcn/button";
 import { ConnectButton } from "@/components/solana/connectButton";
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, Props as RechartsProps } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
+import { Props as RechartsProps } from 'recharts/types/component/DefaultLegendContent';
 import { Copy } from 'lucide-react';
 
 interface LegendEntry {
