@@ -100,7 +100,7 @@ def update_info_file(multiples: dict):
                 # Replace the multiple value
                 lines[i] = re.sub(
                     r'(multiple:\s*)[0-9.]+',
-                    f'\g<1>{multiples[current_pool]}',
+                    fr'\1{multiples[current_pool]}',
                     line
                 )
                 current_pool = None  # Reset current pool after using it
