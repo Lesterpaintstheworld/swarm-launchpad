@@ -10,7 +10,7 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-function ActionCell({ row }: { row: any }) {
+const ActionCell = ({ row }: { row: any }) => {
     const { publicKey } = useWallet();
     const [isClaimed, setIsClaimed] = useState(false);
     const computeAmount = row.getValue('amount') as number;

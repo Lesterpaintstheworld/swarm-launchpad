@@ -267,6 +267,5 @@ export const columns: ColumnDef<DividendPayment>[] = [
             </Button>
         </div>
     );
-}
     }
 ];
