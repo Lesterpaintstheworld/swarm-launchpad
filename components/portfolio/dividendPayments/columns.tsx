@@ -98,17 +98,19 @@ export const columns: ColumnDef<DividendPayment>[] = [
     {
         id: 'actions',
         header: () => null,
-        cell: ({ row }) => {
-            const { publicKey } = useWallet();
-            const computeAmount = row.getValue('amount') as number;
-            const ubcAmount = row.original.ubcAmount;
-            const swarmId = row.getValue('swarm_id') as string;
-            const swarm = getSwarm(swarmId);
-            const isDisabled = computeAmount < 10;
+        cell: ActionCell
+    }
 
-            const [isClaimed, setIsClaimed] = useState(false);
+    function ActionCell({ row }: { row: any }) {
+        const { publicKey } = useWallet();
+        const [isClaimed, setIsClaimed] = useState(false);
+        const computeAmount = row.getValue('amount') as number;
+        const ubcAmount = row.original.ubcAmount;
+        const swarmId = row.getValue('swarm_id') as string;
+        const swarm = getSwarm(swarmId);
+        const isDisabled = computeAmount < 10;
 
-            const getWeekKey = () => {
+        const getWeekKey = () => {
                 const now = new Date();
                 const startOfWeek = new Date(now);
                 startOfWeek.setDate(now.getDate() - now.getDay()); // Get Sunday
@@ -245,26 +247,26 @@ export const columns: ColumnDef<DividendPayment>[] = [
                 }
             };
             
-            return (
-                <div className="w-full flex justify-end">
-                    <Button 
-                        variant="secondary" 
-                        size="sm"
-                        className="bg-violet-500/10 hover:bg-violet-500/20 text-violet-400 hover:text-violet-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        onClick={handleClaim}
-                        disabled={isDisabled || isClaimed}
-                        title={
-                            isDisabled ? "Minimum 10 $COMPUTE required to claim" : 
-                            isClaimed ? "Already claimed this week" : 
-                            undefined
-                        }
-                    >
-                        {isDisabled ? "Below Minimum" : 
-                         isClaimed ? "Claimed" : 
-                         "Claim"}
-                    </Button>
-                </div>
-            )
-        }
+    return (
+        <div className="w-full flex justify-end">
+            <Button 
+                variant="secondary" 
+                size="sm"
+                className="bg-violet-500/10 hover:bg-violet-500/20 text-violet-400 hover:text-violet-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={handleClaim}
+                disabled={isDisabled || isClaimed}
+                title={
+                    isDisabled ? "Minimum 10 $COMPUTE required to claim" : 
+                    isClaimed ? "Already claimed this week" : 
+                    undefined
+                }
+            >
+                {isDisabled ? "Below Minimum" : 
+                 isClaimed ? "Claimed" : 
+                 "Claim"}
+            </Button>
+        </div>
+    );
+}
     }
 ];
