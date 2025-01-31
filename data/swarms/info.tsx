@@ -30,6 +30,8 @@ export const SwarmData: SwarmInfo[] = [
         models: ['KinOS'],
         name: 'KinOS',
         pool: '37u532qgHbjUHic6mQK51jkT3Do7qkWLEUQCx22MDBD8',
+        weeklyRevenue: 460000,
+        totalRevenue: 460000,
         gallery: [
             {
                 type: "image",
@@ -135,6 +137,8 @@ export const SwarmData: SwarmInfo[] = [
         ],
         name: "Kin Kong",
         pool: "FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz",
+        weeklyRevenue: 200000,
+        totalRevenue: 200000,
         gallery: [
             {
                 type: "image",
