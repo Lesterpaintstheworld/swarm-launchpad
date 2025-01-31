@@ -103,6 +103,8 @@ export const columns: ColumnDef<DividendPayment>[] = [
             const swarm = getSwarm(swarmId);
             const isDisabled = computeAmount < 10;
 
+            const [isClaimed, setIsClaimed] = useState(false);
+
             const handleClaim = async () => {
                 if (!publicKey) return;
 
@@ -125,7 +127,25 @@ export const columns: ColumnDef<DividendPayment>[] = [
                         })
                     });
 
-                    toast.success('Claim submitted successfully');
+                    // Show success message with details
+                    toast.success(
+                        <div className="space-y-2">
+                            <p>Claim registered for {swarm?.name}</p>
+                            <p className="font-medium">
+                                {computeAmount.toLocaleString()} $COMPUTE and {ubcAmount.toLocaleString()} $UBC
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                                Please allow up to 24 hours for the transfer to arrive in your wallet.
+                            </p>
+                        </div>,
+                        {
+                            duration: 6000 // Show for 6 seconds due to longer message
+                        }
+                    );
+
+                    // Disable the button
+                    setIsClaimed(true);
+
                 } catch (error) {
                     console.error('Error sending claim notification:', error);
                     toast.error('Error submitting claim');
@@ -139,10 +159,16 @@ export const columns: ColumnDef<DividendPayment>[] = [
                         size="sm"
                         className="bg-violet-500/10 hover:bg-violet-500/20 text-violet-400 hover:text-violet-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         onClick={handleClaim}
-                        disabled={isDisabled}
-                        title={isDisabled ? "Minimum 10 $COMPUTE required to claim" : undefined}
+                        disabled={isDisabled || isClaimed}
+                        title={
+                            isDisabled ? "Minimum 10 $COMPUTE required to claim" : 
+                            isClaimed ? "Claim already registered" : 
+                            undefined
+                        }
                     >
-                        {isDisabled ? "Below Minimum" : "Claim"}
+                        {isDisabled ? "Below Minimum" : 
+                         isClaimed ? "Claimed" : 
+                         "Claim"}
                     </Button>
                 </div>
             )
