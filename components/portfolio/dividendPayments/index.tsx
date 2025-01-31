@@ -1,55 +1,90 @@
-'use client'
+'use client';
 
-import { Card } from "@/components/ui/card"
-import { DataTable } from "@/components/ui/datatable";
-import { cn, sleep } from "@/lib/utils";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { columns } from "./columns";
-import { useState } from "react";
-import { Button } from "@/components/shadcn/button";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { LucideLoader } from "lucide-react";
+import { DataTable } from "@/components/ui/datatable";
+import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
+import { useEffect, useState } from "react";
 
-type DividendPayment = {
-    swarm_id: string;
-    amount: number;
-    token: string;
-    timestamp: number;
-    signature: string;
+interface DividendPaymentsProps {
+    className?: string;
 }
 
-const DividendPayments = ({ className }: { className?: string }) => {
+const DividendPayments = ({ className }: DividendPaymentsProps) => {
+    const [dividends, setDividends] = useState<any[]>([]);
+    const { position: kinKongPosition } = useLaunchpadProgramAccount({ poolAddress: 'FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz' });
+    const { position: xForgePosition } = useLaunchpadProgramAccount({ poolAddress: 'AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi' });
+    const { position: kinOSPosition } = useLaunchpadProgramAccount({ poolAddress: '37u532qgHbjUHic6mQK51jkT3Do7qkWLEUQCx22MDBD8' });
 
-    const ITEMS_PER_PAGE = 10;
-    const [transactions, setTransactions] = useState<DividendPayment[]>([]);
+    useEffect(() => {
+        const calculateDividends = () => {
+            const data = [];
+            const now = new Date();
+            
+            // Helper function to calculate ownership percentage
+            const calculateOwnership = (position: any, totalShares: number) => {
+                if (!position?.shares) return 0;
+                return position.shares.toNumber() / totalShares;
+            };
 
-    const fetchTransactions = async ({ pageParam }: { pageParam: number }) => {
-        await sleep(1000);
-        const data = [].slice(pageParam, pageParam + ITEMS_PER_PAGE);
-        setTransactions(oldTxns => [...oldTxns, ...data]);
-        return { prevIndex: pageParam }
-    }
+            // KinKong dividends
+            const kinKongOwnership = calculateOwnership(kinKongPosition?.data, 100000);
+            if (kinKongOwnership > 0) {
+                data.push({
+                    id: '1',
+                    swarm: 'Kin Kong',
+                    amount: Math.floor(12000 * kinKongOwnership),
+                    date: now.toISOString(),
+                    status: 'pending'
+                });
+            }
 
-    const { isFetching, fetchNextPage } = useInfiniteQuery({
-        initialPageParam: 0,
-        queryKey: ['dividendPayments'],
-        queryFn: fetchTransactions,
-        getNextPageParam: (lastPage) => lastPage.prevIndex + ITEMS_PER_PAGE,
-        refetchOnMount: true,
-        staleTime: 60 * 1000
-    })
+            // XForge dividends
+            const xForgeOwnership = calculateOwnership(xForgePosition?.data, 100000);
+            if (xForgeOwnership > 0) {
+                data.push({
+                    id: '2',
+                    swarm: 'XForge',
+                    amount: Math.floor(160000 * xForgeOwnership),
+                    date: now.toISOString(),
+                    status: 'pending'
+                });
+            }
+
+            // KinOS dividends
+            const kinOSOwnership = calculateOwnership(kinOSPosition?.data, 100000);
+            if (kinOSOwnership > 0) {
+                data.push({
+                    id: '3',
+                    swarm: 'KinOS',
+                    amount: Math.floor(46000 * kinOSOwnership),
+                    date: now.toISOString(),
+                    status: 'pending'
+                });
+            }
+
+            setDividends(data);
+        };
+
+        calculateDividends();
+    }, [kinKongPosition?.data, xForgePosition?.data, kinOSPosition?.data]);
 
     return (
-        <Card className={cn("w-full flex flex-col", className)}>
-            <h4 className="mb-4">Dividend payments</h4>
-            <DataTable columns={columns} data={transactions} />
-            {transactions.length % ITEMS_PER_PAGE === 0 &&
-                <Button className="mx-auto mt-8 mb-3" onClick={() => fetchNextPage()} disabled={isFetching}>
-                    {isFetching ? <LucideLoader className="animate-spin" /> : 'Load more'}
-                </Button>
-            }
+        <Card className={cn("p-6", className)}>
+            <div className="flex items-center justify-between mb-6">
+                <div>
+                    <h3 className="font-semibold">Dividend Payments</h3>
+                    <p className="text-sm text-muted-foreground">Weekly revenue distributions from your swarm investments</p>
+                </div>
+            </div>
+            <DataTable
+                columns={columns}
+                data={dividends}
+            />
         </Card>
     );
 };
 
 export { DividendPayments };
-export type { DividendPayment }
+export type { DividendPaymentsProps };
