@@ -6,7 +6,6 @@ import { ConnectButton } from "@/components/solana/connectButton";
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
-import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
 import { Copy } from 'lucide-react';
 import { calculateSharePrice, cn, IntlNumberFormat, IntlNumberFormatCompact } from "@/lib/utils";
 import { toast } from 'sonner';
