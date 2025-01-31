@@ -33,7 +33,6 @@ interface SwarmInvestCardProps {
 }
 
 const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: SwarmInvestCardProps) => {
-    const { program } = useLaunchpadProgram();
     const { connected } = useWallet();
     const [numShares, setNumShares] = useState<number>(0);
     const [price, setPrice] = useState<number>(0);
