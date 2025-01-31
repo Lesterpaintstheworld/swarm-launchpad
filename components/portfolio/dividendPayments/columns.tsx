@@ -151,17 +151,89 @@ export const columns: ColumnDef<DividendPayment>[] = [
 
                     // Show success message with details
                     toast.success(
-                        <div className="space-y-2">
-                            <p>Claim registered for {swarm?.name}</p>
-                            <p className="font-medium">
-                                {computeAmount.toLocaleString()} $COMPUTE and {ubcAmount.toLocaleString()} $UBC
-                            </p>
-                            <p className="text-sm text-muted-foreground">
-                                Please allow up to 24 hours for the transfer to arrive in your wallet.
-                            </p>
+                        <div className="relative transform transition-all">
+                            {/* Background glow effect */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-violet-500/20 via-purple-500/20 to-pink-500/20 blur-xl animate-pulse" />
+                            
+                            {/* Content */}
+                            <div className="relative p-4 space-y-4">
+                                {/* Success Icon */}
+                                <div className="flex justify-center">
+                                    <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center">
+                                        <svg 
+                                            className="w-6 h-6 text-green-400 animate-[bounce_1s_ease-in-out_1]" 
+                                            fill="none" 
+                                            stroke="currentColor" 
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path 
+                                                strokeLinecap="round" 
+                                                strokeLinejoin="round" 
+                                                strokeWidth={2} 
+                                                d="M5 13l4 4L19 7" 
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                {/* Title */}
+                                <div className="text-center">
+                                    <h3 className="text-lg font-semibold text-white mb-1">
+                                        Claim Registered Successfully!
+                                    </h3>
+                                    <p className="text-white/60 text-sm">
+                                        for {swarm?.name}
+                                    </p>
+                                </div>
+
+                                {/* Amount Details */}
+                                <div className="bg-white/5 rounded-lg p-3 space-y-2 backdrop-blur-sm border border-white/10">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-sm text-white/60">$COMPUTE</span>
+                                        <span className="font-semibold text-green-400">
+                                            {computeAmount.toLocaleString()}
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-sm text-white/60">$UBC</span>
+                                        <span className="font-semibold text-yellow-400">
+                                            {ubcAmount.toLocaleString()}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* Transfer Notice */}
+                                <div className="flex items-center gap-2 text-center justify-center text-sm text-white/60 bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
+                                    <svg 
+                                        className="w-4 h-4 text-blue-400 animate-pulse" 
+                                        fill="none" 
+                                        stroke="currentColor" 
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path 
+                                            strokeLinecap="round" 
+                                            strokeLinejoin="round" 
+                                            strokeWidth={2} 
+                                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" 
+                                        />
+                                    </svg>
+                                    <span>Transfer will arrive within 24 hours</span>
+                                </div>
+                            </div>
                         </div>,
                         {
-                            duration: 6000
+                            duration: 8000,
+                            className: "transform-gpu",
+                            position: "top-center",
+                            style: {
+                                background: "rgba(0, 0, 0, 0.8)",
+                                backdropFilter: "blur(8px)",
+                                border: "1px solid rgba(255, 255, 255, 0.1)",
+                                borderRadius: "1rem",
+                                padding: "1rem",
+                                minWidth: "380px",
+                                animation: "custom-bounce 0.5s ease-out"
+                            }
                         }
                     );
 
