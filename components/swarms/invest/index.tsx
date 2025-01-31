@@ -193,7 +193,7 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
         );
     }
 
-    if (poolAccount.isError) {
+    if (poolAccount.error) {
         return (
             <div className="text-red-400 p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 Error loading pool data. Please try again later.
