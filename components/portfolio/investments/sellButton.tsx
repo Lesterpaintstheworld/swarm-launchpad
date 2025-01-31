@@ -2,7 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
 import { IntlNumberFormat } from "@/lib/utils";
 import { getSwarm } from "@/data/swarms/previews";
-import { DividendPayment } from ".";
+import { DividendPayment } from "./types";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/shadcn/button";
