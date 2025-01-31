@@ -5,11 +5,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build", 
     "start": "next start",
     "lint": "next lint",
     "update-multiples": "python scripts/update_multiples.py",
-    "get-holders": "node --loader ts-node/esm -r tsconfig-paths/register scripts/get_holders.ts"
+    "get-holders": "cross-env NODE_OPTIONS=\"--loader ts-node/esm\" ts-node --project ./scripts/tsconfig.json scripts/get_holders.ts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1",
