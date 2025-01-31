@@ -77,92 +77,39 @@ def update_info_file(multiples: dict):
     file_path = 'data/swarms/info.tsx'
     
     try:
+        # Read the file
         with open(file_path, 'r', encoding='utf-8') as file:
-            content = file.read()
-            
-        # First extract just the array structure
-        data_match = re.search(r'export const SwarmData: SwarmInfo\[\] = (\[[\s\S]*?\n\])', content)
-        if not data_match:
-            raise Exception("Couldn't find SwarmData array in info.tsx")
-            
-        # Get the original array content
-        original_data = data_match.group(1)
+            lines = file.readlines()
         
-        # Create a simplified version for parsing:
-        # 1. Handle new Date() expressions
-        simplified_data = re.sub(
-            r'new Date\(["\'](\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z)["\']\)',
-            r'"\1"',
-            original_data
-        )
+        # Track current position in the file
+        current_pool = None
         
-        # 2. Fix malformed date strings
-        simplified_data = re.sub(
-            r'"(\d{4}-\d{2}-)"(\d{2})T(\d{2})":"(\d{2})":"(\d{2}\.\d{3}Z)"',
-            r'"\1\2T\3:\4:\5"',
-            simplified_data
-        )
+        # Process each line
+        for i in range(len(lines)):
+            line = lines[i]
+            
+            # If we find a pool line, note which pool we're on
+            if 'pool:' in line:
+                # Extract pool address from the line using regex
+                pool_match = re.search(r'pool:\s*["\']([^"\']+)["\']', line)
+                if pool_match:
+                    current_pool = pool_match.group(1)
+            
+            # If we find a multiple line and we have a current pool
+            elif 'multiple:' in line and current_pool and current_pool in multiples:
+                # Replace the multiple value
+                lines[i] = re.sub(
+                    r'(multiple:\s*)[0-9.]+',
+                    f'\g<1>{multiples[current_pool]}',
+                    line
+                )
+                current_pool = None  # Reset current pool after using it
         
-        # 3. Fix URLs with escaped quotes and colons
-        simplified_data = re.sub(
-            r'""https"://',
-            r'"https://',
-            simplified_data
-        )
-        simplified_data = re.sub(
-            r'://"',
-            r'://',
-            simplified_data
-        )
-        simplified_data = re.sub(
-            r'([^\\])"(https?://[^"]+)"',
-            r'\1"\2"',
-            simplified_data
-        )
-        
-        # 4. Replace template literals and descriptions
-        simplified_data = re.sub(
-            r'`[\s\S]*?`',
-            '"PLACEHOLDER"',
-            simplified_data
-        )
-        simplified_data = re.sub(
-            r'description: \w+Description',
-            'description: "PLACEHOLDER"',
-            simplified_data
-        )
-        
-        # 5. Clean up for JSON parsing
-        simplified_data = re.sub(r"'([^']*)'", r'"\1"', simplified_data)  # Convert single quotes
-        simplified_data = re.sub(r'(\w+):', r'"\1":', simplified_data)    # Quote property names
-        simplified_data = simplified_data.replace('undefined', 'null')     # Handle undefined
-        simplified_data = re.sub(r',(\s*[}\]])', r'\1', simplified_data)  # Remove trailing commas
-        
-        try:
-            data = json.loads(simplified_data)
+        # Write the modified lines back to the file
+        with open(file_path, 'w', encoding='utf-8') as file:
+            file.writelines(lines)
             
-            # Update multiples
-            for item in data:
-                if item.get('pool') in multiples:
-                    item['multiple'] = multiples[item['pool']]
-            
-            # Convert back to TypeScript format
-            updated_data = json.dumps(data, indent=4)
-            updated_data = re.sub(r'"(\w+)":', r'\1:', updated_data)  # Unquote keys
-            
-            # Preserve the original descriptions when replacing
-            new_content = content.replace(original_data, updated_data)
-            
-            # Write the updated content
-            with open(file_path, 'w', encoding='utf-8') as file:
-                file.write(new_content)
-                
-            print("\nSuccessfully updated info.tsx with new multiples!")
-            
-        except json.JSONDecodeError as e:
-            print(f"Error parsing SwarmData: {e}")
-            print("Simplified data:", simplified_data[:2000])  # Show more context
-            return
+        print("\nSuccessfully updated info.tsx with new multiples!")
             
     except Exception as e:
         print(f"\nError updating info.tsx: {e}")
