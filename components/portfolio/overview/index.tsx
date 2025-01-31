@@ -21,6 +21,16 @@ interface TooltipProps {
 
 interface LegendEntry {
     value: string;
+    color: string;
+    payload: {
+        name: string;
+        value: number;
+        color: string;
+    };
+}
+
+interface LegendEntry {
+    value: string;
     payload: InvestmentDataItem & {
         strokeDasharray?: string | number;
     };
