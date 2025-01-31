@@ -1,5 +1,5 @@
 import { Connection, PublicKey } from '@solana/web3.js';
-import { Program, AnchorProvider } from '@coral-xyz/anchor';
+import { Program, AnchorProvider, Idl } from '@coral-xyz/anchor';
 import { SwarmData } from '../data/swarms/info';
 import idl from '../data/programs/ubclaunchpad.json';
 
@@ -39,8 +39,8 @@ async function main() {
         { commitment: 'confirmed' }
     );
 
-    // Initialize the program
-    const program = new Program(IDL, PROGRAM_ID, provider);
+    // Initialize the program with proper typing
+    const program = new Program<Idl>(IDL, PROGRAM_ID, provider);
     
     const results: SwarmHolders[] = [];
 
