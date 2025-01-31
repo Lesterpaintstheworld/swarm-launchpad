@@ -89,7 +89,7 @@ export const columns: ColumnDef<DividendPayment>[] = [
                     <Button 
                         variant="secondary" 
                         size="sm"
-                        className="bg-violet-500/10 hover:bg-violet-500/20 text-violet-400 hover:text-violet-300"
+                        className="bg-violet-500/10 hover:bg-violet-500/20 text-violet-400 hover:text-violet-300 transition-colors"
                         onClick={() => {
                             // Add claim functionality here
                             console.log('Claiming dividend:', row.original);
