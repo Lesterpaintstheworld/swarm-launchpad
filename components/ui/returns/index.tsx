@@ -1,25 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Coins, LineChart } from 'lucide-react';
 import { DistributionCharts } from './distributionCharts';
 import { BondingCurve } from './bondingCurve';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
-import { Toggle } from "@/components/shadcn/toggle";
 
 export function Returns() {
-    const [marketType, setMarketType] = useState<'primary' | 'secondary'>('primary');
-
-    const primaryMarketData = [
-        { name: 'Partner Fee', value: 2.5, color: '#3b82f6' },
-        { name: 'Platform Fee', value: 2.5, color: '#22c55e' }
-    ];
-
-    const secondaryMarketData = [
-        { name: 'Partner Fee', value: 2, color: '#3b82f6' },
-        { name: 'Platform Fee', value: 2, color: '#22c55e' },
-        { name: 'Investor Fee', value: 1, color: '#f97316' }
-    ];
     return (
         <div className="bg-accent-1 py-24">
             <div className="container">
