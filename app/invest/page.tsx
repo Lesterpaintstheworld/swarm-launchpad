@@ -87,10 +87,7 @@ export default function Invest() {
                                                 <div className="absolute -inset-2 bg-white/0 rounded-xl opacity-0 group-hover/card:opacity-100 group-hover/card:bg-white/5 blur-lg transition-all duration-700" />
                                                 
                                                 <SwarmPreviewCard 
-                                                    swarm={{
-                                                        ...swarm,
-                                                        revenueShare: swarm.revenueShare || 60,
-                                                    }}
+                                                    swarm={swarm}
                                                 />
                                                 <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/20 border border-orange-500/20 backdrop-blur-sm group-hover/card:border-orange-500/30 transition-colors">
                                                     <span className="text-xs font-medium text-orange-200/90">
