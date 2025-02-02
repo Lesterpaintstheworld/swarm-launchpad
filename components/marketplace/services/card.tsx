@@ -117,13 +117,20 @@ export function ServiceCard({ service }: ServiceCardProps) {
               {serviceTypeLabel[service.serviceType]}
             </span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <span className="text-sm font-medium text-white/80">
-              {service.computePerTask.toLocaleString()}
-            </span>
-            <span className="metallic-text text-sm font-medium">
-              $COMPUTE
-            </span>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-white/60">
+                Active: {service.activeSubscriptions || 0}
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-sm font-medium text-white/80">
+                {service.computePerTask.toLocaleString()}
+              </span>
+              <span className="metallic-text text-sm font-medium">
+                $COMPUTE
+              </span>
+            </div>
           </div>
         </div>
 
