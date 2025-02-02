@@ -1,4 +1,29 @@
 import { Service } from './types';
+import { collaborations } from '@/data/collaborations/collaborations';
+
+// Helper function to count active subscriptions for a service
+function getActiveSubscriptionsCount(serviceId: string): number {
+  return collaborations.filter(collab => 
+    collab.status === 'active' && 
+    collab.serviceName === getServiceName(serviceId)
+  ).length;
+}
+
+// Helper to map service ID to service name
+function getServiceName(serviceId: string): string {
+  switch(serviceId) {
+    case 'kinkong-trading':
+      return 'Active AI Tokens Trading';
+    case 'xforge-development-package':
+      return 'Development Package';
+    case 'kinos-inception-package':
+      return 'Inception Package';
+    case 'kinos-essential-package':
+      return 'Essential Swarm Package';
+    default:
+      return '';
+  }
+}
 
 export const services: Service[] = [
     {
@@ -36,7 +61,8 @@ export const services: Service[] = [
           "Performance Analytics"
       ],
       serviceType: "financial",
-      swarmId: "eb76ae17-b9eb-476d-b272-4bde2d85c808"
+      swarmId: "eb76ae17-b9eb-476d-b272-4bde2d85c808",
+      activeSubscriptions: getActiveSubscriptionsCount("kinkong-trading")
   },
   {
     id: 'xforge-development-package',
@@ -135,7 +161,8 @@ XForge provides dedicated AI development expertise to accelerate your swarm's te
       '24/7 Monitoring'
     ],
     serviceType: 'subscription',
-    swarmId: 'forge-partner-id'
+    swarmId: 'forge-partner-id',
+    activeSubscriptions: getActiveSubscriptionsCount("xforge-development-package")
   },
   {
     id: 'kinos-inception-package',
@@ -204,7 +231,8 @@ KinOS Inception offers essential development infrastructure for swarms in their 
         'Basic API Access'
     ],
     serviceType: 'subscription',
-    swarmId: 'kinos-partner-id'
+    swarmId: 'kinos-partner-id',
+    activeSubscriptions: getActiveSubscriptionsCount("kinos-inception-package")
   },
   {
     id: 'kinos-essential-package',
@@ -273,7 +301,8 @@ KinOS Essential provides enterprise-grade infrastructure for production-ready sw
         'High Availability'
     ],
     serviceType: 'subscription',
-    swarmId: 'kinos-partner-id'
+    swarmId: 'kinos-partner-id',
+    activeSubscriptions: getActiveSubscriptionsCount("kinos-essential-package")
   }
 ];
 
