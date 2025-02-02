@@ -9,14 +9,6 @@ function getActiveSubscriptionsCount(serviceId: string): number {
   ).length;
 }
 
-// Helper function to count active subscriptions for a service
-function getActiveSubscriptionsCount(serviceId: string): number {
-  return collaborations.filter(collab => 
-    collab.status === 'active' && 
-    collab.serviceName === getServiceName(serviceId)
-  ).length;
-}
-
 // Helper to map service ID to service name
 function getServiceName(serviceId: string): string {
   switch(serviceId) {
