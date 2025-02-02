@@ -54,7 +54,7 @@ const SolanaProvider = ({ children }: { children: React.ReactNode }) => {
     }, []);
 
     return (
-        <ConnectionProvider endpoint={'https://mainnet.helius-rpc.com/?api-key=4c3a5fc2-ea3f-45eb-85d5-2f282a6b4401'}>
+        <ConnectionProvider endpoint={constants.rpcUrl}>
             <WalletProvider wallets={wallets} onError={onError} autoConnect>
                 <WalletModalProvider>
                     {children}
