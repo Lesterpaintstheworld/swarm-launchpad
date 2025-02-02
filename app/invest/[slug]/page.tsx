@@ -4,6 +4,12 @@ import { getSwarmInfo } from "@/data/swarms/info";
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { SwarmNews } from '@/components/swarms/news';
+
+interface PageProps {
+    params: {
+        slug: string;
+    };
+}
 import { ServiceGrid } from "@/components/marketplace/services/grid";
 import { getServicesBySwarm } from "@/data/services/services";
 
@@ -137,7 +143,7 @@ const descriptionMap: { [key: string]: string } = {
     'logicatlas-inception-id': LogicAtlasDescription
 };
 
-export default function SwarmPage({ params }: { params: { slug: string } }) {
+export default function SwarmPage({ params }: PageProps): JSX.Element {
     // Get data from both sources
     const swarmInfo = getSwarmInfo(params.slug);
     const swarmPreview = getSwarm(params.slug);
@@ -155,6 +161,7 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
 
     if (!swarm) {
         redirect('/404');
+        return null;
     }
 
     return (
