@@ -1,8 +1,8 @@
 'use client';
 
 import { CountdownTimer } from './CountdownTimer';
-import { useDexScreenerPrice } from '@/hooks/useDexScreenerPrice';
 import { SwarmNews } from '@/components/swarms/news';
+import { useEffect, useState } from 'react';
 import { SwarmInvestCard } from "@/components/swarms/invest";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { InfoPanel } from "@/components/ui/infoPanel";
@@ -18,10 +18,40 @@ import { getCollaborationsBySwarm } from "@/data/collaborations/collaborations";
 
 interface SwarmContentProps {
     swarm: any; // TODO: Add proper type definition
+    initialPrice: number | null;
 }
 
-export function SwarmContent({ swarm }: SwarmContentProps) {
-    const { price: computePrice } = useDexScreenerPrice();
+export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
+    const [price, setPrice] = useState<number | null>(initialPrice);
+
+    useEffect(() => {
+        const controller = new AbortController();
+
+        function fetchPrice() {
+            fetch('https://api.dexscreener.com/latest/dex/pairs/solana/HiYsmVjeFy4ZLx8pkPSxBjswFkoEjecVGB4zJed2e6Y', {
+                signal: controller.signal
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.pair) {
+                        setPrice(parseFloat(data.pair.priceUsd));
+                    }
+                })
+                .catch(error => {
+                    if (error.name === 'AbortError') return;
+                    console.error('Failed to fetch price:', error);
+                });
+        }
+
+        // Set up interval for updates
+        const interval = setInterval(fetchPrice, 60000);
+
+        // Clean up
+        return () => {
+            controller.abort();
+            clearInterval(interval);
+        };
+    }, []);
 
     return (
         <main className="container mb-6 md:mb-24 view">
@@ -41,9 +71,9 @@ export function SwarmContent({ swarm }: SwarmContentProps) {
                                 <p className="text-3xl font-semibold">
                                     <SwarmInvestCard pool={swarm.pool} marketCapOnly /> <span className="text-xl metallic-text">$COMPUTE</span>
                                 </p>
-                                {computePrice && (
+                                {price && (
                                     <p className="text-sm text-muted-foreground mt-1">
-                                        ≈ ${(40000000 * computePrice).toLocaleString(undefined, {
+                                        ≈ ${(40000000 * price).toLocaleString(undefined, {
                                             minimumFractionDigits: 2,
                                             maximumFractionDigits: 2
                                         })}
@@ -55,9 +85,9 @@ export function SwarmContent({ swarm }: SwarmContentProps) {
                                 <p className="text-3xl font-semibold">
                                     <SwarmInvestCard pool={swarm.pool} amountRaisedOnly /> <span className="text-xl metallic-text">$COMPUTE</span>
                                 </p>
-                                {computePrice && (
+                                {price && (
                                     <p className="text-sm text-muted-foreground mt-1">
-                                        ≈ ${(5800000 * computePrice).toLocaleString(undefined, {
+                                        ≈ ${(5800000 * price).toLocaleString(undefined, {
                                             minimumFractionDigits: 2,
                                             maximumFractionDigits: 2
                                         })}
@@ -75,9 +105,9 @@ export function SwarmContent({ swarm }: SwarmContentProps) {
                                         "-"
                                     )}
                                 </p>
-                                {computePrice && swarm.weeklyRevenue && (
+                                {price && swarm.weeklyRevenue && (
                                     <p className="text-sm text-muted-foreground mt-1">
-                                        ≈ ${(swarm.weeklyRevenue * computePrice).toLocaleString(undefined, {
+                                        ≈ ${(swarm.weeklyRevenue * price).toLocaleString(undefined, {
                                             minimumFractionDigits: 2,
                                             maximumFractionDigits: 2
                                         })}
