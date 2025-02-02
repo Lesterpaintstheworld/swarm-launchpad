@@ -1,5 +1,12 @@
+import 'dotenv/config';
+
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
-const AIRTABLE_BASE_ID = 'appFFE67A8CC';
+const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID || 'appFFE67A8CC';
+
+if (!AIRTABLE_API_KEY) {
+  console.error('Error: AIRTABLE_API_KEY environment variable is not set');
+  process.exit(1);
+}
 
 async function main() {
   // Create mock news for KinKong
