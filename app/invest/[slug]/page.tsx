@@ -4,6 +4,7 @@ import { getSwarmInfo } from "@/data/swarms/info";
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { SwarmNews } from '@/components/swarms/news';
+import { useDexScreenerPrice } from '@/hooks/useDexScreenerPrice';
 
 interface PageProps {
     params: {
@@ -144,6 +145,7 @@ const descriptionMap: { [key: string]: string } = {
 };
 
 export default function SwarmPage({ params }: PageProps): JSX.Element {
+    const { price: computePrice } = useDexScreenerPrice();
     // Get data from both sources
     const swarmInfo = getSwarmInfo(params.slug);
     const swarmPreview = getSwarm(params.slug);
@@ -182,12 +184,28 @@ export default function SwarmPage({ params }: PageProps): JSX.Element {
                                 <p className="text-3xl font-semibold">
                                     <SwarmInvestCard pool={swarm.pool} marketCapOnly /> <span className="text-xl metallic-text">$COMPUTE</span>
                                 </p>
+                                {computePrice && (
+                                    <p className="text-sm text-muted-foreground mt-1">
+                                        ≈ ${(40000000 * computePrice).toLocaleString(undefined, {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2
+                                        })}
+                                    </p>
+                                )}
                             </div>
                             <div>
                                 <p className="text-sm text-muted-foreground mb-1">AMOUNT RAISED</p>
                                 <p className="text-3xl font-semibold">
                                     <SwarmInvestCard pool={swarm.pool} amountRaisedOnly /> <span className="text-xl metallic-text">$COMPUTE</span>
                                 </p>
+                                {computePrice && (
+                                    <p className="text-sm text-muted-foreground mt-1">
+                                        ≈ ${(5800000 * computePrice).toLocaleString(undefined, {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2
+                                        })}
+                                    </p>
+                                )}
                             </div>
                             <div>
                                 <p className="text-sm text-muted-foreground mb-1">WEEKLY REVENUE</p>
@@ -200,6 +218,14 @@ export default function SwarmPage({ params }: PageProps): JSX.Element {
                                         "-"
                                     )}
                                 </p>
+                                {computePrice && swarm.weeklyRevenue && (
+                                    <p className="text-sm text-muted-foreground mt-1">
+                                        ≈ ${(swarm.weeklyRevenue * computePrice).toLocaleString(undefined, {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2
+                                        })}
+                                    </p>
+                                )}
                             </div>
                         </div>
                     )}
