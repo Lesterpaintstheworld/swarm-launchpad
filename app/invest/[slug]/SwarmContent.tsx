@@ -73,7 +73,7 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                                 </p>
                                 {price && (
                                     <p className="text-sm text-muted-foreground mt-1">
-                                        ≈ ${(40000000 * price).toLocaleString(undefined, {
+                                        ${(40000000 * price).toLocaleString(undefined, {
                                             minimumFractionDigits: 2,
                                             maximumFractionDigits: 2
                                         })}
@@ -87,7 +87,7 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                                 </p>
                                 {price && (
                                     <p className="text-sm text-muted-foreground mt-1">
-                                        ≈ ${(5800000 * price).toLocaleString(undefined, {
+                                        ${(5800000 * price).toLocaleString(undefined, {
                                             minimumFractionDigits: 2,
                                             maximumFractionDigits: 2
                                         })}
@@ -107,7 +107,7 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                                 </p>
                                 {price && swarm.weeklyRevenue && (
                                     <p className="text-sm text-muted-foreground mt-1">
-                                        ≈ ${(swarm.weeklyRevenue * price).toLocaleString(undefined, {
+                                        ${(swarm.weeklyRevenue * price).toLocaleString(undefined, {
                                             minimumFractionDigits: 2,
                                             maximumFractionDigits: 2
                                         })}
