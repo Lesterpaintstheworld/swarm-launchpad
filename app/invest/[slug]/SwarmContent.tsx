@@ -72,11 +72,8 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                                     <SwarmInvestCard pool={swarm.pool} marketCapOnly /> <span className="text-xl metallic-text">$COMPUTE</span>
                                 </p>
                                 {price && (
-                                    <p className="text-xs italic text-muted-foreground/40 mt-1">
-                                        ${(40000000 * price).toLocaleString(undefined, {
-                                            minimumFractionDigits: 2,
-                                            maximumFractionDigits: 2
-                                        })}
+                                    <p className="text-sm italic text-muted-foreground/40 mt-1">
+                                        ${Math.round(40000000 * price).toLocaleString()}
                                     </p>
                                 )}
                             </div>
@@ -86,11 +83,8 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                                     <SwarmInvestCard pool={swarm.pool} amountRaisedOnly /> <span className="text-xl metallic-text">$COMPUTE</span>
                                 </p>
                                 {price && (
-                                    <p className="text-xs italic text-muted-foreground/40 mt-1">
-                                        ${(5800000 * price).toLocaleString(undefined, {
-                                            minimumFractionDigits: 2,
-                                            maximumFractionDigits: 2
-                                        })}
+                                    <p className="text-sm italic text-muted-foreground/40 mt-1">
+                                        ${Math.round(5800000 * price).toLocaleString()}
                                     </p>
                                 )}
                             </div>
@@ -106,11 +100,8 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                                     )}
                                 </p>
                                 {price && swarm.weeklyRevenue && (
-                                    <p className="text-xs italic text-muted-foreground/40 mt-1">
-                                        ${(swarm.weeklyRevenue * price).toLocaleString(undefined, {
-                                            minimumFractionDigits: 2,
-                                            maximumFractionDigits: 2
-                                        })}
+                                    <p className="text-sm italic text-muted-foreground/40 mt-1">
+                                        ${Math.round(swarm.weeklyRevenue * price).toLocaleString()}
                                     </p>
                                 )}
                             </div>
