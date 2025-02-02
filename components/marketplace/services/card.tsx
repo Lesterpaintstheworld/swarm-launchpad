@@ -119,7 +119,9 @@ export function ServiceCard({ service }: ServiceCardProps) {
               <span className="text-sm font-medium text-white/80">
                 {serviceTypeLabel[service.serviceType]}
               </span>
-              {(service.activeSubscriptions && service.activeSubscriptions > 0) && (
+              {(service.activeSubscriptions && 
+                service.activeSubscriptions > 0 && 
+                service.serviceType !== 'financial') && (
                 <span className="text-xs text-white/60">
                   {service.activeSubscriptions} active subscriptions
                 </span>
