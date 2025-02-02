@@ -88,7 +88,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
       )}
 
       {/* Gradient overlay */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${sectionColors.services.primary} opacity-0 group-hover:opacity-100 transition-opacity`} />
+      <div className={`absolute inset-0 bg-gradient-to-br ${styles.gradient} opacity-0 group-hover:opacity-100 transition-opacity`} />
       
       <div className="relative p-6 pt-12 space-y-4">
         {/* Header */}
@@ -117,25 +117,13 @@ export function ServiceCard({ service }: ServiceCardProps) {
               {serviceTypeLabel[service.serviceType]}
             </span>
           </div>
-          <div className="flex items-center gap-2">
-            {serviceTypeIcon[service.serviceType]}
-            <span className="text-sm font-medium text-white/80">
-              {serviceTypeLabel[service.serviceType]}
-              {service.activeSubscriptions > 0 && (
-                <span className="block text-xs text-white/60 mt-0.5">
-                  {service.activeSubscriptions} active subscriptions
-                </span>
-              )}
-            </span>
-          </div>
           <div className="flex items-center gap-1.5">
-              <span className="text-sm font-medium text-white/80">
-                {service.computePerTask.toLocaleString()}
-              </span>
-              <span className="metallic-text text-sm font-medium">
-                $COMPUTE
-              </span>
-            </div>
+            <span className="text-sm font-medium text-white/80">
+              {service.computePerTask.toLocaleString()}
+            </span>
+            <span className="metallic-text text-sm font-medium">
+              $COMPUTE
+            </span>
           </div>
         </div>
 
