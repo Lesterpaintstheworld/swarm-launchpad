@@ -5,7 +5,26 @@ export function useDexScreenerPrice() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    function fetchPrice() {
+    const controller = new AbortController();
+
+    fetch('https://api.dexscreener.com/latest/dex/pairs/solana/HiYsmVjeFy4ZLx8pkPSxBjswFkoEjecVGB4zJed2e6Y', {
+      signal: controller.signal
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.pair) {
+          setPrice(parseFloat(data.pair.priceUsd));
+        }
+      })
+      .catch(error => {
+        if (error.name === 'AbortError') return;
+        console.error('Failed to fetch price:', error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+
+    const interval = setInterval(() => {
       fetch('https://api.dexscreener.com/latest/dex/pairs/solana/HiYsmVjeFy4ZLx8pkPSxBjswFkoEjecVGB4zJed2e6Y')
         .then(response => response.json())
         .then(data => {
@@ -15,15 +34,13 @@ export function useDexScreenerPrice() {
         })
         .catch(error => {
           console.error('Failed to fetch price:', error);
-        })
-        .finally(() => {
-          setIsLoading(false);
         });
-    }
+    }, 60000);
 
-    fetchPrice();
-    const interval = setInterval(fetchPrice, 60000);
-    return () => clearInterval(interval);
+    return () => {
+      controller.abort();
+      clearInterval(interval);
+    };
   }, []);
 
   return { price, isLoading };
