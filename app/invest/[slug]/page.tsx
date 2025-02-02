@@ -1,6 +1,5 @@
 'use client';
 
-import { getSwarmInfo } from "@/data/swarms/info";
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { SwarmNews } from '@/components/swarms/news';
@@ -146,23 +145,39 @@ const descriptionMap: { [key: string]: string } = {
 
 export default function SwarmPage({ params }: PageProps): JSX.Element {
     const { price: computePrice } = useDexScreenerPrice();
-    // Get data from both sources
-    const swarmInfo = getSwarmInfo(params.slug);
-    const swarmPreview = getSwarm(params.slug);
+    const [swarm, setSwarm] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-    // Combine the data, preferring preview data for most fields
-    const swarm = swarmInfo ? {
-        ...swarmPreview,
-        ...swarmInfo,
-        // Keep preview data for these fields
-        role: swarmPreview?.role,
-        tags: swarmPreview?.tags,
-        // Use the full description from the descriptions folder if available
-        description: descriptionMap[swarmInfo.id] || swarmInfo.description
-    } : null;
+    useEffect(() => {
+        fetch(`/api/swarms/${params.slug}`)
+            .then(res => res.json())
+            .then(data => {
+                if (!data) {
+                    redirect('/404');
+                    return;
+                }
+                setSwarm(data);
+            })
+            .catch(error => {
+                console.error('Failed to fetch swarm data:', error);
+                redirect('/404');
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    }, [params.slug]);
+
+    if (isLoading) {
+        return (
+            <main className="container view">
+                <div className="h-80 flex flex-col items-center justify-center gap-1">
+                    <h2 className="text-center">Loading swarm details...</h2>
+                </div>
+            </main>
+        );
+    }
 
     if (!swarm) {
-        redirect('/404');
         return null;
     }
 
