@@ -10,7 +10,7 @@
     "lint": "next lint",
     "update-multiples": "python scripts/update_multiples.py",
     "get-holders": "python scripts/get_holders.py",
-    "init-news": "ts-node scripts/init-news.ts"
+    "init-news": "ts-node --project tsconfig.scripts.json scripts/init-news.ts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1",
