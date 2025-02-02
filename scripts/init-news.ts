@@ -50,7 +50,8 @@ async function main() {
     );
 
     if (!response.ok) {
-      throw new Error(`Failed to create records: ${response.statusText}`);
+      const errorData = await response.json();
+      throw new Error(`Failed to create records: ${response.statusText}\n${JSON.stringify(errorData, null, 2)}`);
     }
 
     console.log('News entries created successfully!');
