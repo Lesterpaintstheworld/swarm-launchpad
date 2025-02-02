@@ -42,8 +42,10 @@ export function ServiceCard({ service }: ServiceCardProps) {
     'financial': 'Financial Service'
   };
 
-  return (
-    <div className={`group relative rounded-xl bg-white/5 border ${styles.border} overflow-hidden transition-all duration-300 ${styles.hover}`}>
+    console.log('Service:', service); // Debug log
+    
+    return (
+      <div className={`group relative rounded-xl bg-white/5 border ${styles.border} overflow-hidden transition-all duration-300 ${styles.hover}`}>
       {/* Banner image and swarm attribution */}
       {service.banner && (
         <div className="relative">
@@ -113,9 +115,16 @@ export function ServiceCard({ service }: ServiceCardProps) {
         <div className="flex items-center justify-between py-4 border-t border-white/5">
           <div className="flex items-center gap-2">
             {serviceTypeIcon[service.serviceType]}
-            <span className="text-sm font-medium text-white/80">
-              {serviceTypeLabel[service.serviceType]}
-            </span>
+            <div className="flex flex-col">
+              <span className="text-sm font-medium text-white/80">
+                {serviceTypeLabel[service.serviceType]}
+              </span>
+              {(service.activeSubscriptions && service.activeSubscriptions > 0) && (
+                <span className="text-xs text-white/60">
+                  {service.activeSubscriptions} active subscriptions
+                </span>
+              )}
+            </div>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="text-sm font-medium text-white/80">
