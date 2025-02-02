@@ -23,5 +23,5 @@ export interface Service {
   serviceType: ServiceType;
   swarmId: string;
   banner?: string;
-  activeSubscriptions: number;
+  activeSubscriptions?: number; // Optional with default 0
 }
