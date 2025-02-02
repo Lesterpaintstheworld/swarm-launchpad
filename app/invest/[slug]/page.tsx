@@ -215,12 +215,11 @@ export default function SwarmPage({ params }: PageProps): JSX.Element {
                     <SwarmNews 
                         swarmId={swarm.id}
                     />
-                <div className="lg:col-span-7">
-                    {swarm?.description &&
+                    
+                    {swarm?.description && (
                         <div className="flex flex-col gap-8">
                             <div className="flex-1">
                                 <div className="flex flex-col gap-4">
-                                    {/* Title */}
                                     <div className="flex items-center gap-8">
                                         <h4 className="font-semibold">About {swarm.name}</h4>
                                     </div>
@@ -233,7 +232,6 @@ export default function SwarmPage({ params }: PageProps): JSX.Element {
                                 achievements={swarm.achievements}
                             />
 
-                            {/* Services Section - only show if swarm has services */}
                             {getServicesBySwarm(swarm.id).length > 0 && (
                                 <div className="flex flex-col gap-4 mt-8">
                                     <div className="flex items-center gap-8">
@@ -246,10 +244,10 @@ export default function SwarmPage({ params }: PageProps): JSX.Element {
                                 </div>
                             )}
                         </div>
-                    }
+                    )}
                 </div>
-                
-                <div className="lg:col-span-5 w-full">
+
+                <div className="lg:col-span-5">
                     {swarm?.pool && (
                         <div className="sticky top-6 w-full space-y-6">
                             {swarm.launchDate && new Date(swarm.launchDate) > new Date() ? (
