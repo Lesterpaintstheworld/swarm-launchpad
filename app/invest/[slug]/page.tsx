@@ -203,11 +203,11 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
                 gallery={swarm.gallery}
                 swarmName={swarm.name}
             />
-            <SwarmNews 
-                swarmId={swarm.id}
-                className="mt-16"
-            />
             <div className="mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div className="lg:col-span-7 space-y-8">
+                    <SwarmNews 
+                        swarmId={swarm.id}
+                    />
                 <div className="lg:col-span-7">
                     {swarm?.description &&
                         <div className="flex flex-col gap-8">
