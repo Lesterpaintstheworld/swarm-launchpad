@@ -121,7 +121,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
               </span>
               {(service.activeSubscriptions && 
                 service.activeSubscriptions > 0 && 
-                service.serviceType !== 'financial') && (
+                service.serviceType === 'subscription') && (
                 <span className="text-xs text-white/60">
                   {service.activeSubscriptions} active subscriptions
                 </span>
