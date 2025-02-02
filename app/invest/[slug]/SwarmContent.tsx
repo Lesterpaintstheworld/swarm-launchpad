@@ -72,7 +72,7 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                                     <SwarmInvestCard pool={swarm.pool} marketCapOnly /> <span className="text-xl metallic-text">$COMPUTE</span>
                                 </p>
                                 {price && (
-                                    <p className="text-sm text-muted-foreground mt-1">
+                                    <p className="text-xs text-muted-foreground/60 mt-1">
                                         ${(40000000 * price).toLocaleString(undefined, {
                                             minimumFractionDigits: 2,
                                             maximumFractionDigits: 2
@@ -86,7 +86,7 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                                     <SwarmInvestCard pool={swarm.pool} amountRaisedOnly /> <span className="text-xl metallic-text">$COMPUTE</span>
                                 </p>
                                 {price && (
-                                    <p className="text-sm text-muted-foreground mt-1">
+                                    <p className="text-xs text-muted-foreground/60 mt-1">
                                         ${(5800000 * price).toLocaleString(undefined, {
                                             minimumFractionDigits: 2,
                                             maximumFractionDigits: 2
@@ -106,7 +106,7 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                                     )}
                                 </p>
                                 {price && swarm.weeklyRevenue && (
-                                    <p className="text-sm text-muted-foreground mt-1">
+                                    <p className="text-xs text-muted-foreground/60 mt-1">
                                         ${(swarm.weeklyRevenue * price).toLocaleString(undefined, {
                                             minimumFractionDigits: 2,
                                             maximumFractionDigits: 2
