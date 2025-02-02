@@ -1,0 +1,39 @@
+import { NewsItem } from '@/types/news';
+import { NextResponse } from 'next/server';
+
+const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
+const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
+
+export async function GET(
+  request: Request,
+  { params }: { params: { swarmId: string } }
+) {
+  try {
+    const response = await fetch(
+      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/News?filterByFormula={swarmId}="${params.swarmId}"`,
+      {
+        headers: {
+          Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+    
+    const news: NewsItem[] = data.records.map((record: any) => ({
+      id: record.id,
+      swarmId: record.fields.swarmId,
+      title: record.fields.title,
+      content: record.fields.content,
+      date: record.fields.date,
+      link: record.fields.link,
+    }));
+
+    return NextResponse.json(news);
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Failed to fetch news' },
+      { status: 500 }
+    );
+  }
+}

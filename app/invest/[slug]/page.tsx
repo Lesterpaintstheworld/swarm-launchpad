@@ -3,6 +3,7 @@
 import { getSwarmInfo } from "@/data/swarms/info";
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { SwarmNews } from '@/components/swarms/news';
 import { ServiceGrid } from "@/components/marketplace/services/grid";
 import { getServicesBySwarm } from "@/data/services/services";
 
@@ -201,6 +202,10 @@ export default function SwarmPage({ params }: { params: { slug: string } }) {
                 className="mt-16"
                 gallery={swarm.gallery}
                 swarmName={swarm.name}
+            />
+            <SwarmNews 
+                swarmId={swarm.id}
+                className="mt-16"
             />
             <div className="mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8">
                 <div className="lg:col-span-7">
