@@ -62,51 +62,54 @@ async function generateMarketCapVisualization(swarmMetrics) {
     ctx.fillStyle = '#0f172a';
     ctx.fillRect(0, 0, width, height);
 
-    // Calculate total market cap for scaling
-    const totalMC = sortedSwarms.reduce((sum, s) => sum + s.marketCap, 0);
-    const padding = 20;
-    const availableWidth = width - (padding * 2);
-    const availableHeight = height - (padding * 2);
+    // Title
+    ctx.fillStyle = 'white';
+    ctx.font = 'bold 24px Arial';
+    ctx.fillText('Swarm Market Caps', 20, 40);
 
-    // Calculate grid layout
-    const columns = 5;
-    const rows = Math.ceil(sortedSwarms.length / columns);
-    const boxWidth = availableWidth / columns;
-    const boxHeight = availableHeight / rows;
+    // Calculate layout
+    const startY = 80;
+    const boxHeight = 100;
+    const boxPadding = 10;
+    const maxBoxWidth = width - 40;
 
+    // Find max market cap for scaling
+    const maxMarketCap = Math.max(...sortedSwarms.map(s => s.marketCap));
+
+    // Draw boxes
     sortedSwarms.forEach((swarm, index) => {
-        const row = Math.floor(index / columns);
-        const col = index % columns;
-        const x = padding + (col * boxWidth);
-        const y = padding + (row * boxHeight);
-        const size = Math.sqrt((swarm.marketCap / totalMC) * (availableWidth * availableHeight));
-        
-        // Draw box background
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-        ctx.fillRect(x, y, boxWidth - padding, boxHeight - padding);
+        const y = startY + (index * (boxHeight + boxPadding));
+        const boxWidth = (swarm.marketCap / maxMarketCap) * maxBoxWidth;
 
-        // Draw swarm name
+        // Box background
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.fillRect(20, y, boxWidth, boxHeight);
+
+        // Swarm name
         ctx.fillStyle = 'white';
         ctx.font = 'bold 16px Arial';
-        ctx.fillText(swarm.name, x + 10, y + 25);
+        ctx.fillText(swarm.name, 30, y + 30);
 
-        // Draw market cap
+        // Market cap value
         ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
         ctx.font = '14px Arial';
-        const mcText = `${Math.floor(swarm.marketCap).toLocaleString()} $COMPUTE`;
-        ctx.fillText(mcText, x + 10, y + 45);
+        ctx.fillText(
+            `${Math.floor(swarm.marketCap).toLocaleString()} $COMPUTE`, 
+            30, 
+            y + 55
+        );
 
-        // Draw relative size indicator
+        // Percentage of total
+        const totalMC = sortedSwarms.reduce((sum, s) => sum + s.marketCap, 0);
         const percentage = ((swarm.marketCap / totalMC) * 100).toFixed(1);
         ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
         ctx.font = '12px Arial';
-        ctx.fillText(`${percentage}%`, x + 10, y + 65);
+        ctx.fillText(`${percentage}%`, 30, y + 75);
     });
 
     // Save the visualization
-    const outputPath = path.join(__dirname, 'market-caps.png');
     const buffer = canvas.toBuffer('image/png');
-    await fs.writeFile(outputPath, buffer);
+    await fs.writeFile(path.join(__dirname, 'market-caps.png'), buffer);
     console.log('\nVisualization saved as market-caps.png');
 }
 
