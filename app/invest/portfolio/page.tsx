@@ -1,5 +1,10 @@
 'use client'
 
+interface ApiError extends Error {
+  status?: number;
+  message: string;
+}
+
 import { Investment } from '@/types/investments';
 import { DividendPayments } from "@/components/portfolio/dividendPayments";
 import { Investments } from "@/components/portfolio/investments";
