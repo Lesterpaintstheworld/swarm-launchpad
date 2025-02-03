@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
+import { AirtableRecord, CollaborationFields, SwarmResponse } from '@/types/api';
 
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 
-function safeParseJSON(str: string | null | undefined, defaultValue: any = []) {
+function safeParseJSON<T>(str: string | null | undefined, defaultValue: T): T {
   if (!str) return defaultValue;
   try {
     return JSON.parse(str);

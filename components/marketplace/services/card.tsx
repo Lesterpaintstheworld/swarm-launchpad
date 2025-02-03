@@ -47,7 +47,7 @@ interface SwarmData {
 }
 
 export function ServiceCard({ service }: ServiceCardProps) {
-  const [swarm, setSwarm] = useState<SwarmData | null>(null);
+  const [swarm, setSwarm] = useState<SwarmResponse | null>(null);
   const styles = getCardStyles(service.serviceType);
 
   useEffect(() => {
