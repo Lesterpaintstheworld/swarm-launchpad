@@ -19,8 +19,12 @@ export function SwarmNews({ swarmId, className }: SwarmNewsProps) {
   useEffect(() => {
     async function fetchNews() {
       try {
-        const response = await fetch(`/api/news/${swarmId}`);
+        console.log('Fetching news for swarm:', swarmId);
+        const response = await fetch(`/api/news/${swarmId}`, {
+          cache: 'no-store'
+        });
         const data = await response.json();
+        console.log('Received news data:', data);
         setNews(data);
       } catch (error) {
         console.error('Failed to fetch news:', error);

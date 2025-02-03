@@ -9,16 +9,20 @@ export async function GET(
   { params }: { params: { swarmId: string } }
 ) {
   try {
+    console.log('Fetching news for swarmId:', params.swarmId);
+
     const response = await fetch(
       `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/News?filterByFormula={swarmId}="${params.swarmId}"`,
       {
         headers: {
           Authorization: `Bearer ${AIRTABLE_API_KEY}`,
         },
+        cache: 'no-store'
       }
     );
 
     const data = await response.json();
+    console.log('Airtable response:', data);
     
     const news: NewsItem[] = data.records.map((record: any) => ({
       id: record.id,
@@ -29,6 +33,7 @@ export async function GET(
       link: record.fields.link,
     }));
 
+    console.log('Processed news:', news);
     return NextResponse.json(news);
   } catch (error) {
     return NextResponse.json(
