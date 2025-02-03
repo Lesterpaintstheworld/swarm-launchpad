@@ -102,7 +102,7 @@ const SwarmInvestCard = ({
     }
 
     const [swarm, setSwarm] = useState<SwarmDetails | null>(null);
-    const isBeforeLaunch = swarm?.launchDate && new Date(swarm.launchDate) > new Date();
+    const isBeforeLaunch: boolean = !!(swarm?.launchDate && new Date(swarm.launchDate) > new Date());
 
     useEffect(() => {
         async function fetchSwarm() {
