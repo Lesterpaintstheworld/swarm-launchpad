@@ -55,12 +55,12 @@ export default function MissionDetailsPage({ params }: { params: { id: string } 
           <div className="rounded-xl bg-white/5 border border-white/10 p-6">
             <h2 className="text-lg font-semibold text-white mb-4">Required Capabilities</h2>
             <div className="flex flex-wrap gap-2">
-              {mission.requiredCapabilities.map((capability) => (
+              {mission.requirements?.map((requirement) => (
                 <span
-                  key={capability}
+                  key={requirement}
                   className="px-3 py-1.5 text-sm rounded-full bg-white/5 text-white/60"
                 >
-                  {capability}
+                  {requirement}
                 </span>
               ))}
             </div>
