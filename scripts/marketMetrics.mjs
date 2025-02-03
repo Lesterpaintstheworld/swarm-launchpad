@@ -1,11 +1,6 @@
-import { SwarmData } from '../data/swarms/info.tsx';
-import { calculateSharePrice } from '../lib/utils.ts';
 import { Program, AnchorProvider } from '@coral-xyz/anchor';
 import { Connection, PublicKey, Keypair } from '@solana/web3.js';
-const idlModule = await import('../data/programs/ubclaunchpad.json', {
-    assert: { type: 'json' }
-});
-const UbclaunchpadIDL = idlModule.default;
+import UbclaunchpadIDL from '../data/programs/ubclaunchpad.json' assert { type: 'json' };
 
 const PROGRAM_ID = new PublicKey("4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf");
 const RPC_URL = "https://api.mainnet-beta.solana.com";
@@ -19,6 +14,24 @@ class SimpleWallet {
     async signAllTransactions(txs) { return txs; }
     get publicKey() { return this.payer.publicKey; }
 }
+
+// Calculate share price function
+function calculateSharePrice(n) {
+    const cycle = Math.floor(n / 5000);
+    const base = Math.pow(1.35, cycle);
+    return base;
+}
+
+// Get just the essential swarm data
+const swarmPools = [
+    { name: 'KinOS', pool: '37u532qgHbjUHic6mQK51jkT3Do7qkWLEUQCx22MDBD8', weeklyRevenue: 460000 },
+    { name: 'DigitalKin', pool: 'FM6aFbs9cQ6Jrp3GJPABBVxpLnGFEZZD3tSJ5JGCUsyZ' },
+    { name: 'Kin Kong', pool: 'FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz', weeklyRevenue: 120000 },
+    { name: 'Swarm Ventures', pool: '911eRdu96ncdnmEUYA3UQ39gEtE9ueg7UbqycKuKweCG' },
+    { name: 'Synthetic Souls', pool: 'CmC2AUuurX19TLBVQbpNct8pmEjaHsRj6o8SLBAVvxAk' },
+    { name: 'DuoAI', pool: '68K6BBsPynRbLkjJzdQmKMvTPLaUiKb93BUwbJfjqepS' },
+    { name: 'XForge', pool: 'AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi', weeklyRevenue: 1600000 }
+];
 
 async function calculateMetrics() {
     // Setup connection and provider
@@ -37,12 +50,11 @@ async function calculateMetrics() {
     let totalMarketCap = 0;
     let totalAmountRaised = 0;
     let totalWeeklyRevenue = 0;
-    const numSwarms = SwarmData.length;
+    const numSwarms = swarmPools.length;
 
     console.log('Calculating market metrics...\n');
 
-    for (const swarm of SwarmData) {
-        if (!swarm.pool) continue;
+    for (const swarm of swarmPools) {
 
         try {
             // Fetch pool data
