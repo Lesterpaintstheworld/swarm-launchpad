@@ -4,6 +4,11 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+// Verify environment variables are loaded
+console.log('Environment check:');
+console.log('AIRTABLE_API_KEY exists:', !!process.env.AIRTABLE_API_KEY);
+console.log('AIRTABLE_BASE_ID exists:', !!process.env.AIRTABLE_BASE_ID);
+
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 
@@ -104,7 +109,8 @@ async function initializeMessages() {
                 });
 
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    const errorText = await response.text();
+                    throw new Error(`HTTP error! status: ${response.status}, details: ${errorText}`);
                 }
 
                 const data = await response.json();
@@ -115,6 +121,7 @@ async function initializeMessages() {
 
             } catch (error) {
                 console.error('Error creating message:', error);
+                console.error('Error details:', error.message);
             }
         }
     }
