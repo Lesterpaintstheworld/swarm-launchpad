@@ -132,7 +132,10 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                                 </div>
                             </div>
                             <InfoPanel 
-                                socials={swarm.socials}
+                                socials={{
+                                    ...swarm.socials,
+                                    twitter: swarm.twitterAccount || swarm.socials?.twitter
+                                }}
                                 achievements={swarm.achievements}
                             />
 
