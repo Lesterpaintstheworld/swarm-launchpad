@@ -1,4 +1,4 @@
-const { collaborations } = require('../data/collaborations/collaborations');
+const { collaborations } = require('./data/collaborations.cjs');
 require('dotenv').config();
 
 function getServiceId(serviceName) {
