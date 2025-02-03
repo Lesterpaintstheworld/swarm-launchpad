@@ -56,59 +56,68 @@ async function main() {
             endIndex++;
         }
 
-        if (bracketCount !== 0) {
-            throw new Error('Could not find matching end bracket for SwarmData array');
-        }
-
-        // Extract the content
+        // Extract and clean the content
         let content = infoContent.substring(startIndex + startMarker.length, endIndex);
 
-        // First pass: Clean up basic syntax
-        content = content
-            .replace(/\/\*[\s\S]*?\*\//g, '') // Remove multi-line comments
-            .replace(/\/\/.*/g, '') // Remove single-line comments
-            .replace(/new Date\(['"]([^'"]*)['"]\)/g, '"$1"') // Convert Date objects to strings
-            .replace(/[\u0000-\u001F\u007F-\u009F]/g, '') // Remove control characters
-            .replace(/\s+/g, ' ') // Normalize whitespace
-            .trim();
+        // Function to properly format a JavaScript object into valid JSON
+        function formatToJSON(str) {
+            return str
+                // Handle property names
+                .replace(/([{,]\s*)([a-zA-Z0-9_]+):/g, '$1"$2":')
+                // Handle string values
+                .replace(/:\s*'([^']*?)'/g, ':"$1"')
+                // Handle Date objects
+                .replace(/new Date\(['"]([^'"]*)['"]\)/g, '"$1"')
+                // Remove trailing commas
+                .replace(/,(\s*[}\]])/g, '$1')
+                // Remove comments
+                .replace(/\/\*[\s\S]*?\*\//g, '')
+                .replace(/\/\/.*/g, '')
+                // Remove control characters
+                .replace(/[\u0000-\u001F\u007F-\u009F]/g, '')
+                // Normalize whitespace
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
 
-        // Second pass: Handle property names and values
-        content = content
-            .replace(/([{,]\s*)([a-zA-Z0-9_]+):/g, '$1"$2":') // Add quotes to property names
-            .replace(/'/g, '"') // Replace single quotes with double quotes
-            .replace(/,(\s*[}\]])/g, '$1'); // Remove trailing commas
-
-        // Replace description references with actual content
-        Object.entries(descriptions).forEach(([key, value]) => {
-            const escapedValue = value.replace(/"/g, '\\"'); // Escape quotes in descriptions
-            content = content.replace(new RegExp(key, 'g'), `"${escapedValue}"`);
-        });
-
-        // Try to parse the content
-        console.log('\nAttempting to parse content...');
-        
-        // Parse each object individually to find issues
-        const objects = content.split('},{').map((obj, index, array) => {
-            // Add back the brackets that were split
-            let fixedObj = obj;
-            if (index === 0) fixedObj = obj + '}';
-            else if (index === array.length - 1) fixedObj = '{' + obj;
-            else fixedObj = '{' + obj + '}';
-
+        // Split into individual objects and process each one
+        const objects = content.split('},').map((obj, index, array) => {
+            let objStr = obj;
+            if (index < array.length - 1) objStr += '}';
+            
+            // Format the object
+            const formattedObj = formatToJSON(objStr);
+            
             try {
-                JSON.parse(fixedObj);
-                return fixedObj;
+                // Test parse
+                JSON.parse(formattedObj);
+                return formattedObj;
             } catch (e) {
-                console.log('\nError parsing object:', fixedObj);
+                console.log('\nError in object:', formattedObj);
                 console.log('Error:', e.message);
-                return null;
+                // Try to fix common issues
+                const fixedObj = formattedObj
+                    // Fix any remaining unquoted property names
+                    .replace(/([{,]\s*)([a-zA-Z0-9_]+):/g, '$1"$2":')
+                    // Fix any remaining single quotes
+                    .replace(/'/g, '"')
+                    // Remove any trailing commas in arrays/objects
+                    .replace(/,(\s*[}\]])/g, '$1');
+                
+                try {
+                    JSON.parse(fixedObj);
+                    return fixedObj;
+                } catch (e2) {
+                    console.log('Could not fix object:', e2.message);
+                    return null;
+                }
             }
         }).filter(Boolean);
 
-        // Combine the valid objects back into an array
-        const validContent = '[' + objects.join(',') + ']';
+        // Combine into array
+        const validContent = `[${objects.join(',')}]`;
 
-        // Parse and transform
+        // Final parse and transform
         console.log('\nParsing final JSON...');
         const swarms = JSON.parse(validContent);
         console.log('Found', swarms.length, 'swarms');
