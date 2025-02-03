@@ -1,12 +1,14 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
 const getGradientColors = (sourceId: string) => {
   if (sourceId === 'ecosystem') {
     return {
-      from: 'from-yellow-300/20',  // Brighter yellow
-      via: 'via-yellow-400/20',    // Mid yellow
-      to: 'to-yellow-500/20',      // Deeper yellow
+      from: 'from-yellow-300/20',
+      via: 'via-yellow-400/20',
+      to: 'to-yellow-500/20',
       hover: {
         from: 'from-yellow-300/40',
         via: 'via-yellow-400/40',
@@ -43,7 +45,14 @@ interface CollaborationCardProps {
   price: number;
 }
 
-export function CollaborationCard({ id, sourceSwarm, targetSwarm, serviceName, status, price }: CollaborationCardProps) {
+export function CollaborationCard({ 
+  id, 
+  sourceSwarm, 
+  targetSwarm, 
+  serviceName, 
+  status, 
+  price 
+}: CollaborationCardProps) {
   const statusStyles = {
     active: 'text-green-400 bg-green-500/10 border-green-500/20',
     completed: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
