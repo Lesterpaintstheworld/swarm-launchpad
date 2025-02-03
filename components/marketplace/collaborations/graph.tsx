@@ -26,15 +26,40 @@ interface SimulationLink extends d3.SimulationLinkDatum<SimulationNode> {
   serviceName: string;
 }
 
-interface CollaborationGraphProps {
-  collaborations: Collaboration[];
+interface SwarmData {
+  id: string;
+  name: string;
+  swarmType: string;
+  description: string;
+  multiple: number;
+  revenueShare: number;
+  image: string;
 }
 
-export function CollaborationGraph({ collaborations }: CollaborationGraphProps) {
+interface Collaboration {
+  id: string;
+  providerSwarm: {
+    id: string;
+    name: string;
+    image: string;
+  };
+  clientSwarm: {
+    id: string;
+    name: string;
+    image: string;
+  };
+  serviceName: string;
+  price: number;
+  status: string;
+}
+
+export function CollaborationGraph() {
   const svgRef = useRef<SVGSVGElement>(null);
   const [zoom, setZoom] = useState(1);
   const [swarms, setSwarms] = useState<SwarmData[]>([]);
+  const [collaborations, setCollaborations] = useState<Collaboration[]>([]);
   const [swarmMap, setSwarmMap] = useState<Map<string, SwarmData>>(new Map());
+  const [isLoading, setIsLoading] = useState(true);
 
   const getNodeSize = (swarmId: string): number => {
     const swarm = swarmMap.get(swarmId);
@@ -43,29 +68,41 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
   };
 
   useEffect(() => {
-    async function fetchSwarms() {
+    async function fetchData() {
       try {
-        const response = await fetch('/api/swarms');
-        if (response.ok) {
-          const data = await response.json();
-          setSwarms(data);
+        setIsLoading(true);
+        const [swarmsResponse, collaborationsResponse] = await Promise.all([
+          fetch('/api/swarms'),
+          fetch('/api/collaborations')
+        ]);
+
+        if (swarmsResponse.ok && collaborationsResponse.ok) {
+          const [swarmsData, collaborationsData] = await Promise.all([
+            swarmsResponse.json(),
+            collaborationsResponse.json()
+          ]);
+
+          setSwarms(swarmsData);
+          setCollaborations(collaborationsData);
           
           // Create a map for easier lookup
           const map = new Map();
-          data.forEach((swarm: SwarmData) => {
+          swarmsData.forEach((swarm: SwarmData) => {
             map.set(swarm.id, swarm);
           });
           setSwarmMap(map);
         }
       } catch (error) {
-        console.error('Error fetching swarms:', error);
+        console.error('Error fetching data:', error);
+      } finally {
+        setIsLoading(false);
       }
     }
-    fetchSwarms();
+    fetchData();
   }, []);
 
   useEffect(() => {
-    if (!svgRef.current) return;
+    if (!svgRef.current || isLoading || collaborations.length === 0) return;
 
     // Clear previous graph
     d3.select(svgRef.current).selectAll("*").remove();
@@ -407,6 +444,14 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
   const handleZoomOut = () => {
     setZoom(prev => Math.max(prev - 0.2, 0.5));
   };
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-[600px] bg-black/20 rounded-xl flex items-center justify-center">
+        <div className="text-white/60">Loading collaboration graph...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative">
