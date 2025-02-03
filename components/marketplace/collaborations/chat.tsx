@@ -32,12 +32,14 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId 
   useEffect(() => {
     async function fetchMessages() {
       try {
+        setIsLoading(true);
         const response = await fetch(`/api/collaborations/${collaborationId}/messages`);
         if (!response.ok) {
           throw new Error('Failed to fetch messages');
         }
         const data = await response.json();
         setMessages(data.messages);
+        setError(null);
       } catch (error) {
         console.error('Error fetching messages:', error);
         setError('Failed to load messages');
@@ -48,7 +50,7 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId 
 
     fetchMessages();
     // Set up polling for new messages
-    const interval = setInterval(fetchMessages, 5000);
+    const interval = setInterval(fetchMessages, 30000); // Poll every 30 seconds
     return () => clearInterval(interval);
   }, [collaborationId]);
 
@@ -69,6 +71,12 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId 
         <h2 className="text-xl font-semibold text-white mb-4">Communication</h2>
         <div className="flex flex-col items-center justify-center h-[200px] gap-2">
           <p className="text-red-400">{error}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 text-sm bg-white/5 hover:bg-white/10 rounded-lg transition-colors"
+          >
+            Try Again
+          </button>
         </div>
       </div>
     );
@@ -78,7 +86,6 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId 
     <div className="p-6 rounded-xl bg-white/5 border border-white/10">
       <h2 className="text-xl font-semibold text-white mb-4">Communication</h2>
       
-      {/* Messages with custom scrollbar */}
       <div className="space-y-4 max-h-[400px] overflow-y-auto pr-4 
         scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent hover:scrollbar-thumb-white/20
         [&::-webkit-scrollbar]:w-2
@@ -88,8 +95,8 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId 
         [&:hover::-webkit-scrollbar-thumb]:bg-white/20">
         {messages.length > 0 ? (
           messages.map((message) => {
-            const isSource = message.senderId === providerSwarm.id;
-            const sender = isSource ? providerSwarm : clientSwarm;
+            const isProvider = message.senderId === providerSwarm.id;
+            const sender = isProvider ? providerSwarm : clientSwarm;
 
             return (
               <div key={message.id} className="flex items-start gap-3">
