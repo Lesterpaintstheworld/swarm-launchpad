@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react';
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
 import { IntlNumberFormat } from "@/lib/utils";
@@ -8,7 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/shadcn/button";
 import { useWallet } from '@solana/wallet-adapter-react';
-import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
 
 const SwarmCell = ({ swarmId }: { swarmId: string }) => {
     const [swarm, setSwarm] = useState<{ name: string; image: string; role?: string } | null>(null);
