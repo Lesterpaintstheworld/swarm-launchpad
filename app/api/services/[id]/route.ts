@@ -36,10 +36,11 @@ export async function GET(
     const safeParseJSON = <T>(str: string | null | undefined, defaultValue: T): T => {
       if (!str) return defaultValue;
       try {
-        return JSON.parse(str);
+        return JSON.parse(str) as T;
       } catch (e) {
-        if (typeof str === 'string' && str.includes(',')) {
-          return str.split(',').map(item => item.trim());
+        // Only split into array if defaultValue is an array type
+        if (Array.isArray(defaultValue) && typeof str === 'string' && str.includes(',')) {
+          return str.split(',').map(item => item.trim()) as unknown as T;
         }
         return defaultValue;
       }
