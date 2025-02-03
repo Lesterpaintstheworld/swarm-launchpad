@@ -30,55 +30,64 @@ interface CollaborationRecord {
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 
-async function getServiceSpecs(serviceId: string) {
+async function getCollaborationSpecs(collaborationId: string) {
   try {
-    console.log('Fetching specs for serviceId:', serviceId);
-    const response = await fetch(
-      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Services?filterByFormula={serviceId}="${serviceId}"`,
-      {
-        headers: {
-          'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        cache: 'no-store'
-      }
-    );
+    // Fetch specifications, deliverables, and validations in parallel
+    const [specsResponse, deliverablesResponse, validationResponse] = await Promise.all([
+      fetch(
+        `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Specifications?filterByFormula={collaborationId}="${collaborationId}"`,
+        {
+          headers: {
+            'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          cache: 'no-store'
+        }
+      ),
+      fetch(
+        `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Deliverables?filterByFormula={collaborationId}="${collaborationId}"`,
+        {
+          headers: {
+            'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          cache: 'no-store'
+        }
+      ),
+      fetch(
+        `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Validations?filterByFormula={collaborationId}="${collaborationId}"`,
+        {
+          headers: {
+            'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          cache: 'no-store'
+        }
+      )
+    ]);
 
-    if (!response.ok) {
-      throw new Error('Failed to fetch service');
-    }
+    const [specsData, deliverablesData, validationData] = await Promise.all([
+      specsResponse.json(),
+      deliverablesResponse.json(),
+      validationResponse.json()
+    ]);
 
-    const data = await response.json();
-    console.log('Raw service data:', data);
-
-    if (!data.records || data.records.length === 0) {
-      console.log('No records found for serviceId:', serviceId);
-      return null;
-    }
-
-    const record = data.records[0] as CollaborationRecord;
-    console.log('Service record fields:', record.fields);
-    
-    // Parse the specifications from Airtable
     return {
-      specifications: record.fields.specification ? 
-        [{
-          title: JSON.parse(record.fields.specification).specificationId,
-          content: JSON.parse(record.fields.specification).content
-        }] : [],
-      deliverables: record.fields.deliverables ? 
-        [{
-          title: JSON.parse(record.fields.deliverables).title,
-          content: JSON.parse(record.fields.deliverables).content
-        }] : [],
-      validation: record.fields.validation ? 
-        [{
-          title: JSON.parse(record.fields.validation).title,
-          content: JSON.parse(record.fields.validation).content
-        }] : []
+      specifications: specsData.records?.map(record => ({
+        title: record.fields.title || 'Specification',
+        content: record.fields.content
+      })) || [],
+      deliverables: deliverablesData.records?.map(record => ({
+        title: record.fields.title || 'Deliverable',
+        content: record.fields.content
+      })) || [],
+      validation: validationData.records?.map(record => ({
+        title: record.fields.title || 'Validation',
+        content: record.fields.content
+      })) || []
     };
   } catch (error) {
-    console.error('Error fetching service specs:', error);
+    console.error('Error fetching collaboration specs:', error);
     return null;
   }
 }
@@ -218,8 +227,8 @@ export async function GET(
       );
     }
 
-    // Fetch service specs
-    const serviceSpecs = await getServiceSpecs(record.fields.serviceId);
+    // Fetch collaboration specs
+    const specs = await getCollaborationSpecs(params.id);
 
     const collaboration = {
       id: record.fields.collaborationId,
@@ -232,9 +241,9 @@ export async function GET(
       description: record.fields.description,
       objectives: record.fields.objectives ? JSON.parse(record.fields.objectives) : undefined,
       focus: record.fields.focus,
-      specifications: serviceSpecs?.specifications,
-      deliverables: serviceSpecs?.deliverables,
-      validation: serviceSpecs?.validation
+      specifications: specs?.specifications || [],
+      deliverables: specs?.deliverables || [],
+      validation: specs?.validation || []
     };
 
     console.log('Returning collaboration:', collaboration);
