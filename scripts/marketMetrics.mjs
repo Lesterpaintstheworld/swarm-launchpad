@@ -1,10 +1,8 @@
 import { Program, AnchorProvider } from '@coral-xyz/anchor';
 import { Connection, PublicKey, Keypair } from '@solana/web3.js';
-import { createCanvas } from 'canvas';
-import fs from 'fs/promises';
-import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { generateMarketCapVisualization } from './visualization.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
