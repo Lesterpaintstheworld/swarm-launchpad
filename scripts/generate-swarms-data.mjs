@@ -158,6 +158,11 @@ async function main() {
         console.log('Found', swarms.length, 'swarms');
 
         const transformedSwarms = swarms.map(swarm => {
+            // Skip if this is a gallery item or team member
+            if (swarm.type === 'image' || (!swarm.id && swarm.name && swarm.picture)) {
+                return null;
+            }
+
             if (!swarm || typeof swarm.id !== 'string') {
                 console.log('Invalid swarm object:', swarm);
                 return null;
@@ -170,9 +175,9 @@ async function main() {
                 pool: swarm.pool || '',
                 weeklyRevenue: swarm.weeklyRevenue || 0,
                 totalRevenue: swarm.totalRevenue || 0,
-                gallery: swarm.gallery || [],
+                gallery: Array.isArray(swarm.gallery) ? swarm.gallery : [],
                 description: swarm.description,
-                tags: swarm.tags || [],
+                tags: Array.isArray(swarm.tags) ? swarm.tags : [],
                 swarmType: swarm.swarmType || '',
                 multiple: swarm.multiple || 1,
                 launchDate: swarm.launchDate || '',
@@ -180,10 +185,10 @@ async function main() {
                 wallet: swarm.wallet || '',
                 banner: swarm.banner || '',
                 socials: swarm.socials || {},
-                team: swarm.team || [],
-                links: swarm.links || []
+                team: Array.isArray(swarm.team) ? swarm.team : [],
+                links: Array.isArray(swarm.links) ? swarm.links : []
             };
-        }).filter(Boolean);
+        }).filter(Boolean); // Remove null entries
 
         // Write output
         const fileContent = `const SwarmData = ${JSON.stringify(transformedSwarms, null, 2)};
