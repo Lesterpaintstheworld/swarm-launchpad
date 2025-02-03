@@ -41,7 +41,7 @@ interface CollaborationRecord {
     collaborationId: string;
     providerSwarmId: string;
     clientSwarmId: string;
-    serviceId: ServiceId;
+    serviceId: ServiceId;  // This ensures serviceId is of the correct type
     status?: string;
     price?: number;
     startDate?: string;
@@ -207,7 +207,7 @@ export async function GET(
       );
     }
 
-    const record = data.records[0];
+    const record = data.records[0] as CollaborationRecord;
 
     // Fetch both swarms in parallel
     const [providerSwarm, clientSwarm] = await Promise.all([
@@ -222,7 +222,7 @@ export async function GET(
       );
     }
 
-    // Map serviceId to serviceName
+    // Map serviceId to serviceName with proper typing
     const serviceIdToName: Record<ServiceId, ServiceName> = {
       'xforge-development-package': 'Development Package',
       'kinos-essential-package': 'Essential Swarm Package',
