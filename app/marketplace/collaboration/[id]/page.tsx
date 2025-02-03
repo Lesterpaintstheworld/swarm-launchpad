@@ -10,7 +10,7 @@ import { ServiceName } from '@/data/collaborations/collaborations';
 
 // Type guard to validate service names
 function isServiceName(name: string): name is ServiceName {
-  return ['Development Package', 'Essential Swarm Package', 'Inception Package'].includes(name);
+  return ['Development Package', 'Essential Swarm Package', 'Inception Package', 'Active AI Tokens Trading'].includes(name);
 }
 
 const serviceBanners: Record<ServiceName, string> = {
