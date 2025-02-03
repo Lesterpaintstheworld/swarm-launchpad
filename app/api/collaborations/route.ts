@@ -3,44 +3,117 @@ import { NextResponse } from 'next/server';
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 
-export async function GET() {
+async function getSwarm(swarmId: string) {
   try {
     const response = await fetch(
-      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Collaborations`,
+      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Swarms?filterByFormula={swarmId}="${swarmId}"`,
       {
         headers: {
-          Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+          'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+          'Content-Type': 'application/json',
         },
         cache: 'no-store'
       }
     );
 
+    if (!response.ok) {
+      throw new Error('Failed to fetch swarm');
+    }
+
     const data = await response.json();
+    if (!data.records || data.records.length === 0) {
+      return null;
+    }
+
+    const record = data.records[0];
+    return {
+      id: record.fields.swarmId,
+      name: record.fields.name,
+      image: record.fields.image
+    };
+  } catch (error) {
+    console.error('Error fetching swarm:', error);
+    return null;
+  }
+}
+
+export async function GET() {
+  try {
+    console.log('Fetching collaborations from Airtable...');
     
-    const collaborations = data.records.map((record: any) => ({
-      id: record.fields.id,
-      providerSwarm: {
-        id: record.fields.providerSwarmId,
-        name: record.fields.providerSwarmName,
-        image: record.fields.providerSwarmImage,
-      },
-      clientSwarm: {
-        id: record.fields.clientSwarmId,
-        name: record.fields.clientSwarmName,
-        image: record.fields.clientSwarmImage,
-      },
-      serviceName: record.fields.serviceName,
-      status: record.fields.status,
-      price: record.fields.price,
-      startDate: record.fields.startDate,
-      description: record.fields.description,
-      objectives: record.fields.objectives ? JSON.parse(record.fields.objectives) : undefined,
-      focus: record.fields.focus
+    const response = await fetch(
+      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Collaborations`,
+      {
+        headers: {
+          'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        cache: 'no-store'
+      }
+    );
+
+    if (!response.ok) {
+      console.error('Airtable response not OK:', await response.text());
+      throw new Error('Failed to fetch collaborations');
+    }
+
+    const data = await response.json();
+    console.log('Raw Airtable data:', data);
+
+    // Fetch all unique swarms in parallel
+    const uniqueSwarmIds = new Set();
+    data.records.forEach((record: any) => {
+      uniqueSwarmIds.add(record.fields.providerSwarmId);
+      uniqueSwarmIds.add(record.fields.clientSwarmId);
+    });
+
+    const swarmPromises = Array.from(uniqueSwarmIds).map(id => getSwarm(id as string));
+    const swarms = await Promise.all(swarmPromises);
+    const swarmMap = new Map();
+    swarms.forEach(swarm => {
+      if (swarm) {
+        swarmMap.set(swarm.id, swarm);
+      }
+    });
+
+    const collaborations = await Promise.all(data.records.map(async (record: any) => {
+      const providerSwarm = swarmMap.get(record.fields.providerSwarmId);
+      const clientSwarm = swarmMap.get(record.fields.clientSwarmId);
+
+      if (!providerSwarm || !clientSwarm) {
+        console.warn(`Missing swarm data for collaboration ${record.fields.collaborationId}`);
+        return null;
+      }
+
+      // Map serviceId to serviceName
+      const serviceIdToName = {
+        'xforge-development-package': 'Development Package',
+        'kinos-essential-package': 'Essential Swarm Package',
+        'kinos-inception-package': 'Inception Package',
+        'kinkong-trading': 'Active AI Tokens Trading'
+      };
+
+      return {
+        id: record.fields.collaborationId,
+        providerSwarm,
+        clientSwarm,
+        serviceName: serviceIdToName[record.fields.serviceId] || record.fields.serviceId,
+        status: record.fields.status || 'active',
+        price: record.fields.price || 0,
+        startDate: record.fields.startDate,
+        description: record.fields.description,
+        objectives: record.fields.objectives ? JSON.parse(record.fields.objectives) : undefined,
+        focus: record.fields.focus
+      };
     }));
 
-    return NextResponse.json(collaborations);
+    // Filter out null values (collaborations with missing swarm data)
+    const validCollaborations = collaborations.filter(c => c !== null);
+
+    console.log('Processed collaborations:', validCollaborations);
+    return NextResponse.json(validCollaborations);
   } catch (error) {
-    console.error('Error fetching collaborations:', error);
+    console.error('Error in /api/collaborations:', error);
     return NextResponse.json(
       { error: 'Failed to fetch collaborations' },
       { status: 500 }
