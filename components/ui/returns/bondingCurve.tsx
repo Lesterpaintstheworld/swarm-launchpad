@@ -117,7 +117,7 @@ export function BondingCurve() {
                                         <div key="tooltip-content">
                                             <div>Price: {formatNumber(Number(value))} $COMPUTE</div>
                                             <div>Market Cap: {formatNumber(marketCap)} $COMPUTE</div>
-                                            <div>Amount Raised: {formatNumber(amountRaised)} $COMPUTE</div>
+                                            <div>Swarm Raised: {formatNumber(amountRaised)} $COMPUTE</div>
                                         </div>,
                                         null
                                     ];

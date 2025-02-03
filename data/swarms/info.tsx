@@ -51,7 +51,7 @@ export const SwarmData: SwarmInfo[] = [
         role: 'Swarm Operating System',
         swarmType: 'early',
         wallet: 'D1a6RtoptnG2U9gatDz5bQJ3QahKR3wiherDYipe98Vt',
-        multiple: 299.46,
+        multiple: 404.27,
         launchDate: new Date('2025-01-29T19:00:00.000Z'),
         links: [
             {
@@ -125,7 +125,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "Digital Employee Manager",
         swarmType: "partner",
         wallet: "9PEHXookTVdhr4eFfar6RdGr1zPq1RfFxeoiRcR5XZwt",
-        multiple: 299.46
+        multiple: 404.27
     },
     {
         id: "eb76ae17-b9eb-476d-b272-4bde2d85c808",
@@ -185,7 +185,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "Lorem ipsum",
         swarmType: "partner",
         wallet: "7wNok2HWJxNt8fS1aL9bhs4FvEu1jdPaNugSy65RsTcK",
-        multiple: 299.46
+        multiple: 404.27
     },
     {
         id: "e8ffff3d-64d3-44d3-a8cf-f082c5c42234",
@@ -218,7 +218,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "Lorem ipsum",
         swarmType: "partner",
         wallet: "8sUWjMiNsLvmCPerFdmgGJkyQitTXAbwXmQ2CejMPCbN",
-        multiple: 221.82
+        multiple: 404.27
     },
     {
         id: "988b16b4-6beb-4cc5-9a14-50f48ee47a22",
@@ -266,7 +266,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "Lorem ipsum",
         swarmType: "early",
         wallet: "AyJ2wV7UYHwkxvveyuwn2gzDrs9sK6grcyqjLFW3pcaF",
-        multiple: 90.16
+        multiple: 164.31
     },
     {
         id: "7d3c9e5b-1f8a-4d3c-b8d4-9e5b1f8a4d3c",
@@ -293,7 +293,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "Gaming Companion",
         swarmType: "inception",
         wallet: "GkfRszY7B93QL6o8DSP2inVspBpDeZAHCjvYyLddyAo3",
-        multiple: 36.64
+        multiple: 164.31
     },
     {
         id: "forge-partner-id",
@@ -327,7 +327,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "Development Coordinator",
         swarmType: "early",
         wallet: "AFSr2ATJ244u1CY8JRKAK85uuW7VsjNiyKSycmVR4Vg9",
-        multiple: 299.46
+        multiple: 404.27
     },
     {
         id: "propertykin-inception-id",
@@ -383,7 +383,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "Real Estate Arbitrage Bot",
         swarmType: "inception",
         wallet: "7y555firARY2tnQjYKfpy18Zu9vYYZwaftMohenyHuG",
-        multiple: 27.14
+        multiple: 36.64
     },
     {
         id: "b2c3d4e5-f6g7-5b6c-9d0e-1f2g3h4i5j6k",
@@ -411,7 +411,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "Healthcare Assistant",
         swarmType: "inception",
         wallet: "AyA5XS9NKQUoVroHkvZy6ppssAGQzU2n69PRfKxgvWtu",
-        multiple: 11.03
+        multiple: 14.89
     },
     {
         id: "c3d4e5f6-g7h8-6c7d-ae1f-2g3h4i5j6k7l",
@@ -467,7 +467,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "Educational Assistant",
         swarmType: "inception",
         wallet: "3VvQGX8pozFdnfoTED6bAH9NkUJkzUyxjdPZdsSWEPce",
-        multiple: 20.11
+        multiple: 49.47
     },
     {
         id: "e5f6g7h8-i9j0-8e9f-cg3h-4i5j6k7l8m9n",
@@ -495,7 +495,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "Recruitment Assistant",
         swarmType: "inception",
         wallet: "J7VQ5m9A66t6s4VZ463Yxgt3G5cDA2qhs6ztafB1p3P9",
-        multiple: 8.17
+        multiple: 14.89
     },
     {
         id: "f6g7h8i9-j0k1-9f0g-dh4i-5j6k7l8m9n0o",
@@ -522,7 +522,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "Practice Manager",
         swarmType: "inception",
         wallet: "EU9nEKBFEcK2C6oBvTKwywhBpW2xkSatJ3c2eWLYuXm1",
-        multiple: 11.03
+        multiple: 14.89
     },
     {
         id: "g7h8i9j0-k1l2-0g1h-ei5j-6k7l8m9n0o1p",
@@ -549,7 +549,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "E-commerce Manager",
         swarmType: "inception",
         wallet: "3yiG4ftdPae7zfrPcm1x9Mpykh46Yqt6MJVWzPceVM1H",
-        multiple: 11.03
+        multiple: 20.11
     },
     {
         id: "h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q",
@@ -577,7 +577,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "Marketing Automation",
         swarmType: "inception",
         wallet: "6t8QAg9SrsdD1SEt75iFLJDRzR8txZr3L6rBfuDHTqWW",
-        multiple: 27.14
+        multiple: 49.47
     },
     {
         id: "mentor-swarm-id",
@@ -604,7 +604,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "Educational Mentor",
         swarmType: "inception",
         wallet: "GM3P3XTjhanEDFewwrfmUuoQUM7cei8ih1KPViHBb3E1",
-        multiple: 14.89
+        multiple: 49.47
     },
     {
         id: "speaker-swarm-id",
@@ -633,7 +633,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "Conversation Coach",
         swarmType: "inception",
         wallet: "EXQfXLxMkMg6HX2ETo929VFoJc1dqoqyWdspZrPerFcX",
-        multiple: 8.17
+        multiple: 36.64
     },
     {
         id: "travel-swarm-id",
@@ -661,7 +661,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "Travel Concierge",
         swarmType: "inception",
         wallet: "7xvZiYwZD6mBRkeWYm1p93Zy936HYhjSecPa85K9r3Tz",
-        multiple: 8.17
+        multiple: 14.89
     },
     {
         id: "grant-swarm-id",
@@ -689,7 +689,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "Grant Writer",
         swarmType: "inception",
         wallet: "EnUAJY8TKSyqcHwktZCCQ7ixvofcGN8si1N4g1rey6Vu",
-        multiple: 4.48
+        multiple: 20.11
     },
     {
         id: "resume-swarm-id",
@@ -716,7 +716,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "Career Optimizer",
         swarmType: "inception",
         wallet: "8KpUuw7eZQqKUu8byivvzoY1AUotPsabsEL48gKQNuRj",
-        multiple: 8.17
+        multiple: 11.03
     },
     {
         id: "a1b2c3d4-e5f6-4a5b-8c7d-9e8f7a6b5c4d",
@@ -776,7 +776,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "Trading Agent",
         swarmType: "inception",
         wallet: "9StiTDrivvtbjFiM9z1J4Zg63ALS5vkUoGXZz7aCeNyD",
-        multiple: 66.78
+        multiple: 164.31
     },
     {
         id: "f7a92b3c-d8e4-4c1a-9f5d-1234567890ab",
@@ -832,7 +832,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "Screenwriter & Producer",
         swarmType: "inception",
         wallet: "6EfkPAoDDeRhDdzbsjYxYkfs5DysnR3ikzm5PK32uQqB",
-        multiple: 11.03
+        multiple: 20.11
     },
     {
         id: "wealthhive-inception-id",
@@ -863,7 +863,7 @@ export const SwarmData: SwarmInfo[] = [
         role: "Educational Guide",
         swarmType: "inception",
         wallet: "C1uvoRUhHj2o6swBMvgZsdzkaM3Po5J7WMtrcQxGcVJx",
-        multiple: 11.03
+        multiple: 49.47
     },
 {
     id: 'altered-alley-inception-id',
@@ -894,7 +894,7 @@ export const SwarmData: SwarmInfo[] = [
     role: 'Infrastructure Provider',
     swarmType: 'early',
     wallet: '7GmuNjA5AGWMu5izEfrBjakEjuwNpgh5QJuKB1GUq5mGI',
-    multiple: 49.47,
+    multiple: 121.71,
     launchDate: new Date('2025-01-29T19:00:00.000Z'),
     team: [
         {
@@ -967,7 +967,7 @@ export const SwarmData: SwarmInfo[] = [
         role: 'Supply Chain Orchestrator',
         swarmType: 'early',
         wallet: 'CoaDrb1uq7dBfPeirzpYvVD87rPa3cde8oL6xgfqUA6G',
-        multiple: 49.47,
+        multiple: 164.31,
         launchDate: new Date('2025-01-29T19:00:00.000Z'),
         socials: {
             twitter: 'LogicAtlas'
