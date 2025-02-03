@@ -11,10 +11,17 @@ import { ServiceName } from '@/data/collaborations/collaborations';
 // Function to validate service names
 async function isValidServiceName(name: string): Promise<boolean> {
   try {
-    const response = await fetch('/api/services');
-    if (!response.ok) return false;
-    const services = await response.json();
-    return services.some((service: any) => service.name === name);
+    // Map of known service IDs to display names
+    const serviceIdToName = {
+      'xforge-development-package': 'Development Package',
+      'kinos-essential-package': 'Essential Swarm Package',
+      'kinos-inception-package': 'Inception Package',
+      'kinkong-trading': 'Active AI Tokens Trading'
+    };
+
+    // Check if the name matches any of our known service names
+    return Object.values(serviceIdToName).includes(name);
+
   } catch (error) {
     console.error('Error validating service name:', error);
     return false;
