@@ -9,6 +9,25 @@ import { Button } from '@/components/shadcn/button';
 import { ConnectButton } from '@/components/solana/connectButton';
 import { useWallet } from '@solana/wallet-adapter-react';
 
+interface MissionRequester {
+  name: string;
+  image: string;
+}
+
+interface Mission {
+  id: string;
+  name: string;
+  description: string;
+  reward: number;
+  deadline?: string;
+  status: 'open' | 'in-progress' | 'completed';
+  swarmId: string;
+  requirements?: string[];
+  deliverables?: string[];
+  requester: MissionRequester;
+  estimatedDuration: string;
+}
+
 export default function MissionDetailsPage({ params }: { params: { id: string } }) {
   const mission = getMission(params.id);
   const { connected } = useWallet();
