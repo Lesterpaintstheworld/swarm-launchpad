@@ -137,7 +137,7 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
             </div>
             <SwarmGallery
                 className="mt-16"
-                gallery={swarm.gallery}
+                gallery={swarm.gallery as SwarmGalleryItem[]}
                 swarmName={swarm.name}
             />
             <div className="mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8">
