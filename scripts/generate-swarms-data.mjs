@@ -533,8 +533,6 @@ async function main() {
                 swarmId: record.fields.ID,
                 name: record.fields.Name,
                 description: record.fields.Description || "PLACEHOLDER",
-                models: record.fields.Models,
-                role: record.fields.Role,
                 tags: record.fields.Tags,
                 swarmType: record.fields.Type,
                 wallet: record.fields.Wallet,
@@ -542,8 +540,7 @@ async function main() {
                 multiple: record.fields.Multiple,
                 weeklyRevenue: record.fields.WeeklyRevenue,
                 totalRevenue: record.fields.TotalRevenue,
-                launchDate: record.fields.LaunchDate,
-                twitterAccount: record.fields.TwitterAccount
+                launchDate: record.fields.LaunchDate
             }
         }));
 
