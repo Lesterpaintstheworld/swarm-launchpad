@@ -50,51 +50,21 @@ interface SwarmContentProps {
 
 export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
     const [price, setPrice] = useState<number | null>(initialPrice);
-    const [swarmData, setSwarmData] = useState<any>(null);
 
     useEffect(() => {
-        const controller = new AbortController();
-
-        // Separate function for fetching swarm data
-        function fetchSwarmData() {
-            fetch(`/api/swarms/${swarm.id}`)
-                .then(response => {
-                    if (!response.ok) throw new Error('Failed to fetch swarm data');
-                    return response.json();
-                })
-                .then(data => setSwarmData(data))
-                .catch(error => console.error('Error fetching swarm:', error));
-        }
-
-        // Separate function for fetching price
-        function fetchPrice() {
-            fetch('https://api.dexscreener.com/latest/dex/pairs/solana/HiYsmVjeFy4ZLx8pkPSxBjswFkoEjecVGB4zJed2e6Y', {
-                signal: controller.signal
-            })
+        const interval = setInterval(() => {
+            fetch('https://api.dexscreener.com/latest/dex/pairs/solana/HiYsmVjeFy4ZLx8pkPSxBjswFkoEjecVGB4zJed2e6Y')
                 .then(response => response.json())
                 .then(data => {
-                    if (data.pair) {
+                    if (data.pair?.priceUsd) {
                         setPrice(parseFloat(data.pair.priceUsd));
                     }
                 })
-                .catch(error => {
-                    if (error.name === 'AbortError') return;
-                    console.error('Failed to fetch price:', error);
-                });
-        }
+                .catch(error => console.error('Failed to fetch price:', error));
+        }, 60000);
 
-        fetchSwarmData();
-        fetchPrice();
-
-        // Set up interval for price updates
-        const interval = setInterval(fetchPrice, 60000);
-
-        // Clean up
-        return () => {
-            controller.abort();
-            clearInterval(interval);
-        };
-    }, [swarm.id]);
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <main className="container mb-6 md:mb-24 view">

@@ -15,47 +15,31 @@ async function getInitialPrice() {
 async function getSwarm(id: string) {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    console.log('Fetching swarm with id:', id);
-    console.log('Full URL:', `${baseUrl}/api/swarms/${id}`);
-    
     const response = await fetch(`${baseUrl}/api/swarms/${id}`, {
       cache: 'no-store'
     });
 
     if (!response.ok) {
-      console.error('Failed to fetch swarm:', response.statusText);
       return null;
     }
 
-    const data = await response.json();
-    console.log('Received swarm data:', data);
-    return data;
+    return await response.json();
   } catch (error) {
     console.error('Error fetching swarm:', error);
     return null;
   }
 }
 
-interface PageProps {
-    params: {
-        id: string;  // Changed from slug
-    };
-}
-
-export default async function SwarmPage({ params }: PageProps) {
-    console.log('Rendering SwarmPage with id:', params.id);
-    
+export default async function SwarmPage({ params }: { params: { id: string } }) {
     const [swarm, initialPrice] = await Promise.all([
-        getSwarm(params.id),  // Changed from params.slug
+        getSwarm(params.id),
         getInitialPrice()
     ]);
 
     if (!swarm) {
-        console.log('No swarm found, returning 404');
         notFound();
     }
 
-    console.log('Rendering SwarmContent with:', { swarm, initialPrice });
     return <SwarmContent swarm={swarm} initialPrice={initialPrice} />;
 }
 
