@@ -135,6 +135,7 @@ export const SwarmData: SwarmInfo[] = [
             "Claude Haiku"
         ],
         name: "Kin Kong",
+        twitterAccount: "KinKong_ubc",
         pool: "FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz",
         weeklyRevenue: 120000,
         totalRevenue: 120000,
@@ -194,6 +195,7 @@ export const SwarmData: SwarmInfo[] = [
             "Claude Haiku"
         ],
         name: "Swarm Ventures",
+        twitterAccount: "swarmventures",
         pool: "911eRdu96ncdnmEUYA3UQ39gEtE9ueg7UbqycKuKweCG",
         gallery: [
             {
@@ -250,6 +252,7 @@ export const SwarmData: SwarmInfo[] = [
             "GPT-4o Mini"
         ],
         name: "Synthetic Souls",
+        twitterAccount: "syntheticsouls_",
         pool: "CmC2AUuurX19TLBVQbpNct8pmEjaHsRj6o8SLBAVvxAk",
         description: "PLACEHOLDER",
         gallery: [
@@ -935,6 +938,7 @@ export const SwarmData: SwarmInfo[] = [
         image: '/swarms/logicatlas.jpg',
         models: ['KinOS'],
         name: 'LogicAtlas',
+        twitterAccount: 'LogicAtlas',
         pool: '9pMb8Ez61vh3YRKKKrkdA5MthswuNE6Bzj9KYPEVCFme',
         gallery: [
             {
