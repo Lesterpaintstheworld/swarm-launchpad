@@ -6,10 +6,13 @@ const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 
 // Type guard to validate service names
 function isValidServiceName(name: string | undefined): name is ServiceName {
-  return name === 'Development Package' || 
-         name === 'Essential Swarm Package' || 
-         name === 'Inception Package' ||
-         name === 'Active AI Tokens Trading';
+  const validNames = [
+    'Development Package',
+    'Essential Swarm Package',
+    'Inception Package',
+    'Active AI Tokens Trading'
+  ];
+  return !!name && validNames.includes(name);
 }
 
 export async function GET(
@@ -19,7 +22,6 @@ export async function GET(
   try {
     console.log('Fetching collaboration with id:', params.id);
     
-    // Fix: Properly encode the filter formula for Airtable
     const filterByFormula = encodeURIComponent(`{id}="${params.id}"`);
     const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Collaborations?filterByFormula=${filterByFormula}`;
     
@@ -46,7 +48,7 @@ export async function GET(
     }
 
     const data = await response.json();
-    console.log('Raw Airtable data:', data);
+    console.log('Raw Airtable data:', JSON.stringify(data, null, 2));
 
     if (!data.records || data.records.length === 0) {
       console.log('No collaboration found with ID:', params.id);
@@ -57,14 +59,37 @@ export async function GET(
     }
 
     const record = data.records[0];
-    console.log('Raw record fields:', record.fields);
+    console.log('Raw record fields:', JSON.stringify(record.fields, null, 2));
+
+    // Check for both serviceName and serviceId fields
+    let serviceName = record.fields.serviceName;
+    if (!serviceName && record.fields.serviceId) {
+      // Map serviceId to serviceName if needed
+      const serviceIdToName: Record<string, ServiceName> = {
+        'xforge-development-package': 'Development Package',
+        'kinos-essential-package': 'Essential Swarm Package',
+        'kinos-inception-package': 'Inception Package',
+        'kinkong-trading': 'Active AI Tokens Trading'
+      };
+      serviceName = serviceIdToName[record.fields.serviceId];
+    }
 
     // Validate service name
-    const serviceName = record.fields.serviceName;
     if (!isValidServiceName(serviceName)) {
-      console.error('Invalid service name:', serviceName);
+      console.error('Invalid service name:', {
+        serviceName,
+        serviceId: record.fields.serviceId,
+        availableFields: Object.keys(record.fields)
+      });
       return NextResponse.json(
-        { error: 'Invalid service configuration' },
+        { 
+          error: 'Invalid service configuration',
+          details: {
+            receivedServiceName: serviceName,
+            serviceId: record.fields.serviceId,
+            availableFields: Object.keys(record.fields)
+          }
+        },
         { status: 422 }
       );
     }
@@ -91,7 +116,7 @@ export async function GET(
       focus: record.fields.focus
     };
 
-    console.log('Returning collaboration:', collaboration);
+    console.log('Returning collaboration:', JSON.stringify(collaboration, null, 2));
     return NextResponse.json(collaboration);
   } catch (error) {
     console.error('Error in /api/collaborations/[id]:', error);
