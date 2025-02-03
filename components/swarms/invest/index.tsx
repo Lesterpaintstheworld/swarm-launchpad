@@ -386,7 +386,7 @@ const SwarmInvestCard = ({
                 )}
                 
                 {/* Wallet Address */}
-                <div className="bg-slate-800/30 rounded-lg p-4">
+                <div className="bg-slate-800/30 rounded-lg p-4 mt-8">
                     <div className="flex justify-between items-start mb-2">
                         <span className="text-sm text-slate-400">Swarm Wallet</span>
                         <div className="flex items-center gap-2">
