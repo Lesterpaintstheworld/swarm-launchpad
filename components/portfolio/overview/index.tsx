@@ -60,7 +60,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
     const [investmentData, setInvestmentData] = useState<InvestmentDataItem[]>([]);
     const [totalValueInCompute, setTotalValueInCompute] = useState(0);
     const { program } = useLaunchpadProgram();
-    const program = program as unknown as {
+    const typedProgram = program as unknown as {
         account: ProgramAccounts;
     };
 
@@ -75,7 +75,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
                     if (!swarm?.pool) return null;
                     
                     const poolPubkey = new PublicKey(swarm.pool);
-                    const poolData = await program.account.pool.fetch(poolPubkey);
+                    const poolData = await typedProgram.account.pool.fetch(poolPubkey);
                     
                     const totalShares = poolData.totalShares.toNumber();
                     const availableShares = poolData.availableShares.toNumber();
