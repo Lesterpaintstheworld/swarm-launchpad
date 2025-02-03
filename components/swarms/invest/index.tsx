@@ -99,6 +99,7 @@ const SwarmInvestCard = ({
         weeklyRevenue?: number;
         totalRevenue?: number;
         swarmType?: string;
+        wallet?: string;
     }
 
     const [swarm, setSwarm] = useState<SwarmDetails | null>(null);
