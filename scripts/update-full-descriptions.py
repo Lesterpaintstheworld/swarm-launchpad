@@ -224,3 +224,128 @@ def main():
 
 if __name__ == '__main__':
     main()
+import os
+from dotenv import load_dotenv
+import requests
+import time
+
+# Load environment variables
+load_dotenv()
+
+AIRTABLE_API_KEY = os.getenv('AIRTABLE_API_KEY')
+AIRTABLE_BASE_ID = os.getenv('AIRTABLE_BASE_ID')
+AIRTABLE_TABLE_NAME = 'Swarms'
+
+# Map filenames (without .ts) to swarm IDs
+SWARM_ID_MAPPING = {
+    'kinos': 'kinos',
+    'slopfather': 'slopfather',
+    'digitalkin': 'digitalkin', 
+    'kinkong': 'kinkong',
+    'swarmventures': 'swarmventures',
+    'syntheticsouls': 'syntheticsouls',
+    'duoai': 'duoai',
+    'xforge': 'xforge',
+    'propertykin': 'propertykin',
+    'mental-health': 'therapykin',
+    'publishing': 'publishkin',
+    'gamebuddy': 'playwise',
+    'talent': 'talentkin',
+    'carehive': 'carehive',
+    'commercenest': 'commercenest',
+    'affiliate': 'profitbeeai',
+    'mentor': 'deskmate',
+    'speaker': 'stumped',
+    'travel': 'travelaidai',
+    'grant': 'grantkin',
+    'resume': 'careerkin',
+    'robinhood': 'robinhoodagent',
+    'screenplay': 'studiokin',
+    'educative': 'wealthhive',
+    'alteredalley': 'aialley',
+    'logicatlas': 'logicatlas'
+}
+
+def read_description_file(filename):
+    """Read the content of a TypeScript file and extract the description"""
+    with open(filename, 'r', encoding='utf-8') as f:
+        content = f.read()
+        # Extract the description string from the TypeScript export
+        if 'export const description =' in content:
+            # Split on the first occurrence of backtick and take everything after
+            description = content.split('`', 1)[1]
+            # Remove the final backtick
+            description = description.rsplit('`', 1)[0]
+            return description.strip()
+    return None
+
+def update_swarm_description(swarm_id, full_description):
+    """Update a swarm's description in Airtable"""
+    try:
+        # First find the record ID
+        url = f'https://api.airtable.com/v0/{AIRTABLE_BASE_ID}/{AIRTABLE_TABLE_NAME}'
+        headers = {
+            'Authorization': f'Bearer {AIRTABLE_API_KEY}'
+        }
+        params = {
+            'filterByFormula': f'{{swarmId}}="{swarm_id}"'
+        }
+        
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()
+        
+        records = response.json().get('records', [])
+        if not records:
+            print(f'No record found for swarmId: {swarm_id}')
+            return
+        
+        record_id = records[0]['id']
+        
+        # Update the record
+        update_url = f'{url}/{record_id}'
+        payload = {
+            'fields': {
+                'description': full_description
+            }
+        }
+        
+        update_response = requests.patch(update_url, headers={**headers, 'Content-Type': 'application/json'}, json=payload)
+        update_response.raise_for_status()
+        
+        print(f'Updated description for swarm: {swarm_id}')
+        return update_response.json()
+        
+    except Exception as e:
+        print(f'Error updating swarm {swarm_id}:', e)
+        raise
+
+def main():
+    descriptions_dir = 'data/swarms/descriptions'
+    
+    print('Starting description updates...')
+    
+    for filename in os.listdir(descriptions_dir):
+        if filename.endswith('.ts'):
+            base_name = filename[:-3]  # Remove .ts extension
+            if base_name not in SWARM_ID_MAPPING:
+                print(f'Warning: No swarm ID mapping for {filename}')
+                continue
+                
+            swarm_id = SWARM_ID_MAPPING[base_name]
+            filepath = os.path.join(descriptions_dir, filename)
+            
+            description = read_description_file(filepath)
+            if description:
+                try:
+                    update_swarm_description(swarm_id, description)
+                    # Add a small delay between updates to avoid rate limits
+                    time.sleep(1)
+                except Exception as e:
+                    print(f'Failed to update {filename}:', e)
+            else:
+                print(f'Warning: Could not extract description from {filepath}')
+    
+    print('Successfully completed description updates')
+
+if __name__ == '__main__':
+    main()
