@@ -2,7 +2,6 @@ import { Program, AnchorProvider } from '@coral-xyz/anchor';
 import { Connection, PublicKey, Keypair } from '@solana/web3.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { generateMarketCapVisualization } from './visualization.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -128,12 +127,6 @@ export async function calculateMetrics() {
             const marketCap = soldShares * currentPrice;
             totalMarketCap += marketCap;
 
-            // Add metrics to array for visualization
-            swarmMetrics.push({
-                name: swarm.name,
-                marketCap: marketCap,
-                image: `/swarms/${swarm.name.toLowerCase().replace(/\s+/g, '')}.png`
-            });
 
             // Calculate amount raised
             let amountRaised = 0;
@@ -197,8 +190,6 @@ export async function calculateMetrics() {
         console.log(`                    $${(totalWeeklyRevenue * computePrice).toLocaleString()}`);
     }
 
-    // Generate visualization
-    await generateMarketCapVisualization(swarmMetrics);
 }
 
 // Run the script
