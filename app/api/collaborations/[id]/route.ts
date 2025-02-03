@@ -22,27 +22,34 @@ export async function GET(
   try {
     console.log('Fetching collaboration with id:', params.id);
     
-    const filterByFormula = encodeURIComponent(`{id}="${params.id}"`);
+    const filterByFormula = encodeURIComponent(`{collaborationId}="${params.id}"`);
     const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Collaborations?filterByFormula=${filterByFormula}`;
     
     console.log('Fetching from URL:', url);
+    console.log('Using API key:', AIRTABLE_API_KEY ? 'Present' : 'Missing');
 
     const response = await fetch(url, {
       headers: {
-        Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+        'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+        'Content-Type': 'application/json',
       },
       cache: 'no-store'
     });
+
+    console.log('Response status:', response.status);
+    console.log('Response headers:', Object.fromEntries(response.headers.entries()));
 
     if (!response.ok) {
       const errorText = await response.text();
       console.error('Airtable response not OK:', {
         status: response.status,
         statusText: response.statusText,
-        error: errorText
+        error: errorText,
+        url: url,
+        headers: Object.fromEntries(response.headers.entries())
       });
       return NextResponse.json(
-        { error: 'Failed to fetch collaboration' },
+        { error: 'Failed to fetch collaboration', details: errorText },
         { status: response.status }
       );
     }
