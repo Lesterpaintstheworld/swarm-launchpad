@@ -242,6 +242,37 @@ const SwarmInvestCard = ({
                     </div>
                 </div>
             <div className="space-y-6">
+                {/* Supply information */}
+                <div className="space-y-2">
+                    <div className="relative h-4 rounded-full bg-slate-800/50 overflow-hidden">
+                        <div 
+                            className="absolute h-full bg-gradient-to-l from-blue-500 to-blue-400 rounded-full transition-all duration-300"
+                            style={{ 
+                                width: `${(data.remainingSupply / data.totalSupply) * 100}%`,
+                                right: '0',
+                                boxShadow: '0 0 20px rgba(59, 130, 246, 0.5)'
+                            }} 
+                        />
+                        <div 
+                            className="absolute h-full w-[2px] bg-white/30 blur-[2px] animate-pulse"
+                            style={{ 
+                                right: `${(data.remainingSupply / data.totalSupply) * 100}%`,
+                                transform: 'translateX(50%)'
+                            }}
+                        />
+                    </div>
+                    <div className="flex justify-between text-sm">
+                        <span className="text-slate-400">Total Supply</span>
+                        <div className="flex items-center gap-2">
+                            <span className="text-slate-400">{IntlNumberFormat(data.totalSupply)}</span>
+                            <div className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400">
+                                <span>{Math.round((data.remainingSupply / data.totalSupply) * 100)}%</span>
+                                <span>remaining</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 {/* Share input section */}
                 <div>
                     <div className="flex justify-between mb-2">
@@ -304,61 +335,7 @@ const SwarmInvestCard = ({
                         </div>
                     </div>
                 </div>
-
-                {/* Supply information */}
-                <div className="space-y-2">
-                    <div className="flex justify-between text-sm text-slate-400">
-                        <span>Remaining Supply</span>
-                        <span>{IntlNumberFormat(data.remainingSupply)}</span>
-                    </div>
-                    <div className="relative h-4 rounded-full bg-slate-800/50 overflow-hidden">
-                        <div 
-                            className="absolute h-full bg-gradient-to-l from-blue-500 to-blue-400 rounded-full transition-all duration-300"
-                            style={{ 
-                                width: `${(data.remainingSupply / data.totalSupply) * 100}%`,
-                                right: '0',
-                                boxShadow: '0 0 20px rgba(59, 130, 246, 0.5)'
-                            }} 
-                        />
-                        <div 
-                            className="absolute h-full w-[2px] bg-white/30 blur-[2px] animate-pulse"
-                            style={{ 
-                                right: `${(data.remainingSupply / data.totalSupply) * 100}%`,
-                                transform: 'translateX(50%)'
-                            }}
-                        />
-                    </div>
-                    <div className="flex justify-between text-sm">
-                        <span className="text-slate-400">Total Supply</span>
-                        <div className="flex items-center gap-2">
-                            <span className="text-slate-400">{IntlNumberFormat(data.totalSupply)}</span>
-                            <div className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400">
-                                <span>{Math.round((data.remainingSupply / data.totalSupply) * 100)}%</span>
-                                <span>remaining</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-
-            {/* Weekly Revenue per 1000 shares */}
-            {weeklyRevenuePerShare && (
-                <div className="bg-slate-800/30 rounded-lg p-4 mt-4">
-                    <div className="flex justify-between items-start mb-2">
-                        <span className="text-sm text-slate-400">Weekly Revenue per 1000 shares</span>
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <div className="flex items-center justify-between">
-                            <span className="text-sm text-white/60">{IntlNumberFormat(weeklyRevenuePerShare.compute)}</span>
-                            <span className="text-sm metallic-text">$COMPUTE</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                            <span className="text-sm text-white/60">{IntlNumberFormat(weeklyRevenuePerShare.ubc)}</span>
-                            <span className="text-sm metallic-text-ubc">$UBC</span>
-                        </div>
-                    </div>
-                </div>
-            )}
 
             {/* Action button */}
             {connected ? (
@@ -387,6 +364,25 @@ const SwarmInvestCard = ({
             {/* Swarm Information Card */}
             <Card className="bg-[#0f172a] p-6 w-full">
                 <h3 className="text-lg font-semibold text-white mb-4">Swarm Information</h3>
+
+                {/* Weekly Revenue per 1000 shares */}
+                {weeklyRevenuePerShare && (
+                    <div className="bg-slate-800/30 rounded-lg p-4 mt-4">
+                        <div className="flex justify-between items-start mb-2">
+                            <span className="text-sm text-slate-400">Weekly Revenue per 1000 shares</span>
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <div className="flex items-center justify-between">
+                                <span className="text-sm text-white/60">{IntlNumberFormat(weeklyRevenuePerShare.compute)}</span>
+                                <span className="text-sm metallic-text">$COMPUTE</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <span className="text-sm text-white/60">{IntlNumberFormat(weeklyRevenuePerShare.ubc)}</span>
+                                <span className="text-sm metallic-text-ubc">$UBC</span>
+                            </div>
+                        </div>
+                    </div>
+                )}
                 
                 {/* Wallet Address */}
                 <div className="bg-slate-800/30 rounded-lg p-4">
@@ -419,6 +415,21 @@ const SwarmInvestCard = ({
                                 <Copy className="h-4 w-4" />
                             </Button>
                         </div>
+                    </div>
+                </div>
+
+                {/* Twitter Page */}
+                <div className="bg-slate-800/30 rounded-lg p-4 mt-4">
+                    <div className="flex justify-between items-center">
+                        <span className="text-sm text-slate-400">Twitter Page</span>
+                        <a 
+                            href={`https://x.com/`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
+                        >
+                            https://x.com/
+                        </a>
                     </div>
                 </div>
 
@@ -525,21 +536,6 @@ const SwarmInvestCard = ({
                                 ) : (
                                     <p className="text-lg font-semibold text-white">-</p>
                                 )}
-                            </div>
-                            
-                            {/* Per 1000 shares breakdown */}
-                            <div className="px-3 py-2 rounded-lg bg-slate-800/50 border border-white/5">
-                                <p className="text-xs text-white/40 mb-2">Per 1,000 shares:</p>
-                                <div className="space-y-1">
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-xs text-white/60">800</span>
-                                        <span className="text-xs metallic-text">$COMPUTE</span>
-                                    </div>
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-xs text-white/60">200</span>
-                                        <span className="text-xs metallic-text-ubc">$UBC</span>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
