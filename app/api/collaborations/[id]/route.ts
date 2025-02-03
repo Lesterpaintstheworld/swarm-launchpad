@@ -10,7 +10,10 @@ export async function GET(
   try {
     console.log('Fetching collaboration with id:', params.id);
     
-    const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Collaborations?filterByFormula={id}="${params.id}"`;
+    // Fix: Properly encode the filter formula for Airtable
+    const filterByFormula = encodeURIComponent(`{collaborationId}="${params.id}"`);
+    const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Collaborations?filterByFormula=${filterByFormula}`;
+    
     console.log('Fetching from URL:', url);
 
     const response = await fetch(url, {
@@ -47,8 +50,9 @@ export async function GET(
     const record = data.records[0];
     console.log('Raw record fields:', record.fields);
 
+    // Map the fields correctly based on Airtable column names
     const collaboration = {
-      id: record.fields.id,
+      id: record.fields.collaborationId || record.fields.id,
       providerSwarm: {
         id: record.fields.providerSwarmId,
         name: record.fields.providerSwarmName,
