@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { ServiceId, ServiceName } from '@/types/services';
 
 interface AirtableSpecRecord {
   fields: {
