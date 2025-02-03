@@ -4,6 +4,40 @@ import { ServiceName } from '@/data/collaborations/collaborations';
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 
+async function getServiceSpecs(serviceId: string) {
+  try {
+    const response = await fetch(
+      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Services?filterByFormula={serviceId}="${serviceId}"`,
+      {
+        headers: {
+          'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        cache: 'no-store'
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch service');
+    }
+
+    const data = await response.json();
+    if (!data.records || data.records.length === 0) {
+      return null;
+    }
+
+    const record = data.records[0];
+    return {
+      specifications: record.fields.specifications ? JSON.parse(record.fields.specifications) : undefined,
+      deliverables: record.fields.deliverables ? JSON.parse(record.fields.deliverables) : undefined,
+      validation: record.fields.validation ? JSON.parse(record.fields.validation) : undefined
+    };
+  } catch (error) {
+    console.error('Error fetching service specs:', error);
+    return null;
+  }
+}
+
 async function getSwarm(swarmId: string) {
   try {
     const response = await fetch(
