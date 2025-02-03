@@ -34,6 +34,17 @@ interface TooltipProps {
     }>;
 }
 
+interface LegendEntry {
+    value: string;
+    color: string;
+    payload: {
+        name: string;
+        value: number;
+        color: string;
+        percentage?: string;
+    };
+}
+
 interface CustomPayload {
     value: string;
     color: string;
