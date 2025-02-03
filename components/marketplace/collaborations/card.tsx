@@ -60,9 +60,9 @@ export function CollaborationCard({ id, sourceSwarm, targetSwarm, serviceName, s
         />
         
         {/* Service Provider */}
-        <div className="flex items-center gap-4 mb-4">
+        <div className="flex flex-col gap-4 mb-4">
           {/* Provider Swarm */}
-          <div className="flex flex-col items-center gap-3">
+          <div className="flex items-center gap-3">
             <Link 
               href={`/invest/${targetSwarm.id}`}
               className="group/link"
@@ -78,15 +78,17 @@ export function CollaborationCard({ id, sourceSwarm, targetSwarm, serviceName, s
                   />
                 </div>
               </div>
-              <span className="mt-2 block text-sm text-center font-medium text-white/60 group-hover/link:text-pink-200 transition-colors duration-300">
+            </Link>
+            <div>
+              <span className="block text-sm font-medium text-white/60">
                 {targetSwarm.name}
               </span>
-            </Link>
-            <span className="text-xs text-white/40">Provider</span>
+              <span className="text-xs text-white/40">Provider</span>
+            </div>
           </div>
 
           {/* Connection Line with Service Details */}
-          <div className="flex-1 flex flex-col items-center justify-center gap-3">
+          <div className="flex flex-col items-center justify-center gap-3">
             <div className={`px-4 py-1.5 rounded-full text-xs border ${statusStyles[status]} backdrop-blur-sm transition-all duration-300 group-hover:scale-110 relative`}>
               <div className="absolute inset-0 bg-white/5 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <span className="relative">{serviceName}</span>
@@ -103,7 +105,7 @@ export function CollaborationCard({ id, sourceSwarm, targetSwarm, serviceName, s
           </div>
 
           {/* Client Swarm */}
-          <div className="flex flex-col items-center gap-3">
+          <div className="flex items-center gap-3">
             <Link 
               href={`/invest/${sourceSwarm.id}`}
               className="group/link"
@@ -119,11 +121,13 @@ export function CollaborationCard({ id, sourceSwarm, targetSwarm, serviceName, s
                   />
                 </div>
               </div>
-              <span className="mt-2 block text-sm text-center font-medium text-white/60 group-hover/link:text-blue-200 transition-colors duration-300">
+            </Link>
+            <div>
+              <span className="block text-sm font-medium text-white/60">
                 {sourceSwarm.name}
               </span>
-            </Link>
-            <span className="text-xs text-white/40">Client</span>
+              <span className="text-xs text-white/40">Client</span>
+            </div>
           </div>
         </div>
       </div>
