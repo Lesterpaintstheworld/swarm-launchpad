@@ -127,27 +127,21 @@ const SwarmComboBox = ({ className, defaultValue, onChange }: SwarmComboBoxProps
                     <CommandList>
                         <CommandEmpty>No swarms found.</CommandEmpty>
                         <CommandGroup>
-                            {swarms.map((swarm: SwarmPreviewData, index: number) => {
-                                const swarmInfo = getSwarmInfo(swarm.id);
-                                // Early return if no swarm info or no pool
-                                if (!swarmInfo?.pool) return null;
-                                
-                                return (
-                                    <CommandItem
-                                        key={index}
-                                        value={swarm.id}
-                                        onSelect={(currentValue) => handleClick(currentValue)}
-                                    >
-                                        {swarm.name}
-                                        <Check
-                                            className={cn(
-                                                "ml-auto",
-                                                value === swarm.id ? "opacity-100" : "opacity-0"
-                                            )}
-                                        />
-                                    </CommandItem>
-                                );
-                            })}
+                            {swarms.map((swarm: SwarmPreviewData, index: number) => (
+                                <CommandItem
+                                    key={index}
+                                    value={swarm.id}
+                                    onSelect={(currentValue) => handleClick(currentValue)}
+                                >
+                                    {swarm.name}
+                                    <Check
+                                        className={cn(
+                                            "ml-auto",
+                                            value === swarm.id ? "opacity-100" : "opacity-0"
+                                        )}
+                                    />
+                                </CommandItem>
+                            ))}
                         </CommandGroup>
                     </CommandList>
                 </Command>

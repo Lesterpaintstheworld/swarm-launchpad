@@ -196,7 +196,7 @@ export default function SwarmGainersPage() {
 
                 {/* Cards grid */}
                 <div className="grid grid-cols-2 gap-16 mt-40 max-w-[2000px] mx-auto">
-                    {previews.map((swarm) => (
+                    {swarms.map((swarm) => (
                         <SwarmGainCard
                             key={swarm.id}
                             name={swarm.name}
@@ -216,7 +216,7 @@ export default function SwarmGainersPage() {
 
             {/* Launching Today grid */}
             <div className="grid grid-cols-2 gap-16 max-w-[2000px] mx-auto px-8">
-                {previews.map((swarm) => (
+                {swarms.map((swarm) => (
                     <SwarmGainCard
                         key={`launch-${swarm.id}`}
                         name={swarm.name}
