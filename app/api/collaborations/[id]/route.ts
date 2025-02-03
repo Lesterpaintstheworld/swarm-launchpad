@@ -1,10 +1,31 @@
 import { NextResponse } from 'next/server';
 
+type ServiceId = 
+  | 'xforge-development-package'
+  | 'kinos-essential-package'
+  | 'kinos-inception-package'
+  | 'kinkong-trading';
+
 type ServiceName = 
   | 'Development Package'
   | 'Essential Swarm Package'
   | 'Inception Package'
   | 'Active AI Tokens Trading';
+
+interface CollaborationRecord {
+  fields: {
+    collaborationId: string;
+    providerSwarmId: string;
+    clientSwarmId: string;
+    serviceId: ServiceId;
+    status?: string;
+    price?: number;
+    startDate?: string;
+    description?: string;
+    objectives?: string;
+    focus?: string;
+  };
+}
 
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
@@ -35,7 +56,7 @@ async function getServiceSpecs(serviceId: string) {
       return null;
     }
 
-    const record = data.records[0];
+    const record = data.records[0] as CollaborationRecord;
     console.log('Service record fields:', record.fields);
     
     // Parse the specifications from Airtable
@@ -169,7 +190,7 @@ export async function GET(
     }
 
     // Map serviceId to serviceName
-    const serviceIdToName = {
+    const serviceIdToName: Record<ServiceId, ServiceName> = {
       'xforge-development-package': 'Development Package',
       'kinos-essential-package': 'Essential Swarm Package',
       'kinos-inception-package': 'Inception Package',
