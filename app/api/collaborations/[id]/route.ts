@@ -1,7 +1,16 @@
 import { NextResponse } from 'next/server';
+import { ServiceName } from '@/data/collaborations/collaborations';
 
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
+
+// Type guard to validate service names
+function isValidServiceName(name: string | undefined): name is ServiceName {
+  return name === 'Development Package' || 
+         name === 'Essential Swarm Package' || 
+         name === 'Inception Package' ||
+         name === 'Active AI Tokens Trading';
+}
 
 export async function GET(
   request: Request,
@@ -11,7 +20,7 @@ export async function GET(
     console.log('Fetching collaboration with id:', params.id);
     
     // Fix: Properly encode the filter formula for Airtable
-    const filterByFormula = encodeURIComponent(`{collaborationId}="${params.id}"`);
+    const filterByFormula = encodeURIComponent(`{id}="${params.id}"`);
     const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Collaborations?filterByFormula=${filterByFormula}`;
     
     console.log('Fetching from URL:', url);
@@ -50,9 +59,19 @@ export async function GET(
     const record = data.records[0];
     console.log('Raw record fields:', record.fields);
 
+    // Validate service name
+    const serviceName = record.fields.serviceName;
+    if (!isValidServiceName(serviceName)) {
+      console.error('Invalid service name:', serviceName);
+      return NextResponse.json(
+        { error: 'Invalid service configuration' },
+        { status: 422 }
+      );
+    }
+
     // Map the fields correctly based on Airtable column names
     const collaboration = {
-      id: record.fields.collaborationId || record.fields.id,
+      id: record.fields.id,
       providerSwarm: {
         id: record.fields.providerSwarmId,
         name: record.fields.providerSwarmName,
@@ -63,9 +82,9 @@ export async function GET(
         name: record.fields.clientSwarmName,
         image: record.fields.clientSwarmImage,
       },
-      serviceName: record.fields.serviceName,
-      status: record.fields.status,
-      price: record.fields.price,
+      serviceName: serviceName,
+      status: record.fields.status || 'active',
+      price: record.fields.price || 0,
       startDate: record.fields.startDate,
       description: record.fields.description,
       objectives: record.fields.objectives ? JSON.parse(record.fields.objectives) : undefined,
