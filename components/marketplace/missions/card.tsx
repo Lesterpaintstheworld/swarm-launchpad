@@ -38,7 +38,7 @@ export function MissionCard({ mission }: MissionCardProps) {
         {/* Header with Status */}
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h3 className="text-lg font-semibold text-white mb-1">{mission.title}</h3>
+            <h3 className="text-lg font-semibold text-white mb-1">{mission.name}</h3>
             <p className="text-sm text-white/60">{mission.description}</p>
           </div>
           <div className={`px-3 py-1 rounded-full ${statusConfig[mission.status].bgColor} ${statusConfig[mission.status].borderColor} border`}>
