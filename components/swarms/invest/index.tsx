@@ -26,7 +26,6 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { getSwarmUsingPoolId } from "@/data/swarms/info";
-import { previews } from '@/data/swarms/previews';
 
 const getSwarmStage = (swarmType: string) => {
     switch (swarmType) {
@@ -134,12 +133,33 @@ const SwarmInvestCard = ({
         setPrice(totalPrice);
     };
 
-    const previewData = previews.find(p => p.id === swarm?.id);
-    const revenueData = [
+    const [revenueData, setRevenueData] = useState([
         { name: 'Revenue Burned', value: 50, color: '#ef4444' },  // red-500
-        { name: 'Revenue Distributed', value: previewData?.revenueShare || 10, color: '#22c55e' }, // green-500
-        { name: 'Team', value: 50 - (previewData?.revenueShare || 10), color: '#3b82f6' }  // blue-500
-    ];
+        { name: 'Revenue Distributed', value: 10, color: '#22c55e' }, // green-500
+        { name: 'Team', value: 40, color: '#3b82f6' }  // blue-500
+    ]);
+
+    useEffect(() => {
+        async function fetchSwarmData() {
+            try {
+                const response = await fetch(`/api/swarms/${swarm?.id}`);
+                if (response.ok) {
+                    const swarmData = await response.json();
+                    setRevenueData([
+                        { name: 'Revenue Burned', value: 50, color: '#ef4444' },
+                        { name: 'Revenue Distributed', value: swarmData.revenueShare || 10, color: '#22c55e' },
+                        { name: 'Team', value: 50 - (swarmData.revenueShare || 10), color: '#3b82f6' }
+                    ]);
+                }
+            } catch (error) {
+                console.error('Error fetching swarm data:', error);
+            }
+        }
+
+        if (swarm?.id) {
+            fetchSwarmData();
+        }
+    }, [swarm?.id]);
 
     const handleBuy = () => {
         if (!numShares || numShares <= 0) {
