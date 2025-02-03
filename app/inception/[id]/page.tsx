@@ -1,13 +1,17 @@
 'use client';
 
+type GalleryItemType = 'image' | 'video' | 'text';
+
+interface GalleryItem {
+    type: GalleryItemType;
+    content: string;
+}
+
 interface Swarm {
     id: string;
     name: string;
     description?: string;
-    gallery?: Array<{
-        type: string;
-        content: string;
-    }>;
+    gallery?: GalleryItem[];
     swarmType: string;
 }
 
