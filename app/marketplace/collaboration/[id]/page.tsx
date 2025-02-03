@@ -246,10 +246,10 @@ export default function CollaborationPage({ params }: { params: { id: string } }
                       </div>
                     </div>
 
-                    {/* $UBC Redistributed */}
+                    {/* $UBC Burned */}
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-muted-foreground">
-                        <span className="metallic-text-ubc">$UBC</span> Redistributed
+                        <span className="metallic-text-ubc">$UBC</span> Burned
                       </span>
                       <div className="flex items-center gap-2">
                         <span className="text-sm">
@@ -264,10 +264,10 @@ export default function CollaborationPage({ params }: { params: { id: string } }
                       </div>
                     </div>
 
-                    {/* $COMPUTE Redistributed */}
+                    {/* $COMPUTE Burned */}
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-muted-foreground">
-                        <span className="metallic-text">$COMPUTE</span> Redistributed
+                        <span className="metallic-text">$COMPUTE</span> Burned
                       </span>
                       <div className="flex items-center gap-2">
                         <span className="text-sm">
