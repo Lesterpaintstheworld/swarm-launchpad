@@ -5,13 +5,13 @@ const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { slug: string } }
 ) {
   try {
-    console.log('Fetching swarm with ID:', params.id);
+    console.log('Fetching swarm with slug:', params.slug);
     
     const response = await fetch(
-      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Swarms?filterByFormula={swarmId}="${params.id}"`,
+      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Swarms?filterByFormula={swarmId}="${params.slug}"`,
       {
         headers: {
           Authorization: `Bearer ${AIRTABLE_API_KEY}`,
