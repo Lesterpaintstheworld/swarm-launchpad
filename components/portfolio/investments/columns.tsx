@@ -5,17 +5,8 @@ import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
 import { Investment } from "@/components/portfolio/investments";
 import Image from "next/image";
 import { IntlNumberFormat } from "@/lib/utils";
-async function getSwarm(id: string) {
-  try {
-    const response = await fetch(`/api/swarms/${id}`);
-    if (!response.ok) return null;
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching swarm:', error);
-    return null;
-  }
-}
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { useEffect, useState } from "react";
 import { MoreHorizontal } from "lucide-react";
@@ -129,6 +120,44 @@ const ActionCell = ({ swarmId }: { swarmId: string }) => {
     );
 };
 
+const SwarmCell = ({ swarmId }: { swarmId: string }) => {
+  const [swarm, setSwarm] = useState<any>(null);
+
+  useEffect(() => {
+    async function fetchSwarm() {
+      try {
+        const response = await fetch(`/api/swarms/${swarmId}`);
+        if (!response.ok) return;
+        const data = await response.json();
+        setSwarm(data);
+      } catch (error) {
+        console.error('Error fetching swarm:', error);
+      }
+    }
+    fetchSwarm();
+  }, [swarmId]);
+
+  if (!swarm) return null;
+
+  return (
+    <div className="flex items-center min-w-[200px] gap-4 py-1">
+      <Image
+        src={swarm.image}
+        alt={`${swarm.name} avatar`}
+        width={32}
+        height={32}
+        className="rounded-full"
+      />
+      <div className="flex flex-col">
+        <Link className="text-lg mb-0 leading-1 truncate hover:underline" href={`/invest/${swarm.id}`}>
+          {swarm.name}
+        </Link>
+        {swarm.role && <p className="text-sm text-muted truncate">{swarm.role}</p>}
+      </div>
+    </div>
+  );
+};
+
 export const columns: ColumnDef<Investment>[] = [
     {
         accessorKey: 'swarm_id',
@@ -136,24 +165,7 @@ export const columns: ColumnDef<Investment>[] = [
             <DataTableColumnHeader column={column} title="Swarm" />
         ),
         minSize: 200,
-        cell: ({ row }) => {
-            const swarm = getSwarm(row.getValue('swarm_id'));
-            return (
-                <div className="flex items-center min-w-[200px] gap-4 py-1">
-                    <Image
-                        src={swarm?.image}
-                        alt={`${swarm?.name} avatar`}
-                        width={32}
-                        height={32}
-                        className="rounded-full"
-                    />
-                    <div className="flex flex-col">
-                        <Link className="text-lg mb-0 leading-1 truncate hover:underline" href={`/invest/${swarm?.id}`}>{swarm?.name}</Link>
-                        {swarm?.role && <p className="text-sm text-muted truncate">{swarm?.role}</p>}
-                    </div>
-                </div>
-            )
-        }
+        cell: ({ row }) => <SwarmCell swarmId={row.getValue('swarm_id')} />
     },
     {
         accessorKey: 'number_of_shares',
