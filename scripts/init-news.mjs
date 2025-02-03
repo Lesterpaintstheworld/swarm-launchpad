@@ -48,7 +48,7 @@ async function getComputePrice() {
     return null;
 }
 
-async function generateMarketCapVisualization(swarmMetrics) {
+export async function generateMarketCapVisualization(swarmMetrics) {
     // Sort swarms by market cap
     const sortedSwarms = swarmMetrics.sort((a, b) => b.marketCap - a.marketCap);
     
@@ -173,4 +173,4 @@ async function calculateMetrics() {
   }
 }
 
-main();
+calculateMetrics().catch(console.error);

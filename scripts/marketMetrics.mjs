@@ -82,7 +82,7 @@ const swarmPools = [
     { name: 'LogicAtlas', pool: '9pMb8Ez61vh3YRKKKrkdA5MthswuNE6Bzj9KYPEVCFme' }
 ];
 
-async function calculateMetrics() {
+export async function calculateMetrics() {
     // Setup connection and provider
     const connection = new Connection(RPC_URL);
     const wallet = new SimpleWallet(Keypair.generate());
