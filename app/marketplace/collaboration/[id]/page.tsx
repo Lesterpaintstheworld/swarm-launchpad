@@ -130,6 +130,7 @@ export default function CollaborationPage({ params }: { params: { id: string } }
               <CollaborationChat 
                 sourceSwarm={collaboration.sourceSwarm}
                 targetSwarm={collaboration.targetSwarm}
+                collaborationId={collaboration.id}
               />
             </div>
 
