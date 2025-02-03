@@ -20,9 +20,7 @@ import {
 } from "@/components/shadcn/popover";
 import { useEffect, useRef, useState } from "react";
 import { SwarmModel, SwarmPreviewData } from "../swarm.types";
-import { useState, useEffect } from "react";
-import { getSwarm } from "@/data/swarms/info";
-import { getSwarmInfo } from "@/data/swarms/info";
+import { getSwarm, getSwarmInfo } from "@/data/swarms/info";
 
 interface SwarmComboBoxProps {
     defaultValue?: string;
