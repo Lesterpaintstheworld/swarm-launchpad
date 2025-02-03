@@ -137,6 +137,10 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                                     twitter: swarm.twitterAccount || swarm.socials?.twitter
                                 }}
                                 achievements={swarm.achievements}
+                                weeklyRevenuePerShare={swarm.weeklyRevenue ? {
+                                    compute: Math.floor((swarm.weeklyRevenue / 100) * 0.9), // Per 1000 shares
+                                    ubc: Math.floor((swarm.weeklyRevenue / 100) * 0.1)  // Per 1000 shares
+                                } : undefined}
                             />
 
                             {getServicesBySwarm(swarm.id).length > 0 && (
