@@ -140,5 +140,3 @@ export function CollaborationCard({ id, sourceSwarm, targetSwarm, serviceName, s
     </div>
   );
 }
-  );
-}
