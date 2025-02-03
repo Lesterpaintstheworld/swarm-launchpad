@@ -17,7 +17,8 @@
     "market-metrics": "node --loader ts-node/esm -r dotenv/config scripts/marketMetrics.mjs",
     "init-swarms": "node -r dotenv/config scripts/init-swarms.cjs",
     "generate-swarms": "node -r dotenv/config scripts/generate-swarms-data.mjs",
-    "update-descriptions": "node -r dotenv/config scripts/update-short-descriptions.mjs"
+    "update-descriptions": "node -r dotenv/config scripts/update-short-descriptions.mjs",
+    "update-full-descriptions": "node -r dotenv/config scripts/update-full-descriptions.mjs"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1",
