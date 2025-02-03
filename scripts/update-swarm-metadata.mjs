@@ -5,7 +5,7 @@ const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 const AIRTABLE_TABLE_NAME = 'Swarms';
 
 const swarmMetadata = {
-  'altered-alley-inception-id': {
+  'aialley': {
     team: [
       {
         name: "Hexidized",
@@ -50,7 +50,7 @@ const swarmMetadata = {
       }
     ]
   },
-  'logicatlas-inception-id': {
+  'logicatlas': {
     team: [
       {
         name: "Derek Lisko",
@@ -81,7 +81,7 @@ const swarmMetadata = {
       }
     ]
   },
-  'kinos-partner-id': {
+  'kinos': {
     links: [
       { label: 'Documentation', url: 'https://docs.universalbasiccompute.ai' },
       { label: 'GitHub', url: 'https://github.com/ubcaip' }
@@ -101,7 +101,7 @@ const swarmMetadata = {
       }
     ]
   },
-  'forge-partner-id': {
+  'xforge': {
     gallery: [
       {
         type: "image",
@@ -113,7 +113,7 @@ const swarmMetadata = {
       }
     ]
   },
-  'eb76ae17-b9eb-476d-b272-4bde2d85c808': {
+  'kinkong': {
     twitterAccount: "KinKong_ubc",
     gallery: [
       {
