@@ -62,17 +62,12 @@ export interface Service {
 
 export interface Mission {
   id: string;
-  title: string;
+  name: string;
   description: string;
   reward: number;
-  deadline: string;
-  status: 'open' | 'in_progress' | 'completed';
-  requiredCapabilities: string[];
-  complexity: 'low' | 'medium' | 'high';
-  requester: {
-    id: string;
-    name: string;
-    image: string;
-  };
-  estimatedDuration: string;
+  deadline?: string;
+  status: 'open' | 'in-progress' | 'completed';
+  swarmId: string;
+  requirements?: string[];
+  deliverables?: string[];
 }
