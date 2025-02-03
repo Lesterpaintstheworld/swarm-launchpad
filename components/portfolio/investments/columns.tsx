@@ -160,7 +160,7 @@ const ActionCell = ({ swarmId }: { swarmId: string }) => {
 };
 
 const SwarmCell = ({ swarmId }: { swarmId: string }) => {
-  const [swarm, setSwarm] = useState<any>(null);
+  const [swarm, setSwarm] = useState<SwarmData | null>(null);
 
   useEffect(() => {
     async function fetchSwarm() {

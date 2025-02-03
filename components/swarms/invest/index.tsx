@@ -59,7 +59,27 @@ const SwarmInvestCard = ({
     const [numShares, setNumShares] = useState<number>(0);
     const [price, setPrice] = useState<number>(0);
     const [isLoading, setIsLoading] = useState(false);
-    const [swarm, setSwarm] = useState<any>(null);
+    interface SwarmDetails {
+        id: string;
+        name: string;
+        description?: string;
+        launchDate?: string;
+        team?: Array<{
+            name: string;
+            picture: string;
+            telegram?: string;
+            X?: string;
+        }>;
+        links?: Array<{
+            name: string;
+            url: string;
+        }>;
+        weeklyRevenue?: number;
+        totalRevenue?: number;
+        swarmType?: string;
+    }
+
+    const [swarm, setSwarm] = useState<SwarmDetails | null>(null);
     const isBeforeLaunch = swarm?.launchDate && new Date(swarm.launchDate) > new Date();
 
     useEffect(() => {
