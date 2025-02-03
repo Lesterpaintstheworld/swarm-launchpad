@@ -14,7 +14,6 @@ interface SwarmPreviewCardProps {
 
 const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
     const [imgSrc, setImgSrc] = useState(swarm?.image);
-    const [imgSrc, setImgSrc] = useState(swarm?.image);
 
     return (
         <motion.div
