@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { SwarmGainCard } from '@/components/swarms/gainCard';
 import { captureCards } from '@/utils/captureCards';
 import { exportCards } from '@/utils/exportCards';
-import { getSwarmUsingId } from "@/data/swarms/info";
 
 export default function SwarmGainersPage() {
     const [captures, setCaptures] = useState<string[]>([]);
@@ -51,20 +50,14 @@ export default function SwarmGainersPage() {
     }
 
     const gainers = swarms
-        .filter(swarm => {
-            const swarmInfo = getSwarmUsingId(swarm.id);
-            return swarmInfo && swarmInfo.multiple > 1;
-        })
-        .map(swarm => {
-            const swarmInfo = getSwarmUsingId(swarm.id);
-            return {
-                name: swarm.name,
-                value: swarmInfo?.multiple || 1,
-                image: swarm.image
-            };
-        })
-        .sort((a, b) => b.value - a.value) // Sort by multiple in descending order
-        .slice(0, 7); // Take top 7 gainers
+        .filter(swarm => swarm.multiple > 1)
+        .map(swarm => ({
+            name: swarm.name,
+            value: swarm.multiple || 1,
+            image: swarm.image
+        }))
+        .sort((a, b) => b.value - a.value)
+        .slice(0, 7);
 
     return (
         <div className="min-h-screen bg-black relative">
