@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import type { AirtableRecord, ServiceFields } from '@/types/api';
 
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
@@ -21,7 +22,7 @@ export async function GET() {
 
     const data = await response.json();
     
-    const services = data.records.map((record: any) => ({
+    const services = (data.records as AirtableRecord<ServiceFields>[]).map((record) => ({
       id: record.fields.serviceId,
       name: record.fields.name,
       description: record.fields.description,
