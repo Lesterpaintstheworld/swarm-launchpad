@@ -255,7 +255,7 @@ const SwarmInvestCard = ({
                     <div className="text-right">
                         <p className="text-xs text-slate-400 mb-1">CURRENT PRICE</p>
                         <p className="text-2xl font-bold flex items-center gap-1">
-                            <span className="text-violet-400">{IntlNumberFormat(data.pricePerShare, 3)}</span>
+                            <span className="text-violet-400">{IntlNumberFormat(data.pricePerShare, 2)}</span>
                             <span className="text-sm metallic-text">$COMPUTE</span>
                         </p>
                     </div>
