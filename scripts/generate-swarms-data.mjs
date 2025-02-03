@@ -501,6 +501,30 @@ if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
     process.exit(1);
 }
 
+async function uploadBatch(swarms, startIndex) {
+    const batchSize = 10;
+    const endIndex = Math.min(startIndex + batchSize, swarms.length);
+    const batch = swarms.slice(startIndex, endIndex);
+
+    console.log(`Uploading batch ${startIndex/10 + 1} (records ${startIndex + 1}-${endIndex})...`);
+
+    const response = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ records: batch })
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Airtable API error: ${response.status} ${response.statusText}\n${errorText}`);
+    }
+
+    return await response.json();
+}
+
 async function main() {
     try {
         // Transform the existing records into the correct format
@@ -523,24 +547,22 @@ async function main() {
             }
         }));
 
-        console.log(`Making Airtable API call to upload ${swarms.length} swarms...`);
+        console.log(`Processing ${swarms.length} swarms in batches of 10...`);
 
-        const response = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ records: swarms })
-        });
-
-        if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`Airtable API error: ${response.status} ${response.statusText}\n${errorText}`);
+        // Process in batches of 10
+        const results = [];
+        for (let i = 0; i < swarms.length; i += 10) {
+            const result = await uploadBatch(swarms, i);
+            results.push(result);
+            
+            // Add a small delay between batches to avoid rate limits
+            if (i + 10 < swarms.length) {
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
         }
 
-        const result = await response.json();
-        console.log('Successfully uploaded to Airtable:', result);
+        console.log('Successfully uploaded all swarms to Airtable');
+        console.log(`Total records processed: ${swarms.length}`);
 
     } catch (error) {
         console.error('Error:', error);
