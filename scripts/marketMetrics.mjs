@@ -192,6 +192,9 @@ async function calculateMetrics() {
     if (computePrice) {
         console.log(`                    $${(totalWeeklyRevenue * computePrice).toLocaleString()}`);
     }
+
+    // Generate visualization
+    await generateMarketCapVisualization(swarmMetrics);
 }
 
 // Run the script
