@@ -193,7 +193,16 @@ const SwarmInvestCard = ({
 
     if (marketCapOnly) {
         const marketCap = (data.totalSupply - data.remainingSupply) * data.pricePerShare;
-        return `${IntlNumberFormatCompact(marketCap)}`;
+        if (priceInUsd) {
+            // Explicitly show calculation for debugging
+            console.log('Market Cap Calculation:', {
+                marketCap,
+                priceInUsd,
+                result: marketCap * priceInUsd
+            });
+            return IntlNumberFormatCompact(marketCap * priceInUsd);
+        }
+        return IntlNumberFormatCompact(marketCap);
     }
 
     if (amountRaisedOnly) {
@@ -204,7 +213,16 @@ const SwarmInvestCard = ({
             const base = Math.pow(1.35, cycle);
             totalRaised += base;
         }
-        return `${IntlNumberFormatCompact(Math.floor(totalRaised))}`;
+        if (priceInUsd) {
+            // Explicitly show calculation for debugging
+            console.log('Amount Raised Calculation:', {
+                totalRaised,
+                priceInUsd,
+                result: totalRaised * priceInUsd
+            });
+            return IntlNumberFormatCompact(totalRaised * priceInUsd);
+        }
+        return IntlNumberFormatCompact(Math.floor(totalRaised));
     }
 
     if (poolAccount.isLoading) {
