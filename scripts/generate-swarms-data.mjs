@@ -4,20 +4,34 @@ import path from 'path';
 async function main() {
     try {
         // Read the info.tsx file as text
+        console.log('Reading info.tsx file...');
         const infoContent = await readFile('data/swarms/info.tsx', 'utf8');
+        console.log('File length:', infoContent.length, 'characters');
 
         // Extract the SwarmData array using a more flexible regex
         const startMarker = 'export const SwarmData: SwarmInfo[] = [';
         const endMarker = '];';
         
         const startIndex = infoContent.indexOf(startMarker);
-        const endIndex = infoContent.indexOf(endMarker, startIndex);
+        console.log('Start marker index:', startIndex);
         
-        if (startIndex === -1 || endIndex === -1) {
-            throw new Error('Could not find SwarmData array boundaries in info.tsx');
+        if (startIndex === -1) {
+            // Log a portion of the file content to see what we're working with
+            console.log('\nFirst 500 characters of file:');
+            console.log(infoContent.substring(0, 500));
+            throw new Error('Could not find start of SwarmData array in info.tsx');
+        }
+
+        const endIndex = infoContent.indexOf(endMarker, startIndex);
+        console.log('End marker index:', endIndex);
+        
+        if (endIndex === -1) {
+            throw new Error('Could not find end of SwarmData array in info.tsx');
         }
 
         // Extract the array content
+        console.log('\nFirst 200 characters of extracted array:');
+        console.log(arrayContent.substring(0, 200));
         const arrayContent = infoContent.substring(
             startIndex + startMarker.length, 
             endIndex + 1
