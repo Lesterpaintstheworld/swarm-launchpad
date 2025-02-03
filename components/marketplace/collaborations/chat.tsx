@@ -132,7 +132,7 @@ function formatMessageContent(content: string) {
   ));
 }
 
-export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId }: ChatProps) {
+export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId, projectSpecs }: ChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
