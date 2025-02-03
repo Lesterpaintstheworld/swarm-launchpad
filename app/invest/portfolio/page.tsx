@@ -10,6 +10,13 @@ import { PublicKey } from "@solana/web3.js";
 import { useEffect, useState } from "react";
 import { getShareholderPDA } from "@/hooks/useLaunchpadProgram/utils";
 
+interface SwarmData {
+    id: string;
+    name: string;
+    pool?: string;
+    image: string;
+}
+
 interface PositionData {
     id: string;
     number_of_shares: number;
@@ -37,9 +44,9 @@ export default function Portfolio() {
             try {
                 const response = await fetch('/api/swarms');
                 const data = await response.json();
-                const swarmMap = {};
+                const swarmMap: Record<string, SwarmData> = {};
                 const pools: string[] = [];
-                data.forEach(swarm => {
+                data.forEach((swarm: SwarmData) => {
                     if (swarm.pool) {
                         swarmMap[swarm.pool] = swarm;
                         pools.push(swarm.pool);
