@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 
 interface ProjectSpecs {
@@ -131,36 +131,36 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId,
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    async function fetchMessages() {
-      try {
-        // Only show loading state on initial load
-        if (messages.length === 0) {
-          setIsLoading(true);
-        } else {
-          setIsRefreshing(true);
-        }
-        const response = await fetch(`/api/collaborations/${collaborationId}/messages`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch messages');
-        }
-        const data = await response.json();
-        setMessages(data.messages);
-        setError(null);
-      } catch (error) {
-        console.error('Error fetching messages:', error);
-        setError('Failed to load messages');
-      } finally {
-        setIsLoading(false);
-        setIsRefreshing(false);
+  const fetchMessages = useCallback(async () => {
+    try {
+      // Only show loading state on initial load
+      if (messages.length === 0) {
+        setIsLoading(true);
+      } else {
+        setIsRefreshing(true);
       }
+      const response = await fetch(`/api/collaborations/${collaborationId}/messages`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch messages');
+      }
+      const data = await response.json();
+      setMessages(data.messages);
+      setError(null);
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+      setError('Failed to load messages');
+    } finally {
+      setIsLoading(false);
+      setIsRefreshing(false);
     }
+  }, [collaborationId, messages.length]);
 
+  useEffect(() => {
     fetchMessages();
     // Set up polling for new messages
     const interval = setInterval(fetchMessages, 30000); // Poll every 30 seconds
     return () => clearInterval(interval);
-  }, [collaborationId, messages.length]);
+  }, [fetchMessages]);
 
   if (isLoading) {
     return (
