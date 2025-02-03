@@ -8,10 +8,10 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    console.log('Fetching swarm with slug:', params.slug);
+    console.log('Fetching swarm with id:', params.id);
     
     const response = await fetch(
-      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Swarms?filterByFormula={swarmId}="${params.slug}"`,
+      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Swarms?filterByFormula={swarmId}="${params.id}"`,
       {
         headers: {
           Authorization: `Bearer ${AIRTABLE_API_KEY}`,
