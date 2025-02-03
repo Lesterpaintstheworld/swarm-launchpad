@@ -34,7 +34,7 @@ interface TooltipProps {
     }>;
 }
 
-interface LegendEntry {
+interface CustomPayload {
     value: string;
     color: string;
     payload: {
@@ -163,7 +163,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
         
         return (
             <ul className="flex flex-wrap gap-4 justify-center mt-4">
-                {(payload as LegendEntry[]).map((entry, index) => (
+                {(payload as CustomPayload[]).map((entry, index) => (
                     <li key={`item-${index}`} className="flex items-center gap-2">
                         <div 
                             className="w-3 h-3 rounded-full" 
