@@ -138,8 +138,8 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                                 }}
                                 achievements={swarm.achievements}
                                 weeklyRevenuePerShare={swarm.weeklyRevenue ? {
-                                    compute: Math.floor((swarm.weeklyRevenue / 100) * 0.9), // Per 1000 shares
-                                    ubc: Math.floor((swarm.weeklyRevenue / 100) * 0.1)  // Per 1000 shares
+                                    compute: Math.floor((swarm.weeklyRevenue / 100) * 0.8), // Per 1000 shares
+                                    ubc: Math.floor((swarm.weeklyRevenue / 100) * 0.2)  // Per 1000 shares
                                 } : undefined}
                             />
 
