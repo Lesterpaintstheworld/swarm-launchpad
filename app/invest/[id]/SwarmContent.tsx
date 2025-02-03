@@ -12,9 +12,7 @@ import { SwarmGallery } from "@/components/swarms/gallery";
 import { SwarmRecentMarketListings } from "@/components/market/recentListings";
 import { ManagePortfolioCard } from "@/components/cards/managePortfolio";
 import { ServiceGrid } from "@/components/marketplace/services/grid";
-import { getServicesBySwarm } from "@/data/services_bak/services";
 import { CollaborationGrid } from "@/components/marketplace/collaborations/grid";
-import { getCollaborationsBySwarm } from "@/data/collaborations/collaborations";
 
 
 interface SwarmContentProps {
