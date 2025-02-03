@@ -2,6 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
+import { useState, useEffect } from "react";
 import { formatPublicKey, IntlNumberFormat } from "@/lib/utils";
 import { Button } from "@/components/shadcn/button";
 import { MarketListing } from "../market.types";
