@@ -118,38 +118,6 @@ async function main() {
 
         // Log summary 
         console.log(`\nProcessed ${swarms.length} swarms`);
-                models: [
-                    "KinOS",
-                    "Claude Haiku"
-                ],
-                name: "DigitalKin",
-                pool: "FM6aFbs9cQ6Jrp3GJPABBVxpLnGFEZZD3tSJ5JGCUsyZ",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/digitalkin/1.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/digitalkin/2.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/digitalkin/3.png"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                tags: [
-                    "AI",
-                    "Enterprise",
-                    "Automation",
-                    "KinOS"
-                ],
-                role: "Digital Employee Manager",
-                swarmType: "partner",
-                wallet: "9PEHXookTVdhr4eFfar6RdGr1zPq1RfFxeoiRcR5XZwt",
-                multiple: 404.27
-            },
             {
                 id: "eb76ae17-b9eb-476d-b272-4bde2d85c808",
                 image: "/swarms/kinkong.jpg",
