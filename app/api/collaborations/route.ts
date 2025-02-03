@@ -80,7 +80,22 @@ export async function GET() {
 
     // Fetch all unique swarms in parallel
     const uniqueSwarmIds = new Set();
-    data.records.forEach((record: any) => {
+    interface AirtableCollaborationRecord {
+      fields: {
+        collaborationId: string;
+        providerSwarmId: string;
+        clientSwarmId: string;
+        serviceId: string;
+        status?: string;
+        price?: number;
+        startDate?: string;
+        description?: string;
+        objectives?: string;
+        focus?: string;
+      };
+    }
+
+    data.records.forEach((record: AirtableCollaborationRecord) => {
       uniqueSwarmIds.add(record.fields.providerSwarmId);
       uniqueSwarmIds.add(record.fields.clientSwarmId);
     });

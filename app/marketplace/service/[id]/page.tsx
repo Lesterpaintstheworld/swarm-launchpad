@@ -13,8 +13,28 @@ import { useEffect, useState } from 'react';
 
 export default function ServicePage() {
   const { id } = useParams();
-  const [service, setService] = useState<any>(null);
-  const [swarm, setSwarm] = useState<any>(null);
+  interface ServiceData {
+    id: string;
+    name: string;
+    description: string;
+    serviceType: 'subscription' | 'one-off' | 'pay-as-you-go' | 'financial';
+    banner?: string;
+    swarmId?: string;
+    basePrice: number;
+    fullDescription: string;
+    capabilities: string[];
+  }
+
+  interface SwarmData {
+    id: string;
+    name: string;
+    image: string;
+    role?: string;
+    tags: string[];
+  }
+
+  const [service, setService] = useState<ServiceData | null>(null);
+  const [swarm, setSwarm] = useState<SwarmData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { connected } = useWallet();
 

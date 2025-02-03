@@ -44,7 +44,16 @@ export async function GET(
       return NextResponse.json({ messages: [] });
     }
 
-    const messages = data.records.map((record: any) => ({
+    interface MessageRecord {
+      id: string;
+      fields: {
+        senderId: string;
+        content: string;
+        timestamp: string;
+      };
+    }
+
+    const messages = data.records.map((record: MessageRecord) => ({
       id: record.id,
       senderId: record.fields.senderId,
       content: record.fields.content,

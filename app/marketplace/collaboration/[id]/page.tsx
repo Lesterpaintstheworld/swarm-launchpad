@@ -34,9 +34,39 @@ async function getSwarm(id: string) {
 }
 
 export default function CollaborationPage({ params }: { params: { id: string } }) {
-  const [providerSwarm, setProviderSwarm] = useState<any>(null);
-  const [clientSwarm, setClientSwarm] = useState<any>(null);
-  const [collaboration, setCollaboration] = useState<any>(null);
+  interface SwarmData {
+    id: string;
+    name: string;
+    image: string;
+    role?: string;
+    swarmType?: string;
+    revenueShare?: number;
+  }
+
+  interface CollaborationData {
+    id: string;
+    providerSwarm: {
+      id: string;
+      name: string;
+      image: string;
+    };
+    clientSwarm: {
+      id: string;
+      name: string;
+      image: string;
+    };
+    serviceName: string;
+    status: string;
+    price: number;
+    startDate?: string;
+    description?: string;
+    objectives?: string[];
+    focus?: string;
+  }
+
+  const [providerSwarm, setProviderSwarm] = useState<SwarmData | null>(null);
+  const [clientSwarm, setClientSwarm] = useState<SwarmData | null>(null);
+  const [collaboration, setCollaboration] = useState<CollaborationData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

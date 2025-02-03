@@ -33,7 +33,7 @@ export async function GET(
     const record = data.records[0];
     
     // Helper function to safely parse JSON
-    const safeParseJSON = (str: string | null | undefined, defaultValue: any = []) => {
+    const safeParseJSON = <T>(str: string | null | undefined, defaultValue: T): T => {
       if (!str) return defaultValue;
       try {
         return JSON.parse(str);
