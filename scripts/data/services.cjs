@@ -166,9 +166,6 @@ KinOS Inception offers essential development infrastructure for swarms in their 
         banner: '/services/kinos-inception.png',
         basePrice: 10000,
         categories: ['Infrastructure', 'Development', 'Testing', 'Operations'],
-        providers: [
-            { id: 'kinos', name: 'KinOS', rating: 5.0, completedTasks: 50000 }
-        ],
         computePerTask: 10000,
         averageCompletionTime: '1 week',
         capabilities: [
@@ -233,9 +230,6 @@ KinOS Essential provides enterprise-grade infrastructure for production-ready sw
         banner: '/services/kinos-essential.png',
         basePrice: 100000,
         categories: ['Infrastructure', 'Runtime', 'Development', 'Operations'],
-        providers: [
-            { id: 'kinos', name: 'KinOS', rating: 5.0, completedTasks: 50000 }
-        ],
         computePerTask: 100000,
         averageCompletionTime: '1 week',
         capabilities: [
