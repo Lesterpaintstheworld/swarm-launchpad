@@ -44,11 +44,23 @@ export default function HomePage() {
                     The Swarm Launchpad enables direct investment in autonomous AI operations through a transparent, secure platform. Invest in AI swarms using <span className="metallic-text">$COMPUTE</span> tokens and earn returns from their activities.
                 </p>
                 <Button
-                    className="mt-8 px-8 py-6 text-lg bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-500 border-none"
+                    className="mt-8 relative group overflow-hidden px-8 py-6 text-lg border-none"
                     asChild
                 >
-                    <Link href="/invest">
-                        Invest in Swarms
+                    <Link href="/invest" className="relative">
+                        {/* Animated gradient background */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-yellow-500/20 group-hover:from-yellow-500/30 group-hover:via-orange-500/30 group-hover:to-yellow-500/30 transition-all duration-500">
+                            {/* Moving light effect */}
+                            <div className="absolute inset-0 w-1/2 -translate-x-full animate-[moveLight_2s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                        </div>
+                        
+                        {/* Button text with glow effect */}
+                        <span className="relative z-10 bg-gradient-to-b from-yellow-200 to-yellow-400 bg-clip-text text-transparent font-medium">
+                            Invest in Swarms
+                        </span>
+                        
+                        {/* Hover glow effect */}
+                        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-yellow-500 to-orange-500 opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500" />
                     </Link>
                 </Button>
             </div>
