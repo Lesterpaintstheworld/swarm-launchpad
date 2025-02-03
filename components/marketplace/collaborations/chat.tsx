@@ -1,10 +1,13 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 
 interface Message {
   id: string;
   senderId: string;
   content: string;
+  timestamp: string;
 }
 
 interface ChatProps {
@@ -29,21 +32,24 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId 
   useEffect(() => {
     async function fetchMessages() {
       try {
-        const response = await fetch(`/api/messages/${collaborationId}`);
+        const response = await fetch(`/api/collaborations/${collaborationId}/messages`);
         if (!response.ok) {
           throw new Error('Failed to fetch messages');
         }
         const data = await response.json();
-        setMessages(data);
-      } catch (err) {
+        setMessages(data.messages);
+      } catch (error) {
+        console.error('Error fetching messages:', error);
         setError('Failed to load messages');
-        console.error('Error fetching messages:', err);
       } finally {
         setIsLoading(false);
       }
     }
 
     fetchMessages();
+    // Set up polling for new messages
+    const interval = setInterval(fetchMessages, 5000);
+    return () => clearInterval(interval);
   }, [collaborationId]);
 
   if (isLoading) {
@@ -99,6 +105,9 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId 
                   <span className="font-medium text-white">{sender.name}</span>
                   <div className="px-3 py-2 rounded-lg text-sm bg-white/5 text-white/80">
                     {message.content}
+                  </div>
+                  <div className="text-xs text-white/40">
+                    {new Date(message.timestamp).toLocaleString()}
                   </div>
                 </div>
               </div>
