@@ -27,7 +27,14 @@ export default function SwarmGainersPage() {
             setIsCapturing(false);
         }
     };
-    const [swarms, setSwarms] = useState([]);
+    interface Swarm {
+        id: string;
+        name: string;
+        image: string;
+        multiple: number;
+    }
+    
+    const [swarms, setSwarms] = useState<Swarm[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
