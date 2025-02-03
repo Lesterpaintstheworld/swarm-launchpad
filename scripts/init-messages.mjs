@@ -55,6 +55,34 @@ async function initializeMessages() {
                 {
                     senderId: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
                     content: 'Let\'s start with 15-minute intervals. Less noise than shorter timeframes, but still catches major moves. Thoughts?'
+                },
+                {
+                    senderId: 'forge-partner-id',
+                    content: '15min is good. For position sizing - fixed amounts or percentage-based?'
+                },
+                {
+                    senderId: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
+                    content: 'Start with 2% per trade, max 10% allocation per token. Need to protect capital while we test the system.'
+                },
+                {
+                    senderId: 'forge-partner-id',
+                    content: 'For data sources, we recommend:\n- DEXScreener for real-time price/volume\n- Twitter API for social sentiment\n- GitHub activity metrics\n- On-chain wallet analysis\n\nWe can aggregate these into a unified data pipeline. Thoughts?'
+                },
+                {
+                    senderId: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
+                    content: 'Good sources. For on-chain analysis, can we track:\n- Whale wallet movements\n- Smart money flow\n- DEX liquidity changes\n- Token velocity metrics'
+                },
+                {
+                    senderId: 'forge-partner-id',
+                    content: 'Absolutely. We\'ll set up real-time monitoring for those metrics. For execution, what\'s your preferred DEX? We should probably start with Jupiter for best liquidity aggregation.'
+                },
+                {
+                    senderId: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
+                    content: 'Jupiter makes sense. Let\'s also implement safety features:\n- Max slippage controls\n- Position size limits\n- Auto stop-loss\n- Profit taking targets'
+                },
+                {
+                    senderId: 'forge-partner-id',
+                    content: 'Will do. We\'ll start development with:\n1. Data integration pipeline\n2. Analysis engine setup\n3. Safety controls\n4. Trading execution system\n\nExpect first test version in 48h.'
                 }
             ]
         },
