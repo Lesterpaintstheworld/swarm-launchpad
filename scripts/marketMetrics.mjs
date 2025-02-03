@@ -1,5 +1,8 @@
 import { Program, AnchorProvider } from '@coral-xyz/anchor';
 import { Connection, PublicKey, Keypair } from '@solana/web3.js';
+import { createCanvas, loadImage } from 'canvas';
+import fs from 'fs/promises';
+import path from 'path';
 const idlModule = await import('../data/programs/ubclaunchpad.json', {
     assert: { type: 'json' }
 });
@@ -91,6 +94,7 @@ async function calculateMetrics() {
     let totalAmountRaised = 0;
     let totalWeeklyRevenue = 0;
     const numSwarms = swarmPools.length;
+    const swarmMetrics = [];
 
     // Get $COMPUTE price once at the start
     console.log('Fetching $COMPUTE price...');
@@ -119,6 +123,13 @@ async function calculateMetrics() {
             // Calculate market cap
             const marketCap = soldShares * currentPrice;
             totalMarketCap += marketCap;
+
+            // Add metrics to array for visualization
+            swarmMetrics.push({
+                name: swarm.name,
+                marketCap: marketCap,
+                image: `/swarms/${swarm.name.toLowerCase().replace(/\s+/g, '')}.png`
+            });
 
             // Calculate amount raised
             let amountRaised = 0;

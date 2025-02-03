@@ -6,8 +6,84 @@ if (!AIRTABLE_API_KEY) {
   process.exit(1);
 }
 
-async function main() {
-  // Create news for XForge collaborations
+// Generate market cap visualization
+async function generateMarketCapVisualization(swarmMetrics) {
+    // Sort swarms by market cap
+    const sortedSwarms = swarmMetrics.sort((a, b) => b.marketCap - a.marketCap);
+    
+    // Canvas setup
+    const width = 1200;
+    const height = 800;
+    const canvas = createCanvas(width, height);
+    const ctx = canvas.getContext('2d');
+
+    // Background
+    ctx.fillStyle = '#0f172a';
+    ctx.fillRect(0, 0, width, height);
+
+    // Calculate total market cap for scaling
+    const totalMC = sortedSwarms.reduce((sum, s) => sum + s.marketCap, 0);
+    const totalArea = width * height;
+
+    // Position tracking
+    let currentX = 0;
+    let currentY = 0;
+    let rowHeight = 0;
+
+    for (const swarm of sortedSwarms) {
+        // Calculate box size based on market cap proportion
+        const boxArea = (swarm.marketCap / totalMC) * totalArea;
+        const boxWidth = Math.sqrt(boxArea) * 1.2; // Adjust for better visibility
+        const boxHeight = boxWidth;
+
+        // Check if we need to start a new row
+        if (currentX + boxWidth > width) {
+            currentX = 0;
+            currentY += rowHeight;
+            rowHeight = 0;
+        }
+
+        // Draw box
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+        ctx.fillRect(currentX, currentY, boxWidth, boxHeight);
+
+        try {
+            // Load and draw swarm image
+            const imagePath = path.join(process.cwd(), 'public', swarm.image);
+            const img = await loadImage(imagePath);
+            ctx.globalAlpha = 0.3;
+            ctx.drawImage(img, currentX, currentY, boxWidth, boxHeight);
+            ctx.globalAlpha = 1;
+        } catch (error) {
+            console.error(`Error loading image for ${swarm.name}:`, error);
+        }
+
+        // Draw swarm name
+        ctx.fillStyle = 'white';
+        ctx.font = '16px Arial';
+        ctx.fillText(swarm.name, currentX + 10, currentY + 25);
+
+        // Draw market cap
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+        ctx.font = '14px Arial';
+        ctx.fillText(
+            `${Math.floor(swarm.marketCap).toLocaleString()} $COMPUTE`, 
+            currentX + 10, 
+            currentY + 45
+        );
+
+        // Update position tracking
+        currentX += boxWidth;
+        rowHeight = Math.max(rowHeight, boxHeight);
+    }
+
+    // Save the visualization
+    const buffer = canvas.toBuffer('image/png');
+    await fs.writeFile('market-caps.png', buffer);
+    console.log('\nVisualization saved as market-caps.png');
+}
+
+async function calculateMetrics() {
   const xForgeCollaborationNews = [
     // KinKong x XForge news
     {
