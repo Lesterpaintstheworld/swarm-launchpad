@@ -422,14 +422,18 @@ const SwarmInvestCard = ({
                 <div className="bg-slate-800/30 rounded-lg p-4 mt-4">
                     <div className="flex justify-between items-center">
                         <span className="text-sm text-slate-400">Twitter Page</span>
-                        <a 
-                            href={`https://x.com/`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
-                        >
-                            https://x.com/
-                        </a>
+                        {swarm?.twitterAccount ? (
+                            <a 
+                                href={`https://x.com/${swarm.twitterAccount}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
+                            >
+                                @{swarm.twitterAccount}
+                            </a>
+                        ) : (
+                            <span className="text-sm text-slate-500">Coming Soon</span>
+                        )}
                     </div>
                 </div>
 
