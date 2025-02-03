@@ -18,8 +18,15 @@ export const columns: ColumnDef<MarketListing>[] = [
         minSize: 250,
         cell: ({ row }) => {
 
+            interface SwarmData {
+              id: string;
+              name: string;
+              image: string;
+              role?: string;
+            }
+
             const SwarmCell = ({ swarmId }: { swarmId: string }) => {
-                const [swarm, setSwarm] = useState<any>(null);
+                const [swarm, setSwarm] = useState<SwarmData | null>(null);
 
                 useEffect(() => {
                     async function fetchSwarm() {

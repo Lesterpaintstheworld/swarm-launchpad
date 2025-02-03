@@ -435,7 +435,7 @@ export function CollaborationGraph() {
       lightsGroup.selectAll(".link-light").interrupt();
       tooltip.remove(); // Remove tooltip when component unmounts
     };
-  }, [collaborations, zoom]);
+  }, [collaborations, zoom, getNodeSize, isLoading, swarmMap]);
 
   const handleZoomIn = () => {
     setZoom(prev => Math.min(prev + 0.2, 2));

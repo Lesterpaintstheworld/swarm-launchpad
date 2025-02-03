@@ -13,7 +13,13 @@ function safeParseJSON(str: string | null | undefined, defaultValue: any = []) {
   }
 }
 
-async function getSwarm(swarmId: string) {
+interface SwarmData {
+  id: string;
+  name: string;
+  image: string;
+}
+
+async function getSwarm(swarmId: string): Promise<SwarmData | null> {
   try {
     const response = await fetch(
       `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Swarms?filterByFormula={swarmId}="${swarmId}"`,
@@ -68,6 +74,7 @@ export async function GET() {
     }
 
     const data = await response.json();
+    const records = data.records as AirtableRecord<CollaborationFields>[];
     console.log('Raw Airtable data:', data);
 
     // Fetch all unique swarms in parallel
