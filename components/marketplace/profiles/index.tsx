@@ -4,6 +4,7 @@
 
 import { SwarmPreviewCard } from '@/components/swarms/preview';
 import { useState, useEffect } from 'react';
+import { SwarmPreviewData } from '@/components/swarms/swarm.types';
 
 function ComingSoonSection() {
   return (
@@ -27,7 +28,7 @@ function ComingSoonSection() {
 }
 
 export function SwarmProfiles() {
-  const [swarms, setSwarms] = useState([]);
+  const [swarms, setSwarms] = useState<SwarmPreviewData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
