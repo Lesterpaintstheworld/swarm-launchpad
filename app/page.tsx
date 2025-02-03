@@ -57,9 +57,9 @@ export default function HomePage() {
             <div className="w-full max-w-6xl mx-auto mt-24 mb-24">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {/* Number of Swarms */}
-                    <div className="relative group">
+                    <div className="relative group h-[160px]">
                         <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                        <div className="relative p-8 rounded-xl bg-black/40 border border-white/10 backdrop-blur-sm hover:bg-black/50 transition-all duration-300">
+                        <div className="relative p-8 rounded-xl bg-black/40 border border-white/10 backdrop-blur-sm hover:bg-black/50 transition-all duration-300 h-full">
                             <div className="text-center h-full flex flex-col justify-center">
                                 <h3 className="text-sm text-muted-foreground/80 uppercase tracking-wider mb-4 font-medium">Active Swarms</h3>
                                 <p className="text-6xl font-bold bg-gradient-to-br from-white via-white/90 to-white/80 bg-clip-text text-transparent">25</p>
@@ -68,9 +68,9 @@ export default function HomePage() {
                     </div>
 
                     {/* Total Market Cap */}
-                    <div className="relative group">
+                    <div className="relative group h-[160px]">
                         <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                        <div className="relative p-8 rounded-xl bg-black/40 border border-white/10 backdrop-blur-sm hover:bg-black/50 transition-all duration-300">
+                        <div className="relative p-8 rounded-xl bg-black/40 border border-white/10 backdrop-blur-sm hover:bg-black/50 transition-all duration-300 h-full">
                             <div className="text-center h-full flex flex-col justify-center">
                                 <h3 className="text-sm text-muted-foreground/80 uppercase tracking-wider mb-4 font-medium">Total Market Cap</h3>
                                 <div className="space-y-1">
@@ -83,9 +83,9 @@ export default function HomePage() {
                     </div>
 
                     {/* Total Amount Raised */}
-                    <div className="relative group">
+                    <div className="relative group h-[160px]">
                         <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-500/20 to-rose-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                        <div className="relative p-8 rounded-xl bg-black/40 border border-white/10 backdrop-blur-sm hover:bg-black/50 transition-all duration-300">
+                        <div className="relative p-8 rounded-xl bg-black/40 border border-white/10 backdrop-blur-sm hover:bg-black/50 transition-all duration-300 h-full">
                             <div className="text-center h-full flex flex-col justify-center">
                                 <h3 className="text-sm text-muted-foreground/80 uppercase tracking-wider mb-4 font-medium">Total Amount Raised</h3>
                                 <div className="space-y-1">
