@@ -2,7 +2,6 @@
 
 import { useParams } from 'next/navigation';
 import { Shield, Cpu, Clock } from 'lucide-react';
-import { getSwarmUsingId } from "@/data/swarms/info";
 import { ClientMarkdown } from '@/components/ui/clientMarkdown';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -15,26 +14,36 @@ import { useEffect, useState } from 'react';
 export default function ServicePage() {
   const { id } = useParams();
   const [service, setService] = useState<any>(null);
+  const [swarm, setSwarm] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { connected } = useWallet();
 
   useEffect(() => {
-    async function fetchService() {
+    async function fetchData() {
       try {
-        const response = await fetch(`/api/services/${id}`);
-        if (!response.ok) {
+        const serviceResponse = await fetch(`/api/services/${id}`);
+        if (!serviceResponse.ok) {
           throw new Error('Service not found');
         }
-        const data = await response.json();
-        setService(data);
+        const serviceData = await serviceResponse.json();
+        setService(serviceData);
+
+        if (serviceData.swarmId) {
+          const swarmResponse = await fetch(`/api/swarms/${serviceData.swarmId}`);
+          if (!swarmResponse.ok) {
+            throw new Error('Failed to fetch swarm data');
+          }
+          const swarmData = await swarmResponse.json();
+          setSwarm(swarmData);
+        }
       } catch (error) {
-        console.error('Error fetching service:', error);
+        console.error('Error fetching data:', error);
       } finally {
         setIsLoading(false);
       }
     }
     
-    fetchService();
+    fetchData();
   }, [id]);
 
   if (isLoading) {
@@ -45,19 +54,12 @@ export default function ServicePage() {
     );
   }
 
-  if (!service) {
+  if (!service || (service.swarmId && !swarm)) {
     return (
       <div className="container py-12">
-        <h1 className="text-2xl font-bold">Service not found</h1>
-      </div>
-    );
-  }
-
-  const swarm = getSwarmUsingId(service.swarmId);
-  if (!swarm) {
-    return (
-      <div className="container py-12">
-        <h1 className="text-2xl font-bold">Service configuration error</h1>
+        <h1 className="text-2xl font-bold">
+          {!service ? "Service not found" : "Loading swarm data..."}
+        </h1>
       </div>
     );
   }
