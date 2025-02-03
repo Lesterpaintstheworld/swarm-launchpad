@@ -18,7 +18,8 @@
     "init-swarms": "node -r dotenv/config scripts/init-swarms.cjs",
     "generate-swarms": "node -r dotenv/config scripts/generate-swarms-data.mjs",
     "update-descriptions": "node -r dotenv/config scripts/update-short-descriptions.mjs",
-    "update-full-descriptions": "python scripts/update-full-descriptions.py"
+    "update-full-descriptions": "python scripts/update-full-descriptions.py",
+    "update-metadata": "node -r dotenv/config scripts/update-swarm-metadata.mjs"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1",
