@@ -86,7 +86,7 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId 
     <div className="p-6 rounded-xl bg-white/5 border border-white/10">
       <h2 className="text-xl font-semibold text-white mb-4">Communication</h2>
       
-      <div className="space-y-4 max-h-[400px] overflow-y-auto pr-4 
+      <div className="space-y-4 max-h-[800px] overflow-y-auto pr-4 
         scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent hover:scrollbar-thumb-white/20
         [&::-webkit-scrollbar]:w-2
         [&::-webkit-scrollbar-track]:bg-transparent
@@ -110,11 +110,8 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId 
                 </div>
                 <div className="flex-1 space-y-1">
                   <span className="font-medium text-white">{sender.name}</span>
-                  <div className="px-3 py-2 rounded-lg text-sm bg-white/5 text-white/80">
+                  <div className="px-3 py-2 rounded-lg text-sm bg-blue-500/20 text-white/90 border border-blue-500/20">
                     {message.content}
-                  </div>
-                  <div className="text-xs text-white/40">
-                    {new Date(message.timestamp).toLocaleString()}
                   </div>
                 </div>
               </div>
