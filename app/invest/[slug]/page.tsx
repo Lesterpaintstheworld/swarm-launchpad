@@ -1,7 +1,4 @@
-import { getSwarmInfo } from "@/data/swarms/info";
-import { getSwarm } from "@/data/swarms/previews";
 import { SwarmContent } from "./SwarmContent";
-import { descriptionMap } from "./descriptions";
 
 async function getInitialPrice() {
   try {
@@ -14,6 +11,19 @@ async function getInitialPrice() {
   }
 }
 
+async function getSwarm(id: string) {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/swarms/${id}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch swarm');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching swarm:', error);
+    return null;
+  }
+}
+
 interface PageProps {
     params: {
         slug: string;
@@ -21,21 +31,14 @@ interface PageProps {
 }
 
 export default async function SwarmPage({ params }: PageProps) {
-    const swarmInfo = getSwarmInfo(params.slug);
-    const swarmPreview = getSwarm(params.slug);
-    const initialPrice = await getInitialPrice();
+    const [swarm, initialPrice] = await Promise.all([
+        getSwarm(params.slug),
+        getInitialPrice()
+    ]);
 
-    if (!swarmInfo) {
+    if (!swarm) {
         return null;
     }
-
-    const swarm = {
-        ...swarmPreview,
-        ...swarmInfo,
-        role: swarmPreview?.role,
-        tags: swarmPreview?.tags,
-        description: descriptionMap[swarmInfo.id] || swarmInfo.description
-    };
 
     return <SwarmContent swarm={swarm} initialPrice={initialPrice} />;
 }
