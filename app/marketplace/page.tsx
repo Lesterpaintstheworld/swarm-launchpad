@@ -4,6 +4,23 @@ import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { CollaborationGrid } from '@/components/marketplace/collaborations/grid';
 
+type ValidServiceType = 'subscription' | 'one-off' | 'pay-as-you-go' | 'financial';
+
+function validateServiceType(type: string): ValidServiceType {
+  switch (type) {
+    case 'subscription':
+      return 'subscription';
+    case 'one-off':
+      return 'one-off';
+    case 'pay-as-you-go':
+      return 'pay-as-you-go';
+    case 'financial':
+      return 'financial';
+    default:
+      return 'one-off'; // Default fallback
+  }
+}
+
 function validateCollaborationStatus(status: string): 'active' | 'completed' | 'pending' {
   switch (status.toLowerCase()) {
     case 'active':
@@ -37,7 +54,7 @@ function MarketplaceContent() {
   
   // State for marketplace data
   const [collaborations, setCollaborations] = useState<CollaborationResponse[]>([]);
-  const [services, setServices] = useState<ServiceResponse[]>([]);
+  const [services, setServices] = useState<Array<ServiceResponse & { serviceType: ValidServiceType }>>([]);
   const [missions, setMissions] = useState<Mission[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -128,7 +145,10 @@ function MarketplaceContent() {
                         {services.filter(s => s.serviceType !== 'financial').length} services found
                       </div>
                     </div>
-                    <ServiceGrid services={services.filter(s => s.serviceType !== 'financial')} />
+                    <ServiceGrid services={services.filter(s => s.serviceType !== 'financial').map(s => ({
+                      ...s,
+                      serviceType: validateServiceType(s.serviceType)
+                    }))} />
                   </div>
 
                   {/* Ecosystem Services */}
@@ -140,7 +160,10 @@ function MarketplaceContent() {
                           {services.filter(s => s.serviceType === 'financial').length} services found
                         </div>
                       </div>
-                      <ServiceGrid services={services.filter(s => s.serviceType === 'financial')} />
+                      <ServiceGrid services={services.filter(s => s.serviceType === 'financial').map(s => ({
+                        ...s,
+                        serviceType: validateServiceType(s.serviceType)
+                      }))} />
                     </div>
                   )}
                 </div>
