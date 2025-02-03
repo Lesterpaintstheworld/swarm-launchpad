@@ -34,7 +34,7 @@ export async function GET() {
         } catch (e) {
           // If it's a comma-separated string, convert it to array
           if (typeof str === 'string' && str.includes(',')) {
-            return str.split(',').map(item => item.trim());
+            return str.split(',').map(item => item.trim()) as unknown as T;
           }
           return defaultValue;
         }
