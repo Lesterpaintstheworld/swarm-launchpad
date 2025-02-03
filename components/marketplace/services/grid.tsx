@@ -1,18 +1,19 @@
 'use client';
 
+import { ServiceCard } from './card';
+import { useEffect, useState } from 'react';
+
 interface Service {
   id: string;
   name: string;
   description: string;
-  serviceType: string;
+  serviceType: 'subscription' | 'one-off' | 'pay-as-you-go' | 'financial';
   banner?: string;
   swarmId?: string;
   categories: string[];
   computePerTask: number;
   activeSubscriptions?: number;
 }
-import { ServiceCard } from './card';
-import { useEffect, useState } from 'react';
 
 interface ServiceGridProps {
   services?: Service[];
@@ -33,7 +34,12 @@ export function ServiceGrid({ services: initialServices }: ServiceGridProps) {
           throw new Error('Failed to fetch services');
         }
         const data = await response.json();
-        setServices(data);
+        // Ensure the serviceType is one of the allowed values
+        const validatedServices = data.map((service: any) => ({
+          ...service,
+          serviceType: validateServiceType(service.serviceType)
+        }));
+        setServices(validatedServices);
       } catch (err) {
         console.error('Error fetching services:', err);
         setError('Failed to load services');
@@ -44,6 +50,19 @@ export function ServiceGrid({ services: initialServices }: ServiceGridProps) {
 
     fetchServices();
   }, [initialServices]);
+
+  // Helper function to validate serviceType
+  function validateServiceType(type: string): Service['serviceType'] {
+    switch (type) {
+      case 'subscription':
+      case 'one-off':
+      case 'pay-as-you-go':
+      case 'financial':
+        return type;
+      default:
+        return 'one-off'; // Default fallback
+    }
+  }
 
   if (isLoading) {
     return (
