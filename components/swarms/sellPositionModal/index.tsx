@@ -7,7 +7,6 @@ import { Token } from "@/components/tokens/tokens.types";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { Tag } from "@/components/ui/tag";
-import { getSwarmInfo } from "@/data/swarms/info";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { IntlNumberFormat } from "@/lib/utils";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -30,7 +29,23 @@ const SellPositionModal = ({ isModalOpen, closeModal, swarmId }: SellPositionPro
     const [pricePerShare, setPricePerShare] = useState<number>(0);
     const [token, setToken] = useState<Token>();
 
-    const swarm = getSwarmInfo(swarmID);
+    const [swarm, setSwarm] = useState<any>(null);
+
+    useEffect(() => {
+        async function fetchSwarm() {
+            if (!swarmID) return;
+            try {
+                const response = await fetch(`/api/swarms/${swarmID}`);
+                if (!response.ok) return;
+                const data = await response.json();
+                setSwarm(data);
+            } catch (error) {
+                console.error('Error fetching swarm:', error);
+            }
+        }
+        fetchSwarm();
+    }, [swarmID]);
+
     const { position, createListing } = useLaunchpadProgramAccount({ 
         poolAddress: swarm?.pool || '' 
     });

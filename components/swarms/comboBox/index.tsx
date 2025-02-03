@@ -20,7 +20,6 @@ import {
 } from "@/components/shadcn/popover";
 import { useEffect, useRef, useState } from "react";
 import { SwarmModel, SwarmPreviewData } from "../swarm.types";
-import { getSwarmUsingId, getSwarmInfo } from "@/data/swarms/info";
 
 interface SwarmComboBoxProps {
     defaultValue?: string;
@@ -72,12 +71,14 @@ const SwarmComboBox = ({ className, defaultValue, onChange }: SwarmComboBoxProps
     }, [value, defaultValue, onChange])
 
     const handleFilter = (value: string, search: string): number => {
-        const swarm = getSwarmUsingId(value);
+        const swarm = swarms.find(s => s.id === value);
+        if (!swarm) return 0;
+        
         if (
-            swarm.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
-            swarm.models.toString().toLocaleLowerCase().includes(search.toLocaleLowerCase() as SwarmModel) ||
-            swarm.tags.toString().toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
-            swarm.role?.toString().toLocaleLowerCase().includes(search.toLocaleLowerCase())
+            swarm.name.toLowerCase().includes(search.toLowerCase()) ||
+            swarm.models?.toString().toLowerCase().includes(search.toLowerCase()) ||
+            swarm.tags?.toString().toLowerCase().includes(search.toLowerCase()) ||
+            swarm.role?.toString().toLowerCase().includes(search.toLowerCase())
         ) {
             return 1;
         }

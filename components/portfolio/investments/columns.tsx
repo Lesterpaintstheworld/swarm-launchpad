@@ -6,7 +6,6 @@ import { Investment } from "@/components/portfolio/investments";
 import Image from "next/image";
 import { IntlNumberFormat } from "@/lib/utils";
 import Link from "next/link";
-import { getSwarmUsingId } from "@/data/swarms/info";
 import { useEffect, useState } from "react";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { MoreHorizontal } from "lucide-react";
@@ -229,12 +228,23 @@ export const columns: ColumnDef<Investment>[] = [
             <DataTableColumnHeader column={column} title="Price per Share" />
         ),
         cell: ({ row }) => {
-            const swarm = getSwarmUsingId(row.getValue('swarm_id'));
-            console.log('Swarm data:', {
-                swarmId: row.getValue('swarm_id'),
-                swarm,
-                pool: swarm?.pool
-            });
+            const swarmId = row.getValue('swarm_id');
+            const [swarm, setSwarm] = useState<any>(null);
+
+            useEffect(() => {
+                async function fetchSwarm() {
+                    try {
+                        const response = await fetch(`/api/swarms/${swarmId}`);
+                        if (!response.ok) return;
+                        const data = await response.json();
+                        setSwarm(data);
+                    } catch (error) {
+                        console.error('Error fetching swarm:', error);
+                    }
+                }
+                fetchSwarm();
+            }, [swarmId]);
+
             if (!swarm?.pool) return null;
             return <PriceCell poolAddress={swarm.pool} />;
         }
@@ -245,9 +255,8 @@ export const columns: ColumnDef<Investment>[] = [
             <DataTableColumnHeader column={column} title="Value" />
         ),
         cell: ({ row }) => {
-            const swarm = getSwarmUsingId(row.getValue('swarm_id'));
-            if (!swarm?.pool) return null;
-            return <ValueCell poolAddress={swarm.pool} shares={row.original.number_of_shares} />;
+            const swarmId = row.getValue('swarm_id');
+            return <ValueCell swarmId={swarmId} shares={row.original.number_of_shares} />;
         }
     },
     {
