@@ -12,7 +12,7 @@ if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
 }
 
 const descriptions = {
-    'h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q': affiliateDescription,
+    'profitbeeai': affiliateDescription,
     // Add more mappings as we add more description files
 };
 
