@@ -16,7 +16,7 @@ async function main() {
                         content: "/swarms/kinos.png"
                     }
                 ],
-                description: KinOSDescription,
+                description: "PLACEHOLDER",
                 programAddress: '',
                 tags: [
                     'Infrastructure',
@@ -56,7 +56,7 @@ async function main() {
                         content: "/swarms/slopfather.png"
                     }
                 ],
-                description: SlopFatherDescription,
+                description: "PLACEHOLDER",
                 programAddress: "",
                 tags: [
                     "AI",
