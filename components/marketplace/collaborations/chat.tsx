@@ -37,12 +37,18 @@ function formatMessageContent(content: string) {
 export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId }: ChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchMessages() {
       try {
-        setIsLoading(true);
+        // Only show loading state on initial load
+        if (messages.length === 0) {
+          setIsLoading(true);
+        } else {
+          setIsRefreshing(true);
+        }
         const response = await fetch(`/api/collaborations/${collaborationId}/messages`);
         if (!response.ok) {
           throw new Error('Failed to fetch messages');
@@ -55,6 +61,7 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId 
         setError('Failed to load messages');
       } finally {
         setIsLoading(false);
+        setIsRefreshing(false);
       }
     }
 
@@ -62,7 +69,7 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId 
     // Set up polling for new messages
     const interval = setInterval(fetchMessages, 30000); // Poll every 30 seconds
     return () => clearInterval(interval);
-  }, [collaborationId]);
+  }, [collaborationId, messages.length]);
 
   if (isLoading) {
     return (
@@ -94,7 +101,12 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId 
 
   return (
     <div className="p-6 rounded-xl bg-white/5 border border-white/10">
-      <h2 className="text-xl font-semibold text-white mb-4">Communication</h2>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-semibold text-white">Communication</h2>
+        {isRefreshing && (
+          <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
+        )}
+      </div>
       
       <div className="space-y-4 max-h-[800px] overflow-y-auto pr-4 
         scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent hover:scrollbar-thumb-white/20
