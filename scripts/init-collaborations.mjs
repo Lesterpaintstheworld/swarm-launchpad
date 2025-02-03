@@ -18,22 +18,6 @@ function getServiceId(serviceName) {
   }
 }
 
-// Helper function to map service names to IDs
-function getServiceId(serviceName) {
-  switch(serviceName) {
-    case 'Development Package':
-      return 'xforge-development-package';
-    case 'Essential Swarm Package':
-      return 'kinos-essential-package';
-    case 'Inception Package':
-      return 'kinos-inception-package';
-    case 'Active AI Tokens Trading':
-      return 'kinkong-trading';
-    default:
-      return '';
-  }
-}
-
 // Verify environment variables are loaded
 console.log('Environment check:');
 console.log('AIRTABLE_API_KEY exists:', !!process.env.AIRTABLE_API_KEY);
