@@ -3,6 +3,21 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+function getServiceId(serviceName) {
+  switch(serviceName) {
+    case 'Development Package':
+      return 'xforge-development-package';
+    case 'Essential Swarm Package':
+      return 'kinos-essential-package';
+    case 'Inception Package':
+      return 'kinos-inception-package';
+    case 'Active AI Tokens Trading':
+      return 'kinkong-trading';
+    default:
+      return '';
+  }
+}
+
 // Helper function to map service names to IDs
 function getServiceId(serviceName) {
   switch(serviceName) {
