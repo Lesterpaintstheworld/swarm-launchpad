@@ -65,6 +65,7 @@ const SwarmsPreviewGrid = ({}: SwarmsPreviewGridProps) => {
             try {
                 const response = await fetch('/api/swarms');
                 const data = await response.json();
+                console.log('Fetched swarms:', data); // Debug log
                 setSwarms(data);
             } catch (error) {
                 console.error('Error fetching swarms:', error);
@@ -76,18 +77,22 @@ const SwarmsPreviewGrid = ({}: SwarmsPreviewGridProps) => {
     }, []);
 
     const filterSwarms = useCallback((type: SwarmType) => {
-        return swarms.filter(swarm => {
+        const filtered = swarms.filter(swarm => {
             const matchesSearch = 
-                swarm.name.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
-                swarm.description.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
-                swarm.models.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase() as SwarmModel) ||
-                swarm.tags.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
-                swarm.role?.toString().toLocaleLowerCase().includes(searchValue.toLocaleLowerCase());
+                swarm.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+                swarm.description.toLowerCase().includes(searchValue.toLowerCase()) ||
+                swarm.models.toString().toLowerCase().includes(searchValue.toLowerCase()) ||
+                swarm.tags.toString().toLowerCase().includes(searchValue.toLowerCase()) ||
+                swarm.role?.toString().toLowerCase().includes(searchValue.toLowerCase());
             
-            // Add back the type filter
-            return matchesSearch && swarm.swarmType === type;
+            const matchesType = swarm.swarmType === type;
+            console.log(`Swarm ${swarm.name}: type=${swarm.swarmType}, matches=${matchesType}`); // Debug log
+            
+            return matchesSearch && matchesType;
         });
-    }, [searchValue]);
+        console.log(`Filtered ${type} swarms:`, filtered); // Debug log
+        return filtered;
+    }, [searchValue, swarms]);
 
     // Always show all sections
     const showPartner = true;

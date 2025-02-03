@@ -22,7 +22,7 @@ export async function GET() {
     }
 
     const data = await response.json();
-    console.log('Fetched swarms count:', data.records?.length);
+    console.log('Raw Airtable data:', data); // Debug log
     
     const swarms = data.records.map((record: any) => {
       // Helper function to safely parse JSON or return default value
@@ -38,8 +38,10 @@ export async function GET() {
           return defaultValue;
         }
       };
+      console.log('Processed swarm:', swarm); // Debug log
+      return swarm;
 
-      return {
+      const swarm = {
         id: record.fields.swarmId,
         name: record.fields.name,
         description: record.fields.description || '',
@@ -65,7 +67,7 @@ export async function GET() {
       };
     });
 
-    console.log('Transformed swarms:', swarms);
+    console.log('Returning swarms:', swarms); // Debug log
     return NextResponse.json(swarms);
   } catch (error) {
     console.error('Error in /api/swarms:', error);
