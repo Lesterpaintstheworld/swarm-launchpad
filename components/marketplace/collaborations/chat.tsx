@@ -31,6 +31,13 @@ interface ChatProps {
   projectSpecs?: ProjectSpecs;
 }
 
+export function CollaborationChat({ 
+  providerSwarm, 
+  clientSwarm, 
+  collaborationId,
+  projectSpecs 
+}: ChatProps) {
+
 function SpecificationAccordion({ specs }: { specs: ProjectSpecs }) {
   const [isOpen, setIsOpen] = useState(false);
 

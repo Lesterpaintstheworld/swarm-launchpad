@@ -1,10 +1,10 @@
-// @ts-nocheck
 'use client'
 
 import { Card } from "@/components/ui/card";
 import { Investment } from "../investments"
 import { cn, IntlNumberFormat } from "@/lib/utils";
 import { useEffect, useState } from "react";
+
 interface InvestmentDataItem {
     name: string;
     value: number;
@@ -26,13 +26,7 @@ interface LegendEntry {
         name: string;
         value: number;
         color: string;
-    };
-}
-
-interface LegendEntry {
-    value: string;
-    payload: InvestmentDataItem & {
-        strokeDasharray?: string | number;
+        percentage?: string;
     };
 }
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';

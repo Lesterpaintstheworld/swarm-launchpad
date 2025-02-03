@@ -1,4 +1,3 @@
-// @ts-nocheck
 'use client'
 
 import { DividendPayments } from "@/components/portfolio/dividendPayments";
@@ -8,7 +7,6 @@ import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import { useEffect, useState } from "react";
-import { extractKey } from "@/lib/utils";
 import { getShareholderPDA } from "@/hooks/useLaunchpadProgram/utils";
 
 interface PositionData {
@@ -16,9 +14,13 @@ interface PositionData {
     number_of_shares: number;
     total_shares: number;
     last_dividend_payment: number;
+    swarm_id: string;
 }
 
-type Investment = PositionData;
+interface SwarmData {
+    id: string;
+    pool?: string;
+}
 
 export default function Portfolio() {
     const { connected, publicKey } = useWallet();
@@ -26,7 +28,7 @@ export default function Portfolio() {
     const [investments, setInvestments] = useState<Investment[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
-    const [swarmData, setSwarmData] = useState({});
+    const [swarmData, setSwarmData] = useState<Record<string, SwarmData>>({});
     const [poolIds, setPoolIds] = useState<string[]>([]);
 
     useEffect(() => {
