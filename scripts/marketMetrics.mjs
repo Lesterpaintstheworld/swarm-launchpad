@@ -1,8 +1,14 @@
 import { Program, AnchorProvider } from '@coral-xyz/anchor';
 import { Connection, PublicKey, Keypair } from '@solana/web3.js';
-import { createCanvas, loadImage } from 'canvas';
+import { createCanvas } from 'canvas';
 import fs from 'fs/promises';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const idlModule = await import('../data/programs/ubclaunchpad.json', {
     assert: { type: 'json' }
 });
