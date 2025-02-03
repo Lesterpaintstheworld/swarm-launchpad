@@ -58,7 +58,7 @@ function SpecificationAccordion({ specs }: { specs: ProjectSpecs }) {
         onClick={() => setIsOpen(!isOpen)}
         className="w-full px-6 py-4 flex items-center justify-between hover:bg-white/5 transition-colors"
       >
-        <span className="text-xl font-semibold text-white">Project Specifications</span>
+        <span className="text-xl font-semibold text-white">Collaboration Documents</span>
         <svg
           className={`w-6 h-6 transform transition-transform ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
