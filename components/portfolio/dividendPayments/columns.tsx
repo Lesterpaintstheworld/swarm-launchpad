@@ -81,7 +81,16 @@ const ActionCell = ({ row }: ActionCellProps) => {
     const computeAmount = row.getValue('amount') as number;
     const ubcAmount = row.original.ubcAmount;
     const swarmId = row.getValue('swarm_id') as string;
-    const swarm = getSwarm(swarmId);
+    const [swarm, setSwarm] = useState<any>(null);
+
+    useEffect(() => {
+        async function fetchSwarm() {
+            const data = await getSwarm(swarmId);
+            setSwarm(data);
+        }
+        fetchSwarm();
+    }, [swarmId]);
+
     const isDisabled = computeAmount < 10;
 
     return (
