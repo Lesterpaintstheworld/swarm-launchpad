@@ -1,19 +1,60 @@
-const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
-const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID || 'appFFE67A8CC';
+import { Program, AnchorProvider } from '@coral-xyz/anchor';
+import { Connection, PublicKey, Keypair } from '@solana/web3.js';
+import { createCanvas, loadImage } from 'canvas';
+import fs from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
-if (!AIRTABLE_API_KEY) {
-  console.error('Error: AIRTABLE_API_KEY environment variable is not set');
-  process.exit(1);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const PROGRAM_ID = new PublicKey("4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf");
+const RPC_URL = "https://api.mainnet-beta.solana.com";
+
+// Simple wallet implementation for provider
+class SimpleWallet {
+    constructor(payer) {
+        this.payer = payer;
+    }
+    async signTransaction(tx) { return tx; }
+    async signAllTransactions(txs) { return txs; }
+    get publicKey() { return this.payer.publicKey; }
 }
 
-// Generate market cap visualization
+// Calculate share price function
+function calculateSharePrice(n) {
+    const cycle = Math.floor(n / 5000);
+    const base = Math.pow(1.35, cycle);
+    return base;
+}
+
+// Sleep function
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Get compute price
+async function getComputePrice() {
+    try {
+        const response = await fetch('https://api.dexscreener.com/latest/dex/pairs/solana/HiYsmVjeFy4ZLx8pkPSxBjswFkoEjecVGB4zJed2e6Y');
+        const data = await response.json();
+        if (data.pair?.priceUsd) {
+            return parseFloat(data.pair.priceUsd);
+        }
+    } catch (error) {
+        console.error('Error fetching $COMPUTE price:', error);
+    }
+    return null;
+}
+
 async function generateMarketCapVisualization(swarmMetrics) {
     // Sort swarms by market cap
     const sortedSwarms = swarmMetrics.sort((a, b) => b.marketCap - a.marketCap);
     
     // Canvas setup
-    const width = 1200;
-    const height = 800;
+    const width = 1600;
+    const height = 1000;
     const canvas = createCanvas(width, height);
     const ctx = canvas.getContext('2d');
 
@@ -23,63 +64,49 @@ async function generateMarketCapVisualization(swarmMetrics) {
 
     // Calculate total market cap for scaling
     const totalMC = sortedSwarms.reduce((sum, s) => sum + s.marketCap, 0);
-    const totalArea = width * height;
+    const padding = 20;
+    const availableWidth = width - (padding * 2);
+    const availableHeight = height - (padding * 2);
 
-    // Position tracking
-    let currentX = 0;
-    let currentY = 0;
-    let rowHeight = 0;
+    // Calculate grid layout
+    const columns = 5;
+    const rows = Math.ceil(sortedSwarms.length / columns);
+    const boxWidth = availableWidth / columns;
+    const boxHeight = availableHeight / rows;
 
-    for (const swarm of sortedSwarms) {
-        // Calculate box size based on market cap proportion
-        const boxArea = (swarm.marketCap / totalMC) * totalArea;
-        const boxWidth = Math.sqrt(boxArea) * 1.2; // Adjust for better visibility
-        const boxHeight = boxWidth;
-
-        // Check if we need to start a new row
-        if (currentX + boxWidth > width) {
-            currentX = 0;
-            currentY += rowHeight;
-            rowHeight = 0;
-        }
-
-        // Draw box
+    sortedSwarms.forEach((swarm, index) => {
+        const row = Math.floor(index / columns);
+        const col = index % columns;
+        const x = padding + (col * boxWidth);
+        const y = padding + (row * boxHeight);
+        const size = Math.sqrt((swarm.marketCap / totalMC) * (availableWidth * availableHeight));
+        
+        // Draw box background
         ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-        ctx.fillRect(currentX, currentY, boxWidth, boxHeight);
-
-        try {
-            // Load and draw swarm image
-            const imagePath = path.join(process.cwd(), 'public', swarm.image);
-            const img = await loadImage(imagePath);
-            ctx.globalAlpha = 0.3;
-            ctx.drawImage(img, currentX, currentY, boxWidth, boxHeight);
-            ctx.globalAlpha = 1;
-        } catch (error) {
-            console.error(`Error loading image for ${swarm.name}:`, error);
-        }
+        ctx.fillRect(x, y, boxWidth - padding, boxHeight - padding);
 
         // Draw swarm name
         ctx.fillStyle = 'white';
-        ctx.font = '16px Arial';
-        ctx.fillText(swarm.name, currentX + 10, currentY + 25);
+        ctx.font = 'bold 16px Arial';
+        ctx.fillText(swarm.name, x + 10, y + 25);
 
         // Draw market cap
         ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
         ctx.font = '14px Arial';
-        ctx.fillText(
-            `${Math.floor(swarm.marketCap).toLocaleString()} $COMPUTE`, 
-            currentX + 10, 
-            currentY + 45
-        );
+        const mcText = `${Math.floor(swarm.marketCap).toLocaleString()} $COMPUTE`;
+        ctx.fillText(mcText, x + 10, y + 45);
 
-        // Update position tracking
-        currentX += boxWidth;
-        rowHeight = Math.max(rowHeight, boxHeight);
-    }
+        // Draw relative size indicator
+        const percentage = ((swarm.marketCap / totalMC) * 100).toFixed(1);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+        ctx.font = '12px Arial';
+        ctx.fillText(`${percentage}%`, x + 10, y + 65);
+    });
 
     // Save the visualization
+    const outputPath = path.join(__dirname, 'market-caps.png');
     const buffer = canvas.toBuffer('image/png');
-    await fs.writeFile('market-caps.png', buffer);
+    await fs.writeFile(outputPath, buffer);
     console.log('\nVisualization saved as market-caps.png');
 }
 
