@@ -16,6 +16,11 @@ function getServiceId(serviceName) {
   }
 }
 
+// Generate a unique service ID
+function generateServiceId() {
+  return 'svc_' + Math.random().toString(36).substr(2, 9);
+}
+
 // Verify environment variables are loaded
 console.log('Environment check:');
 console.log('AIRTABLE_API_KEY exists:', !!process.env.AIRTABLE_API_KEY);
@@ -44,17 +49,22 @@ async function initializeCollaborations() {
                 body: JSON.stringify({
                     records: [{
                         fields: {
-                            id: collaboration.id,
+                            collaborationId: collaboration.id,
+                            serviceId: generateServiceId(),
                             sourceSwarmId: collaboration.sourceSwarm.id,
                             targetSwarmId: collaboration.targetSwarm.id,
                             serviceName: collaboration.serviceName,
-                            serviceId: getServiceId(collaboration.serviceName),
+                            serviceType: getServiceId(collaboration.serviceName),
                             status: collaboration.status,
                             price: collaboration.price,
                             startDate: collaboration.startDate || '',
                             description: collaboration.description || '',
                             objectives: collaboration.objectives ? JSON.stringify(collaboration.objectives) : '',
-                            focus: collaboration.focus || ''
+                            focus: collaboration.focus || '',
+                            sourceSwarmName: collaboration.sourceSwarm.name,
+                            targetSwarmName: collaboration.targetSwarm.name,
+                            sourceSwarmImage: collaboration.sourceSwarm.image,
+                            targetSwarmImage: collaboration.targetSwarm.image
                         }
                     }]
                 })
