@@ -577,24 +577,23 @@ const SwarmInvestCard = ({
                                         height={36}
                                         content={(props: RechartsProps) => {
                                             const { payload } = props;
-                                            if (payload && payload.length) {
-                                                return (
-                                                    <ul className="flex flex-wrap justify-center gap-2 mt-4">
-                                                        {((payload as unknown) as CustomPayload[]).map((entry, index) => (
-                                                            <li key={`legend-${index}`} className="flex items-center gap-1 text-xs">
-                                                                <div 
-                                                                    className="w-2 h-2 rounded-full"
-                                                                    style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                                                                />
-                                                                <span className="text-white/60">
-                                                                    {entry.value} ({entry.payload.percentage}%)
-                                                                </span>
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                );
-                                            }
-                                            return null;
+                                            if (!payload) return null;
+                                            
+                                            return (
+                                                <ul className="flex flex-wrap gap-4 justify-center mt-4">
+                                                    {((payload as unknown) as CustomPayload[]).map((entry, index) => (
+                                                        <li key={`item-${index}`} className="flex items-center gap-2">
+                                                            <div 
+                                                                className="w-3 h-3 rounded-full" 
+                                                                style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                                                            />
+                                                            <span className="text-sm">
+                                                                {entry.value} ({entry.payload.percentage}%)
+                                                            </span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            );
                                         }}
                                     />
                                 </PieChart>
