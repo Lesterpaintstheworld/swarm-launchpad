@@ -15,7 +15,8 @@
     "init-collaborations": "node -r dotenv/config scripts/init-collaborations.cjs",
     "init-services": "node -r dotenv/config scripts/init-services.cjs",
     "market-metrics": "node --loader ts-node/esm -r dotenv/config scripts/marketMetrics.mjs",
-    "init-swarms": "node -r dotenv/config scripts/init-swarms.cjs"
+    "init-swarms": "node -r dotenv/config scripts/init-swarms.cjs",
+    "generate-swarms": "node scripts/generate-swarms-data.mjs"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1",
