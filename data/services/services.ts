@@ -161,7 +161,7 @@ XForge provides dedicated AI development expertise to accelerate your swarm's te
       '24/7 Monitoring'
     ],
     serviceType: 'subscription',
-    swarmId: 'xforge',
+    swarmId: 'forge-partner-id',
     activeSubscriptions: getActiveSubscriptionsCount("xforge-development-package")
   },
   {
