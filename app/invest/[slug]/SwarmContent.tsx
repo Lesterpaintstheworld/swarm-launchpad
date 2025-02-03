@@ -17,7 +17,33 @@ import { getCollaborationsBySwarm } from "@/data/collaborations/collaborations";
 
 
 interface SwarmContentProps {
-    swarm: any; // TODO: Add proper type definition
+    swarm: {
+        id: string;
+        name: string;
+        description?: string;
+        pool?: string;
+        gallery?: Array<{
+            type: string;
+            content: string;
+        }>;
+        achievements?: Array<{
+            id: string;
+            name: string;
+            description: string;
+            completed: boolean;
+        }>;
+        socials?: {
+            website?: string;
+            twitter?: string;
+            telegram?: string;
+            telegramChannel?: string;
+            discord?: string;
+            dexscreener?: string;
+        };
+        weeklyRevenue?: number;
+        launchDate?: Date;
+        twitterAccount?: string;
+    };
     initialPrice: number | null;
 }
 

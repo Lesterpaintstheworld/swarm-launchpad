@@ -4,6 +4,17 @@ import { NextResponse } from 'next/server';
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 
+interface AirtableRecord {
+  id: string;
+  fields: {
+    swarmId: string;
+    title: string;
+    content: string;
+    date: string;
+    link?: string;
+  };
+}
+
 export async function GET(
   request: Request,
   { params }: { params: { swarmId: string } }
@@ -24,7 +35,7 @@ export async function GET(
     const data = await response.json();
     console.log('Airtable response:', data);
     
-    const news: NewsItem[] = data.records.map((record: any) => ({
+    const news: NewsItem[] = data.records.map((record: AirtableRecord) => ({
       id: record.id,
       swarmId: record.fields.swarmId,
       title: record.fields.title,
