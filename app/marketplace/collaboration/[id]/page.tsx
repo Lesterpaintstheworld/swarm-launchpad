@@ -1,6 +1,5 @@
 'use client';
 
-import { getCollaboration } from '@/data/collaborations/collaborations';
 import { CollaborationChat } from '@/components/marketplace/collaborations/chat';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -35,23 +34,48 @@ async function getSwarm(id: string) {
 }
 
 export default function CollaborationPage({ params }: { params: { id: string } }) {
-  const [providerSwarm, setproviderSwarm] = useState<any>(null);
-  const [clientSwarm, setclientSwarm] = useState<any>(null);
-  const collaboration = getCollaboration(params.id);
+  const [providerSwarm, setProviderSwarm] = useState<any>(null);
+  const [clientSwarm, setClientSwarm] = useState<any>(null);
+  const [collaboration, setCollaboration] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (collaboration) {
-      // Fetch both swarms
-      Promise.all([
-        getSwarm(collaboration.providerSwarm.id),
-        getSwarm(collaboration.clientSwarm.id)
-      ]).then(([source, target]) => {
-        setproviderSwarm(source);
-        setclientSwarm(target);
-      });
+    async function fetchData() {
+      try {
+        // Fetch collaboration
+        const collabResponse = await fetch(`/api/collaborations/${params.id}`);
+        if (!collabResponse.ok) {
+          throw new Error('Failed to fetch collaboration');
+        }
+        const collabData = await collabResponse.json();
+        setCollaboration(collabData);
+
+        // Fetch both swarms
+        const [provider, client] = await Promise.all([
+          getSwarm(collabData.providerSwarm.id),
+          getSwarm(collabData.clientSwarm.id)
+        ]);
+        
+        setProviderSwarm(provider);
+        setClientSwarm(client);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setIsLoading(false);
+      }
     }
-  }, [collaboration]);
-  
+
+    fetchData();
+  }, [params.id]);
+
+  if (isLoading) {
+    return (
+      <div className="container py-12">
+        <h1 className="text-2xl font-bold">Loading...</h1>
+      </div>
+    );
+  }
+
   if (!collaboration) {
     return (
       <div className="container py-12">
