@@ -1,5 +1,27 @@
 'use client'
 
+const getSwarmUsingPoolId = (poolId: string): { id: string; name: string; wallet?: string } | null => {
+    const swarmMap: Record<string, { id: string; name: string; wallet: string }> = {
+        'FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz': {
+            id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
+            name: 'KinKong',
+            wallet: 'BQxsFSHqkwxnhYwW1YqhS6eXvbDp6YUhqiWrGvnB3UBE'
+        },
+        'AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi': {
+            id: 'forge-partner-id',
+            name: 'XForge',
+            wallet: '5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1'
+        },
+        '37u532qgHbjUHic6mQK51jkT3Do7qkWLEUQCx22MDBD8': {
+            id: 'kinos-partner-id',
+            name: 'KinOS',
+            wallet: '6MxUwQisBsEQKAWkXQPnVh3L2TZfQBFY3DXr8RaXDYet'
+        }
+    } as const;
+
+    return (poolId in swarmMap) ? swarmMap[poolId as keyof typeof swarmMap] : null;
+};
+
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/shadcn/button";
