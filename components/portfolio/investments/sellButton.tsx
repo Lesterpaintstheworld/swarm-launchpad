@@ -2,6 +2,13 @@ import { useState, useEffect } from 'react';
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
 import { IntlNumberFormat } from "@/lib/utils";
+import { DividendPayment } from "./types";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/shadcn/button";
+import { useWallet } from '@solana/wallet-adapter-react';
+import { toast } from 'sonner';
+
 async function getSwarm(id: string) {
   try {
     const response = await fetch(`/api/swarms/${id}`);
@@ -12,13 +19,6 @@ async function getSwarm(id: string) {
     return null;
   }
 }
-import { DividendPayment } from "./types";
-import Image from "next/image";
-import Link from "next/link";
-import { Button } from "@/components/shadcn/button";
-import { useWallet } from '@solana/wallet-adapter-react';
-import { useState } from 'react';
-import { toast } from 'sonner';
 
 interface RowData {
     amount: number;
