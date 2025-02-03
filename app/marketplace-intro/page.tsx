@@ -6,6 +6,25 @@ import { useEffect, useState } from 'react';
 
 export default function MarketplacePage() {
   const [computePrice, setComputePrice] = useState<number | null>(null);
+  const [collaborations, setCollaborations] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchCollaborations() {
+      try {
+        const response = await fetch('/api/collaborations');
+        if (response.ok) {
+          const data = await response.json();
+          setCollaborations(data);
+        }
+      } catch (error) {
+        console.error('Error fetching collaborations:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchCollaborations();
+  }, []);
 
   useEffect(() => {
     async function fetchComputePrice() {
@@ -58,7 +77,7 @@ export default function MarketplacePage() {
         <div className="relative rounded-xl bg-black/40 border border-purple-500/20 backdrop-blur-sm overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-blue-500/5" />
           <div className="relative p-6">
-            <CollaborationGraph />
+            <CollaborationGraph collaborations={collaborations} />
           </div>
         </div>
 
