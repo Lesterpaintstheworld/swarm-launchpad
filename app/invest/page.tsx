@@ -38,14 +38,18 @@ export default function Invest() {
     }
 
     // Sort and filter swarms
-    const sortedSwarms = swarms
-        .filter(swarm => swarm.pool) // Only show swarms with pools
-        .sort((a, b) => (b.multiple || 0) - (a.multiple || 0));
+    const sortedSwarms = Array.isArray(swarms) ? swarms
+        .filter(swarm => swarm?.pool) // Only show swarms with pools
+        .sort((a, b) => (b?.multiple || 0) - (a?.multiple || 0))
+    : [];
 
     // Split swarms by type using preview data
-    const partnerSwarms = sortedSwarms.filter(swarm => swarm.swarmType === 'partner');
-    const earlySwarms = sortedSwarms.filter(swarm => swarm.swarmType === 'early');
-    const inceptionSwarms = sortedSwarms.filter(swarm => swarm.swarmType === 'inception');
+    const partnerSwarms = Array.isArray(sortedSwarms) ?
+        sortedSwarms.filter(swarm => swarm?.swarmType === 'partner') : [];
+    const earlySwarms = Array.isArray(sortedSwarms) ?
+        sortedSwarms.filter(swarm => swarm?.swarmType === 'early') : [];
+    const inceptionSwarms = Array.isArray(sortedSwarms) ?
+        sortedSwarms.filter(swarm => swarm?.swarmType === 'inception') : [];
 
     return (
         <main className="container view">
