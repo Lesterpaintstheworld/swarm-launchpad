@@ -965,9 +965,32 @@ async function main() {
             }
         ];
         
-        // Log the first swarm
-        console.log('First Swarm Data:');
-        console.log(JSON.stringify(infoJson[0], null, 2));
+        // Log what the Airtable API call would look like
+        console.log('Airtable API call would be:');
+        console.log(JSON.stringify({
+            records: [{
+                fields: {
+                    swarmId: infoJson[0].id,
+                    name: infoJson[0].name,
+                    description: infoJson[0].description,
+                    image: infoJson[0].image,
+                    pool: infoJson[0].pool || '',
+                    weeklyRevenue: infoJson[0].weeklyRevenue || 0,
+                    totalRevenue: infoJson[0].totalRevenue || 0,
+                    gallery: JSON.stringify(infoJson[0].gallery || []),
+                    tags: JSON.stringify(infoJson[0].tags || []),
+                    swarmType: infoJson[0].swarmType || '',
+                    multiple: infoJson[0].multiple || 1,
+                    launchDate: infoJson[0].launchDate || '',
+                    revenueShare: infoJson[0].revenueShare || 0,
+                    wallet: infoJson[0].wallet || '',
+                    banner: infoJson[0].banner || '',
+                    socials: JSON.stringify(infoJson[0].socials || {}),
+                    team: JSON.stringify(infoJson[0].team || []),
+                    links: JSON.stringify(infoJson[0].links || [])
+                }
+            }]
+        }, null, 2));
 
     } catch (error) {
         console.error('Error:', error);
