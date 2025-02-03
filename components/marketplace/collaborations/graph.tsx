@@ -3,6 +3,25 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import * as d3 from 'd3';
 
+interface CollaborationGraphProps {
+  collaborations: Array<{
+    id: string;
+    providerSwarm: {
+      id: string;
+      name: string;
+      image: string;
+    };
+    clientSwarm: {
+      id: string;
+      name: string;
+      image: string;
+    };
+    serviceName: string;
+    status: string;
+    price: number;
+  }>;
+}
+
 interface SimulationNode extends d3.SimulationNodeDatum {
   id: string;
   name: string;
@@ -71,7 +90,7 @@ interface Collaboration {
   status: string;
 }
 
-export function CollaborationGraph() {
+export function CollaborationGraph({ collaborations }: CollaborationGraphProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [zoom, setZoom] = useState(1);
   const [swarms, setSwarms] = useState<SwarmData[]>([]);
