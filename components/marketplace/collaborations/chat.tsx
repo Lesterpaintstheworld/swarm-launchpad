@@ -24,6 +24,16 @@ interface ChatProps {
   collaborationId: string;
 }
 
+function formatMessageContent(content: string) {
+  return content
+    .split('\n')
+    .map((line, i) => (
+      <span key={i} className="block">
+        {line || '\u00A0'}
+      </span>
+    ));
+}
+
 export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId }: ChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -110,8 +120,8 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId 
                 </div>
                 <div className="flex-1 space-y-1">
                   <span className="font-medium text-white">{sender.name}</span>
-                  <div className="px-3 py-2 rounded-lg text-sm bg-blue-500/20 text-white/90 border border-blue-500/20">
-                    {message.content}
+                  <div className="px-3 py-2 rounded-lg text-sm bg-blue-500/20 text-white/90 border border-blue-500/20 whitespace-pre-wrap">
+                    {formatMessageContent(message.content)}
                   </div>
                 </div>
               </div>
