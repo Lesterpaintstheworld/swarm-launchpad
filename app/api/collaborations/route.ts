@@ -22,10 +22,9 @@ interface SwarmData {
 
 async function getCollaborationSpecs(collaborationId: string) {
   try {
-    // Log the collaboration ID
     console.log(`Fetching specs for collaboration: ${collaborationId}`);
     
-    // Build the filter formula for Airtable
+    // Build the filter formula for Airtable - use specificationId field
     const filterFormula = encodeURIComponent(`{collaborationId}="${collaborationId}"`);
 
     // Construct the URLs
@@ -53,14 +52,11 @@ async function getCollaborationSpecs(collaborationId: string) {
       validationResponse.json()
     ]);
 
-    // Log raw data
-    console.log({
-      specs: specsData,
-      deliverables: deliverablesData,
-      validations: validationData
-    });
+    // Log raw responses for debugging
+    console.log('Raw Specifications:', specsData);
+    console.log('Raw Deliverables:', deliverablesData);
+    console.log('Raw Validations:', validationData);
 
-    // Process and return the data
     return {
       specifications: specsData.records?.map(record => ({
         title: record.fields.title || 'Specification',

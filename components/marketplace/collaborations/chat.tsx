@@ -265,6 +265,7 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId,
                     src={sender.image}
                     alt={sender.name}
                     fill
+                    sizes="(max-width: 32px) 100vw"
                     className="object-cover"
                   />
                 </div>
