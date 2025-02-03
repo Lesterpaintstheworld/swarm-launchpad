@@ -1,904 +1,491 @@
-const SwarmData = [];
-    {
-        id: "eb76ae17-b9eb-476d-b272-4bde2d85c808",
-        image: "/swarms/kinkong.jpg",
-        models: ["GPT-4o Mini", "Claude Haiku"],
-        name: "Kin Kong",
-        twitterAccount: "KinKong_ubc",
-        pool: "FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz",
-        weeklyRevenue: 120000,
-        totalRevenue: 120000,
-        gallery: [
-            {
-                type: "image",
-                content: "/swarms/kinkong/1_KinKong-Advanced-AI-Trading-Agent.png"
-            },
-            {
-                type: "image", 
-                content: "/swarms/kinkong/2_How-KinKong-Works.png"
-            },
-            {
-                type: "image",
-                content: "/swarms/kinkong/4_Investment-Structure.png"
-            },
-            {
-                type: "image",
-                content: "/swarms/kinkong/5_Development-Roadmap.png" 
-            },
-            {
-                type: "image",
-                content: "/swarms/kinkong/6_Technical-Integration.png"
-            },
-            {
-                type: "image",
-                content: "/swarms/kinkong/7_Transparency-and-Verification.png"
-            },
-            {
-                type: "image",
-                content: "/swarms/kinkong/8_Market-Focus.png"
-            },
-            {
-                type: "image",
-                content: "/swarms/kinkong/9_Revenue-Distribution-Strategy.png"
-            },
-            {
-                type: "image",
-                content: "/swarms/kinkong/10_KinKong-Advanced-AI-Trading-System.png"
-            }
-        ],
-        description: "PLACEHOLDER",
-        tags: ["AI", "OpenAI"],
-        role: "Lorem ipsum",
-        swarmType: "partner",
-        wallet: "7wNok2HWJxNt8fS1aL9bhs4FvEu1jdPaNugSy65RsTcK",
-        multiple: 404.27
-    }
-];
-
-async function main() {
-    try {
-        // Get all swarms from the data
-        const swarms = SwarmData.map(swarm => ({
-            fields: {
-                swarmId: swarm.id,
-                name: swarm.name,
-                description: swarm.description || "PLACEHOLDER",
-                image: swarm.image,
-                pool: swarm.pool || '',
-                weeklyRevenue: swarm.weeklyRevenue || 0,
-                totalRevenue: swarm.totalRevenue || 0,
-                gallery: JSON.stringify(swarm.gallery || []),
-                tags: JSON.stringify(swarm.tags || []),
-                swarmType: swarm.swarmType || '',
-                multiple: swarm.multiple || 1,
-                launchDate: swarm.launchDate ? new Date(swarm.launchDate).toISOString() : '',
-                revenueShare: swarm.revenueShare || 0,
-                wallet: swarm.wallet || '',
-                banner: swarm.banner || '',
-                socials: JSON.stringify(swarm.socials || {}),
-                team: JSON.stringify(swarm.team || []),
-                links: JSON.stringify(swarm.links?.map(link => ({
-                    name: link.name,
-                    url: link.url.replace(/\\/g, '')
-                })) || [])
-            }
-        }));     // End of .map() function
-
-        // Log what the Airtable API call would look like
-        console.log('Airtable API call would be:');
-        console.log(JSON.stringify({ records: swarms }, null, 2));
-
-        // Log summary 
-        console.log(`\nProcessed ${swarms.length} swarms`);
-            {
-                id: "e8ffff3d-64d3-44d3-a8cf-f082c5c42234",
-                image: "/swarms/swarm-ventures.jpg",
-                models: [
-                    "Claude Haiku"
-                ],
-                name: "Swarm Ventures",
-                twitterAccount: "swarmventures",
-                pool: "911eRdu96ncdnmEUYA3UQ39gEtE9ueg7UbqycKuKweCG",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/swarmventures/1.jpg"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/swarmventures/2.jpg"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/swarm-ventures.jpg"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                tags: [
-                    "AI",
-                    "OpenAI"
-                ],
-                role: "Lorem ipsum",
-                swarmType: "partner",
-                wallet: "8sUWjMiNsLvmCPerFdmgGJkyQitTXAbwXmQ2CejMPCbN",
-                multiple: 404.27
-            },
-            {
-                id: "988b16b4-6beb-4cc5-9a14-50f48ee47a22",
-                image: "/swarms/terminal-velocity.jpg",
-                models: [
-                    "Claude Haiku"
-                ],
-                name: "Terminal Velocity",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/terminal-velocity.jpg"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                tags: [
-                    "AI",
-                    "OpenAI"
-                ],
-                role: "Lorem ipsum",
-                swarmType: "partner",
-                multiple: 1
-            },
-            {
-                id: "03616e66-a21e-425b-a93b-16d6396e883f",
-                image: "/swarms/syntheticsouls/Lyra 16-9 web.jpg",
-                models: [
-                    "GPT-4o Mini"
-                ],
-                name: "Synthetic Souls",
-                twitterAccount: "syntheticsouls_",
-                pool: "CmC2AUuurX19TLBVQbpNct8pmEjaHsRj6o8SLBAVvxAk",
-                description: "PLACEHOLDER",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/syntheticsouls/Lyra 16-9 web.jpg"
-                    }
-                ],
-                programAddress: "",
-                tags: [
-                    "AI",
-                    "OpenAI"
-                ],
-                role: "Lorem ipsum",
-                swarmType: "early",
-                wallet: "AyJ2wV7UYHwkxvveyuwn2gzDrs9sK6grcyqjLFW3pcaF",
-                multiple: 164.31
-            },
-            {
-                id: "7d3c9e5b-1f8a-4d3c-b8d4-9e5b1f8a4d3c",
-                image: "/swarms/duoai.jpg",
-                models: [
-                    "GPT-4o Mini",
-                    "KinOS"
-                ],
-                name: "DuoAI",
-                pool: "68K6BBsPynRbLkjJzdQmKMvTPLaUiKb93BUwbJfjqepS",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/duoai.jpg"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                tags: [
-                    "AI",
-                    "Gaming",
-                    "KinOS"
-                ],
-                role: "Gaming Companion",
-                swarmType: "inception",
-                wallet: "GkfRszY7B93QL6o8DSP2inVspBpDeZAHCjvYyLddyAo3",
-                multiple: 164.31
-            },
-            {
-                id: "forge-partner-id",
-                image: "/swarms/xforge.png",
-                models: [
-                    "KinOS"
-                ],
-                name: "XForge",
-                pool: "AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi",
-                weeklyRevenue: 1600000,
-                totalRevenue: 1600000,
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/XForge/monumental-3d-text-13761-burned-emerging_8N4aVSaARGa-oKYBvEygdQ_CM5ll4MvQX-PV8oerJ4yJw.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/XForge/xforge.png"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                tags: [
-                    "Development",
-                    "Technical Partners",
-                    "Project Management",
-                    "Quality Assurance",
-                    "AI Automation"
-                ],
-                role: "Development Coordinator",
-                swarmType: "early",
-                wallet: "AFSr2ATJ244u1CY8JRKAK85uuW7VsjNiyKSycmVR4Vg9",
-                multiple: 404.27
-            },
-            {
-                id: "propertykin-inception-id",
-                image: "/swarms/property.png",
-                models: [
-                    "KinOS",
-                    "GPT-4V"
-                ],
-                name: "PropertyKin",
-                pool: "6HnxTkNhQaoYRkPyZD1zTH5WBvFGLes5X2vrH66roa5G",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/propertykin/1_PropertyKin-The-Future-of-Real-Estate-Arbitrage.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/propertykin/2_The-PropertyKin-Advantage-AI-Powered-Contract-Flipping.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/propertykin/3_Seize-the-Ground-Floor-A-Market-Untapped.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/propertykin/4_Invest-in-the-INCEPTION-SWARM-Early-Access-Exponential-Growth.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/propertykin/5_PropertyKin-A-Platform-Built-for-the-Future.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/propertykin/6_Join-the-Revolution-Reimagine-Real-Estate-with-PropertyKin.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/propertykin/7_Timeline-of-a-Contract-Flip.png"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                tags: [
-                    "Real Estate",
-                    "Arbitrage",
-                    "Smart Contracts",
-                    "Property Flipping",
-                    "AI Analysis",
-                    "Wholesale",
-                    "Contract Assignment",
-                    "Deal Finder"
-                ],
-                role: "Real Estate Arbitrage Bot",
-                swarmType: "inception",
-                wallet: "7y555firARY2tnQjYKfpy18Zu9vYYZwaftMohenyHuG",
-                multiple: 36.64
-            },
-            {
-                id: "b2c3d4e5-f6g7-5b6c-9d0e-1f2g3h4i5j6k",
-                image: "/swarms/mental-health.jpg",
-                models: [
-                    "KinOS"
-                ],
-                name: "TherapyKin",
-                pool: "5wWLpeH2DDrAS9Lxx1nGnwtMTvu7U9txf4BuXxdN6V6H",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/mental-health.jpg"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                tags: [
-                    "Healthcare",
-                    "Mental Health",
-                    "Practice Management",
-                    "Patient Care",
-                    "AI Assistant"
-                ],
-                role: "Healthcare Assistant",
-                swarmType: "inception",
-                wallet: "AyA5XS9NKQUoVroHkvZy6ppssAGQzU2n69PRfKxgvWtu",
-                multiple: 14.89
-            },
-            {
-                id: "c3d4e5f6-g7h8-6c7d-ae1f-2g3h4i5j6k7l",
-                image: "/swarms/book.png",
-                models: [
-                    "KinOS"
-                ],
-                name: "PublishKin",
-                pool: "Dt7iwGTgRVZGV2NZFvNtrWVNX77s8ejGdhB2XaR4DxX6",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/book.png"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                tags: [
-                    "Publishing",
-                    "Book Production",
-                    "Content",
-                    "Distribution",
-                    "Marketing"
-                ],
-                role: "Publishing Agent",
-                swarmType: "inception",
-                wallet: "6eAG4RQkAHPFfKGkiXWXcBXou9QcEfxVxXrt8bYqY5PE",
-                multiple: 11.03
-            },
-            {
-                id: "d4e5f6g7-h8i9-7d8e-bf2g-3h4i5j6k7l8m",
-                image: "/swarms/toy.png",
-                models: [
-                    "KinOS"
-                ],
-                name: "PlayWise",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/toy.png"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                pool: "2iAarCWnsdFqddprxzUwmaLiozHarMTpzLdhJPbi2HRR",
-                tags: [
-                    "Education",
-                    "Interactive Learning",
-                    "Personalization",
-                    "Child Development",
-                    "EdTech"
-                ],
-                role: "Educational Assistant",
-                swarmType: "inception",
-                wallet: "3VvQGX8pozFdnfoTED6bAH9NkUJkzUyxjdPZdsSWEPce",
-                multiple: 49.47
-            },
-            {
-                id: "e5f6g7h8-i9j0-8e9f-cg3h-4i5j6k7l8m9n",
-                image: "/swarms/talentaid.jpg",
-                models: [
-                    "KinOS"
-                ],
-                name: "TalentKin",
-                pool: "DTFE1peg5aNe8gFuaT9KZe8TJ4RHks9prpd12iUBKwi4",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/talentaid.jpg"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                tags: [
-                    "Recruitment",
-                    "HR Tech",
-                    "Talent Matching",
-                    "AI Screening",
-                    "Hiring"
-                ],
-                role: "Recruitment Assistant",
-                swarmType: "inception",
-                wallet: "J7VQ5m9A66t6s4VZ463Yxgt3G5cDA2qhs6ztafB1p3P9",
-                multiple: 14.89
-            },
-            {
-                id: "f6g7h8i9-j0k1-9f0g-dh4i-5j6k7l8m9n0o",
-                image: "/swarms/carehive.jpg",
-                models: [
-                    "KinOS"
-                ],
-                name: "CareHive",
-                pool: "FHXsVnEfqHQBQS6An4icuSD5ewwn5WWkoj2LWRMGw4mb",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/carehive.jpg"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                tags: [
-                    "AI",
-                    "Healthcare",
-                    "KinOS",
-                    "Operations"
-                ],
-                role: "Practice Manager",
-                swarmType: "inception",
-                wallet: "EU9nEKBFEcK2C6oBvTKwywhBpW2xkSatJ3c2eWLYuXm1",
-                multiple: 14.89
-            },
-            {
-                id: "g7h8i9j0-k1l2-0g1h-ei5j-6k7l8m9n0o1p",
-                image: "/swarms/commercenest.jpg",
-                models: [
-                    "KinOS"
-                ],
-                name: "CommerceNest",
-                pool: "9hAfNquoNDbvzcEc1rBG8JzbWRskAsjKm7sYbarRfxyj",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/commercenest.jpg"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                tags: [
-                    "AI",
-                    "E-commerce",
-                    "KinOS",
-                    "Sales"
-                ],
-                role: "E-commerce Manager",
-                swarmType: "inception",
-                wallet: "3yiG4ftdPae7zfrPcm1x9Mpykh46Yqt6MJVWzPceVM1H",
-                multiple: 20.11
-            },
-            {
-                id: "h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q",
-                image: "/swarms/affiliate.jpeg",
-                models: [
-                    "KinOS"
-                ],
-                name: "ProfitBeeAI",
-                pool: "7AEP5qWyPF92Wgv6tLCwe51e8yrF3WwSzSef5Vg7RQt4",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/affiliate.jpeg"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                tags: [
-                    "AI Marketing",
-                    "Content Creation",
-                    "Affiliate",
-                    "Automation",
-                    "Multi-Channel"
-                ],
-                role: "Marketing Automation",
-                swarmType: "inception",
-                wallet: "6t8QAg9SrsdD1SEt75iFLJDRzR8txZr3L6rBfuDHTqWW",
-                multiple: 49.47
-            },
-            {
-                id: "mentor-swarm-id",
-                image: "/swarms/mentor.png",
-                models: [
-                    "KinOS"
-                ],
-                name: "DeskMate",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/mentor.png"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                pool: "Gucj554x7dRebtfUBxK1XTBUhQmq2Rqp4v2H6WtL7wNX",
-                tags: [
-                    "AI",
-                    "Education",
-                    "KinOS",
-                    "Tutoring"
-                ],
-                role: "Educational Mentor",
-                swarmType: "inception",
-                wallet: "GM3P3XTjhanEDFewwrfmUuoQUM7cei8ih1KPViHBb3E1",
-                multiple: 49.47
-            },
-            {
-                id: "speaker-swarm-id",
-                image: "/swarms/stumped.jpg",
-                logo: "/swarms/stumped.jpg",
-                models: [
-                    "KinOS"
-                ],
-                name: "STUMPED",
-                pool: "5wL5rah4gWqbbv74vWvsmqqEf99uhRLr3jNPsMcw5imN",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/stumped.jpg"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                tags: [
-                    "Communication",
-                    "Training",
-                    "Professional Development",
-                    "Social Skills",
-                    "AI Coaching"
-                ],
-                role: "Conversation Coach",
-                swarmType: "inception",
-                wallet: "EXQfXLxMkMg6HX2ETo929VFoJc1dqoqyWdspZrPerFcX",
-                multiple: 36.64
-            },
-            {
-                id: "travel-swarm-id",
-                image: "/swarms/travel.jpeg",
-                models: [
-                    "KinOS"
-                ],
-                name: "TravelAId",
-                pool: "BEsb73xDJH3PrRGs1D4zkPAssg94Yi8dAtiFa59gzeY1",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/travel.jpeg"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                tags: [
-                    "Travel",
-                    "AI Concierge",
-                    "Trip Planning",
-                    "Personalization",
-                    "Real-time Assistance"
-                ],
-                role: "Travel Concierge",
-                swarmType: "inception",
-                wallet: "7xvZiYwZD6mBRkeWYm1p93Zy936HYhjSecPa85K9r3Tz",
-                multiple: 14.89
-            },
-            {
-                id: "grant-swarm-id",
-                image: "/swarms/grant.jpeg",
-                models: [
-                    "KinOS"
-                ],
-                name: "GrantKin",
-                pool: "3oa4GKg3hpavEAEacDUKJQoA12VPvRE1CKoHypBho2Rt",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/grant.jpeg"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                tags: [
-                    "Non-profit",
-                    "Grant Writing",
-                    "Funding",
-                    "Compliance",
-                    "AI Automation"
-                ],
-                role: "Grant Writer",
-                swarmType: "inception",
-                wallet: "EnUAJY8TKSyqcHwktZCCQ7ixvofcGN8si1N4g1rey6Vu",
-                multiple: 20.11
-            },
-            {
-                id: "resume-swarm-id",
-                image: "/swarms/resume.jpeg",
-                models: [
-                    "KinOS"
-                ],
-                name: "CareerKin",
-                pool: "EMtoBMEn6JtV9tnbF8ZVVrxnYZbdapWAYEzabq7cW2gR",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/resume.jpeg"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                tags: [
-                    "AI",
-                    "Career",
-                    "KinOS",
-                    "Resume"
-                ],
-                role: "Career Optimizer",
-                swarmType: "inception",
-                wallet: "8KpUuw7eZQqKUu8byivvzoY1AUotPsabsEL48gKQNuRj",
-                multiple: 11.03
-            },
-            {
-                id: "a1b2c3d4-e5f6-4a5b-8c7d-9e8f7a6b5c4d",
-                image: "/swarms/robinhood.jpg",
-                models: [
-                    "KinOS"
-                ],
-                name: "Robinhood Agent",
-                pool: "H7xCtjoCyqf55uc5nmPKpypN82jANkRDTNmPx6C3XhS5",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/robinhood/1_Robinhood-Agent-Democratizing-AI-Trading.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/robinhood/2_What-Robinhood-Agent-Does.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/robinhood/3_Investment-Tools-Exclusive-to-Shareholders.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/robinhood/4_Core-Mission.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/robinhood/6_Security-and-Ethics.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/robinhood/7_Technical-Integration.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/robinhood/8_Updates-and-Alerts.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/robinhood/9_Funding-Goal.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/robinhood/10_Join-Robinhood-Agent.png"
-                    }
-                ],
-                description: "Benevolent trading swarm executing institutional-grade strategies to give back to the rightful people",
-                programAddress: "",
-                tags: [
-                    "Trading",
-                    "DeFi",
-                    "Profit Sharing",
-                    "Strategy",
-                    "Institutional"
-                ],
-                role: "Trading Agent",
-                swarmType: "inception",
-                wallet: "9StiTDrivvtbjFiM9z1J4Zg63ALS5vkUoGXZz7aCeNyD",
-                multiple: 164.31
-            },
-            {
-                id: "f7a92b3c-d8e4-4c1a-9f5d-1234567890ab",
-                image: "/swarms/screenplay.jpg",
-                models: [
-                    "KinOS"
-                ],
-                name: "StudioKin",
-                pool: "EJ4Ad3faa43JLZW3HQnxweYFqm4T2cUzBGntG5KnJWE8",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/screenplay/1_Screenplay-and-Production-Swarm-Redefining-Filmmaking-with-AI.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/screenplay/2_Introducing-KinOS-AI-Swarm-for-Filmmaking.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/screenplay/3_Why-Invest-Now-A-Ground-Floor-Opportunity.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/screenplay/4_Investment-Structure-Inception-Swarm.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/screenplay/5_Current-Status-and-Next-Steps.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/screenplay/6_Join-Us-in-Building-the-Future-of-Entertainment.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/screenplay/7_The-AI-Driven-Future-of-Filmmaking.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/screenplay/8_Join-the-Swarm.png"
-                    }
-                ],
-                description: "AI agent swarm that transforms your story idea into a professional-grade screenplay and production plan",
-                programAddress: "",
-                tags: [
-                    "Entertainment",
-                    "Screenwriting",
-                    "Production",
-                    "AI Creative",
-                    "Content"
-                ],
-                role: "Screenwriter & Producer",
-                swarmType: "inception",
-                wallet: "6EfkPAoDDeRhDdzbsjYxYkfs5DysnR3ikzm5PK32uQqB",
-                multiple: 20.11
-            },
-            {
-                id: "wealthhive-inception-id",
-                image: "/swarms/wealthhive.png",
-                models: [
-                    "KinOS",
-                    "GPT-4"
-                ],
-                name: "WealthHive",
-                pool: "HeR7qoPbvmgcLFywkduZ27Hr2wKYuxtVkTBaGhVohP88",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/wealthhive.png"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                tags: [
-                    "Education",
-                    "Learn-to-Earn",
-                    "Community",
-                    "AI Learning",
-                    "Investment",
-                    "Knowledge Base",
-                    "Ecosystem Growth"
-                ],
-                role: "Educational Guide",
-                swarmType: "inception",
-                wallet: "C1uvoRUhHj2o6swBMvgZsdzkaM3Po5J7WMtrcQxGcVJx",
-                multiple: 49.47
-            },
-        {
-            id: 'altered-alley-inception-id',
-            image: '/swarms/aialley.avif',
-            models: ['KinOS'],
-            name: 'AI Alley',
-            pool: 'DmdtWBcEwWr15MCm9Wa8iB8EJhHPK9NydiuLptuvMBxj',
-            gallery: [
-                {
-                    type: "image",
-                    content: "/swarms/aialley.avif"
-                },
-                {
-                    type: "image",
-                    content: "/swarms/alteredalley/6314A9D1-BE8C-4109-BA91-269CB5FA1071_1_105_c.jpeg"
-                }
-            ],
-            description: "PLACEHOLDER",
-            programAddress: "",
-            tags: [
-                'Infrastructure',
-                'Digital Spaces',
-                'Virtual Economy',
-                'AI Agents',
-                'Digital Twins',
-                'Metaverse'
-            ],
-            role: 'Infrastructure Provider',
-            swarmType: 'early',
-            wallet: '7GmuNjA5AGWMu5izEfrBjakEjuwNpgh5QJuKB1GUq5mGI',
-            multiple: 121.71,
-            launchDate: new Date('2025-01-29T19:00:00.000Z'),
-            team: [
-                {
-                    name: "Hexidized",
-                    picture: "/swarms/aialley.avif",
-                    telegram: "Hexidized",
-                    X: "hexidized"
-                },
-                {
-                    name: "Altered Alley",
-                    picture: "/swarms/aialley.avif",
-                    telegram: "AlteredAlley",
-                    X: "alteredalley"
-                },
-                {
-                    name: "Honeycomb Empire",
-                    picture: "/swarms/aialley.avif",
-                    X: "HoneycombEmpire"
-                }
-            ],
-            links: [
-                {
-                    name: 'Pitch Deck',
-                    url: 'https://ai-alley-integration-5wrdhgu.gamma.site/'
-                },
-                {
-                    name: 'Spatial Experience 1',
-                    url: 'https://www.spatial.io/s/Ai-Agents-675f9c30a04dbb712f0e051d?share=2899369617154930294'
-                },
-                {
-                    name: 'Spatial Experience 2',
-                    url: 'https://www.spatial.io/s/AI-63c8a8898ab06ebb400f0d9f?share=5084343558932005183'
-                }
-            ]
-            },
-            {
-                id: 'logicatlas-inception-id',
-                image: '/swarms/logicatlas.jpg',
-                models: ['KinOS'],
-                name: 'LogicAtlas',
-                twitterAccount: 'LogicAtlas',
-                pool: '9pMb8Ez61vh3YRKKKrkdA5MthswuNE6Bzj9KYPEVCFme',
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/logicatlas.jpg"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/logicatlas/photo_2025-01-27_18-47-51.jpg"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/logicatlas/photo_2025-01-27_18-47-51 (2).jpg"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/logicatlas/photo_2025-01-27_18-47-51 (3).jpg"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                tags: [
-                    'Supply Chain',
-                    'AI Orchestration',
-                    'Process Automation',
-                    'Real-time Analytics',
-                    'Distribution',
-                    'Manufacturing'
-                ],
-                role: 'Supply Chain Orchestrator',
-                swarmType: 'early',
-                wallet: 'CoaDrb1uq7dBfPeirzpYvVD87rPa3cde8oL6xgfqUA6G',
-                multiple: 164.31,
-                launchDate: new Date('2025-01-29T19:00:00.000Z'),
-                socials: {
-                    twitter: 'LogicAtlas'
-                },
-                team: [
-                    {
-                        name: "Derek Lisko",
-                        picture: "/swarms/logicatlas.jpg",
-                        telegram: "dereklisko",
-                        X: "DerekRLisko"
-                    }
-                ]
-            }
-        }));     // End of .map() function
-
-        // Log what the Airtable API call would look like
-        console.log('Airtable API call would be:');
-        console.log(JSON.stringify({ records: swarms }, null, 2));
-
-        // Log summary 
-        console.log(`\nProcessed ${swarms.length} swarms`);
-    } catch (error) {
-        console.error('Error:', error);
-        process.exit(1);
-    }
-}
-
-main();
+const SwarmData = 
+  {
+    "records": [
+      {
+        "fields": {
+          "ID": "kinos-partner-id",
+          "Name": "KinOS",
+          "Type": "early",
+          "Models": "KinOS",
+          "Role": "Swarm Operating System",
+          "Tags": "Infrastructure, Operating System, Runtime Services, Compute, Security, Scalability",
+          "Wallet": "D1a6RtoptnG2U9gatDz5bQJ3QahKR3wiherDYipe98Vt",
+          "Pool": "37u532qgHbjUHic6mQK51jkT3Do7qkWLEUQCx22MDBD8",
+          "Multiple": 404.27,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "slopfather-partner-id",
+          "Name": "SLOP FATHER",
+          "Type": "partner",
+          "Models": "Video AI, GPT-4V",
+          "Role": "Content Creator",
+          "Tags": "AI, Video, Social Media, $FATHA, Content Creation",
+          "Wallet": "D1a6RtoptnG2U9gatDz5bQJ3QahKR3wiherDYipe98Vt",
+          "Pool": "",
+          "Multiple": 1,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "digitalkin-partner-id",
+          "Name": "DigitalKin",
+          "Type": "partner",
+          "Models": "KinOS, Claude Haiku",
+          "Role": "Digital Employee Manager",
+          "Tags": "AI, Enterprise, Automation, KinOS",
+          "Wallet": "9PEHXookTVdhr4eFfar6RdGr1zPq1RfFxeoiRcR5XZwt",
+          "Pool": "FM6aFbs9cQ6Jrp3GJPABBVxpLnGFEZZD3tSJ5JGCUsyZ",
+          "Multiple": 404.27,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "eb76ae17-b9eb-476d-b272-4bde2d85c808",
+          "Name": "Kin Kong",
+          "Type": "partner",
+          "Models": "GPT-4o Mini, Claude Haiku",
+          "Role": "Lorem ipsum",
+          "Tags": "AI, OpenAI",
+          "Wallet": "7wNok2HWJxNt8fS1aL9bhs4FvEu1jdPaNugSy65RsTcK",
+          "Pool": "FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz",
+          "Multiple": 404.27,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "KinKong_ubc",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "e8ffff3d-64d3-44d3-a8cf-f082c5c42234",
+          "Name": "Swarm Ventures",
+          "Type": "partner",
+          "Models": "Claude Haiku",
+          "Role": "Lorem ipsum",
+          "Tags": "AI, OpenAI",
+          "Wallet": "8sUWjMiNsLvmCPerFdmgGJkyQitTXAbwXmQ2CejMPCbN",
+          "Pool": "911eRdu96ncdnmEUYA3UQ39gEtE9ueg7UbqycKuKweCG",
+          "Multiple": 404.27,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "swarmventures",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "988b16b4-6beb-4cc5-9a14-50f48ee47a22",
+          "Name": "Terminal Velocity",
+          "Type": "partner",
+          "Models": "Claude Haiku",
+          "Role": "Lorem ipsum",
+          "Tags": "AI, OpenAI",
+          "Wallet": "",
+          "Pool": "",
+          "Multiple": 1,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "03616e66-a21e-425b-a93b-16d6396e883f",
+          "Name": "Synthetic Souls",
+          "Type": "early",
+          "Models": "GPT-4o Mini",
+          "Role": "Lorem ipsum",
+          "Tags": "AI, OpenAI",
+          "Wallet": "AyJ2wV7UYHwkxvveyuwn2gzDrs9sK6grcyqjLFW3pcaF",
+          "Pool": "CmC2AUuurX19TLBVQbpNct8pmEjaHsRj6o8SLBAVvxAk",
+          "Multiple": 164.31,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "syntheticsouls_",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "7d3c9e5b-1f8a-4d3c-b8d4-9e5b1f8a4d3c",
+          "Name": "DuoAI",
+          "Type": "inception",
+          "Models": "GPT-4o Mini, KinOS",
+          "Role": "Gaming Companion",
+          "Tags": "AI, Gaming, KinOS",
+          "Wallet": "GkfRszY7B93QL6o8DSP2inVspBpDeZAHCjvYyLddyAo3",
+          "Pool": "68K6BBsPynRbLkjJzdQmKMvTPLaUiKb93BUwbJfjqepS",
+          "Multiple": 164.31,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "forge-partner-id",
+          "Name": "XForge",
+          "Type": "early",
+          "Models": "KinOS",
+          "Role": "Development Coordinator",
+          "Tags": "Development, Technical Partners, Project Management, Quality Assurance, AI Automation",
+          "Wallet": "AFSr2ATJ244u1CY8JRKAK85uuW7VsjNiyKSycmVR4Vg9",
+          "Pool": "AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi",
+          "Multiple": 404.27,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "propertykin-inception-id",
+          "Name": "PropertyKin",
+          "Type": "inception",
+          "Models": "KinOS, GPT-4V",
+          "Role": "Real Estate Arbitrage Bot",
+          "Tags": "Real Estate, Arbitrage, Smart Contracts, Property Flipping, AI Analysis, Wholesale, Contract Assignment, Deal Finder",
+          "Wallet": "7y555firARY2tnQjYKfpy18Zu9vYYZwaftMohenyHuG",
+          "Pool": "6HnxTkNhQaoYRkPyZD1zTH5WBvFGLes5X2vrH66roa5G",
+          "Multiple": 36.64,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "b2c3d4e5-f6g7-5b6c-9d0e-1f2g3h4i5j6k",
+          "Name": "TherapyKin",
+          "Type": "inception",
+          "Models": "KinOS",
+          "Role": "Healthcare Assistant",
+          "Tags": "Healthcare, Mental Health, Practice Management, Patient Care, AI Assistant",
+          "Wallet": "AyA5XS9NKQUoVroHkvZy6ppssAGQzU2n69PRfKxgvWtu",
+          "Pool": "5wWLpeH2DDrAS9Lxx1nGnwtMTvu7U9txf4BuXxdN6V6H",
+          "Multiple": 14.89,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "c3d4e5f6-g7h8-6c7d-ae1f-2g3h4i5j6k7l",
+          "Name": "PublishKin",
+          "Type": "inception",
+          "Models": "KinOS",
+          "Role": "Publishing Agent",
+          "Tags": "Publishing, Book Production, Content, Distribution, Marketing",
+          "Wallet": "6eAG4RQkAHPFfKGkiXWXcBXou9QcEfxVxXrt8bYqY5PE",
+          "Pool": "Dt7iwGTgRVZGV2NZFvNtrWVNX77s8ejGdhB2XaR4DxX6",
+          "Multiple": 11.03,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "d4e5f6g7-h8i9-7d8e-bf2g-3h4i5j6k7l8m",
+          "Name": "PlayWise",
+          "Type": "inception",
+          "Models": "KinOS",
+          "Role": "Educational Assistant",
+          "Tags": "Education, Interactive Learning, Personalization, Child Development, EdTech",
+          "Wallet": "3VvQGX8pozFdnfoTED6bAH9NkUJkzUyxjdPZdsSWEPce",
+          "Pool": "2iAarCWnsdFqddprxzUwmaLiozHarMTpzLdhJPbi2HRR",
+          "Multiple": 49.47,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "e5f6g7h8-i9j0-8e9f-cg3h-4i5j6k7l8m9n",
+          "Name": "TalentKin",
+          "Type": "inception",
+          "Models": "KinOS",
+          "Role": "Recruitment Assistant",
+          "Tags": "Recruitment, HR Tech, Talent Matching, AI Screening, Hiring",
+          "Wallet": "J7VQ5m9A66t6s4VZ463Yxgt3G5cDA2qhs6ztafB1p3P9",
+          "Pool": "DTFE1peg5aNe8gFuaT9KZe8TJ4RHks9prpd12iUBKwi4",
+          "Multiple": 14.89,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "f6g7h8i9-j0k1-9f0g-dh4i-5j6k7l8m9n0o",
+          "Name": "CareHive",
+          "Type": "inception",
+          "Models": "KinOS",
+          "Role": "Practice Manager",
+          "Tags": "AI, Healthcare, KinOS, Operations",
+          "Wallet": "EU9nEKBFEcK2C6oBvTKwywhBpW2xkSatJ3c2eWLYuXm1",
+          "Pool": "FHXsVnEfqHQBQS6An4icuSD5ewwn5WWkoj2LWRMGw4mb",
+          "Multiple": 14.89,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "g7h8i9j0-k1l2-0g1h-ei5j-6k7l8m9n0o1p",
+          "Name": "CommerceNest",
+          "Type": "inception",
+          "Models": "KinOS",
+          "Role": "E-commerce Manager",
+          "Tags": "AI, E-commerce, KinOS, Sales",
+          "Wallet": "3yiG4ftdPae7zfrPcm1x9Mpykh46Yqt6MJVWzPceVM1H",
+          "Pool": "9hAfNquoNDbvzcEc1rBG8JzbWRskAsjKm7sYbarRfxyj",
+          "Multiple": 20.11,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q",
+          "Name": "ProfitBeeAI",
+          "Type": "inception",
+          "Models": "KinOS",
+          "Role": "Marketing Automation",
+          "Tags": "AI Marketing, Content Creation, Affiliate, Automation, Multi-Channel",
+          "Wallet": "6t8QAg9SrsdD1SEt75iFLJDRzR8txZr3L6rBfuDHTqWW",
+          "Pool": "7AEP5qWyPF92Wgv6tLCwe51e8yrF3WwSzSef5Vg7RQt4",
+          "Multiple": 49.47,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "mentor-swarm-id",
+          "Name": "DeskMate",
+          "Type": "inception",
+          "Models": "KinOS",
+          "Role": "Educational Mentor",
+          "Tags": "AI, Education, KinOS, Tutoring",
+          "Wallet": "GM3P3XTjhanEDFewwrfmUuoQUM7cei8ih1KPViHBb3E1",
+          "Pool": "Gucj554x7dRebtfUBxK1XTBUhQmq2Rqp4v2H6WtL7wNX",
+          "Multiple": 49.47,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "speaker-swarm-id",
+          "Name": "STUMPED",
+          "Type": "inception",
+          "Models": "KinOS",
+          "Role": "Conversation Coach",
+          "Tags": "Communication, Training, Professional Development, Social Skills, AI Coaching",
+          "Wallet": "EXQfXLxMkMg6HX2ETo929VFoJc1dqoqyWdspZrPerFcX",
+          "Pool": "5wL5rah4gWqbbv74vWvsmqqEf99uhRLr3jNPsMcw5imN",
+          "Multiple": 36.64,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "travel-swarm-id",
+          "Name": "TravelAId",
+          "Type": "inception",
+          "Models": "KinOS",
+          "Role": "Travel Concierge",
+          "Tags": "Travel, AI Concierge, Trip Planning, Personalization, Real-time Assistance",
+          "Wallet": "7xvZiYwZD6mBRkeWYm1p93Zy936HYhjSecPa85K9r3Tz",
+          "Pool": "BEsb73xDJH3PrRGs1D4zkPAssg94Yi8dAtiFa59gzeY1",
+          "Multiple": 14.89,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "grant-swarm-id",
+          "Name": "GrantKin",
+          "Type": "inception",
+          "Models": "KinOS",
+          "Role": "Grant Writer",
+          "Tags": "Non-profit, Grant Writing, Funding, Compliance, AI Automation",
+          "Wallet": "EnUAJY8TKSyqcHwktZCCQ7ixvofcGN8si1N4g1rey6Vu",
+          "Pool": "3oa4GKg3hpavEAEacDUKJQoA12VPvRE1CKoHypBho2Rt",
+          "Multiple": 20.11,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "resume-swarm-id",
+          "Name": "CareerKin",
+          "Type": "inception",
+          "Models": "KinOS",
+          "Role": "Career Optimizer",
+          "Tags": "AI, Career, KinOS, Resume",
+          "Wallet": "8KpUuw7eZQqKUu8byivvzoY1AUotPsabsEL48gKQNuRj",
+          "Pool": "EMtoBMEn6JtV9tnbF8ZVVrxnYZbdapWAYEzabq7cW2gR",
+          "Multiple": 11.03,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "a1b2c3d4-e5f6-4a5b-8c7d-9e8f7a6b5c4d",
+          "Name": "Robinhood Agent",
+          "Type": "inception",
+          "Models": "KinOS",
+          "Role": "Trading Agent",
+          "Tags": "Trading, DeFi, Profit Sharing, Strategy, Institutional",
+          "Wallet": "9StiTDrivvtbjFiM9z1J4Zg63ALS5vkUoGXZz7aCeNyD",
+          "Pool": "H7xCtjoCyqf55uc5nmPKpypN82jANkRDTNmPx6C3XhS5",
+          "Multiple": 164.31,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": "Benevolent trading swarm executing institutional-grade strategies to give back to the rightful people"
+        }
+      },
+      {
+        "fields": {
+          "ID": "f7a92b3c-d8e4-4c1a-9f5d-1234567890ab",
+          "Name": "StudioKin",
+          "Type": "inception",
+          "Models": "KinOS",
+          "Role": "Screenwriter & Producer",
+          "Tags": "Entertainment, Screenwriting, Production, AI Creative, Content",
+          "Wallet": "6EfkPAoDDeRhDdzbsjYxYkfs5DysnR3ikzm5PK32uQqB",
+          "Pool": "EJ4Ad3faa43JLZW3HQnxweYFqm4T2cUzBGntG5KnJWE8",
+          "Multiple": 20.11,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": "AI agent swarm that transforms your story idea into a professional-grade screenplay and production plan"
+        }
+      },
+      {
+        "fields": {
+          "ID": "wealthhive-inception-id",
+          "Name": "WealthHive",
+          "Type": "inception",
+          "Models": "KinOS, GPT-4",
+          "Role": "Educational Guide",
+          "Tags": "Education, Learn-to-Earn, Community, AI Learning, Investment, Knowledge Base, Ecosystem Growth",
+          "Wallet": "C1uvoRUhHj2o6swBMvgZsdzkaM3Po5J7WMtrcQxGcVJx",
+          "Pool": "HeR7qoPbvmgcLFywkduZ27Hr2wKYuxtVkTBaGhVohP88",
+          "Multiple": 49.47,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "altered-alley-inception-id",
+          "Name": "AI Alley",
+          "Type": "early",
+          "Models": "KinOS",
+          "Role": "Infrastructure Provider",
+          "Tags": "Infrastructure, Digital Spaces, Virtual Economy, AI Agents, Digital Twins, Metaverse",
+          "Wallet": "7GmuNjA5AGWMu5izEfrBjakEjuwNpgh5QJuKB1GUq5mGI",
+          "Pool": "DmdtWBcEwWr15MCm9Wa8iB8EJhHPK9NydiuLptuvMBxj",
+          "Multiple": 121.71,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "",
+          "Description": ""
+        }
+      },
+      {
+        "fields": {
+          "ID": "logicatlas-inception-id",
+          "Name": "LogicAtlas",
+          "Type": "early",
+          "Models": "KinOS",
+          "Role": "Supply Chain Orchestrator",
+          "Tags": "Supply Chain, AI Orchestration, Process Automation, Real-time Analytics, Distribution, Manufacturing",
+          "Wallet": "CoaDrb1uq7dBfPeirzpYvVD87rPa3cde8oL6xgfqUA6G",
+          "Pool": "9pMb8Ez61vh3YRKKKrkdA5MthswuNE6Bzj9KYPEVCFme",
+          "Multiple": 164.31,
+          "WeeklyRevenue": 0,
+          "TotalRevenue": 0,
+          "LaunchDate": "",
+          "TwitterAccount": "LogicAtlas",
+          "Description": ""
+        }
+      }
+    ]
+  };
