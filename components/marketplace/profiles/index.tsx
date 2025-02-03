@@ -1,7 +1,9 @@
 'use client';
 
+'use client';
+
 import { SwarmPreviewCard } from '@/components/swarms/preview';
-import { previews } from '@/data/swarms/previews';
+import { useState, useEffect } from 'react';
 
 function ComingSoonSection() {
   return (
@@ -25,6 +27,23 @@ function ComingSoonSection() {
 }
 
 export function SwarmProfiles() {
+  const [swarms, setSwarms] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchSwarms() {
+      try {
+        const response = await fetch('/api/swarms');
+        const data = await response.json();
+        setSwarms(data);
+      } catch (error) {
+        console.error('Error fetching swarms:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchSwarms();
+  }, []);
   return (
     <div className="space-y-8">
       {/* Top Gainers Section */}

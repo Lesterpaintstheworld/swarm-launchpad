@@ -2,8 +2,7 @@
 
 import { Search } from "@/components/ui/search"
 import { SwarmPreviewCard } from "../preview"
-import { previews } from "@/data/swarms/previews"
-import { useCallback, useState } from "react"
+import { useCallback, useState, useEffect } from "react"
 import { AnimatePresence } from "motion/react"
 import { SwarmModel, SwarmPreviewData, SwarmType } from "../swarm.types"
 import { Button } from "@/components/shadcn/button"
@@ -58,9 +57,26 @@ const SwarmTypeHeader = ({ type, icon, title }: { type: SwarmType, icon: string,
 
 const SwarmsPreviewGrid = ({}: SwarmsPreviewGridProps) => {
     const [searchValue, setSearchValue] = useState<string>('');
+    const [swarms, setSwarms] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    const filterPreviews = useCallback((type: SwarmType) => {
-        return previews.filter(swarm => {
+    useEffect(() => {
+        async function fetchSwarms() {
+            try {
+                const response = await fetch('/api/swarms');
+                const data = await response.json();
+                setSwarms(data);
+            } catch (error) {
+                console.error('Error fetching swarms:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        fetchSwarms();
+    }, []);
+
+    const filterSwarms = useCallback((type: SwarmType) => {
+        return swarms.filter(swarm => {
             const matchesSearch = 
                 swarm.name.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
                 swarm.description.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) ||
@@ -87,7 +103,7 @@ const SwarmsPreviewGrid = ({}: SwarmsPreviewGridProps) => {
                     <SwarmTypeHeader type="partner" icon="🤝" title="Partner Swarms" />
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <AnimatePresence>
-                            {filterPreviews('partner').map((swarm: SwarmPreviewData, index: number) => (
+                            {filterSwarms('partner').map((swarm: SwarmPreviewData, index: number) => (
                                 <SwarmPreviewCard swarm={swarm} key={index} />
                             ))}
                         </AnimatePresence>
@@ -100,7 +116,7 @@ const SwarmsPreviewGrid = ({}: SwarmsPreviewGridProps) => {
                     <SwarmTypeHeader type="early" icon="🚀" title="Early Swarms" />
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <AnimatePresence>
-                            {filterPreviews('early').map((swarm: SwarmPreviewData, index: number) => (
+                            {filterSwarms('early').map((swarm: SwarmPreviewData, index: number) => (
                                 <SwarmPreviewCard swarm={swarm} key={index} />
                             ))}
                         </AnimatePresence>
@@ -113,7 +129,7 @@ const SwarmsPreviewGrid = ({}: SwarmsPreviewGridProps) => {
                     <SwarmTypeHeader type="inception" icon="🌱" title="Inception Swarms" />
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <AnimatePresence>
-                            {filterPreviews('inception').map((swarm: SwarmPreviewData, index: number) => (
+                            {filterSwarms('inception').map((swarm: SwarmPreviewData, index: number) => (
                                 <SwarmPreviewCard swarm={swarm} key={index} />
                             ))}
                         </AnimatePresence>

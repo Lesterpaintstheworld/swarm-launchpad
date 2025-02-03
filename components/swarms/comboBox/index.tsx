@@ -19,8 +19,8 @@ import {
     PopoverTrigger,
 } from "@/components/shadcn/popover";
 import { useEffect, useRef, useState } from "react";
-import { previews as swarms } from "@/data/swarms/previews";
 import { SwarmModel, SwarmPreviewData } from "../swarm.types";
+import { useState, useEffect } from "react";
 import { getSwarm } from "@/data/swarms/previews";
 import { getSwarmInfo } from "@/data/swarms/info";
 
@@ -31,6 +31,20 @@ interface SwarmComboBoxProps {
 }
 
 const SwarmComboBox = ({ className, defaultValue, onChange }: SwarmComboBoxProps) => {
+    const [swarms, setSwarms] = useState([]);
+
+    useEffect(() => {
+        async function fetchSwarms() {
+            try {
+                const response = await fetch('/api/swarms');
+                const data = await response.json();
+                setSwarms(data);
+            } catch (error) {
+                console.error('Error fetching swarms:', error);
+            }
+        }
+        fetchSwarms();
+    }, []);
 
     const btnRef = useRef<HTMLButtonElement>(null);
 
