@@ -1,9 +1,7 @@
 'use client';
 
-import { useParams } from 'next/navigation'; 
-import { getService } from '@/data/services/services';
+import { useParams } from 'next/navigation';
 import { Shield, Cpu, Clock } from 'lucide-react';
-
 import { getSwarmUsingId } from "@/data/swarms/info";
 import { ClientMarkdown } from '@/components/ui/clientMarkdown';
 import Image from 'next/image';
@@ -12,17 +10,54 @@ import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/shadcn/button';
 import { ConnectButton } from '@/components/solana/connectButton';
 import { useWallet } from '@solana/wallet-adapter-react';
+import { useEffect, useState } from 'react';
 
 export default function ServicePage() {
   const { id } = useParams();
-  const service = getService(id as string);
-  const swarm = service ? getSwarmUsingId(service.swarmId) : null;
+  const [service, setService] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const { connected } = useWallet();
 
-  if (!service || !swarm) {
+  useEffect(() => {
+    async function fetchService() {
+      try {
+        const response = await fetch(`/api/services/${id}`);
+        if (!response.ok) {
+          throw new Error('Service not found');
+        }
+        const data = await response.json();
+        setService(data);
+      } catch (error) {
+        console.error('Error fetching service:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    
+    fetchService();
+  }, [id]);
+
+  if (isLoading) {
+    return (
+      <div className="container py-12">
+        <h1 className="text-2xl font-bold">Loading...</h1>
+      </div>
+    );
+  }
+
+  if (!service) {
     return (
       <div className="container py-12">
         <h1 className="text-2xl font-bold">Service not found</h1>
+      </div>
+    );
+  }
+
+  const swarm = getSwarmUsingId(service.swarmId);
+  if (!swarm) {
+    return (
+      <div className="container py-12">
+        <h1 className="text-2xl font-bold">Service configuration error</h1>
       </div>
     );
   }
