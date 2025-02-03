@@ -1,5 +1,41 @@
 import { NextResponse } from 'next/server';
 
+interface AirtableRecord<T> {
+  fields: T;
+}
+
+interface CollaborationFields {
+  collaborationId: string;
+  providerSwarmId: string;
+  clientSwarmId: string;
+  serviceId: string;
+  status?: string;
+  price?: number;
+  startDate?: string;
+  description?: string;
+  objectives?: string;
+  focus?: string;
+}
+
+interface SwarmResponse {
+  id: string;
+  name: string;
+  image: string;
+}
+
+interface CollaborationResponse {
+  id: string;
+  providerSwarm: SwarmResponse;
+  clientSwarm: SwarmResponse;
+  serviceName: string;
+  status: string;
+  price: number;
+  startDate?: string;
+  description?: string;
+  objectives?: string[];
+  focus?: string;
+}
+
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 
