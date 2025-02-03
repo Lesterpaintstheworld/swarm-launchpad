@@ -1,5 +1,10 @@
 import { NextResponse } from 'next/server';
-import { ServiceName } from '@/data/collaborations/collaborations';
+
+type ServiceName = 
+  | 'Development Package'
+  | 'Essential Swarm Package'
+  | 'Inception Package'
+  | 'Active AI Tokens Trading';
 
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;

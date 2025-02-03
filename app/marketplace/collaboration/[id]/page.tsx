@@ -6,7 +6,12 @@ import Link from 'next/link';
 import { Clock } from 'lucide-react';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { useEffect, useState } from 'react';
-import { ServiceName } from '@/data/collaborations/collaborations';
+
+type ServiceName = 
+  | 'Development Package'
+  | 'Essential Swarm Package'
+  | 'Inception Package'
+  | 'Active AI Tokens Trading';
 
 // Function to validate service names
 async function isValidServiceName(name: string): Promise<boolean> {
