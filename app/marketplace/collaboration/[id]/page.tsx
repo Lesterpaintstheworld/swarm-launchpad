@@ -214,7 +214,7 @@ export default function CollaborationPage({ params }: { params: { id: string } }
                 <div className="p-6 rounded-xl bg-white/5 border border-white/10">
                   <h3 className="text-xl font-semibold mb-4">On-chain Info</h3>
                   <div className="space-y-4">
-                    {/* $UBC Burned */}
+                    {/* First $UBC Burned */}
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-muted-foreground">
                         <span className="metallic-text-ubc">$UBC</span> Burned
@@ -230,7 +230,7 @@ export default function CollaborationPage({ params }: { params: { id: string } }
                       </div>
                     </div>
 
-                    {/* $COMPUTE Burned */}
+                    {/* First $COMPUTE Burned */}
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-muted-foreground">
                         <span className="metallic-text">$COMPUTE</span> Burned
@@ -246,14 +246,14 @@ export default function CollaborationPage({ params }: { params: { id: string } }
                       </div>
                     </div>
 
-                    {/* $UBC Burned */}
+                    {/* Second $UBC Burned */}
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-muted-foreground">
                         <span className="metallic-text-ubc">$UBC</span> Burned
                       </span>
                       <div className="flex items-center gap-2">
                         <span className="text-sm">
-                          {Math.round(collaboration.price * 0.5 * 0.2).toLocaleString()}
+                          {Math.round(collaboration.price * (sourceSwarm?.revenueShare || 0) / 100 * 0.2).toLocaleString()}
                         </span>
                         <Link 
                           href="#"
@@ -264,14 +264,14 @@ export default function CollaborationPage({ params }: { params: { id: string } }
                       </div>
                     </div>
 
-                    {/* $COMPUTE Burned */}
+                    {/* Second $COMPUTE Burned */}
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-muted-foreground">
                         <span className="metallic-text">$COMPUTE</span> Burned
                       </span>
                       <div className="flex items-center gap-2">
                         <span className="text-sm">
-                          {Math.round(collaboration.price * 0.5 * 0.8).toLocaleString()}
+                          {Math.round(collaboration.price * (sourceSwarm?.revenueShare || 0) / 100 * 0.8).toLocaleString()}
                         </span>
                         <Link 
                           href="#"
