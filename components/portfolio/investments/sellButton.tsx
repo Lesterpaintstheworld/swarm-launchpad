@@ -213,24 +213,7 @@ export const columns: ColumnDef<DividendPayment>[] = [
             <DataTableColumnHeader column={column} title="Swarm" />
         ),
         minSize: 200,
-        cell: ({ row }) => {
-            const swarm = getSwarm(row.getValue('swarm_id'));
-            return (
-                <div className="flex items-center min-w-[200px] gap-4 py-1">
-                    <Image
-                        src={swarm?.image}
-                        alt={`${swarm?.name} avatar`}
-                        width={32}
-                        height={32}
-                        className="rounded-full"
-                    />
-                    <div className="flex flex-col">
-                        <Link className="text-lg mb-0 leading-1 truncate hover:underline" href={`/invest/${swarm.id}`}>{swarm?.name}</Link>
-                        {swarm?.role && <p className="text-sm text-muted truncate">{swarm?.role}</p>}
-                    </div>
-                </div>
-            )
-        }
+        cell: ({ row }) => <SwarmCell swarmId={row.getValue('swarm_id')} />
     },
     {
         accessorKey: 'amount',
