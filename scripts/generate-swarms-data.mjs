@@ -78,23 +78,38 @@ async function main() {
                 // Handle team array
                 .replace(/team:\s*\[([\s\S]*?)\]/g, (match, teamContent) => {
                     try {
-                        // Format each team member object
-                        const formattedTeam = teamContent
-                            .split('},{')
-                            .map(member => {
-                                let formatted = member
-                                    .replace(/^\s*{/, '')
-                                    .replace(/}\s*$/, '')
-                                    .split(',')
-                                    .map(prop => {
-                                        const [key, value] = prop.split(':').map(s => s.trim());
-                                        return `"${key}":"${value.replace(/^['"]|['"]$/g, '')}"`;
-                                    })
-                                    .join(',');
-                                return `{${formatted}}`;
-                            })
-                            .join(',');
-                        return `"team":[${formattedTeam}]`;
+                        // Split into individual team members
+                        const members = teamContent.split('},');
+                            
+                        // Format each member
+                        const formattedMembers = members.map(member => {
+                            // Clean up the member string
+                            member = member
+                                .replace(/^\s*{/, '')  // Remove opening brace
+                                .replace(/}\s*$/, '')  // Remove closing brace
+                                .trim();
+                                
+                            // Split into properties
+                            const props = member.split(',').map(prop => {
+                                const [key, ...valueParts] = prop.trim().split(':');
+                                const value = valueParts.join(':').trim();
+                                    
+                                // Remove existing quotes from key
+                                const cleanKey = key.replace(/['"]/g, '').trim();
+                                    
+                                // Clean and format value
+                                const cleanValue = value
+                                    .replace(/^["']/, '')  // Remove leading quotes
+                                    .replace(/["']$/, '')  // Remove trailing quotes
+                                    .trim();
+                                        
+                                return `"${cleanKey}":"${cleanValue}"`;
+                            });
+                                
+                            return `{${props.join(',')}}`;
+                        });
+                            
+                        return `"team":[${formattedMembers.join(',')}]`;
                     } catch (e) {
                         console.log('Error formatting team:', e);
                         return '"team":[]';
