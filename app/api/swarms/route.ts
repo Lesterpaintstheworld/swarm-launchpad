@@ -5,6 +5,7 @@ const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 
 export async function GET() {
   try {
+    console.log('Fetching swarms from Airtable...');
     const response = await fetch(
       `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Swarms`,
       {
@@ -16,39 +17,58 @@ export async function GET() {
     );
 
     if (!response.ok) {
+      console.error('Airtable response not OK:', await response.text());
       throw new Error('Failed to fetch swarms');
     }
 
     const data = await response.json();
+    console.log('Fetched swarms count:', data.records?.length);
     
-    const swarms = data.records.map((record: any) => ({
-      id: record.fields.swarmId,
-      name: record.fields.name,
-      description: record.fields.description,
-      image: record.fields.image,
-      models: JSON.parse(record.fields.models || '[]'),
-      pool: record.fields.pool,
-      weeklyRevenue: record.fields.weeklyRevenue,
-      totalRevenue: record.fields.totalRevenue,
-      gallery: JSON.parse(record.fields.gallery || '[]'),
-      tags: JSON.parse(record.fields.tags || '[]'),
-      role: record.fields.role,
-      swarmType: record.fields.swarmType,
-      multiple: record.fields.multiple,
-      launchDate: record.fields.launchDate,
-      revenueShare: record.fields.revenueShare,
-      wallet: record.fields.wallet,
-      banner: record.fields.banner,
-      twitterAccount: record.fields.twitterAccount,
-      socials: JSON.parse(record.fields.socials || '{}'),
-      achievements: JSON.parse(record.fields.achievements || '[]'),
-      team: JSON.parse(record.fields.team || '[]'),
-      links: JSON.parse(record.fields.links || '[]')
-    }));
+    const swarms = data.records.map((record: any) => {
+      // Helper function to safely parse JSON or return default value
+      const safeParseJSON = (str: string | null | undefined, defaultValue: any = []) => {
+        if (!str) return defaultValue;
+        try {
+          return JSON.parse(str);
+        } catch (e) {
+          // If it's a comma-separated string, convert it to array
+          if (typeof str === 'string' && str.includes(',')) {
+            return str.split(',').map(item => item.trim());
+          }
+          return defaultValue;
+        }
+      };
 
+      return {
+        id: record.fields.swarmId,
+        name: record.fields.name,
+        description: record.fields.description || '',
+        image: record.fields.image,
+        models: safeParseJSON(record.fields.models, []),
+        pool: record.fields.pool,
+        weeklyRevenue: record.fields.weeklyRevenue || 0,
+        totalRevenue: record.fields.totalRevenue || 0,
+        gallery: safeParseJSON(record.fields.gallery, []),
+        tags: safeParseJSON(record.fields.tags, []),
+        role: record.fields.role || '',
+        swarmType: record.fields.swarmType || 'inception',
+        multiple: record.fields.multiple || 1,
+        launchDate: record.fields.launchDate || null,
+        revenueShare: record.fields.revenueShare || 60,
+        wallet: record.fields.wallet || '',
+        banner: record.fields.banner || '',
+        twitterAccount: record.fields.twitterAccount || '',
+        socials: safeParseJSON(record.fields.socials, {}),
+        achievements: safeParseJSON(record.fields.achievements, []),
+        team: safeParseJSON(record.fields.team, []),
+        links: safeParseJSON(record.fields.links, [])
+      };
+    });
+
+    console.log('Transformed swarms:', swarms);
     return NextResponse.json(swarms);
   } catch (error) {
-    console.error('Error fetching swarms:', error);
+    console.error('Error in /api/swarms:', error);
     return NextResponse.json(
       { error: 'Failed to fetch swarms' },
       { status: 500 }
