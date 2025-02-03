@@ -82,6 +82,7 @@ export function CollaborationCard({
                     src={providerSwarm.image}
                     alt={providerSwarm.name}
                     fill
+                    sizes="(max-width: 56px) 100vw"
                     className="object-cover transition-transform duration-300 group-hover/link:scale-110"
                   />
                 </div>
