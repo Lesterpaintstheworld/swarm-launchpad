@@ -214,13 +214,15 @@ export default function CollaborationPage({ params }: { params: { id: string } }
                 <div className="p-6 rounded-xl bg-white/5 border border-white/10">
                   <h3 className="text-xl font-semibold mb-4">On-chain Info</h3>
                   <div className="space-y-4">
-                    {/* First $UBC Burned */}
+                    {/* First $UBC Burned - 50% * 20% */}
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-muted-foreground">
                         <span className="metallic-text-ubc">$UBC</span> Burned
                       </span>
                       <div className="flex items-center gap-2">
-                        <span className="text-sm">-</span>
+                        <span className="text-sm">
+                          {Math.round(collaboration.price * 0.5 * 0.2).toLocaleString()}
+                        </span>
                         <Link 
                           href="#"
                           className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
@@ -230,13 +232,15 @@ export default function CollaborationPage({ params }: { params: { id: string } }
                       </div>
                     </div>
 
-                    {/* First $COMPUTE Burned */}
+                    {/* First $COMPUTE Burned - 50% * 80% */}
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-muted-foreground">
                         <span className="metallic-text">$COMPUTE</span> Burned
                       </span>
                       <div className="flex items-center gap-2">
-                        <span className="text-sm">-</span>
+                        <span className="text-sm">
+                          {Math.round(collaboration.price * 0.5 * 0.8).toLocaleString()}
+                        </span>
                         <Link 
                           href="#"
                           className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
@@ -246,10 +250,10 @@ export default function CollaborationPage({ params }: { params: { id: string } }
                       </div>
                     </div>
 
-                    {/* Second $UBC Burned */}
+                    {/* $UBC Redistributed */}
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-muted-foreground">
-                        <span className="metallic-text-ubc">$UBC</span> Burned
+                        <span className="metallic-text-ubc">$UBC</span> Redistributed
                       </span>
                       <div className="flex items-center gap-2">
                         <span className="text-sm">
@@ -264,10 +268,10 @@ export default function CollaborationPage({ params }: { params: { id: string } }
                       </div>
                     </div>
 
-                    {/* Second $COMPUTE Burned */}
+                    {/* $COMPUTE Redistributed */}
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-muted-foreground">
-                        <span className="metallic-text">$COMPUTE</span> Burned
+                        <span className="metallic-text">$COMPUTE</span> Redistributed
                       </span>
                       <div className="flex items-center gap-2">
                         <span className="text-sm">
