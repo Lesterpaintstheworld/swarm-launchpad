@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import { getService } from '@/data/services/services';
 import { Shield, Cpu, Clock } from 'lucide-react';
 
-import { getSwarm } from '@/data/swarms/info';
+import { getSwarmUsingId } from '@/data/swarms/info';
 import { ClientMarkdown } from '@/components/ui/clientMarkdown';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -16,7 +16,7 @@ import { useWallet } from '@solana/wallet-adapter-react';
 export default function ServicePage() {
   const { id } = useParams();
   const service = getService(id as string);
-  const swarm = service ? getSwarm(service.swarmId) : null;
+  const swarm = service ? getSwarmUsingId(service.swarmId) : null;
   const { connected } = useWallet();
 
   if (!service || !swarm) {
