@@ -18,8 +18,10 @@ export async function GET(
 
     console.log('Fetching collaboration with id:', params.id);
     
-    const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Collaborations?filterByFormula={collaborationId}="${params.id}"`;
+    const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Collaborations?filterByFormula={id}="${params.id}"`;
     console.log('Fetching from URL:', url);
+    
+    console.log('Raw record fields:', data.records[0]?.fields);
 
     const response = await fetch(url, {
       headers: {
@@ -89,7 +91,7 @@ export async function GET(
     }
 
     const collaboration = {
-      id: record.fields.collaborationId,
+      id: record.fields.id,
       providerSwarm: {
         id: record.fields.providerSwarmId,
         name: record.fields.providerSwarmName,
@@ -100,7 +102,11 @@ export async function GET(
         name: record.fields.clientSwarmName,
         image: record.fields.clientSwarmImage,
       },
-      serviceName: record.fields.serviceName,
+      serviceName: record.fields.serviceId === 'xforge-development-package' ? 'Development Package' :
+                  record.fields.serviceId === 'kinos-essential-package' ? 'Essential Swarm Package' :
+                  record.fields.serviceId === 'kinos-inception-package' ? 'Inception Package' :
+                  record.fields.serviceId === 'kinkong-trading' ? 'Active AI Tokens Trading' :
+                  'Unknown Service',
       status: record.fields.status,
       price: record.fields.price,
       startDate: record.fields.startDate,
