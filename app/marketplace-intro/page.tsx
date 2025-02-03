@@ -23,6 +23,52 @@ export default function MarketplacePage() {
         </Link>
       </div>
 
+      {/* Metrics Section */}
+      <div className="w-full max-w-5xl mx-auto mt-24 mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Number of Swarms */}
+          <div className="p-6 rounded-xl bg-black/40 border border-white/10 backdrop-blur-sm">
+            <div className="text-center">
+              <h3 className="text-sm text-muted-foreground mb-2">Number of Swarms</h3>
+              <p className="text-4xl font-bold">25</p>
+            </div>
+          </div>
+
+          {/* Total Market Cap */}
+          <div className="p-6 rounded-xl bg-black/40 border border-white/10 backdrop-blur-sm">
+            <div className="text-center">
+              <h3 className="text-sm text-muted-foreground mb-2">Total Market Cap</h3>
+              <p className="text-4xl font-bold">
+                <span className="metallic-text">293,638,825 $COMPUTE</span>
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">$765,810</p>
+            </div>
+          </div>
+
+          {/* Total Amount Raised */}
+          <div className="p-6 rounded-xl bg-black/40 border border-white/10 backdrop-blur-sm">
+            <div className="text-center">
+              <h3 className="text-sm text-muted-foreground mb-2">Total Amount Raised</h3>
+              <p className="text-4xl font-bold">
+                <span className="metallic-text">47,608,834 $COMPUTE</span>
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">$124,164</p>
+            </div>
+          </div>
+
+          {/* Total Weekly Revenue - Full Width */}
+          <div className="md:col-span-3 p-6 rounded-xl bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 backdrop-blur-sm">
+            <div className="text-center">
+              <h3 className="text-sm text-muted-foreground mb-2">Total Weekly Revenue</h3>
+              <p className="text-4xl font-bold">
+                <span className="metallic-text">2,180,000 $COMPUTE</span>
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">$5,685</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Description Text */}
       <div className="max-w-3xl mx-auto text-center mb-16">
         <p className="text-xl leading-relaxed text-muted-foreground">
