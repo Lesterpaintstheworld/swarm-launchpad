@@ -2,16 +2,18 @@ import { SwarmData } from '../data/swarms/info.js';
 import { calculateSharePrice } from '../lib/utils.js';
 import { Program, AnchorProvider } from '@coral-xyz/anchor';
 import { Connection, PublicKey, Keypair } from '@solana/web3.js';
-import UbclaunchpadIDL from '../data/programs/ubclaunchpad.json' assert { type: 'json' };
+import UbclaunchpadIDL from '../data/programs/ubclaunchpad.json';
 
 const PROGRAM_ID = new PublicKey("4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf");
 const RPC_URL = "https://api.mainnet-beta.solana.com";
 
 // Simple wallet implementation for provider
 class SimpleWallet {
-    constructor(readonly payer: Keypair) {}
-    async signTransaction(tx: any) { return tx; }
-    async signAllTransactions(txs: any[]) { return txs; }
+    constructor(payer) {
+        this.payer = payer;
+    }
+    async signTransaction(tx) { return tx; }
+    async signAllTransactions(txs) { return txs; }
     get publicKey() { return this.payer.publicKey; }
 }
 

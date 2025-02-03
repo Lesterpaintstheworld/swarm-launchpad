@@ -11,7 +11,7 @@
     "update-multiples": "python scripts/update_multiples.py",
     "get-holders": "python scripts/get_holders.py",
     "init-news": "node -r dotenv/config scripts/init-news.mjs",
-    "market-metrics": "node -r dotenv/config scripts/marketMetrics.mjs"
+    "market-metrics": "node -r dotenv/config scripts/marketMetrics.js"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1",
