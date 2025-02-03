@@ -52,11 +52,11 @@ const ActionCell = ({ row }: ActionCellProps) => {
     const claimKey = `claimed_${swarmId}_${publicKey?.toString()}_week_${getWeekKey()}`;
     
     const handleClaim = async () => {
-        if (!publicKey || !claimKey) return;
+        if (!publicKey || !claimKey || !swarm) return;
 
         const message = `New Dividend Claim:\n\n` +
             `Wallet: ${publicKey.toString()}\n` +
-            `Swarm: ${swarm?.name}\n` +
+            `Swarm: ${swarm.name}\n` +
             `Amount: ${computeAmount.toLocaleString()} $COMPUTE\n` +
             `UBC Amount: ${ubcAmount.toLocaleString()} $UBC\n` +
             `Week: ${getWeekKey()}`;
