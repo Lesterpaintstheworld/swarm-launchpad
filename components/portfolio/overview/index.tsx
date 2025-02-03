@@ -107,7 +107,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
                         valueInCompute: value,
                     } as InvestmentDataItem;
                 } catch (error) {
-                    console.error(`Error fetching pool data for ${swarm.name}:`, error);
+                    console.error(`Error fetching pool data for swarm ID ${investment.swarm_id}:`, error);
                     return null;
                 }
             }));
