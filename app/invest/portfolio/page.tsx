@@ -130,30 +130,32 @@ export default function Portfolio() {
                                 total_shares: soldShares,
                                 last_dividend_payment: 0
                             });
-                        } catch (err) {
+                        } catch (error: unknown) {
                             // Check if it's a rate limit error
-                            if (err.message?.includes('429') || err.message?.includes('exceeded limit')) {
+                            if (error instanceof Error && 
+                                (error.message?.includes('429') || error.message?.includes('exceeded limit'))) {
                                 if (attempt < MAX_RETRIES) {
                                     console.log(`Rate limit hit, retrying in ${RETRY_DELAY}ms...`);
                                     await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
                                     return fetchWithRetry(attempt + 1);
                                 }
                             }
-                            throw err;
+                            throw error;
                         }
                     }
                     
                     setInvestments(positions);
                     setIsLoading(false);
-                } catch (err) {
-                    if (err.message?.includes('429') || err.message?.includes('exceeded limit')) {
+                } catch (error: unknown) {
+                    if (error instanceof Error && 
+                        (error.message?.includes('429') || error.message?.includes('exceeded limit'))) {
                         if (attempt < MAX_RETRIES) {
                             console.log(`Rate limit hit, retrying in ${RETRY_DELAY}ms...`);
                             await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
                             return fetchWithRetry(attempt + 1);
                         }
                     }
-                    console.error('Error fetching portfolio data:', err);
+                    console.error('Error fetching portfolio data:', error instanceof Error ? error.message : 'Unknown error');
                     setError(new Error("Unable to load portfolio data. Please try again later."));
                     setIsLoading(false);
                 }
