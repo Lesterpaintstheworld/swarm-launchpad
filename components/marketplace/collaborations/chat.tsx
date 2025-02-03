@@ -124,13 +124,12 @@ function SpecificationAccordion({ specs }: { specs: ProjectSpecs }) {
 }
 
 function formatMessageContent(content: string) {
-  return content
-    .split('\n')
-    .map((line, i) => (
-      <span key={i} className="block">
-        {line || '\u00A0'}
-      </span>
-    ));
+  // Split by newlines and handle empty lines
+  return content.split('\n').map((line, i) => (
+    <span key={i} className="block">
+      {line || '\u00A0'}  {/* Use non-breaking space for empty lines */}
+    </span>
+  ));
 }
 
 export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId }: ChatProps) {
