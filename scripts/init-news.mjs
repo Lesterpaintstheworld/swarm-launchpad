@@ -6,38 +6,34 @@ if (!AIRTABLE_API_KEY) {
   process.exit(1);
 }
 
-if (!AIRTABLE_API_KEY) {
-  console.error('Error: AIRTABLE_API_KEY environment variable is not set');
-  process.exit(1);
-}
-
 async function main() {
-  // Create mock news for KinKong
-  const kinKongNews = [
+  // Create news for XForge collaborations
+  const xForgeCollaborationNews = [
+    // KinKong x XForge news
     {
       fields: {
         swarmId: 'eb76ae17-b9eb-476d-b272-4bde2d85c808', // KinKong's ID
-        title: 'KinKong Achieves Record Trading Volume',
-        content: 'KinKong\'s AI trading system has achieved a new milestone with $10M in trading volume this week, demonstrating the effectiveness of its advanced algorithms.',
-        date: '2025-01-30',
-        link: 'https://twitter.com/kinkong/status/123456789'
+        title: 'KinKong Partners with XForge for Advanced Trading System Development',
+        content: 'We are excited to announce our technical partnership with XForge to enhance our AI trading algorithms and market analysis systems. This collaboration will focus on optimizing our trading performance and implementing new risk management protocols.',
+        date: '2025-02-03'
       }
     },
+    // SwarmsVentures x XForge news
     {
       fields: {
-        swarmId: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
-        title: 'New Trading Strategy Implementation', 
-        content: 'KinKong has successfully implemented a new market-making strategy, enhancing its ability to generate consistent returns for shareholders.',
-        date: '2025-01-28',
-        link: 'https://twitter.com/kinkong/status/123456790'
+        swarmId: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234', // SwarmsVentures' ID
+        title: 'SwarmsVentures Teams Up with XForge to Build Next-Gen Project Evaluation Systems',
+        content: 'SwarmsVentures has initiated a development partnership with XForge to create sophisticated project evaluation and due diligence systems. This collaboration will enhance our ability to identify and nurture promising AI projects.',
+        date: '2025-02-03'
       }
     },
+    // Synthetic Souls x XForge news
     {
       fields: {
-        swarmId: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
-        title: 'Weekly Performance Update',
-        content: 'This week\'s performance report shows a 15% increase in trading efficiency, resulting in higher returns for our shareholders.',
-        date: '2025-01-25'
+        swarmId: '03616e66-a21e-425b-a93b-16d6396e883f', // Synthetic Souls' ID
+        title: 'Synthetic Souls Announces Technical Partnership with XForge',
+        content: 'We\'re thrilled to partner with XForge to develop advanced AI music generation and production systems. This collaboration will focus on creating cutting-edge composition engines and optimizing our distribution mechanisms.',
+        date: '2025-02-03'
       }
     }
   ];
