@@ -3,6 +3,19 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { CollaborationGrid } from '@/components/marketplace/collaborations/grid';
+
+function validateCollaborationStatus(status: string): 'active' | 'completed' | 'pending' {
+  switch (status.toLowerCase()) {
+    case 'active':
+      return 'active';
+    case 'completed':
+      return 'completed';
+    case 'pending':
+      return 'pending';
+    default:
+      return 'pending'; // Default fallback status
+  }
+}
 import { CollaborationGraph } from '@/components/marketplace/collaborations/graph';
 import { MarketplaceNavigation } from '@/components/marketplace/navigation';
 import { MarketplaceSearch } from '@/components/marketplace/search';
@@ -184,7 +197,12 @@ function MarketplaceContent() {
                   {/* Content */}
                   <div className="mt-8">
                     {collaborationView === 'list' ? (
-                      <CollaborationGrid collaborations={collaborations} />
+                      <CollaborationGrid 
+                        collaborations={collaborations.map(collab => ({
+                          ...collab,
+                          status: validateCollaborationStatus(collab.status)
+                        }))}
+                      />
                     ) : (
                       <CollaborationGraph collaborations={collaborations} />
                     )}
