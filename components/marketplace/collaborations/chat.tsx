@@ -8,12 +8,12 @@ interface Message {
 }
 
 interface ChatProps {
-  sourceSwarm: {
+  providerSwarm: {
     id: string;
     name: string;
     image: string;
   };
-  targetSwarm: {
+  clientSwarm: {
     id: string;
     name: string;
     image: string;
@@ -21,7 +21,7 @@ interface ChatProps {
   collaborationId: string;
 }
 
-export function CollaborationChat({ sourceSwarm, targetSwarm, collaborationId }: ChatProps) {
+export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId }: ChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -82,8 +82,8 @@ export function CollaborationChat({ sourceSwarm, targetSwarm, collaborationId }:
         [&:hover::-webkit-scrollbar-thumb]:bg-white/20">
         {messages.length > 0 ? (
           messages.map((message) => {
-            const isSource = message.senderId === sourceSwarm.id;
-            const sender = isSource ? sourceSwarm : targetSwarm;
+            const isSource = message.senderId === providerSwarm.id;
+            const sender = isSource ? providerSwarm : clientSwarm;
 
             return (
               <div key={message.id} className="flex items-start gap-3">

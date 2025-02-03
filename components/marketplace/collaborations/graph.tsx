@@ -59,19 +59,19 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
 
     // Filter out ecosystem nodes and create set of ecosystem targets
     const filteredCollaborations = collaborations.filter(
-      collab => collab.sourceSwarm.id !== 'ecosystem'
+      collab => collab.providerSwarm.id !== 'ecosystem'
     );
     const ecosystemTargets = new Set(
       collaborations
-        .filter(collab => collab.sourceSwarm.id === 'ecosystem')
-        .map(collab => collab.targetSwarm.id)
+        .filter(collab => collab.providerSwarm.id === 'ecosystem')
+        .map(collab => collab.clientSwarm.id)
     );
 
     // Create nodes array (unique swarms)
     const swarms = new Set();
     filteredCollaborations.forEach(collab => {
-      swarms.add(JSON.stringify(collab.sourceSwarm));
-      swarms.add(JSON.stringify(collab.targetSwarm));
+      swarms.add(JSON.stringify(collab.providerSwarm));
+      swarms.add(JSON.stringify(collab.clientSwarm));
     });
     const nodes = Array.from(swarms).map(s => JSON.parse(s as string));
 
@@ -88,8 +88,8 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
     };
 
     const links = filteredCollaborations.map(collab => ({
-      source: collab.sourceSwarm.id,
-      target: collab.targetSwarm.id,
+      source: collab.providerSwarm.id,
+      target: collab.clientSwarm.id,
       value: collab.price,
       strength: (collab.price / maxPrice) * 0.3 + 0.2,
       serviceName: collab.serviceName

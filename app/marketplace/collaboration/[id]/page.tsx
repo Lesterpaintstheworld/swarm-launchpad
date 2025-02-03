@@ -35,19 +35,19 @@ async function getSwarm(id: string) {
 }
 
 export default function CollaborationPage({ params }: { params: { id: string } }) {
-  const [sourceSwarm, setSourceSwarm] = useState<any>(null);
-  const [targetSwarm, setTargetSwarm] = useState<any>(null);
+  const [providerSwarm, setproviderSwarm] = useState<any>(null);
+  const [clientSwarm, setclientSwarm] = useState<any>(null);
   const collaboration = getCollaboration(params.id);
 
   useEffect(() => {
     if (collaboration) {
       // Fetch both swarms
       Promise.all([
-        getSwarm(collaboration.sourceSwarm.id),
-        getSwarm(collaboration.targetSwarm.id)
+        getSwarm(collaboration.providerSwarm.id),
+        getSwarm(collaboration.clientSwarm.id)
       ]).then(([source, target]) => {
-        setSourceSwarm(source);
-        setTargetSwarm(target);
+        setproviderSwarm(source);
+        setclientSwarm(target);
       });
     }
   }, [collaboration]);
@@ -72,7 +72,7 @@ export default function CollaborationPage({ params }: { params: { id: string } }
   // Now TypeScript knows collaboration.serviceName is a valid ServiceName
   const bannerSrc = serviceBanners[collaboration.serviceName];
 
-  if (!sourceSwarm || !targetSwarm) {
+  if (!providerSwarm || !clientSwarm) {
     return (
       <div className="container py-12">
         <h1 className="text-2xl font-bold">Loading...</h1>
@@ -88,7 +88,7 @@ export default function CollaborationPage({ params }: { params: { id: string } }
           crumbs={[
             { label: "Marketplace", href: "/marketplace" },
             { label: "Collaborations", href: "/marketplace?tab=collaborations" },
-            { label: `${sourceSwarm?.name} × ${targetSwarm?.name}` }
+            { label: `${providerSwarm?.name} × ${clientSwarm?.name}` }
           ]}
         />
 
@@ -108,7 +108,7 @@ export default function CollaborationPage({ params }: { params: { id: string } }
             <div className="absolute bottom-6 left-6 right-6">
               <div className="flex items-center justify-between">
                 <h1 className="text-4xl font-bold">
-                  {sourceSwarm?.name} × {targetSwarm?.name}
+                  {providerSwarm?.name} × {clientSwarm?.name}
                 </h1>
                 <div className="px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 text-green-400">
                   Active Collaboration
@@ -158,8 +158,8 @@ export default function CollaborationPage({ params }: { params: { id: string } }
 
               {/* Communication Section */}
               <CollaborationChat 
-                sourceSwarm={collaboration.sourceSwarm}
-                targetSwarm={collaboration.targetSwarm}
+                providerSwarm={collaboration.providerSwarm}
+                clientSwarm={collaboration.clientSwarm}
                 collaborationId={collaboration.id}
               />
             </div>
@@ -177,40 +177,40 @@ export default function CollaborationPage({ params }: { params: { id: string } }
                     <div>
                       <h4 className="text-sm text-muted-foreground mb-2">Service Provider</h4>
                       <Link 
-                        href={`/invest/${targetSwarm?.id}`}
+                        href={`/invest/${clientSwarm?.id}`}
                         className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors"
                       >
                         <div className="relative w-12 h-12 rounded-full overflow-hidden border border-white/20">
                           <Image
-                            src={collaboration.targetSwarm.image}
-                            alt={collaboration.targetSwarm.name}
+                            src={collaboration.clientSwarm.image}
+                            alt={collaboration.clientSwarm.name}
                             fill
                             className="object-cover"
                           />
                         </div>
                         <div>
-                          <div className="font-medium">{collaboration.targetSwarm.name}</div>
-                          <div className="text-sm text-muted-foreground">{targetSwarm?.role}</div>
+                          <div className="font-medium">{collaboration.clientSwarm.name}</div>
+                          <div className="text-sm text-muted-foreground">{clientSwarm?.role}</div>
                         </div>
                       </Link>
                     </div>
                     <div>
                       <h4 className="text-sm text-muted-foreground mb-2">Client</h4>
                       <Link 
-                        href={`/invest/${sourceSwarm?.id}`}
+                        href={`/invest/${providerSwarm?.id}`}
                         className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors"
                       >
                         <div className="relative w-12 h-12 rounded-full overflow-hidden border border-white/20">
                           <Image
-                            src={collaboration.sourceSwarm.image}
-                            alt={collaboration.sourceSwarm.name}
+                            src={collaboration.providerSwarm.image}
+                            alt={collaboration.providerSwarm.name}
                             fill
                             className="object-cover"
                           />
                         </div>
                         <div>
-                          <div className="font-medium">{collaboration.sourceSwarm.name}</div>
-                          <div className="text-sm text-muted-foreground">{sourceSwarm?.role}</div>
+                          <div className="font-medium">{collaboration.providerSwarm.name}</div>
+                          <div className="text-sm text-muted-foreground">{providerSwarm?.role}</div>
                         </div>
                       </Link>
                     </div>
@@ -274,7 +274,7 @@ export default function CollaborationPage({ params }: { params: { id: string } }
                     {/* $UBC Redistributed */}
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-muted-foreground">
-                        {Math.round(collaboration.price * (sourceSwarm?.revenueShare || 0) / 100 * 0.2).toLocaleString()} <span className="metallic-text-ubc">$UBC</span> Redistributed
+                        {Math.round(collaboration.price * (providerSwarm?.revenueShare || 0) / 100 * 0.2).toLocaleString()} <span className="metallic-text-ubc">$UBC</span> Redistributed
                       </span>
                       <Link 
                         href="#"
@@ -287,7 +287,7 @@ export default function CollaborationPage({ params }: { params: { id: string } }
                     {/* $COMPUTE Redistributed */}
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-muted-foreground">
-                        {Math.round(collaboration.price * (sourceSwarm?.revenueShare || 0) / 100 * 0.8).toLocaleString()} <span className="metallic-text">$COMPUTE</span> Redistributed
+                        {Math.round(collaboration.price * (providerSwarm?.revenueShare || 0) / 100 * 0.8).toLocaleString()} <span className="metallic-text">$COMPUTE</span> Redistributed
                       </span>
                       <Link 
                         href="#"

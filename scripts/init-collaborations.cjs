@@ -38,8 +38,8 @@ async function initializeCollaborations() {
                     records: [{
                         fields: {
                             collaborationId: collaboration.id,
-                            sourceSwarmId: collaboration.sourceSwarm.id,
-                            targetSwarmId: collaboration.targetSwarm.id,
+                            providerSwarmId: collaboration.providerSwarm.id,
+                            clientSwarmId: collaboration.clientSwarm.id,
                             serviceId: SERVICE_IDS[collaboration.serviceName],
                             status: collaboration.status,
                             price: collaboration.price,
@@ -58,7 +58,7 @@ async function initializeCollaborations() {
             }
 
             const data = await response.json();
-            console.log(`Collaboration created: ${collaboration.sourceSwarm.name} × ${collaboration.targetSwarm.name}`);
+            console.log(`Collaboration created: ${collaboration.providerSwarm.name} × ${collaboration.clientSwarm.name}`);
 
             // Add delay between requests to respect Airtable's rate limits
             await sleep(1000);

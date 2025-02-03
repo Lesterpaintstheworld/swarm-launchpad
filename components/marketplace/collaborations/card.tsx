@@ -30,12 +30,12 @@ const getGradientColors = (sourceId: string) => {
 
 interface CollaborationCardProps {
   id: string;
-  sourceSwarm: {
+  providerSwarm: {
     id: string;
     name: string;
     image: string;
   };
-  targetSwarm: {
+  clientSwarm: {
     id: string;
     name: string;
     image: string;
@@ -47,8 +47,8 @@ interface CollaborationCardProps {
 
 export function CollaborationCard({ 
   id, 
-  sourceSwarm, 
-  targetSwarm, 
+  providerSwarm, 
+  clientSwarm, 
   serviceName, 
   status, 
   price 
@@ -72,15 +72,15 @@ export function CollaborationCard({
           {/* Provider Swarm (was Target) - Now First */}
           <div className="flex flex-col items-center space-y-2">
             <Link 
-              href={`/invest/${targetSwarm.id}`}
+              href={`/invest/${clientSwarm.id}`}
               className="group/link"
             >
               <div className="relative">
                 <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/50 to-pink-500/50 rounded-xl opacity-0 group-hover/link:opacity-100 blur transition-opacity duration-500" />
                 <div className="relative w-14 h-14 rounded-xl overflow-hidden border border-white/20 group-hover/link:border-white/40 transition-colors duration-300">
                   <Image
-                    src={targetSwarm.image}
-                    alt={targetSwarm.name}
+                    src={clientSwarm.image}
+                    alt={clientSwarm.name}
                     fill
                     className="object-cover transition-transform duration-300 group-hover/link:scale-110"
                   />
@@ -88,7 +88,7 @@ export function CollaborationCard({
               </div>
             </Link>
             <div className="flex flex-col items-center gap-0.5">
-              <span className="text-sm font-medium text-white/60">{targetSwarm.name}</span>
+              <span className="text-sm font-medium text-white/60">{clientSwarm.name}</span>
               <span className="text-[10px] text-white/40">Provider</span>
             </div>
           </div>
@@ -101,7 +101,7 @@ export function CollaborationCard({
             </div>
             
             <div className="h-[2px] w-full relative overflow-hidden my-2">
-              <div className={`absolute inset-0 bg-gradient-to-r ${getGradientColors(sourceSwarm.id).from} ${getGradientColors(sourceSwarm.id).via} ${getGradientColors(sourceSwarm.id).to} group-hover:${getGradientColors(sourceSwarm.id).hover.from} group-hover:${getGradientColors(sourceSwarm.id).hover.via} group-hover:${getGradientColors(sourceSwarm.id).hover.to} transition-all duration-500`} />
+              <div className={`absolute inset-0 bg-gradient-to-r ${getGradientColors(providerSwarm.id).from} ${getGradientColors(providerSwarm.id).via} ${getGradientColors(providerSwarm.id).to} group-hover:${getGradientColors(providerSwarm.id).hover.from} group-hover:${getGradientColors(providerSwarm.id).hover.via} group-hover:${getGradientColors(providerSwarm.id).hover.to} transition-all duration-500`} />
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent w-[50%] animate-[moveLight_3s_linear_infinite] -translate-x-[100%]" />
             </div>
 
@@ -113,15 +113,15 @@ export function CollaborationCard({
           {/* Client Swarm (was Source) - Now Last */}
           <div className="flex flex-col items-center space-y-2">
             <Link 
-              href={`/invest/${sourceSwarm.id}`}
+              href={`/invest/${providerSwarm.id}`}
               className="group/link"
             >
               <div className="relative">
                 <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/50 to-purple-500/50 rounded-xl opacity-0 group-hover/link:opacity-100 blur transition-opacity duration-500" />
                 <div className="relative w-14 h-14 rounded-xl overflow-hidden border border-white/20 group-hover/link:border-white/40 transition-colors duration-300">
                   <Image
-                    src={sourceSwarm.image}
-                    alt={sourceSwarm.name}
+                    src={providerSwarm.image}
+                    alt={providerSwarm.name}
                     fill
                     className="object-cover transition-transform duration-300 group-hover/link:scale-110"
                   />
@@ -129,7 +129,7 @@ export function CollaborationCard({
               </div>
             </Link>
             <div className="flex flex-col items-center gap-0.5">
-              <span className="text-sm font-medium text-white/60">{sourceSwarm.name}</span>
+              <span className="text-sm font-medium text-white/60">{providerSwarm.name}</span>
               <span className="text-[10px] text-white/40">Client</span>
             </div>
           </div>

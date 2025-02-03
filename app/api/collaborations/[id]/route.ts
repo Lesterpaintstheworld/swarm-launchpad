@@ -27,15 +27,15 @@ export async function GET(
     const record = data.records[0];
     const collaboration = {
       id: record.fields.id,
-      sourceSwarm: {
-        id: record.fields.sourceSwarmId,
-        name: record.fields.sourceSwarmName,
-        image: record.fields.sourceSwarmImage,
+      providerSwarm: {
+        id: record.fields.providerSwarmId,
+        name: record.fields.providerSwarmName,
+        image: record.fields.providerSwarmImage,
       },
-      targetSwarm: {
-        id: record.fields.targetSwarmId,
-        name: record.fields.targetSwarmName,
-        image: record.fields.targetSwarmImage,
+      clientSwarm: {
+        id: record.fields.clientSwarmId,
+        name: record.fields.clientSwarmName,
+        image: record.fields.clientSwarmImage,
       },
       serviceName: record.fields.serviceName,
       status: record.fields.status,

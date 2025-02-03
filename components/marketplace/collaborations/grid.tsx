@@ -2,12 +2,12 @@ import { CollaborationCard } from './card';
 
 interface Collaboration {
   id: string;
-  sourceSwarm: {
+  providerSwarm: {
     id: string;
     name: string;
     image: string;
   };
-  targetSwarm: {
+  clientSwarm: {
     id: string;
     name: string;
     image: string;
@@ -31,8 +31,8 @@ export function CollaborationGrid({ collaborations }: CollaborationGridProps) {
         <CollaborationCard
           key={collaboration.id}
           id={collaboration.id}
-          sourceSwarm={collaboration.sourceSwarm}
-          targetSwarm={collaboration.targetSwarm}
+          providerSwarm={collaboration.providerSwarm}
+          clientSwarm={collaboration.clientSwarm}
           serviceName={collaboration.serviceName}
           status={collaboration.status}
           price={collaboration.price}

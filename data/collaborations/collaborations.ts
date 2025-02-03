@@ -2,12 +2,12 @@ export type ServiceName = 'Development Package' | 'Essential Swarm Package' | 'I
 
 export interface Collaboration {
   id: string;
-  sourceSwarm: {
+  providerSwarm: {
     id: string;
     name: string;
     image: string;
   };
-  targetSwarm: {
+  clientSwarm: {
     id: string;
     name: string;
     image: string;
@@ -24,12 +24,12 @@ export interface Collaboration {
 export const collaborations: Collaboration[] = [
   {
     id: '24',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'logicatlas-inception-id',
       name: 'LogicAtlas',
       image: '/swarms/logicatlas.jpg'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
@@ -50,12 +50,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '23',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'forge-partner-id',
       name: 'XForge', 
       image: '/swarms/xforge.png'
@@ -76,12 +76,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '22',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'wealthhive-inception-id',
       name: 'WealthHive',
       image: '/swarms/wealthhive.png'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
@@ -102,12 +102,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '18',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'f7a92b3c-d8e4-4c1a-9f5d-1234567890ab',
       name: 'StudioKin',
       image: '/swarms/screenplay.jpg'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
@@ -128,12 +128,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '19',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'd4e5f6g7-h8i9-7d8e-bf2g-3h4i5j6k7l8m',
       name: 'PlayWise',
       image: '/swarms/toy.png'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
@@ -154,12 +154,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '20',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'mentor-swarm-id',
       name: 'DeskMate',
       image: '/swarms/mentor.png'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
@@ -180,12 +180,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '21',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'speaker-swarm-id',
       name: 'STUMPED',
       image: '/swarms/stumped.jpg'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
@@ -207,12 +207,12 @@ export const collaborations: Collaboration[] = [
   // Early Swarms
   {
     id: '1',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
       name: 'Kin Kong',
       image: '/swarms/kinkong.jpg'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
@@ -233,12 +233,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '2',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',
       name: 'SwarmsVenture',
       image: '/swarms/swarm-ventures.jpg'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
@@ -259,12 +259,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '3',
-    sourceSwarm: {
+    providerSwarm: {
       id: '03616e66-a21e-425b-a93b-16d6396e883f',
       name: 'Synthetic Souls',
       image: '/swarms/syntheticsouls/Lyra 16-9 web.jpg'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
@@ -286,12 +286,12 @@ export const collaborations: Collaboration[] = [
   // Inception Swarms
   {
     id: '4',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'a1b2c3d4-e5f6-4a5b-8c7d-9e8f7a6b5c4d',
       name: 'Robinhood Agent',
       image: '/swarms/robinhood.jpg'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
@@ -302,12 +302,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '5',
-    sourceSwarm: {
+    providerSwarm: {
       id: '7d3c9e5b-1f8a-4d3c-b8d4-9e5b1f8a4d3c',
       name: 'DuoAI',
       image: '/swarms/duoai.jpg'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
@@ -318,12 +318,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '6',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q',
       name: 'ProfitBeeAI',
       image: '/swarms/affiliate.jpeg'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
@@ -334,12 +334,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '7',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'propertykin-inception-id',
       name: 'PropertyKin',
       image: '/swarms/property.png'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
@@ -350,12 +350,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '8',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'd4e5f6g7-h8i9-7d8e-bf2g-3h4i5j6k7l8m',
       name: 'PlayWise',
       image: '/swarms/toy.png'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
@@ -366,12 +366,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '9',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'b2c3d4e5-f6g7-5b6c-9d0e-1f2g3h4i5j6k',
       name: 'TherapyKin',
       image: '/swarms/mental-health.jpg'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
@@ -392,12 +392,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '10',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'c3d4e5f6-g7h8-6c7d-ae1f-2g3h4i5j6k7l',
       name: 'PublishKin',
       image: '/swarms/book.png'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
@@ -418,12 +418,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '11',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'resume-swarm-id',
       name: 'CareerKin',
       image: '/swarms/resume.jpeg'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
@@ -444,12 +444,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '12',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'travel-swarm-id',
       name: 'TravelAId',
       image: '/swarms/travel.jpeg'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
@@ -470,12 +470,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '13',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'grant-swarm-id',
       name: 'GrantKin',
       image: '/swarms/grant.jpeg'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
@@ -496,12 +496,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '15',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
       name: 'Kin Kong',
       image: '/swarms/kinkong.jpg'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'forge-partner-id',
       name: 'XForge',
       image: '/swarms/xforge.png'
@@ -522,12 +522,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '16',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',
       name: 'SwarmsVenture',
       image: '/swarms/swarm-ventures.jpg'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'forge-partner-id', 
       name: 'XForge',
       image: '/swarms/xforge.png'
@@ -548,12 +548,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '17',
-    sourceSwarm: {
+    providerSwarm: {
       id: '03616e66-a21e-425b-a93b-16d6396e883f',
       name: 'Synthetic Souls',
       image: '/swarms/syntheticsouls/Lyra 16-9 web.jpg'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'forge-partner-id',
       name: 'XForge',
       image: '/swarms/xforge.png'
@@ -574,12 +574,12 @@ export const collaborations: Collaboration[] = [
   },
   {
     id: '25',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'ecosystem',
       name: 'Ecosystem',
       image: '/swarms/ecosystem.png'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
       name: 'Kin Kong',
       image: '/swarms/kinkong.jpg'
@@ -603,5 +603,5 @@ export const collaborations: Collaboration[] = [
 export const getCollaboration = (id: string) => collaborations.find(collab => collab.id === id);
 export const getCollaborationsBySwarm = (swarmId: string) => 
   collaborations.filter(collab => 
-    collab.sourceSwarm.id === swarmId || collab.targetSwarm.id === swarmId
+    collab.providerSwarm.id === swarmId || collab.clientSwarm.id === swarmId
   );

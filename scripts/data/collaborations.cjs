@@ -1,12 +1,12 @@
 const collaborations = [
   {
     id: '24',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'logicatlas-inception-id',
       name: 'LogicAtlas',
       image: '/swarms/logicatlas.jpg'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
@@ -27,12 +27,12 @@ const collaborations = [
   },
   {
     id: '23',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'kinos-partner-id',
       name: 'KinOS',
       image: '/swarms/kinos.png'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'forge-partner-id',
       name: 'XForge',
       image: '/swarms/xforge.png'
@@ -53,12 +53,12 @@ const collaborations = [
   },
   {
     id: '15',
-    sourceSwarm: {
+    providerSwarm: {
       id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
       name: 'Kin Kong',
       image: '/swarms/kinkong.jpg'
     },
-    targetSwarm: {
+    clientSwarm: {
       id: 'forge-partner-id',
       name: 'XForge',
       image: '/swarms/xforge.png'
