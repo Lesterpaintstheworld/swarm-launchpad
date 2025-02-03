@@ -60,9 +60,6 @@ const SwarmCell = ({ swarmId }: { swarmId: string }) => {
         </div>
     );
 };
-import { useState, useEffect } from 'react';
-import { toast } from 'sonner';
-
 // First define the ActionCell component outside and before the columns definition
 interface RowData {
     amount: number;
