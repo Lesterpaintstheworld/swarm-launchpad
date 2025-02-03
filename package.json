@@ -11,6 +11,7 @@
     "update-multiples": "python scripts/update_multiples.py",
     "get-holders": "python scripts/get_holders.py",
     "init-news": "node -r dotenv/config scripts/init-news.mjs",
+    "init-messages": "node -r dotenv/config scripts/init-messages.mjs",
     "market-metrics": "node --loader ts-node/esm -r dotenv/config scripts/marketMetrics.mjs"
   },
   "dependencies": {
