@@ -66,7 +66,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
           {swarm && (
             <div className="absolute -bottom-8 left-6 flex items-center gap-3">
               <Link 
-                href={`/invest/${swarm.id}`}
+                href={`/invest/${swarm?.id}`}
                 className="relative w-16 h-16 rounded-xl overflow-hidden border-2 border-blue-400/30 hover:border-blue-400/50 transition-colors shadow-lg shadow-black/20"
               >
                 <Image

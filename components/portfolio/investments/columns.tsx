@@ -148,7 +148,7 @@ export const columns: ColumnDef<Investment>[] = [
                         className="rounded-full"
                     />
                     <div className="flex flex-col">
-                        <Link className="text-lg mb-0 leading-1 truncate hover:underline" href={`/invest/${swarm.id}`}>{swarm?.name}</Link>
+                        <Link className="text-lg mb-0 leading-1 truncate hover:underline" href={`/invest/${swarm?.id}`}>{swarm?.name}</Link>
                         {swarm?.role && <p className="text-sm text-muted truncate">{swarm?.role}</p>}
                     </div>
                 </div>

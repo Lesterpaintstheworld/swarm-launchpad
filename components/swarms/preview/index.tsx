@@ -23,7 +23,7 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
             transition={{ duration: 0.05 }}
             className="h-full"
         >
-            <Link href={`/invest/${swarm.id}`} className="block transition-all duration-200 h-full">
+            <Link href={`/invest/${swarm?.id}`} className="block transition-all duration-200 h-full">
                 <Card className="p-2 md:max-w-[300px] w-full h-full flex flex-col cursor-pointer hover:shadow-lg hover:border-foreground/30 transition-colors relative">
                     <Image
                         src={imgSrc}
