@@ -139,6 +139,8 @@ function formatMessageContent(content: string) {
 }
 
 export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId, projectSpecs }: ChatProps) {
+  console.log('Project specs received:', projectSpecs);
+  
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -216,8 +218,12 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId,
   return (
     <div className="space-y-6">
       {/* Project Specifications Accordion */}
-      {projectSpecs && (
+      {projectSpecs && Object.keys(projectSpecs).length > 0 ? (
         <SpecificationAccordion specs={projectSpecs} />
+      ) : (
+        <div className="mb-6 p-4 rounded-xl bg-white/5 border border-white/10">
+          <p className="text-white/60 text-sm">No specifications available</p>
+        </div>
       )}
 
       {/* Chat Component */}
