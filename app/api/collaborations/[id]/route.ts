@@ -28,21 +28,30 @@ async function getServiceSpecs(serviceId: string) {
 
     const record = data.records[0];
     
-    // Add logging to debug
-    console.log('Service record:', record);
-    console.log('Raw specifications:', record.fields.specifications);
-    console.log('Raw deliverables:', record.fields.deliverables);
-    console.log('Raw validation:', record.fields.validation);
+    // Parse the specification content into bullet points
+    const specifications = record.fields.specification ? 
+      JSON.parse(record.fields.specification).content
+        .split('\n')
+        .filter((line: string) => line.trim().startsWith('-'))
+        .map((line: string) => line.trim().substring(2)) // Remove the "- " prefix
+      : undefined;
 
-    // Safely parse JSON fields
-    const specifications = record.fields.specifications ? JSON.parse(record.fields.specifications) : undefined;
-    const deliverables = record.fields.deliverables ? JSON.parse(record.fields.deliverables) : undefined;
-    const validation = record.fields.validation ? JSON.parse(record.fields.validation) : undefined;
+    // Parse the deliverables content - assuming it's in Markdown format
+    const deliverables = record.fields.deliverables ? 
+      JSON.parse(record.fields.deliverables).content
+        .split('\n')
+        .filter((line: string) => line.trim().startsWith('###'))
+        .map((line: string) => line.trim().substring(4)) // Remove the "### " prefix
+      : undefined;
 
-    // Add more logging
-    console.log('Parsed specifications:', specifications);
-    console.log('Parsed deliverables:', deliverables);
-    console.log('Parsed validation:', validation);
+    // For validation, we'll use some key sections from the deliverables
+    const validation = record.fields.deliverables ? 
+      JSON.parse(record.fields.deliverables).content
+        .split('\n')
+        .filter((line: string) => line.trim().startsWith('- '))
+        .slice(0, 4) // Take first 4 bullet points
+        .map((line: string) => line.trim().substring(2)) // Remove the "- " prefix
+      : undefined;
 
     return {
       specifications,
