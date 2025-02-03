@@ -37,34 +37,6 @@ async function main() {
         // Log summary 
         console.log(`\nProcessed ${swarms.length} swarms`);
                 models: [
-                    "Video AI",
-                    "GPT-4V"
-                ],
-                name: "SLOP FATHER",
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/slopfather.png"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                tags: [
-                    "AI",
-                    "Video",
-                    "Social Media",
-                    "$FATHA",
-                    "Content Creation"
-                ],
-                role: "Content Creator",
-                swarmType: "partner",
-                wallet: "D1a6RtoptnG2U9gatDz5bQJ3QahKR3wiherDYipe98Vt",
-                multiple: 1
-            },
-            {
-                id: "digitalkin-partner-id",
-                image: "/swarms/digitalkin.png",
-                models: [
                     "KinOS",
                     "Claude Haiku"
                 ],
@@ -954,7 +926,7 @@ async function main() {
                     }
                 ]
             }
-        ));
+        }));
         
 
     } catch (error) {
