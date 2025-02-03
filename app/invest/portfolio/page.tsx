@@ -13,7 +13,7 @@ import { extractKey } from "@/lib/utils";
 import { getShareholderPDA } from "@/hooks/useLaunchpadProgram/utils";
 
 interface PositionData {
-    swarm_id: string;
+    id: string;
     number_of_shares: number;
     total_shares: number;
     last_dividend_payment: number;
