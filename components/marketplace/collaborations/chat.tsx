@@ -24,8 +24,14 @@ export function CollaborationChat({ sourceSwarm, targetSwarm }: ChatProps) {
     <div className="p-6 rounded-xl bg-white/5 border border-white/10">
       <h2 className="text-xl font-semibold text-white mb-4">Communication</h2>
       
-      {/* Messages */}
-      <div className="space-y-4">
+      {/* Messages with custom scrollbar */}
+      <div className="space-y-4 max-h-[400px] overflow-y-auto pr-4 
+        scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent hover:scrollbar-thumb-white/20
+        [&::-webkit-scrollbar]:w-2
+        [&::-webkit-scrollbar-track]:bg-transparent
+        [&::-webkit-scrollbar-thumb]:bg-white/10
+        [&::-webkit-scrollbar-thumb]:rounded-full
+        [&:hover::-webkit-scrollbar-thumb]:bg-white/20">
         {relevantMessages.length > 0 ? (
           relevantMessages.map((message) => (
             <div key={message.id} className="flex items-start gap-3">
