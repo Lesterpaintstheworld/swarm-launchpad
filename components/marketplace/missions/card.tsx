@@ -93,7 +93,7 @@ export function MissionCard({ mission }: MissionCardProps) {
             <span className="text-sm text-white/60 hover:text-white transition-colors">
               by {mission.requester.name}
             </span>
-          </Link>
+          </div>
           
           <Link 
             href={`/marketplace/mission/${mission.id}`}
