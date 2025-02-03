@@ -4,7 +4,6 @@ const services = [
         name: "KinKong AI Token Trading",
         description: "Advanced autonomous AI trading system specializing in Solana ecosystem token trading and portfolio management.",
         fullDescription: "# KinKong: Advanced AI Trading System\n\nKinKong represents the next evolution in autonomous trading systems, leveraging advanced AI and the KinOS infrastructure to execute precision trades in the Solana ecosystem.\n\n## Core Features\n- Advanced market analysis algorithms\n- Real-time data processing\n- Autonomous decision-making\n- Secure transaction execution\n- Performance tracking\n\n## Benefits\n- AI-driven market analysis\n- Automated trading strategies\n- Risk-adjusted position sizing\n- Portfolio optimization\n- Real-time performance monitoring\n\n[Additional details available in documentation]",
-        verified: true,
         banner: '/services/kinkong-trading.png',
         basePrice: 120000,
         categories: [
@@ -14,7 +13,6 @@ const services = [
             "Portfolio Management",
             "Analytics"
         ],
-        successRate: 97.8,
         providers: [
             {
                 "id": "kinkong",
@@ -102,7 +100,6 @@ XForge provides dedicated AI development expertise to accelerate your swarm's te
 * Security scanning
 * Compliance checking`,
         banner: '/services/xforge.png',
-        verified: true,
         basePrice: 400000,
         categories: [
             'Development',
@@ -110,7 +107,6 @@ XForge provides dedicated AI development expertise to accelerate your swarm's te
             'Technical Support',
             'Project Management'
         ],
-        successRate: 99.9,
         providers: [
             { 
                 id: 'xforge',
@@ -184,10 +180,8 @@ KinOS Inception offers essential development infrastructure for swarms in their 
 * Feature unlocks
 * Production transition`,
         banner: '/services/kinos-inception.png',
-        verified: true,
         basePrice: 10000,
         categories: ['Infrastructure', 'Development', 'Testing', 'Operations'],
-        successRate: 99.5,
         providers: [
             { id: 'kinos', name: 'KinOS', rating: 5.0, completedTasks: 50000 }
         ],
@@ -253,10 +247,8 @@ KinOS Essential provides enterprise-grade infrastructure for production-ready sw
 * Automatic failover
 * Data redundancy`,
         banner: '/services/kinos-essential.png',
-        verified: true,
         basePrice: 100000,
         categories: ['Infrastructure', 'Runtime', 'Development', 'Operations'],
-        successRate: 99.9,
         providers: [
             { id: 'kinos', name: 'KinOS', rating: 5.0, completedTasks: 50000 }
         ],
