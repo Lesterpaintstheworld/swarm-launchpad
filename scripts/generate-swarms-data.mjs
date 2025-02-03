@@ -976,7 +976,7 @@ async function main() {
                     }
                 ]
             }
-        }));
+        }));     // End of .map() function
 
         // Log what the Airtable API call would look like
         console.log('Airtable API call would be:');
