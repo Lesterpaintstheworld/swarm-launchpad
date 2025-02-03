@@ -42,6 +42,7 @@ interface SwarmInvestCardProps {
     className?: string;
     marketCapOnly?: boolean;
     amountRaisedOnly?: boolean;
+    priceInUsd?: number;
     weeklyRevenuePerShare?: {
         compute: number;
         ubc: number;
