@@ -36,11 +36,7 @@ interface TooltipProps {
 
 interface CustomPayload {
     value: string;
-    payload: {
-        name: string;
-        value: number;
-        percentage?: string;
-    };
+    payload: InvestmentDataItem;
     color: string;
 }
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
