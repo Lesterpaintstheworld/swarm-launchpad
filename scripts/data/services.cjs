@@ -13,14 +13,6 @@ const services = [
             "Portfolio Management",
             "Analytics"
         ],
-        providers: [
-            {
-                "id": "kinkong",
-                "name": "KinKong",
-                "rating": 4.8,
-                "completedTasks": 0
-            }
-        ],
         computePerTask: 120000,
         averageCompletionTime: "real-time",
         capabilities: [
@@ -106,14 +98,6 @@ XForge provides dedicated AI development expertise to accelerate your swarm's te
             'Infrastructure', 
             'Technical Support',
             'Project Management'
-        ],
-        providers: [
-            { 
-                id: 'xforge',
-                name: 'XForge',
-                rating: 5.0,
-                completedTasks: 1000
-            }
         ],
         computePerTask: 400000,
         averageCompletionTime: '1 week',

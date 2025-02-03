@@ -35,7 +35,6 @@ async function initializeServices() {
                             fullDescription: service.fullDescription,
                             basePrice: service.basePrice,
                             categories: JSON.stringify(service.categories),
-                            providers: JSON.stringify(service.providers),
                             computePerTask: service.computePerTask,
                             averageCompletionTime: service.averageCompletionTime,
                             capabilities: JSON.stringify(service.capabilities),
