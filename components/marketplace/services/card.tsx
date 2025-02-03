@@ -1,7 +1,16 @@
 import { Cpu, Clock } from 'lucide-react';
 import Link from 'next/link';
 import { Service } from '@/data/services/types';
-import { getSwarm } from '@/data/swarms/previews';
+async function getSwarm(id: string) {
+  try {
+    const response = await fetch(`/api/swarms/${id}`);
+    if (!response.ok) return null;
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching swarm:', error);
+    return null;
+  }
+}
 import Image from 'next/image';
 import { sectionColors } from '../types';
 

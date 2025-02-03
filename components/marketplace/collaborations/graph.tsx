@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { Collaboration } from '@/data/collaborations/collaborations';
 import { getSwarmUsingId } from "@/data/swarms/info";
-import { previews } from '@/data/swarms/previews';
 
 interface SimulationNode extends d3.SimulationNodeDatum {
   id: string;
@@ -34,6 +33,23 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
     // More subtle scaling - changed from 0.8 to 0.2 for less dramatic difference
     return Math.max(25, Math.min(40, 25 + (swarm.multiple * 0.2)));
   };
+
+  const [swarms, setSwarms] = useState([]);
+
+  useEffect(() => {
+    async function fetchSwarms() {
+      try {
+        const response = await fetch('/api/swarms');
+        if (response.ok) {
+          const data = await response.json();
+          setSwarms(data);
+        }
+      } catch (error) {
+        console.error('Error fetching swarms:', error);
+      }
+    }
+    fetchSwarms();
+  }, []);
 
   useEffect(() => {
     if (!svgRef.current) return;
@@ -217,7 +233,7 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
         .on("end", dragended))
       .on("mouseover", (event, d) => {
         const swarm = getSwarmUsingId(d.id);
-        const previewData = previews.find(p => p.id === d.id);
+        const previewData = swarms.find(p => p.id === d.id);
         if (!swarm || !previewData) return;
 
         const multiple = swarm.multiple || 1;
