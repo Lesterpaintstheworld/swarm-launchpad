@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import { description as affiliateDescription } from '../data/swarms/descriptions/affiliate.ts';
+import { description as kinosDescription } from '../data/swarms/descriptions/kinos.ts';
 
 // Get environment variables
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
@@ -12,7 +13,8 @@ if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
 }
 
 const descriptions = {
-    'profitbeeai': affiliateDescription,
+    'h8i9j0k1-l2m3-1h2i-fj6k-7l8m9n0o1p2q': affiliateDescription, // ProfitBeeAI
+    'kinos-partner-id': kinosDescription, // KinOS
     // Add more mappings as we add more description files
 };
 
