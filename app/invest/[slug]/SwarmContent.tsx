@@ -3,6 +3,7 @@
 import { CountdownTimer } from './CountdownTimer';
 import { SwarmNews } from '@/components/swarms/news';
 import { useEffect, useState } from 'react';
+import { SwarmGalleryItem } from '@/components/swarms/swarm.types';
 import { SwarmInvestCard } from "@/components/swarms/invest";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { InfoPanel } from "@/components/ui/infoPanel";

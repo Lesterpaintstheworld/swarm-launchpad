@@ -2,7 +2,7 @@
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/shadcn/button';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 
 interface CarouselProps {
@@ -13,9 +13,9 @@ interface CarouselProps {
 export function Carousel({ items, className }: CarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const next = () => {
+  const next = useCallback(() => {
     setCurrentIndex((current) => (current + 1) % items.length);
-  };
+  }, [items.length]);
 
   const prev = () => {
     setCurrentIndex((current) => (current - 1 + items.length) % items.length);
@@ -25,7 +25,7 @@ export function Carousel({ items, className }: CarouselProps) {
   useEffect(() => {
     const timer = setInterval(next, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [next]);
 
   return (
     <div className={cn("relative group", className)}>
