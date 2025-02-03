@@ -2,7 +2,6 @@ const SwarmData = [
     {
         id: 'kinos-partner-id',
         image: '/swarms/kinos.png',
-        models: ['KinOS'],
         name: 'KinOS',
         pool: '37u532qgHbjUHic6mQK51jkT3Do7qkWLEUQCx22MDBD8',
         weeklyRevenue: 460000,
@@ -22,7 +21,6 @@ const SwarmData = [
             'Security',
             'Scalability'
         ],
-        role: 'Swarm Operating System',
         swarmType: 'early',
         wallet: 'D1a6RtoptnG2U9gatDz5bQJ3QahKR3wiherDYipe98Vt',
         multiple: 404.27,
