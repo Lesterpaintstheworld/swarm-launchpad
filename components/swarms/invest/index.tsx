@@ -186,8 +186,12 @@ const SwarmInvestCard = ({
                         { name: 'Team', value: 50 - (swarmData.revenueShare || 10), color: '#3b82f6' }
                     ]);
                 }
-            } catch (error) {
-                console.error('Error fetching swarm data:', error);
+            } catch (error: unknown) {
+                if (error instanceof Error) {
+                    console.error('Error fetching swarm data:', error.message);
+                } else {
+                    console.error('Unknown error fetching swarm data');
+                }
             }
         }
 
