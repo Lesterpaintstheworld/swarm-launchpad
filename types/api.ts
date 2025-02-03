@@ -113,3 +113,15 @@ export interface CollaborationResponse {
   objectives?: string[];
   focus?: string;
 }
+
+export interface Mission {
+  id: string;
+  name: string;
+  description: string;
+  reward: number;
+  deadline?: string;
+  status: 'open' | 'in-progress' | 'completed';
+  swarmId: string;
+  requirements?: string[];
+  deliverables?: string[];
+}
