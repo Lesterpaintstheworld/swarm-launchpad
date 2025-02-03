@@ -15,10 +15,10 @@ async function getInitialPrice() {
 async function getSwarm(id: string) {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    console.log('Fetching swarm with slug:', slug);
-    console.log('Full URL:', `${baseUrl}/api/swarms/${slug}`);
+    console.log('Fetching swarm with id:', id);
+    console.log('Full URL:', `${baseUrl}/api/swarms/${id}`);
     
-    const response = await fetch(`${baseUrl}/api/swarms/${slug}`, {
+    const response = await fetch(`${baseUrl}/api/swarms/${id}`, {
       cache: 'no-store'
     });
 
@@ -38,7 +38,7 @@ async function getSwarm(id: string) {
 
 interface PageProps {
     params: {
-        id: string;
+        id: string;  // Changed from slug
     };
 }
 
@@ -46,7 +46,7 @@ export default async function SwarmPage({ params }: PageProps) {
     console.log('Rendering SwarmPage with id:', params.id);
     
     const [swarm, initialPrice] = await Promise.all([
-        getSwarm(params.id),
+        getSwarm(params.id),  // Changed from params.slug
         getInitialPrice()
     ]);
 
