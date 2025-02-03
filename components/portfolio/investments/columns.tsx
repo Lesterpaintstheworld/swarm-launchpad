@@ -5,26 +5,6 @@ import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
 import { Investment } from "@/components/portfolio/investments";
 import Image from "next/image";
 import { IntlNumberFormat } from "@/lib/utils";
-async function getSwarm(slug: string) {
-  try {
-    const response = await fetch(`/api/swarms/${id}`);
-    if (!response.ok) return null;
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching swarm:', error);
-    return null;
-  }
-}
-async function getSwarm(id: string) {
-  try {
-    const response = await fetch(`/api/swarms/${id}`);
-    if (!response.ok) return null;
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching swarm:', error);
-    return null;
-  }
-}
 async function getSwarm(id: string) {
   try {
     const response = await fetch(`/api/swarms/${id}`);
