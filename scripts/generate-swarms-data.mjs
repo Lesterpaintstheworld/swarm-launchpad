@@ -76,10 +76,30 @@ async function main() {
             .replace(/,(\s*[}\]])/g, '$1') // Remove trailing commas
             .replace(/([{,]\s*)([a-zA-Z0-9_]+):/g, '$1"$2":') // Add quotes to property names
             .replace(/'/g, '"') // Replace single quotes with double quotes
-            .replace(/,(\s*[}\]])/g, '$1'); // Handle any remaining trailing commas
+            .replace(/,(\s*[}\]])/g, '$1') // Handle any remaining trailing commas
+            .replace(/[\u0000-\u001F\u007F-\u009F]/g, ''); // Remove control characters
+
+        // Log a sample of the cleaned content
+        console.log('\nFirst 1000 characters of cleaned content:');
+        console.log(content.substring(0, 1000));
+        console.log('\nCharacters around position 1001:');
+        console.log(content.substring(990, 1010));
+
+        // Try to parse small chunks to identify the problem area
+        const chunkSize = 500;
+        for (let i = 0; i < content.length; i += chunkSize) {
+            const chunk = content.substring(i, i + chunkSize);
+            try {
+                JSON.parse(`[${chunk}]`);
+            } catch (e) {
+                console.log(`\nProblem in chunk starting at position ${i}:`);
+                console.log(chunk);
+                break;
+            }
+        }
 
         // Parse and transform
-        console.log('Parsing JSON...');
+        console.log('\nParsing JSON...');
         const swarms = JSON.parse(content);
         console.log('Found', swarms.length, 'swarms');
 
