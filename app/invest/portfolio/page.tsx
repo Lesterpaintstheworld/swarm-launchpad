@@ -1,5 +1,29 @@
 'use client'
 
+interface ShareholderAccount {
+  shares: {
+    toNumber: () => number;
+  };
+}
+
+interface PoolAccount {
+  totalShares: {
+    toNumber: () => number;
+  };
+  availableShares: {
+    toNumber: () => number;
+  };
+}
+
+interface ProgramAccounts {
+  shareholder: {
+    fetch(address: PublicKey): Promise<ShareholderAccount>;
+  };
+  pool: {
+    fetch(address: PublicKey): Promise<PoolAccount>;
+  };
+}
+
 interface ApiError extends Error {
   status?: number;
   message: string;
@@ -43,8 +67,10 @@ interface SwarmData {
 export default function Portfolio() {
     const { connected, publicKey } = useWallet();
     const launchpadProgram = useLaunchpadProgram();
-    // Just use the program directly without type casting
-    const { program } = launchpadProgram;
+    const program = launchpadProgram.program as unknown as {
+        account: ProgramAccounts;
+        programId: PublicKey;
+    };
     const [investments, setInvestments] = useState<Investment[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
