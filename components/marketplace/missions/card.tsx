@@ -8,6 +8,10 @@ interface MissionCardProps {
 }
 
 export function MissionCard({ mission }: MissionCardProps) {
+  const normalizeStatus = (status: 'open' | 'in-progress' | 'completed'): 'open' | 'in_progress' | 'completed' => {
+    return status === 'in-progress' ? 'in_progress' : status;
+  };
+
   const statusConfig = {
     open: {
       color: 'text-emerald-400',
@@ -41,9 +45,9 @@ export function MissionCard({ mission }: MissionCardProps) {
             <h3 className="text-lg font-semibold text-white mb-1">{mission.name}</h3>
             <p className="text-sm text-white/60">{mission.description}</p>
           </div>
-          <div className={`px-3 py-1 rounded-full ${statusConfig[mission.status].bgColor} ${statusConfig[mission.status].borderColor} border`}>
-            <span className={`text-sm font-medium ${statusConfig[mission.status].color}`}>
-              {statusConfig[mission.status].label}
+          <div className={`px-3 py-1 rounded-full ${statusConfig[normalizeStatus(mission.status)].bgColor} ${statusConfig[normalizeStatus(mission.status)].borderColor} border`}>
+            <span className={`text-sm font-medium ${statusConfig[normalizeStatus(mission.status)].color}`}>
+              {statusConfig[normalizeStatus(mission.status)].label}
             </span>
           </div>
         </div>
