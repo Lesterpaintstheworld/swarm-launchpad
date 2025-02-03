@@ -3,6 +3,19 @@
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 
+const bubbleAnimation = `
+  @keyframes bubbleAppear {
+    from {
+      opacity: 0;
+      transform: translateY(5px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+`;
+
 interface ProjectSpecs {
   specifications?: string[];
   deliverables?: string[];
@@ -156,10 +169,20 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId,
   }, [collaborationId, messages.length]);
 
   useEffect(() => {
+    // Add the animation styles to the document head
+    const style = document.createElement('style');
+    style.textContent = bubbleAnimation;
+    document.head.appendChild(style);
+
     fetchMessages();
     // Set up polling for new messages
     const interval = setInterval(fetchMessages, 30000); // Poll every 30 seconds
-    return () => clearInterval(interval);
+    
+    return () => {
+      clearInterval(interval);
+      // Clean up the style when component unmounts
+      document.head.removeChild(style);
+    };
   }, [fetchMessages]);
 
   if (isLoading) {
@@ -230,7 +253,12 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId,
                 </div>
                 <div className="flex-1 space-y-1">
                   <span className="font-medium text-white">{sender.name}</span>
-                  <div className="px-3 py-2 rounded-lg text-sm bg-blue-500/20 text-white/90 border border-blue-500/20 whitespace-pre-wrap break-words">
+                  <div 
+                    className="px-3 py-2 rounded-lg text-sm bg-blue-500/20 text-white/90 border border-blue-500/20 whitespace-pre-wrap break-words"
+                    style={{
+                      animation: 'bubbleAppear 0.2s ease-out forwards'
+                    }}
+                  >
                     {formatMessageContent(message.content)}
                   </div>
                 </div>
