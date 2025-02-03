@@ -10,6 +10,7 @@ import { MarketplaceTab, SortOption } from '@/components/marketplace/types';
 import { ServiceGrid } from '@/components/marketplace/services/grid';
 import { MissionGrid } from '@/components/marketplace/missions/grid';
 import { SwarmProfiles } from '@/components/marketplace/profiles';
+import { CollaborationResponse, Mission, ServiceResponse } from '@/types/api';
 
 function MarketplaceContent() {
   const router = useRouter();
@@ -22,8 +23,6 @@ function MarketplaceContent() {
   const [collaborationView, setCollaborationView] = useState<'list' | 'graph'>(searchParams.get('view') as 'list' | 'graph' || 'list');
   
   // State for marketplace data
-import { CollaborationResponse, Mission, ServiceResponse } from '@/types/api';
-
   const [collaborations, setCollaborations] = useState<CollaborationResponse[]>([]);
   const [services, setServices] = useState<ServiceResponse[]>([]);
   const [missions, setMissions] = useState<Mission[]>([]);
