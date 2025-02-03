@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { Collaboration } from '@/data/collaborations/collaborations';
 
 interface SwarmData {
   id: string;
