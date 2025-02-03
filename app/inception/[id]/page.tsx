@@ -1,30 +1,45 @@
 'use client';
 
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
-import { SwarmData } from "@/data/swarms/info";
 import { useRouter } from "next/navigation";
 import { Markdown } from "@/components/ui/markdown";
 import { Expandable } from "@/components/ui/expandable";
 import { SwarmGallery } from "@/components/swarms/gallery";
 
-export default function InceptionSwarm({ params }: { params: { slug: string } }) {
+export default function InceptionSwarm({ params }: { params: { id: string } }) {
     const router = useRouter();
+    const [swarm, setSwarm] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-    const swarm = useCallback(() => {
-        const found = SwarmData.find((swarm) => swarm.id === params.slug);
-        if (!found) {
-            router.push('/404');
-            return null;
+    useEffect(() => {
+        async function fetchSwarm() {
+            try {
+                const response = await fetch(`/api/swarms/${params.id}`);
+                if (!response.ok) {
+                    router.push('/404');
+                    return;
+                }
+                const data = await response.json();
+                if (data.swarmType !== 'inception') {
+                    router.push(`/invest/${data.id}`);
+                    return;
+                }
+                setSwarm(data);
+            } catch (error) {
+                console.error('Error fetching swarm:', error);
+                router.push('/404');
+            } finally {
+                setIsLoading(false);
+            }
         }
-        if (found.swarmType !== 'inception') {
-            router.push(`/invest/${found.id}`);
-            return null;
-        }
-        return found;
-    }, [params.slug, router])();
+        fetchSwarm();
+    }, [params.id, router]);
 
-    // If no swarm was found, return null while redirecting
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
     if (!swarm) {
         return null;
     }
