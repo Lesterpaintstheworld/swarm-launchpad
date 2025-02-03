@@ -82,6 +82,18 @@ export default function CollaborationPage({ params }: { params: { id: string } }
     description?: string;
     objectives?: string[];
     focus?: string;
+    specifications?: Array<{
+      title: string;
+      content: string;
+    }>;
+    deliverables?: Array<{
+      title: string;
+      content: string;
+    }>;
+    validation?: Array<{
+      title: string;
+      content: string;
+    }>;
   }
 
   const [providerSwarm, setProviderSwarm] = useState<SwarmData | null>(null);
