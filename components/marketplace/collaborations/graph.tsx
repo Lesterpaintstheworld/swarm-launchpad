@@ -90,11 +90,11 @@ interface Collaboration {
   status: string;
 }
 
-export function CollaborationGraph({ collaborations }: CollaborationGraphProps) {
+export function CollaborationGraph({ collaborations: collaborationsProp }: CollaborationGraphProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [zoom, setZoom] = useState(1);
   const [swarms, setSwarms] = useState<SwarmData[]>([]);
-  const [collaborations, setCollaborations] = useState<Collaboration[]>([]);
+  const [localCollaborations, setLocalCollaborations] = useState<Collaboration[]>([]);
   const [swarmMap, setSwarmMap] = useState<Map<string, SwarmData>>(new Map());
   const [isLoading, setIsLoading] = useState(true);
 
@@ -120,7 +120,7 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
           ]);
 
           setSwarms(swarmsData);
-          setCollaborations(collaborationsData);
+          setLocalCollaborations(collaborationsData);
           
           // Create a map for easier lookup
           const map = new Map();
@@ -145,11 +145,11 @@ export function CollaborationGraph({ collaborations }: CollaborationGraphProps) 
     d3.select(svgRef.current).selectAll("*").remove();
 
     // Filter out ecosystem nodes and create set of ecosystem targets
-    const filteredCollaborations = collaborations.filter(
+    const filteredCollaborations = collaborationsProp.filter(
       collab => collab.providerSwarm.id !== 'ecosystem'
     );
     const ecosystemTargets = new Set(
-      collaborations
+      collaborationsProp
         .filter(collab => collab.providerSwarm.id === 'ecosystem')
         .map(collab => collab.clientSwarm.id)
     );
