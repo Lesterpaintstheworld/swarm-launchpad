@@ -169,6 +169,10 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                             ) : (
                                 <SwarmInvestCard
                                     pool={swarm.pool as string}
+                                    weeklyRevenuePerShare={swarm.weeklyRevenue ? {
+                                        compute: Math.floor((swarm.weeklyRevenue / 100) * 0.9), // Per 1000 shares
+                                        ubc: Math.floor((swarm.weeklyRevenue / 100) * 0.1)  // Per 1000 shares
+                                    } : undefined}
                                 />
                             )}
                         </div>

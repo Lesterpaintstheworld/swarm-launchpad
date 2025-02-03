@@ -41,6 +41,10 @@ interface SwarmInvestCardProps {
     className?: string;
     marketCapOnly?: boolean;
     amountRaisedOnly?: boolean;
+    weeklyRevenuePerShare?: {
+        compute: number;
+        ubc: number;
+    };
 }
 
 const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: SwarmInvestCardProps) => {
@@ -330,6 +334,25 @@ const SwarmInvestCard = ({ pool, className, marketCapOnly, amountRaisedOnly }: S
                     </div>
                 </div>
             </div>
+
+            {/* Weekly Revenue per 1000 shares */}
+            {weeklyRevenuePerShare && (
+                <div className="bg-slate-800/30 rounded-lg p-4 mt-4">
+                    <div className="flex justify-between items-start mb-2">
+                        <span className="text-sm text-slate-400">Weekly Revenue per 1000 shares</span>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        <div className="flex items-center justify-between">
+                            <span className="text-sm text-white/60">{IntlNumberFormat(weeklyRevenuePerShare.compute)}</span>
+                            <span className="text-sm metallic-text">$COMPUTE</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <span className="text-sm text-white/60">{IntlNumberFormat(weeklyRevenuePerShare.ubc)}</span>
+                            <span className="text-sm metallic-text-ubc">$UBC</span>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Action button */}
             {connected ? (
