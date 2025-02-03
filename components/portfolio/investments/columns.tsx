@@ -160,41 +160,54 @@ const ActionCell = ({ swarmId }: { swarmId: string }) => {
 };
 
 const SwarmCell = ({ swarmId }: { swarmId: string }) => {
-  const [swarm, setSwarm] = useState<SwarmData | null>(null);
+    const [swarm, setSwarm] = useState<{ name: string; image: string; role?: string } | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchSwarm() {
-      try {
-        const response = await fetch(`/api/swarms/${swarmId}`);
-        if (!response.ok) return;
-        const data = await response.json();
-        setSwarm(data);
-      } catch (error) {
-        console.error('Error fetching swarm:', error);
-      }
+    useEffect(() => {
+        async function fetchSwarm() {
+            try {
+                const response = await fetch(`/api/swarms/${swarmId}`);
+                if (!response.ok) return;
+                const data = await response.json();
+                setSwarm(data);
+            } catch (error) {
+                console.error('Error fetching swarm:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        fetchSwarm();
+    }, [swarmId]);
+
+    if (isLoading || !swarm) {
+        return (
+            <div className="flex items-center min-w-[200px] gap-4 py-1">
+                <div className="w-8 h-8 rounded-full bg-white/10 animate-pulse" />
+                <div className="flex flex-col gap-2">
+                    <div className="h-4 w-24 bg-white/10 rounded animate-pulse" />
+                    <div className="h-3 w-16 bg-white/10 rounded animate-pulse" />
+                </div>
+            </div>
+        );
     }
-    fetchSwarm();
-  }, [swarmId]);
 
-  if (!swarm) return null;
-
-  return (
-    <div className="flex items-center min-w-[200px] gap-4 py-1">
-      <Image
-        src={swarm.image}
-        alt={`${swarm.name} avatar`}
-        width={32}
-        height={32}
-        className="rounded-full"
-      />
-      <div className="flex flex-col">
-        <Link className="text-lg mb-0 leading-1 truncate hover:underline" href={`/invest/${swarm.id}`}>
-          {swarm.name}
-        </Link>
-        {swarm.role && <p className="text-sm text-muted truncate">{swarm.role}</p>}
-      </div>
-    </div>
-  );
+    return (
+        <div className="flex items-center min-w-[200px] gap-4 py-1">
+            <Image
+                src={swarm.image}
+                alt={`${swarm.name} avatar`}
+                width={32}
+                height={32}
+                className="rounded-full"
+            />
+            <div className="flex flex-col">
+                <Link className="text-lg mb-0 leading-1 truncate hover:underline" href={`/invest/${swarmId}`}>
+                    {swarm.name}
+                </Link>
+                {swarm.role && <p className="text-sm text-muted truncate">{swarm.role}</p>}
+            </div>
+        </div>
+    );
 };
 
 export const columns: ColumnDef<Investment>[] = [
