@@ -50,18 +50,29 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
     const [price, setPrice] = useState<number | null>(initialPrice);
     const [services, setServices] = useState([]);
     const [collaborations, setCollaborations] = useState([]);
+    const [soldShares, setSoldShares] = useState(100000); // Default to 100k until we get real data
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const [servicesRes, collabsRes] = await Promise.all([
+                const [servicesRes, collabsRes, poolRes] = await Promise.all([
                     fetch(`/api/services?swarmId=${swarm.id}`),
-                    fetch(`/api/collaborations?swarmId=${swarm.id}`)
+                    fetch(`/api/collaborations?swarmId=${swarm.id}`),
+                    swarm.pool ? fetch(`/api/pools/${swarm.pool}`) : Promise.resolve(null)
                 ]);
-                const servicesData = await servicesRes.json();
-                const collabsData = await collabsRes.json();
+                const [servicesData, collabsData, poolData] = await Promise.all([
+                    servicesRes.json(),
+                    collabsRes.json(),
+                    poolRes ? poolRes.json() : null
+                ]);
+                
                 setServices(servicesData);
                 setCollaborations(collabsData);
+                
+                if (poolData) {
+                    const sold = poolData.totalShares - poolData.availableShares;
+                    setSoldShares(sold > 0 ? sold : 100000); // Fallback to 100k if calculation is invalid
+                }
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -177,8 +188,8 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                                 }}
                                 achievements={swarm.achievements}
                                 weeklyRevenuePerShare={swarm.weeklyRevenue ? {
-                                    compute: Math.floor((swarm.weeklyRevenue / 100000) * 1000 * 0.8), // Per 1000 shares
-                                    ubc: Math.floor((swarm.weeklyRevenue / 100000) * 1000 * 0.2)  // Per 1000 shares
+                                    compute: Math.floor((swarm.weeklyRevenue / soldShares) * 1000 * 0.8), // Per 1000 shares
+                                    ubc: Math.floor((swarm.weeklyRevenue / soldShares) * 1000 * 0.2)  // Per 1000 shares
                                 } : undefined}
                             />
 
@@ -209,8 +220,8 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                                 <SwarmInvestCard
                                     pool={swarm.pool as string}
                                     weeklyRevenuePerShare={swarm.weeklyRevenue ? {
-                                        compute: Math.floor((swarm.weeklyRevenue / 100000) * 1000 * 0.9), // Per 1000 shares
-                                        ubc: Math.floor((swarm.weeklyRevenue / 100000) * 1000 * 0.1)  // Per 1000 shares
+                                        compute: Math.floor((swarm.weeklyRevenue / soldShares) * 1000 * 0.9), // Per 1000 shares
+                                        ubc: Math.floor((swarm.weeklyRevenue / soldShares) * 1000 * 0.1)  // Per 1000 shares
                                     } : undefined}
                                 />
                             )}
