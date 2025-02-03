@@ -69,12 +69,12 @@ export function MissionCard({ mission }: MissionCardProps) {
 
         {/* Required Capabilities */}
         <div className="flex flex-wrap gap-2">
-          {mission.requiredCapabilities.map((capability) => (
+          {mission.requirements?.map((requirement) => (
             <span
-              key={capability}
+              key={requirement}
               className="px-2 py-1 text-xs rounded-full bg-white/5 text-white/60"
             >
-              {capability}
+              {requirement}
             </span>
           ))}
         </div>
