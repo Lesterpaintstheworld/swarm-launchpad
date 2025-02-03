@@ -251,10 +251,7 @@ export async function GET(
       );
     }
 
-    // Fetch collaboration specs
-    const specs = await getCollaborationSpecs(params.id);
-
-    // Fetch collaboration specs
+    // Fetch collaboration specs (only once)
     const specs = await getCollaborationSpecs(params.id);
     console.log('Fetched specs:', specs);
 
