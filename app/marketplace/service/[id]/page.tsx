@@ -213,14 +213,14 @@ export default function ServicePage() {
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {swarm.tags.map((tag) => (
+              {swarm?.tags?.map((tag) => (
                 <span
                   key={tag}
                   className="px-2 py-1 text-xs rounded-full bg-white/5 text-white/60"
                 >
                   {tag}
                 </span>
-              ))}
+              )) || null}
             </div>
           </div>
 

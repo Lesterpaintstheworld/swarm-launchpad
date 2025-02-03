@@ -139,7 +139,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
   }, []);
 
   useEffect(() => {
-    if (!svgRef.current || isLoading || collaborationsProp.length === 0) return;
+    if (!svgRef.current || isLoading || !collaborationsProp?.length) return;
 
     // Clear previous graph
     d3.select(svgRef.current).selectAll("*").remove();
