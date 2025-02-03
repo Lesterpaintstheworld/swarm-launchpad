@@ -60,9 +60,11 @@ export function CollaborationCard({ id, sourceSwarm, targetSwarm, serviceName, s
         />
         
         {/* Service Provider */}
-        <div className="flex flex-col gap-4 mb-4">
+        <div className="flex flex-col gap-8">
           {/* Provider Swarm */}
-          <div className="flex items-center gap-3">
+          <div>
+            <h4 className="text-sm text-muted-foreground mb-2">Service Provider</h4>
+            <div className="flex items-center gap-3">
             <Link 
               href={`/invest/${targetSwarm.id}`}
               className="group/link"
@@ -105,7 +107,9 @@ export function CollaborationCard({ id, sourceSwarm, targetSwarm, serviceName, s
           </div>
 
           {/* Client Swarm */}
-          <div className="flex items-center gap-3">
+          <div>
+            <h4 className="text-sm text-muted-foreground mb-2">Client</h4>
+            <div className="flex items-center gap-3">
             <Link 
               href={`/invest/${sourceSwarm.id}`}
               className="group/link"
