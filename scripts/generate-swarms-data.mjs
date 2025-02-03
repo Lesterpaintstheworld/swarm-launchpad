@@ -528,11 +528,14 @@ async function uploadBatch(swarms, startIndex) {
 async function main() {
     try {
         // Transform the existing records into the correct format
-        const swarms = SwarmData.records.map(record => ({
-            fields: {
+        const swarms = SwarmData.records.map(record => {
+            // Create base fields object
+            const fields = {
                 swarmId: record.fields.ID,
                 name: record.fields.Name,
                 description: record.fields.Description || "PLACEHOLDER",
+                models: record.fields.Models,
+                role: record.fields.Role,
                 tags: record.fields.Tags,
                 swarmType: record.fields.Type,
                 wallet: record.fields.Wallet,
@@ -540,9 +543,16 @@ async function main() {
                 multiple: record.fields.Multiple,
                 weeklyRevenue: record.fields.WeeklyRevenue,
                 totalRevenue: record.fields.TotalRevenue,
-                launchDate: record.fields.LaunchDate
+                twitterAccount: record.fields.TwitterAccount
+            };
+
+            // Only add launchDate if it's not empty
+            if (record.fields.LaunchDate) {
+                fields.launchDate = record.fields.LaunchDate;
             }
-        }));
+
+            return { fields };
+        });
 
         console.log(`Processing ${swarms.length} swarms in batches of 10...`);
 
