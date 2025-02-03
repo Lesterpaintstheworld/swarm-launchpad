@@ -1009,8 +1009,13 @@ async function main() {
                 ]
             }
         }));
-        
 
+        // Log what the Airtable API call would look like
+        console.log('Airtable API call would be:');
+        console.log(JSON.stringify({ records: swarms }, null, 2));
+
+        // Log summary 
+        console.log(`\nProcessed ${swarms.length} swarms`);
     } catch (error) {
         console.error('Error:', error);
         process.exit(1);
