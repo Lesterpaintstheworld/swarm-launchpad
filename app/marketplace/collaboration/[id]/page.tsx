@@ -45,7 +45,7 @@ export default function CollaborationPage({ params }: { params: { id: string } }
   // Now TypeScript knows collaboration.serviceName is a valid ServiceName
   const bannerSrc = serviceBanners[collaboration.serviceName];
 
-  // Get additional swarm details
+  // Get additional swarm details 
   const sourceSwarm = getSwarm(collaboration.sourceSwarm.id);
   const targetSwarm = getSwarm(collaboration.targetSwarm.id);
 
