@@ -28,6 +28,9 @@ const getGradientColors = (sourceId: string) => {
   };
 };
 
+// Define the valid status types
+type CollaborationStatus = 'active' | 'completed' | 'pending';
+
 interface CollaborationCardProps {
   id: string;
   providerSwarm: {
@@ -41,9 +44,16 @@ interface CollaborationCardProps {
     image: string;
   };
   serviceName: string;
-  status: string;
+  status: CollaborationStatus;
   price: number;
 }
+
+// Update the statusStyles object with proper typing
+const statusStyles: Record<CollaborationStatus, string> = {
+  active: 'text-green-400 bg-green-500/10 border-green-500/20',
+  completed: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
+  pending: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20'
+};
 
 export function CollaborationCard({ 
   id, 
@@ -53,11 +63,6 @@ export function CollaborationCard({
   status, 
   price 
 }: CollaborationCardProps) {
-  const statusStyles = {
-    active: 'text-green-400 bg-green-500/10 border-green-500/20',
-    completed: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
-    pending: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20'
-  };
 
   return (
     <div className="group relative w-full rounded-xl bg-gradient-to-r from-white/5 via-white/[0.07] to-white/5 border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden">
