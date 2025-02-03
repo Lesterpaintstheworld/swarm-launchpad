@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { SwarmFields, AirtableRecord } from '@/types/api';
 
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
@@ -24,9 +25,9 @@ export async function GET() {
     const data = await response.json();
     console.log('Raw Airtable data:', data);
 
-    const swarms = data.records.map((record: any) => {
+    const swarms = data.records.map((record: AirtableRecord<SwarmFields>) => {
       // Helper function to safely parse JSON or return default value
-      const safeParseJSON = (str: string | null | undefined, defaultValue: any = []) => {
+      const safeParseJSON = <T>(str: string | null | undefined, defaultValue: T): T => {
         if (!str) return defaultValue;
         try {
           return JSON.parse(str);

@@ -1,5 +1,7 @@
 'use client'
 
+import { SwarmResponse } from '@/types/api';
+
 import { Button } from "@/components/shadcn/button";
 import { SwarmComboBox } from "@/components/swarms/comboBox";
 import { TokenComboBox } from "@/components/tokens/comboBox";
@@ -29,7 +31,7 @@ const SellPositionModal = ({ isModalOpen, closeModal, swarmId }: SellPositionPro
     const [pricePerShare, setPricePerShare] = useState<number>(0);
     const [token, setToken] = useState<Token>();
 
-    const [swarm, setSwarm] = useState<any>(null);
+    const [swarm, setSwarm] = useState<SwarmResponse | null>(null);
 
     useEffect(() => {
         async function fetchSwarm() {
