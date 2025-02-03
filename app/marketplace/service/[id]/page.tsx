@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import { getService } from '@/data/services/services';
 import { Shield, Cpu, Clock } from 'lucide-react';
 
-import { getSwarmUsingId } from '@/data/swarms/info';
+import { getSwarmUsingId } from "@/data/swarms/info";
 import { ClientMarkdown } from '@/components/ui/clientMarkdown';
 import Image from 'next/image';
 import Link from 'next/link';
