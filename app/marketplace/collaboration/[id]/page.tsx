@@ -1,13 +1,12 @@
 'use client';
 
 import { getCollaboration } from '@/data/collaborations/collaborations';
-import { getSwarm } from '@/data/swarms/previews';
 import { CollaborationChat } from '@/components/marketplace/collaborations/chat';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Clock } from 'lucide-react';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
-
+import { useEffect, useState } from 'react';
 import { ServiceName } from '@/data/collaborations/collaborations';
 
 // Type guard to validate service names
@@ -22,8 +21,36 @@ const serviceBanners: Record<ServiceName, string> = {
   'Active AI Tokens Trading': '/services/kinkong-trading.png'
 };
 
+async function getSwarm(id: string) {
+  try {
+    const response = await fetch(`/api/swarms/${id}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch swarm');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching swarm:', error);
+    return null;
+  }
+}
+
 export default function CollaborationPage({ params }: { params: { id: string } }) {
+  const [sourceSwarm, setSourceSwarm] = useState<any>(null);
+  const [targetSwarm, setTargetSwarm] = useState<any>(null);
   const collaboration = getCollaboration(params.id);
+
+  useEffect(() => {
+    if (collaboration) {
+      // Fetch both swarms
+      Promise.all([
+        getSwarm(collaboration.sourceSwarm.id),
+        getSwarm(collaboration.targetSwarm.id)
+      ]).then(([source, target]) => {
+        setSourceSwarm(source);
+        setTargetSwarm(target);
+      });
+    }
+  }, [collaboration]);
   
   if (!collaboration) {
     return (
@@ -45,10 +72,13 @@ export default function CollaborationPage({ params }: { params: { id: string } }
   // Now TypeScript knows collaboration.serviceName is a valid ServiceName
   const bannerSrc = serviceBanners[collaboration.serviceName];
 
-  // Get additional swarm details 
-  const sourceSwarm = getSwarm(collaboration.sourceSwarm.id);
-  const targetSwarm = getSwarm(collaboration.targetSwarm.id);
-
+  if (!sourceSwarm || !targetSwarm) {
+    return (
+      <div className="container py-12">
+        <h1 className="text-2xl font-bold">Loading...</h1>
+      </div>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-background to-background/50">
