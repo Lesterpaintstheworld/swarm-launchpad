@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { CollaborationGraph } from '@/components/marketplace/collaborations/graph';
-import { collaborations } from '@/data/collaborations/collaborations';
 import { useEffect, useState } from 'react';
 
 export default function MarketplacePage() {
@@ -59,7 +58,7 @@ export default function MarketplacePage() {
         <div className="relative rounded-xl bg-black/40 border border-purple-500/20 backdrop-blur-sm overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-blue-500/5" />
           <div className="relative p-6">
-            <CollaborationGraph collaborations={collaborations} />
+            <CollaborationGraph />
           </div>
         </div>
 

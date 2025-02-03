@@ -35,7 +35,6 @@ interface LegendEntry {
         strokeDasharray?: string | number;
     };
 }
-import { getSwarmUsingId } from "@/data/swarms/info";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { Props as RechartsProps } from 'recharts/types/component/DefaultLegendContent';
 import { PublicKey } from "@solana/web3.js";
@@ -58,10 +57,11 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
             if (!program) return;
 
             const values = await Promise.all(investments.map(async (investment) => {
-                const swarm = getSwarmUsingId(investment.swarm_id);
-                if (!swarm?.pool) return null;
-
                 try {
+                    const swarmResponse = await fetch(`/api/swarms/${investment.swarm_id}`);
+                    const swarm = await swarmResponse.json();
+                    if (!swarm?.pool) return null;
+                    
                     const poolPubkey = new PublicKey(swarm.pool);
                     const poolData = await program.account.pool.fetch(poolPubkey);
                     

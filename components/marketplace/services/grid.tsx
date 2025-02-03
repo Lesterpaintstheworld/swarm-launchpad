@@ -1,6 +1,16 @@
 'use client';
 
-import { Service } from '@/data/services_bak/types';
+interface Service {
+  id: string;
+  name: string;
+  description: string;
+  serviceType: string;
+  banner?: string;
+  swarmId?: string;
+  categories: string[];
+  computePerTask: number;
+  activeSubscriptions?: number;
+}
 import { ServiceCard } from './card';
 import { useEffect, useState } from 'react';
 
