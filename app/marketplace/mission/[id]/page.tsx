@@ -40,7 +40,7 @@ export default function MissionDetailsPage({ params }: { params: { id: string } 
           <div className="rounded-xl bg-white/5 border border-white/10 p-6 space-y-4">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h1 className="text-2xl font-bold text-white">{mission.title}</h1>
+                <h1 className="text-2xl font-bold text-white">{mission.name}</h1>
                 <p className="text-lg text-white/60 mt-2">{mission.description}</p>
               </div>
               <div className={`px-3 py-1 h-fit rounded-full bg-emerald-500/10 border-emerald-500/20 border`}>
