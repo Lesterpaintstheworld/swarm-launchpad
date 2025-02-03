@@ -12,6 +12,8 @@ import { PortfolioOverview } from "@/components/portfolio/overview";
 import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
 import type { Ubclaunchpad } from "@/hooks/useLaunchpadProgram/ubclaunchpad";
 import { Program } from "@project-serum/anchor";
+import type { Ubclaunchpad } from "@/hooks/useLaunchpadProgram/ubclaunchpad";
+import { Program } from "@project-serum/anchor";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import { useEffect, useState } from "react";
@@ -43,9 +45,9 @@ interface SwarmData {
 
 export default function Portfolio() {
     const { connected, publicKey } = useWallet();
-    const { program } = useLaunchpadProgram() as {
-        program: Program<Ubclaunchpad>
-    };
+    const launchpadProgram = useLaunchpadProgram();
+    // Cast the program to unknown first, then to the specific type
+    const program = (launchpadProgram.program as unknown) as Program<Ubclaunchpad>;
     const [investments, setInvestments] = useState<Investment[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
