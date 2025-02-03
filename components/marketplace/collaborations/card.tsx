@@ -69,48 +69,7 @@ export function CollaborationCard({
         />
         
         <div className="flex items-center justify-between gap-4">
-          {/* Source Swarm */}
-          <div className="flex flex-col items-center space-y-2">
-            <Link 
-              href={`/invest/${sourceSwarm.id}`}
-              className="group/link"
-            >
-              <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/50 to-purple-500/50 rounded-xl opacity-0 group-hover/link:opacity-100 blur transition-opacity duration-500" />
-                <div className="relative w-14 h-14 rounded-xl overflow-hidden border border-white/20 group-hover/link:border-white/40 transition-colors duration-300">
-                  <Image
-                    src={sourceSwarm.image}
-                    alt={sourceSwarm.name}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover/link:scale-110"
-                  />
-                </div>
-              </div>
-            </Link>
-            <div className="flex flex-col items-center gap-0.5">
-              <span className="text-sm font-medium text-white/60">{sourceSwarm.name}</span>
-              <span className="text-[10px] text-white/40">Client</span>
-            </div>
-          </div>
-
-          {/* Connection Line with Service Name */}
-          <div className="flex-1 mx-2 flex flex-col items-center">
-            <div className={`px-3 py-1 rounded-full text-xs border ${statusStyles[status]} backdrop-blur-sm transition-all duration-300 group-hover:scale-110 relative`}>
-              <div className="absolute inset-0 bg-white/5 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <span className="relative">{serviceName}</span>
-            </div>
-            
-            <div className="h-[2px] w-full relative overflow-hidden my-2">
-              <div className={`absolute inset-0 bg-gradient-to-r ${getGradientColors(sourceSwarm.id).from} ${getGradientColors(sourceSwarm.id).via} ${getGradientColors(sourceSwarm.id).to} group-hover:${getGradientColors(sourceSwarm.id).hover.from} group-hover:${getGradientColors(sourceSwarm.id).hover.via} group-hover:${getGradientColors(sourceSwarm.id).hover.to} transition-all duration-500`} />
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent w-[50%] animate-[moveLight_3s_linear_infinite] -translate-x-[100%]" />
-            </div>
-
-            <span className="text-xs font-medium text-white/90">
-              <span className="metallic-text">{price.toLocaleString()} $COMPUTE</span>
-            </span>
-          </div>
-
-          {/* Target Swarm */}
+          {/* Provider Swarm (was Target) - Now First */}
           <div className="flex flex-col items-center space-y-2">
             <Link 
               href={`/invest/${targetSwarm.id}`}
@@ -131,6 +90,47 @@ export function CollaborationCard({
             <div className="flex flex-col items-center gap-0.5">
               <span className="text-sm font-medium text-white/60">{targetSwarm.name}</span>
               <span className="text-[10px] text-white/40">Provider</span>
+            </div>
+          </div>
+
+          {/* Connection Line with Service Name */}
+          <div className="flex-1 mx-2 flex flex-col items-center">
+            <div className={`px-3 py-1 rounded-full text-xs border ${statusStyles[status]} backdrop-blur-sm transition-all duration-300 group-hover:scale-110 relative`}>
+              <div className="absolute inset-0 bg-white/5 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <span className="relative">{serviceName}</span>
+            </div>
+            
+            <div className="h-[2px] w-full relative overflow-hidden my-2">
+              <div className={`absolute inset-0 bg-gradient-to-r ${getGradientColors(sourceSwarm.id).from} ${getGradientColors(sourceSwarm.id).via} ${getGradientColors(sourceSwarm.id).to} group-hover:${getGradientColors(sourceSwarm.id).hover.from} group-hover:${getGradientColors(sourceSwarm.id).hover.via} group-hover:${getGradientColors(sourceSwarm.id).hover.to} transition-all duration-500`} />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent w-[50%] animate-[moveLight_3s_linear_infinite] -translate-x-[100%]" />
+            </div>
+
+            <span className="text-xs font-medium text-white/90">
+              <span className="metallic-text">{price.toLocaleString()} $COMPUTE</span>
+            </span>
+          </div>
+
+          {/* Client Swarm (was Source) - Now Last */}
+          <div className="flex flex-col items-center space-y-2">
+            <Link 
+              href={`/invest/${sourceSwarm.id}`}
+              className="group/link"
+            >
+              <div className="relative">
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/50 to-purple-500/50 rounded-xl opacity-0 group-hover/link:opacity-100 blur transition-opacity duration-500" />
+                <div className="relative w-14 h-14 rounded-xl overflow-hidden border border-white/20 group-hover/link:border-white/40 transition-colors duration-300">
+                  <Image
+                    src={sourceSwarm.image}
+                    alt={sourceSwarm.name}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover/link:scale-110"
+                  />
+                </div>
+              </div>
+            </Link>
+            <div className="flex flex-col items-center gap-0.5">
+              <span className="text-sm font-medium text-white/60">{sourceSwarm.name}</span>
+              <span className="text-[10px] text-white/40">Client</span>
             </div>
           </div>
         </div>
