@@ -77,8 +77,8 @@ export default function Portfolio() {
             try {
                 const shareholderData = await program.account.shareholder.fetch(pda);
                 return shareholderData;
-            } catch (error) {
-                if (error.message.includes('Account does not exist')) {
+            } catch (error: unknown) {
+                if (error instanceof Error && error.message.includes('Account does not exist')) {
                     return null;
                 }
                 throw error;
