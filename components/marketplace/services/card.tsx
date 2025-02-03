@@ -1,7 +1,7 @@
 import { Cpu, Clock } from 'lucide-react';
 import Link from 'next/link';
 import { Service } from '@/data/services/types';
-import { getSwarm } from '@/data/swarms/info';
+import { getSwarmUsingId } from '@/data/swarms/info';
 import Image from 'next/image';
 import { sectionColors } from '../types';
 
@@ -25,7 +25,7 @@ interface ServiceCardProps {
 }
 
 export function ServiceCard({ service }: ServiceCardProps) {
-  const swarm = getSwarm(service.swarmId);
+  const swarm = getSwarmUsingId(service.swarmId);
   const styles = getCardStyles(service.serviceType);
 
   const serviceTypeIcon = {
