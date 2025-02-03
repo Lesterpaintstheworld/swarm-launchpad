@@ -1,5 +1,11 @@
 import { NextResponse } from 'next/server';
 
+type ServiceId = 
+  | 'xforge-development-package'
+  | 'kinos-essential-package'
+  | 'kinos-inception-package'
+  | 'kinkong-trading';
+
 interface AirtableRecord<T> {
   fields: T;
 }

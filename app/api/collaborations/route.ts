@@ -167,7 +167,7 @@ export async function GET() {
         collaborationId: string;
         providerSwarmId: string;
         clientSwarmId: string;
-        serviceId: string;
+        serviceId: ServiceId;
         status?: string;
         price?: number;
         startDate?: string;
@@ -200,8 +200,8 @@ export async function GET() {
         return null;
       }
 
-      // Map serviceId to serviceName
-      const serviceIdToName = {
+      // Map serviceId to serviceName with proper typing
+      const serviceIdToName: Record<ServiceId, string> = {
         'xforge-development-package': 'Development Package',
         'kinos-essential-package': 'Essential Swarm Package',
         'kinos-inception-package': 'Inception Package',
@@ -212,7 +212,7 @@ export async function GET() {
         id: record.fields.collaborationId,
         providerSwarm,
         clientSwarm,
-        serviceName: serviceIdToName[record.fields.serviceId] || record.fields.serviceId,
+        serviceName: serviceIdToName[record.fields.serviceId as ServiceId] || record.fields.serviceId,
         status: record.fields.status || 'active',
         price: record.fields.price || 0,
         startDate: record.fields.startDate,
