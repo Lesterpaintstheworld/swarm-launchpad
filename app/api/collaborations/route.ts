@@ -3,6 +3,16 @@ import { NextResponse } from 'next/server';
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 
+function safeParseJSON(str: string | null | undefined, defaultValue: any = []) {
+  if (!str) return defaultValue;
+  try {
+    return JSON.parse(str);
+  } catch (e) {
+    console.warn('Failed to parse JSON:', str);
+    return defaultValue;
+  }
+}
+
 async function getSwarm(swarmId: string) {
   try {
     const response = await fetch(
@@ -102,7 +112,7 @@ export async function GET() {
         price: record.fields.price || 0,
         startDate: record.fields.startDate,
         description: record.fields.description,
-        objectives: record.fields.objectives ? JSON.parse(record.fields.objectives) : undefined,
+        objectives: safeParseJSON(record.fields.objectives, []),
         focus: record.fields.focus
       };
     }));
