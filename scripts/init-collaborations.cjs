@@ -1,25 +1,13 @@
 const { collaborations } = require('./data/collaborations.cjs');
 require('dotenv').config();
 
-function getServiceId(serviceName) {
-  switch(serviceName) {
-    case 'Development Package':
-      return 'xforge-development-package';
-    case 'Essential Swarm Package':
-      return 'kinos-essential-package';
-    case 'Inception Package':
-      return 'kinos-inception-package';
-    case 'Active AI Tokens Trading':
-      return 'kinkong-trading';
-    default:
-      return '';
-  }
-}
-
-// Generate a unique service ID
-function generateServiceId() {
-  return 'svc_' + Math.random().toString(36).substr(2, 9);
-}
+// Map of service names to their fixed IDs
+const SERVICE_IDS = {
+  'Development Package': 'xforge-development-package',
+  'Essential Swarm Package': 'kinos-essential-package', 
+  'Inception Package': 'kinos-inception-package',
+  'Active AI Tokens Trading': 'kinkong-trading'
+};
 
 // Verify environment variables are loaded
 console.log('Environment check:');
@@ -50,11 +38,9 @@ async function initializeCollaborations() {
                     records: [{
                         fields: {
                             collaborationId: collaboration.id,
-                            serviceId: generateServiceId(),
                             sourceSwarmId: collaboration.sourceSwarm.id,
                             targetSwarmId: collaboration.targetSwarm.id,
-                            serviceName: collaboration.serviceName,
-                            serviceType: getServiceId(collaboration.serviceName),
+                            serviceId: SERVICE_IDS[collaboration.serviceName],
                             status: collaboration.status,
                             price: collaboration.price,
                             startDate: collaboration.startDate || '',
