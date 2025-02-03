@@ -328,7 +328,7 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId,
             return (
               <div 
                 key={message.id}
-                className="flex items-start gap-3 group/message animate-[fadeIn_300ms_ease-out]"
+                className="flex items-start gap-3 group/message animate-fadeIn"
               >
                 {/* Avatar with hover effect */}
                 <div className="relative">
