@@ -250,5 +250,6 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId,
         )}
       </div>
     </div>
+  </div>
   );
 }
