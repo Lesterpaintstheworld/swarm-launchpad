@@ -1,6 +1,5 @@
 import { Cpu, Clock } from 'lucide-react';
 import Link from 'next/link';
-import { Service } from '@/data/services_bak/types';
 import Image from 'next/image';
 import { sectionColors } from '../types';
 import { useEffect, useState } from 'react';
