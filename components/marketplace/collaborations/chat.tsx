@@ -52,15 +52,67 @@ interface ChatProps {
 function SpecificationAccordion({ specs }: { specs: ProjectSpecs }) {
   const [isOpen, setIsOpen] = useState(false);
 
+  // Helper function to format markdown with basic styling
+  const formatMarkdown = (content: string) => {
+    return content
+      .split('\n')
+      .map((line, i) => {
+        // Handle headers
+        if (line.startsWith('# ')) {
+          return <h3 key={i} className="text-lg font-semibold text-white/90 mt-4 mb-2">{line.slice(2)}</h3>;
+        }
+        if (line.startsWith('## ')) {
+          return <h4 key={i} className="text-base font-medium text-white/80 mt-3 mb-2">{line.slice(3)}</h4>;
+        }
+        // Handle bullet points
+        if (line.startsWith('- ')) {
+          return (
+            <div key={i} className="flex items-start gap-2 my-1">
+              <div className="w-1.5 h-1.5 rounded-full bg-blue-400/60 mt-2 flex-shrink-0" />
+              <span className="text-white/70">{line.slice(2)}</span>
+            </div>
+          );
+        }
+        // Handle numbered lists
+        if (/^\d+\.\s/.test(line)) {
+          return (
+            <div key={i} className="flex items-start gap-2 my-1 pl-2">
+              <span className="text-blue-400/80 font-medium">{line.match(/^\d+/)?.[0]}.</span>
+              <span className="text-white/70">{line.replace(/^\d+\.\s/, '')}</span>
+            </div>
+          );
+        }
+        // Regular paragraphs
+        return line ? (
+          <p key={i} className="text-white/70 my-2">{line}</p>
+        ) : (
+          <div key={i} className="h-2" /> // Spacing for empty lines
+        );
+      });
+  };
+
   return (
-    <div className="mb-6 rounded-xl bg-white/5 border border-white/10 overflow-hidden">
+    <div className="mb-6 rounded-xl bg-gradient-to-br from-white/[0.07] to-white/[0.05] border border-white/10 overflow-hidden backdrop-blur-sm">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-6 py-4 flex items-center justify-between hover:bg-white/5 transition-colors"
+        className="w-full px-6 py-4 flex items-center justify-between hover:bg-white/5 transition-colors group"
       >
-        <span className="text-xl font-semibold text-white">Collaboration Documents</span>
+        <div className="flex items-center gap-3">
+          <span className="text-xl font-semibold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
+            Collaboration Documents
+          </span>
+          <div className="px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20">
+            <span className="text-xs font-medium text-blue-400">
+              {[
+                specs.specifications?.length || 0,
+                specs.deliverables?.length || 0,
+                specs.validation?.length || 0
+              ].reduce((a, b) => a + b, 0)} items
+            </span>
+          </div>
+        </div>
         <svg
-          className={`w-6 h-6 transform transition-transform ${isOpen ? 'rotate-180' : ''}`}
+          className={`w-6 h-6 transform transition-transform duration-300 text-white/60 group-hover:text-white/90 ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -70,24 +122,29 @@ function SpecificationAccordion({ specs }: { specs: ProjectSpecs }) {
       </button>
       
       <div
-        className={`overflow-hidden transition-all duration-300 ${
-          isOpen ? 'max-h-[1000px]' : 'max-h-0'
+        className={`overflow-hidden transition-all duration-500 ease-in-out ${
+          isOpen ? 'max-h-[800px]' : 'max-h-0'
         }`}
       >
-        <div className="px-6 pb-6 space-y-6">
+        <div className="px-6 pb-6 space-y-6 max-h-[700px] overflow-y-auto custom-scrollbar">
           {/* Specifications */}
           {specs.specifications && specs.specifications.length > 0 && (
-            <div>
-              <h3 className="text-sm font-medium text-white/60 mb-3">Specifications</h3>
-              <div className="space-y-2">
+            <div className="relative">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-1 h-6 bg-gradient-to-b from-blue-400 to-purple-400 rounded-full" />
+                <h3 className="text-lg font-medium text-white/90">Specifications</h3>
+              </div>
+              <div className="space-y-3">
                 {specs.specifications.map((spec, index) => (
                   <div
                     key={index}
-                    className="bg-white/5 rounded-lg p-4 space-y-2"
+                    className="bg-white/[0.07] rounded-lg p-5 space-y-2 hover:bg-white/[0.09] transition-colors border border-white/10"
                   >
-                    <h4 className="text-sm font-medium text-white/80">{spec.title}</h4>
-                    <div className="text-sm text-white/60 whitespace-pre-wrap">
-                      {spec.content}
+                    <h4 className="text-sm font-semibold text-white/90 pb-2 border-b border-white/10">
+                      {spec.title}
+                    </h4>
+                    <div className="prose prose-invert prose-sm max-w-none pt-2">
+                      {formatMarkdown(spec.content)}
                     </div>
                   </div>
                 ))}
@@ -97,17 +154,22 @@ function SpecificationAccordion({ specs }: { specs: ProjectSpecs }) {
 
           {/* Deliverables */}
           {specs.deliverables && specs.deliverables.length > 0 && (
-            <div>
-              <h3 className="text-sm font-medium text-white/60 mb-3">Deliverables</h3>
-              <div className="space-y-2">
+            <div className="relative">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-1 h-6 bg-gradient-to-b from-green-400 to-emerald-400 rounded-full" />
+                <h3 className="text-lg font-medium text-white/90">Deliverables</h3>
+              </div>
+              <div className="space-y-3">
                 {specs.deliverables.map((deliverable, index) => (
                   <div
                     key={index}
-                    className="bg-white/5 rounded-lg p-4 space-y-2"
+                    className="bg-white/[0.07] rounded-lg p-5 space-y-2 hover:bg-white/[0.09] transition-colors border border-white/10"
                   >
-                    <h4 className="text-sm font-medium text-white/80">{deliverable.title}</h4>
-                    <div className="text-sm text-white/60 whitespace-pre-wrap">
-                      {deliverable.content}
+                    <h4 className="text-sm font-semibold text-white/90 pb-2 border-b border-white/10">
+                      {deliverable.title}
+                    </h4>
+                    <div className="prose prose-invert prose-sm max-w-none pt-2">
+                      {formatMarkdown(deliverable.content)}
                     </div>
                   </div>
                 ))}
@@ -117,17 +179,22 @@ function SpecificationAccordion({ specs }: { specs: ProjectSpecs }) {
 
           {/* Validation Criteria */}
           {specs.validation && specs.validation.length > 0 && (
-            <div>
-              <h3 className="text-sm font-medium text-white/60 mb-3">Validation Criteria</h3>
-              <div className="space-y-2">
+            <div className="relative">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-1 h-6 bg-gradient-to-b from-pink-400 to-rose-400 rounded-full" />
+                <h3 className="text-lg font-medium text-white/90">Validation Criteria</h3>
+              </div>
+              <div className="space-y-3">
                 {specs.validation.map((criterion, index) => (
                   <div
                     key={index}
-                    className="bg-white/5 rounded-lg p-4 space-y-2"
+                    className="bg-white/[0.07] rounded-lg p-5 space-y-2 hover:bg-white/[0.09] transition-colors border border-white/10"
                   >
-                    <h4 className="text-sm font-medium text-white/80">{criterion.title}</h4>
-                    <div className="text-sm text-white/60 whitespace-pre-wrap">
-                      {criterion.content}
+                    <h4 className="text-sm font-semibold text-white/90 pb-2 border-b border-white/10">
+                      {criterion.title}
+                    </h4>
+                    <div className="prose prose-invert prose-sm max-w-none pt-2">
+                      {formatMarkdown(criterion.content)}
                     </div>
                   </div>
                 ))}
