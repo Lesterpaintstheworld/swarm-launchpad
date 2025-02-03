@@ -49,44 +49,59 @@ const PriceCell = ({ poolAddress }: { poolAddress: string }) => {
 };
 
 
-const ValueCell = ({ poolAddress, shares }: { poolAddress: string, shares: number }) => {
-    const { poolAccount } = useLaunchpadProgramAccount({ poolAddress });
-    const [value, setValue] = useState<number>(0);
+interface SwarmData {
+  id: string;
+  name: string;
+  image: string;
+  pool?: string;
+  role?: string;
+}
 
-    useEffect(() => {
-        try {
-            if (poolAccount?.data) {
-                const totalShares = poolAccount.data.totalShares.toNumber();
-                const availableShares = poolAccount.data.availableShares.toNumber();
-                const soldShares = totalShares - availableShares;
-                
-                // Calculate price based on bonding curve
-                const cycle = Math.floor(soldShares / 5000);
-                const base = Math.pow(1.35, cycle);
-                const sharePrice = Math.floor(base * 100) / 100; // Divide by 100 to fix scaling
+const PriceAndValueCell = ({ swarmId, shares }: { swarmId: string; shares?: number }) => {
+  const [swarm, setSwarm] = useState<SwarmData | null>(null);
+  const { poolAccount } = useLaunchpadProgramAccount({ 
+    poolAddress: swarm?.pool || '' 
+  });
+  const [value, setValue] = useState<number>(0);
 
-                console.log('ValueCell data:', {
-                    totalShares,
-                    availableShares,
-                    soldShares,
-                    sharePrice,
-                    shares,
-                    calculatedValue: shares * sharePrice
-                });
+  useEffect(() => {
+    async function fetchSwarm() {
+      try {
+        const response = await fetch(`/api/swarms/${swarmId}`);
+        if (!response.ok) return;
+        const data = await response.json();
+        setSwarm(data);
+      } catch (error) {
+        console.error('Error fetching swarm:', error);
+      }
+    }
+    fetchSwarm();
+  }, [swarmId]);
 
-                setValue(shares * sharePrice);
-            }
-        } catch (error) {
-            console.error('Error calculating value:', error);
-            setValue(0);
-        }
-    }, [poolAccount.data, shares]);
+  useEffect(() => {
+    try {
+      if (poolAccount?.data && shares) {
+        const totalShares = poolAccount.data.totalShares.toNumber();
+        const availableShares = poolAccount.data.availableShares.toNumber();
+        const soldShares = totalShares - availableShares;
+        
+        const cycle = Math.floor(soldShares / 5000);
+        const base = Math.pow(1.35, cycle);
+        const sharePrice = Math.floor(base * 100) / 100;
 
-    return (
-        <p className="font-bold text-green-400">
-            {IntlNumberFormat(value)} $COMPUTE
-        </p>
-    );
+        setValue(shares * sharePrice);
+      }
+    } catch (error) {
+      console.error('Error calculating value:', error);
+      setValue(0);
+    }
+  }, [poolAccount?.data, shares]);
+
+  return (
+    <p className="font-bold text-green-400">
+      {IntlNumberFormat(value)} $COMPUTE
+    </p>
+  );
 };
 
 const ActionCell = ({ swarmId }: { swarmId: string }) => {
@@ -254,10 +269,12 @@ export const columns: ColumnDef<Investment>[] = [
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Value" />
         ),
-        cell: ({ row }) => {
-            const swarmId = row.getValue('swarm_id');
-            return <ValueCell swarmId={swarmId} shares={row.original.number_of_shares} />;
-        }
+        cell: ({ row }) => (
+          <PriceAndValueCell 
+            swarmId={row.getValue('swarm_id')} 
+            shares={row.original.number_of_shares} 
+          />
+        )
     },
     {
         id: 'actions',
