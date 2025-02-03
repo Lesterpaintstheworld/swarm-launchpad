@@ -193,7 +193,7 @@ export default function ServicePage() {
               <h3 className="text-lg font-semibold">About the Provider</h3>
               {swarm && (
                 <Link
-                  href={`/invest/${swarm.id}`}
+                  href={swarm ? `/invest/${swarm.id}` : '#'}
                   className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 transition-colors"
                 >
                   <div className="relative w-12 h-12 rounded-full overflow-hidden">
@@ -212,16 +212,18 @@ export default function ServicePage() {
               )}
             </div>
 
-            <div className="flex flex-wrap gap-2">
-              {swarm?.tags?.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-2 py-1 text-xs rounded-full bg-white/5 text-white/60"
-                >
-                  {tag}
-                </span>
-              )) || null}
-            </div>
+            {swarm?.tags && swarm.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {swarm.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-2 py-1 text-xs rounded-full bg-white/5 text-white/60"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Service Stats Card */}
