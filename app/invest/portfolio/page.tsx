@@ -1,7 +1,7 @@
 'use client'
 
 const getSwarmUsingPoolId = (poolId: string): { id: string; name: string; wallet?: string } | null => {
-    const swarmMap = {
+    const swarmMap: Record<string, { id: string; name: string; wallet: string }> = {
         'FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz': {
             id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
             name: 'KinKong',
@@ -17,9 +17,9 @@ const getSwarmUsingPoolId = (poolId: string): { id: string; name: string; wallet
             name: 'KinOS',
             wallet: '6MxUwQisBsEQKAWkXQPnVh3L2TZfQBFY3DXr8RaXDYet'
         }
-    };
+    } as const;
 
-    return swarmMap[poolId] || null;
+    return (poolId in swarmMap) ? swarmMap[poolId as keyof typeof swarmMap] : null;
 };
 
 interface ShareholderAccount {
