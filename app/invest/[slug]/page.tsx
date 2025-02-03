@@ -12,7 +12,7 @@ async function getInitialPrice() {
   }
 }
 
-async function getSwarm(slug: string) {
+async function getSwarm(id: string) {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     console.log('Fetching swarm with slug:', slug);
