@@ -252,7 +252,9 @@ export default function CollaborationPage({ params }: { params: { id: string } }
                         <span className="metallic-text-ubc">$UBC</span> Redistributed
                       </span>
                       <div className="flex items-center gap-2">
-                        <span className="text-sm">-</span>
+                        <span className="text-sm">
+                          {Math.round(collaboration.price * 0.5 * 0.2).toLocaleString()}
+                        </span>
                         <Link 
                           href="#"
                           className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
@@ -268,7 +270,9 @@ export default function CollaborationPage({ params }: { params: { id: string } }
                         <span className="metallic-text">$COMPUTE</span> Redistributed
                       </span>
                       <div className="flex items-center gap-2">
-                        <span className="text-sm">-</span>
+                        <span className="text-sm">
+                          {Math.round(collaboration.price * 0.5 * 0.8).toLocaleString()}
+                        </span>
                         <Link 
                           href="#"
                           className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
