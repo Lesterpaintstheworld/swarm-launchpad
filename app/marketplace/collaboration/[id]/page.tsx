@@ -197,6 +197,11 @@ export default function CollaborationPage({ params }: { params: { id: string } }
                 providerSwarm={collaboration.providerSwarm}
                 clientSwarm={collaboration.clientSwarm}
                 collaborationId={collaboration.id}
+                projectSpecs={{
+                  specifications: collaboration.specifications,
+                  deliverables: collaboration.deliverables,
+                  validation: collaboration.validation
+                }}
               />
             </div>
 
