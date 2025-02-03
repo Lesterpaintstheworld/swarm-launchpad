@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build", 
     "start": "next start",
     "lint": "next lint",
     "update-multiples": "python scripts/update_multiples.py",
@@ -13,6 +13,7 @@
     "init-news": "node -r dotenv/config scripts/init-news.mjs",
     "init-messages": "node -r dotenv/config scripts/init-messages.mjs",
     "init-collaborations": "node -r dotenv/config scripts/init-collaborations.cjs",
+    "init-services": "node -r dotenv/config scripts/init-services.cjs",
     "market-metrics": "node --loader ts-node/esm -r dotenv/config scripts/marketMetrics.mjs"
   },
   "dependencies": {
