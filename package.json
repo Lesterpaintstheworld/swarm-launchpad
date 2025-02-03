@@ -12,7 +12,7 @@
     "get-holders": "python scripts/get_holders.py",
     "init-news": "node -r dotenv/config scripts/init-news.mjs",
     "init-messages": "node -r dotenv/config scripts/init-messages.mjs",
-    "init-collaborations": "ts-node --project scripts/tsconfig.json scripts/init-collaborations.ts",
+    "init-collaborations": "node -r dotenv/config scripts/init-collaborations.mjs",
     "market-metrics": "node --loader ts-node/esm -r dotenv/config scripts/marketMetrics.mjs"
   },
   "dependencies": {
