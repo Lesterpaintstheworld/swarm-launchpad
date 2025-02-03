@@ -5,7 +5,6 @@ import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
 import { formatPublicKey, IntlNumberFormat } from "@/lib/utils";
 import { Button } from "@/components/shadcn/button";
 import { MarketListing } from "../market.types";
-import { getSwarm } from "@/data/swarms/previews";
 import Image from "next/image";
 import Link from "next/link";
 import { Token } from "@/components/tokens/token";
@@ -19,23 +18,45 @@ export const columns: ColumnDef<MarketListing>[] = [
         minSize: 250,
         cell: ({ row }) => {
 
-            const swarm = getSwarm(row.getValue('swarm_id'));
+            const SwarmCell = ({ swarmId }: { swarmId: string }) => {
+                const [swarm, setSwarm] = useState<any>(null);
 
-            return (
-                <div className="flex items-center min-w-[200px] gap-4 py-1">
-                    <Image
-                        src={swarm?.image}
-                        alt={`${swarm?.name} avatar`}
-                        width={32}
-                        height={32}
-                        className="rounded-full"
-                    />
-                    <div className="flex flex-col">
-                        <Link className="text-lg mb-0 leading-1 truncate hover:underline" href={`/invest/${swarm?.id}`}>{swarm?.name}</Link>
-                        {swarm?.role && <p className="text-sm text-muted truncate">{swarm?.role}</p>}
+                useEffect(() => {
+                    async function fetchSwarm() {
+                        try {
+                            const response = await fetch(`/api/swarms/${swarmId}`);
+                            if (!response.ok) return;
+                            const data = await response.json();
+                            setSwarm(data);
+                        } catch (error) {
+                            console.error('Error fetching swarm:', error);
+                        }
+                    }
+                    fetchSwarm();
+                }, [swarmId]);
+
+                if (!swarm) return null;
+
+                return (
+                    <div className="flex items-center min-w-[200px] gap-4 py-1">
+                        <Image
+                            src={swarm.image}
+                            alt={`${swarm.name} avatar`}
+                            width={32}
+                            height={32}
+                            className="rounded-full"
+                        />
+                        <div className="flex flex-col">
+                            <Link className="text-lg mb-0 leading-1 truncate hover:underline" href={`/invest/${swarm.id}`}>
+                                {swarm.name}
+                            </Link>
+                            {swarm.role && <p className="text-sm text-muted truncate">{swarm.role}</p>}
+                        </div>
                     </div>
-                </div>
-            )
+                );
+            };
+
+            return <SwarmCell swarmId={row.getValue('swarm_id')} />;
         }
     },
     {
