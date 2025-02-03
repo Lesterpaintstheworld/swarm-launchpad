@@ -36,11 +36,25 @@ interface ActionCellProps {
 const ActionCell = ({ row }: ActionCellProps) => {
     const { publicKey } = useWallet();
     const [isClaimed, setIsClaimed] = useState(false);
+    const [swarm, setSwarm] = useState<any>(null);
     const computeAmount = row.getValue('amount') as number;
     const ubcAmount = row.original.ubcAmount;
     const swarmId = row.getValue('swarm_id') as string;
-    const swarm = getSwarm(swarmId);
     const isDisabled = computeAmount < 10;
+
+    useEffect(() => {
+        async function fetchSwarm() {
+            try {
+                const response = await fetch(`/api/swarms/${swarmId}`);
+                if (!response.ok) return;
+                const data = await response.json();
+                setSwarm(data);
+            } catch (error) {
+                console.error('Error fetching swarm:', error);
+            }
+        }
+        fetchSwarm();
+    }, [swarmId]);
 
     const getWeekKey = () => {
         const now = new Date();
