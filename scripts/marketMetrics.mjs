@@ -25,6 +25,25 @@ function calculateSharePrice(n) {
     return base;
 }
 
+// Sleep function
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Get compute price
+async function getComputePrice() {
+    try {
+        const response = await fetch('https://api.dexscreener.com/latest/dex/pairs/solana/HiYsmVjeFy4ZLx8pkPSxBjswFkoEjecVGB4zJed2e6Y');
+        const data = await response.json();
+        if (data.pair?.priceUsd) {
+            return parseFloat(data.pair.priceUsd);
+        }
+    } catch (error) {
+        console.error('Error fetching $COMPUTE price:', error);
+    }
+    return null;
+}
+
 // Get just the essential swarm data
 const swarmPools = [
     { name: 'KinOS', pool: '37u532qgHbjUHic6mQK51jkT3Do7qkWLEUQCx22MDBD8', weeklyRevenue: 460000 },
@@ -73,6 +92,15 @@ async function calculateMetrics() {
     let totalWeeklyRevenue = 0;
     const numSwarms = swarmPools.length;
 
+    // Get $COMPUTE price once at the start
+    console.log('Fetching $COMPUTE price...');
+    const computePrice = await getComputePrice();
+    if (computePrice) {
+        console.log(`Current $COMPUTE price: $${computePrice.toFixed(4)}\n`);
+    } else {
+        console.log('Unable to fetch $COMPUTE price. Will show only $COMPUTE values.\n');
+    }
+
     console.log('Calculating market metrics...\n');
 
     for (const swarm of swarmPools) {
@@ -109,11 +137,25 @@ async function calculateMetrics() {
             // Log individual swarm metrics
             console.log(`${swarm.name}:`);
             console.log(`  Market Cap: ${marketCap.toLocaleString()} $COMPUTE`);
+            if (computePrice) {
+                console.log(`            $${(marketCap * computePrice).toLocaleString()}`);
+            }
+            
             console.log(`  Amount Raised: ${Math.floor(amountRaised).toLocaleString()} $COMPUTE`);
+            if (computePrice) {
+                console.log(`                $${(Math.floor(amountRaised) * computePrice).toLocaleString()}`);
+            }
+            
             if (swarm.weeklyRevenue) {
                 console.log(`  Weekly Revenue: ${swarm.weeklyRevenue.toLocaleString()} $COMPUTE`);
+                if (computePrice) {
+                    console.log(`                 $${(swarm.weeklyRevenue * computePrice).toLocaleString()}`);
+                }
             }
             console.log('');
+
+            // Add delay between calls
+            await sleep(2000); // 2 second delay
 
         } catch (error) {
             console.error(`Error processing ${swarm.name}:`, error);
@@ -124,9 +166,21 @@ async function calculateMetrics() {
     console.log('\nTotal Market Metrics:');
     console.log('====================');
     console.log(`Number of Swarms: ${numSwarms}`);
+    
     console.log(`Total Market Cap: ${totalMarketCap.toLocaleString()} $COMPUTE`);
+    if (computePrice) {
+        console.log(`                $${(totalMarketCap * computePrice).toLocaleString()}`);
+    }
+    
     console.log(`Total Amount Raised: ${Math.floor(totalAmountRaised).toLocaleString()} $COMPUTE`);
+    if (computePrice) {
+        console.log(`                   $${(Math.floor(totalAmountRaised) * computePrice).toLocaleString()}`);
+    }
+    
     console.log(`Total Weekly Revenue: ${totalWeeklyRevenue.toLocaleString()} $COMPUTE`);
+    if (computePrice) {
+        console.log(`                    $${(totalWeeklyRevenue * computePrice).toLocaleString()}`);
+    }
 }
 
 // Run the script
