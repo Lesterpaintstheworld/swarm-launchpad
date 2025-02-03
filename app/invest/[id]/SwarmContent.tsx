@@ -50,9 +50,21 @@ interface SwarmContentProps {
 
 export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
     const [price, setPrice] = useState<number | null>(initialPrice);
+    const [swarmData, setSwarmData] = useState<any>(null);
 
     useEffect(() => {
         const controller = new AbortController();
+
+        async function fetchSwarmData() {
+            try {
+                const response = await fetch(`/api/swarms/${swarm.id}`);
+                if (!response.ok) return;
+                const data = await response.json();
+                setSwarmData(data);
+            } catch (error) {
+                console.error('Error fetching swarm:', error);
+            }
+        }
 
         function fetchPrice() {
             fetch('https://api.dexscreener.com/latest/dex/pairs/solana/HiYsmVjeFy4ZLx8pkPSxBjswFkoEjecVGB4zJed2e6Y', {
@@ -70,7 +82,10 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                 });
         }
 
-        // Set up interval for updates
+        fetchSwarmData();
+        fetchPrice();
+
+        // Set up interval for price updates
         const interval = setInterval(fetchPrice, 60000);
 
         // Clean up
@@ -78,7 +93,7 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
             controller.abort();
             clearInterval(interval);
         };
-    }, []);
+    }, [swarm.id]);
 
     return (
         <main className="container mb-6 md:mb-24 view">
