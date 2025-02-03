@@ -57,7 +57,7 @@ const SwarmTypeHeader = ({ type, icon, title }: { type: SwarmType, icon: string,
 
 const SwarmsPreviewGrid = ({}: SwarmsPreviewGridProps) => {
     const [searchValue, setSearchValue] = useState<string>('');
-    const [swarms, setSwarms] = useState([]);
+    const [swarms, setSwarms] = useState<SwarmPreviewData[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -65,10 +65,17 @@ const SwarmsPreviewGrid = ({}: SwarmsPreviewGridProps) => {
             try {
                 const response = await fetch('/api/swarms');
                 const data = await response.json();
-                console.log('Fetched swarms:', data); // Debug log
-                setSwarms(data);
+                // Ensure data is an array before setting
+                if (Array.isArray(data)) {
+                    console.log('Fetched swarms:', data);
+                    setSwarms(data);
+                } else {
+                    console.error('Fetched data is not an array:', data);
+                    setSwarms([]);
+                }
             } catch (error) {
                 console.error('Error fetching swarms:', error);
+                setSwarms([]); // Set empty array on error
             } finally {
                 setIsLoading(false);
             }
@@ -77,16 +84,23 @@ const SwarmsPreviewGrid = ({}: SwarmsPreviewGridProps) => {
     }, []);
 
     const filterSwarms = useCallback((type: SwarmType) => {
+        if (!Array.isArray(swarms)) {
+            console.error('swarms is not an array:', swarms);
+            return [];
+        }
+
         const filtered = swarms.filter(swarm => {
+            if (!swarm) return false;
+            
             const matchesSearch = 
-                swarm.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-                swarm.description.toLowerCase().includes(searchValue.toLowerCase()) ||
-                swarm.models.toString().toLowerCase().includes(searchValue.toLowerCase()) ||
-                swarm.tags.toString().toLowerCase().includes(searchValue.toLowerCase()) ||
-                swarm.role?.toString().toLowerCase().includes(searchValue.toLowerCase());
+                (swarm.name?.toLowerCase().includes(searchValue.toLowerCase()) || false) &&
+                (swarm.description?.toLowerCase().includes(searchValue.toLowerCase()) || false) &&
+                (swarm.models?.toString().toLowerCase().includes(searchValue.toLowerCase()) || false) &&
+                (swarm.tags?.toString().toLowerCase().includes(searchValue.toLowerCase()) || false) &&
+                (swarm.role?.toString().toLowerCase().includes(searchValue.toLowerCase()) || false);
             
             const matchesType = swarm.swarmType === type;
-            console.log(`Swarm ${swarm.name}: type=${swarm.swarmType}, matches=${matchesType}`); // Debug log
+            console.log(`Swarm ${swarm.name}: type=${swarm.swarmType}, matches=${matchesType}`);
             
             return matchesSearch && matchesType;
         });

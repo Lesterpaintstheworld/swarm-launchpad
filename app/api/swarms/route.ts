@@ -22,8 +22,8 @@ export async function GET() {
     }
 
     const data = await response.json();
-    console.log('Raw Airtable data:', data); // Debug log
-    
+    console.log('Raw Airtable data:', data);
+
     const swarms = data.records.map((record: any) => {
       // Helper function to safely parse JSON or return default value
       const safeParseJSON = (str: string | null | undefined, defaultValue: any = []) => {
@@ -38,7 +38,32 @@ export async function GET() {
           return defaultValue;
         }
       };
-      console.log('Processed swarm:', swarm); // Debug log
+
+      const swarm = {
+        id: record.fields.swarmId,
+        name: record.fields.name,
+        description: record.fields.description || '',
+        image: record.fields.image,
+        models: safeParseJSON(record.fields.models, []),
+        pool: record.fields.pool,
+        weeklyRevenue: record.fields.weeklyRevenue || 0,
+        totalRevenue: record.fields.totalRevenue || 0,
+        gallery: safeParseJSON(record.fields.gallery, []),
+        tags: safeParseJSON(record.fields.tags, []),
+        role: record.fields.role || '',
+        swarmType: record.fields.swarmType || 'inception',
+        multiple: record.fields.multiple || 1,
+        launchDate: record.fields.launchDate || null,
+        revenueShare: record.fields.revenueShare || 60,
+        wallet: record.fields.wallet || '',
+        banner: record.fields.banner || '',
+        twitterAccount: record.fields.twitterAccount || '',
+        socials: safeParseJSON(record.fields.socials, {}),
+        achievements: safeParseJSON(record.fields.achievements, []),
+        team: safeParseJSON(record.fields.team, []),
+        links: safeParseJSON(record.fields.links, [])
+      };
+      console.log('Processed swarm:', swarm);
       return swarm;
 
       const swarm = {
