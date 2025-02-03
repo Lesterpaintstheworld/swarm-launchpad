@@ -74,8 +74,8 @@ export default function HomePage() {
                             <div className="text-center h-full flex flex-col justify-center">
                                 <h3 className="text-sm text-muted-foreground/80 uppercase tracking-wider mb-4 font-medium">Total Market Cap</h3>
                                 <div className="space-y-1">
-                                    <p className="text-4xl tracking-tight text-green-400/90 font-medium">
-                                        ${computePrice ? (10000000000 * computePrice).toLocaleString() : '26,100,000'}
+                                    <p className="text-5xl tracking-tight text-green-400/90 font-medium">
+                                        ${computePrice ? (10000000000 * computePrice).toLocaleString() : '26,080,000'}
                                     </p>
                                 </div>
                             </div>
