@@ -587,7 +587,7 @@ const SwarmInvestCard = ({
                                                                     style={{ backgroundColor: COLORS[index % COLORS.length] }}
                                                                 />
                                                                 <span className="text-white/60">
-                                                                    {entry.value}: {investmentData[index].percentage}%
+                                                                    {entry.value} ({entry.payload.percentage}%)
                                                                 </span>
                                                             </li>
                                                         ))}
