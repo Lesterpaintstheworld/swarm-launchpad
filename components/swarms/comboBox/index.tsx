@@ -28,7 +28,7 @@ interface SwarmComboBoxProps {
 }
 
 const SwarmComboBox = ({ className, defaultValue, onChange }: SwarmComboBoxProps) => {
-    const [swarms, setSwarms] = useState([]);
+    const [swarms, setSwarms] = useState<SwarmPreviewData[]>([]);
 
     useEffect(() => {
         async function fetchSwarms() {

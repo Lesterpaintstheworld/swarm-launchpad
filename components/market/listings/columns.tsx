@@ -25,24 +25,31 @@ export const columns: ColumnDef<MarketListing>[] = [
               role?: string;
             }
 
+            interface SwarmData {
+              id: string;
+              name: string;
+              image: string;
+              role?: string;
+            }
+
             const SwarmCell = ({ swarmId }: { swarmId: string }) => {
-                const [swarm, setSwarm] = useState<SwarmData | null>(null);
+              const [swarm, setSwarm] = useState<SwarmData | null>(null);
 
-                useEffect(() => {
-                    async function fetchSwarm() {
-                        try {
-                            const response = await fetch(`/api/swarms/${swarmId}`);
-                            if (!response.ok) return;
-                            const data = await response.json();
-                            setSwarm(data);
-                        } catch (error) {
-                            console.error('Error fetching swarm:', error);
-                        }
-                    }
-                    fetchSwarm();
-                }, [swarmId]);
+              useEffect(() => {
+                async function fetchSwarm() {
+                  try {
+                    const response = await fetch(`/api/swarms/${swarmId}`);
+                    if (!response.ok) return;
+                    const data = await response.json();
+                    setSwarm(data);
+                  } catch (error) {
+                    console.error('Error fetching swarm:', error);
+                  }
+                }
+                fetchSwarm();
+              }, [swarmId]);
 
-                if (!swarm) return null;
+              if (!swarm) return null;
 
                 return (
                     <div className="flex items-center min-w-[200px] gap-4 py-1">
