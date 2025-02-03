@@ -489,10 +489,17 @@ const SwarmData = {
     ]
   };
 
-// Airtable configuration
-const AIRTABLE_API_KEY = 'your_api_key';
-const AIRTABLE_BASE_ID = 'your_base_id';
+import 'dotenv/config';
+
+// Get environment variables
+const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
+const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 const AIRTABLE_TABLE_NAME = 'Swarms';
+
+if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
+    console.error('Missing required environment variables. Please check your .env file');
+    process.exit(1);
+}
 
 async function main() {
     try {
@@ -503,6 +510,7 @@ async function main() {
                 name: record.fields.Name,
                 description: record.fields.Description || "PLACEHOLDER",
                 models: record.fields.Models,
+                role: record.fields.Role,
                 tags: record.fields.Tags,
                 swarmType: record.fields.Type,
                 wallet: record.fields.Wallet,
@@ -510,33 +518,29 @@ async function main() {
                 multiple: record.fields.Multiple,
                 weeklyRevenue: record.fields.WeeklyRevenue,
                 totalRevenue: record.fields.TotalRevenue,
-                launchDate: record.fields.LaunchDate
+                launchDate: record.fields.LaunchDate,
+                twitterAccount: record.fields.TwitterAccount
             }
         }));
 
-        // Log what the Airtable API call would look like
-        console.log('Airtable API call would be:');
-        console.log(JSON.stringify({ records: swarms }, null, 2));
+        console.log(`Making Airtable API call to upload ${swarms.length} swarms...`);
 
-        // Log summary 
-        console.log(`\nProcessed ${swarms.length} swarms`);
+        const response = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ records: swarms })
+        });
 
-        // Here you would make the actual Airtable API call
-        // const response = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({ records: swarms })
-        // });
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Airtable API error: ${response.status} ${response.statusText}\n${errorText}`);
+        }
 
-        // if (!response.ok) {
-        //     throw new Error(`Airtable API error: ${response.status} ${response.statusText}`);
-        // }
-
-        // const result = await response.json();
-        // console.log('Successfully uploaded to Airtable:', result);
+        const result = await response.json();
+        console.log('Successfully uploaded to Airtable:', result);
 
     } catch (error) {
         console.error('Error:', error);
