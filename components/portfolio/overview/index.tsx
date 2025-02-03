@@ -1,5 +1,20 @@
 'use client'
 
+interface PoolAccount {
+    totalShares: {
+        toNumber: () => number;
+    };
+    availableShares: {
+        toNumber: () => number;
+    };
+}
+
+interface ProgramAccounts {
+    pool: {
+        fetch(address: PublicKey): Promise<PoolAccount>;
+    };
+}
+
 import { Card } from "@/components/ui/card";
 import { Investment } from "../investments"
 import { cn, IntlNumberFormat } from "@/lib/utils";
@@ -45,6 +60,9 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
     const [investmentData, setInvestmentData] = useState<InvestmentDataItem[]>([]);
     const [totalValueInCompute, setTotalValueInCompute] = useState(0);
     const { program } = useLaunchpadProgram();
+    const program = program as unknown as {
+        account: ProgramAccounts;
+    };
 
     useEffect(() => {
         const calculateValues = async () => {
