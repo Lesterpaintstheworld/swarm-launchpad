@@ -11,6 +11,18 @@ import { Button } from "@/components/shadcn/button";
 import { useWallet } from '@solana/wallet-adapter-react';
 import { toast } from 'sonner';
 
+async function getSwarm(swarmId: string) {
+  try {
+    const response = await fetch(`/api/swarms/${swarmId}`);
+    if (!response.ok) return null;
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching swarm:', error);
+    return null;
+  }
+}
+
 const SwarmCell = ({ swarmId }: { swarmId: string }) => {
     const [swarm, setSwarm] = useState<{ name: string; image: string; role?: string } | null>(null);
     const [isLoading, setIsLoading] = useState(true);
