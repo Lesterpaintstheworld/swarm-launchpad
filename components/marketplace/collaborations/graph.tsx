@@ -321,7 +321,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
         .on("end", dragended))
       .on("mouseover", (event, d) => {
         const swarm = swarmMap.get(d.id);
-        const previewData = swarms.find((p: SwarmData) => p.id === d.id);
+        const previewData = Array.from(swarms as SwarmData[]).find(p => p.id === d.id);
         if (!swarm || !previewData) return;
 
         const multiple = swarm.multiple || 1;
@@ -473,7 +473,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       lightsGroup.selectAll(".link-light").interrupt();
       tooltip.remove(); // Remove tooltip when component unmounts
     };
-  }, [collaborations, zoom, getNodeSize, isLoading, swarmMap]);
+  }, [zoom, getNodeSize, isLoading, swarmMap, collaborationsProp]);
 
   const handleZoomIn = () => {
     setZoom(prev => Math.min(prev + 0.2, 2));
