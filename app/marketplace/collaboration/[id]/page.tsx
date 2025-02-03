@@ -8,12 +8,20 @@ import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { useEffect, useState } from 'react';
 import { ServiceName } from '@/data/collaborations/collaborations';
 
-// Type guard to validate service names
-function isServiceName(name: string): name is ServiceName {
-  return ['Development Package', 'Essential Swarm Package', 'Inception Package', 'Active AI Tokens Trading'].includes(name);
+// Function to validate service names
+async function isValidServiceName(name: string): Promise<boolean> {
+  try {
+    const response = await fetch('/api/services');
+    if (!response.ok) return false;
+    const services = await response.json();
+    return services.some((service: any) => service.name === name);
+  } catch (error) {
+    console.error('Error validating service name:', error);
+    return false;
+  }
 }
 
-const serviceBanners: Record<ServiceName, string> = {
+const serviceBanners: Record<string, string> = {
   'Development Package': '/services/xforge.png',
   'Essential Swarm Package': '/services/kinos-essential.png',
   'Inception Package': '/services/kinos-inception.png',
@@ -117,14 +125,9 @@ export default function CollaborationPage({ params }: { params: { id: string } }
   }
 
   // Validate the service name
-  if (!isServiceName(collaboration.serviceName)) {
+  const isValid = await isValidServiceName(collaboration.serviceName);
+  if (!isValid) {
     console.error('Invalid service name:', collaboration.serviceName);
-    console.error('Expected one of:', [
-      'Development Package', 
-      'Essential Swarm Package', 
-      'Inception Package',
-      'Active AI Tokens Trading'
-    ]);
     return (
       <div className="container py-12">
         <h1 className="text-2xl font-bold">Invalid service type</h1>
@@ -135,8 +138,7 @@ export default function CollaborationPage({ params }: { params: { id: string } }
     );
   }
 
-  // Now TypeScript knows collaboration.serviceName is a valid ServiceName
-  const bannerSrc = serviceBanners[collaboration.serviceName];
+  const bannerSrc = serviceBanners[collaboration.serviceName] || '/services/default.png';
 
   if (!providerSwarm || !clientSwarm) {
     return (
