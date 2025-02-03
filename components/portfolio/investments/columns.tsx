@@ -5,7 +5,16 @@ import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
 import { Investment } from "@/components/portfolio/investments";
 import Image from "next/image";
 import { IntlNumberFormat } from "@/lib/utils";
-import { getSwarm } from "@/data/swarms/previews"; // Keep for other uses
+async function getSwarm(id: string) {
+  try {
+    const response = await fetch(`/api/swarms/${id}`);
+    if (!response.ok) return null;
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching swarm:', error);
+    return null;
+  }
+}
 import { getSwarmUsingId } from "@/data/swarms/info";
 import Link from "next/link";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
