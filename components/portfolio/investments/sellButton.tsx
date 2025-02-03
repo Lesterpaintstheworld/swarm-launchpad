@@ -1,7 +1,16 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
 import { IntlNumberFormat } from "@/lib/utils";
-import { getSwarm } from "@/data/swarms/previews";
+async function getSwarm(id: string) {
+  try {
+    const response = await fetch(`/api/swarms/${id}`);
+    if (!response.ok) return null;
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching swarm:', error);
+    return null;
+  }
+}
 import { DividendPayment } from "./types";
 import Image from "next/image";
 import Link from "next/link";

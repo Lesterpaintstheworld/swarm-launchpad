@@ -25,6 +25,16 @@ async function getSwarm(id: string) {
     return null;
   }
 }
+async function getSwarm(id: string) {
+  try {
+    const response = await fetch(`/api/swarms/${id}`);
+    if (!response.ok) return null;
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching swarm:', error);
+    return null;
+  }
+}
 import Link from "next/link";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { useEffect, useState } from "react";
