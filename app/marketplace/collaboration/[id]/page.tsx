@@ -217,73 +217,53 @@ export default function CollaborationPage({ params }: { params: { id: string } }
                     {/* First $UBC Burned - 50% * 20% */}
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-muted-foreground">
-                        <span className="metallic-text-ubc">$UBC</span> Burned
+                        {Math.round(collaboration.price * 0.5 * 0.2).toLocaleString()} <span className="metallic-text-ubc">$UBC</span> Burned
                       </span>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm">
-                          {Math.round(collaboration.price * 0.5 * 0.2).toLocaleString()}
-                        </span>
-                        <Link 
-                          href="#"
-                          className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
-                        >
-                          [→]
-                        </Link>
-                      </div>
+                      <Link 
+                        href="#"
+                        className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
+                      >
+                        [→]
+                      </Link>
                     </div>
 
                     {/* First $COMPUTE Burned - 50% * 80% */}
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-muted-foreground">
-                        <span className="metallic-text">$COMPUTE</span> Burned
+                        {Math.round(collaboration.price * 0.5 * 0.8).toLocaleString()} <span className="metallic-text">$COMPUTE</span> Burned
                       </span>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm">
-                          {Math.round(collaboration.price * 0.5 * 0.8).toLocaleString()}
-                        </span>
-                        <Link 
-                          href="#"
-                          className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
-                        >
-                          [→]
-                        </Link>
-                      </div>
+                      <Link 
+                        href="#"
+                        className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
+                      >
+                        [→]
+                      </Link>
                     </div>
 
                     {/* $UBC Redistributed */}
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-muted-foreground">
-                        <span className="metallic-text-ubc">$UBC</span> Redistributed
+                        {Math.round(collaboration.price * (sourceSwarm?.revenueShare || 0) / 100 * 0.2).toLocaleString()} <span className="metallic-text-ubc">$UBC</span> Redistributed
                       </span>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm">
-                          {Math.round(collaboration.price * (sourceSwarm?.revenueShare || 0) / 100 * 0.2).toLocaleString()}
-                        </span>
-                        <Link 
-                          href="#"
-                          className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
-                        >
-                          [→]
-                        </Link>
-                      </div>
+                      <Link 
+                        href="#"
+                        className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
+                      >
+                        [→]
+                      </Link>
                     </div>
 
                     {/* $COMPUTE Redistributed */}
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-muted-foreground">
-                        <span className="metallic-text">$COMPUTE</span> Redistributed
+                        {Math.round(collaboration.price * (sourceSwarm?.revenueShare || 0) / 100 * 0.8).toLocaleString()} <span className="metallic-text">$COMPUTE</span> Redistributed
                       </span>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm">
-                          {Math.round(collaboration.price * (sourceSwarm?.revenueShare || 0) / 100 * 0.8).toLocaleString()}
-                        </span>
-                        <Link 
-                          href="#"
-                          className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
-                        >
-                          [→]
-                        </Link>
-                      </div>
+                      <Link 
+                        href="#"
+                        className="text-xs text-blue-400 hover:text-blue-300 transition-colors opacity-50 cursor-not-allowed"
+                      >
+                        [→]
+                      </Link>
                     </div>
 
                     {/* Coming Soon Notice */}
