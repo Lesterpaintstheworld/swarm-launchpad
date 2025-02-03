@@ -151,17 +151,23 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
         
         return (
             <ul className="flex flex-wrap gap-4 justify-center mt-4">
-                {(payload as CustomPayload[]).map((entry, index) => (
-                    <li key={`item-${index}`} className="flex items-center gap-2">
-                        <div 
-                            className="w-3 h-3 rounded-full" 
-                            style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                        />
-                        <span className="text-sm">
-                            {entry.value} ({entry.payload.percentage}%)
-                        </span>
-                    </li>
-                ))}
+                {((payload as unknown[]).map((entry, index) => {
+                    const typedEntry = entry as {
+                        value: string;
+                        payload: InvestmentDataItem;
+                    };
+                    return (
+                        <li key={`item-${index}`} className="flex items-center gap-2">
+                            <div 
+                                className="w-3 h-3 rounded-full" 
+                                style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                            />
+                            <span className="text-sm">
+                                {typedEntry.value} ({typedEntry.payload.percentage}%)
+                            </span>
+                        </li>
+                    );
+                }))}
             </ul>
         );
     };
