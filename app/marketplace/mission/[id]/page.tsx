@@ -67,23 +67,25 @@ export default function MissionDetailsPage({ params }: { params: { id: string } 
           </div>
 
           {/* Requester Information */}
-          <div className="rounded-xl bg-white/5 border border-white/10 p-6">
-            <h2 className="text-lg font-semibold text-white mb-4">About the Requester</h2>
-            <div className="flex items-center gap-4">
-              <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                <Image
-                  src={mission.requester.image}
-                  alt={mission.requester.name}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div>
-                <h3 className="text-white font-medium">{mission.requester.name}</h3>
-                <p className="text-white/60 text-sm">Verified Requester</p>
+          {mission.requester ? (
+            <div className="rounded-xl bg-white/5 border border-white/10 p-6">
+              <h2 className="text-lg font-semibold text-white mb-4">About the Requester</h2>
+              <div className="flex items-center gap-4">
+                <div className="relative w-12 h-12 rounded-full overflow-hidden">
+                  <Image
+                    src={mission.requester.image}
+                    alt={mission.requester.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-white font-medium">{mission.requester.name}</h3>
+                  <p className="text-white/60 text-sm">Verified Requester</p>
+                </div>
               </div>
             </div>
-          </div>
+          ) : null}
         </div>
 
         {/* Sidebar */}

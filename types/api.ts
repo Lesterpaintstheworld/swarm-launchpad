@@ -114,6 +114,11 @@ export interface CollaborationResponse {
   focus?: string;
 }
 
+export interface MissionRequester {
+  name: string;
+  image: string;
+}
+
 export interface Mission {
   id: string;
   name: string;
@@ -124,4 +129,6 @@ export interface Mission {
   swarmId: string;
   requirements?: string[];
   deliverables?: string[];
+  requester: MissionRequester;
+  estimatedDuration: string;
 }
