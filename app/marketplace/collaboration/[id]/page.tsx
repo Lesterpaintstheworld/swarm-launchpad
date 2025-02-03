@@ -48,6 +48,8 @@ export default function CollaborationPage({ params }: { params: { id: string } }
           throw new Error('Failed to fetch collaboration');
         }
         const collabData = await collabResponse.json();
+        console.log('Received collaboration:', collabData);
+        console.log('Service name:', collabData.serviceName);
         setCollaboration(collabData);
 
         // Fetch both swarms
@@ -86,9 +88,19 @@ export default function CollaborationPage({ params }: { params: { id: string } }
 
   // Validate the service name
   if (!isServiceName(collaboration.serviceName)) {
+    console.error('Invalid service name:', collaboration.serviceName);
+    console.error('Expected one of:', [
+      'Development Package', 
+      'Essential Swarm Package', 
+      'Inception Package',
+      'Active AI Tokens Trading'
+    ]);
     return (
       <div className="container py-12">
         <h1 className="text-2xl font-bold">Invalid service type</h1>
+        <p className="text-muted-foreground mt-2">
+          Received: {collaboration.serviceName}
+        </p>
       </div>
     );
   }
