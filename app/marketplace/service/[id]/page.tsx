@@ -1,6 +1,6 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useParams } from 'next/navigation'; 
 import { getService } from '@/data/services/services';
 import { Shield, Cpu, Clock } from 'lucide-react';
 
