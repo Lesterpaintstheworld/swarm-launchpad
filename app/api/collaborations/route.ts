@@ -22,53 +22,46 @@ interface SwarmData {
 
 async function getCollaborationSpecs(collaborationId: string) {
   try {
-    console.log('Fetching specs for collaboration:', collaborationId);
+    // Log the collaboration ID
+    console.log(`Fetching specs for collaboration: ${collaborationId}`);
     
-    // Fetch specifications, deliverables, and validations in parallel
+    // Build the filter formula for Airtable
+    const filterFormula = encodeURIComponent(`{collaborationId}="${collaborationId}"`);
+
+    // Construct the URLs
+    const specsUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Specifications?filterByFormula=${filterFormula}`;
+    const deliverablesUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Deliverables?filterByFormula=${filterFormula}`;
+    const validationsUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Validations?filterByFormula=${filterFormula}`;
+
+    // Common headers
+    const headers = {
+      'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+      'Content-Type': 'application/json',
+    };
+
+    // Fetch all data in parallel
     const [specsResponse, deliverablesResponse, validationResponse] = await Promise.all([
-      fetch(
-        `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Specifications?filterByFormula={collaborationId}="${collaborationId}"`,
-        {
-          headers: {
-            'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
-            'Content-Type': 'application/json',
-          },
-          cache: 'no-store'
-        }
-      ),
-      fetch(
-        `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Deliverables?filterByFormula={collaborationId}="${collaborationId}"`,
-        {
-          headers: {
-            'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
-            'Content-Type': 'application/json',
-          },
-          cache: 'no-store'
-        }
-      ),
-      fetch(
-        `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Validations?filterByFormula={collaborationId}="${collaborationId}"`,
-        {
-          headers: {
-            'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
-            'Content-Type': 'application/json',
-          },
-          cache: 'no-store'
-        }
-      )
+      fetch(specsUrl, { headers, cache: 'no-store' }),
+      fetch(deliverablesUrl, { headers, cache: 'no-store' }),
+      fetch(validationsUrl, { headers, cache: 'no-store' })
     ]);
 
+    // Parse responses
     const [specsData, deliverablesData, validationData] = await Promise.all([
       specsResponse.json(),
       deliverablesResponse.json(),
       validationResponse.json()
     ]);
 
-    console.log('Raw specs data:', specsData);
-    console.log('Raw deliverables data:', deliverablesData);
-    console.log('Raw validation data:', validationData);
+    // Log raw data
+    console.log({
+      specs: specsData,
+      deliverables: deliverablesData,
+      validations: validationData
+    });
 
-    const result = {
+    // Process and return the data
+    return {
       specifications: specsData.records?.map(record => ({
         title: record.fields.title || 'Specification',
         content: record.fields.content
@@ -82,9 +75,6 @@ async function getCollaborationSpecs(collaborationId: string) {
         content: record.fields.content
       })) || []
     };
-
-    console.log('Processed specs result:', result);
-    return result;
 
   } catch (error) {
     console.error('Error fetching collaboration specs:', error);
