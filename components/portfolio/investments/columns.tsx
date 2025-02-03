@@ -5,7 +5,7 @@ import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
 import { Investment } from "@/components/portfolio/investments";
 import Image from "next/image";
 import { IntlNumberFormat } from "@/lib/utils";
-async function getSwarm(id: string) {
+async function getSwarm(slug: string) {
   try {
     const response = await fetch(`/api/swarms/${id}`);
     if (!response.ok) return null;

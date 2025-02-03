@@ -36,7 +36,9 @@ const SwarmComboBox = ({ className, defaultValue, onChange }: SwarmComboBoxProps
     useEffect(() => {
         async function fetchSwarms() {
             try {
-                const response = await fetch('/api/swarms');
+                const response = await fetch('/api/swarms', {
+                    cache: 'no-store'
+                });
                 const data = await response.json();
                 setSwarms(data);
             } catch (error) {

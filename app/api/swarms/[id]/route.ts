@@ -5,7 +5,7 @@ const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 
 export async function GET(
   request: Request,
-  { params }: { params: { slug: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
     console.log('Fetching swarm with slug:', params.slug);
