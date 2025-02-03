@@ -27,10 +27,27 @@ async function getServiceSpecs(serviceId: string) {
     }
 
     const record = data.records[0];
+    
+    // Add logging to debug
+    console.log('Service record:', record);
+    console.log('Raw specifications:', record.fields.specifications);
+    console.log('Raw deliverables:', record.fields.deliverables);
+    console.log('Raw validation:', record.fields.validation);
+
+    // Safely parse JSON fields
+    const specifications = record.fields.specifications ? JSON.parse(record.fields.specifications) : undefined;
+    const deliverables = record.fields.deliverables ? JSON.parse(record.fields.deliverables) : undefined;
+    const validation = record.fields.validation ? JSON.parse(record.fields.validation) : undefined;
+
+    // Add more logging
+    console.log('Parsed specifications:', specifications);
+    console.log('Parsed deliverables:', deliverables);
+    console.log('Parsed validation:', validation);
+
     return {
-      specifications: record.fields.specifications ? JSON.parse(record.fields.specifications) : undefined,
-      deliverables: record.fields.deliverables ? JSON.parse(record.fields.deliverables) : undefined,
-      validation: record.fields.validation ? JSON.parse(record.fields.validation) : undefined
+      specifications,
+      deliverables,
+      validation
     };
   } catch (error) {
     console.error('Error fetching service specs:', error);
