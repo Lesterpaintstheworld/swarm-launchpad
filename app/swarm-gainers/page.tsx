@@ -1,8 +1,7 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { SwarmGainCard } from '@/components/swarms/gainCard';
-import { previews } from '@/data/swarms/previews';
 import { captureCards } from '@/utils/captureCards';
 import { exportCards } from '@/utils/exportCards';
 import { getSwarmUsingId } from "@/data/swarms/info";
@@ -29,7 +28,29 @@ export default function SwarmGainersPage() {
             setIsCapturing(false);
         }
     };
-    const gainers = previews
+    const [swarms, setSwarms] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchSwarms() {
+            try {
+                const response = await fetch('/api/swarms');
+                const data = await response.json();
+                setSwarms(data);
+            } catch (error) {
+                console.error('Error fetching swarms:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        fetchSwarms();
+    }, []);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    const gainers = swarms
         .filter(swarm => {
             const swarmInfo = getSwarmUsingId(swarm.id);
             return swarmInfo && swarmInfo.multiple > 1;
