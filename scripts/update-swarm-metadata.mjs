@@ -5,6 +5,82 @@ const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 const AIRTABLE_TABLE_NAME = 'Swarms';
 
 const swarmMetadata = {
+  'altered-alley-inception-id': {
+    team: [
+      {
+        name: "Hexidized",
+        picture: "/swarms/aialley.avif",
+        telegram: "Hexidized",
+        X: "hexidized"
+      },
+      {
+        name: "Altered Alley",
+        picture: "/swarms/aialley.avif",
+        telegram: "AlteredAlley",
+        X: "alteredalley"
+      },
+      {
+        name: "Honeycomb Empire",
+        picture: "/swarms/aialley.avif",
+        X: "HoneycombEmpire"
+      }
+    ],
+    links: [
+      {
+        name: 'Pitch Deck',
+        url: 'https://ai-alley-integration-5wrdhgu.gamma.site/'
+      },
+      {
+        name: 'Spatial Experience 1',
+        url: 'https://www.spatial.io/s/Ai-Agents-675f9c30a04dbb712f0e051d?share=2899369617154930294'
+      },
+      {
+        name: 'Spatial Experience 2',
+        url: 'https://www.spatial.io/s/AI-63c8a8898ab06ebb400f0d9f?share=5084343558932005183'
+      }
+    ],
+    gallery: [
+      {
+        type: "image",
+        content: "/swarms/aialley.avif"
+      },
+      {
+        type: "image",
+        content: "/swarms/alteredalley/6314A9D1-BE8C-4109-BA91-269CB5FA1071_1_105_c.jpeg"
+      }
+    ]
+  },
+  'logicatlas-inception-id': {
+    team: [
+      {
+        name: "Derek Lisko",
+        picture: "/swarms/logicatlas.jpg",
+        telegram: "dereklisko",
+        X: "DerekRLisko"
+      }
+    ],
+    socials: {
+      twitter: 'LogicAtlas'
+    },
+    gallery: [
+      {
+        type: "image",
+        content: "/swarms/logicatlas.jpg"
+      },
+      {
+        type: "image",
+        content: "/swarms/logicatlas/photo_2025-01-27_18-47-51.jpg"
+      },
+      {
+        type: "image",
+        content: "/swarms/logicatlas/photo_2025-01-27_18-47-51 (2).jpg"
+      },
+      {
+        type: "image",
+        content: "/swarms/logicatlas/photo_2025-01-27_18-47-51 (3).jpg"
+      }
+    ]
+  },
   'kinos-partner-id': {
     links: [
       { label: 'Documentation', url: 'https://docs.universalbasiccompute.ai' },
@@ -20,49 +96,61 @@ const swarmMetadata = {
     },
     gallery: [
       {
-        type: 'image',
-        content: '/swarms/kinos/gallery/1.png'
-      },
-      {
-        type: 'image',
-        content: '/swarms/kinos/gallery/2.png'
-      }
-    ],
-    team: [
-      {
-        name: "Alex Chen",
-        role: "Lead Developer",
-        image: "/team/alex.jpg",
-        twitter: "alexchen_dev"
-      },
-      {
-        name: "Sarah Johnson",
-        role: "AI Architect",
-        image: "/team/sarah.jpg",
-        twitter: "sarahj_ai"
+        type: "image",
+        content: "/swarms/kinos.png"
       }
     ]
   },
-  'xforge-partner-id': {
-    links: [
-      { label: 'Portfolio', url: 'https://xforge.universalbasiccompute.ai' }
-    ],
-    socials: {
-      twitter: 'xforge_ubc',
-      telegram: 'xforgeubc'
-    },
+  'forge-partner-id': {
     gallery: [
       {
-        type: 'image',
-        content: '/swarms/xforge/gallery/1.png'
-      }
-    ],
-    team: [
+        type: "image",
+        content: "/swarms/XForge/monumental-3d-text-13761-burned-emerging_8N4aVSaARGa-oKYBvEygdQ_CM5ll4MvQX-PV8oerJ4yJw.png"
+      },
       {
-        name: "Michael Zhang",
-        role: "Technical Lead",
-        image: "/team/michael.jpg",
-        twitter: "mzhang_dev"
+        type: "image",
+        content: "/swarms/XForge/xforge.png"
+      }
+    ]
+  },
+  'eb76ae17-b9eb-476d-b272-4bde2d85c808': {
+    twitterAccount: "KinKong_ubc",
+    gallery: [
+      {
+        type: "image",
+        content: "/swarms/kinkong/1_KinKong-Advanced-AI-Trading-Agent.png"
+      },
+      {
+        type: "image",
+        content: "/swarms/kinkong/2_How-KinKong-Works.png"
+      },
+      {
+        type: "image",
+        content: "/swarms/kinkong/4_Investment-Structure.png"
+      },
+      {
+        type: "image",
+        content: "/swarms/kinkong/5_Development-Roadmap.png"
+      },
+      {
+        type: "image",
+        content: "/swarms/kinkong/6_Technical-Integration.png"
+      },
+      {
+        type: "image",
+        content: "/swarms/kinkong/7_Transparency-and-Verification.png"
+      },
+      {
+        type: "image",
+        content: "/swarms/kinkong/8_Market-Focus.png"
+      },
+      {
+        type: "image",
+        content: "/swarms/kinkong/9_Revenue-Distribution-Strategy.png"
+      },
+      {
+        type: "image",
+        content: "/swarms/kinkong/10_KinKong-Advanced-AI-Trading-System.png"
       }
     ]
   }
