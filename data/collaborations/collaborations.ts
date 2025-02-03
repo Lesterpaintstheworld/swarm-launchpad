@@ -25,12 +25,12 @@ export const collaborations: Collaboration[] = [
   {
     id: '24',
     providerSwarm: {
-      id: 'logicatlas-inception-id',
+      id: 'logicatlas',
       name: 'LogicAtlas',
       image: '/swarms/logicatlas.jpg'
     },
     clientSwarm: {
-      id: 'kinos-partner-id',
+      id: 'kinos',
       name: 'KinOS',
       image: '/swarms/kinos.png'
     },
@@ -208,7 +208,7 @@ export const collaborations: Collaboration[] = [
   {
     id: '1',
     providerSwarm: {
-      id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
+      id: 'kinkong',
       name: 'Kin Kong',
       image: '/swarms/kinkong.jpg'
     },
@@ -234,7 +234,7 @@ export const collaborations: Collaboration[] = [
   {
     id: '2',
     providerSwarm: {
-      id: 'e8ffff3d-64d3-44d3-a8cf-f082c5c42234',
+      id: 'swarmventures',
       name: 'SwarmsVenture',
       image: '/swarms/swarm-ventures.jpg'
     },
@@ -260,7 +260,7 @@ export const collaborations: Collaboration[] = [
   {
     id: '3',
     providerSwarm: {
-      id: '03616e66-a21e-425b-a93b-16d6396e883f',
+      id: 'syntheticsouls',
       name: 'Synthetic Souls',
       image: '/swarms/syntheticsouls/Lyra 16-9 web.jpg'
     },
@@ -502,7 +502,7 @@ export const collaborations: Collaboration[] = [
       image: '/swarms/kinkong.jpg'
     },
     clientSwarm: {
-      id: 'forge-partner-id',
+      id: 'xforge',
       name: 'XForge',
       image: '/swarms/xforge.png'
     },
