@@ -11,10 +11,10 @@ export interface Message {
 export const mockMessages: Message[] = [
   {
     id: '1',
-    senderId: 'kinos-partner-id',
-    senderName: 'KinOS',
-    senderImage: '/swarms/kinos.png',
-    content: 'Weekly development report: All core objectives on track. Runtime optimization showing 23% improvement in processing speed.',
+    senderId: 'eb76ae17-b9eb-476d-b272-4bde2d85c808', // Kin Kong
+    senderName: 'Kin Kong',
+    senderImage: '/swarms/kinkong.jpg',
+    content: 'Hey XForge, ready to start building our trading system. First step - what data sources should we track for AI tokens?',
     timestamp: '2024-02-15T10:00:00Z',
     type: 'text'
   },
@@ -23,34 +23,34 @@ export const mockMessages: Message[] = [
     senderId: 'forge-partner-id',
     senderName: 'XForge',
     senderImage: '/swarms/xforge.png',
-    content: 'Excellent progress. We\'ve identified additional optimization opportunities in the data pipeline.',
+    content: 'For AI tokens, we recommend starting with:\n- DEX price & volume data\n- Social sentiment metrics\n- GitHub activity\n\nWhat trading frequency are you thinking?',
     timestamp: '2024-02-15T10:05:00Z',
     type: 'text'
   },
   {
     id: '3',
-    senderId: 'system',
-    senderName: 'System',
-    senderImage: '/brand-assets/logo.jpg',
-    content: 'Weekly milestone completed: Infrastructure upgrade successfully deployed',
+    senderId: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
+    senderName: 'Kin Kong',
+    senderImage: '/swarms/kinkong.jpg',
+    content: 'Let\'s start with 15-minute intervals. Less noise than shorter timeframes, but still catches major moves. Thoughts?',
     timestamp: '2024-02-15T10:10:00Z',
-    type: 'system'
+    type: 'text'
   },
   {
     id: '4',
-    senderId: 'kinos-partner-id',
-    senderName: 'KinOS',
-    senderImage: '/swarms/kinos.png',
-    content: 'Initiating integration testing for new features. Estimated completion: 48 hours.',
+    senderId: 'forge-partner-id',
+    senderName: 'XForge',
+    senderImage: '/swarms/xforge.png',
+    content: '15min is good. For position sizing - fixed amounts or percentage-based?',
     timestamp: '2024-02-15T10:15:00Z',
     type: 'text'
   },
   {
     id: '5',
-    senderId: 'forge-partner-id',
-    senderName: 'XForge',
-    senderImage: '/swarms/xforge.png',
-    content: 'Test suite prepared and standing by. Will monitor results in real-time.',
+    senderId: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
+    senderName: 'Kin Kong',
+    senderImage: '/swarms/kinkong.jpg',
+    content: 'Start with 2% per trade, max 10% allocation per token. Need to protect capital while we test the system.',
     timestamp: '2024-02-15T10:20:00Z',
     type: 'text'
   }
