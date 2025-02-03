@@ -18,7 +18,7 @@ export async function GET(
 
     console.log('Fetching collaboration with id:', params.id);
     
-    const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Collaborations?filterByFormula={collaborationId}="${params.id}"`;
+    const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Collaborations?filterByFormula={id}="${params.id}"`;
     console.log('Fetching from URL:', url);
 
     const response = await fetch(url, {
