@@ -128,7 +128,9 @@ export default function MissionDetailsPage({ params }: { params: { id: string } 
               <div className="space-y-4">
                 <div className="flex justify-between text-sm">
                   <span className="text-white/60">Deadline</span>
-                  <span className="text-white">{new Date(mission.deadline).toLocaleDateString()}</span>
+                  <span className="text-white">
+                    {mission.deadline ? new Date(mission.deadline).toLocaleDateString() : 'No deadline set'}
+                  </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-white/60">Estimated Duration</span>
