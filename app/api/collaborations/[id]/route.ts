@@ -8,39 +8,86 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
+    if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
+      console.error('Missing Airtable configuration');
+      return NextResponse.json(
+        { error: 'Server configuration error' },
+        { status: 500 }
+      );
+    }
+
     console.log('Fetching collaboration with id:', params.id);
     
-    const response = await fetch(
-      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Collaborations?filterByFormula={id}="${params.id}"`,
-      {
-        headers: {
-          Authorization: `Bearer ${AIRTABLE_API_KEY}`,
-        },
-        cache: 'no-store'
-      }
-    );
+    const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Collaborations?filterByFormula={id}="${params.id}"`;
+    console.log('Fetching from URL:', url);
+
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+      },
+      cache: 'no-store'
+    });
 
     if (!response.ok) {
-      console.error('Airtable response not OK:', await response.text());
-      return NextResponse.json({ error: 'Failed to fetch collaboration' }, { status: 500 });
+      const errorText = await response.text();
+      console.error('Airtable response not OK:', {
+        status: response.status,
+        statusText: response.statusText,
+        error: errorText
+      });
+      return NextResponse.json(
+        { error: 'Failed to fetch collaboration' },
+        { status: response.status }
+      );
     }
 
-    const data = await response.json();
-    console.log('Raw Airtable data:', data);
-
-    // Check if data and records exist
-    if (!data || !data.records) {
-      console.log('No data or records returned from Airtable');
-      return NextResponse.json({ error: 'Collaboration not found' }, { status: 404 });
+    let data;
+    try {
+      data = await response.json();
+    } catch (parseError) {
+      console.error('Failed to parse response:', parseError);
+      return NextResponse.json(
+        { error: 'Invalid response format' },
+        { status: 500 }
+      );
     }
 
-    // Check if any records were found
+    console.log('Received data:', JSON.stringify(data, null, 2));
+
+    if (!data || typeof data !== 'object') {
+      console.error('Invalid data format received');
+      return NextResponse.json(
+        { error: 'Invalid data format' },
+        { status: 500 }
+      );
+    }
+
+    if (!Array.isArray(data.records)) {
+      console.error('No records array in response');
+      return NextResponse.json(
+        { error: 'Invalid data format' },
+        { status: 500 }
+      );
+    }
+
     if (data.records.length === 0) {
       console.log('No collaboration found with ID:', params.id);
-      return NextResponse.json({ error: 'Collaboration not found' }, { status: 404 });
+      return NextResponse.json(
+        { error: 'Collaboration not found' },
+        { status: 404 }
+      );
     }
 
     const record = data.records[0];
+    
+    if (!record.fields) {
+      console.error('Record missing fields:', record);
+      return NextResponse.json(
+        { error: 'Invalid record format' },
+        { status: 500 }
+      );
+    }
+
     const collaboration = {
       id: record.fields.id,
       providerSwarm: {
@@ -62,6 +109,7 @@ export async function GET(
       focus: record.fields.focus
     };
 
+    console.log('Returning collaboration:', collaboration);
     return NextResponse.json(collaboration);
   } catch (error) {
     console.error('Error in /api/collaborations/[id]:', error);
