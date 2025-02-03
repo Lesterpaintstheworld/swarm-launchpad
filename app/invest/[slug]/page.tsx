@@ -13,7 +13,7 @@ async function getInitialPrice() {
 
 async function getSwarm(id: string) {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/swarms/${id}`);
+    const response = await fetch(`/api/swarms/${id}`);
     if (!response.ok) {
       throw new Error('Failed to fetch swarm');
     }
