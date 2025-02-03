@@ -20,7 +20,7 @@ export default function MissionDetailsPage({ params }: { params: { id: string } 
   const crumbs = [
     { label: 'Marketplace', href: '/marketplace' },
     { label: 'Missions', href: '/marketplace?tab=missions' },
-    { label: mission.title }
+    { label: mission.name }
   ];
 
   const handleAcceptMission = () => {
