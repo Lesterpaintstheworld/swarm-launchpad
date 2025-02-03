@@ -25,7 +25,6 @@ import { toast } from 'sonner';
 import { useWallet } from "@solana/wallet-adapter-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
-import { getSwarmUsingPoolId } from "@/data/swarms/info";
 
 const getSwarmStage = (swarmType: string) => {
     switch (swarmType) {
@@ -60,8 +59,24 @@ const SwarmInvestCard = ({
     const [numShares, setNumShares] = useState<number>(0);
     const [price, setPrice] = useState<number>(0);
     const [isLoading, setIsLoading] = useState(false);
-    const swarm = getSwarmUsingPoolId(pool);
+    const [swarm, setSwarm] = useState<any>(null);
     const isBeforeLaunch = swarm?.launchDate && new Date(swarm.launchDate) > new Date();
+
+    useEffect(() => {
+        async function fetchSwarm() {
+            try {
+                const response = await fetch(`/api/swarms?poolId=${pool}`);
+                if (!response.ok) return;
+                const data = await response.json();
+                if (data.length > 0) {
+                    setSwarm(data[0]);
+                }
+            } catch (error) {
+                console.error('Error fetching swarm:', error);
+            }
+        }
+        fetchSwarm();
+    }, [pool]);
     const [data, setData] = useState({
         totalSupply: 0,
         remainingSupply: 0,
