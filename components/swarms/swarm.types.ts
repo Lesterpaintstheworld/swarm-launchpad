@@ -78,4 +78,5 @@ export interface SwarmInfo {
     team?: TeamMember[];
     weeklyRevenue?: number;
     totalRevenue?: number;
+    twitterAccount?: string;
 }
