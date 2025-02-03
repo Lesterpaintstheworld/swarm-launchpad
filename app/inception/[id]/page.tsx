@@ -1,5 +1,16 @@
 'use client';
 
+interface Swarm {
+    id: string;
+    name: string;
+    description?: string;
+    gallery?: Array<{
+        type: string;
+        content: string;
+    }>;
+    swarmType: string;
+}
+
 import { useCallback, useEffect, useState } from "react";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { useRouter } from "next/navigation";
@@ -9,7 +20,7 @@ import { SwarmGallery } from "@/components/swarms/gallery";
 
 export default function InceptionSwarm({ params }: { params: { id: string } }) {
     const router = useRouter();
-    const [swarm, setSwarm] = useState(null);
+    const [swarm, setSwarm] = useState<Swarm | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -20,7 +31,7 @@ export default function InceptionSwarm({ params }: { params: { id: string } }) {
                     router.push('/404');
                     return;
                 }
-                const data = await response.json();
+                const data: Swarm = await response.json();
                 if (data.swarmType !== 'inception') {
                     router.push(`/invest/${data.id}`);
                     return;
