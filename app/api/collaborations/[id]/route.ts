@@ -139,6 +139,9 @@ export async function GET(
       );
     }
 
+    // Fetch service specs
+    const serviceSpecs = await getServiceSpecs(record.fields.serviceId);
+
     const collaboration = {
       id: record.fields.collaborationId,
       providerSwarm,
@@ -149,7 +152,10 @@ export async function GET(
       startDate: record.fields.startDate,
       description: record.fields.description,
       objectives: record.fields.objectives ? JSON.parse(record.fields.objectives) : undefined,
-      focus: record.fields.focus
+      focus: record.fields.focus,
+      specifications: serviceSpecs?.specifications,
+      deliverables: serviceSpecs?.deliverables,
+      validation: serviceSpecs?.validation
     };
 
     console.log('Returning collaboration:', collaboration);
