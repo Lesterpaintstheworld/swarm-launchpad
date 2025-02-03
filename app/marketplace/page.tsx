@@ -20,6 +20,33 @@ function MarketplaceContent() {
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
   const [sortOption, setSortOption] = useState<SortOption>(searchParams.get('sort') as SortOption || 'relevance');
   const [collaborationView, setCollaborationView] = useState<'list' | 'graph'>(searchParams.get('view') as 'list' | 'graph' || 'list');
+  
+  // State for marketplace data
+  const [collaborations, setCollaborations] = useState([]);
+  const [services, setServices] = useState([]);
+  const [missions, setMissions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch collaborations data
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        const response = await fetch('/api/collaborations');
+        if (!response.ok) {
+          throw new Error('Failed to fetch collaborations');
+        }
+        const data = await response.json();
+        setCollaborations(data);
+      } catch (error) {
+        console.error('Error fetching collaborations:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const params = new URLSearchParams();
