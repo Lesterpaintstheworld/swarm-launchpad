@@ -70,4 +70,9 @@ export interface Mission {
   swarmId: string;
   requirements?: string[];
   deliverables?: string[];
+  requester: {
+    name: string;
+    image: string;
+  };
+  estimatedDuration: string;
 }
