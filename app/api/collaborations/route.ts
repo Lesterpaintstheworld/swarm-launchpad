@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { AirtableRecord, CollaborationFields, SwarmResponse } from '@/types/api';
+import { ServiceId, ServiceName } from '@/types/services';
 
 interface AirtableSpecRecord {
   fields: {

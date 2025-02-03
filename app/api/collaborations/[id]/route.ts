@@ -24,17 +24,6 @@ interface AirtableValidationRecord {
   };
 }
 
-type ServiceId = 
-  | 'xforge-development-package'
-  | 'kinos-essential-package'
-  | 'kinos-inception-package'
-  | 'kinkong-trading';
-
-type ServiceName = 
-  | 'Development Package'
-  | 'Essential Swarm Package'
-  | 'Inception Package'
-  | 'Active AI Tokens Trading';
 
 interface CollaborationRecord {
   fields: {
