@@ -4,6 +4,22 @@ import Image from 'next/image';
 import { sectionColors } from '../types';
 import { useEffect, useState } from 'react';
 
+interface Service {
+  id: string;
+  name: string;
+  description: string;
+  serviceType: 'subscription' | 'one-off' | 'pay-as-you-go' | 'financial';
+  banner?: string;
+  swarmId?: string;
+  categories: string[];
+  computePerTask: number;
+  activeSubscriptions?: number;
+}
+
+interface ServiceCardProps {
+  service: Service;
+}
+
 const getCardStyles = (serviceType: string) => {
   if (serviceType === 'financial') {
     return {
