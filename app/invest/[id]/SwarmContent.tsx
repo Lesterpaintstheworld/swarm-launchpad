@@ -42,6 +42,7 @@ interface SwarmContentProps {
         weeklyRevenue?: number;
         launchDate?: Date;
         twitterAccount?: string;
+        revenueShare?: number;
     };
     initialPrice: number | null;
 }
