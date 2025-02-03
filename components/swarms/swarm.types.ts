@@ -32,6 +32,7 @@ export interface SwarmPreviewData {
     launchDate?: Date;
     weeklyRevenue?: number;
     totalRevenue?: number;
+    twitterAccount?: string;  // Added this line
 }
 
 export type SwarmModel = 'KinOS' | 'Claude Haiku' | 'GPT-4o Mini';
