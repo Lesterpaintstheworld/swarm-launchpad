@@ -3,7 +3,6 @@
 'use client';
 
 import { SwarmPreviewCard } from '@/components/swarms/preview';
-import { getSwarm } from '@/data/swarms/info';
 import { useState, useEffect } from 'react';
 
 function ComingSoonSection() {
@@ -45,6 +44,7 @@ export function SwarmProfiles() {
     }
     fetchSwarms();
   }, []);
+
   return (
     <div className="space-y-8">
       {/* Top Gainers Section */}
