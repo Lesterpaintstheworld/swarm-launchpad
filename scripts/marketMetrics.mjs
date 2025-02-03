@@ -33,7 +33,25 @@ const swarmPools = [
     { name: 'Swarm Ventures', pool: '911eRdu96ncdnmEUYA3UQ39gEtE9ueg7UbqycKuKweCG' },
     { name: 'Synthetic Souls', pool: 'CmC2AUuurX19TLBVQbpNct8pmEjaHsRj6o8SLBAVvxAk' },
     { name: 'DuoAI', pool: '68K6BBsPynRbLkjJzdQmKMvTPLaUiKb93BUwbJfjqepS' },
-    { name: 'XForge', pool: 'AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi', weeklyRevenue: 1600000 }
+    { name: 'XForge', pool: 'AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi', weeklyRevenue: 1600000 },
+    { name: 'PropertyKin', pool: '6HnxTkNhQaoYRkPyZD1zTH5WBvFGLes5X2vrH66roa5G' },
+    { name: 'TherapyKin', pool: '5wWLpeH2DDrAS9Lxx1nGnwtMTvu7U9txf4BuXxdN6V6H' },
+    { name: 'PublishKin', pool: 'Dt7iwGTgRVZGV2NZFvNtrWVNX77s8ejGdhB2XaR4DxX6' },
+    { name: 'PlayWise', pool: '2iAarCWnsdFqddprxzUwmaLiozHarMTpzLdhJPbi2HRR' },
+    { name: 'TalentKin', pool: 'DTFE1peg5aNe8gFuaT9KZe8TJ4RHks9prpd12iUBKwi4' },
+    { name: 'CareHive', pool: 'FHXsVnEfqHQBQS6An4icuSD5ewwn5WWkoj2LWRMGw4mb' },
+    { name: 'CommerceNest', pool: '9hAfNquoNDbvzcEc1rBG8JzbWRskAsjKm7sYbarRfxyj' },
+    { name: 'ProfitBeeAI', pool: '7AEP5qWyPF92Wgv6tLCwe51e8yrF3WwSzSef5Vg7RQt4' },
+    { name: 'DeskMate', pool: 'Gucj554x7dRebtfUBxK1XTBUhQmq2Rqp4v2H6WtL7wNX' },
+    { name: 'STUMPED', pool: '5wL5rah4gWqbbv74vWvsmqqEf99uhRLr3jNPsMcw5imN' },
+    { name: 'TravelAId', pool: 'BEsb73xDJH3PrRGs1D4zkPAssg94Yi8dAtiFa59gzeY1' },
+    { name: 'GrantKin', pool: '3oa4GKg3hpavEAEacDUKJQoA12VPvRE1CKoHypBho2Rt' },
+    { name: 'CareerKin', pool: 'EMtoBMEn6JtV9tnbF8ZVVrxnYZbdapWAYEzabq7cW2gR' },
+    { name: 'Robinhood Agent', pool: 'H7xCtjoCyqf55uc5nmPKpypN82jANkRDTNmPx6C3XhS5' },
+    { name: 'StudioKin', pool: 'EJ4Ad3faa43JLZW3HQnxweYFqm4T2cUzBGntG5KnJWE8' },
+    { name: 'WealthHive', pool: 'HeR7qoPbvmgcLFywkduZ27Hr2wKYuxtVkTBaGhVohP88' },
+    { name: 'AI Alley', pool: 'DmdtWBcEwWr15MCm9Wa8iB8EJhHPK9NydiuLptuvMBxj' },
+    { name: 'LogicAtlas', pool: '9pMb8Ez61vh3YRKKKrkdA5MthswuNE6Bzj9KYPEVCFme' }
 ];
 
 async function calculateMetrics() {
