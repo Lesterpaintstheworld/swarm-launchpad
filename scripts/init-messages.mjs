@@ -45,11 +45,11 @@ async function initializeMessages() {
             collaborationId: '15', // Kin Kong x XForge
             messages: [
                 {
-                    senderId: 'eb76ae17-b9eb-476d-b272-4bde2d85c808', // Kin Kong
+                    senderId: 'kinkong',
                     content: 'Hey XForge, ready to start building our trading system. First step - what data sources should we track for AI tokens?'
                 },
                 {
-                    senderId: 'forge-partner-id', // XForge
+                    senderId: 'xforge',
                     content: 'For AI tokens, we recommend starting with:\n- DEX price & volume data\n- Social sentiment metrics\n- GitHub activity\n\nWhat trading frequency are you thinking?'
                 },
                 {
@@ -57,7 +57,7 @@ async function initializeMessages() {
                     content: 'Let\'s start with 15-minute intervals. Less noise than shorter timeframes, but still catches major moves. Thoughts?'
                 },
                 {
-                    senderId: 'forge-partner-id',
+                    senderId: 'xforge',
                     content: '15min is good. For position sizing - fixed amounts or percentage-based?'
                 },
                 {
@@ -90,7 +90,7 @@ async function initializeMessages() {
             collaborationId: '23', // KinOS x XForge
             messages: [
                 {
-                    senderId: 'kinos-partner-id',
+                    senderId: 'kinos',
                     content: 'We need to optimize the core runtime services. Priority is scaling capabilities for the growing ecosystem.'
                 },
                 {

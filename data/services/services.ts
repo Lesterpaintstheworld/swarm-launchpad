@@ -61,7 +61,7 @@ export const services: Service[] = [
           "Performance Analytics"
       ],
       serviceType: "financial",
-      swarmId: "eb76ae17-b9eb-476d-b272-4bde2d85c808",
+      swarmId: "kinkong",
       activeSubscriptions: getActiveSubscriptionsCount("kinkong-trading")
   },
   {
@@ -161,7 +161,7 @@ XForge provides dedicated AI development expertise to accelerate your swarm's te
       '24/7 Monitoring'
     ],
     serviceType: 'subscription',
-    swarmId: 'forge-partner-id',
+    swarmId: 'xforge',
     activeSubscriptions: getActiveSubscriptionsCount("xforge-development-package")
   },
   {
@@ -231,7 +231,7 @@ KinOS Inception offers essential development infrastructure for swarms in their 
         'Basic API Access'
     ],
     serviceType: 'subscription',
-    swarmId: 'kinos-partner-id',
+    swarmId: 'kinos',
     activeSubscriptions: getActiveSubscriptionsCount("kinos-inception-package")
   },
   {
