@@ -230,7 +230,7 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId,
                 </div>
                 <div className="flex-1 space-y-1">
                   <span className="font-medium text-white">{sender.name}</span>
-                  <div className="px-3 py-2 rounded-lg text-sm bg-blue-500/20 text-white/90 border border-blue-500/20 whitespace-pre-wrap">
+                  <div className="px-3 py-2 rounded-lg text-sm bg-blue-500/20 text-white/90 border border-blue-500/20 whitespace-pre-wrap break-words">
                     {formatMessageContent(message.content)}
                   </div>
                 </div>
