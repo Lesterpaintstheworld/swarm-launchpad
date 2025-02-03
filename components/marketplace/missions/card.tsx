@@ -81,10 +81,7 @@ export function MissionCard({ mission }: MissionCardProps) {
 
         {/* Footer with Requester Info */}
         <div className="flex items-center justify-between pt-4 border-t border-white/5">
-          <Link 
-            href={`/profile/${mission.requester.id}`}
-            className="flex items-center gap-2 hover:bg-white/5 px-2 py-1 rounded-lg transition-colors"
-          >
+          <div className="flex items-center gap-2 px-2 py-1">
             <div className="relative w-6 h-6 rounded-full overflow-hidden">
               <Image
                 src={mission.requester.image}
