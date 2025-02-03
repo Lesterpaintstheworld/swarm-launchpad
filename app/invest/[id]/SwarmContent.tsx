@@ -50,6 +50,26 @@ interface SwarmContentProps {
 
 export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
     const [price, setPrice] = useState<number | null>(initialPrice);
+    const [services, setServices] = useState([]);
+    const [collaborations, setCollaborations] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const [servicesRes, collabsRes] = await Promise.all([
+                    fetch(`/api/services?swarmId=${swarm.id}`),
+                    fetch(`/api/collaborations?swarmId=${swarm.id}`)
+                ]);
+                const servicesData = await servicesRes.json();
+                const collabsData = await collabsRes.json();
+                setServices(servicesData);
+                setCollaborations(collabsData);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+        fetchData();
+    }, [swarm.id]);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -164,14 +184,14 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                                 } : undefined}
                             />
 
-                            {getServicesBySwarm(swarm.id).length > 0 && (
+                            {services.length > 0 && (
                                 <div className="flex flex-col gap-4 mt-8">
                                     <div className="flex items-center gap-8">
                                         <h4 className="font-semibold">Services Offered</h4>
                                     </div>
                                     <hr className="mt-3" />
                                     <ServiceGrid 
-                                        services={getServicesBySwarm(swarm.id)}
+                                        services={services}
                                     />
                                 </div>
                             )}
@@ -202,7 +222,7 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
             </div>
 
             {/* Active Collaborations - Full Width */}
-            {getCollaborationsBySwarm(swarm.id).length > 0 && (
+            {collaborations.length > 0 && (
                 <div className="mt-16">
                     <div className="flex items-center gap-8 mb-4">
                         <h4 className="font-semibold">Active Collaborations</h4>
@@ -210,7 +230,7 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                     <hr className="mb-6" />
                     <div className="bg-black/20 rounded-xl p-6 border border-white/10">
                         <CollaborationGrid 
-                            collaborations={getCollaborationsBySwarm(swarm.id)}
+                            collaborations={collaborations}
                         />
                     </div>
                 </div>

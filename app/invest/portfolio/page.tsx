@@ -8,7 +8,6 @@ import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import { useEffect, useState } from "react";
-import { SwarmData, getSwarmUsingPoolId } from "@/data/swarms/info";
 import { extractKey } from "@/lib/utils";
 import { getShareholderPDA } from "@/hooks/useLaunchpadProgram/utils";
 
@@ -27,8 +26,30 @@ export default function Portfolio() {
     const [investments, setInvestments] = useState<Investment[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
+    const [swarmData, setSwarmData] = useState({});
+    const [poolIds, setPoolIds] = useState<string[]>([]);
 
-    const poolIds: string[] = extractKey(SwarmData, 'pool') || [];
+    useEffect(() => {
+        async function fetchSwarmData() {
+            try {
+                const response = await fetch('/api/swarms');
+                const data = await response.json();
+                const swarmMap = {};
+                const pools: string[] = [];
+                data.forEach(swarm => {
+                    if (swarm.pool) {
+                        swarmMap[swarm.pool] = swarm;
+                        pools.push(swarm.pool);
+                    }
+                });
+                setSwarmData(swarmMap);
+                setPoolIds(pools);
+            } catch (error) {
+                console.error('Error fetching swarm data:', error);
+            }
+        }
+        fetchSwarmData();
+    }, []);
 
     useEffect(() => {
         if (!connected || !publicKey || poolIds.length < 1) {
@@ -72,7 +93,7 @@ export default function Portfolio() {
                             const poolPubkey = new PublicKey(poolId);
                             const poolData = await program.account.pool.fetch(poolPubkey);
                 
-                            const swarm = getSwarmUsingPoolId(poolId);
+                            const swarm = swarmData[poolId];
                             if (!swarm) {
                                 console.error(`No swarm found for pool ID: ${poolId}`);
                                 continue;
