@@ -93,7 +93,7 @@ export async function GET() {
       }
     });
 
-    const collaborations = await Promise.all(data.records.map(async (record: any) => {
+    const collaborations = await Promise.all(data.records.map(async (record: AirtableRecord<CollaborationFields>) => {
       const providerSwarm = swarmMap.get(record.fields.providerSwarmId);
       const clientSwarm = swarmMap.get(record.fields.clientSwarmId);
 

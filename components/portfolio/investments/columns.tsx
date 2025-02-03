@@ -242,27 +242,7 @@ export const columns: ColumnDef<Investment>[] = [
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Price per Share" />
         ),
-        cell: ({ row }) => {
-            const swarmId = row.getValue('swarm_id');
-            const [swarm, setSwarm] = useState<any>(null);
-
-            useEffect(() => {
-                async function fetchSwarm() {
-                    try {
-                        const response = await fetch(`/api/swarms/${swarmId}`);
-                        if (!response.ok) return;
-                        const data = await response.json();
-                        setSwarm(data);
-                    } catch (error) {
-                        console.error('Error fetching swarm:', error);
-                    }
-                }
-                fetchSwarm();
-            }, [swarmId]);
-
-            if (!swarm?.pool) return null;
-            return <PriceCell poolAddress={swarm.pool} />;
-        }
+        cell: ({ row }) => <PriceCell swarmId={row.getValue('swarm_id')} />
     },
     {
         accessorKey: 'value',

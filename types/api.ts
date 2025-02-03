@@ -64,3 +64,52 @@ export interface MessageFields {
   content: string;
   timestamp: string;
 }
+
+export interface SwarmResponse {
+  id: string;
+  name: string;
+  image: string;
+  pool?: string;
+  description?: string;
+  role?: string;
+  swarmType?: string;
+  multiple?: number;
+  weeklyRevenue?: number;
+  gallery?: any[];
+  tags?: string[];
+  achievements?: any[];
+  socials?: Record<string, string>;
+}
+
+export interface ServiceResponse {
+  id: string;
+  name: string;
+  description: string;
+  serviceType: string;
+  banner?: string;
+  swarmId?: string;
+  categories: string[];
+  computePerTask: number;
+  activeSubscriptions?: number;
+}
+
+export interface CollaborationResponse {
+  id: string;
+  providerSwarm: {
+    id: string;
+    name: string;
+    image: string;
+  };
+  clientSwarm: {
+    id: string;
+    name: string;
+    image: string;
+  };
+  serviceName: string;
+  status: string;
+  price: number;
+  startDate: string;
+  description?: string;
+  objectives?: string[];
+  focus?: string;
+}

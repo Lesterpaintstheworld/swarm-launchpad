@@ -61,11 +61,11 @@ export function CollaborationGraph() {
   const [swarmMap, setSwarmMap] = useState<Map<string, SwarmData>>(new Map());
   const [isLoading, setIsLoading] = useState(true);
 
-  const getNodeSize = (swarmId: string): number => {
+  const getNodeSize = useCallback((swarmId: string): number => {
     const swarm = swarmMap.get(swarmId);
     if (!swarm?.multiple) return 30; // Default size
     return Math.max(25, Math.min(40, 25 + (swarm.multiple * 0.2)));
-  };
+  }, [swarmMap]);
 
   useEffect(() => {
     async function fetchData() {
