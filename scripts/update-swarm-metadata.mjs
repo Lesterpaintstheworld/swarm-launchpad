@@ -180,6 +180,24 @@ async function updateSwarmMetadata(swarmId, metadata) {
 
     const recordId = findData.records[0].id;
 
+    // Prepare the fields object with stringified data
+    const fields = {};
+    
+    if (metadata.links) {
+      fields.links = JSON.stringify(metadata.links);
+    }
+    if (metadata.socials) {
+      fields.socials = JSON.stringify(metadata.socials);
+    }
+    if (metadata.gallery) {
+      fields.gallery = JSON.stringify(metadata.gallery);
+    }
+    if (metadata.team) {
+      fields.team = JSON.stringify(metadata.team);
+    }
+
+    console.log(`Updating ${swarmId} with fields:`, fields);
+
     // Update the record with the new metadata
     const updateResponse = await fetch(
       `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}/${recordId}`,
@@ -190,12 +208,7 @@ async function updateSwarmMetadata(swarmId, metadata) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          fields: {
-            links: JSON.stringify(metadata.links || []),
-            socials: JSON.stringify(metadata.socials || {}),
-            gallery: JSON.stringify(metadata.gallery || []),
-            team: JSON.stringify(metadata.team || [])
-          }
+          fields: fields
         })
       }
     );
