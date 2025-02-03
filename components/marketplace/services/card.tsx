@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { sectionColors } from '../types';
 import { useEffect, useState } from 'react';
+import { SwarmResponse } from '@/types/api';
 
 interface Service {
   id: string;
