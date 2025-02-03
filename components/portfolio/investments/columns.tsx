@@ -6,6 +6,7 @@ import { Investment } from "@/components/portfolio/investments";
 import Image from "next/image";
 import { IntlNumberFormat } from "@/lib/utils";
 import Link from "next/link";
+import { getSwarmUsingId } from "@/data/swarms/info";
 import { useEffect, useState } from "react";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { MoreHorizontal } from "lucide-react";
