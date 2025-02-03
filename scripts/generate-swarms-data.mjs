@@ -77,14 +77,28 @@ async function main() {
                 .replace(/[\u0000-\u001F\u007F-\u009F]/g, '')
                 // Handle team array
                 .replace(/team:\s*\[([\s\S]*?)\]/g, (match, teamContent) => {
-                    // Format team member objects
-                    const formattedTeam = teamContent
-                        .replace(/{\s*name:/g, '{"name":')
-                        .replace(/,\s*picture:/g, ',"picture":')
-                        .replace(/,\s*telegram:/g, ',"telegram":')
-                        .replace(/,\s*X:/g, ',"X":')
-                        .replace(/'/g, '"');
-                    return `"team":[${formattedTeam}]`;
+                    try {
+                        // Format each team member object
+                        const formattedTeam = teamContent
+                            .split('},{')
+                            .map(member => {
+                                let formatted = member
+                                    .replace(/^\s*{/, '')
+                                    .replace(/}\s*$/, '')
+                                    .split(',')
+                                    .map(prop => {
+                                        const [key, value] = prop.split(':').map(s => s.trim());
+                                        return `"${key}":"${value.replace(/^['"]|['"]$/g, '')}"`;
+                                    })
+                                    .join(',');
+                                return `{${formatted}}`;
+                            })
+                            .join(',');
+                        return `"team":[${formattedTeam}]`;
+                    } catch (e) {
+                        console.log('Error formatting team:', e);
+                        return '"team":[]';
+                    }
                 })
                 // Normalize whitespace
                 .replace(/\s+/g, ' ')
