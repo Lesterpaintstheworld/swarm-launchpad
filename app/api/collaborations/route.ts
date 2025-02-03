@@ -20,6 +20,78 @@ interface SwarmData {
   image: string;
 }
 
+async function getCollaborationSpecs(collaborationId: string) {
+  try {
+    console.log('Fetching specs for collaboration:', collaborationId);
+    
+    // Fetch specifications, deliverables, and validations in parallel
+    const [specsResponse, deliverablesResponse, validationResponse] = await Promise.all([
+      fetch(
+        `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Specifications?filterByFormula={collaborationId}="${collaborationId}"`,
+        {
+          headers: {
+            'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          cache: 'no-store'
+        }
+      ),
+      fetch(
+        `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Deliverables?filterByFormula={collaborationId}="${collaborationId}"`,
+        {
+          headers: {
+            'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          cache: 'no-store'
+        }
+      ),
+      fetch(
+        `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Validations?filterByFormula={collaborationId}="${collaborationId}"`,
+        {
+          headers: {
+            'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          cache: 'no-store'
+        }
+      )
+    ]);
+
+    const [specsData, deliverablesData, validationData] = await Promise.all([
+      specsResponse.json(),
+      deliverablesResponse.json(),
+      validationResponse.json()
+    ]);
+
+    console.log('Raw specs data:', specsData);
+    console.log('Raw deliverables data:', deliverablesData);
+    console.log('Raw validation data:', validationData);
+
+    const result = {
+      specifications: specsData.records?.map(record => ({
+        title: record.fields.title || 'Specification',
+        content: record.fields.content
+      })) || [],
+      deliverables: deliverablesData.records?.map(record => ({
+        title: record.fields.title || 'Deliverable',
+        content: record.fields.content
+      })) || [],
+      validation: validationData.records?.map(record => ({
+        title: record.fields.title || 'Validation',
+        content: record.fields.content
+      })) || []
+    };
+
+    console.log('Processed specs result:', result);
+    return result;
+
+  } catch (error) {
+    console.error('Error fetching collaboration specs:', error);
+    return null;
+  }
+}
+
 async function getSwarm(swarmId: string): Promise<SwarmData | null> {
   try {
     const response = await fetch(

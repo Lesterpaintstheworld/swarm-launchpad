@@ -254,6 +254,10 @@ export async function GET(
     // Fetch collaboration specs
     const specs = await getCollaborationSpecs(params.id);
 
+    // Fetch collaboration specs
+    const specs = await getCollaborationSpecs(params.id);
+    console.log('Fetched specs:', specs);
+
     const collaboration = {
       id: record.fields.collaborationId,
       providerSwarm,
