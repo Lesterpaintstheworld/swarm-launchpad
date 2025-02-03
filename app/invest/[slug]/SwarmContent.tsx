@@ -100,7 +100,11 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                                 </p>
                                 {price && (
                                     <p className="text-sm italic text-muted-foreground/40 mt-1">
-                                        ${Math.round(40000000 * price).toLocaleString()}
+                                        $<SwarmInvestCard 
+                                            pool={swarm.pool} 
+                                            marketCapOnly 
+                                            priceInUsd={price}
+                                        />
                                     </p>
                                 )}
                             </div>
@@ -111,7 +115,11 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                                 </p>
                                 {price && (
                                     <p className="text-sm italic text-muted-foreground/40 mt-1">
-                                        ${Math.round(5800000 * price).toLocaleString()}
+                                        $<SwarmInvestCard 
+                                            pool={swarm.pool} 
+                                            amountRaisedOnly 
+                                            priceInUsd={price}
+                                        />
                                     </p>
                                 )}
                             </div>
@@ -128,7 +136,7 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
                                 </p>
                                 {price && swarm.weeklyRevenue && (
                                     <p className="text-sm italic text-muted-foreground/40 mt-1">
-                                        ${Math.round(swarm.weeklyRevenue * price).toLocaleString()}
+                                        ${(swarm.weeklyRevenue * price).toLocaleString()}
                                     </p>
                                 )}
                             </div>
