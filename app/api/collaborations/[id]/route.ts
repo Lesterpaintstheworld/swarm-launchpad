@@ -1,5 +1,29 @@
 import { NextResponse } from 'next/server';
 
+interface AirtableSpecRecord {
+  fields: {
+    title?: string;
+    content: string;
+    collaborationId: string;
+  };
+}
+
+interface AirtableDeliverableRecord {
+  fields: {
+    title?: string;
+    content: string;
+    collaborationId: string;
+  };
+}
+
+interface AirtableValidationRecord {
+  fields: {
+    title?: string;
+    content: string;
+    collaborationId: string;
+  };
+}
+
 type ServiceId = 
   | 'xforge-development-package'
   | 'kinos-essential-package'
@@ -73,15 +97,15 @@ async function getCollaborationSpecs(collaborationId: string) {
     ]);
 
     return {
-      specifications: specsData.records?.map(record => ({
+      specifications: specsData.records?.map((record: AirtableSpecRecord) => ({
         title: record.fields.title || 'Specification',
         content: record.fields.content
       })) || [],
-      deliverables: deliverablesData.records?.map(record => ({
+      deliverables: deliverablesData.records?.map((record: AirtableDeliverableRecord) => ({
         title: record.fields.title || 'Deliverable',
         content: record.fields.content
       })) || [],
-      validation: validationData.records?.map(record => ({
+      validation: validationData.records?.map((record: AirtableValidationRecord) => ({
         title: record.fields.title || 'Validation',
         content: record.fields.content
       })) || []
