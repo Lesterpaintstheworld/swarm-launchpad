@@ -34,7 +34,7 @@ interface TooltipProps {
     }>;
 }
 
-interface LegendEntry {
+interface CustomPayload {
     value: string;
     color: string;
     payload: {
@@ -127,7 +127,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
         if (program && investments.length > 0) {
             calculateValues();
         }
-    }, [investments, program]);
+    }, [investments, program, typedProgram]);
 
     const CustomTooltip = ({ active, payload }: TooltipProps) => {
         if (active && payload && payload.length) {
