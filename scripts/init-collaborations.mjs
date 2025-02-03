@@ -64,19 +64,15 @@ async function initializeCollaborations() {
                         fields: {
                             id: collaboration.id,
                             sourceSwarmId: collaboration.sourceSwarm.id,
-                            sourceSwarmName: collaboration.sourceSwarm.name,
-                            sourceSwarmImage: collaboration.sourceSwarm.image,
                             targetSwarmId: collaboration.targetSwarm.id,
-                            targetSwarmName: collaboration.targetSwarm.name,
-                            targetSwarmImage: collaboration.targetSwarm.image,
                             serviceName: collaboration.serviceName,
+                            serviceId: getServiceId(collaboration.serviceName),
                             status: collaboration.status,
                             price: collaboration.price,
                             startDate: collaboration.startDate || '',
                             description: collaboration.description || '',
                             objectives: collaboration.objectives ? JSON.stringify(collaboration.objectives) : '',
-                            focus: collaboration.focus || '',
-                            serviceId: getServiceId(collaboration.serviceName)
+                            focus: collaboration.focus || ''
                         }
                     }]
                 })
