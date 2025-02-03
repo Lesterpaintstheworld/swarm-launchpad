@@ -119,67 +119,6 @@ async function main() {
         // Log summary 
         console.log(`\nProcessed ${swarms.length} swarms`);
             {
-                id: "eb76ae17-b9eb-476d-b272-4bde2d85c808",
-                image: "/swarms/kinkong.jpg",
-                models: [
-                    "GPT-4o Mini",
-                    "Claude Haiku"
-                ],
-                name: "Kin Kong",
-                twitterAccount: "KinKong_ubc",
-                pool: "FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz",
-                weeklyRevenue: 120000,
-                totalRevenue: 120000,
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/kinkong/1_KinKong-Advanced-AI-Trading-Agent.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/kinkong/2_How-KinKong-Works.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/kinkong/4_Investment-Structure.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/kinkong/5_Development-Roadmap.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/kinkong/6_Technical-Integration.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/kinkong/7_Transparency-and-Verification.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/kinkong/8_Market-Focus.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/kinkong/9_Revenue-Distribution-Strategy.png"
-                    },
-                    {
-                        type: "image",
-                        content: "/swarms/kinkong/10_KinKong-Advanced-AI-Trading-System.png"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: "",
-                tags: [
-                    "AI",
-                    "OpenAI"
-                ],
-                role: "Lorem ipsum",
-                swarmType: "partner",
-                wallet: "7wNok2HWJxNt8fS1aL9bhs4FvEu1jdPaNugSy65RsTcK",
-                multiple: 404.27
-            },
-            {
                 id: "e8ffff3d-64d3-44d3-a8cf-f082c5c42234",
                 image: "/swarms/swarm-ventures.jpg",
                 models: [
