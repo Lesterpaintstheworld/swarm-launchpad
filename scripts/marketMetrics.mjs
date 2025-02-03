@@ -1,6 +1,9 @@
 import { Program, AnchorProvider } from '@coral-xyz/anchor';
 import { Connection, PublicKey, Keypair } from '@solana/web3.js';
-import UbclaunchpadIDL from '../data/programs/ubclaunchpad.json' assert { type: 'json' };
+const idlModule = await import('../data/programs/ubclaunchpad.json', {
+    assert: { type: 'json' }
+});
+const UbclaunchpadIDL = idlModule.default;
 
 const PROGRAM_ID = new PublicKey("4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf");
 const RPC_URL = "https://api.mainnet-beta.solana.com";
