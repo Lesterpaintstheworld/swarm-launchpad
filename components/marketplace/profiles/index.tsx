@@ -3,6 +3,7 @@
 'use client';
 
 import { SwarmPreviewCard } from '@/components/swarms/preview';
+import { getSwarm } from '@/data/swarms/info';
 import { useState, useEffect } from 'react';
 
 function ComingSoonSection() {

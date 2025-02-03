@@ -14,20 +14,7 @@ interface SwarmPreviewCardProps {
 
 const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
     const [imgSrc, setImgSrc] = useState(swarm?.image);
-    const [swarms, setSwarms] = useState([]);
-
-    useEffect(() => {
-        async function fetchSwarms() {
-            try {
-                const response = await fetch('/api/swarms');
-                const data = await response.json();
-                setSwarms(data);
-            } catch (error) {
-                console.error('Error fetching swarms:', error);
-            }
-        }
-        fetchSwarms();
-    }, []);
+    const [imgSrc, setImgSrc] = useState(swarm?.image);
 
     return (
         <motion.div

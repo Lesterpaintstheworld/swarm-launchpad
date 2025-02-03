@@ -21,7 +21,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { SwarmModel, SwarmPreviewData } from "../swarm.types";
 import { useState, useEffect } from "react";
-import { getSwarm } from "@/data/swarms/previews";
+import { getSwarm } from "@/data/swarms/info";
 import { getSwarmInfo } from "@/data/swarms/info";
 
 interface SwarmComboBoxProps {
