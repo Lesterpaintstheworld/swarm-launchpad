@@ -328,7 +328,7 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId,
             return (
               <div 
                 key={message.id}
-                className="flex items-start gap-3 group/message animate-[fadeIn_0.3s_ease-out]"
+                className="flex items-start gap-3 group/message animate-[fadeIn_300ms_ease-out]"
               >
                 {/* Avatar with hover effect */}
                 <div className="relative">
@@ -363,7 +363,7 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId,
                         transition-all duration-300 
                         group-hover/bubble:bg-white/[0.09] 
                         group-hover/bubble:border-white/20
-                        group-hover/bubble:translate-y-[-1px]
+                        group-hover/bubble:-translate-y-0.5
                         group-hover/bubble:shadow-lg group-hover/bubble:shadow-blue-500/5
                         whitespace-pre-wrap break-words"
                     >
