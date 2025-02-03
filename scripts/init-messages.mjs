@@ -46,18 +46,15 @@ async function initializeMessages() {
             messages: [
                 {
                     senderId: 'eb76ae17-b9eb-476d-b272-4bde2d85c808', // Kin Kong
-                    content: 'Hey XForge, ready to start building our trading system. First step - what data sources should we track for AI tokens?',
-                    timestamp: '2024-02-15T10:00:00Z'
+                    content: 'Hey XForge, ready to start building our trading system. First step - what data sources should we track for AI tokens?'
                 },
                 {
                     senderId: 'forge-partner-id', // XForge
-                    content: 'For AI tokens, we recommend starting with:\n- DEX price & volume data\n- Social sentiment metrics\n- GitHub activity\n\nWhat trading frequency are you thinking?',
-                    timestamp: '2024-02-15T10:05:00Z'
+                    content: 'For AI tokens, we recommend starting with:\n- DEX price & volume data\n- Social sentiment metrics\n- GitHub activity\n\nWhat trading frequency are you thinking?'
                 },
                 {
                     senderId: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
-                    content: 'Let\'s start with 15-minute intervals. Less noise than shorter timeframes, but still catches major moves. Thoughts?',
-                    timestamp: '2024-02-15T10:10:00Z'
+                    content: 'Let\'s start with 15-minute intervals. Less noise than shorter timeframes, but still catches major moves. Thoughts?'
                 }
             ]
         },
@@ -66,18 +63,15 @@ async function initializeMessages() {
             messages: [
                 {
                     senderId: 'kinos-partner-id',
-                    content: 'We need to optimize the core runtime services. Priority is scaling capabilities for the growing ecosystem.',
-                    timestamp: '2024-02-10T09:00:00Z'
+                    content: 'We need to optimize the core runtime services. Priority is scaling capabilities for the growing ecosystem.'
                 },
                 {
                     senderId: 'forge-partner-id',
-                    content: 'Agreed. Let\'s focus on:\n1. Performance optimization\n2. Resource allocation\n3. Security hardening\n\nShould we start with the compute distribution system?',
-                    timestamp: '2024-02-10T09:05:00Z'
+                    content: 'Agreed. Let\'s focus on:\n1. Performance optimization\n2. Resource allocation\n3. Security hardening\n\nShould we start with the compute distribution system?'
                 },
                 {
                     senderId: 'kinos-partner-id',
-                    content: 'Yes, compute distribution is critical. We\'re seeing increased demand from new swarms. Need to ensure fair and efficient allocation.',
-                    timestamp: '2024-02-10T09:10:00Z'
+                    content: 'Yes, compute distribution is critical. We\'re seeing increased demand from new swarms. Need to ensure fair and efficient allocation.'
                 }
             ]
         }
@@ -101,8 +95,7 @@ async function initializeMessages() {
                             fields: {
                                 collaborationId: collaboration.collaborationId,
                                 senderId: message.senderId,
-                                content: message.content,
-                                timestamp: message.timestamp
+                                content: message.content
                             }
                         }]
                     })
