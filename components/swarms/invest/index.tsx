@@ -580,7 +580,7 @@ const SwarmInvestCard = ({
                                             if (payload && payload.length) {
                                                 return (
                                                     <ul className="flex flex-wrap justify-center gap-2 mt-4">
-                                                        {(payload as CustomPayload[]).map((entry, index) => (
+                                                        {((payload as unknown) as CustomPayload[]).map((entry, index) => (
                                                             <li key={`legend-${index}`} className="flex items-center gap-1 text-xs">
                                                                 <div 
                                                                     className="w-2 h-2 rounded-full"
