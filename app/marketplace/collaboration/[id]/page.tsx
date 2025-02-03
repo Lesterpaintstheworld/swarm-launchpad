@@ -76,6 +76,17 @@ export default function CollaborationPage({ params }: { params: { id: string } }
   const [clientSwarm, setClientSwarm] = useState<SwarmData | null>(null);
   const [collaboration, setCollaboration] = useState<CollaborationData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isValidService, setIsValidService] = useState(true);
+
+  useEffect(() => {
+    async function validateService() {
+      if (collaboration?.serviceName) {
+        const isValid = await isValidServiceName(collaboration.serviceName);
+        setIsValidService(isValid);
+      }
+    }
+    validateService();
+  }, [collaboration?.serviceName]);
 
   useEffect(() => {
     async function fetchData() {
@@ -124,10 +135,7 @@ export default function CollaborationPage({ params }: { params: { id: string } }
     );
   }
 
-  // Validate the service name
-  const isValid = await isValidServiceName(collaboration.serviceName);
-  if (!isValid) {
-    console.error('Invalid service name:', collaboration.serviceName);
+  if (!isValidService) {
     return (
       <div className="container py-12">
         <h1 className="text-2xl font-bold">Invalid service type</h1>
