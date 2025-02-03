@@ -16,10 +16,15 @@ const bubbleAnimation = `
   }
 `;
 
+interface SpecItem {
+  title: string;
+  content: string;
+}
+
 interface ProjectSpecs {
-  specifications?: string[];
-  deliverables?: string[];
-  validation?: string[];
+  specifications?: SpecItem[];
+  deliverables?: SpecItem[];
+  validation?: SpecItem[];
 }
 
 interface Message {
@@ -66,7 +71,7 @@ function SpecificationAccordion({ specs }: { specs: ProjectSpecs }) {
       
       <div
         className={`overflow-hidden transition-all duration-300 ${
-          isOpen ? 'max-h-[500px]' : 'max-h-0'
+          isOpen ? 'max-h-[1000px]' : 'max-h-0'
         }`}
       >
         <div className="px-6 pb-6 space-y-6">
@@ -78,10 +83,12 @@ function SpecificationAccordion({ specs }: { specs: ProjectSpecs }) {
                 {specs.specifications.map((spec, index) => (
                   <div
                     key={index}
-                    className="flex items-start gap-2 text-sm text-white/80"
+                    className="bg-white/5 rounded-lg p-4 space-y-2"
                   >
-                    <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2 flex-shrink-0" />
-                    <span>{spec}</span>
+                    <h4 className="text-sm font-medium text-white/80">{spec.title}</h4>
+                    <div className="text-sm text-white/60 whitespace-pre-wrap">
+                      {spec.content}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -96,10 +103,12 @@ function SpecificationAccordion({ specs }: { specs: ProjectSpecs }) {
                 {specs.deliverables.map((deliverable, index) => (
                   <div
                     key={index}
-                    className="flex items-start gap-2 text-sm text-white/80"
+                    className="bg-white/5 rounded-lg p-4 space-y-2"
                   >
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-400 mt-2 flex-shrink-0" />
-                    <span>{deliverable}</span>
+                    <h4 className="text-sm font-medium text-white/80">{deliverable.title}</h4>
+                    <div className="text-sm text-white/60 whitespace-pre-wrap">
+                      {deliverable.content}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -114,10 +123,12 @@ function SpecificationAccordion({ specs }: { specs: ProjectSpecs }) {
                 {specs.validation.map((criterion, index) => (
                   <div
                     key={index}
-                    className="flex items-start gap-2 text-sm text-white/80"
+                    className="bg-white/5 rounded-lg p-4 space-y-2"
                   >
-                    <div className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-2 flex-shrink-0" />
-                    <span>{criterion}</span>
+                    <h4 className="text-sm font-medium text-white/80">{criterion.title}</h4>
+                    <div className="text-sm text-white/60 whitespace-pre-wrap">
+                      {criterion.content}
+                    </div>
                   </div>
                 ))}
               </div>

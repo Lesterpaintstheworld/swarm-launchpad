@@ -38,26 +38,23 @@ async function getServiceSpecs(serviceId: string) {
     const record = data.records[0];
     console.log('Service record fields:', record.fields);
     
-    // Return the specifications directly from the example data
+    // Parse the specifications from Airtable
     return {
-      specifications: [
-        "Development of AI-powered screenplay generation",
-        "Production planning system",
-        "Script generation engine with industry-standard formatting",
-        "Narrative analysis system with genre awareness"
-      ],
-      deliverables: [
-        "Production-ready web application",
-        "Deployed and tested smart contracts",
-        "Technical documentation",
-        "API specifications"
-      ],
-      validation: [
-        "All test suites passing",
-        "Security audit completed",
-        "Performance metrics met",
-        "Successful deployment"
-      ]
+      specifications: record.fields.specification ? 
+        [{
+          title: JSON.parse(record.fields.specification).specificationId,
+          content: JSON.parse(record.fields.specification).content
+        }] : [],
+      deliverables: record.fields.deliverables ? 
+        [{
+          title: JSON.parse(record.fields.deliverables).title,
+          content: JSON.parse(record.fields.deliverables).content
+        }] : [],
+      validation: record.fields.validation ? 
+        [{
+          title: JSON.parse(record.fields.validation).title,
+          content: JSON.parse(record.fields.validation).content
+        }] : []
     };
   } catch (error) {
     console.error('Error fetching service specs:', error);
