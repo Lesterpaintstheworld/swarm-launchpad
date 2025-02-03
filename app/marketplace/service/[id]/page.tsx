@@ -191,23 +191,25 @@ export default function ServicePage() {
           <div className="p-6 rounded-xl bg-white/5 border border-white/10 space-y-6">
             <div className="space-y-4">
               <h3 className="text-lg font-semibold">About the Provider</h3>
-              <Link
-                href={`/invest/${swarm.id}`}
-                className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 transition-colors"
-              >
-                <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                  <Image
-                    src={swarm.image}
-                    alt={swarm.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div>
-                  <div className="font-medium">{swarm.name}</div>
-                  <div className="text-sm text-muted-foreground">{swarm.role}</div>
-                </div>
-              </Link>
+              {swarm && (
+                <Link
+                  href={`/invest/${swarm.id}`}
+                  className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 transition-colors"
+                >
+                  <div className="relative w-12 h-12 rounded-full overflow-hidden">
+                    <Image
+                      src={swarm.image}
+                      alt={swarm.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div>
+                    <div className="font-medium">{swarm.name}</div>
+                    <div className="text-sm text-muted-foreground">{swarm.role}</div>
+                  </div>
+                </Link>
+              )}
             </div>
 
             <div className="flex flex-wrap gap-2">

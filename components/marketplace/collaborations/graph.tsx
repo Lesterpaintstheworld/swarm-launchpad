@@ -148,6 +148,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     const filteredCollaborations = collaborationsProp.filter(
       collab => collab.providerSwarm.id !== 'ecosystem'
     );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
     const ecosystemTargets = new Set(
       collaborationsProp
         .filter(collab => collab.providerSwarm.id === 'ecosystem')
