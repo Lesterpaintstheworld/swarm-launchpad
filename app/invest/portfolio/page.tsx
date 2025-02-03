@@ -1,5 +1,6 @@
 'use client'
 
+import { Investment } from '@/types/investments';
 import { DividendPayments } from "@/components/portfolio/dividendPayments";
 import { Investments } from "@/components/portfolio/investments";
 import { PortfolioOverview } from "@/components/portfolio/overview";
