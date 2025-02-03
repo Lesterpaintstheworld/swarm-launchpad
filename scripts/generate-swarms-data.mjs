@@ -534,16 +534,13 @@ async function main() {
                 swarmId: record.fields.ID,
                 name: record.fields.Name,
                 description: record.fields.Description || "PLACEHOLDER",
-                models: record.fields.Models,
-                role: record.fields.Role,
                 tags: record.fields.Tags,
                 swarmType: record.fields.Type,
                 wallet: record.fields.Wallet,
                 pool: record.fields.Pool,
                 multiple: record.fields.Multiple,
                 weeklyRevenue: record.fields.WeeklyRevenue,
-                totalRevenue: record.fields.TotalRevenue,
-                twitterAccount: record.fields.TwitterAccount
+                totalRevenue: record.fields.TotalRevenue
             };
 
             // Only add launchDate if it's not empty
