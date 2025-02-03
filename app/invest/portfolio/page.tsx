@@ -12,6 +12,10 @@ import { PublicKey } from "@solana/web3.js";
 import { useEffect, useState } from "react";
 import { getShareholderPDA } from "@/hooks/useLaunchpadProgram/utils";
 
+interface ProgramError extends Error {
+    message: string;
+}
+
 interface SwarmData {
     id: string;
     name: string;
