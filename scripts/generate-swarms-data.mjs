@@ -1,7 +1,10 @@
+// Import the swarm data
+import { SwarmData } from './data/swarms.cjs';
+
 async function main() {
     try {
         // Get all swarms from the data
-        const swarms = infoJson.map(swarm => ({
+        const swarms = SwarmData.map(swarm => ({
             fields: {
                 swarmId: swarm.id,
                 name: swarm.name,
@@ -33,11 +36,6 @@ async function main() {
 
         // Log summary 
         console.log(`\nProcessed ${swarms.length} swarms`);
-                image: '/swarms/kinos.png',
-                models: ['KinOS'],
-                name: 'KinOS',
-                pool: '37u532qgHbjUHic6mQK51jkT3Do7qkWLEUQCx22MDBD8',
-                weeklyRevenue: 460000,
                 totalRevenue: 460000,
                 gallery: [
                     {
