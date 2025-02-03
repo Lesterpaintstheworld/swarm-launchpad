@@ -161,7 +161,7 @@ XForge provides dedicated AI development expertise to accelerate your swarm's te
       '24/7 Monitoring'
     ],
     serviceType: 'subscription',
-    swarmId: 'forge-partner-id',
+    swarmId: 'xforge',
     activeSubscriptions: getActiveSubscriptionsCount("xforge-development-package")
   },
   {
@@ -301,7 +301,7 @@ KinOS Essential provides enterprise-grade infrastructure for production-ready sw
         'High Availability'
     ],
     serviceType: 'subscription',
-    swarmId: 'kinos-partner-id',
+    swarmId: 'kinos',
     activeSubscriptions: getActiveSubscriptionsCount("kinos-essential-package")
   }
 ];
