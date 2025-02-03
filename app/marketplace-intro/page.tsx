@@ -24,46 +24,52 @@ export default function MarketplacePage() {
       </div>
 
       {/* Metrics Section */}
-      <div className="w-full max-w-5xl mx-auto mt-24 mb-24">
+      <div className="w-full max-w-5xl mx-auto mt-12 mb-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Number of Swarms */}
-          <div className="p-6 rounded-xl bg-black/40 border border-white/10 backdrop-blur-sm">
-            <div className="text-center">
-              <h3 className="text-sm text-muted-foreground mb-2">Number of Swarms</h3>
-              <p className="text-4xl font-bold">25</p>
+          <div className="p-8 rounded-xl bg-black/40 border border-white/10 backdrop-blur-sm hover:bg-black/50 transition-all duration-300">
+            <div className="text-center h-full flex flex-col justify-center">
+              <h3 className="text-sm text-muted-foreground/80 uppercase tracking-wider mb-3">Number of Swarms</h3>
+              <p className="text-5xl font-bold bg-gradient-to-br from-white to-white/80 bg-clip-text text-transparent">25</p>
             </div>
           </div>
 
           {/* Total Market Cap */}
-          <div className="p-6 rounded-xl bg-black/40 border border-white/10 backdrop-blur-sm">
-            <div className="text-center">
-              <h3 className="text-sm text-muted-foreground mb-2">Total Market Cap</h3>
-              <p className="text-4xl font-bold">
-                <span className="metallic-text">293,638,825 $COMPUTE</span>
-              </p>
-              <p className="text-sm text-muted-foreground mt-1">$765,810</p>
+          <div className="p-8 rounded-xl bg-black/40 border border-white/10 backdrop-blur-sm hover:bg-black/50 transition-all duration-300">
+            <div className="text-center h-full flex flex-col justify-center">
+              <h3 className="text-sm text-muted-foreground/80 uppercase tracking-wider mb-3">Total Market Cap</h3>
+              <div className="space-y-2">
+                <p className="text-4xl">
+                  <span className="metallic-text font-normal">293,638,825 $COMPUTE</span>
+                </p>
+                <p className="text-2xl text-green-400/90 font-medium">$765,810</p>
+              </div>
             </div>
           </div>
 
           {/* Total Amount Raised */}
-          <div className="p-6 rounded-xl bg-black/40 border border-white/10 backdrop-blur-sm">
-            <div className="text-center">
-              <h3 className="text-sm text-muted-foreground mb-2">Total Amount Raised</h3>
-              <p className="text-4xl font-bold">
-                <span className="metallic-text">47,608,834 $COMPUTE</span>
-              </p>
-              <p className="text-sm text-muted-foreground mt-1">$124,164</p>
+          <div className="p-8 rounded-xl bg-black/40 border border-white/10 backdrop-blur-sm hover:bg-black/50 transition-all duration-300">
+            <div className="text-center h-full flex flex-col justify-center">
+              <h3 className="text-sm text-muted-foreground/80 uppercase tracking-wider mb-3">Total Amount Raised</h3>
+              <div className="space-y-2">
+                <p className="text-4xl">
+                  <span className="metallic-text font-normal">47,608,834 $COMPUTE</span>
+                </p>
+                <p className="text-2xl text-green-400/90 font-medium">$124,164</p>
+              </div>
             </div>
           </div>
 
           {/* Total Weekly Revenue - Full Width */}
-          <div className="md:col-span-3 p-6 rounded-xl bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 backdrop-blur-sm">
-            <div className="text-center">
-              <h3 className="text-sm text-muted-foreground mb-2">Total Weekly Revenue</h3>
-              <p className="text-4xl font-bold">
-                <span className="metallic-text">2,180,000 $COMPUTE</span>
-              </p>
-              <p className="text-sm text-muted-foreground mt-1">$5,685</p>
+          <div className="md:col-span-3 p-8 rounded-xl bg-gradient-to-r from-green-500/10 via-emerald-500/10 to-green-500/10 border border-green-500/20 backdrop-blur-sm hover:from-green-500/15 hover:via-emerald-500/15 hover:to-green-500/15 transition-all duration-300">
+            <div className="text-center h-full flex flex-col justify-center">
+              <h3 className="text-sm text-muted-foreground/80 uppercase tracking-wider mb-3">Total Weekly Revenue</h3>
+              <div className="space-y-2">
+                <p className="text-4xl">
+                  <span className="metallic-text font-normal">2,180,000 $COMPUTE</span>
+                </p>
+                <p className="text-2xl text-green-400/90 font-medium">$5,685</p>
+              </div>
             </div>
           </div>
         </div>
