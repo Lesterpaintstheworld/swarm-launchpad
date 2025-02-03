@@ -4,7 +4,7 @@ require('dotenv').config();
 // Map of service names to their fixed IDs
 const SERVICE_IDS = {
   'Development Package': 'xforge-development-package',
-  'Essential Swarm Package': 'kinos-essential-package', 
+  'Essential Swarm Package': 'kinos-essential-package',
   'Inception Package': 'kinos-inception-package',
   'Active AI Tokens Trading': 'kinkong-trading'
 };
@@ -46,11 +46,7 @@ async function initializeCollaborations() {
                             startDate: collaboration.startDate || '',
                             description: collaboration.description || '',
                             objectives: collaboration.objectives ? JSON.stringify(collaboration.objectives) : '',
-                            focus: collaboration.focus || '',
-                            sourceSwarmName: collaboration.sourceSwarm.name,
-                            targetSwarmName: collaboration.targetSwarm.name,
-                            sourceSwarmImage: collaboration.sourceSwarm.image,
-                            targetSwarmImage: collaboration.targetSwarm.image
+                            focus: collaboration.focus || ''
                         }
                     }]
                 })
