@@ -105,11 +105,14 @@ async function main() {
             let objStr = obj;
             if (index < array.length - 1) objStr += '}';
             
+            let formattedObj = ''; // Declare outside try block
+            
             try {
                 // Format the object
-                const formattedObj = formatToJSON(objStr);
+                formattedObj = formatToJSON(objStr);
                 console.log('\nProcessing object:', index + 1);
-                console.log('Formatted object:', formattedObj.substring(0, 200) + '...');
+                console.log('Original:', objStr.substring(0, 200) + '...');
+                console.log('Formatted:', formattedObj.substring(0, 200) + '...');
                 
                 // Test parse
                 JSON.parse(formattedObj);
@@ -117,9 +120,32 @@ async function main() {
             } catch (e) {
                 console.log('\nError in object:', index + 1);
                 console.log('Original:', objStr.substring(0, 200) + '...');
-                console.log('Formatted:', formattedObj.substring(0, 200) + '...');
+                if (formattedObj) {
+                    console.log('Formatted:', formattedObj.substring(0, 200) + '...');
+                }
                 console.log('Error:', e.message);
-                return null;
+                
+                // Try to fix common issues
+                try {
+                    // Handle array values
+                    formattedObj = objStr.replace(/:\s*\[(.*?)\]/g, (match, contents) => {
+                        const fixedContents = contents
+                            .replace(/'/g, '"')
+                            .replace(/,\s*]/g, ']');
+                        return `: [${fixedContents}]`;
+                    });
+                    
+                    // Format the fixed object
+                    formattedObj = formatToJSON(formattedObj);
+                    
+                    // Test parse
+                    JSON.parse(formattedObj);
+                    console.log('Fixed object successfully');
+                    return formattedObj;
+                } catch (e2) {
+                    console.log('Could not fix object:', e2.message);
+                    return null;
+                }
             }
         }).filter(Boolean);
 
