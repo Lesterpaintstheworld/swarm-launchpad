@@ -65,27 +65,28 @@ export function CollaborationCard({ id, sourceSwarm, targetSwarm, serviceName, s
           <div>
             <h4 className="text-sm text-muted-foreground mb-2">Service Provider</h4>
             <div className="flex items-center gap-3">
-            <Link 
-              href={`/invest/${targetSwarm.id}`}
-              className="group/link"
-            >
-              <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/50 to-pink-500/50 rounded-xl opacity-0 group-hover/link:opacity-100 blur transition-opacity duration-500" />
-                <div className="relative w-16 h-16 rounded-xl overflow-hidden border border-white/20 group-hover/link:border-white/40 transition-colors duration-300">
-                  <Image
-                    src={targetSwarm.image}
-                    alt={targetSwarm.name}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover/link:scale-110"
-                  />
+              <Link 
+                href={`/invest/${targetSwarm.id}`}
+                className="group/link"
+              >
+                <div className="relative">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/50 to-pink-500/50 rounded-xl opacity-0 group-hover/link:opacity-100 blur transition-opacity duration-500" />
+                  <div className="relative w-16 h-16 rounded-xl overflow-hidden border border-white/20 group-hover/link:border-white/40 transition-colors duration-300">
+                    <Image
+                      src={targetSwarm.image}
+                      alt={targetSwarm.name}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover/link:scale-110"
+                    />
+                  </div>
                 </div>
+              </Link>
+              <div>
+                <span className="block text-sm font-medium text-white/60">
+                  {targetSwarm.name}
+                </span>
+                <span className="text-xs text-white/40">Provider</span>
               </div>
-            </Link>
-            <div>
-              <span className="block text-sm font-medium text-white/60">
-                {targetSwarm.name}
-              </span>
-              <span className="text-xs text-white/40">Provider</span>
             </div>
           </div>
 
@@ -110,31 +111,34 @@ export function CollaborationCard({ id, sourceSwarm, targetSwarm, serviceName, s
           <div>
             <h4 className="text-sm text-muted-foreground mb-2">Client</h4>
             <div className="flex items-center gap-3">
-            <Link 
-              href={`/invest/${sourceSwarm.id}`}
-              className="group/link"
-            >
-              <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/50 to-purple-500/50 rounded-xl opacity-0 group-hover/link:opacity-100 blur transition-opacity duration-500" />
-                <div className="relative w-16 h-16 rounded-xl overflow-hidden border border-white/20 group-hover/link:border-white/40 transition-colors duration-300">
-                  <Image
-                    src={sourceSwarm.image}
-                    alt={sourceSwarm.name}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover/link:scale-110"
-                  />
+              <Link 
+                href={`/invest/${sourceSwarm.id}`}
+                className="group/link"
+              >
+                <div className="relative">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/50 to-purple-500/50 rounded-xl opacity-0 group-hover/link:opacity-100 blur transition-opacity duration-500" />
+                  <div className="relative w-16 h-16 rounded-xl overflow-hidden border border-white/20 group-hover/link:border-white/40 transition-colors duration-300">
+                    <Image
+                      src={sourceSwarm.image}
+                      alt={sourceSwarm.name}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover/link:scale-110"
+                    />
+                  </div>
                 </div>
+              </Link>
+              <div>
+                <span className="block text-sm font-medium text-white/60">
+                  {sourceSwarm.name}
+                </span>
+                <span className="text-xs text-white/40">Client</span>
               </div>
-            </Link>
-            <div>
-              <span className="block text-sm font-medium text-white/60">
-                {sourceSwarm.name}
-              </span>
-              <span className="text-xs text-white/40">Client</span>
             </div>
           </div>
         </div>
       </div>
     </div>
+  );
+}
   );
 }
