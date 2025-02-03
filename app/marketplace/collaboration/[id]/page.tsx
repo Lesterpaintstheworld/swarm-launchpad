@@ -21,7 +21,7 @@ const serviceBanners: Record<ServiceName, string> = {
   'Active AI Tokens Trading': '/services/kinkong-trading.png'
 };
 
-async function getSwarm(slug: string) {
+async function getSwarm(id: string) {
   try {
     const response = await fetch(`/api/swarms/${id}`);
     if (!response.ok) {

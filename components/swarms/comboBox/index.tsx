@@ -55,7 +55,21 @@ const SwarmComboBox = ({ className, defaultValue, onChange }: SwarmComboBoxProps
     const [swarm, setSwarm] = useState<SwarmPreviewData | undefined>(undefined);
 
     useEffect(() => {
-        setSwarm(getSwarm(value));
+        const fetchSwarm = async () => {
+            try {
+                const response = await fetch(`/api/swarms/${value}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setSwarm(data);
+                }
+            } catch (error) {
+                console.error('Error fetching swarm:', error);
+            }
+        };
+
+        if (value) {
+            fetchSwarm();
+        }
         onChange(value);
     }, [value, defaultValue, onChange])
 

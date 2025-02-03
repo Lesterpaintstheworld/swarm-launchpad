@@ -38,15 +38,15 @@ async function getSwarm(slug: string) {
 
 interface PageProps {
     params: {
-        slug: string;
+        id: string;
     };
 }
 
 export default async function SwarmPage({ params }: PageProps) {
-    console.log('Rendering SwarmPage with slug:', params.slug);
+    console.log('Rendering SwarmPage with id:', params.id);
     
     const [swarm, initialPrice] = await Promise.all([
-        getSwarm(params.slug),
+        getSwarm(params.id),
         getInitialPrice()
     ]);
 
