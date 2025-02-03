@@ -24,9 +24,35 @@ interface ServiceCardProps {
   service: Service;
 }
 
+interface SwarmData {
+  id: string;
+  name: string;
+  image: string;
+  role?: string;
+}
+
 export function ServiceCard({ service }: ServiceCardProps) {
-  const swarm = getSwarmUsingId(service.swarmId);
+  const [swarm, setSwarm] = useState<SwarmData | null>(null);
   const styles = getCardStyles(service.serviceType);
+
+  useEffect(() => {
+    async function fetchSwarm() {
+      try {
+        const response = await fetch(`/api/swarms/${service.swarmId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch swarm');
+        }
+        const data = await response.json();
+        setSwarm(data);
+      } catch (error) {
+        console.error('Error fetching swarm:', error);
+      }
+    }
+
+    if (service.swarmId) {
+      fetchSwarm();
+    }
+  }, [service.swarmId]);
 
   const serviceTypeIcon = {
     'subscription': <Clock className="w-4 h-4 text-white/40" />,
