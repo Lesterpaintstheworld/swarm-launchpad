@@ -41,7 +41,7 @@ interface CollaborationCardProps {
     image: string;
   };
   serviceName: string;
-  status: 'active' | 'completed' | 'pending';
+  status: string;
   price: number;
 }
 

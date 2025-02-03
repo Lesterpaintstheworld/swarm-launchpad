@@ -1,5 +1,18 @@
 import { CollaborationCard } from './card';
 
+function validateStatus(status: string): 'active' | 'completed' | 'pending' {
+  switch (status.toLowerCase()) {
+    case 'active':
+      return 'active';
+    case 'completed':
+      return 'completed';
+    case 'pending':
+      return 'pending';
+    default:
+      return 'pending'; // Default fallback status
+  }
+}
+
 interface Collaboration {
   id: string;
   providerSwarm: {
@@ -34,7 +47,7 @@ export function CollaborationGrid({ collaborations }: CollaborationGridProps) {
           providerSwarm={collaboration.providerSwarm}
           clientSwarm={collaboration.clientSwarm}
           serviceName={collaboration.serviceName}
-          status={collaboration.status}
+          status={validateStatus(collaboration.status)}
           price={collaboration.price}
         />
       ))}
