@@ -321,7 +321,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
         .on("end", dragended))
       .on("mouseover", (event, d) => {
         const swarm = swarmMap.get(d.id);
-        const previewData = Array.from(swarms as SwarmData[]).find(p => p.id === d.id);
+        const previewData = Array.from<SwarmData>(swarms as Set<SwarmData>).find(p => p.id === d.id);
         if (!swarm || !previewData) return;
 
         const multiple = swarm.multiple || 1;
