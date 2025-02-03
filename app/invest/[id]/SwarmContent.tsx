@@ -79,7 +79,7 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
             }
         }
         fetchData();
-    }, [swarm.id]);
+    }, [swarm.id, swarm.pool]);
 
     useEffect(() => {
         const interval = setInterval(() => {
