@@ -36,42 +36,6 @@ async function main() {
 
         // Log summary 
         console.log(`\nProcessed ${swarms.length} swarms`);
-                totalRevenue: 460000,
-                gallery: [
-                    {
-                        type: "image",
-                        content: "/swarms/kinos.png"
-                    }
-                ],
-                description: "PLACEHOLDER",
-                programAddress: '',
-                tags: [
-                    'Infrastructure',
-                    'Operating System',
-                    'Runtime Services',
-                    'Compute',
-                    'Security',
-                    'Scalability'
-                ],
-                role: 'Swarm Operating System',
-                swarmType: 'early',
-                wallet: 'D1a6RtoptnG2U9gatDz5bQJ3QahKR3wiherDYipe98Vt',
-                multiple: 404.27,
-                launchDate: new Date('2025-01-29T19:00:00.000Z'),
-                links: [
-                    {
-                        name: 'GitHub',
-                        url: 'https://github.com/Lesterpaintstheworld/your-character-lives'
-                    },
-                    {
-                        name: 'Livestream - KinOS in action',
-                        url: 'https://x.com/i/broadcasts/1lPJqOmYNBbKb'
-                    }
-                ]
-            },
-            {
-                id: "slopfather-partner-id",
-                image: "/swarms/slopfather.png",
                 models: [
                     "Video AI",
                     "GPT-4V"
@@ -990,7 +954,7 @@ async function main() {
                     }
                 ]
             }
-        ];
+        ));
         
 
     } catch (error) {
