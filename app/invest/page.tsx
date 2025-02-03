@@ -1,26 +1,44 @@
 'use client'
 
 import { TokenTooltip } from "@/components/ui/tokenTooltip";
-import { getSwarmInfo } from "@/data/swarms/info";
-import { previews } from "@/data/swarms/previews";
 import { SwarmPreviewCard } from "@/components/swarms/preview";
 import { Info } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/shadcn/tooltip";
+import { useEffect, useState } from "react";
+import { SwarmPreviewData } from "@/components/swarms/swarm.types";
 
 export default function Invest() {
-    // Combine preview data with multiples from SwarmData
-    const combinedSwarms = previews.map(preview => {
-        const swarmInfo = getSwarmInfo(preview.id);
-        return {
-            ...preview,
-            multiple: swarmInfo?.multiple || 1,
-            pool: swarmInfo?.pool,
-            launchDate: swarmInfo?.launchDate
-        };
-    });
+    const [swarms, setSwarms] = useState<SwarmPreviewData[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchSwarms() {
+            try {
+                const response = await fetch('/api/swarms');
+                const data = await response.json();
+                setSwarms(data);
+            } catch (error) {
+                console.error('Error fetching swarms:', error);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchSwarms();
+    }, []);
+
+    if (loading) {
+        return (
+            <main className="container view">
+                <div className="h-80 flex items-center justify-center">
+                    <h2>Loading swarms...</h2>
+                </div>
+            </main>
+        );
+    }
 
     // Sort and filter swarms
-    const sortedSwarms = combinedSwarms
+    const sortedSwarms = swarms
         .filter(swarm => swarm.pool) // Only show swarms with pools
         .sort((a, b) => (b.multiple || 0) - (a.multiple || 0));
 
