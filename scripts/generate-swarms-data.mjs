@@ -61,7 +61,7 @@ async function main() {
 
         // Function to properly format a JavaScript object into valid JSON
         function formatToJSON(str) {
-            return str
+            let result = str
                 // Handle property names
                 .replace(/([{,]\s*)([a-zA-Z0-9_]+):/g, '$1"$2":')
                 // Handle string values
@@ -75,9 +75,29 @@ async function main() {
                 .replace(/\/\/.*/g, '')
                 // Remove control characters
                 .replace(/[\u0000-\u001F\u007F-\u009F]/g, '')
+                // Handle team array
+                .replace(/team:\s*\[([\s\S]*?)\]/g, (match, teamContent) => {
+                    // Format team member objects
+                    const formattedTeam = teamContent
+                        .replace(/{\s*name:/g, '{"name":')
+                        .replace(/,\s*picture:/g, ',"picture":')
+                        .replace(/,\s*telegram:/g, ',"telegram":')
+                        .replace(/,\s*X:/g, ',"X":')
+                        .replace(/'/g, '"');
+                    return `"team":[${formattedTeam}]`;
+                })
                 // Normalize whitespace
                 .replace(/\s+/g, ' ')
                 .trim();
+
+            // Add quotes around property values that need them
+            result = result.replace(/:\s*([^",\{\[\]\}\s][^,\}\]]*)/g, (match, value) => {
+                if (/^-?\d+\.?\d*$/.test(value)) return match; // Don't quote numbers
+                if (/^true|false|null$/.test(value)) return match; // Don't quote booleans or null
+                return `:"${value}"`;
+            });
+
+            return result;
         }
 
         // Split into individual objects and process each one
@@ -85,32 +105,21 @@ async function main() {
             let objStr = obj;
             if (index < array.length - 1) objStr += '}';
             
-            // Format the object
-            const formattedObj = formatToJSON(objStr);
-            
             try {
+                // Format the object
+                const formattedObj = formatToJSON(objStr);
+                console.log('\nProcessing object:', index + 1);
+                console.log('Formatted object:', formattedObj.substring(0, 200) + '...');
+                
                 // Test parse
                 JSON.parse(formattedObj);
                 return formattedObj;
             } catch (e) {
-                console.log('\nError in object:', formattedObj);
+                console.log('\nError in object:', index + 1);
+                console.log('Original:', objStr.substring(0, 200) + '...');
+                console.log('Formatted:', formattedObj.substring(0, 200) + '...');
                 console.log('Error:', e.message);
-                // Try to fix common issues
-                const fixedObj = formattedObj
-                    // Fix any remaining unquoted property names
-                    .replace(/([{,]\s*)([a-zA-Z0-9_]+):/g, '$1"$2":')
-                    // Fix any remaining single quotes
-                    .replace(/'/g, '"')
-                    // Remove any trailing commas in arrays/objects
-                    .replace(/,(\s*[}\]])/g, '$1');
-                
-                try {
-                    JSON.parse(fixedObj);
-                    return fixedObj;
-                } catch (e2) {
-                    console.log('Could not fix object:', e2.message);
-                    return null;
-                }
+                return null;
             }
         }).filter(Boolean);
 
@@ -122,26 +131,33 @@ async function main() {
         const swarms = JSON.parse(validContent);
         console.log('Found', swarms.length, 'swarms');
 
-        const transformedSwarms = swarms.map(swarm => ({
-            id: swarm.id.replace(/-partner-id$|-inception-id$/, ''),
-            image: swarm.image,
-            name: swarm.name,
-            pool: swarm.pool || '',
-            weeklyRevenue: swarm.weeklyRevenue || 0,
-            totalRevenue: swarm.totalRevenue || 0,
-            gallery: swarm.gallery || [],
-            description: swarm.description,
-            tags: swarm.tags || [],
-            swarmType: swarm.swarmType || '',
-            multiple: swarm.multiple || 1,
-            launchDate: swarm.launchDate || '',
-            revenueShare: swarm.revenueShare || 0,
-            wallet: swarm.wallet || '',
-            banner: swarm.banner || '',
-            socials: swarm.socials || {},
-            team: swarm.team || [],
-            links: swarm.links || []
-        }));
+        const transformedSwarms = swarms.map(swarm => {
+            if (!swarm || typeof swarm.id !== 'string') {
+                console.log('Invalid swarm object:', swarm);
+                return null;
+            }
+            
+            return {
+                id: swarm.id.replace(/-partner-id$|-inception-id$/, ''),
+                image: swarm.image,
+                name: swarm.name,
+                pool: swarm.pool || '',
+                weeklyRevenue: swarm.weeklyRevenue || 0,
+                totalRevenue: swarm.totalRevenue || 0,
+                gallery: swarm.gallery || [],
+                description: swarm.description,
+                tags: swarm.tags || [],
+                swarmType: swarm.swarmType || '',
+                multiple: swarm.multiple || 1,
+                launchDate: swarm.launchDate || '',
+                revenueShare: swarm.revenueShare || 0,
+                wallet: swarm.wallet || '',
+                banner: swarm.banner || '',
+                socials: swarm.socials || {},
+                team: swarm.team || [],
+                links: swarm.links || []
+            };
+        }).filter(Boolean);
 
         // Write output
         const fileContent = `const SwarmData = ${JSON.stringify(transformedSwarms, null, 2)};
