@@ -8,6 +8,8 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
+    console.log('Fetching collaboration with id:', params.id);
+    
     const response = await fetch(
       `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Collaborations?filterByFormula={id}="${params.id}"`,
       {
@@ -18,10 +20,24 @@ export async function GET(
       }
     );
 
+    if (!response.ok) {
+      console.error('Airtable response not OK:', await response.text());
+      return NextResponse.json({ error: 'Failed to fetch collaboration' }, { status: 500 });
+    }
+
     const data = await response.json();
-    
-    if (!data.records.length) {
-      return NextResponse.json(null);
+    console.log('Raw Airtable data:', data);
+
+    // Check if data and records exist
+    if (!data || !data.records) {
+      console.log('No data or records returned from Airtable');
+      return NextResponse.json({ error: 'Collaboration not found' }, { status: 404 });
+    }
+
+    // Check if any records were found
+    if (data.records.length === 0) {
+      console.log('No collaboration found with ID:', params.id);
+      return NextResponse.json({ error: 'Collaboration not found' }, { status: 404 });
     }
 
     const record = data.records[0];
@@ -48,7 +64,7 @@ export async function GET(
 
     return NextResponse.json(collaboration);
   } catch (error) {
-    console.error('Error fetching collaboration:', error);
+    console.error('Error in /api/collaborations/[id]:', error);
     return NextResponse.json(
       { error: 'Failed to fetch collaboration' },
       { status: 500 }
