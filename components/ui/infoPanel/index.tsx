@@ -13,11 +13,32 @@ interface InfoPanelProps {
         dexscreener?: string;
     };
     achievements?: Achievement[];
+    weeklyRevenuePerShare?: {
+        compute: number;
+        ubc: number;
+    };
 }
 
-export function InfoPanel({ className, socials, achievements }: InfoPanelProps) {
+export function InfoPanel({ className, socials, achievements, weeklyRevenuePerShare }: InfoPanelProps) {
     return (
         <div className={cn("w-full max-w-xs bg-accent-1 rounded-lg p-6", className)}>
+            {/* Weekly Revenue Per Share */}
+            {weeklyRevenuePerShare && (
+                <div className="space-y-3 mb-6">
+                    <h4 className="text-lg font-semibold mb-4">Weekly Revenue per 1000 shares</h4>
+                    <div className="flex flex-col gap-2">
+                        <div className="flex items-center justify-between">
+                            <span className="text-sm text-white/60">{weeklyRevenuePerShare.compute.toLocaleString()}</span>
+                            <span className="text-sm metallic-text">$COMPUTE</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <span className="text-sm text-white/60">{weeklyRevenuePerShare.ubc.toLocaleString()}</span>
+                            <span className="text-sm metallic-text-ubc">$UBC</span>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Social Links */}
             {socials && (
                 <div className="space-y-3 mb-6">
@@ -110,3 +131,5 @@ export function InfoPanel({ className, socials, achievements }: InfoPanelProps) 
         </div>
     );
 }
+
+export type { InfoPanelProps };
