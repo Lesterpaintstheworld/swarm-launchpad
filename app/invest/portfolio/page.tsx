@@ -12,8 +12,6 @@ import { PortfolioOverview } from "@/components/portfolio/overview";
 import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
 import type { Ubclaunchpad } from "@/hooks/useLaunchpadProgram/ubclaunchpad";
 import { Program } from "@project-serum/anchor";
-import type { Ubclaunchpad } from "@/hooks/useLaunchpadProgram/ubclaunchpad";
-import { Program } from "@project-serum/anchor";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import { useEffect, useState } from "react";
