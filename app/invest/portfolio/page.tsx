@@ -106,8 +106,8 @@ export default function Portfolio() {
 
         const getPosition = async (ownerPublicKey: PublicKey, poolId: string) => {
             const poolPubkey = new PublicKey(poolId);
-            const pda = getShareholderPDA(program.programId, ownerPublicKey, poolPubkey);
-            
+            const pda = getShareholderPDA(program.programId, ownerPublicKey, poolPubkey) as PublicKey;
+    
             try {
                 const shareholderData = await program.account.shareholder.fetch(pda);
                 return shareholderData;
