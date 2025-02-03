@@ -584,10 +584,10 @@ const SwarmInvestCard = ({
                                                             <li key={`legend-${index}`} className="flex items-center gap-1 text-xs">
                                                                 <div 
                                                                     className="w-2 h-2 rounded-full"
-                                                                    style={{ backgroundColor: entry.color }}
+                                                                    style={{ backgroundColor: COLORS[index % COLORS.length] }}
                                                                 />
                                                                 <span className="text-white/60">
-                                                                    {entry.value}: {revenueData[index].value}%
+                                                                    {entry.value}: {investmentData[index].percentage}%
                                                                 </span>
                                                             </li>
                                                         ))}

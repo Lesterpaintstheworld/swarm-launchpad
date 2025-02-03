@@ -36,24 +36,12 @@ interface TooltipProps {
 
 interface CustomPayload {
     value: string;
-    color: string;
     payload: {
         name: string;
         value: number;
-        color: string;
         percentage?: string;
     };
-}
-
-interface CustomPayload {
-    value: string;
     color: string;
-    payload: {
-        name: string;
-        value: number;
-        color: string;
-        percentage?: string;
-    };
 }
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { Props as RechartsProps } from 'recharts/types/component/DefaultLegendContent';
