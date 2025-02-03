@@ -1,5 +1,4 @@
 import { readFile, writeFile } from 'fs/promises';
-import path from 'path';
 
 async function main() {
     try {
@@ -8,36 +7,41 @@ async function main() {
         const infoContent = await readFile('data/swarms/info.tsx', 'utf8');
         console.log('File length:', infoContent.length, 'characters');
 
-        // Extract the SwarmData array using a more flexible regex
+        // Extract the SwarmData array using a more sophisticated approach
         const startMarker = 'export const SwarmData: SwarmInfo[] = [';
-        const endMarker = '];';
-        
         const startIndex = infoContent.indexOf(startMarker);
-        console.log('Start marker index:', startIndex);
         
         if (startIndex === -1) {
-            // Log a portion of the file content to see what we're working with
             console.log('\nFirst 500 characters of file:');
             console.log(infoContent.substring(0, 500));
             throw new Error('Could not find start of SwarmData array in info.tsx');
         }
 
-        const endIndex = infoContent.indexOf(endMarker, startIndex);
-        console.log('End marker index:', endIndex);
+        // Find the matching closing bracket by counting opening and closing brackets
+        let bracketCount = 1;
+        let endIndex = startIndex + startMarker.length;
         
-        if (endIndex === -1) {
-            throw new Error('Could not find end of SwarmData array in info.tsx');
+        while (bracketCount > 0 && endIndex < infoContent.length) {
+            if (infoContent[endIndex] === '[') bracketCount++;
+            if (infoContent[endIndex] === ']') bracketCount--;
+            endIndex++;
+        }
+
+        if (bracketCount !== 0) {
+            throw new Error('Could not find matching end bracket for SwarmData array');
         }
 
         // Extract the array content
-        console.log('\nFirst 200 characters of extracted array:');
-        console.log(arrayContent.substring(0, 200));
         const arrayContent = infoContent.substring(
             startIndex + startMarker.length, 
-            endIndex + 1
+            endIndex
         );
 
+        console.log('\nFound array content. Length:', arrayContent.length, 'characters');
+        console.log('First 200 characters:', arrayContent.substring(0, 200));
+
         // Clean up the content
+        console.log('Cleaning content...');
         const cleanContent = arrayContent
             .replace(/\/\*[\s\S]*?\*\//g, '') // Remove multi-line comments
             .replace(/\/\/.*/g, '') // Remove single-line comments
@@ -47,9 +51,12 @@ async function main() {
             .replace(/\n\s*\n/g, '\n'); // Remove empty lines
 
         // Parse the JSON
+        console.log('Parsing JSON...');
         const swarms = JSON.parse(cleanContent);
+        console.log('Found', swarms.length, 'swarms');
 
         // Transform the data
+        console.log('Transforming data...');
         const transformedSwarms = swarms.map(swarm => ({
             id: swarm.id.replace(/-partner-id$|-inception-id$/, ''),
             image: swarm.image,
@@ -78,6 +85,7 @@ module.exports = { SwarmData };
 `;
 
         // Write to scripts/data/swarms.cjs
+        console.log('Writing output file...');
         await writeFile('scripts/data/swarms.cjs', fileContent);
 
         console.log('Generated swarms data file successfully!');
