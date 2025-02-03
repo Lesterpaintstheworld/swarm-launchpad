@@ -3,7 +3,7 @@
 import { NewsItem } from '@/types/news';
 import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Newspaper } from 'lucide-react';
 import Link from 'next/link';
 import { Carousel } from '@/components/ui/carousel';
 
@@ -37,7 +37,12 @@ export function SwarmNews({ swarmId, className }: SwarmNewsProps) {
   }, [swarmId]);
 
   if (isLoading) {
-    return <div className="animate-pulse h-32 bg-white/5 rounded-xl" />;
+    return (
+      <div className="space-y-4">
+        <div className="h-8 w-48 bg-white/5 rounded animate-pulse" />
+        <div className="h-[200px] bg-white/5 rounded-xl animate-pulse" />
+      </div>
+    );
   }
 
   if (news.length === 0) {
@@ -47,26 +52,45 @@ export function SwarmNews({ swarmId, className }: SwarmNewsProps) {
   const newsItems = news.map((item) => (
     <div
       key={item.id}
-      className="p-6 bg-white/5 hover:bg-white/10 transition-colors h-full"
+      className="relative group overflow-hidden"
     >
-      <div className="flex flex-col h-full">
-        <div className="flex-1">
-          <h5 className="font-medium mb-2">{item.title}</h5>
-          <p className="text-muted-foreground">{item.content}</p>
-        </div>
-        <div className="mt-4 flex justify-between items-end">
-          <p className="text-sm text-muted-foreground">
-            {format(new Date(item.date), 'MMM d, yyyy')}
+      {/* Animated gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      
+      {/* Content */}
+      <div className="relative p-6 bg-white/5 hover:bg-white/10 transition-colors rounded-xl border border-white/10 group-hover:border-white/20">
+        <div className="flex flex-col h-full">
+          {/* Header with icon */}
+          <div className="flex items-center gap-2 mb-4">
+            <Newspaper className="w-5 h-5 text-blue-400" />
+            <span className="text-sm text-blue-400 font-medium">
+              {format(new Date(item.date), 'MMM d, yyyy')}
+            </span>
+          </div>
+
+          {/* Title with hover effect */}
+          <h5 className="font-medium mb-3 text-lg group-hover:text-blue-400 transition-colors">
+            {item.title}
+          </h5>
+
+          {/* Content */}
+          <p className="text-muted-foreground group-hover:text-white/70 transition-colors">
+            {item.content}
           </p>
+
+          {/* Footer */}
           {item.link && (
-            <Link
-              href={item.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 transition-colors"
-            >
-              Read More <ExternalLink className="w-4 h-4" />
-            </Link>
+            <div className="mt-4 pt-4 border-t border-white/10">
+              <Link
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 transition-colors group/link"
+              >
+                Read Full Story 
+                <ExternalLink className="w-4 h-4 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+              </Link>
+            </div>
           )}
         </div>
       </div>
@@ -76,9 +100,14 @@ export function SwarmNews({ swarmId, className }: SwarmNewsProps) {
   return (
     <div className={className}>
       <div className="flex items-center justify-between mb-4">
-        <h4 className="font-semibold">Latest News</h4>
+        <div className="space-y-1">
+          <h4 className="font-semibold text-lg">Latest Updates</h4>
+          <p className="text-sm text-muted-foreground">
+            Stay informed about recent developments and announcements
+          </p>
+        </div>
       </div>
-      <hr className="mb-6" />
+      <hr className="mb-6 border-white/10" />
       <Carousel items={newsItems} />
     </div>
   );
