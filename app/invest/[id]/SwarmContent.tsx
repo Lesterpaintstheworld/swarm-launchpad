@@ -55,17 +55,18 @@ export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
     useEffect(() => {
         const controller = new AbortController();
 
-        async function fetchSwarmData() {
-            try {
-                const response = await fetch(`/api/swarms/${swarm.id}`);
-                if (!response.ok) return;
-                const data = await response.json();
-                setSwarmData(data);
-            } catch (error) {
-                console.error('Error fetching swarm:', error);
-            }
+        // Separate function for fetching swarm data
+        function fetchSwarmData() {
+            fetch(`/api/swarms/${swarm.id}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Failed to fetch swarm data');
+                    return response.json();
+                })
+                .then(data => setSwarmData(data))
+                .catch(error => console.error('Error fetching swarm:', error));
         }
 
+        // Separate function for fetching price
         function fetchPrice() {
             fetch('https://api.dexscreener.com/latest/dex/pairs/solana/HiYsmVjeFy4ZLx8pkPSxBjswFkoEjecVGB4zJed2e6Y', {
                 signal: controller.signal
