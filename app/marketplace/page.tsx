@@ -22,7 +22,7 @@ function MarketplaceContent() {
   const [collaborationView, setCollaborationView] = useState<'list' | 'graph'>(searchParams.get('view') as 'list' | 'graph' || 'list');
   
   // State for marketplace data
-import { CollaborationResponse, ServiceResponse } from '@/types/api';
+import { CollaborationResponse, Mission, ServiceResponse } from '@/types/api';
 
   const [collaborations, setCollaborations] = useState<CollaborationResponse[]>([]);
   const [services, setServices] = useState<ServiceResponse[]>([]);

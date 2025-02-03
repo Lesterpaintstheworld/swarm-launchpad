@@ -26,13 +26,6 @@ export const columns: ColumnDef<MarketListing>[] = [
               role?: string;
             }
 
-            interface SwarmData {
-              id: string;
-              name: string;
-              image: string;
-              role?: string;
-            }
-
             const SwarmCell = ({ swarmId }: { swarmId: string }) => {
               const [swarm, setSwarm] = useState<SwarmData | null>(null);
 
