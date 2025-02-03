@@ -1,6 +1,6 @@
 import { Cpu, Clock } from 'lucide-react';
 import Link from 'next/link';
-import { Service } from '@/data/services/types';
+import { Service } from '@/data/services_bak/types';
 import { getSwarmUsingId } from '@/data/swarms/info';
 import Image from 'next/image';
 import { sectionColors } from '../types';

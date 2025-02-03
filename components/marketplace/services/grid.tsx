@@ -1,6 +1,6 @@
 'use client';
 
-import { Service } from '@/data/services/types';
+import { Service } from '@/data/services_bak/types';
 import { ServiceCard } from './card';
 import { useEffect, useState } from 'react';
 

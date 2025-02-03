@@ -9,9 +9,6 @@ import { MarketplaceSearch } from '@/components/marketplace/search';
 import { MarketplaceTab, SortOption } from '@/components/marketplace/types';
 import { ServiceGrid } from '@/components/marketplace/services/grid';
 import { MissionGrid } from '@/components/marketplace/missions/grid';
-import { services } from '@/data/services/services';
-import { missions } from '@/data/missions/missions';
-import { collaborations } from '@/data/collaborations/collaborations';
 import { SwarmProfiles } from '@/components/marketplace/profiles';
 
 function MarketplaceContent() {

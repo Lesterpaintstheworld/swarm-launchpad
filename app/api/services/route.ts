@@ -47,7 +47,7 @@ export async function GET() {
   }
 }
 import { NextResponse } from 'next/server';
-import { services } from '@/data/services/services';
+import { services } from '@/data/services_bak/services';
 
 export async function GET() {
   try {
