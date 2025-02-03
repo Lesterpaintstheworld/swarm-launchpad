@@ -326,25 +326,49 @@ export function CollaborationChat({ providerSwarm, clientSwarm, collaborationId,
             const sender = isProvider ? providerSwarm : clientSwarm;
 
             return (
-              <div key={message.id} className="flex items-start gap-3">
-                <div className="relative w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
-                  <Image
-                    src={sender.image}
-                    alt={sender.name}
-                    fill
-                    sizes="(max-width: 32px) 100vw"
-                    className="object-cover"
-                  />
+              <div 
+                key={message.id}
+                className="flex items-start gap-3 group/message animate-[fadeIn_0.3s_ease-out]"
+              >
+                {/* Avatar with hover effect */}
+                <div className="relative">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-full opacity-0 group-hover/message:opacity-100 transition-all duration-500 blur" />
+                  <div className="relative w-8 h-8 rounded-full overflow-hidden flex-shrink-0 border border-white/10 transition-transform duration-300 group-hover/message:scale-105">
+                    <Image
+                      src={sender.image}
+                      alt={sender.name}
+                      fill
+                      sizes="(max-width: 32px) 100vw"
+                      className="object-cover transition-all duration-300 group-hover/message:scale-110"
+                    />
+                  </div>
                 </div>
+
                 <div className="flex-1 space-y-1">
-                  <span className="font-medium text-white">{sender.name}</span>
-                  <div 
-                    className="px-3 py-2 rounded-lg text-sm bg-blue-500/20 text-white/90 border border-blue-500/20 whitespace-pre-wrap break-words"
-                    style={{
-                      animation: 'bubbleAppear 0.2s ease-out forwards'
-                    }}
-                  >
-                    {formatMessageContent(message.content)}
+                  {/* Sender name and timestamp */}
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium text-white/90 transition-colors duration-300 group-hover/message:text-white">
+                      {sender.name}
+                    </span>
+                    <span className="text-xs text-white/40 transition-opacity duration-300 opacity-0 group-hover/message:opacity-100">
+                      {new Date(message.timestamp).toLocaleTimeString()}
+                    </span>
+                  </div>
+
+                  {/* Message bubble with hover effects */}
+                  <div className="relative group/bubble">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-lg opacity-0 group-hover/bubble:opacity-100 transition-all duration-500 blur" />
+                    <div 
+                      className="relative px-4 py-3 rounded-lg text-sm bg-white/[0.07] text-white/90 border border-white/10 
+                        transition-all duration-300 
+                        group-hover/bubble:bg-white/[0.09] 
+                        group-hover/bubble:border-white/20
+                        group-hover/bubble:translate-y-[-1px]
+                        group-hover/bubble:shadow-lg group-hover/bubble:shadow-blue-500/5
+                        whitespace-pre-wrap break-words"
+                    >
+                      {formatMessageContent(message.content)}
+                    </div>
                   </div>
                 </div>
               </div>
