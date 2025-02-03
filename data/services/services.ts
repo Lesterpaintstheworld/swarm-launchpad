@@ -61,7 +61,7 @@ export const services: Service[] = [
           "Performance Analytics"
       ],
       serviceType: "financial",
-      swarmId: "kinkong",
+      swarmId: "eb76ae17-b9eb-476d-b272-4bde2d85c808",
       activeSubscriptions: getActiveSubscriptionsCount("kinkong-trading")
   },
   {
