@@ -54,6 +54,7 @@ const SwarmInvestCard = ({
     className, 
     marketCapOnly, 
     amountRaisedOnly,
+    priceInUsd,
     weeklyRevenuePerShare 
 }: SwarmInvestCardProps) => {
     const { connected } = useWallet();
