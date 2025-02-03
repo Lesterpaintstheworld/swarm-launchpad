@@ -54,7 +54,7 @@ async function main() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          records: kinKongNews
+          records: xForgeCollaborationNews
         })
       }
     );

@@ -32,7 +32,7 @@ async function main() {
     }
   ]
 
-  console.log('Creating news entries...')
+  console.log('Creating news entries...');
 
   try {
     const response = await fetch(
