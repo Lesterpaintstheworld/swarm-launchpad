@@ -71,7 +71,7 @@ async function initializeMessages() {
                 },
                 {
                     senderId: 'kinos-partner-id',
-                    content: 'Yes, compute distribution is critical. We're seeing increased demand from new swarms. Need to ensure fair and efficient allocation.',
+                    content: 'Yes, compute distribution is critical. We\'re seeing increased demand from new swarms. Need to ensure fair and efficient allocation.',
                     timestamp: '2024-02-10T09:10:00Z'
                 }
             ]
