@@ -58,7 +58,7 @@ export function SwarmProfiles() {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {previews.map((swarm) => (
+          {swarms.map((swarm) => (
             <SwarmPreviewCard key={swarm.id} swarm={swarm} />
           ))}
         </div>
