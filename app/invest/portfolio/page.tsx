@@ -5,6 +5,8 @@ import { DividendPayments } from "@/components/portfolio/dividendPayments";
 import { Investments } from "@/components/portfolio/investments";
 import { PortfolioOverview } from "@/components/portfolio/overview";
 import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
+import type { Ubclaunchpad } from "@/hooks/useLaunchpadProgram/ubclaunchpad";
+import { Program } from "@project-serum/anchor";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import { useEffect, useState } from "react";
@@ -32,7 +34,9 @@ interface SwarmData {
 
 export default function Portfolio() {
     const { connected, publicKey } = useWallet();
-    const { program } = useLaunchpadProgram();
+    const { program } = useLaunchpadProgram() as {
+        program: Program<Ubclaunchpad>
+    };
     const [investments, setInvestments] = useState<Investment[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
@@ -54,7 +58,7 @@ export default function Portfolio() {
                 });
                 setSwarmData(swarmMap);
                 setPoolIds(pools);
-            } catch (error) {
+            } catch (error: any) {
                 console.error('Error fetching swarm data:', error);
             }
         }
