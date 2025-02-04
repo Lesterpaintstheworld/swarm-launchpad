@@ -61,12 +61,17 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 
 const getSwarmStage = (swarmType: string) => {
-    switch (swarmType?.toLowerCase()) {
-        case 'inception': return 0; // Inception Swarm
-        case 'early': return 1;     // Early Swarm
-        case 'partner': return 2;   // Partner Swarm
-        default: return 0;
-    }
+    console.log('Getting stage for swarm type:', swarmType);
+    const stage = (() => {
+        switch (swarmType?.toLowerCase()) {
+            case 'partner': return 2;    // Partner Swarm (🤝)
+            case 'early': return 1;      // Early Swarm (🚀) 
+            case 'inception': return 0;  // Inception Swarm (🌱)
+            default: return 0;
+        }
+    })();
+    console.log('Calculated stage:', stage);
+    return stage;
 };
 
 interface SwarmInvestCardProps {
@@ -818,7 +823,9 @@ const SwarmInvestCard = ({
                                 emoji: '🤝'
                             }
                         ].map((stage, index) => {
+                            console.log('Swarm data:', swarm);
                             const currentStage = getSwarmStage(swarm?.swarmType || 'inception');
+                            console.log('Timeline node index:', index, 'Current stage:', currentStage);
                             const isActive = index <= currentStage;
                             const isCurrent = index === currentStage;
 
