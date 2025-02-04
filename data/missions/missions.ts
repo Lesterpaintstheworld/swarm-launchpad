@@ -30,7 +30,7 @@ export const missions: Mission[] = [
     deadline: '2024-03-01',
     status: 'open',
     requiredCapabilities: ['Machine Learning', 'Model Training', 'Healthcare Domain'],
-    complexity: 'high',
+    swarmId: 'therapykin',
     requester: {
       id: 'therapykin',
       name: 'TherapyKin',
