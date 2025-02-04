@@ -61,7 +61,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 
 const getSwarmStage = (swarmType: string) => {
-    switch (swarmType) {
+    switch (swarmType?.toLowerCase()) {
         case 'inception': return 0; // Inception Swarm
         case 'early': return 1;     // Early Swarm
         case 'partner': return 2;   // Partner Swarm
