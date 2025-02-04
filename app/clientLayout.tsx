@@ -1,5 +1,6 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { Providers } from "./providers";
 import { Toaster } from "@/components/shadcn/sonner";
 import { Navigation } from "@/components/navigation";

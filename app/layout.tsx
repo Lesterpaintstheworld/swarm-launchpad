@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { ClientLayout } from "./clientLayout";
 import "./globals.css";
-import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Universal Basic Compute"
@@ -14,10 +13,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <Script
+      <body className="antialiased dark min-h-screen flex flex-col">
+        <ClientLayout>
+          {children}
+        </ClientLayout>
+        <script
           id="microsoft-clarity"
-          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               (function(c,l,a,r,i,t,y){
@@ -28,11 +29,6 @@ export default function RootLayout({
             `
           }}
         />
-      </head>
-      <body className="antialiased dark min-h-screen flex flex-col">
-        <ClientLayout>
-          {children}
-        </ClientLayout>
       </body>
     </html>
   );
