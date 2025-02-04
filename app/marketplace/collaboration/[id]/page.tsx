@@ -290,6 +290,7 @@ export default function CollaborationPage({ params }: { params: { id: string } }
                             src={collaboration.clientSwarm.image}
                             alt={collaboration.clientSwarm.name}
                             fill
+                            sizes="48px"
                             className="object-cover"
                           />
                         </div>
@@ -310,6 +311,7 @@ export default function CollaborationPage({ params }: { params: { id: string } }
                             src={collaboration.providerSwarm.image}
                             alt={collaboration.providerSwarm.name}
                             fill
+                            sizes="48px"
                             className="object-cover"
                           />
                         </div>

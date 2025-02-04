@@ -53,6 +53,7 @@ export const columns: ColumnDef<MarketListing>[] = [
                             width={32}
                             height={32}
                             className="rounded-full"
+                            sizes="32px"
                         />
                         <div className="flex flex-col">
                             <Link className="text-lg mb-0 leading-1 truncate hover:underline" href={`/invest/${swarm.id}`}>

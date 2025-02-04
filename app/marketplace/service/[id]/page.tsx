@@ -201,6 +201,7 @@ export default function ServicePage() {
                       src={swarm.image}
                       alt={swarm.name}
                       fill
+                      sizes="48px"
                       className="object-cover"
                     />
                   </div>
