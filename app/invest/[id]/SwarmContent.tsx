@@ -49,37 +49,6 @@ interface SwarmContentProps {
 
 export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
     const [price, setPrice] = useState<number | null>(initialPrice);
-    const [services, setServices] = useState([]);
-    const [collaborations, setCollaborations] = useState([]);
-    const [soldShares, setSoldShares] = useState(100000); // Default to 100k until we get real data
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const [servicesRes, collabsRes, poolRes] = await Promise.all([
-                    fetch(`/api/services?swarmId=${swarm.id}`),
-                    fetch(`/api/collaborations?swarmId=${swarm.id}`),
-                    swarm.pool ? fetch(`/api/pools/${swarm.pool}`) : Promise.resolve(null)
-                ]);
-                const [servicesData, collabsData, poolData] = await Promise.all([
-                    servicesRes.json(),
-                    collabsRes.json(),
-                    poolRes ? poolRes.json() : null
-                ]);
-                
-                setServices(servicesData);
-                setCollaborations(collabsData);
-                
-                if (poolData) {
-                    const sold = poolData.totalShares - poolData.availableShares;
-                    setSoldShares(sold > 0 ? sold : 100000); // Fallback to 100k if calculation is invalid
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        }
-        fetchData();
-    }, [swarm.id, swarm.pool]);
 
     useEffect(() => {
         const interval = setInterval(() => {
