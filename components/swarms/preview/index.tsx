@@ -44,7 +44,7 @@ const SwarmPreviewCard = ({ swarm }: SwarmPreviewCardProps) => {
                             ))}
                         </div>
                         <p className="text-lg font-medium">{swarm.name}</p>
-                        <p className="text-muted text-sm text-truncate line-clamp-4 mt-2">{swarm.description}</p>
+                        <p className="text-muted text-sm text-truncate line-clamp-4 mt-2">{swarm.shortDescription || swarm.description}</p>
                         
                         <div className="w-full bg-[#1e3a8a] hover:bg-[#172554] text-white border-[#172554] hover:text-white mb-1 mt-8 px-4 py-2 rounded-lg text-center">
                             Invest

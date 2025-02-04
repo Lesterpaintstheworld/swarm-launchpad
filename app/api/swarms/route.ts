@@ -44,6 +44,7 @@ export async function GET() {
         id: record.fields.swarmId,
         name: record.fields.name,
         description: record.fields.description || '',
+        shortDescription: record.fields.shortDescription || record.fields.description || '',
         image: record.fields.image,
         models: safeParseJSON(record.fields.models, []),
         pool: record.fields.pool,
