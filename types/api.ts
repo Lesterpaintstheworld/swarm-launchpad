@@ -24,6 +24,7 @@ export interface SwarmFields {
   swarmId: string;
   name: string;
   description: string;
+  shortDescription?: string;
   image: string;
   models: string;
   pool?: string;
