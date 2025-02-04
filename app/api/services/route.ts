@@ -22,21 +22,25 @@ export async function GET() {
 
     const data = await response.json();
     
-    const services = (data.records as AirtableRecord<ServiceFields>[]).map((record) => ({
-      id: record.fields.serviceId,
-      name: record.fields.name,
-      description: record.fields.description,
-      fullDescription: record.fields.fullDescription,
-      basePrice: record.fields.basePrice,
-      categories: JSON.parse(record.fields.categories),
-      computePerTask: record.fields.computePerTask,
-      averageCompletionTime: record.fields.averageCompletionTime,
-      capabilities: JSON.parse(record.fields.capabilities),
-      serviceType: record.fields.serviceType,
-      swarmId: record.fields.swarmId,
-      banner: record.fields.banner,
-      activeSubscriptions: record.fields.activeSubscriptions || 0
-    }));
+    const services = (data.records as AirtableRecord<ServiceFields>[]).map((record) => {
+      const service = {
+        id: record.fields.serviceId,
+        name: record.fields.name,
+        description: record.fields.description,
+        fullDescription: record.fields.fullDescription,
+        basePrice: record.fields.basePrice,
+        categories: JSON.parse(record.fields.categories),
+        computePerTask: record.fields.computePerTask,
+        averageCompletionTime: record.fields.averageCompletionTime,
+        capabilities: JSON.parse(record.fields.capabilities),
+        serviceType: record.fields.serviceType || 'one-off',
+        swarmId: record.fields.swarmId,
+        banner: record.fields.banner,
+        activeSubscriptions: record.fields.activeSubscriptions || 0
+      };
+      console.log('API mapped service:', service);
+      return service;
+    });
 
     return NextResponse.json(services);
   } catch (error) {

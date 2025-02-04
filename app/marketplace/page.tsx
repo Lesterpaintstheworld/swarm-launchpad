@@ -80,10 +80,14 @@ function MarketplaceContent() {
         console.log('Fetched services data:', servicesData);
 
         setCollaborations(collabData);
-        setServices(servicesData.map((service: ServiceResponse) => ({
-          ...service,
-          serviceType: validateServiceType(service.serviceType || 'one-off')
-        })));
+        setServices(servicesData.map((service: ServiceResponse) => {
+          const mappedService = {
+            ...service,
+            serviceType: validateServiceType(service.serviceType || 'one-off')
+          };
+          console.log('Mapped service:', mappedService);
+          return mappedService;
+        }));
       } catch (error) {
         console.error('Error fetching marketplace data:', error);
       } finally {
@@ -157,10 +161,16 @@ function MarketplaceContent() {
                     <div className="flex items-center justify-between">
                       <h2 className="text-xl font-semibold text-white">Swarm Services</h2>
                       <div className="text-sm text-white/60">
+                        {console.log('Non-financial services:', services?.filter(s => s.serviceType !== 'financial'))}
                         {services?.filter(s => s.serviceType !== 'financial').length || 0} services found
                       </div>
                     </div>
-                    <ServiceGrid services={services?.filter(s => s.serviceType !== 'financial') || []} />
+                    <ServiceGrid 
+                      services={services?.filter(s => {
+                        console.log('Service type check:', s.id, s.serviceType);
+                        return s.serviceType !== 'financial';
+                      }) || []} 
+                    />
                   </div>
 
                   {/* Ecosystem Services */}
