@@ -8,29 +8,11 @@ import { useEffect } from "react";
 import { Button } from "@/components/shadcn/button";
 import { LucideRefreshCcw } from "lucide-react";
 import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
+import { MarketListing } from "../market.types";
+import { ListingAccount } from "@/hooks/useLaunchpadProgram/types";
 
 const MarketListings = ({ className }: { className?: string }) => {
-
     const ITEMS_PER_PAGE = 20;
-    // const [transactions, setTransactions] = useState<MarketListing[]>([]);
-
-    // const fetchTransactions = async ({ pageParam }: { pageParam: number }) => {
-    //     await sleep(1000);
-    //     const data = [].slice(pageParam, pageParam + ITEMS_PER_PAGE);
-    //     setTransactions(oldTxns => [...oldTxns, ...data]);
-    //     return { prevIndex: pageParam }
-    // }
-
-    // const { isFetching, fetchNextPage } = useInfiniteQuery({
-    //     initialPageParam: 0,
-    //     queryKey: ['MarketListings'],
-    //     queryFn: fetchTransactions,
-    //     getNextPageParam: (lastPage) => lastPage.prevIndex + ITEMS_PER_PAGE,
-    //     refetchOnMount: true,
-    //     staleTime: 60 * 1000
-    // })
-
-
 
     const { useListingsPagination } = useLaunchpadProgram();
     const { 
@@ -38,12 +20,17 @@ const MarketListings = ({ className }: { className?: string }) => {
         isLoading, 
         pagination,
         refresh,
-    } = useListingsPagination(ITEMS_PER_PAGE); // 20 items per page
+    } = useListingsPagination(ITEMS_PER_PAGE);
 
-    // transform listings to MarketListing[]
-    useEffect(() => {
-        console.log('listings', listings);
-    }, [listings]);
+    // Transform ListingAccount[] to MarketListing[]
+    const transformedListings: MarketListing[] = listings.map((listing: ListingAccount) => ({
+        id: listing.listingId,
+        swarm_id: listing.pool.toString(),
+        number_of_shares: Number(listing.numberOfShares),
+        price_per_share: Number(listing.pricePerShare),
+        seller: listing.seller.toString(),
+        token: '$COMPUTE' // Assuming all listings are in $COMPUTE
+    }));
 
     return (
         <Card className={cn("w-full flex flex-col", className)}>
@@ -53,7 +40,7 @@ const MarketListings = ({ className }: { className?: string }) => {
                     <LucideRefreshCcw size={16} />
                 </Button>
             </div>
-            <DataTable columns={columns} data={isLoading ? [] : listings} />
+            <DataTable columns={columns} data={isLoading ? [] : transformedListings} />
             {listings.length > 0 &&
                 <div className="flex gap-2 mt-4">
                     <Button 
