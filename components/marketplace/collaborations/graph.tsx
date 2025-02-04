@@ -177,7 +177,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     });
 
     // Convert Set back to array and parse JSON strings
-    const nodes = Array.from(uniqueSwarms).map(s => JSON.parse(s));
+    const nodes = Array.from(uniqueSwarms).map(s => JSON.parse(s as string));
 
     // Debug logging
     console.log('Collaborations:', filteredCollaborations);
