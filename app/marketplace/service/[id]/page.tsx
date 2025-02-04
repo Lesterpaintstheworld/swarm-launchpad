@@ -88,14 +88,14 @@ export default function ServicePage() {
     'subscription': <Clock className="w-4 h-4" />,
     'one-off': <Cpu className="w-4 h-4" />,
     'pay-as-you-go': <Cpu className="w-4 h-4" />,
-    'financial': <Cpu className="w-4 h-4" />
+    'financial': <Shield className="w-4 h-4 text-green-400" />
   };
 
   const serviceTypeLabel = {
     'subscription': 'Subscription',
     'one-off': 'One-time Purchase',
     'pay-as-you-go': 'Pay as you go',
-    'financial': 'Financial Service'
+    'financial': 'Ecosystem Service'
   };
 
   const crumbs = [
@@ -170,7 +170,9 @@ export default function ServicePage() {
                 <span className="text-3xl font-bold">
                   {service.basePrice.toLocaleString()}
                 </span>
-                <span className="metallic-text text-xl">$COMPUTE</span>
+                <span className={`text-xl ${service.serviceType === 'financial' ? 'metallic-text-ubc' : 'metallic-text'}`}>
+                  {service.serviceType === 'financial' ? '$UBC' : '$COMPUTE'}
+                </span>
               </div>
             </div>
 
