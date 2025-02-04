@@ -1,7 +1,7 @@
 import { Program as AnchorProgram, Idl } from "@coral-xyz/anchor";
 import { PublicKey as SolanaPublicKey } from "@solana/web3.js";
 import { AnchorProvider } from "@coral-xyz/anchor";
-import UbclaunchpadIDL from "../../data/programs/ubclaunchpad.json" assert { type: "json" };
+import UbclaunchpadIDL from "../../data/programs/ubclaunchpad.json";
 
 const getShareholderPDA = (
     programId: SolanaPublicKey, 
