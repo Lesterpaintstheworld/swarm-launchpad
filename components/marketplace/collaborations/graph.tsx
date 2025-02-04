@@ -498,7 +498,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
       function animateMessages() {
         let activeAnimations = 0;
-        let totalDuration = 0;
+        const totalDuration = 0;
 
         // Process messages in batches
         const recentMessages = sortedMessages.slice(-100);
@@ -692,7 +692,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       }
       tooltip.remove(); // Remove tooltip when component unmounts
     };
-  }, [zoom, getNodeSize, isLoading, swarmMap, collaborationsProp]);
+  }, [zoom, getNodeSize, isLoading, swarmMap, collaborationsProp, swarms]);
 
   const handleZoomIn = () => {
     setZoom(prev => Math.min(prev + 0.2, 2));
