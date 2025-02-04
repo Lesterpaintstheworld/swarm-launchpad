@@ -115,6 +115,7 @@ export interface CollaborationResponse {
 }
 
 export interface MissionRequester {
+  id: string;
   name: string;
   image: string;
 }
