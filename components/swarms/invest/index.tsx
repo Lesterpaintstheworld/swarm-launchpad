@@ -32,6 +32,16 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recha
 import { Props as RechartsProps } from 'recharts/types/component/DefaultLegendContent';
 import { Copy } from 'lucide-react';
 
+interface CustomPayload {
+    value: string;
+    payload: {
+        name: string;
+        value: number;
+        color: string;
+        percentage?: string;
+    };
+}
+
 interface LegendEntry {
     value: string;
     color: string;
