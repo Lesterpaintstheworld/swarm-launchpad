@@ -158,10 +158,7 @@ function MarketplaceContent() {
                         {services.filter(s => s.serviceType !== 'financial').length} services found
                       </div>
                     </div>
-                    <ServiceGrid services={services.filter(s => s.serviceType !== 'financial').map(s => ({
-                      ...s,
-                      serviceType: validateServiceType(s.serviceType)
-                    }))} />
+                    <ServiceGrid services={services.filter(s => s.serviceType !== 'financial')} />
                   </div>
 
                   {/* Ecosystem Services */}
@@ -173,10 +170,7 @@ function MarketplaceContent() {
                           {services.filter(s => s.serviceType === 'financial').length} services found
                         </div>
                       </div>
-                      <ServiceGrid services={services.filter(s => s.serviceType === 'financial').map(s => ({
-                        ...s,
-                        serviceType: validateServiceType(s.serviceType)
-                      }))} />
+                      <ServiceGrid services={services.filter(s => s.serviceType === 'financial')} />
                     </div>
                   )}
                 </div>
