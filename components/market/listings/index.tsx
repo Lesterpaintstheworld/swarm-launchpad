@@ -29,7 +29,10 @@ const MarketListings = ({ className }: { className?: string }) => {
         number_of_shares: Number(listing.numberOfShares),
         price_per_share: Number(listing.pricePerShare),
         seller: listing.seller.toString(),
-        token: '$COMPUTE' // Assuming all listings are in $COMPUTE
+        token: {
+            label: '$COMPUTE',
+            icon: '/tokens/compute.svg'
+        }
     }));
 
     return (
