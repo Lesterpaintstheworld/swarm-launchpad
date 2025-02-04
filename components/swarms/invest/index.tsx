@@ -62,9 +62,9 @@ import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 
 const getSwarmStage = (swarmType: string) => {
     switch (swarmType) {
-        case 'inception': return 0; // Idea stage
-        case 'early': return 2;     // Prototype stage
-        case 'partner': return 4;    // Scaling stage
+        case 'inception': return 0; // Inception Swarm
+        case 'early': return 1;     // Early Swarm
+        case 'partner': return 2;   // Partner Swarm
         default: return 0;
     }
 };
@@ -802,11 +802,9 @@ const SwarmInvestCard = ({
                             
                         {/* Timeline nodes */}
                         {[
-                            { label: 'Idea', description: 'Initial concept and planning' },
-                            { label: 'POC', description: 'Proof of concept development' },
-                            { label: 'Prototype', description: 'Working prototype and testing' },
-                            { label: 'First Sale', description: 'Market validation and revenue' },
-                            { label: 'Scaling', description: 'Growth and expansion' }
+                            { label: 'Inception Swarm', description: 'Initial concept and development' },
+                            { label: 'Early Swarm', description: 'Growing revenue and user base' },
+                            { label: 'Partner Swarm', description: 'Established and scaling' }
                         ].map((stage, index) => {
                             const currentStage = getSwarmStage(swarm?.swarmType || 'inception');
                             const isActive = index <= currentStage;
