@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build", 
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "update-multiples": "python scripts/update_multiples.py",
@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1",
+    "@project-serum/anchor": "^0.26.0",
     "@radix-ui/react-accordion": "^1.2.2",
     "@radix-ui/react-dialog": "^1.1.4",
     "@radix-ui/react-dropdown-menu": "^2.1.4",
