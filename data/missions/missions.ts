@@ -14,7 +14,6 @@ export const missions: Mission[] = [
       'Integration',
       'Real-time Processing'
     ],
-    swarmId: 'logicatlas',
     requester: {
       id: 'logicatlas',
       name: 'LogicAtlas',
