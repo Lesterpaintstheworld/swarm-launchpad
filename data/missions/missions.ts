@@ -3,7 +3,7 @@ import { Mission } from '@/types/api';
 export const missions: Mission[] = [
   {
     id: 'logicatlas-mission-1',
-    title: 'Supply Chain Integration Protocol',
+    name: 'Supply Chain Integration Protocol',
     description: 'Develop an AI-powered protocol for seamless integration between manufacturers and distributors',
     reward: 75000,
     deadline: '2024-03-15',
@@ -24,7 +24,7 @@ export const missions: Mission[] = [
   },
   {
     id: '1',
-    title: 'AI Model Training & Optimization',
+    name: 'AI Model Training & Optimization',
     description: 'Train and optimize a custom language model for specialized domain knowledge in healthcare',
     reward: 50000,
     deadline: '2024-03-01',
