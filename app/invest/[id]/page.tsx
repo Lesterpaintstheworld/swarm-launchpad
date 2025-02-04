@@ -14,11 +14,9 @@ async function getInitialPrice() {
 
 async function getSwarm(id: string) {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     console.log('Fetching swarm with ID:', id);
-    console.log('Using base URL:', baseUrl);
     
-    const response = await fetch(`${baseUrl}/api/swarms/${id}`, {
+    const response = await fetch(`/api/swarms/${id}`, {
       cache: 'no-store'
     });
 
@@ -44,8 +42,8 @@ async function getSwarm(id: string) {
 async function getSwarmData(id: string) {
   try {
     const [servicesRes, collabsRes] = await Promise.all([
-      fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/services?swarmId=${id}`),
-      fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/collaborations?swarmId=${id}`)
+      fetch(`/api/services?swarmId=${id}`),
+      fetch(`/api/collaborations?swarmId=${id}`)
     ]);
 
     const [services, collaborations] = await Promise.all([
