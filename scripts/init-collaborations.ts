@@ -75,7 +75,9 @@ async function initializeCollaborations() {
 
         } catch (error) {
             console.error('Error creating collaboration:', error);
-            console.error('Error details:', error.message);
+            if (error instanceof Error) {
+                console.error('Error details:', error.message);
+            }
         }
     }
 
