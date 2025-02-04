@@ -797,7 +797,6 @@ const SwarmInvestCard = ({
                             { label: 'First Sale', description: 'Market validation and revenue' },
                             { label: 'Scaling', description: 'Growth and expansion' }
                         ].map((stage, index) => {
-                            // Get swarm type from API data instead of pool mapping
                             const currentStage = getSwarmStage(swarm?.swarmType || 'inception');
                             const isActive = index <= currentStage;
                             const isCurrent = index === currentStage;
