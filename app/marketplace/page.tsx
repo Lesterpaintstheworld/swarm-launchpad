@@ -58,19 +58,32 @@ function MarketplaceContent() {
   const [missions, setMissions] = useState<Mission[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Fetch collaborations data
+  // Fetch marketplace data
   useEffect(() => {
     async function fetchData() {
       try {
         setIsLoading(true);
-        const response = await fetch('/api/collaborations');
-        if (!response.ok) {
-          throw new Error('Failed to fetch collaborations');
+        const [collabResponse, servicesResponse] = await Promise.all([
+          fetch('/api/collaborations'),
+          fetch('/api/services')
+        ]);
+
+        if (!collabResponse.ok || !servicesResponse.ok) {
+          throw new Error('Failed to fetch marketplace data');
         }
-        const data = await response.json();
-        setCollaborations(data);
+
+        const [collabData, servicesData] = await Promise.all([
+          collabResponse.json(),
+          servicesResponse.json()
+        ]);
+
+        setCollaborations(collabData);
+        setServices(servicesData.map((service: ServiceResponse) => ({
+          ...service,
+          serviceType: validateServiceType(service.serviceType || 'one-off')
+        })));
       } catch (error) {
-        console.error('Error fetching collaborations:', error);
+        console.error('Error fetching marketplace data:', error);
       } finally {
         setIsLoading(false);
       }
