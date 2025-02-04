@@ -56,7 +56,7 @@ import { DividendPayments } from "@/components/portfolio/dividendPayments";
 import { Investments } from "@/components/portfolio/investments";
 import { PortfolioOverview } from "@/components/portfolio/overview";
 import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
-import { Program, Idl } from "@project-serum/anchor";
+import { Program, Idl } from "@coral-xyz/anchor";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import { useEffect, useState } from "react";
