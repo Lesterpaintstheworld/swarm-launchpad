@@ -1,4 +1,4 @@
-import { collaborations } from '../data/collaborations/collaborations.js';
+import { collaborations } from '../data/collaborations/collaborations';
 import dotenv from 'dotenv';
 
 dotenv.config();
