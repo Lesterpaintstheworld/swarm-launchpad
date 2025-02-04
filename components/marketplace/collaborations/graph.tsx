@@ -572,7 +572,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
                   
                   if (point) {
                     const nextPoint = tempPath.node()?.getPointAtLength(Math.min(pathLength, (t + 0.01) * pathLength));
-                    const angle = Math.atan2(nextPoint.y - point.y, nextPoint.x - point.x) * 180 / Math.PI;
+                    const angle = nextPoint ? Math.atan2(nextPoint.y - point.y, nextPoint.x - point.x) * 180 / Math.PI : 0;
                     
                     // Add slight randomization to envelope paths
                     const jitter = Math.sin(progress * Math.PI * 4) * 2;
