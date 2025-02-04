@@ -12,7 +12,7 @@ import { Tag } from "@/components/ui/tag";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { IntlNumberFormat } from "@/lib/utils";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { randomBytes } from "crypto";
 
 interface SellPositionProps {
