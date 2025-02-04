@@ -15,15 +15,26 @@ async function getInitialPrice() {
 async function getSwarm(id: string) {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    console.log('Fetching swarm with ID:', id);
+    console.log('Using base URL:', baseUrl);
+    
     const response = await fetch(`${baseUrl}/api/swarms/${id}`, {
       cache: 'no-store'
     });
 
     if (!response.ok) {
+      console.error('Swarm fetch failed:', {
+        status: response.status,
+        statusText: response.statusText
+      });
+      const text = await response.text();
+      console.error('Response body:', text);
       return null;
     }
 
-    return await response.json();
+    const data = await response.json();
+    console.log('Fetched swarm data:', data);
+    return data;
   } catch (error) {
     console.error('Error fetching swarm:', error);
     return null;
@@ -50,6 +61,15 @@ async function getSwarmData(id: string) {
 }
 
 export default async function SwarmPage({ params }: { params: { id: string } }) {
+    console.log('SwarmPage called with params:', params);
+    
+    // Validate ID format
+    if (!params.id || typeof params.id !== 'string') {
+        console.error('Invalid swarm ID:', params.id);
+        notFound();
+        return;
+    }
+
     const [swarm, initialPrice, swarmData] = await Promise.all([
         getSwarm(params.id),
         getInitialPrice(),
@@ -57,7 +77,9 @@ export default async function SwarmPage({ params }: { params: { id: string } }) 
     ]);
 
     if (!swarm) {
+        console.error('Swarm not found for ID:', params.id);
         notFound();
+        return;
     }
 
     return <SwarmContent 
