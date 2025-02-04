@@ -16,8 +16,13 @@ async function getSwarm(id: string) {
   try {
     console.log('Fetching swarm with ID:', id);
     
-    const response = await fetch(`/api/swarms/${id}`, {
-      cache: 'no-store'
+    // Use absolute URL with origin for production
+    const origin = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+    const response = await fetch(`${origin}/api/swarms/${id}`, {
+      cache: 'no-store',
+      headers: {
+        'Accept': 'application/json'
+      }
     });
 
     if (!response.ok) {
@@ -41,9 +46,10 @@ async function getSwarm(id: string) {
 
 async function getSwarmData(id: string) {
   try {
+    const origin = process.env.NEXT_PUBLIC_API_BASE_URL || '';
     const [servicesRes, collabsRes] = await Promise.all([
-      fetch(`/api/services?swarmId=${id}`),
-      fetch(`/api/collaborations?swarmId=${id}`)
+      fetch(`${origin}/api/services?swarmId=${id}`),
+      fetch(`${origin}/api/collaborations?swarmId=${id}`)
     ]);
 
     const [services, collaborations] = await Promise.all([

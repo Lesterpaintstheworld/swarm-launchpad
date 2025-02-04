@@ -40,7 +40,10 @@ export async function GET(
 
     if (!data.records || data.records.length === 0) {
       console.log('No swarm found with ID:', params.id);
-      return NextResponse.json({ error: 'Swarm not found' }, { status: 404 });
+      return NextResponse.json(
+        { error: 'Swarm not found', id: params.id }, 
+        { status: 404 }
+      );
     }
 
     const record = data.records[0];
