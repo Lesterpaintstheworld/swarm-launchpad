@@ -1,4 +1,4 @@
-import { Mission } from '@/components/marketplace/types';
+import { Mission } from '@/types/api';
 
 export const missions: Mission[] = [
   {
