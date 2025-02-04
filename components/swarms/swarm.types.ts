@@ -20,6 +20,7 @@ export interface SwarmPreviewData {
     models: string[];
     name: string;
     description: string;
+    shortDescription?: string;
     tags: string[];
     role: string;
     swarmType: SwarmType;
