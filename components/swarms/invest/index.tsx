@@ -802,9 +802,21 @@ const SwarmInvestCard = ({
                             
                         {/* Timeline nodes */}
                         {[
-                            { label: 'Inception Swarm', description: 'Initial concept and development' },
-                            { label: 'Early Swarm', description: 'Growing revenue and user base' },
-                            { label: 'Partner Swarm', description: 'Established and scaling' }
+                            { 
+                                label: 'Inception Swarm', 
+                                description: 'Initial concept and development',
+                                emoji: '🌱'
+                            },
+                            { 
+                                label: 'Early Swarm', 
+                                description: 'Growing revenue and user base',
+                                emoji: '🚀'
+                            },
+                            { 
+                                label: 'Partner Swarm', 
+                                description: 'Established and scaling',
+                                emoji: '🤝'
+                            }
                         ].map((stage, index) => {
                             const currentStage = getSwarmStage(swarm?.swarmType || 'inception');
                             const isActive = index <= currentStage;
@@ -853,7 +865,7 @@ const SwarmInvestCard = ({
                                         <h5 className={cn(
                                             "text-sm font-medium mb-1",
                                             isCurrent && "text-blue-400"
-                                        )}>{stage.label}</h5>
+                                        )}>{stage.emoji} {stage.label}</h5>
                                         <p className="text-xs opacity-80">{stage.description}</p>
                                     </div>
                                 </div>
