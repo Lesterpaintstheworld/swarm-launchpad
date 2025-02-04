@@ -245,12 +245,6 @@ const SwarmInvestCard = ({
         setIsLoading(true);
         const calculatedCostInBaseUnits = Math.floor(price * Math.pow(10, 6));
             
-        const swarm = getSwarmUsingPoolId(pool);
-        if (!swarm) {
-            toast.error("Invalid swarm");
-            return;
-        }
-
         toast.promise(purchaseShares.mutateAsync({ 
             numberOfShares: numShares, 
             calculatedCost: calculatedCostInBaseUnits
@@ -258,7 +252,11 @@ const SwarmInvestCard = ({
             loading: 'Transaction pending...',
             success: (result) => {
                 // Webhook notification
-                const swarm = getSwarmUsingPoolId(pool);
+                const swarmDetails = getSwarmUsingPoolId(pool);
+                if (!swarmDetails) {
+                    console.error("Could not find swarm details for webhook");
+                    return `Successfully purchased ${numShares} shares!`;
+                }
                 fetch('https://nlr.app.n8n.cloud/webhook/buybot', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
