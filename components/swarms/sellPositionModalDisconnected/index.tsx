@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { Tag } from "@/components/ui/tag";
 import { IntlNumberFormat } from "@/lib/utils";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 interface SellPositionProps {
     isModalOpen: boolean;
