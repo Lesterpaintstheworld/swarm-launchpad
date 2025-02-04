@@ -100,6 +100,7 @@ const SwarmInvestCard = ({
         totalRevenue?: number;
         swarmType?: string;
         wallet?: string;
+        X?: string;
     }
 
     const [swarm, setSwarm] = useState<SwarmDetails | null>(null);
@@ -521,18 +522,18 @@ const SwarmInvestCard = ({
                     </div>
                 </div>
 
-                {/* Twitter Page */}
-                {swarm?.twitterAccount && (
+                {/* X (Twitter) Page */}
+                {swarm?.X && (
                     <div className="bg-slate-800/30 rounded-lg p-4 mt-4">
                         <div className="flex justify-between items-center">
-                            <span className="text-sm text-slate-400">Twitter Page</span>
+                            <span className="text-sm text-slate-400">X (Twitter) Page</span>
                             <Link 
-                                href={`https://x.com/${swarm.twitterAccount}`}
+                                href={`https://x.com/${swarm.X}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
                             >
-                                @{swarm.twitterAccount}
+                                @{swarm.X}
                             </Link>
                         </div>
                     </div>
