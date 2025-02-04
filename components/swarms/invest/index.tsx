@@ -455,7 +455,20 @@ const SwarmInvestCard = ({
             {connected ? (
                 <Button
                     onClick={handleBuy}
-                    className="w-full mt-6"
+                    className={cn(
+                        "w-full mt-6 relative overflow-hidden",
+                        "bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-400",
+                        "hover:from-yellow-300 hover:via-orange-300 to-yellow-300",
+                        "border-none text-black font-semibold",
+                        "transition-all duration-500",
+                        "transform hover:scale-[1.02]",
+                        "before:absolute before:inset-0",
+                        "before:bg-gradient-to-r before:from-transparent before:via-white/40 before:to-transparent",
+                        "before:translate-x-[-200%] before:animate-[shine_6s_ease-in-out_infinite]",
+                        "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
+                        "shadow-[0_0_15px_rgba(234,179,8,0.3)]",
+                        "hover:shadow-[0_0_20px_rgba(234,179,8,0.5)]"
+                    )}
                     disabled={!numShares || numShares <= 0 || isLoading || isBeforeLaunch}
                 >
                     {isLoading ? (

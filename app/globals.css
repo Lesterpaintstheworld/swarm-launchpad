@@ -239,6 +239,15 @@
     transition: none !important;
 }
 
+@keyframes shine {
+  0% {
+    transform: translateX(-200%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
 @keyframes metallic-shine {
   0% {
     background-position: -200%;
@@ -249,7 +258,6 @@
 }
 
 .metallic-text {
-  color: #5b21b6; /* Even more blueish violet base */
   background: linear-gradient(
     120deg,
     #5b21b6 0%,    /* More blueish violet base */
@@ -261,10 +269,8 @@
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
-  text-fill-color: transparent;
   -webkit-text-fill-color: transparent;
   animation: metallic-shine 6s linear infinite;
-  animation-delay: 0s;
 }
 
 .metallic-bg-ubc {
@@ -279,7 +285,6 @@
 }
 
 .metallic-text-ubc {
-  color: #f59e0b; /* Amber/yellow base color */
   background: linear-gradient(
     120deg,
     #f59e0b 0%,
@@ -291,10 +296,8 @@
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
-  text-fill-color: transparent;
   -webkit-text-fill-color: transparent;
-  animation: metallic-shine 8s ease-out infinite;
-  animation-delay: 3s;
+  animation: metallic-shine 8s linear infinite;
 }
 
 .metallic-text-sol {
