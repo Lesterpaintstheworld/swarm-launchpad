@@ -1,5 +1,7 @@
 'use client'
 
+const COLORS = ['#ef4444', '#22c55e', '#3b82f6']; // red, green, blue
+
 const getSwarmUsingPoolId = (poolId: string): { id: string; name: string; wallet?: string } | null => {
     const swarmMap: Record<string, { id: string; name: string; wallet: string }> = {
         'FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz': {
@@ -619,7 +621,7 @@ const SwarmInvestCard = ({
                                                         <li key={`item-${index}`} className="flex items-center gap-2">
                                                             <div 
                                                                 className="w-3 h-3 rounded-full" 
-                                                                style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                                                                style={{ backgroundColor: entry.payload.color }}
                                                             />
                                                             <span className="text-sm">
                                                                 {entry.value} ({entry.payload.percentage}%)
