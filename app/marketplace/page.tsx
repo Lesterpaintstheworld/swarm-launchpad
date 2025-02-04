@@ -161,15 +161,11 @@ function MarketplaceContent() {
                     <div className="flex items-center justify-between">
                       <h2 className="text-xl font-semibold text-white">Swarm Services</h2>
                       <div className="text-sm text-white/60">
-                        {console.log('Non-financial services:', services?.filter(s => s.serviceType !== 'financial'))}
                         {services?.filter(s => s.serviceType !== 'financial').length || 0} services found
                       </div>
                     </div>
                     <ServiceGrid 
-                      services={services?.filter(s => {
-                        console.log('Service type check:', s.id, s.serviceType);
-                        return s.serviceType !== 'financial';
-                      }) || []} 
+                      services={services?.filter(s => s.serviceType !== 'financial')} 
                     />
                   </div>
 
@@ -182,7 +178,9 @@ function MarketplaceContent() {
                           {services?.filter(s => s.serviceType === 'financial').length || 0} services found
                         </div>
                       </div>
-                      <ServiceGrid services={services?.filter(s => s.serviceType === 'financial') || []} />
+                      <ServiceGrid 
+                        services={services?.filter(s => s.serviceType === 'financial')} 
+                      />
                     </div>
                   )}
                 </div>
