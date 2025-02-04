@@ -105,35 +105,38 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
   }, [swarmMap]);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        setIsLoading(true);
-        const [swarmsResponse, collaborationsResponse] = await Promise.all([
-          fetch('/api/swarms'),
-          fetch('/api/collaborations')
-        ]);
-
+    function fetchData() {
+      setIsLoading(true);
+      Promise.all([
+        fetch('/api/swarms'),
+        fetch('/api/collaborations')
+      ])
+      .then(([swarmsResponse, collaborationsResponse]) => {
         if (swarmsResponse.ok && collaborationsResponse.ok) {
-          const [swarmsData, collaborationsData] = await Promise.all([
+          return Promise.all([
             swarmsResponse.json(),
             collaborationsResponse.json()
           ]);
-
-          setSwarms(swarmsData);
-          setLocalCollaborations(collaborationsData);
-          
-          // Create a map for easier lookup
-          const map = new Map();
-          swarmsData.forEach((swarm: SwarmData) => {
-            map.set(swarm.id, swarm);
-          });
-          setSwarmMap(map);
         }
-      } catch (error) {
+        throw new Error('Failed to fetch data');
+      })
+      .then(([swarmsData, collaborationsData]) => {
+        setSwarms(swarmsData);
+        setLocalCollaborations(collaborationsData);
+        
+        // Create a map for easier lookup
+        const map = new Map();
+        swarmsData.forEach((swarm: SwarmData) => {
+          map.set(swarm.id, swarm);
+        });
+        setSwarmMap(map);
+      })
+      .catch(error => {
         console.error('Error fetching data:', error);
-      } finally {
+      })
+      .finally(() => {
         setIsLoading(false);
-      }
+      });
     }
     fetchData();
   }, []);
@@ -144,24 +147,41 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     // Clear previous graph
     d3.select(svgRef.current).selectAll("*").remove();
 
-    // Filter out ecosystem nodes and create set of ecosystem targets
+    // Filter collaborations and create set of ecosystem targets
     const filteredCollaborations = collaborationsProp.filter(
-      collab => collab.providerSwarm.id !== 'ecosystem'
+      collab => collab.providerSwarm && collab.clientSwarm // Ensure both swarms exist
     );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    // Create set of ecosystem targets
     const ecosystemTargets = new Set(
       collaborationsProp
-        .filter(collab => collab.providerSwarm.id === 'ecosystem')
-        .map(collab => collab.clientSwarm.id)
+        .filter(collab => collab.providerSwarm?.id === 'ecosystem')
+        .map(collab => collab.clientSwarm?.id)
+        .filter(Boolean) // Remove any undefined values
     );
 
     // Create nodes array (unique swarms)
-    const swarms = new Set();
+    const uniqueSwarms = new Set();
     filteredCollaborations.forEach(collab => {
-      swarms.add(JSON.stringify(collab.providerSwarm));
-      swarms.add(JSON.stringify(collab.clientSwarm));
+      // Add both provider and client swarms
+      uniqueSwarms.add(JSON.stringify({
+        id: collab.providerSwarm.id,
+        name: collab.providerSwarm.name,
+        image: collab.providerSwarm.image
+      }));
+      uniqueSwarms.add(JSON.stringify({
+        id: collab.clientSwarm.id,
+        name: collab.clientSwarm.name,
+        image: collab.clientSwarm.image
+      }));
     });
-    const nodes = Array.from(swarms).map(s => JSON.parse(s as string));
+
+    // Convert Set back to array and parse JSON strings
+    const nodes = Array.from(uniqueSwarms).map(s => JSON.parse(s));
+
+    // Debug logging
+    console.log('Collaborations:', filteredCollaborations);
+    console.log('Created nodes:', nodes);
 
     // Create links array with normalized strengths based on price
     const maxPrice = Math.max(...filteredCollaborations.map(c => c.price));
@@ -217,6 +237,12 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     const lightGradient = defs.append("linearGradient")
       .attr("id", "light-gradient")
       .attr("gradientUnits", "userSpaceOnUse");
+
+    // Add envelope path to defs
+    defs.append("path")
+      .attr("id", "envelope-icon")
+      .attr("d", "M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.708 2.825L15 11.105V5.383zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741zM1 11.105l4.708-2.897L1 5.383v5.722z")
+      .attr("fill", "currentColor");
 
     lightGradient.append("stop")
       .attr("offset", "0%")
@@ -420,6 +446,193 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       .attr("font-weight", "bold")
       .style("text-shadow", "0 0 10px rgba(0,0,0,0.5)");
 
+    function createMessageAnimations(messages: Array<{senderId: string, timestamp: string}>) {
+      g.selectAll(".message-envelope").remove();
+      g.selectAll("filter[id^='glow-']").remove();
+
+      // Create message map to link senders with multiple possible recipients
+      const messageMap = new Map<string, string[]>();
+      collaborationsProp.forEach(collab => {
+        // For provider swarm
+        if (!messageMap.has(collab.providerSwarm.id)) {
+          messageMap.set(collab.providerSwarm.id, []);
+        }
+        messageMap.get(collab.providerSwarm.id)?.push(collab.clientSwarm.id);
+
+        // For client swarm
+        if (!messageMap.has(collab.clientSwarm.id)) {
+          messageMap.set(collab.clientSwarm.id, []);
+        }
+        messageMap.get(collab.clientSwarm.id)?.push(collab.providerSwarm.id);
+      });
+
+      // Create a single reusable glow filter
+      const glowFilter = defs.append("filter")
+        .attr("id", "envelope-glow")
+        .attr("width", "300%")
+        .attr("height", "300%")
+        .attr("x", "-100%")
+        .attr("y", "-100%")
+        .html(`
+          <feGaussianBlur stdDeviation="2" result="blur"/>
+          <feFlood flood-color="#fff" flood-opacity="0.3"/>
+          <feComposite in2="blur" operator="in"/>
+          <feMerge>
+            <feMergeNode/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        `);
+
+      // Pre-calculate node positions and sizes
+      const nodePositions = new Map(nodes.map(node => [
+        node.id, {
+          x: node.x,
+          y: node.y,
+          size: getNodeSize(node.id)
+        }
+      ]));
+
+      const sortedMessages = [...messages].sort((a, b) => 
+        new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+      );
+
+      function animateMessages() {
+        let activeAnimations = 0;
+        let totalDuration = 0;
+
+        // Process messages in batches
+        const recentMessages = sortedMessages.slice(-100);
+        const batchSize = 10; // Number of envelopes to animate simultaneously
+        
+        // Process messages in batches
+        for(let i = 0; i < recentMessages.length; i += batchSize) {
+          const batch = recentMessages.slice(i, i + batchSize);
+          
+          batch.forEach((message, index) => {
+            const possibleTargets = messageMap.get(message.senderId);
+            if (!possibleTargets || possibleTargets.length === 0) return;
+            
+            // Randomly select one of the possible targets
+            const targetId = possibleTargets[Math.floor(Math.random() * possibleTargets.length)];
+            if (!targetId) return;
+
+            const sourcePos = nodePositions.get(message.senderId);
+            const targetPos = nodePositions.get(targetId);
+            
+            if (!sourcePos || !targetPos) return;
+
+            setTimeout(() => {
+              activeAnimations++;
+              
+              // Calculate path once
+              const dx = targetPos.x - sourcePos.x;
+              const dy = targetPos.y - sourcePos.y;
+              const distance = Math.sqrt(dx * dx + dy * dy);
+              
+              const startX = sourcePos.x + (dx / distance * sourcePos.size);
+              const startY = sourcePos.y + (dy / distance * sourcePos.size);
+              const endX = targetPos.x - (dx / distance * targetPos.size);
+              const endY = targetPos.y - (dy / distance * targetPos.size);
+              
+              const pathData = `
+                M ${startX} ${startY}
+                Q ${(startX + endX) / 2} ${(startY + endY) / 2 - distance * 0.2},
+                  ${endX} ${endY}
+              `;
+
+              const tempPath = g.append("path")
+                .attr("d", pathData)
+                .style("display", "none");
+
+              const pathLength = tempPath.node()?.getTotalLength() || 0;
+              
+              const envelopeGroup = g.append("g")
+                .attr("class", "message-envelope")
+                .style("opacity", 0);
+
+              envelopeGroup.html(`
+                <use href="#envelope-icon" width="32" height="32" fill="white" style="filter:url(#envelope-glow)"/>
+                <use href="#envelope-icon" width="32" height="32" fill="white"/>
+              `);
+
+              const animationDuration = 2500;
+              // Stagger the animations within each batch
+              const staggerDelay = (index % batchSize) * 200; // 200ms stagger within batch
+              
+              let startTime: number | null = null;
+              let animationFrame: number;
+              
+              function animate(timestamp: number) {
+                if (!startTime) startTime = timestamp + staggerDelay;
+                const progress = Math.max(0, (timestamp - startTime) / animationDuration);
+
+                if (progress < 1) {
+                  const t = progress;
+                  const point = tempPath.node()?.getPointAtLength(t * pathLength);
+                  
+                  if (point) {
+                    const nextPoint = tempPath.node()?.getPointAtLength(Math.min(pathLength, (t + 0.01) * pathLength));
+                    const angle = Math.atan2(nextPoint.y - point.y, nextPoint.x - point.x) * 180 / Math.PI;
+                    
+                    // Add slight randomization to envelope paths
+                    const jitter = Math.sin(progress * Math.PI * 4) * 2;
+                    
+                    envelopeGroup
+                      .attr("transform", `translate(${point.x - 16 + jitter},${point.y - 16}) rotate(${angle}, 16, 16)`)
+                      .style("opacity", t < 0.1 ? t * 10 : t > 0.9 ? (1 - t) * 10 : 1);
+                    
+                    animationFrame = requestAnimationFrame(animate);
+                  }
+                } else {
+                  tempPath.remove();
+                  envelopeGroup.remove();
+                  activeAnimations--;
+
+                  if (activeAnimations === 0) {
+                    setTimeout(animateMessages, 500); // Reduced delay between cycles
+                  }
+                }
+              }
+
+              animationFrame = requestAnimationFrame(animate);
+            }, Math.floor(i / batchSize) * 1000); // 1 second between batches
+          });
+        }
+      }
+
+      // Start initial animation
+      animateMessages();
+
+      // Cleanup function
+      return () => {
+        g.selectAll(".message-envelope").remove();
+        g.selectAll("filter[id^='envelope-glow']").remove();
+        // Cancel any pending animations
+        const highestId = window.requestAnimationFrame(() => {});
+        for (let i = 0; i < highestId; i++) {
+          window.cancelAnimationFrame(i);
+        }
+      };
+    }
+
+    // Fetch messages for all collaborations
+    const fetchMessages = () => {
+      Promise.all(collaborationsProp.map(collab => 
+        fetch(`/api/collaborations/${collab.id}/messages`)
+          .then(res => res.json())
+          .then(data => data.messages)
+      ))
+      .then(messagesArrays => {
+        const allMessages = messagesArrays.flat();
+        createMessageAnimations(allMessages);
+      })
+      .catch(error => {
+        console.error('Error fetching messages:', error);
+      });
+    };
+
+    fetchMessages();
+
     simulation.on("tick", () => {
       // Update base links
       baseLinks.attr("d", (d: SimulationLink) => {
@@ -471,6 +684,12 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       simulation.stop();
       // Clean up animations
       lightsGroup.selectAll(".link-light").interrupt();
+      g.selectAll(".message-envelope").remove();
+      // Clear any running intervals
+      const highestId = window.setInterval(() => {}, 0);
+      for (let i = 0; i < highestId; i++) {
+        window.clearInterval(i);
+      }
       tooltip.remove(); // Remove tooltip when component unmounts
     };
   }, [zoom, getNodeSize, isLoading, swarmMap, collaborationsProp]);
