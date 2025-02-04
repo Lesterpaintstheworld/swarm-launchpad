@@ -24,11 +24,11 @@ const MarketListings = ({ className }: { className?: string }) => {
 
     // Transform ListingAccount[] to MarketListing[]
     const transformedListings: MarketListing[] = listings.map((listing: ListingAccount) => ({
-        id: listing.listingId,
-        swarm_id: listing.pool.toString(),
-        number_of_shares: Number(listing.numberOfShares),
-        price_per_share: Number(listing.pricePerShare),
-        seller: listing.seller.toString(),
+        id: listing.account.listingId,
+        swarm_id: listing.account.pool.toString(),
+        number_of_shares: Number(listing.account.numberOfShares),
+        price_per_share: Number(listing.account.pricePerShare),
+        seller: listing.account.seller.toString(),
         token: {
             label: '$COMPUTE',
             icon: '/tokens/compute.svg'
