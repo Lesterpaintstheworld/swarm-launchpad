@@ -144,6 +144,8 @@ export default function Portfolio() {
             const MAX_RETRIES = 3;
             const RETRY_DELAY = 1000; // 1 second
 
+            console.log('Starting RPC data fetch...');
+
             const fetchWithRetry = async (attempt = 0) => {
                 try {
                     setIsLoading(true);
@@ -154,13 +156,17 @@ export default function Portfolio() {
                         if(!poolId) { continue; }
                         
                         try {
+                            console.log(`Fetching position for pool ${poolId}...`);
                             const position = await getPosition(publicKey as PublicKey, poolId);
                             if(!position) {
+                                console.log(`No position found for pool ${poolId}`);
                                 continue;
                             }
                             
                             const poolPubkey = new PublicKey(poolId);
+                            console.log(`Fetching pool data for ${poolId}...`);
                             const poolData = await program.account.pool.fetch(poolPubkey);
+                            console.log('Pool data received:', poolData);
                 
                             const swarm = swarmData[poolId];
                             if (!swarm) {
