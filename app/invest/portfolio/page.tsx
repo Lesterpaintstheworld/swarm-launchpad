@@ -214,7 +214,15 @@ export default function Portfolio() {
         // eslint-disable-next-line
     }, [publicKey, connected]);
 
-    if (isLoading) return (
+    if (!connected) return (
+        <main className="container view">
+            <div className="h-80 flex flex-col items-center justify-center gap-1">
+                <h2 className="text-center">Please connect your wallet</h2>
+            </div>
+        </main>
+    );
+
+    if (isLoading && connected) return (
         <main className="container view">
             <div className="h-80 flex flex-col items-center justify-center gap-1">
                 <h2 className="text-center">Loading portfolio...</h2>
