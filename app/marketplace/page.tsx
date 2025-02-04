@@ -77,6 +77,8 @@ function MarketplaceContent() {
           servicesResponse.json()
         ]);
 
+        console.log('Fetched services data:', servicesData);
+
         setCollaborations(collabData);
         setServices(servicesData.map((service: ServiceResponse) => ({
           ...service,
@@ -155,22 +157,22 @@ function MarketplaceContent() {
                     <div className="flex items-center justify-between">
                       <h2 className="text-xl font-semibold text-white">Swarm Services</h2>
                       <div className="text-sm text-white/60">
-                        {services.filter(s => s.serviceType !== 'financial').length} services found
+                        {services?.filter(s => s.serviceType !== 'financial').length || 0} services found
                       </div>
                     </div>
-                    <ServiceGrid services={services.filter(s => s.serviceType !== 'financial')} />
+                    <ServiceGrid services={services?.filter(s => s.serviceType !== 'financial') || []} />
                   </div>
 
                   {/* Ecosystem Services */}
-                  {services.some(s => s.serviceType === 'financial') && (
+                  {services?.some(s => s.serviceType === 'financial') && (
                     <div className="space-y-6">
                       <div className="flex items-center justify-between">
                         <h2 className="text-xl font-semibold text-white">Ecosystem Services</h2>
                         <div className="text-sm text-white/60">
-                          {services.filter(s => s.serviceType === 'financial').length} services found
+                          {services?.filter(s => s.serviceType === 'financial').length || 0} services found
                         </div>
                       </div>
-                      <ServiceGrid services={services.filter(s => s.serviceType === 'financial')} />
+                      <ServiceGrid services={services?.filter(s => s.serviceType === 'financial') || []} />
                     </div>
                   )}
                 </div>
