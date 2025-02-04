@@ -53,8 +53,8 @@ const MarketListings = ({ className }: { className?: string }) => {
                     <LucideRefreshCcw size={16} />
                 </Button>
             </div>
-            <DataTable columns={columns} data={isLoading ? [] : []} />
-            {[].length > -1 &&
+            <DataTable columns={columns} data={isLoading ? [] : listings} />
+            {listings.length > 0 &&
                 <div className="flex gap-2 mt-4">
                     <Button 
                         onClick={pagination.previousPage}
