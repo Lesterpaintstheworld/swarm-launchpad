@@ -43,6 +43,7 @@ interface SwarmContentProps {
         launchDate?: Date;
         twitterAccount?: string;
         revenueShare?: number;
+        soldShares?: number;
     };
     initialPrice: number | null;
     services: any[];
@@ -51,6 +52,7 @@ interface SwarmContentProps {
 
 export function SwarmContent({ swarm, initialPrice, services, collaborations }: SwarmContentProps) {
     const [price, setPrice] = useState<number | null>(initialPrice);
+    const soldShares = swarm.soldShares || 1000000; // Default to 1M shares if not provided
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -160,8 +162,8 @@ export function SwarmContent({ swarm, initialPrice, services, collaborations }: 
                                 }}
                                 achievements={swarm.achievements}
                                 weeklyRevenuePerShare={swarm.weeklyRevenue ? {
-                                    compute: Math.floor((swarm.weeklyRevenue / soldShares) * 1000 * 0.8), // Per 1000 shares
-                                    ubc: Math.floor((swarm.weeklyRevenue / soldShares) * 1000 * 0.2)  // Per 1000 shares
+                                    compute: Math.floor((swarm.weeklyRevenue / (swarm.soldShares || 1000000)) * 1000 * 0.8), // Per 1000 shares
+                                    ubc: Math.floor((swarm.weeklyRevenue / (swarm.soldShares || 1000000)) * 1000 * 0.2)  // Per 1000 shares
                                 } : undefined}
                             />
 
@@ -192,8 +194,8 @@ export function SwarmContent({ swarm, initialPrice, services, collaborations }: 
                                 <SwarmInvestCard
                                     pool={swarm.pool as string}
                                     weeklyRevenuePerShare={swarm.weeklyRevenue ? {
-                                        compute: Math.floor((swarm.weeklyRevenue / soldShares) * 1000 * 0.9 * ((swarm.revenueShare ?? 10) / 100)), // Per 1000 shares
-                                        ubc: Math.floor((swarm.weeklyRevenue / soldShares) * 1000 * 0.1 * ((swarm.revenueShare ?? 10) / 100))  // Per 1000 shares
+                                        compute: Math.floor((swarm.weeklyRevenue / (swarm.soldShares || 1000000)) * 1000 * 0.9 * ((swarm.revenueShare ?? 10) / 100)), // Per 1000 shares
+                                        ubc: Math.floor((swarm.weeklyRevenue / (swarm.soldShares || 1000000)) * 1000 * 0.1 * ((swarm.revenueShare ?? 10) / 100))  // Per 1000 shares
                                     } : undefined}
                                 />
                             )}
