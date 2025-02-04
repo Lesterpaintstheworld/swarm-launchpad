@@ -10,8 +10,14 @@ export async function GET(
   try {
     console.log('Fetching swarm with id:', params.id);
     
+    // Add logging for the constructed URL and env vars
+    const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Swarms?filterByFormula={swarmId}="${params.id}"`;
+    console.log('Airtable request URL:', url);
+    console.log('Airtable API Key present:', !!AIRTABLE_API_KEY);
+    console.log('Airtable Base ID present:', !!AIRTABLE_BASE_ID);
+
     const response = await fetch(
-      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Swarms?filterByFormula={swarmId}="${params.id}"`,
+      url,
       {
         headers: {
           Authorization: `Bearer ${AIRTABLE_API_KEY}`,
@@ -20,9 +26,13 @@ export async function GET(
       }
     );
 
+    // Add logging for response status
+    console.log('Airtable response status:', response.status);
+
     if (!response.ok) {
-      console.error('Airtable response not OK:', await response.text());
-      return NextResponse.json({ error: 'Failed to fetch swarm' }, { status: 500 });
+      const errorText = await response.text();
+      console.error('Airtable error response:', errorText);
+      return NextResponse.json({ error: 'Failed to fetch swarm' }, { status: response.status });
     }
 
     const data = await response.json();
