@@ -124,18 +124,27 @@ const SwarmInvestCard = ({
     const isBeforeLaunch: boolean = !!(swarm?.launchDate && new Date(swarm.launchDate) > new Date());
 
     useEffect(() => {
-        async function fetchSwarm() {
-            try {
-                const response = await fetch(`/api/swarms?poolId=${pool}`);
-                if (!response.ok) return;
-                const data = await response.json();
-                if (data.length > 0) {
-                    setSwarm(data[0]);
-                }
-            } catch (error) {
-                console.error('Error fetching swarm:', error);
+        function fetchSwarm() {
+            const swarmId = getSwarmUsingPoolId(pool)?.id;
+            if (!swarmId) {
+                console.error('Could not find swarm ID for pool:', pool);
+                return;
             }
+            
+            fetch(`/api/swarms/${swarmId}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Failed to fetch swarm');
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Fetched swarm data:', data);
+                    setSwarm(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching swarm:', error);
+                });
         }
+        
         fetchSwarm();
     }, [pool]);
     const [data, setData] = useState({
