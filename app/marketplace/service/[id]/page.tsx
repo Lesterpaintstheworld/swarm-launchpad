@@ -20,7 +20,7 @@ export default function ServicePage() {
     serviceType: 'subscription' | 'one-off' | 'pay-as-you-go' | 'financial';
     banner?: string;
     swarmId?: string;
-    basePrice: number;
+    basePrice?: number;
     fullDescription: string;
     capabilities: string[];
   }
@@ -168,7 +168,7 @@ export default function ServicePage() {
               </div>
               <div className="flex items-baseline gap-2">
                 <span className="text-3xl font-bold">
-                  {service.basePrice.toLocaleString()}
+                  {(service.basePrice ?? 0).toLocaleString()}
                 </span>
                 <span className={`text-xl ${service.serviceType === 'financial' ? 'metallic-text-ubc' : 'metallic-text'}`}>
                   {service.serviceType === 'financial' ? '$UBC' : '$COMPUTE'}
