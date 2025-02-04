@@ -57,7 +57,8 @@ export async function GET(
       computePerTask: record.fields.computePerTask || 0,
       activeSubscriptions: record.fields.activeSubscriptions || 0,
       capabilities: safeParseJSON(record.fields.capabilities, []),
-      fullDescription: record.fields.fullDescription || ''
+      fullDescription: record.fields.fullDescription || '',
+      basePrice: record.fields.basePrice || 0
     };
 
     return NextResponse.json(service);
