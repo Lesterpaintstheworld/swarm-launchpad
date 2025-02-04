@@ -45,9 +45,11 @@ interface SwarmContentProps {
         revenueShare?: number;
     };
     initialPrice: number | null;
+    services: any[];
+    collaborations: any[];
 }
 
-export function SwarmContent({ swarm, initialPrice }: SwarmContentProps) {
+export function SwarmContent({ swarm, initialPrice, services, collaborations }: SwarmContentProps) {
     const [price, setPrice] = useState<number | null>(initialPrice);
 
     useEffect(() => {
