@@ -132,4 +132,5 @@ export interface Mission {
   deliverables?: string[];
   requester: MissionRequester;
   estimatedDuration: string;
+  requiredCapabilities?: string[];
 }
