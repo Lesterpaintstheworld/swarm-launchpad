@@ -146,57 +146,46 @@ export default function Portfolio() {
 
             console.log('Starting RPC data fetch...');
 
+            // Batch all position fetches into a single request
             const fetchWithRetry = async (attempt = 0) => {
                 try {
                     setIsLoading(true);
                     const positions: PositionData[] = [];
                     
-                    for(let i = 0; i < poolIds.length; i++) {
-                        const poolId = poolIds[i];
-                        if(!poolId) { continue; }
+                    // Fetch all positions in parallel
+                    const positionPromises = poolIds.map(async poolId => {
+                        if (!poolId) return null;
                         
                         try {
-                            console.log(`Fetching position for pool ${poolId}...`);
-                            const position = await getPosition(publicKey as PublicKey, poolId);
-                            if(!position) {
-                                console.log(`No position found for pool ${poolId}`);
-                                continue;
-                            }
-                            
-                            const poolPubkey = new PublicKey(poolId);
-                            console.log(`Fetching pool data for ${poolId}...`);
-                            const poolData = await program.account.pool.fetch(poolPubkey);
-                            console.log('Pool data received:', poolData);
-                
+                            const [position, poolData] = await Promise.all([
+                                getPosition(publicKey as PublicKey, poolId),
+                                program.account.pool.fetch(new PublicKey(poolId))
+                            ]);
+
+                            if (!position) return null;
+
                             const swarm = swarmData[poolId];
-                            if (!swarm) {
-                                console.error(`No swarm found for pool ID: ${poolId}`);
-                                continue;
-                            }
-                
+                            if (!swarm) return null;
+
                             const soldShares = poolData.totalShares.toNumber() - poolData.availableShares.toNumber();
 
-                            positions.push({
+                            return {
                                 swarm_id: swarm.id,
-                                number_of_shares: position?.shares.toNumber() || 0,
+                                number_of_shares: position.shares.toNumber(),
                                 total_shares: soldShares,
                                 last_dividend_payment: 0
-                            });
+                            };
                         } catch (error: unknown) {
-                            // Check if it's a rate limit error
-                            if (error instanceof Error && 
-                                (error.message?.includes('429') || error.message?.includes('exceeded limit'))) {
-                                if (attempt < MAX_RETRIES) {
-                                    console.log(`Rate limit hit, retrying in ${RETRY_DELAY}ms...`);
-                                    await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
-                                    return fetchWithRetry(attempt + 1);
-                                }
-                            }
-                            throw error;
+                            console.error(`Error fetching data for pool ${poolId}:`, error);
+                            return null;
                         }
-                    }
+                    });
+
+                    // Wait for all position fetches to complete
+                    const results = await Promise.all(positionPromises);
                     
-                    setInvestments(positions);
+                    // Filter out null results and set investments
+                    setInvestments(results.filter((pos): pos is PositionData => pos !== null));
                     setIsLoading(false);
                 } catch (error: unknown) {
                     if (error instanceof Error && 
