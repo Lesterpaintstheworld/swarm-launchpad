@@ -19,14 +19,15 @@ import {
 import { SellPositionModal } from "@/components/swarms/sellPositionModal";
 
 interface SwarmData {
-  id: string;
-  name: string;
-  image: string;
-  pool?: string;
-  role?: string;
+    id: string;
+    name: string;
+    image: string;
+    pool?: string;
+    role?: string;
 }
 
 const PriceCell = ({ swarmId }: { swarmId: string }) => {
+    const [error, setError] = useState<Error | null>(null);
     const [swarm, setSwarm] = useState<SwarmData | null>(null);
     const [price, setPrice] = useState<number>(100); // Default price
     const { poolAccount } = useLaunchpadProgramAccount({ 
@@ -74,23 +75,26 @@ const PriceCell = ({ swarmId }: { swarmId: string }) => {
         }
     }, [poolAccount?.data, swarm?.pool]);
 
+    if (error) {
+        return <p className="text-red-400">Error calculating price</p>;
+    }
+
     return (
-        <p className="font-bold">
-            {IntlNumberFormat(price)} $COMPUTE
-        </p>
+        <div className="flex items-center gap-2">
+            {price === 100 ? (
+                <div className="h-4 w-24 bg-white/10 rounded animate-pulse" />
+            ) : (
+                <p className="font-bold">
+                    {IntlNumberFormat(price)} $COMPUTE
+                </p>
+            )}
+        </div>
     );
 };
 
 
-interface SwarmData {
-  id: string;
-  name: string;
-  image: string;
-  pool?: string;
-  role?: string;
-}
-
 const PriceAndValueCell = ({ swarmId, shares }: { swarmId: string; shares?: number }) => {
+    const [error, setError] = useState<Error | null>(null);
   const [swarm, setSwarm] = useState<SwarmData | null>(null);
   const { poolAccount } = useLaunchpadProgramAccount({ 
     poolAddress: swarm?.pool || '' 
