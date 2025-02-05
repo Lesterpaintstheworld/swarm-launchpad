@@ -157,7 +157,7 @@ export default function Portfolio() {
                         const poolPubkey = new PublicKey(poolId);
                         const shareholderPda = getShareholderPDA(
                             program.programId,
-                            publicKey,
+                            publicKey as PublicKey, // Type assertion is safe here because we checked above
                             poolPubkey
                         );
 
@@ -228,7 +228,7 @@ export default function Portfolio() {
         return () => {
             isMounted = false;
         };
-    }, [connected, publicKey, program?.programId?.toString(), poolIds.join(',')]);
+    }, [connected, publicKey?.toString(), program?.programId?.toString(), poolIds.join(',')]);
 
     if (!connected) return (
         <main className="container view">
