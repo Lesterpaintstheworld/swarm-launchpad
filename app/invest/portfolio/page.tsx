@@ -216,7 +216,7 @@ export default function Portfolio() {
         }
 
         fetchPositions();
-    }, [connected, publicKey, poolIds, program, swarmData]);
+    }, []); // Empty dependency array - only runs once on mount
 
     if (!connected) return (
         <main className="container view">
