@@ -179,6 +179,11 @@ export default function Portfolio() {
         };
 
         async function fetchPositions() {
+            if (!publicKey) {
+                console.log('No public key available');
+                return;
+            }
+
             console.log('Starting fetchPositions with:', {
                 programId: program.programId.toString(),
                 poolIds
