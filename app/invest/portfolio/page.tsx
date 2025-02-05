@@ -59,7 +59,6 @@ import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
 import { Program, Idl } from "@coral-xyz/anchor";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
-import { useEffect, useState } from "react";
 import { getShareholderPDA } from "@/hooks/useLaunchpadProgram/utils";
 
 interface ProgramError extends Error {
@@ -101,20 +100,31 @@ export default function Portfolio() {
     useEffect(() => {
         async function fetchSwarmData() {
             try {
+                setIsLoading(true);
                 const response = await fetch('/api/swarms');
                 const data = await response.json();
                 const swarmMap: Record<string, SwarmData> = {};
                 const pools: string[] = [];
+                
+                console.log('Fetched swarms data:', data);
+
                 data.forEach((swarm: SwarmData) => {
                     if (swarm.pool) {
+                        console.log('Processing swarm:', swarm.id, 'with pool:', swarm.pool);
                         swarmMap[swarm.pool] = swarm;
                         pools.push(swarm.pool);
                     }
                 });
+                
+                console.log('Processed swarm map:', swarmMap);
+                console.log('Processed pool IDs:', pools);
+                
                 setSwarmData(swarmMap);
                 setPoolIds(pools);
             } catch (error: any) {
                 console.error('Error fetching swarm data:', error);
+            } finally {
+                setIsLoading(false);
             }
         }
         fetchSwarmData();
@@ -122,20 +132,29 @@ export default function Portfolio() {
 
     useEffect(() => {
         if (!connected || !publicKey || poolIds.length < 1) {
+            console.log('Skipping position fetch:', { 
+                connected, 
+                publicKey: publicKey?.toString(), 
+                poolIdsLength: poolIds.length 
+            });
             return;
         }
 
         const getPosition = async (ownerPublicKey: PublicKey, poolId: string) => {
+            console.log('Fetching position for pool:', poolId);
             const poolPubkey = new PublicKey(poolId);
             const pda = getShareholderPDA(program.programId, ownerPublicKey, poolPubkey) as PublicKey;
     
             try {
                 const shareholderData = await program.account.shareholder.fetch(pda);
+                console.log('Fetched shareholder data:', shareholderData);
                 return shareholderData;
             } catch (error: unknown) {
                 if (error instanceof Error && error.message.includes('Account does not exist')) {
+                    console.log('No shareholder account for pool:', poolId);
                     return null;
                 }
+                console.error('Error fetching shareholder data:', error);
                 throw error;
             }
         };
