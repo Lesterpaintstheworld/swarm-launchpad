@@ -145,91 +145,81 @@ export default function Portfolio() {
 
         const getPosition = async (ownerPublicKey: PublicKey, poolId: string) => {
             console.log('Fetching position for pool:', poolId);
-            const poolPubkey = new PublicKey(poolId);
-            const pda = getShareholderPDA(program.programId, ownerPublicKey, poolPubkey) as PublicKey;
-    
             try {
+                const poolPubkey = new PublicKey(poolId);
+                const pda = getShareholderPDA(program.programId, ownerPublicKey, poolPubkey);
+                
+                // Log the PDA being used
+                console.log('Using PDA:', pda.toString());
+
                 const shareholderData = await program.account.shareholder.fetch(pda);
-                console.log('Fetched shareholder data:', shareholderData);
-                return shareholderData;
-            } catch (error: unknown) {
+                console.log('Shareholder data for pool', poolId, ':', shareholderData);
+                
+                // Parse the number of shares from the response
+                const shares = shareholderData.shares.toNumber();
+                console.log('Parsed shares:', shares);
+                
+                return shares > 0 ? shareholderData : null;
+            } catch (error) {
                 if (error instanceof Error && error.message.includes('Account does not exist')) {
                     console.log('No shareholder account for pool:', poolId);
                     return null;
                 }
                 console.error('Error fetching shareholder data:', error);
-                throw error;
+                return null;
             }
         };
 
         const fetchData = async () => {
-            const MAX_RETRIES = 3;
-            const RETRY_DELAY = 1000; // 1 second
-
-            console.log('Starting RPC data fetch...');
-
-            // Batch all position fetches into a single request
-            const fetchWithRetry = async (attempt = 0) => {
-                try {
-                    setIsLoading(true);
-                    const positions: PositionData[] = [];
+            try {
+                setIsLoading(true);
+                const positions = await Promise.all(poolIds.map(async poolId => {
+                    if (!poolId) return null;
                     
-                    // Fetch all positions in parallel
-                    const positionPromises = poolIds.map(async poolId => {
-                        if (!poolId) return null;
-                        
-                        try {
-                            const [position, poolData] = await Promise.all([
-                                getPosition(publicKey as PublicKey, poolId),
-                                program.account.pool.fetch(new PublicKey(poolId))
-                            ]);
+                    try {
+                        const [position, poolData] = await Promise.all([
+                            getPosition(publicKey, poolId),
+                            program.account.pool.fetch(new PublicKey(poolId))
+                        ]);
 
-                            if (!position) return null;
+                        if (!position) return null;
 
-                            const swarm = swarmData[poolId];
-                            if (!swarm) return null;
-
-                            const soldShares = poolData.totalShares.toNumber() - poolData.availableShares.toNumber();
-
-                            return {
-                                swarm_id: swarm.id,
-                                number_of_shares: position.shares.toNumber(),
-                                total_shares: soldShares,
-                                last_dividend_payment: 0
-                            };
-                        } catch (error: unknown) {
-                            console.error(`Error fetching data for pool ${poolId}:`, error);
+                        const swarm = swarmData[poolId];
+                        if (!swarm) {
+                            console.log('No swarm data found for pool:', poolId);
                             return null;
                         }
-                    });
 
-                    // Wait for all position fetches to complete
-                    const results = await Promise.all(positionPromises);
-                    
-                    // Filter out null results and set investments
-                    setInvestments(results.filter((pos): pos is PositionData => pos !== null));
-                    setIsLoading(false);
-                } catch (error: unknown) {
-                    if (error instanceof Error && 
-                        (error.message?.includes('429') || error.message?.includes('exceeded limit'))) {
-                        if (attempt < MAX_RETRIES) {
-                            console.log(`Rate limit hit, retrying in ${RETRY_DELAY}ms...`);
-                            await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
-                            return fetchWithRetry(attempt + 1);
-                        }
+                        const totalShares = poolData.totalShares.toNumber();
+                        const availableShares = poolData.availableShares.toNumber();
+                        const soldShares = totalShares - availableShares;
+
+                        return {
+                            swarm_id: swarm.id,
+                            number_of_shares: position.shares.toNumber(),
+                            total_shares: soldShares,
+                            last_dividend_payment: 0
+                        };
+                    } catch (error) {
+                        console.error(`Error fetching data for pool ${poolId}:`, error);
+                        return null;
                     }
-                    console.error('Error fetching portfolio data:', error instanceof Error ? error.message : 'Unknown error');
-                    setError(new Error("Unable to load portfolio data. Please try again later."));
-                    setIsLoading(false);
-                }
-            };
+                }));
 
-            await fetchWithRetry();
+                // Filter out null positions and set investments
+                const validPositions = positions.filter((pos): pos is PositionData => pos !== null);
+                console.log('Setting investments:', validPositions);
+                setInvestments(validPositions);
+            } catch (error) {
+                console.error('Error fetching portfolio data:', error);
+                setError(new Error("Unable to load portfolio data. Please try again later."));
+            } finally {
+                setIsLoading(false);
+            }
         };
 
         fetchData();
-        // eslint-disable-next-line
-    }, [publicKey, connected]);
+    }, [connected, publicKey, poolIds, program, swarmData]);
 
     if (!connected) return (
         <main className="container view">
