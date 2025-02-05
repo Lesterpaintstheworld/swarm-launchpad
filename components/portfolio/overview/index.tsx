@@ -165,10 +165,6 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
         };
     }, [investments, program]);
 
-    const totalValueInCompute = useMemo(() => {
-        return chartData.reduce((acc, item) => acc + item.value, 0);
-    }, [chartData]);
-
     const CustomTooltip = ({ active, payload }: TooltipProps) => {
         if (active && payload && payload.length) {
             return (
