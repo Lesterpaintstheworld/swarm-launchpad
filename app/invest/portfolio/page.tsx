@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from "react";
+
 const getSwarmUsingPoolId = (poolId: string): { id: string; name: string; wallet?: string } | null => {
     const swarmMap: Record<string, { id: string; name: string; wallet: string }> = {
         'FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz': {
