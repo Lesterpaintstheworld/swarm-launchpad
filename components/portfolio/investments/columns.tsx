@@ -134,11 +134,21 @@ const PriceAndValueCell = ({ swarmId, shares }: { swarmId: string; shares?: numb
     }
   }, [poolAccount?.data, shares]);
 
-  return (
-    <p className="font-bold text-green-400">
-      {IntlNumberFormat(value)} $COMPUTE
-    </p>
-  );
+    if (error) {
+        return <p className="text-red-400">Error calculating value</p>;
+    }
+
+    return (
+        <div className="flex items-center gap-2">
+            {value === 0 ? (
+                <div className="h-4 w-24 bg-white/10 rounded animate-pulse" />
+            ) : (
+                <p className="font-bold text-green-400">
+                    {IntlNumberFormat(value)} $COMPUTE
+                </p>
+            )}
+        </div>
+    );
 };
 
 const ActionCell = ({ swarmId }: { swarmId: string }) => {
