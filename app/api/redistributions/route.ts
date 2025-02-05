@@ -8,7 +8,7 @@ interface RedistributionData {
     token: 'COMPUTE' | 'UBC';
     amount: number;
     date: string;
-    swarmName: string;
+    swarmId: string;
 }
 
 export async function POST(req: Request) {
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
                                 token,
                                 amount,
                                 date,
-                                swarmName
+                                swarmId
                             }
                         }
                     ]

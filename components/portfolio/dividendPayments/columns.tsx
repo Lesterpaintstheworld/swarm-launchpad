@@ -165,7 +165,7 @@ const ActionCell = ({ row }: ActionCellProps) => {
                         token: 'COMPUTE',
                         amount: computeAmount,
                         date: formattedDate,
-                        swarmName: swarm.name
+                        swarmId
                     })
                 });
 
@@ -187,7 +187,7 @@ const ActionCell = ({ row }: ActionCellProps) => {
                         token: 'UBC',
                         amount: ubcAmount,
                         date: formattedDate,
-                        swarmName: swarm.name
+                        swarmId
                     })
                 });
 
