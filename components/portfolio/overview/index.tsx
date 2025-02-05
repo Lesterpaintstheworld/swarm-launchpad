@@ -34,6 +34,13 @@ interface TooltipProps {
     }>;
 }
 
+interface TooltipProps {
+    active?: boolean;
+    payload?: Array<{
+        payload: InvestmentDataItem;
+    }>;
+}
+
 interface CustomPayload {
     value: string;
     payload: InvestmentDataItem;
@@ -53,17 +60,22 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'
 
 const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) => {
     const [totalValueInCompute, setTotalValueInCompute] = useState(0);
+    const [chartData, setChartData] = useState<InvestmentDataItem[]>([]);
     const { program } = useLaunchpadProgram();
     const typedProgram = program as unknown as {
         account: ProgramAccounts;
     };
 
     // Memoize the investment data calculations
-    const investmentData = useMemo(async () => {
-        if (!program || investments.length === 0) return [];
+    const calculateInvestmentData = useMemo(() => {
+        async function fetchData() {
+            if (!program || investments.length === 0) {
+                setChartData([]);
+                return;
+            }
 
-        try {
-            const values = await Promise.all(investments.map(async (investment) => {
+            try {
+                const values = await Promise.all(investments.map(async (investment) => {
                 try {
                     const swarmResponse = await fetch(`/api/swarms/${investment.swarm_id}`);
                     const swarm = await swarmResponse.json();
@@ -94,22 +106,22 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
                 }
             }));
 
-            return values.filter((item): item is InvestmentDataItem => item !== null);
-        } catch (error) {
-            console.error('Error calculating investment values:', error);
-            return [];
+                const validValues = values.filter((item): item is InvestmentDataItem => item !== null);
+                setChartData(validValues);
+            } catch (error) {
+                console.error('Error calculating investment values:', error);
+                setChartData([]);
+            }
         }
+
+        fetchData();
     }, [investments, program, totalValueInCompute]);
 
-    // Update total value when investment data changes
+    // Update total value when chart data changes
     useEffect(() => {
-        const calculateTotal = async () => {
-            const data = await investmentData;
-            const total = data.reduce((acc, item) => acc + item.value, 0);
-            setTotalValueInCompute(Math.round(total));
-        };
-        calculateTotal();
-    }, [investments, program, typedProgram]);
+        const total = chartData.reduce((acc, item) => acc + item.value, 0);
+        setTotalValueInCompute(Math.round(total));
+    }, [chartData]);
 
     const CustomTooltip = ({ active, payload }: TooltipProps) => {
         if (active && payload && payload.length) {
@@ -170,7 +182,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
                 <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                         <Pie
-                            data={investmentData}
+                            data={chartData}
                             cx="50%"
                             cy="50%"
                             innerRadius={60}
@@ -179,7 +191,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
                             paddingAngle={5}
                             dataKey="value"
                         >
-                            {investmentData.map((_, index) => (
+                            {chartData.map((_, index) => (
                                 <Cell 
                                     key={`cell-${index}`} 
                                     fill={COLORS[index % COLORS.length]}
