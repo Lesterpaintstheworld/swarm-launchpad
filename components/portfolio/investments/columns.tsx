@@ -27,25 +27,25 @@ interface SwarmData {
 }
 
 const PriceCell = ({ swarmId }: { swarmId: string }) => {
-    const [error, setError] = useState<Error | null>(null);
     const [swarm, setSwarm] = useState<SwarmData | null>(null);
-    const [price, setPrice] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
     const { poolAccount } = useLaunchpadProgramAccount({ 
         poolAddress: swarm?.pool || '' 
     });
+    const [price, setPrice] = useState<number>(0);
 
     useEffect(() => {
         async function fetchSwarm() {
             try {
+                setIsLoading(true);
                 const response = await fetch(`/api/swarms/${swarmId}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch swarm data');
-                }
+                if (!response.ok) return;
                 const data = await response.json();
                 setSwarm(data);
             } catch (error) {
                 console.error('Error fetching swarm:', error);
-                setError(error as Error);
+            } finally {
+                setIsLoading(false);
             }
         }
         fetchSwarm();
@@ -68,18 +68,11 @@ const PriceCell = ({ swarmId }: { swarmId: string }) => {
             setPrice(sharePrice);
         } catch (error) {
             console.error('Error calculating price:', error);
-            setError(error as Error);
         }
     }, [poolAccount?.data, swarm?.pool]);
 
-    if (error) {
-        return <p className="text-red-400">Error loading price</p>;
-    }
-
-    if (!price) {
-        return (
-            <div className="h-4 w-24 bg-white/10 rounded animate-pulse" />
-        );
+    if (isLoading) {
+        return <div className="h-4 w-24 bg-white/10 rounded animate-pulse" />;
     }
 
     return (
@@ -91,59 +84,58 @@ const PriceCell = ({ swarmId }: { swarmId: string }) => {
 
 
 const PriceAndValueCell = ({ swarmId, shares }: { swarmId: string; shares?: number }) => {
-    const [error, setError] = useState<Error | null>(null);
-  const [swarm, setSwarm] = useState<SwarmData | null>(null);
-  const { poolAccount } = useLaunchpadProgramAccount({ 
-    poolAddress: swarm?.pool || '' 
-  });
-  const [value, setValue] = useState<number>(0);
+    const [swarm, setSwarm] = useState<SwarmData | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const { poolAccount } = useLaunchpadProgramAccount({ 
+        poolAddress: swarm?.pool || '' 
+    });
+    const [value, setValue] = useState<number>(0);
 
-  useEffect(() => {
-    async function fetchSwarm() {
-      try {
-        const response = await fetch(`/api/swarms/${swarmId}`);
-        if (!response.ok) return;
-        const data = await response.json();
-        setSwarm(data);
-      } catch (error) {
-        console.error('Error fetching swarm:', error);
-      }
-    }
-    fetchSwarm();
-  }, [swarmId]);
+    useEffect(() => {
+        async function fetchSwarm() {
+            try {
+                setIsLoading(true);
+                const response = await fetch(`/api/swarms/${swarmId}`);
+                if (!response.ok) return;
+                const data = await response.json();
+                setSwarm(data);
+            } catch (error) {
+                console.error('Error fetching swarm:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        fetchSwarm();
+    }, [swarmId]);
 
-  useEffect(() => {
-    try {
-      if (poolAccount?.data && shares) {
-        const totalShares = poolAccount.data.totalShares.toNumber();
-        const availableShares = poolAccount.data.availableShares.toNumber();
-        const soldShares = totalShares - availableShares;
-        
-        const cycle = Math.floor(soldShares / 5000);
-        const base = Math.pow(1.35, cycle);
-        const sharePrice = Math.floor(base * 100) / 100;
+    useEffect(() => {
+        try {
+            if (poolAccount?.data && shares) {
+                const totalShares = poolAccount.data.totalShares.toNumber();
+                const availableShares = poolAccount.data.availableShares.toNumber();
+                const soldShares = totalShares - availableShares;
+                
+                const cycle = Math.floor(soldShares / 5000);
+                const base = Math.pow(1.35, cycle);
+                const sharePrice = Math.floor(base * 100) / 100;
 
-        setValue(shares * sharePrice);
-      }
-    } catch (error) {
-      console.error('Error calculating value:', error);
-      setValue(0);
-    }
-  }, [poolAccount?.data, shares]);
+                setValue(shares * sharePrice);
+            }
+        } catch (error) {
+            console.error('Error calculating value:', error);
+            setValue(0);
+        }
+    }, [poolAccount?.data, shares]);
 
-    if (error) {
-        return <p className="text-red-400">Error calculating value</p>;
+    if (isLoading) {
+        return <div className="h-4 w-24 bg-white/10 rounded animate-pulse" />;
     }
 
     return (
         <div className="flex items-center gap-2">
-            {value === 0 ? (
-                <div className="h-4 w-24 bg-white/10 rounded animate-pulse" />
-            ) : (
-                <p className="font-bold text-green-400">
-                    {IntlNumberFormat(value)} $COMPUTE
-                </p>
-            )}
+            <p className="font-bold text-green-400">
+                {IntlNumberFormat(value)} $COMPUTE
+            </p>
         </div>
     );
 };
