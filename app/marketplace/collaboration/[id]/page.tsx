@@ -75,17 +75,6 @@ export default function CollaborationPage({ params }: { params: { id: string } }
   const [clientSwarm, setClientSwarm] = useState<SwarmData | null>(null);
   const [collaboration, setCollaboration] = useState<CollaborationData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isValidService, setIsValidService] = useState(true);
-
-  useEffect(() => {
-    async function validateService() {
-      if (collaboration?.serviceName) {
-        const isValid = await isValidServiceName(collaboration.serviceName);
-        setIsValidService(isValid);
-      }
-    }
-    validateService();
-  }, [collaboration?.serviceName]);
 
   useEffect(() => {
     async function fetchData() {
