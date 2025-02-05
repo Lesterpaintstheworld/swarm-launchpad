@@ -18,7 +18,7 @@ interface ProgramAccounts {
 import { Card } from "@/components/ui/card";
 import { Investment } from "../investments"
 import { cn, IntlNumberFormat } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 interface InvestmentDataItem {
     name: string;
@@ -52,17 +52,17 @@ interface PortfolioOverviewProps {
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
 
 const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) => {
-    const [investmentData, setInvestmentData] = useState<InvestmentDataItem[]>([]);
     const [totalValueInCompute, setTotalValueInCompute] = useState(0);
     const { program } = useLaunchpadProgram();
     const typedProgram = program as unknown as {
         account: ProgramAccounts;
     };
 
-    useEffect(() => {
-        const calculateValues = async () => {
-            if (!program) return;
+    // Memoize the investment data calculations
+    const investmentData = useMemo(async () => {
+        if (!program || investments.length === 0) return [];
 
+        try {
             const values = await Promise.all(investments.map(async (investment) => {
                 try {
                     const swarmResponse = await fetch(`/api/swarms/${investment.swarm_id}`);
@@ -78,50 +78,37 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
                     
                     const cycle = Math.floor(soldShares / 5000);
                     const base = Math.pow(1.35, cycle);
-                    const sharePrice = Math.floor(base * 100) / 100;
+                    const sharePrice = Math.round(base * 100) / 100;
                     
-                    if (typeof investment.number_of_shares !== 'number') {
-                        console.error('Invalid number_of_shares:', investment.number_of_shares);
-                        return null;
-                    }
-
-                    const value = investment.number_of_shares * sharePrice;
-
-                    if (isNaN(value)) {
-                        console.error('Invalid value calculation:', {
-                            shares: investment.number_of_shares,
-                            price: sharePrice,
-                            value
-                        });
-                        return null;
-                    }
+                    const value = Math.round(investment.number_of_shares * sharePrice);
 
                     return {
                         name: swarm.name,
                         value: value,
                         valueInCompute: value,
-                    } as InvestmentDataItem;
+                        percentage: ((value / totalValueInCompute * 100) || 0).toFixed(1)
+                    };
                 } catch (error) {
-                    console.error(`Error fetching pool data for swarm ID ${investment.swarm_id}:`, error);
+                    console.error(`Error calculating value for swarm ${investment.swarm_id}:`, error);
                     return null;
                 }
             }));
 
-            const validValues = values.filter((item): item is InvestmentDataItem => item !== null);
-            const total = validValues.reduce((acc, item) => acc + item.value, 0);
-            
-            const dataWithPercentages = validValues.map(item => ({
-                ...item,
-                percentage: ((item.value / total * 100).toFixed(1))
-            }));
-
-            setInvestmentData(dataWithPercentages);
-            setTotalValueInCompute(total);
-        };
-
-        if (program && investments.length > 0) {
-            calculateValues();
+            return values.filter((item): item is InvestmentDataItem => item !== null);
+        } catch (error) {
+            console.error('Error calculating investment values:', error);
+            return [];
         }
+    }, [investments, program, totalValueInCompute]);
+
+    // Update total value when investment data changes
+    useEffect(() => {
+        const calculateTotal = async () => {
+            const data = await investmentData;
+            const total = data.reduce((acc, item) => acc + item.value, 0);
+            setTotalValueInCompute(Math.round(total));
+        };
+        calculateTotal();
     }, [investments, program, typedProgram]);
 
     const CustomTooltip = ({ active, payload }: TooltipProps) => {
