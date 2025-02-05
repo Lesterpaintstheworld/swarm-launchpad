@@ -133,6 +133,39 @@ export default function Portfolio() {
     }, []);
 
     useEffect(() => {
+        async function fetchSwarmData() {
+            try {
+                setIsLoading(true);
+                const response = await fetch('/api/swarms');
+                const data = await response.json();
+                const swarmMap: Record<string, SwarmData> = {};
+                const pools: string[] = [];
+                
+                console.log('Fetched swarms data:', data);
+
+                data.forEach((swarm: SwarmData) => {
+                    if (swarm.pool) {
+                        console.log('Processing swarm:', swarm.id, 'with pool:', swarm.pool);
+                        swarmMap[swarm.pool] = swarm;
+                        pools.push(swarm.pool);
+                    }
+                });
+                
+                console.log('Processed swarm map:', swarmMap);
+                console.log('Processed pool IDs:', pools);
+                
+                setSwarmData(swarmMap);
+                setPoolIds(pools);
+            } catch (error: any) {
+                console.error('Error fetching swarm data:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        fetchSwarmData();
+    }, []);
+
+    useEffect(() => {
         if (!connected || !publicKey || poolIds.length < 1) {
             console.log('Skipping position fetch:', { 
                 connected, 
