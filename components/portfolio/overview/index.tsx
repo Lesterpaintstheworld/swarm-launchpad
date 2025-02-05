@@ -1,7 +1,7 @@
 'use client'
 
 const swarmCache: Record<string, any> = {};
-let pendingRequests: Record<string, Promise<any>> = {};
+const pendingRequests: Record<string, Promise<any>> = {};
 
 const fetchSwarmWithCache = async (swarmId: string) => {
   // Return cached data if available

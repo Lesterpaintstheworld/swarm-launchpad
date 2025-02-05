@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 const swarmCache: Record<string, any> = {};
 
 // Add a simple request queue to prevent too many simultaneous requests
-let requestQueue: string[] = [];
+const requestQueue: string[] = [];
 let isProcessingQueue = false;
 
 const processQueue = async () => {
