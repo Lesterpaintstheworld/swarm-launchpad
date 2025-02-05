@@ -28,20 +28,38 @@ const SwarmCell = ({ swarmId }: { swarmId: string }) => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        let isMounted = true;
+        const controller = new AbortController();
+
         async function fetchSwarm() {
             try {
-                const response = await fetch(`/api/swarms/${swarmId}`);
-                if (!response.ok) return;
+                const response = await fetch(`/api/swarms/${swarmId}`, {
+                    signal: controller.signal
+                });
+                if (!response.ok) throw new Error('Failed to fetch swarm');
                 const data = await response.json();
-                setSwarm(data);
+                if (isMounted) {
+                    setSwarm(data);
+                    setIsLoading(false);
+                }
             } catch (error) {
+                if (error instanceof Error && error.name === 'AbortError') {
+                    return;
+                }
                 console.error('Error fetching swarm:', error);
-            } finally {
-                setIsLoading(false);
+                if (isMounted) {
+                    setIsLoading(false);
+                }
             }
         }
+
         fetchSwarm();
-    }, [swarmId]);
+
+        return () => {
+            isMounted = false;
+            controller.abort();
+        };
+    }, [swarmId]); // Only depend on swarmId
 
     if (isLoading || !swarm) {
         return (
@@ -131,12 +149,11 @@ const ActionCell = ({ row }: ActionCellProps) => {
             `Week: ${getWeekKey()}`;
 
         try {
-            // Create Airtable records for both COMPUTE and UBC tokens
             const currentDate = new Date().toISOString();
             
             // Create COMPUTE redistribution record
             if (computeAmount > 0) {
-                await fetch('/api/redistributions', {
+                const computeResponse = await fetch('/api/redistributions', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -148,11 +165,16 @@ const ActionCell = ({ row }: ActionCellProps) => {
                         date: currentDate
                     })
                 });
+
+                if (!computeResponse.ok) {
+                    const error = await computeResponse.json();
+                    throw new Error(`COMPUTE record creation failed: ${error.details || error.error}`);
+                }
             }
 
             // Create UBC redistribution record
             if (ubcAmount > 0) {
-                await fetch('/api/redistributions', {
+                const ubcResponse = await fetch('/api/redistributions', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -164,6 +186,11 @@ const ActionCell = ({ row }: ActionCellProps) => {
                         date: currentDate
                     })
                 });
+
+                if (!ubcResponse.ok) {
+                    const error = await ubcResponse.json();
+                    throw new Error(`UBC record creation failed: ${error.details || error.error}`);
+                }
             }
 
             // Send Telegram notification
