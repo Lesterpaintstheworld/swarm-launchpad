@@ -267,12 +267,13 @@ const SwarmInvestCard = ({
 
             // Webhook notification
             try {
+                const swarmDetails = getSwarmUsingPoolId(pool);
                 await fetch('https://nlr.app.n8n.cloud/webhook/buybot', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        swarmName: swarm?.name || 'Unknown Swarm',
-                        swarmId: swarm?.id || 'unknown',
+                        swarmName: swarmDetails?.name || 'Unknown Swarm',
+                        swarmId: swarmDetails?.id || 'unknown',
                         numberOfShares: numShares,
                         pricePerShare: data.pricePerShare,
                         totalCost: price,
