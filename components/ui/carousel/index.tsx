@@ -12,6 +12,7 @@ interface CarouselProps {
 
 export function Carousel({ items, className }: CarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   const next = useCallback(() => {
     setCurrentIndex((current) => (current + 1) % items.length);
@@ -21,14 +22,19 @@ export function Carousel({ items, className }: CarouselProps) {
     setCurrentIndex((current) => (current - 1 + items.length) % items.length);
   };
 
-  // Auto advance every 5 seconds
   useEffect(() => {
-    const timer = setInterval(next, 5000);
-    return () => clearInterval(timer);
-  }, [next]);
+    if (!isPaused) {
+      const timer = setInterval(next, 5000);
+      return () => clearInterval(timer);
+    }
+  }, [next, isPaused]);
 
   return (
-    <div className={cn("relative group", className)}>
+    <div 
+      className={cn("relative group", className)}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       <div className="overflow-hidden rounded-xl">
         <div 
           className="transition-transform duration-500 ease-in-out flex"
