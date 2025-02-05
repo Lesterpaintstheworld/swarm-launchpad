@@ -330,14 +330,16 @@ const ActionCell = ({ row }: ActionCellProps) => {
                 size="sm"
                 className="bg-violet-500/10 hover:bg-violet-500/20 text-violet-400 hover:text-violet-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={handleClaim}
-                disabled={isDisabled || isClaimed}
+                disabled={isDisabled || isClaimed || isLoading}
                 title={
+                    isLoading ? "Checking claim status..." :
                     isDisabled ? "Minimum 10 $COMPUTE required to claim" : 
                     isClaimed ? "Already claimed this week" : 
                     undefined
                 }
             >
-                {isDisabled ? "Below Minimum" : 
+                {isLoading ? "Checking..." :
+                 isDisabled ? "Below Minimum" : 
                  isClaimed ? "Claimed" : 
                  "Claim"}
             </Button>
