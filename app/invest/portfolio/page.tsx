@@ -153,16 +153,21 @@ export default function Portfolio() {
             try {
                 const poolPubkey = new PublicKey(poolId);
                 const pda = getShareholderPDA(program.programId, ownerPublicKey, poolPubkey);
-                
+            
+                if (!pda) {
+                    console.log('Failed to generate PDA for pool:', poolId);
+                    return null;
+                }
+            
                 console.log('Generated PDA:', pda.toString());
 
                 const shareholderData = await program.account.shareholder.fetch(pda);
-                console.log('Fetched shareholder data:', {
-                    poolId,
-                    shares: shareholderData.shares.toNumber()
-                });
-                
-                return shareholderData.shares.toNumber() > 0 ? shareholderData : null;
+                console.log('Shareholder data for pool', poolId, ':', shareholderData);
+            
+                const shares = shareholderData.shares.toNumber();
+                console.log('Parsed shares:', shares);
+            
+                return shares > 0 ? shareholderData : null;
             } catch (error) {
                 if (error instanceof Error && error.message.includes('Account does not exist')) {
                     console.log('No shareholder account found for pool:', poolId);
