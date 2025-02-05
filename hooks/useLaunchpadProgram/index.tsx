@@ -18,20 +18,44 @@ import { toast } from 'sonner';
 import { ListingAccount } from './types';
 
 export function useLaunchpadProgram() {
+    // First, ensure network is properly initialized
+    const network = useMemo(() => 
+        constants.environment === 'production' 
+            ? WalletAdapterNetwork.Mainnet 
+            : WalletAdapterNetwork.Devnet,
+        []  // Empty dependency array since constants.environment won't change
+    );
 
-    const network = constants.environment === 'production' 
-        ? WalletAdapterNetwork.Mainnet 
-        : WalletAdapterNetwork.Devnet;
-    const connection = new Connection(HELIUS_RPC, {
-        commitment: 'confirmed',
-        wsEndpoint: undefined // Helius doesn't support websockets on this endpoint
-    });
-    const { publicKey } = useWallet()
-    const provider = useAnchorProvider(connection)
-    const programId = useMemo(() => new PublicKey(constants.investmentProgram.id), [network])
-    const computeMint = useMemo(() => new PublicKey(constants.investmentProgram.computeMint), [network])
-    const ubcMint = useMemo(() => new PublicKey(constants.investmentProgram.ubcMint), [network])
-    const program = useMemo(() => getLaunchpadProgram(provider, programId), [programId, provider])
+    const connection = useMemo(() => 
+        new Connection(HELIUS_RPC, {
+            commitment: 'confirmed',
+            wsEndpoint: undefined // Helius doesn't support websockets on this endpoint
+        }),
+        []  // Empty dependency array since HELIUS_RPC won't change
+    );
+
+    const { publicKey } = useWallet();
+    const provider = useAnchorProvider(connection);
+    
+    const programId = useMemo(() => 
+        new PublicKey(constants.investmentProgram.id), 
+        []  // Remove network from dependencies since it's not used
+    );
+
+    const computeMint = useMemo(() => 
+        new PublicKey(constants.investmentProgram.computeMint), 
+        []  // Remove network from dependencies since it's not used
+    );
+
+    const ubcMint = useMemo(() => 
+        new PublicKey(constants.investmentProgram.ubcMint), 
+        []  // Remove network from dependencies since it's not used
+    );
+
+    const program = useMemo(() => 
+        getLaunchpadProgram(provider, programId), 
+        [programId, provider]
+    );
 
     // Query all pools
     const pools = useQuery({
