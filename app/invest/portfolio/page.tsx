@@ -135,32 +135,37 @@ export default function Portfolio() {
 
     useEffect(() => {
         if (!connected || !publicKey || poolIds.length < 1) {
-            console.log('Skipping position fetch:', { 
+            console.log('Skipping position fetch - prerequisites not met:', { 
                 connected, 
                 publicKey: publicKey?.toString(), 
-                poolIdsLength: poolIds.length 
+                poolIdsLength: poolIds.length,
+                poolIds
             });
             return;
         }
 
         const getPosition = async (ownerPublicKey: PublicKey, poolId: string) => {
-            console.log('Fetching position for pool:', poolId);
+            console.log('Attempting to fetch position for:', {
+                owner: ownerPublicKey.toString(),
+                poolId
+            });
+            
             try {
                 const poolPubkey = new PublicKey(poolId);
                 const pda = getShareholderPDA(program.programId, ownerPublicKey, poolPubkey);
                 
-                console.log('Using PDA:', pda.toString());
+                console.log('Generated PDA:', pda.toString());
 
                 const shareholderData = await program.account.shareholder.fetch(pda);
-                console.log('Shareholder data for pool', poolId, ':', shareholderData);
+                console.log('Fetched shareholder data:', {
+                    poolId,
+                    shares: shareholderData.shares.toNumber()
+                });
                 
-                const shares = shareholderData.shares.toNumber();
-                console.log('Parsed shares:', shares);
-                
-                return shares > 0 ? shareholderData : null;
+                return shareholderData.shares.toNumber() > 0 ? shareholderData : null;
             } catch (error) {
                 if (error instanceof Error && error.message.includes('Account does not exist')) {
-                    console.log('No shareholder account for pool:', poolId);
+                    console.log('No shareholder account found for pool:', poolId);
                     return null;
                 }
                 console.error('Error fetching shareholder data:', error);
@@ -169,18 +174,37 @@ export default function Portfolio() {
         };
 
         async function fetchPositions() {
+            console.log('Starting fetchPositions with:', {
+                programId: program.programId.toString(),
+                poolIds
+            });
+
             try {
                 setIsLoading(true);
                 const positions = await Promise.all(poolIds.map(async poolId => {
-                    if (!poolId) return null;
+                    if (!poolId) {
+                        console.log('Skipping null pool ID');
+                        return null;
+                    }
                     
                     try {
+                        console.log('Processing pool:', poolId);
+                        
                         const [position, poolData] = await Promise.all([
                             getPosition(publicKey, poolId),
                             program.account.pool.fetch(new PublicKey(poolId))
                         ]);
 
-                        if (!position) return null;
+                        console.log('Fetched data for pool:', {
+                            poolId,
+                            hasPosition: !!position,
+                            poolDataExists: !!poolData
+                        });
+
+                        if (!position) {
+                            console.log('No position found for pool:', poolId);
+                            return null;
+                        }
 
                         const swarm = swarmData[poolId];
                         if (!swarm) {
@@ -192,6 +216,13 @@ export default function Portfolio() {
                         const availableShares = poolData.availableShares.toNumber();
                         const soldShares = totalShares - availableShares;
 
+                        console.log('Creating position for', swarm.id, ':', {
+                            shares: position.shares.toNumber(),
+                            totalShares,
+                            availableShares,
+                            soldShares
+                        });
+
                         return {
                             swarm_id: swarm.id,
                             number_of_shares: position.shares.toNumber(),
@@ -199,22 +230,23 @@ export default function Portfolio() {
                             last_dividend_payment: 0
                         };
                     } catch (error) {
-                        console.error(`Error fetching data for pool ${poolId}:`, error);
+                        console.error(`Error processing pool ${poolId}:`, error);
                         return null;
                     }
                 }));
 
                 const validPositions = positions.filter((pos): pos is PositionData => pos !== null);
-                console.log('Setting investments:', validPositions);
+                console.log('Final valid positions:', validPositions);
                 setInvestments(validPositions);
             } catch (error) {
-                console.error('Error fetching portfolio data:', error);
+                console.error('Error in fetchPositions:', error);
                 setError(new Error("Unable to load portfolio data. Please try again later."));
             } finally {
                 setIsLoading(false);
             }
         }
 
+        console.log('Initiating position fetch...');
         fetchPositions();
     }, []); // Empty dependency array - only runs once on mount
 
