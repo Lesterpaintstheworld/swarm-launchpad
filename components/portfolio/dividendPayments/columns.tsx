@@ -164,7 +164,8 @@ const ActionCell = ({ row }: ActionCellProps) => {
                         wallet: publicKey.toString(),
                         token: 'COMPUTE',
                         amount: computeAmount,
-                        date: formattedDate
+                        date: formattedDate,
+                        swarmName: swarm.name
                     })
                 });
 
@@ -185,7 +186,8 @@ const ActionCell = ({ row }: ActionCellProps) => {
                         wallet: publicKey.toString(),
                         token: 'UBC',
                         amount: ubcAmount,
-                        date: formattedDate
+                        date: formattedDate,
+                        swarmName: swarm.name
                     })
                 });
 
