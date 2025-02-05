@@ -109,116 +109,66 @@ export default function Portfolio() {
                 const swarmMap: Record<string, SwarmData> = {};
                 const pools: string[] = [];
                 
-                console.log('Fetched swarms data:', data);
-
                 data.forEach((swarm: SwarmData) => {
                     if (swarm.pool) {
-                        console.log('Processing swarm:', swarm.id, 'with pool:', swarm.pool);
                         swarmMap[swarm.pool] = swarm;
                         pools.push(swarm.pool);
                     }
                 });
                 
-                console.log('Processed swarm map:', swarmMap);
-                console.log('Processed pool IDs:', pools);
-                
                 setSwarmData(swarmMap);
                 setPoolIds(pools);
             } catch (error: any) {
                 console.error('Error fetching swarm data:', error);
-            } finally {
-                setIsLoading(false);
+                setError(new Error('Failed to fetch swarm data'));
             }
         }
         fetchSwarmData();
     }, []);
 
     useEffect(() => {
-        if (!connected || !publicKey || poolIds.length < 1) {
-            console.log('Skipping position fetch - prerequisites not met:', { 
-                connected, 
-                publicKey: publicKey?.toString(), 
-                poolIdsLength: poolIds.length,
-                poolIds
-            });
+        if (!connected || !publicKey || !program || poolIds.length === 0) {
+            setIsLoading(false);
             return;
         }
 
-        const getPosition = async (ownerPublicKey: PublicKey, poolId: string) => {
-            console.log('Attempting to fetch position for:', {
-                owner: ownerPublicKey.toString(),
-                poolId
-            });
-            
-            try {
-                const poolPubkey = new PublicKey(poolId);
-                const pda = getShareholderPDA(program.programId, ownerPublicKey, poolPubkey);
-            
-                if (!pda) {
-                    console.log('Failed to generate PDA for pool:', poolId);
-                    return null;
-                }
-            
-                console.log('Generated PDA:', pda.toString());
-
-                const shareholderData = await program.account.shareholder.fetch(pda);
-                console.log('Shareholder data for pool', poolId, ':', shareholderData);
-            
-                const shares = shareholderData.shares.toNumber();
-                console.log('Parsed shares:', shares);
-            
-                return shares > 0 ? shareholderData : null;
-            } catch (error) {
-                if (error instanceof Error && error.message.includes('Account does not exist')) {
-                    console.log('No shareholder account found for pool:', poolId);
-                    return null;
-                }
-                console.error('Error fetching shareholder data:', error);
-                return null;
-            }
-        };
-
         async function fetchPositions() {
-            if (!publicKey) {
-                console.log('No public key available');
-                return;
-            }
-
-            console.log('Starting fetchPositions with:', {
-                programId: program.programId.toString(),
-                poolIds
-            });
-
             try {
                 setIsLoading(true);
-                const positions = await Promise.all(poolIds.map(async poolId => {
-                    if (!poolId) {
-                        console.log('Skipping null pool ID');
-                        return null;
-                    }
-                    
+                const positions = await Promise.all(poolIds.map(async (poolId) => {
                     try {
-                        console.log('Processing pool:', poolId);
-                        
-                        const [position, poolData] = await Promise.all([
-                            getPosition(publicKey, poolId),
-                            program.account.pool.fetch(new PublicKey(poolId))
+                        const poolPubkey = new PublicKey(poolId);
+                        const shareholderPda = getShareholderPDA(
+                            program.programId,
+                            publicKey,
+                            poolPubkey
+                        );
+
+                        if (!shareholderPda) {
+                            console.log(`No PDA generated for pool ${poolId}`);
+                            return null;
+                        }
+
+                        // Fetch both shareholder and pool data concurrently
+                        const [shareholderData, poolData] = await Promise.all([
+                            program.account.shareholder.fetch(shareholderPda)
+                                .catch(e => {
+                                    if (e.message.includes('Account does not exist')) {
+                                        return null;
+                                    }
+                                    throw e;
+                                }),
+                            program.account.pool.fetch(poolPubkey)
                         ]);
 
-                        console.log('Fetched data for pool:', {
-                            poolId,
-                            hasPosition: !!position,
-                            poolDataExists: !!poolData
-                        });
-
-                        if (!position) {
-                            console.log('No position found for pool:', poolId);
+                        // Skip if no shares owned
+                        if (!shareholderData || shareholderData.shares.toNumber() === 0) {
                             return null;
                         }
 
                         const swarm = swarmData[poolId];
                         if (!swarm) {
-                            console.log('No swarm data found for pool:', poolId);
+                            console.log(`No swarm data found for pool ${poolId}`);
                             return null;
                         }
 
@@ -226,16 +176,9 @@ export default function Portfolio() {
                         const availableShares = poolData.availableShares.toNumber();
                         const soldShares = totalShares - availableShares;
 
-                        console.log('Creating position for', swarm.id, ':', {
-                            shares: position.shares.toNumber(),
-                            totalShares,
-                            availableShares,
-                            soldShares
-                        });
-
                         return {
                             swarm_id: swarm.id,
-                            number_of_shares: position.shares.toNumber(),
+                            number_of_shares: shareholderData.shares.toNumber(),
                             total_shares: soldShares,
                             last_dividend_payment: 0
                         };
@@ -245,20 +188,21 @@ export default function Portfolio() {
                     }
                 }));
 
-                const validPositions = positions.filter((pos): pos is PositionData => pos !== null);
-                console.log('Final valid positions:', validPositions);
+                const validPositions = positions.filter((pos): pos is Investment => 
+                    pos !== null && pos.number_of_shares > 0
+                );
+
                 setInvestments(validPositions);
             } catch (error) {
-                console.error('Error in fetchPositions:', error);
-                setError(new Error("Unable to load portfolio data. Please try again later."));
+                console.error('Error fetching positions:', error);
+                setError(new Error('Failed to fetch investment positions'));
             } finally {
                 setIsLoading(false);
             }
         }
 
-        console.log('Initiating position fetch...');
         fetchPositions();
-    }, []); // Empty dependency array - only runs once on mount
+    }, [connected, publicKey, program, poolIds, swarmData]);
 
     if (!connected) return (
         <main className="container view">
