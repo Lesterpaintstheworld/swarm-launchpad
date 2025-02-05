@@ -55,7 +55,7 @@ export function SwarmContent({ swarm, initialPrice, services, collaborations }: 
     const soldShares = swarm.soldShares || 1000000; // Default to 1M shares if not provided
 
     useEffect(() => {
-        const interval = setInterval(() => {
+        const fetchPrice = () => {
             fetch('https://api.dexscreener.com/latest/dex/pairs/solana/HiYsmVjeFy4ZLx8pkPSxBjswFkoEjecVGB4zJed2e6Y')
                 .then(response => response.json())
                 .then(data => {
@@ -64,8 +64,15 @@ export function SwarmContent({ swarm, initialPrice, services, collaborations }: 
                     }
                 })
                 .catch(error => console.error('Failed to fetch price:', error));
-        }, 60000);
+        };
 
+        // Initial fetch
+        fetchPrice();
+
+        // Set up interval for periodic updates
+        const interval = setInterval(fetchPrice, 60000);
+
+        // Cleanup
         return () => clearInterval(interval);
     }, []);
 

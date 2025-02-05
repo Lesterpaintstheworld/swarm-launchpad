@@ -2,14 +2,14 @@ import { SwarmContent } from "./SwarmContent";
 import { notFound } from "next/navigation";
 
 async function getInitialPrice() {
-  try {
-    const response = await fetch('https://api.dexscreener.com/latest/dex/pairs/solana/HiYsmVjeFy4ZLx8pkPSxBjswFkoEjecVGB4zJed2e6Y');
-    const data = await response.json();
-    return data.pair?.priceUsd ? parseFloat(data.pair.priceUsd) : null;
-  } catch (error) {
-    console.error('Failed to fetch initial price:', error);
-    return null;
-  }
+    try {
+        const response = await fetch('https://api.dexscreener.com/latest/dex/pairs/solana/HiYsmVjeFy4ZLx8pkPSxBjswFkoEjecVGB4zJed2e6Y');
+        const data = await response.json();
+        return data.pair?.priceUsd ? parseFloat(data.pair.priceUsd) : null;
+    } catch (error) {
+        console.error('Failed to fetch initial price:', error);
+        return null;
+    }
 }
 
 async function getSwarm(id: string) {
