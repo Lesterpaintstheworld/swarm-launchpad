@@ -149,13 +149,11 @@ export default function Portfolio() {
                 const poolPubkey = new PublicKey(poolId);
                 const pda = getShareholderPDA(program.programId, ownerPublicKey, poolPubkey);
                 
-                // Log the PDA being used
                 console.log('Using PDA:', pda.toString());
 
                 const shareholderData = await program.account.shareholder.fetch(pda);
                 console.log('Shareholder data for pool', poolId, ':', shareholderData);
                 
-                // Parse the number of shares from the response
                 const shares = shareholderData.shares.toNumber();
                 console.log('Parsed shares:', shares);
                 
@@ -170,7 +168,7 @@ export default function Portfolio() {
             }
         };
 
-        const fetchData = async () => {
+        async function fetchPositions() {
             try {
                 setIsLoading(true);
                 const positions = await Promise.all(poolIds.map(async poolId => {
@@ -206,7 +204,6 @@ export default function Portfolio() {
                     }
                 }));
 
-                // Filter out null positions and set investments
                 const validPositions = positions.filter((pos): pos is PositionData => pos !== null);
                 console.log('Setting investments:', validPositions);
                 setInvestments(validPositions);
@@ -216,9 +213,9 @@ export default function Portfolio() {
             } finally {
                 setIsLoading(false);
             }
-        };
+        }
 
-        fetchData();
+        fetchPositions();
     }, [connected, publicKey, poolIds, program, swarmData]);
 
     if (!connected) return (
