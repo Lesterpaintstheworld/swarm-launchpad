@@ -7,31 +7,6 @@ import { Clock } from 'lucide-react';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { useEffect, useState } from 'react';
 
-type ServiceName = 
-  | 'Development Package'
-  | 'Essential Swarm Package'
-  | 'Inception Package'
-  | 'Active AI Tokens Trading';
-
-// Function to validate service names
-async function isValidServiceName(name: string): Promise<boolean> {
-  try {
-    // Map of known service IDs to display names
-    const serviceIdToName = {
-      'xforge-development-package': 'Development Package',
-      'kinos-essential-package': 'Essential Swarm Package',
-      'kinos-inception-package': 'Inception Package',
-      'kinkong-trading': 'Active AI Tokens Trading'
-    };
-
-    // Check if the name matches any of our known service names
-    return Object.values(serviceIdToName).includes(name);
-
-  } catch (error) {
-    console.error('Error validating service name:', error);
-    return false;
-  }
-}
 
 const serviceBanners: Record<string, string> = {
   'Development Package': '/services/xforge.png',
@@ -155,17 +130,6 @@ export default function CollaborationPage({ params }: { params: { id: string } }
     return (
       <div className="container py-12">
         <h1 className="text-2xl font-bold">Collaboration not found</h1>
-      </div>
-    );
-  }
-
-  if (!isValidService) {
-    return (
-      <div className="container py-12">
-        <h1 className="text-2xl font-bold">Invalid service type</h1>
-        <p className="text-muted-foreground mt-2">
-          Received: {collaboration.serviceName}
-        </p>
       </div>
     );
   }
