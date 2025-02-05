@@ -8,15 +8,6 @@ import { IntlNumberFormat } from "@/lib/utils";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
-import { MoreHorizontal } from "lucide-react";
-import { Button } from "@/components/shadcn/button";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/shadcn/dropdown-menu";
-import { SellPositionModal } from "@/components/swarms/sellPositionModal";
 
 interface SwarmData {
     id: string;
@@ -100,35 +91,6 @@ const PriceAndValueCell = ({ swarmId, shares }: { swarmId: string; shares?: numb
     );
 };
 
-const ActionCell = ({ swarmId }: { swarmId: string }) => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    
-    return (
-        <>
-            <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="h-8 w-8 p-0">
-                        <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                    <DropdownMenuItem 
-                        className="text-red-500"
-                        onClick={() => setIsModalOpen(true)}
-                    >
-                        Sell
-                    </DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>
-
-            <SellPositionModal
-                swarmId={swarmId}
-                isModalOpen={isModalOpen}
-                closeModal={() => setIsModalOpen(false)}
-            />
-        </>
-    );
-};
 
 const SwarmCell = ({ swarmId }: { swarmId: string }) => {
     const [swarm, setSwarm] = useState<{ name: string; image: string; role?: string } | null>(null);
@@ -257,9 +219,5 @@ export const columns: ColumnDef<Investment>[] = [
             shares={row.original.number_of_shares} 
           />
         )
-    },
-    {
-        id: 'actions',
-        cell: ({ row }) => <ActionCell swarmId={row.original.swarm_id} />
     }
 ];
