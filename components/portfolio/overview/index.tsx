@@ -163,7 +163,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
         return () => {
             isMounted = false;
         };
-    }, [investments, program]);
+    }, [investments, program, typedProgram.account.pool]);
 
     const CustomTooltip = ({ active, payload }: TooltipProps) => {
         if (active && payload && payload.length) {
