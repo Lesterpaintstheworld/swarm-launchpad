@@ -151,12 +151,10 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
         return () => {
             isMounted = false;
         };
-    }, [investments, program, totalValueInCompute]);
+    }, [investments, program]);
 
-    // Update total value when chart data changes
-    useEffect(() => {
-        const total = chartData.reduce((acc, item) => acc + item.value, 0);
-        setTotalValueInCompute(Math.round(total));
+    const totalValueInCompute = useMemo(() => {
+        return chartData.reduce((acc, item) => acc + item.value, 0);
     }, [chartData]);
 
     const CustomTooltip = ({ active, payload }: TooltipProps) => {
