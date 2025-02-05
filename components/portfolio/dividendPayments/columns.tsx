@@ -112,7 +112,7 @@ const ActionCell = ({ row }: ActionCellProps) => {
     const [swarm, setSwarm] = useState<any>(null);
     const computeAmount = row.getValue('amount') as number;
     const ubcAmount = row.original.ubcAmount;
-    const swarmId = row.getValue('swarm_id') as string;
+    const swarmId = row.original.swarm_id;
     const isDisabled = computeAmount < 10;
 
     useEffect(() => {
@@ -165,7 +165,7 @@ const ActionCell = ({ row }: ActionCellProps) => {
                         token: 'COMPUTE',
                         amount: computeAmount,
                         date: formattedDate,
-                        swarmId
+                        swarmId: swarmId
                     })
                 });
 
@@ -187,7 +187,7 @@ const ActionCell = ({ row }: ActionCellProps) => {
                         token: 'UBC',
                         amount: ubcAmount,
                         date: formattedDate,
-                        swarmId
+                        swarmId: swarmId
                     })
                 });
 
