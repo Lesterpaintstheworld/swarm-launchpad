@@ -95,6 +95,11 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
     const typedProgram = program as unknown as {
         account: ProgramAccounts;
     };
+
+    const totalValueInCompute = useMemo(() => {
+        return chartData.reduce((acc, item) => acc + item.value, 0);
+    }, [chartData]);
+
     useEffect(() => {
         let isMounted = true;
 
@@ -122,13 +127,12 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
                         const sharePrice = Math.round(base * 100) / 100;
                         
                         const value = Math.round(investment.number_of_shares * sharePrice);
-                        const totalValue = values?.reduce((acc, item) => acc + (item?.value || 0), 0) || 0;
 
                         return {
                             name: swarm.name,
                             value: value,
                             valueInCompute: value,
-                            percentage: ((value / totalValue * 100) || 0).toFixed(1)
+                            percentage: '0' // Will be calculated after all values are known
                         };
                     } catch (error) {
                         console.error(`Error calculating value for swarm ${investment.swarm_id}:`, error);
@@ -139,7 +143,15 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
                 if (!isMounted) return;
 
                 const validValues = values.filter((item): item is InvestmentDataItem => item !== null);
-                setChartData(validValues);
+                
+                // Calculate percentages after we have all values
+                const totalValue = validValues.reduce((acc, item) => acc + item.value, 0);
+                const valuesWithPercentages = validValues.map(item => ({
+                    ...item,
+                    percentage: ((item.value / totalValue * 100) || 0).toFixed(1)
+                }));
+
+                setChartData(valuesWithPercentages);
             } catch (error) {
                 console.error('Error calculating investment values:', error);
                 if (isMounted) setChartData([]);
