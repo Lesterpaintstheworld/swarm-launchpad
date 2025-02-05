@@ -18,14 +18,6 @@ import { toast } from 'sonner';
 import { ListingAccount } from './types';
 
 export function useLaunchpadProgram() {
-    // First, ensure network is properly initialized
-    const network = useMemo(() => 
-        constants.environment === 'production' 
-            ? WalletAdapterNetwork.Mainnet 
-            : WalletAdapterNetwork.Devnet,
-        []  // Empty dependency array since constants.environment won't change
-    );
-
     const connection = useMemo(() => 
         new Connection(HELIUS_RPC, {
             commitment: 'confirmed',
@@ -39,17 +31,17 @@ export function useLaunchpadProgram() {
     
     const programId = useMemo(() => 
         new PublicKey(constants.investmentProgram.id), 
-        []  // Remove network from dependencies since it's not used
+        []
     );
 
     const computeMint = useMemo(() => 
         new PublicKey(constants.investmentProgram.computeMint), 
-        []  // Remove network from dependencies since it's not used
+        []
     );
 
     const ubcMint = useMemo(() => 
         new PublicKey(constants.investmentProgram.ubcMint), 
-        []  // Remove network from dependencies since it's not used
+        []
     );
 
     const program = useMemo(() => 
@@ -59,13 +51,13 @@ export function useLaunchpadProgram() {
 
     // Query all pools
     const pools = useQuery({
-        queryKey: ['pools', 'all', network],
+        queryKey: ['pools', 'all'],
         queryFn: () => program.account.pool.all(),
         enabled: !!connection && !!program
     })
 
     const initializePool = useMutation({
-        mutationKey: ['pool', 'initialize', network],
+        mutationKey: ['pool', 'initialize'],
         mutationFn: async ({
             poolName,
             totalShares,
@@ -132,7 +124,7 @@ export function useLaunchpadProgram() {
 
     // Freeze/unfreeze pool
     const freezePool = useMutation({
-        mutationKey: ['pool', 'freeze', network],
+        mutationKey: ['pool', 'freeze'],
         mutationFn: async ({ pool, state }: { pool: PublicKey, state: boolean }) => {
             if (!publicKey) throw new Error('Wallet not connected')
 
@@ -148,7 +140,7 @@ export function useLaunchpadProgram() {
     
     // Freeze/unfreeze pool
     const removePool = useMutation({
-        mutationKey: ['remove-pool', 'freeze', network],
+        mutationKey: ['remove-pool', 'freeze'],
         mutationFn: async ({ pool }: { pool: PublicKey }) => {
             if (!publicKey) throw new Error('Wallet not connected')
 
