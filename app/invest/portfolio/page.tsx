@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const getSwarmUsingPoolId = (poolId: string): { id: string; name: string; wallet?: string } | null => {
     const swarmMap: Record<string, { id: string; name: string; wallet: string }> = {
