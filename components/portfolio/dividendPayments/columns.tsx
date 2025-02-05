@@ -113,6 +113,15 @@ const ActionCell = ({ row }: ActionCellProps) => {
     const computeAmount = row.getValue('amount') as number;
     const ubcAmount = row.original.ubcAmount;
     const swarmId = row.original.swarm_id;
+
+    // Add debug logging
+    console.log('Row data:', {
+        original: row.original,
+        swarmId,
+        computeAmount,
+        ubcAmount
+    });
+
     const isDisabled = computeAmount < 10;
 
     useEffect(() => {
@@ -140,6 +149,15 @@ const ActionCell = ({ row }: ActionCellProps) => {
     
     const handleClaim = async () => {
         if (!publicKey || !claimKey || !swarm) return;
+
+        // Add debug logging
+        console.log('Claim attempt with:', {
+            wallet: publicKey.toString(),
+            swarmId,
+            computeAmount,
+            ubcAmount,
+            swarm
+        });
 
         const message = `New Dividend Claim:\n\n` +
             `Wallet: ${publicKey.toString()}\n` +

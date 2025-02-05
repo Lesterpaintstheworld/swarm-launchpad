@@ -28,12 +28,29 @@ export async function POST(req: Request) {
         }
 
         const data = await req.json();
-        console.log('Received data:', {
+        
+        // Add validation logging
+        console.log('Received redistribution data:', {
             ...data,
-            wallet: data.wallet ? `${data.wallet.slice(0, 6)}...` : undefined // Log partial wallet for privacy
+            wallet: data.wallet ? `${data.wallet.slice(0, 6)}...` : undefined
         });
 
-        const { wallet, token, amount, date } = data as RedistributionData;
+        // Validate required fields
+        if (!data.wallet || !data.token || !data.amount || !data.date || !data.swarmId) {
+            console.error('Missing required fields:', {
+                hasWallet: !!data.wallet,
+                hasToken: !!data.token,
+                hasAmount: !!data.amount,
+                hasDate: !!data.date,
+                hasSwarmId: !!data.swarmId
+            });
+            return NextResponse.json(
+                { error: 'Missing required fields', details: 'All fields are required' },
+                { status: 400 }
+            );
+        }
+
+        const { wallet, token, amount, date, swarmId } = data as RedistributionData;
 
         // Construct Airtable URL
         const airtableUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Redistributions`;
