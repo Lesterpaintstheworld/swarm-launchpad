@@ -317,14 +317,14 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
         
         d3.select(this)
           .attr("stroke-dasharray", `${dashLength} ${length - dashLength}`)
-          .attr("stroke-dashoffset", 0)
+          .attr("stroke-dashoffset", -length)  // Start from negative length
           .transition()
           .duration(4000)
           .ease(d3.easeLinear)
-          .attr("stroke-dashoffset", -length)
+          .attr("stroke-dashoffset", 0)  // Animate to zero
           .on("end", function() {
             d3.select(this)
-              .attr("stroke-dashoffset", 0)
+              .attr("stroke-dashoffset", -length)  // Reset to negative length
               .transition()
               .duration(0)
               .on("end", animateLights);
