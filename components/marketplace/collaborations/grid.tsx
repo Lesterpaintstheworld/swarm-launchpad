@@ -35,8 +35,25 @@ interface CollaborationGridProps {
 }
 
 export function CollaborationGrid({ collaborations }: CollaborationGridProps) {
-  // Sort collaborations by price in descending order
-  const sortedCollaborations = [...collaborations].sort((a, b) => b.price - a.price);
+  // Define status priority order (active first, then others)
+  const statusOrder: Record<string, number> = {
+    'active': 0,
+    'pending': 1,
+    'completed': 2,
+    'paused': 3
+  };
+
+  // Sort collaborations by status first, then by price
+  const sortedCollaborations = [...collaborations].sort((a, b) => {
+    // First compare by status
+    const statusA = statusOrder[a.status.toLowerCase()] ?? 999; // Default high number for unknown status
+    const statusB = statusOrder[b.status.toLowerCase()] ?? 999;
+    if (statusA !== statusB) {
+      return statusA - statusB;
+    }
+    // If status is the same, sort by price (descending)
+    return b.price - a.price;
+  });
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
