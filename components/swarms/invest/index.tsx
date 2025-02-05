@@ -250,7 +250,7 @@ const SwarmInvestCard = ({
         }
     }, [swarm?.id]);
 
-    const handleBuy = () => {
+    const handleBuy = async () => {
         if (!numShares || numShares <= 0) {
             toast.error("Please enter a valid number of shares");
             return;
@@ -259,46 +259,45 @@ const SwarmInvestCard = ({
         setIsLoading(true);
         const calculatedCostInBaseUnits = Math.floor(price * Math.pow(10, 6));
             
-        toast.promise(purchaseShares.mutateAsync({ 
-            numberOfShares: numShares, 
-            calculatedCost: calculatedCostInBaseUnits
-        }), {
-            loading: 'Transaction pending...',
-            success: (result) => {
-                // Webhook notification
-                const swarmDetails = getSwarmUsingPoolId(pool);
-                if (!swarmDetails) {
-                    console.error("Could not find swarm details for webhook");
-                    return `Successfully purchased ${numShares} shares!`;
-                }
-                fetch('https://nlr.app.n8n.cloud/webhook/buybot', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        swarmName: swarm?.name || 'Unknown Swarm',
-                        swarmId: swarm?.id || 'unknown',
-                        numberOfShares: numShares,
-                        pricePerShare: data.pricePerShare,
-                        totalCost: price,
-                        poolAddress: pool,
-                        timestamp: new Date().toISOString(),
-                        transactionSignature: result
-                    })
-                }).catch((webhookError) => {
+        try {
+            const result = await purchaseShares.mutateAsync({ 
+                numberOfShares: numShares, 
+                calculatedCost: calculatedCostInBaseUnits
+            });
+
+            // Webhook notification
+            const swarmDetails = getSwarmUsingPoolId(pool);
+            if (swarmDetails) {
+                try {
+                    await fetch('https://nlr.app.n8n.cloud/webhook/buybot', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            swarmName: swarm?.name || 'Unknown Swarm',
+                            swarmId: swarm?.id || 'unknown',
+                            numberOfShares: numShares,
+                            pricePerShare: data.pricePerShare,
+                            totalCost: price,
+                            poolAddress: pool,
+                            timestamp: new Date().toISOString(),
+                            transactionSignature: result
+                        })
+                    });
+                } catch (webhookError) {
                     console.debug('Webhook notification failed:', webhookError);
-                });
-                setNumShares(0);
-                setPrice(0);
-                setIsLoading(false);
-                return `Successfully purchased ${numShares} shares!`;
-            },
-            error: (error) => {
-                console.error('Purchase error:', error);
-                setIsLoading(false);
-                return error instanceof Error ? error.message : 'Transaction failed';
+                }
             }
-        });
-    }
+
+            setNumShares(0);
+            setPrice(0);
+            toast.success(`Successfully purchased ${numShares} shares!`);
+        } catch (error) {
+            console.error('Purchase error:', error);
+            toast.error(error instanceof Error ? error.message : 'Transaction failed');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     if (marketCapOnly) {
         const marketCap = (data.totalSupply - data.remainingSupply) * data.pricePerShare;
