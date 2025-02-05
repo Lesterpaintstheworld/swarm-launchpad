@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 import { ExternalLink, Newspaper } from 'lucide-react';
 import Link from 'next/link';
 import { Carousel } from '@/components/ui/carousel';
+import { ClientMarkdown } from '@/components/ui/clientMarkdown';
 
 interface SwarmNewsProps {
   swarmId: string;
@@ -73,10 +74,10 @@ export function SwarmNews({ swarmId, className }: SwarmNewsProps) {
             {item.title}
           </h5>
 
-          {/* Content */}
-          <p className="text-muted-foreground group-hover:text-white/70 transition-colors">
-            {item.content}
-          </p>
+          {/* Content with markdown support */}
+          <div className="prose prose-invert prose-sm max-w-none">
+            <ClientMarkdown markdown={item.content} />
+          </div>
 
           {/* Footer */}
           {item.link && (
