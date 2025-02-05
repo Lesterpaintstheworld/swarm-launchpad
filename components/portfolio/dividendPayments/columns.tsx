@@ -149,7 +149,9 @@ const ActionCell = ({ row }: ActionCellProps) => {
             `Week: ${getWeekKey()}`;
 
         try {
-            const currentDate = new Date().toISOString();
+            // Format date as YYYY-MM-DD
+            const today = new Date();
+            const formattedDate = today.toISOString().split('T')[0]; // This will give us YYYY-MM-DD
             
             // Create COMPUTE redistribution record
             if (computeAmount > 0) {
@@ -162,7 +164,7 @@ const ActionCell = ({ row }: ActionCellProps) => {
                         wallet: publicKey.toString(),
                         token: 'COMPUTE',
                         amount: computeAmount,
-                        date: currentDate
+                        date: formattedDate
                     })
                 });
 
@@ -183,7 +185,7 @@ const ActionCell = ({ row }: ActionCellProps) => {
                         wallet: publicKey.toString(),
                         token: 'UBC',
                         amount: ubcAmount,
-                        date: currentDate
+                        date: formattedDate
                     })
                 });
 
