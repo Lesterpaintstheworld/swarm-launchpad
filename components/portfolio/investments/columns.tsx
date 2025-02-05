@@ -8,36 +8,85 @@ import { IntlNumberFormat } from "@/lib/utils";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-interface SwarmData {
-    id: string;
-    name: string;
-    image: string;
-    pool?: string;
-    role?: string;
-}
+// Create a cache object outside component to persist between renders
+const swarmCache: Record<string, any> = {};
 
+// Add a simple request queue to prevent too many simultaneous requests
+let requestQueue: string[] = [];
+let isProcessingQueue = false;
 
+const processQueue = async () => {
+    if (isProcessingQueue || requestQueue.length === 0) return;
+    
+    isProcessingQueue = true;
+    const BATCH_SIZE = 3; // Process 3 requests at a time
+    const DELAY = 1000; // 1 second delay between batches
 
+    while (requestQueue.length > 0) {
+        const batch = requestQueue.splice(0, BATCH_SIZE);
+        await Promise.all(batch.map(async (swarmId) => {
+            try {
+                if (!swarmCache[swarmId]) {
+                    const response = await fetch(`/api/swarms/${swarmId}`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        swarmCache[swarmId] = data;
+                    }
+                }
+            } catch (error) {
+                console.error(`Error fetching swarm ${swarmId}:`, error);
+            }
+        }));
 
+        if (requestQueue.length > 0) {
+            await new Promise(resolve => setTimeout(resolve, DELAY));
+        }
+    }
+    
+    isProcessingQueue = false;
+};
 
 const SwarmCell = ({ swarmId }: { swarmId: string }) => {
     const [swarm, setSwarm] = useState<{ name: string; image: string; role?: string } | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        async function fetchSwarm() {
-            try {
-                const response = await fetch(`/api/swarms/${swarmId}`);
-                if (!response.ok) return;
-                const data = await response.json();
-                setSwarm(data);
-            } catch (error) {
-                console.error('Error fetching swarm:', error);
-            } finally {
-                setIsLoading(false);
+        let isMounted = true;
+
+        const fetchSwarm = async () => {
+            // Check cache first
+            if (swarmCache[swarmId]) {
+                if (isMounted) {
+                    setSwarm(swarmCache[swarmId]);
+                    setIsLoading(false);
+                }
+                return;
             }
-        }
+
+            // Add to queue if not in cache
+            if (!requestQueue.includes(swarmId)) {
+                requestQueue.push(swarmId);
+                processQueue();
+            }
+
+            // Poll cache until data is available
+            const checkCache = setInterval(() => {
+                if (swarmCache[swarmId] && isMounted) {
+                    setSwarm(swarmCache[swarmId]);
+                    setIsLoading(false);
+                    clearInterval(checkCache);
+                }
+            }, 100);
+
+            // Cleanup
+            return () => clearInterval(checkCache);
+        };
+
         fetchSwarm();
+
+        return () => {
+            isMounted = false;
+        };
     }, [swarmId]);
 
     if (isLoading || !swarm) {
