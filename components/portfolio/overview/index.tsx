@@ -66,55 +66,63 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
         account: ProgramAccounts;
     };
 
-    // Memoize the investment data calculations
-    const calculateInvestmentData = useMemo(() => {
+    // Use useEffect instead of useMemo for the data fetching
+    useEffect(() => {
+        let isMounted = true;
+
         async function fetchData() {
             if (!program || investments.length === 0) {
-                setChartData([]);
+                if (isMounted) setChartData([]);
                 return;
             }
 
             try {
                 const values = await Promise.all(investments.map(async (investment) => {
-                try {
-                    const swarmResponse = await fetch(`/api/swarms/${investment.swarm_id}`);
-                    const swarm = await swarmResponse.json();
-                    if (!swarm?.pool) return null;
-                    
-                    const poolPubkey = new PublicKey(swarm.pool);
-                    const poolData = await typedProgram.account.pool.fetch(poolPubkey);
-                    
-                    const totalShares = poolData.totalShares.toNumber();
-                    const availableShares = poolData.availableShares.toNumber();
-                    const soldShares = totalShares - availableShares;
-                    
-                    const cycle = Math.floor(soldShares / 5000);
-                    const base = Math.pow(1.35, cycle);
-                    const sharePrice = Math.round(base * 100) / 100;
-                    
-                    const value = Math.round(investment.number_of_shares * sharePrice);
+                    try {
+                        const swarmResponse = await fetch(`/api/swarms/${investment.swarm_id}`);
+                        const swarm = await swarmResponse.json();
+                        if (!swarm?.pool) return null;
+                        
+                        const poolPubkey = new PublicKey(swarm.pool);
+                        const poolData = await typedProgram.account.pool.fetch(poolPubkey);
+                        
+                        const totalShares = poolData.totalShares.toNumber();
+                        const availableShares = poolData.availableShares.toNumber();
+                        const soldShares = totalShares - availableShares;
+                        
+                        const cycle = Math.floor(soldShares / 5000);
+                        const base = Math.pow(1.35, cycle);
+                        const sharePrice = Math.round(base * 100) / 100;
+                        
+                        const value = Math.round(investment.number_of_shares * sharePrice);
 
-                    return {
-                        name: swarm.name,
-                        value: value,
-                        valueInCompute: value,
-                        percentage: ((value / totalValueInCompute * 100) || 0).toFixed(1)
-                    };
-                } catch (error) {
-                    console.error(`Error calculating value for swarm ${investment.swarm_id}:`, error);
-                    return null;
-                }
-            }));
+                        return {
+                            name: swarm.name,
+                            value: value,
+                            valueInCompute: value,
+                            percentage: ((value / totalValueInCompute * 100) || 0).toFixed(1)
+                        };
+                    } catch (error) {
+                        console.error(`Error calculating value for swarm ${investment.swarm_id}:`, error);
+                        return null;
+                    }
+                }));
+
+                if (!isMounted) return;
 
                 const validValues = values.filter((item): item is InvestmentDataItem => item !== null);
                 setChartData(validValues);
             } catch (error) {
                 console.error('Error calculating investment values:', error);
-                setChartData([]);
+                if (isMounted) setChartData([]);
             }
         }
 
         fetchData();
+
+        return () => {
+            isMounted = false;
+        };
     }, [investments, program, totalValueInCompute]);
 
     // Update total value when chart data changes
