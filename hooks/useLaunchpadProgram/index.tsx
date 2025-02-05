@@ -4,29 +4,37 @@
 import { useWallet } from '@solana/wallet-adapter-react'
 import { PublicKey, SystemProgram, Connection } from '@solana/web3.js'
 import { constants } from '@/lib/constants'
-const HELIUS_RPC = process.env.NEXT_PUBLIC_HELIUS_RPC_KEY 
-    ? `https://mainnet.helius-rpc.com/?api-key=${process.env.NEXT_PUBLIC_HELIUS_RPC_KEY}`
-    : 'https://api.mainnet-beta.solana.com'; // Fallback to public RPC
 import { getAssociatedTokenAddress } from '@solana/spl-token';
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { useAnchorProvider } from '../useAnchor'
-import { WalletAdapterNetwork, WalletSignTransactionError } from '@solana/wallet-adapter-base'
+import { WalletAdapterNetwork } from '@solana/wallet-adapter-base'
 import { getLaunchpadProgram, getShareholderPDA } from './utils'
-import { BN, BorshAccountsCoder } from '@coral-xyz/anchor'
-
+import { BN } from '@coral-xyz/anchor'
 import { TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token'
-import { toast } from 'sonner';
-import { ListingAccount } from './types';
+import { toast } from 'sonner'
+import { ListingAccount } from './types'
+
+// Define fallback RPC endpoint
+const FALLBACK_RPC = 'https://api.mainnet-beta.solana.com';
+
+// Get RPC endpoint with fallback
+const getRpcEndpoint = () => {
+    if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_HELIUS_RPC_KEY) {
+        return `https://mainnet.helius-rpc.com/?api-key=${process.env.NEXT_PUBLIC_HELIUS_RPC_KEY}`;
+    }
+    return FALLBACK_RPC;
+};
 
 export function useLaunchpadProgram() {
     const connection = useMemo(() => {
-        console.log('Creating connection with RPC:', HELIUS_RPC); // Debug log
-        return new Connection(HELIUS_RPC, {
+        const endpoint = getRpcEndpoint();
+        console.log('Creating connection with RPC endpoint');
+        return new Connection(endpoint, {
             commitment: 'confirmed',
-            wsEndpoint: undefined // Helius doesn't support websockets on this endpoint
+            wsEndpoint: undefined
         });
-    }, []); // Empty dependency array since HELIUS_RPC won't change
+    }, []);
 
     const { publicKey } = useWallet();
     const provider = useAnchorProvider(connection);
