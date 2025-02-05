@@ -5,9 +5,13 @@ from typing import Dict, List, Optional
 import json
 from collections import defaultdict
 
+import os
+from dotenv import load_dotenv
+
 # Constants
+load_dotenv()
 PROGRAM_ID = "4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf"
-HELIUS_RPC = "https://mainnet.helius-rpc.com/?api-key=4c3a5fc2-ea3f-45eb-85d5-2f282a6b4401"
+HELIUS_RPC = f"https://mainnet.helius-rpc.com/?api-key={os.getenv('HELIUS_RPC_KEY')}"
 MAX_RETRIES = 3
 RETRY_DELAY = 2  # seconds
 

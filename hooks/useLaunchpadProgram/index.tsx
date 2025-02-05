@@ -4,7 +4,7 @@
 import { useWallet } from '@solana/wallet-adapter-react'
 import { PublicKey, SystemProgram, Connection } from '@solana/web3.js'
 import { constants } from '@/lib/constants'
-const HELIUS_RPC = "https://mainnet.helius-rpc.com/?api-key=4c3a5fc2-ea3f-45eb-85d5-2f282a6b4401";
+const HELIUS_RPC = `https://mainnet.helius-rpc.com/?api-key=${process.env.NEXT_PUBLIC_HELIUS_RPC_KEY}`;
 import { getAssociatedTokenAddress } from '@solana/spl-token';
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
