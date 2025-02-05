@@ -1,5 +1,12 @@
 'use client'
 
+// Memory cache for investment data
+let cachedData: {
+    investments: Investment[];
+    timestamp: number;
+} | null = null;
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
+
 import { useState, useEffect } from "react";
 
 const getSwarmUsingPoolId = (poolId: string): { id: string; name: string; wallet?: string } | null => {
@@ -99,6 +106,11 @@ export default function Portfolio() {
     const [swarmData, setSwarmData] = useState<Record<string, SwarmData>>({});
     const [poolIds, setPoolIds] = useState<string[]>([]);
 
+    const refreshInvestments = () => {
+        cachedData = null; // Clear the memory cache
+        setIsLoading(true); // This will trigger a re-fetch
+    };
+
 
     useEffect(() => {
         let isMounted = true;
@@ -151,6 +163,13 @@ export default function Portfolio() {
             if (!isMounted) return;
             
             try {
+                // Check memory cache first
+                if (cachedData && (Date.now() - cachedData.timestamp < CACHE_DURATION)) {
+                    setInvestments(cachedData.investments);
+                    setIsLoading(false);
+                    return;
+                }
+
                 setIsLoading(true);
                 const positions = await Promise.all(poolIds.map(async (poolId) => {
                     try {
@@ -211,6 +230,12 @@ export default function Portfolio() {
                     pos !== null && pos.number_of_shares > 0
                 );
 
+                // Update memory cache
+                cachedData = {
+                    investments: validPositions,
+                    timestamp: Date.now()
+                };
+
                 setInvestments(validPositions);
             } catch (error) {
                 console.error('Error fetching positions:', error);
@@ -225,8 +250,13 @@ export default function Portfolio() {
         }
 
         fetchPositions();
+        
+        // Set up manual refresh interval
+        const refreshInterval = setInterval(fetchPositions, CACHE_DURATION);
+
         return () => {
             isMounted = false;
+            clearInterval(refreshInterval);
         };
     }, [connected, publicKey?.toString(), program?.programId?.toString(), poolIds.join(',')]);
 
