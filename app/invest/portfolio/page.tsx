@@ -101,11 +101,18 @@ export default function Portfolio() {
 
 
     useEffect(() => {
+        let isMounted = true;
+
         async function fetchSwarmData() {
+            if (!isMounted) return;
+            
             try {
-                setIsLoading(true);
                 const response = await fetch('/api/swarms');
+                if (!response.ok) throw new Error('Failed to fetch swarm data');
                 const data = await response.json();
+                
+                if (!isMounted) return;
+
                 const swarmMap: Record<string, SwarmData> = {};
                 const pools: string[] = [];
                 
@@ -120,19 +127,29 @@ export default function Portfolio() {
                 setPoolIds(pools);
             } catch (error: any) {
                 console.error('Error fetching swarm data:', error);
-                setError(new Error('Failed to fetch swarm data'));
+                if (isMounted) {
+                    setError(new Error('Failed to fetch swarm data'));
+                }
             }
         }
+
         fetchSwarmData();
-    }, []);
+        return () => {
+            isMounted = false;
+        };
+    }, []); // Empty dependency array - only run once on mount
 
     useEffect(() => {
+        let isMounted = true;
+
         if (!connected || !publicKey || !program || poolIds.length === 0) {
             setIsLoading(false);
             return;
         }
 
         async function fetchPositions() {
+            if (!isMounted) return;
+            
             try {
                 setIsLoading(true);
                 const positions = await Promise.all(poolIds.map(async (poolId) => {
@@ -188,6 +205,8 @@ export default function Portfolio() {
                     }
                 }));
 
+                if (!isMounted) return;
+
                 const validPositions = positions.filter((pos): pos is Investment => 
                     pos !== null && pos.number_of_shares > 0
                 );
@@ -195,14 +214,21 @@ export default function Portfolio() {
                 setInvestments(validPositions);
             } catch (error) {
                 console.error('Error fetching positions:', error);
-                setError(new Error('Failed to fetch investment positions'));
+                if (isMounted) {
+                    setError(new Error('Failed to fetch investment positions'));
+                }
             } finally {
-                setIsLoading(false);
+                if (isMounted) {
+                    setIsLoading(false);
+                }
             }
         }
 
         fetchPositions();
-    }, [connected, publicKey, program, poolIds, swarmData]);
+        return () => {
+            isMounted = false;
+        };
+    }, [connected, publicKey, program?.programId?.toString(), poolIds.join(',')]);
 
     if (!connected) return (
         <main className="container view">
