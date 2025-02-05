@@ -55,7 +55,7 @@ interface InvestmentDataItem {
     name: string;
     value: number;
     valueInCompute: number;
-    percentage?: string;
+    percentage?: string; // Make percentage optional to match actual usage
 }
 
 interface TooltipProps {
@@ -132,7 +132,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
                             name: swarm.name,
                             value: value,
                             valueInCompute: value,
-                            percentage: '0' // Will be calculated after all values are known
+                            percentage: undefined // Remove initial percentage
                         };
                     } catch (error) {
                         console.error(`Error calculating value for swarm ${investment.swarm_id}:`, error);
@@ -142,6 +142,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
 
                 if (!isMounted) return;
 
+                // Update the type predicate to match the interface
                 const validValues = values.filter((item): item is InvestmentDataItem => item !== null);
                 
                 // Calculate percentages after we have all values
