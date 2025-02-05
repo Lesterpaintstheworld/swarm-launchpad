@@ -36,36 +36,51 @@ const PriceAndValueCell = ({ swarmId, shares }: { swarmId: string; shares?: numb
     });
     const [value, setValue] = useState<number>(0);
 
+    // First effect to fetch swarm data
     useEffect(() => {
+        let isMounted = true;
+        
         async function fetchSwarm() {
             try {
                 setIsLoading(true);
                 const response = await fetch(`/api/swarms/${swarmId}`);
                 if (!response.ok) return;
                 const data = await response.json();
-                setSwarm(data);
+                if (isMounted) {
+                    setSwarm(data);
+                }
             } catch (error) {
                 console.error('Error fetching swarm:', error);
             } finally {
-                setIsLoading(false);
+                if (isMounted) {
+                    setIsLoading(false);
+                }
             }
         }
+
         fetchSwarm();
-    }, [swarmId]);
+        return () => {
+            isMounted = false;
+        };
+    }, [swarmId]); // Only depend on swarmId
 
+    // Second effect to calculate value
     useEffect(() => {
-        try {
-            if (poolAccount?.data && shares) {
-                const totalShares = poolAccount.data.totalShares.toNumber();
-                const availableShares = poolAccount.data.availableShares.toNumber();
-                const soldShares = totalShares - availableShares;
-                
-                const cycle = Math.floor(soldShares / 5000);
-                const base = Math.pow(1.35, cycle);
-                const sharePrice = Math.floor(base * 100) / 100;
+        if (!poolAccount?.data || !shares) {
+            setValue(0);
+            return;
+        }
 
-                setValue(shares * sharePrice);
-            }
+        try {
+            const totalShares = poolAccount.data.totalShares.toNumber();
+            const availableShares = poolAccount.data.availableShares.toNumber();
+            const soldShares = totalShares - availableShares;
+            
+            const cycle = Math.floor(soldShares / 5000);
+            const base = Math.pow(1.35, cycle);
+            const sharePrice = Math.floor(base * 100) / 100;
+
+            setValue(shares * sharePrice);
         } catch (error) {
             console.error('Error calculating value:', error);
             setValue(0);
