@@ -51,11 +51,20 @@ import { Investment } from "../investments"
 import { cn, IntlNumberFormat } from "@/lib/utils";
 import { useEffect, useState, useMemo } from "react";
 
+// First, let's create a more specific interface for the initial mapped items
+interface InitialInvestmentData {
+    name: string;
+    value: number;
+    valueInCompute: number;
+    percentage: undefined;
+}
+
+// Keep the existing InvestmentDataItem interface for the final data
 interface InvestmentDataItem {
     name: string;
     value: number;
     valueInCompute: number;
-    percentage?: string; // Make percentage optional to match actual usage
+    percentage?: string;
 }
 
 interface TooltipProps {
@@ -132,8 +141,8 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
                             name: swarm.name,
                             value: value,
                             valueInCompute: value,
-                            percentage: undefined // Remove initial percentage
-                        };
+                            percentage: undefined
+                        } as InitialInvestmentData;
                     } catch (error) {
                         console.error(`Error calculating value for swarm ${investment.swarm_id}:`, error);
                         return null;
@@ -142,12 +151,12 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
 
                 if (!isMounted) return;
 
-                // Update the type predicate to match the interface
-                const validValues = values.filter((item): item is InvestmentDataItem => item !== null);
+                // Update the type predicate to use InitialInvestmentData
+                const validValues = values.filter((item): item is InitialInvestmentData => item !== null);
                 
-                // Calculate percentages after we have all values
+                // Calculate percentages and convert to final format
                 const totalValue = validValues.reduce((acc, item) => acc + item.value, 0);
-                const valuesWithPercentages = validValues.map(item => ({
+                const valuesWithPercentages: InvestmentDataItem[] = validValues.map(item => ({
                     ...item,
                     percentage: ((item.value / totalValue * 100) || 0).toFixed(1)
                 }));
