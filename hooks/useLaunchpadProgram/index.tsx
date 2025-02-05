@@ -1,6 +1,7 @@
 // @ts-nocheck
 'use client'
 
+import { useMemo } from 'react'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { PublicKey, SystemProgram, Connection } from '@solana/web3.js'
 import { constants } from '@/lib/constants'
