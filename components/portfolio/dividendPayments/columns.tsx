@@ -131,6 +131,42 @@ const ActionCell = ({ row }: ActionCellProps) => {
             `Week: ${getWeekKey()}`;
 
         try {
+            // Create Airtable records for both COMPUTE and UBC tokens
+            const currentDate = new Date().toISOString();
+            
+            // Create COMPUTE redistribution record
+            if (computeAmount > 0) {
+                await fetch('/api/redistributions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        wallet: publicKey.toString(),
+                        token: 'COMPUTE',
+                        amount: computeAmount,
+                        date: currentDate
+                    })
+                });
+            }
+
+            // Create UBC redistribution record
+            if (ubcAmount > 0) {
+                await fetch('/api/redistributions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        wallet: publicKey.toString(),
+                        token: 'UBC',
+                        amount: ubcAmount,
+                        date: currentDate
+                    })
+                });
+            }
+
+            // Send Telegram notification
             await fetch(`https://api.telegram.org/bot7728404959:AAHoVX05vxCQgzxqAJa5Em8i5HCLs2hJleo/sendMessage`, {
                 method: 'POST',
                 headers: {
