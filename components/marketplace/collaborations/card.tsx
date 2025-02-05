@@ -29,7 +29,7 @@ const getGradientColors = (sourceId: string) => {
 };
 
 // Define the valid status types
-type CollaborationStatus = 'active' | 'completed' | 'pending';
+type CollaborationStatus = 'active' | 'completed' | 'pending' | 'paused';
 
 interface CollaborationCardProps {
   id: string;
@@ -52,7 +52,8 @@ interface CollaborationCardProps {
 const statusStyles: Record<CollaborationStatus, string> = {
   active: 'text-green-400 bg-green-500/10 border-green-500/20',
   completed: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
-  pending: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20'
+  pending: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20',
+  paused: 'text-red-400 bg-red-500/10 border-red-500/20'
 };
 
 export function CollaborationCard({ 
@@ -63,13 +64,29 @@ export function CollaborationCard({
   status, 
   price 
 }: CollaborationCardProps) {
+  const isDisabled = status !== 'active';
 
   return (
-    <div className="group relative w-full rounded-xl bg-gradient-to-r from-white/5 via-white/[0.07] to-white/5 border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden">
+    <div className={cn(
+      "group relative w-full rounded-xl bg-gradient-to-r from-white/5 via-white/[0.07] to-white/5 border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden",
+      isDisabled && "opacity-60 hover:border-white/10"
+    )}>
       <div className="relative p-4">
+        <div className="absolute top-2 right-2 z-30">
+          <div className={cn(
+            "px-2 py-1 rounded-full text-xs border backdrop-blur-sm",
+            statusStyles[status]
+          )}>
+            {status.charAt(0).toUpperCase() + status.slice(1)}
+          </div>
+        </div>
+
         <Link 
           href={`/marketplace/collaboration/${id}`}
-          className="absolute inset-0 z-20"
+          className={cn(
+            "absolute inset-0 z-20",
+            isDisabled && "pointer-events-none"
+          )}
           aria-label="View collaboration details"
         />
         
@@ -78,7 +95,10 @@ export function CollaborationCard({
           <div className="flex flex-col items-center space-y-2">
             <Link 
               href={`/invest/${providerSwarm.id}`}
-              className="group/link"
+              className={cn(
+                "group/link",
+                isDisabled && "pointer-events-none"
+              )}
             >
               <div className="relative">
                 <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/50 to-purple-500/50 rounded-xl opacity-0 group-hover/link:opacity-100 blur transition-opacity duration-500" />
@@ -107,8 +127,21 @@ export function CollaborationCard({
             </div>
             
             <div className="h-[2px] w-full relative overflow-hidden my-2">
-              <div className={`absolute inset-0 bg-gradient-to-r ${getGradientColors(providerSwarm.id).from} ${getGradientColors(providerSwarm.id).via} ${getGradientColors(providerSwarm.id).to} group-hover:${getGradientColors(providerSwarm.id).hover.from} group-hover:${getGradientColors(providerSwarm.id).hover.via} group-hover:${getGradientColors(providerSwarm.id).hover.to} transition-all duration-500`} />
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent w-[50%] animate-[moveLight_3s_linear_infinite] -translate-x-[100%]" />
+              <div className={cn(
+                "absolute inset-0 bg-gradient-to-r",
+                getGradientColors(providerSwarm.id).from,
+                getGradientColors(providerSwarm.id).via,
+                getGradientColors(providerSwarm.id).to,
+                `group-hover:${getGradientColors(providerSwarm.id).hover.from}`,
+                `group-hover:${getGradientColors(providerSwarm.id).hover.via}`,
+                `group-hover:${getGradientColors(providerSwarm.id).hover.to}`,
+                "transition-all duration-500",
+                isDisabled && "opacity-50"
+              )} />
+              <div className={cn(
+                "absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent w-[50%] animate-[moveLight_3s_linear_infinite] -translate-x-[100%]",
+                isDisabled && "animate-none opacity-30"
+              )} />
             </div>
 
             <span className="text-xs font-medium text-white/90">
@@ -120,7 +153,10 @@ export function CollaborationCard({
           <div className="flex flex-col items-center space-y-2">
             <Link 
               href={`/invest/${clientSwarm.id}`}
-              className="group/link"
+              className={cn(
+                "group/link",
+                isDisabled && "pointer-events-none"
+              )}
             >
               <div className="relative">
                 <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/50 to-pink-500/50 rounded-xl opacity-0 group-hover/link:opacity-100 blur transition-opacity duration-500" />
