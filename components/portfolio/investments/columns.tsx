@@ -7,7 +7,6 @@ import Image from "next/image";
 import { IntlNumberFormat } from "@/lib/utils";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 
 interface SwarmData {
     id: string;
@@ -19,77 +18,6 @@ interface SwarmData {
 
 
 
-const PriceAndValueCell = ({ swarmId, shares }: { swarmId: string; shares?: number }) => {
-    const [swarm, setSwarm] = useState<SwarmData | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const { poolAccount } = useLaunchpadProgramAccount({ 
-        poolAddress: swarm?.pool || '' 
-    });
-    const [value, setValue] = useState<number>(0);
-
-    // First effect to fetch swarm data
-    useEffect(() => {
-        let isMounted = true;
-        
-        async function fetchSwarm() {
-            try {
-                setIsLoading(true);
-                const response = await fetch(`/api/swarms/${swarmId}`);
-                if (!response.ok) return;
-                const data = await response.json();
-                if (isMounted) {
-                    setSwarm(data);
-                }
-            } catch (error) {
-                console.error('Error fetching swarm:', error);
-            } finally {
-                if (isMounted) {
-                    setIsLoading(false);
-                }
-            }
-        }
-
-        fetchSwarm();
-        return () => {
-            isMounted = false;
-        };
-    }, [swarmId]); // Only depend on swarmId
-
-    // Second effect to calculate value
-    useEffect(() => {
-        if (!poolAccount?.data || !shares) {
-            setValue(0);
-            return;
-        }
-
-        try {
-            const totalShares = poolAccount.data.totalShares.toNumber();
-            const availableShares = poolAccount.data.availableShares.toNumber();
-            const soldShares = totalShares - availableShares;
-            
-            const cycle = Math.floor(soldShares / 5000);
-            const base = Math.pow(1.35, cycle);
-            const sharePrice = Math.floor(base * 100) / 100;
-
-            setValue(shares * sharePrice);
-        } catch (error) {
-            console.error('Error calculating value:', error);
-            setValue(0);
-        }
-    }, [poolAccount?.data, shares]);
-
-    if (isLoading) {
-        return <div className="h-4 w-24 bg-white/10 rounded animate-pulse" />;
-    }
-
-    return (
-        <div className="flex items-center gap-2">
-            <p className="font-bold text-green-400">
-                {IntlNumberFormat(value)} $COMPUTE
-            </p>
-        </div>
-    );
-};
 
 
 const SwarmCell = ({ swarmId }: { swarmId: string }) => {
@@ -207,17 +135,5 @@ export const columns: ColumnDef<Investment>[] = [
                 </div>
             )
         }
-    },
-    {
-        accessorKey: 'value',
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Value" />
-        ),
-        cell: ({ row }) => (
-          <PriceAndValueCell 
-            swarmId={row.getValue('swarm_id')} 
-            shares={row.original.number_of_shares} 
-          />
-        )
     }
 ];
