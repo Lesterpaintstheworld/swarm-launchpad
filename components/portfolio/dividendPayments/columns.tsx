@@ -109,10 +109,38 @@ interface ActionCellProps {
 const ActionCell = ({ row }: ActionCellProps) => {
     const { publicKey } = useWallet();
     const [isClaimed, setIsClaimed] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [swarm, setSwarm] = useState<any>(null);
     const computeAmount = row.getValue('amount') as number;
     const ubcAmount = row.original.ubcAmount;
     const swarmId = row.original.swarm_id;
+
+    // Add check for existing claims
+    useEffect(() => {
+        async function checkExistingClaim() {
+            if (!publicKey || !swarmId) return;
+
+            try {
+                const today = new Date();
+                const startOfWeek = new Date(today);
+                startOfWeek.setDate(today.getDate() - today.getDay());
+                const formattedDate = startOfWeek.toISOString().split('T')[0];
+
+                const response = await fetch(`/api/redistributions/check?wallet=${publicKey.toString()}&swarmId=${swarmId}&date=${formattedDate}`);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    setIsClaimed(data.exists);
+                }
+            } catch (error) {
+                console.error('Error checking existing claim:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        checkExistingClaim();
+    }, [publicKey, swarmId]);
 
     // Add debug logging
     console.log('Row data:', {
