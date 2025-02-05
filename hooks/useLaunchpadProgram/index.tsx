@@ -4,7 +4,9 @@
 import { useWallet } from '@solana/wallet-adapter-react'
 import { PublicKey, SystemProgram, Connection } from '@solana/web3.js'
 import { constants } from '@/lib/constants'
-const HELIUS_RPC = `https://mainnet.helius-rpc.com/?api-key=${process.env.NEXT_PUBLIC_HELIUS_RPC_KEY}`;
+const HELIUS_RPC = process.env.NEXT_PUBLIC_HELIUS_RPC_KEY 
+    ? `https://mainnet.helius-rpc.com/?api-key=${process.env.NEXT_PUBLIC_HELIUS_RPC_KEY}`
+    : 'https://api.mainnet-beta.solana.com'; // Fallback to public RPC
 import { getAssociatedTokenAddress } from '@solana/spl-token';
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
@@ -18,13 +20,13 @@ import { toast } from 'sonner';
 import { ListingAccount } from './types';
 
 export function useLaunchpadProgram() {
-    const connection = useMemo(() => 
-        new Connection(HELIUS_RPC, {
+    const connection = useMemo(() => {
+        console.log('Creating connection with RPC:', HELIUS_RPC); // Debug log
+        return new Connection(HELIUS_RPC, {
             commitment: 'confirmed',
             wsEndpoint: undefined // Helius doesn't support websockets on this endpoint
-        }),
-        []  // Empty dependency array since HELIUS_RPC won't change
-    );
+        });
+    }, []); // Empty dependency array since HELIUS_RPC won't change
 
     const { publicKey } = useWallet();
     const provider = useAnchorProvider(connection);
