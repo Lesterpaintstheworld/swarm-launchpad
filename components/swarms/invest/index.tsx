@@ -266,26 +266,25 @@ const SwarmInvestCard = ({
             });
 
             // Webhook notification
-            const swarmDetails = getSwarmUsingPoolId(pool);
-            if (swarmDetails) {
-                try {
-                    await fetch('https://nlr.app.n8n.cloud/webhook/buybot', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            swarmName: swarm?.name || 'Unknown Swarm',
-                            swarmId: swarm?.id || 'unknown',
-                            numberOfShares: numShares,
-                            pricePerShare: data.pricePerShare,
-                            totalCost: price,
-                            poolAddress: pool,
-                            timestamp: new Date().toISOString(),
-                            transactionSignature: result
-                        })
-                    });
-                } catch (webhookError) {
-                    console.debug('Webhook notification failed:', webhookError);
-                }
+            try {
+                await fetch('https://nlr.app.n8n.cloud/webhook/buybot', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        swarmName: swarm?.name || 'Unknown Swarm',
+                        swarmId: swarm?.id || 'unknown',
+                        numberOfShares: numShares,
+                        pricePerShare: data.pricePerShare,
+                        totalCost: price,
+                        poolAddress: pool,
+                        timestamp: new Date().toISOString(),
+                        transactionSignature: result
+                    })
+                });
+                console.log('Buy notification sent successfully');
+            } catch (webhookError) {
+                console.error('Failed to send buy notification:', webhookError);
+                // Don't throw here - we still want to complete the transaction flow
             }
 
             setNumShares(0);
