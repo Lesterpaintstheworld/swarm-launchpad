@@ -24,7 +24,7 @@ const data = {
 }
 
 const SellPositionModalDisconnected = ({ isModalOpen, closeModal, swarmId }: SellPositionProps) => {
-    const [swarmID, setSwarmID] = useState<string>(swarmId || 'digitalkin-partner-id');
+    const [swarmID, setSwarmID] = useState<string>(swarmId || 'kinos');
     const [numShares, setNumShares] = useState<string>('');
     const [pricePerShare, setPricePerShare] = useState<number>(0);
     const [token, setToken] = useState<Token>();

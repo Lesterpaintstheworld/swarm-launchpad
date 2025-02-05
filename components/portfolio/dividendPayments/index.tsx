@@ -44,7 +44,7 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
             if (xForgeOwnership > 0) {
                 data.push({
                     id: '1',
-                    swarm_id: 'forge-partner-id',
+                    swarm_id: 'xforge',
                     amount: Math.floor(160000 * 0.90 * xForgeOwnership),
                     ubcAmount: Math.floor(160000 * 0.10 * xForgeOwnership),
                     timestamp: now.toISOString(),
@@ -56,7 +56,7 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
             if (kinOSOwnership > 0) {
                 data.push({
                     id: '2',
-                    swarm_id: 'kinos-partner-id',
+                    swarm_id: 'kinos',
                     amount: Math.floor(46000 * 0.90 * kinOSOwnership),
                     ubcAmount: Math.floor(46000 * 0.10 * kinOSOwnership),
                     timestamp: now.toISOString(),
@@ -68,7 +68,7 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
             if (kinKongOwnership > 0) {
                 data.push({
                     id: '3',
-                    swarm_id: 'eb76ae17-b9eb-476d-b272-4bde2d85c808',
+                    swarm_id: 'kinkong',
                     amount: Math.floor(12000 * 0.90 * kinKongOwnership),
                     ubcAmount: Math.floor(12000 * 0.10 * kinKongOwnership),
                     timestamp: now.toISOString(),

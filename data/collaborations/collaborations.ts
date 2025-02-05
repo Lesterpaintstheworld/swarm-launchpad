@@ -23,12 +23,12 @@ export const collaborations: Collaboration[] = [
   {
     id: 'collab-1',
     providerSwarm: {
-      id: 'xforge-partner-id',
+      id: 'xforge',
       name: 'XForge',
       image: '/swarms/xforge.jpg'
     },
     clientSwarm: {
-      id: 'logicatlas-id',
+      id: 'logicatlas',
       name: 'LogicAtlas',
       image: '/swarms/logicatlas.jpg'
     },

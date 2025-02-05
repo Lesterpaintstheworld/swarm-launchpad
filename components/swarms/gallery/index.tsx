@@ -45,7 +45,7 @@ export const SwarmGallery = ({ gallery, swarmName, className }: SwarmGalleryProp
                     id="player" 
                     width="640" 
                     height="390"
-                    src={`${item.content}?enablejsapi=1&origin=https://localhost:3000/invest/digitalkin-partner-id.com`}
+                    src={`${item.content}?enablejsapi=1&origin=https://localhost:3000/invest/kinos`}
                 ></iframe>
             } else {
                 content = item.content;

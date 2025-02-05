@@ -26,7 +26,7 @@ const SellPositionModal = ({ isModalOpen, closeModal, swarmId }: SellPositionPro
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { publicKey } = useWallet();
 
-    const [swarmID, setSwarmID] = useState<string>(swarmId || 'digitalkin-partner-id');
+    const [swarmID, setSwarmID] = useState<string>(swarmId || 'kinos');
     const [numShares, setNumShares] = useState<string>('');
     const [pricePerShare, setPricePerShare] = useState<number>(0);
     const [token, setToken] = useState<Token>();
