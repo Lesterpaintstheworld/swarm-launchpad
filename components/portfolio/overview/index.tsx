@@ -1,5 +1,36 @@
 'use client'
 
+const swarmCache: Record<string, any> = {};
+let pendingRequests: Record<string, Promise<any>> = {};
+
+const fetchSwarmWithCache = async (swarmId: string) => {
+  // Return cached data if available
+  if (swarmCache[swarmId]) {
+    return swarmCache[swarmId];
+  }
+
+  // Return existing promise if request is pending
+  if (pendingRequests[swarmId]) {
+    return pendingRequests[swarmId];
+  }
+
+  // Create new request
+  pendingRequests[swarmId] = fetch(`/api/swarms/${swarmId}`)
+    .then(async (response) => {
+      if (!response.ok) throw new Error('Failed to fetch swarm');
+      const data = await response.json();
+      swarmCache[swarmId] = data;
+      delete pendingRequests[swarmId];
+      return data;
+    })
+    .catch((error) => {
+      delete pendingRequests[swarmId];
+      throw error;
+    });
+
+  return pendingRequests[swarmId];
+};
+
 interface PoolAccount {
     totalShares: {
         toNumber: () => number;
@@ -59,14 +90,11 @@ interface PortfolioOverviewProps {
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
 
 const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) => {
-    const [totalValueInCompute, setTotalValueInCompute] = useState(0);
     const [chartData, setChartData] = useState<InvestmentDataItem[]>([]);
     const { program } = useLaunchpadProgram();
     const typedProgram = program as unknown as {
         account: ProgramAccounts;
     };
-
-    // Use useEffect instead of useMemo for the data fetching
     useEffect(() => {
         let isMounted = true;
 
@@ -79,8 +107,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
             try {
                 const values = await Promise.all(investments.map(async (investment) => {
                     try {
-                        const swarmResponse = await fetch(`/api/swarms/${investment.swarm_id}`);
-                        const swarm = await swarmResponse.json();
+                        const swarm = await fetchSwarmWithCache(investment.swarm_id);
                         if (!swarm?.pool) return null;
                         
                         const poolPubkey = new PublicKey(swarm.pool);
@@ -95,12 +122,13 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
                         const sharePrice = Math.round(base * 100) / 100;
                         
                         const value = Math.round(investment.number_of_shares * sharePrice);
+                        const totalValue = values?.reduce((acc, item) => acc + (item?.value || 0), 0) || 0;
 
                         return {
                             name: swarm.name,
                             value: value,
                             valueInCompute: value,
-                            percentage: ((value / totalValueInCompute * 100) || 0).toFixed(1)
+                            percentage: ((value / totalValue * 100) || 0).toFixed(1)
                         };
                     } catch (error) {
                         console.error(`Error calculating value for swarm ${investment.swarm_id}:`, error);
