@@ -171,6 +171,8 @@ export default function Portfolio() {
             return;
         }
 
+        // Destructure all needed dependencies
+        const { poolIds, program, publicKey, swarmData } = deps;
         const { account: { shareholder, pool }, programId } = program;
 
         async function fetchPositions() {
