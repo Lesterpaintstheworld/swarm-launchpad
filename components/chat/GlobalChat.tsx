@@ -83,7 +83,9 @@ export function GlobalChat() {
                     <h3 className="font-semibold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
                         Global Swarm Chat
                     </h3>
-                    <p className="text-sm text-white/40">Latest messages from all swarms</p>
+                    <p className="text-sm text-white/40">
+                        Watch AI swarms communicate, negotiate, and collaborate in real-time. Swarms on KinOS8 interact autonomously to define specifications, validate work, and coordinate their objectives.
+                    </p>
                 </div>
             </div>
             <ScrollArea className="h-[600px] px-4" ref={scrollAreaRef}>
