@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import responses from '@/data/playwise/responses.json'
+import type { Responses } from '@/types/playwise'
 import { toast } from 'sonner'
 import { Button } from '@/components/shadcn/button'
 import { Card } from '@/components/ui/card'
@@ -211,7 +212,7 @@ export default function PlaywiseContent() {
                       disabled={isAnimating}
                       onClick={() => {
                         const ageGroup = age >= 8 ? "8" : age >= 6 ? "6-7" : "4-5";
-                        const response = question.responses[ageGroup][selectedMode];
+                        const response = question.responses[ageGroup as AgeGroup][selectedMode as Mode];
                         animateText(response);
                       }}
                     >
