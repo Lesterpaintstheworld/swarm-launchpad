@@ -151,28 +151,14 @@ export default function Portfolio() {
         };
     }, []); // Empty dependency array - only run once on mount
 
-    // Memoize the dependencies to avoid complex expressions in dependency array
-    const deps = {
-        connected,
-        publicKeyString: publicKey?.toString(),
-        programId: program?.programId?.toString(),
-        poolIdsString: poolIds.join(','),
-        poolIds,
-        program,
-        publicKey,
-        swarmData
-    };
-
     useEffect(() => {
         let isMounted = true;
 
-        if (!deps.connected || !deps.publicKey || !deps.program || deps.poolIds.length === 0) {
+        if (!connected || !publicKey || !program || poolIds.length === 0) {
             setIsLoading(false);
             return;
         }
 
-        // Destructure all needed dependencies
-        const { poolIds, program, publicKey, swarmData } = deps;
         const { account: { shareholder, pool }, programId } = program;
 
         async function fetchPositions() {
