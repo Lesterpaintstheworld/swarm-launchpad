@@ -102,6 +102,14 @@ export default function StumpedContent() {
               Try editing the text on the left and click &quot;Read Speech&quot; to hear it!
             </DialogDescription>
           </DialogHeader>
+          <div className="flex justify-end mt-4">
+            <Button 
+              variant="destructive" 
+              onClick={() => setShowIntro(false)}
+            >
+              I&apos;m ready to get STUMPED
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
       {/* Left side - Speech */}
