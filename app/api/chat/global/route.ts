@@ -103,7 +103,7 @@ export async function GET() {
                 content: record.fields.content,
                 timestamp: record.fields.timestamp
             };
-        }).filter(msg => msg !== null);
+        }).filter((msg: any) => msg !== null);
 
         return NextResponse.json(messages);
 

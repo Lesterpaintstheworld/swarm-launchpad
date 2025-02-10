@@ -159,6 +159,7 @@ export default function Portfolio() {
             return;
         }
 
+        // Destructure needed dependencies
         const { account: { shareholder, pool }, programId } = program;
 
         async function fetchPositions() {
@@ -260,7 +261,7 @@ export default function Portfolio() {
             isMounted = false;
             clearInterval(refreshInterval);
         };
-    }, [deps]);
+    }, [connected, poolIds, program, publicKey, swarmData]);
 
     if (!connected) return (
         <main className="container view">
