@@ -92,7 +92,7 @@ export default function StumpedContent() {
   }
 
   return (
-    <>
+    <div className="relative min-h-screen flex flex-col">
       <Dialog open={showIntro} onOpenChange={setShowIntro}>
         <DialogContent>
           <DialogHeader>
@@ -112,8 +112,9 @@ export default function StumpedContent() {
           </div>
         </DialogContent>
       </Dialog>
-      {/* Left side - Speech */}
-      <div className="w-1/2 p-8 bg-background border-r">
+      <div className="flex flex-1">
+        {/* Left side - Speech */}
+        <div className="w-1/2 p-8 bg-background border-r">
         {/* Microphone Section */}
         <div className="mb-6 p-4 border rounded-lg bg-card">
           <h3 className="text-lg font-medium mb-2">Microphone Input</h3>
@@ -153,9 +154,9 @@ export default function StumpedContent() {
         >
           Read Speech
         </Button>
-      </div>
+        </div>
 
-      {/* Right side - Video */}
+        {/* Right side - Video */}
       <div className="w-1/2 bg-muted flex items-center justify-center">
         <video 
           autoPlay 
@@ -168,6 +169,11 @@ export default function StumpedContent() {
           Your browser does not support the video tag.
         </video>
       </div>
-    </>
+
+      {/* Footer */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 text-center text-sm text-muted-foreground bg-background/80 backdrop-blur-sm">
+        Built by XForge
+      </div>
+    </div>
   )
 }
