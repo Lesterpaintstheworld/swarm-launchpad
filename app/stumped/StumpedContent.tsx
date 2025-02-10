@@ -53,9 +53,18 @@ export default function StumpedContent() {
         </Button>
       </div>
 
-      {/* Right side - Face */}
-      <div className="w-1/2 p-8 bg-muted flex items-center justify-center">
-        <div className="text-9xl">😊</div>
+      {/* Right side - Video */}
+      <div className="w-1/2 bg-muted flex items-center justify-center">
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          className="w-full h-full object-cover"
+        >
+          <source src="/stumped/loop.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </div>
     </>
   )
