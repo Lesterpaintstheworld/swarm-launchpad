@@ -212,7 +212,8 @@ export default function PlaywiseContent() {
                       disabled={isAnimating}
                       onClick={() => {
                         const ageGroup = age >= 8 ? "8" : age >= 6 ? "6-7" : "4-5";
-                        const response = question.responses[ageGroup as AgeGroup][selectedMode as Mode];
+                        const responses = question.responses[ageGroup as AgeGroup];
+                        const response = responses[selectedMode as Mode];
                         animateText(response);
                       }}
                     >

@@ -14,8 +14,7 @@ const nextConfig = {
       use: 'raw-loader'
     })
     return config
-  },
-  json: true
+  }
 }
 
 export default nextConfig;
