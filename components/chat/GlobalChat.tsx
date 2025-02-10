@@ -5,13 +5,16 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/avatar"
 import { ScrollArea } from "@/components/shadcn/scroll-area";
 import { formatDistanceToNow } from 'date-fns';
 import { cn } from "@/lib/utils";
+import { Markdown } from "@/components/ui/markdown";
 
 interface ChatMessage {
     id: string;
     swarmId: string;
     swarmName: string;
     swarmImage: string;
+    receiverId?: string;
     receiverName?: string;
+    receiverImage?: string;
     content: string;
     timestamp: string;
 }
@@ -54,26 +57,50 @@ export function GlobalChat() {
                             "flex items-start gap-3",
                             message.swarmId === 'system' && "opacity-75"
                         )}>
-                            <Avatar className={cn(
-                                "h-8 w-8",
-                                message.swarmId === 'system' && "bg-blue-500/10"
-                            )}>
-                                <AvatarImage 
-                                    src={message.swarmImage} 
-                                    alt={message.swarmName}
-                                    onError={(e) => {
-                                        const img = e.target as HTMLImageElement;
-                                        img.src = '/images/default-avatar.png';
-                                    }}
-                                />
-                                <AvatarFallback>
-                                    {message.swarmName.split(' ')
-                                        .map(word => word[0])
-                                        .join('')
-                                        .substring(0, 2)
-                                        .toUpperCase()}
-                                </AvatarFallback>
-                            </Avatar>
+                            <div className="flex items-center gap-2">
+                                <Avatar className={cn(
+                                    "h-8 w-8",
+                                    message.swarmId === 'system' && "bg-blue-500/10"
+                                )}>
+                                    <AvatarImage 
+                                        src={message.swarmImage} 
+                                        alt={message.swarmName}
+                                        onError={(e) => {
+                                            const img = e.target as HTMLImageElement;
+                                            img.src = '/images/default-avatar.png';
+                                        }}
+                                    />
+                                    <AvatarFallback>
+                                        {message.swarmName.split(' ')
+                                            .map(word => word[0])
+                                            .join('')
+                                            .substring(0, 2)
+                                            .toUpperCase()}
+                                    </AvatarFallback>
+                                </Avatar>
+                                {message.receiverName && (
+                                    <>
+                                        <span className="text-muted-foreground">→</span>
+                                        <Avatar className="h-8 w-8">
+                                            <AvatarImage 
+                                                src={message.receiverImage} 
+                                                alt={message.receiverName}
+                                                onError={(e) => {
+                                                    const img = e.target as HTMLImageElement;
+                                                    img.src = '/images/default-avatar.png';
+                                                }}
+                                            />
+                                            <AvatarFallback>
+                                                {message.receiverName.split(' ')
+                                                    .map(word => word[0])
+                                                    .join('')
+                                                    .substring(0, 2)
+                                                    .toUpperCase()}
+                                            </AvatarFallback>
+                                        </Avatar>
+                                    </>
+                                )}
+                            </div>
                             <div className="flex-1">
                                 <div className="flex items-center gap-2">
                                     <p className={cn(
@@ -94,7 +121,9 @@ export function GlobalChat() {
                                         {formatDistanceToNow(new Date(message.timestamp), { addSuffix: true })}
                                     </span>
                                 </div>
-                                <p className="text-sm text-muted-foreground">{message.content}</p>
+                                <div className="text-sm text-muted-foreground whitespace-pre-wrap">
+                                    <Markdown markdown={message.content} />
+                                </div>
                             </div>
                         </div>
                     ))}

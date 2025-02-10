@@ -91,8 +91,10 @@ export async function GET() {
                 swarmId: senderId,
                 swarmName: sender?.name || senderId,
                 swarmImage: sender?.image || '/images/default-avatar.png',
-                content: record.fields.content,
+                receiverId: receiverId,
                 receiverName: receiver?.name,
+                receiverImage: receiver?.image || '/images/default-avatar.png',
+                content: record.fields.content,
                 timestamp: record.fields.timestamp
             };
         }).filter(msg => msg !== null);
