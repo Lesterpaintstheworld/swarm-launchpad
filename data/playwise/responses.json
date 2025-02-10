@@ -79,6 +79,46 @@
           "bedtime": "Tonight, remember that even the simplest things, like raindrops, can create something as magnificent as a rainbow. It's a reminder that science and magic sometimes look the same, and that beauty can be found in understanding how things work. Dream of colors and light... ✨"
         }
       }
+    },
+    "bedtime_story": {
+      "question": "Tell me a bedtime story 📚",
+      "responses": {
+        "4-5": {
+          "playful": "Once upon a time, there was a tiny star named Twinkle who loved to dance in the night sky! Every evening, Twinkle would spin and sparkle, making all the other stars giggle. One night, Twinkle noticed a sad little cloud who couldn't dance. 'Don't worry,' said Twinkle, 'I'll teach you!' Together, they created the most beautiful sky ballet anyone had ever seen, with sparkling star-light and fluffy cloud-twirls. From that day on, everyone looked forward to their nightly performance! ✨",
+          "learning": "Let me tell you about Luna, the curious little moonbeam! Luna wondered why some animals only came out at night. She visited owls who taught her about their super-seeing eyes, met bats who showed her how they sing to find their way, and discovered fireflies who taught her their special light-up dance. Luna learned that nighttime is just as amazing as daytime - just different! 🌙",
+          "bedtime": "In a cozy tree hollow lived a sleepy little owl named Hoot. Every night, before going to sleep, Hoot would wrap himself in a blanket of soft moonlight and count the twinkling stars. 'One sleepy star, two sleepy stars...' And before he knew it, Hoot would drift off into sweet dreams, just like you will too... 💫"
+        },
+        "6-7": {
+          "playful": "Deep in the Whispering Woods lived a young dragon named Spark who couldn't breathe fire - instead, he breathed beautiful rainbow bubbles! At first, the other dragons laughed, but when the forest needed cheering up during a rainy week, Spark's bubbles filled the trees with floating rainbows and brought smiles to everyone. Sometimes being different is the most magical thing of all! 🐲",
+          "learning": "In the great Library of Imagination, books would come alive at night! One evening, a shy dictionary named Webster met an adventurous storybook called Tales. Together, they discovered that while Webster knew all the words, Tales knew how to turn them into exciting adventures. They became best friends, teaching each other that knowledge and imagination work best together! 📚",
+          "bedtime": "High above the sleeping city lived Cloud, the guardian of dreams. Each night, Cloud would gather stardust and sprinkle it over children's windows, giving them the most wonderful dreams. Tonight, Cloud has a special handful of golden stardust just for you, ready to fill your sleep with magical adventures... 🌟"
+        },
+        "8": {
+          "playful": "In the hidden valley of Pixel Peak lived a young video game character named Glitch. Unlike other characters who could only follow their programming, Glitch could jump between different games! One day, he discovered that a virus was threatening to delete all the games. Using his unique ability, Glitch brought together characters from every game to save their digital world. They learned that sometimes the best solutions come from thinking outside the screen! 🎮",
+          "learning": "On the International Space Station, a small plant named Pioneer grew in a special science garden. Pioneer was part of an experiment to see how plants grow in space, but she became much more - she taught the astronauts about adaptation, resilience, and how life finds a way to thrive even in the most unexpected places. Through Pioneer's journey, we learned that every scientific discovery has a story to tell! 🚀",
+          "bedtime": "In the Constellation Commons, where stars gather to share stories of the day, lived a young wishing star named Nova. Each night, Nova would listen to tales from shooting stars about the wishes they'd heard, from comets about their travels across the galaxy, and from the wise old moon about watching over the sleeping Earth. Tonight, Nova has chosen you to share these cosmic dreams with... ⭐"
+        }
+      }
+    },
+    "adventure_story": {
+      "question": "Tell me an adventure story 🗺️",
+      "responses": {
+        "4-5": {
+          "playful": "Meet Max the Brave Little Mouse! One day, Max found a mysterious map in his cheese wheel. Following tiny paw prints, he discovered a secret playground under the garden! There were slide-stems, swing-petals, and a merry-go-round made of dandelion fluff. Max invited all the garden creatures, and now it's the happiest spot in the whole backyard! 🐭",
+          "learning": "Sarah the Explorer Snail had a big dream - to reach the top of Flower Mountain! Everyone said snails can't climb that high, but Sarah took one tiny step at a time. She met helpful ants who showed her safe paths, a wise butterfly who taught her about wind directions, and finally made it to the top! Sarah learned that slow and steady really does win the race! 🐌",
+          "bedtime": "In the quiet corner of Garden Grove lived a sleepy caterpillar named Pip. Every night, Pip dreamed of flying with the butterflies. Little did Pip know that soon, a magical transformation would make those dreams come true. As you drift off to sleep, imagine what wonderful changes tomorrow might bring... 🦋"
+        },
+        "6-7": {
+          "playful": "Captain Kit, the brave cardboard box astronaut, was ready for their greatest mission yet - exploring the mysterious Planet Playroom! With their trusty sidekick Robot (who looked suspiciously like a recycled juice box), they discovered floating sock asteroids, a alien civilization living in the toy chest, and even found the long-lost left shoes that had been disappearing through a space-time portal under the bed! 🚀",
+          "learning": "Join the Backyard Science Squad! When Jamie and their pet ant farm noticed all the neighborhood plants looking sad, they became nature detectives. Using magnifying glasses and weather charts, they discovered that the garden needed more butterfly visitors to help with pollination. The Squad created a butterfly garden, and soon the whole neighborhood was blooming with life! 🔍",
+          "bedtime": "As the sun set on Treehouse Island, the Secret Dreamers Club was just beginning their nightly adventure. With magic dream-catchers in hand, they collected shooting star wishes, bottled moonbeam giggles, and painted the northern lights with stardust. Tonight, they've saved a special dream just for you... 💫"
+        },
+        "8": {
+          "playful": "Welcome to Game Master Gabi's Ultimate Quest! When Gabi discovered that video game characters were sneaking into the real world at night, she became their guide. Together with Sir Pixel-a-lot, Princess Debug, and the Glitch Guardians, they go on missions to keep both worlds in harmony while having epic adventures. Tonight's quest: helping a lost power-up find its way home through a maze of wifi signals! 🎮",
+          "learning": "The Time-Traveling Science Club found more than they bargained for when their recycled-parts time machine actually worked! Led by young inventor Mai, they've visited ancient civilizations to learn about early astronomy, jumped to the future to see solar-powered cities, and even met their own grandparents as kids. Every trip teaches them that curiosity and creativity can change the world! ⚡",
+          "bedtime": "In the dream dimension of Aurora Academy, where imagination and reality merge, students learn to craft their own adventures. Tonight's lesson is about peaceful quests - how the greatest journeys often happen in our minds, and the most valuable treasures are the dreams we carry into tomorrow. As you close your eyes, what adventure will you dream up? 🌠"
+        }
+      }
     }
   }
 }
