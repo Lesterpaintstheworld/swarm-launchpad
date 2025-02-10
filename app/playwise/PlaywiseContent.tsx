@@ -63,7 +63,7 @@ export default function PlaywiseContent() {
   }
 
   return (
-    <div className="flex-1 p-8 bg-gradient-to-b from-background via-background to-accent-1/20">
+    <div className="flex-1 p-8 bg-gradient-to-b from-background via-background/95 to-purple-900/10 animate-gradient-shift">
       {/* Header */}
       <div className="max-w-4xl mx-auto mb-12">
         <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient">
@@ -79,7 +79,13 @@ export default function PlaywiseContent() {
         {/* Controls Group */}
         <div className="flex gap-4 mb-8">
           {/* Age Selection */}
-          <Card className="p-4 rounded-2xl border-2 border-purple-500/20 flex-1">
+          <Card className={cn(
+            "p-4 rounded-2xl flex-1",
+            "bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-pink-500/10",
+            "border-2 border-purple-500/20 hover:border-purple-500/30",
+            "transition-all duration-500 hover:shadow-[0_0_15px_rgba(168,85,247,0.15)]",
+            "backdrop-blur-sm"
+          )}>
             <h2 className="text-lg font-bold mb-4">Select Child's Age</h2>
             <div className="px-2">
               <Slider
@@ -98,7 +104,13 @@ export default function PlaywiseContent() {
           </Card>
 
           {/* Topic Selection */}
-          <Card className="p-4 rounded-2xl border-2 border-purple-500/20 flex-1">
+          <Card className={cn(
+            "p-4 rounded-2xl flex-1",
+            "bg-gradient-to-br from-green-500/10 via-blue-500/5 to-purple-500/10",
+            "border-2 border-purple-500/20 hover:border-purple-500/30",
+            "transition-all duration-500 hover:shadow-[0_0_15px_rgba(168,85,247,0.15)]",
+            "backdrop-blur-sm"
+          )}>
             <h2 className="text-lg font-bold mb-4">Choose a Topic</h2>
             <div className="flex gap-2">
               {topics.map(topic => (
@@ -107,8 +119,14 @@ export default function PlaywiseContent() {
                   onClick={() => setSelectedTopic(topic.id)}
                   className={cn(
                     "flex-1 text-sm py-2 rounded-xl",
-                    "transition-all duration-300 hover:scale-105",
-                    selectedTopic === topic.id && topic.color
+                    "transition-all duration-300",
+                    "hover:scale-105 hover:shadow-lg",
+                    "bg-gradient-to-r",
+                    selectedTopic === topic.id ? [
+                      topic.id === 'math' && "from-blue-500/20 to-blue-600/20 text-blue-400",
+                      topic.id === 'science' && "from-green-500/20 to-green-600/20 text-green-400",
+                      topic.id === 'stories' && "from-purple-500/20 to-purple-600/20 text-purple-400",
+                    ] : "hover:bg-white/5"
                   )}
                 >
                   <span>{topic.icon}</span>
@@ -119,7 +137,13 @@ export default function PlaywiseContent() {
           </Card>
 
           {/* Mode Selection */}
-          <Card className="p-4 rounded-2xl border-2 border-purple-500/20 flex-1">
+          <Card className={cn(
+            "p-4 rounded-2xl flex-1",
+            "bg-gradient-to-br from-yellow-500/10 via-purple-500/5 to-blue-500/10",
+            "border-2 border-purple-500/20 hover:border-purple-500/30",
+            "transition-all duration-500 hover:shadow-[0_0_15px_rgba(168,85,247,0.15)]",
+            "backdrop-blur-sm"
+          )}>
             <h2 className="text-lg font-bold mb-4">Learning Mode</h2>
             <div className="flex gap-2">
                 {modes.map(mode => (
@@ -148,8 +172,11 @@ export default function PlaywiseContent() {
                     variant="secondary"
                     className={cn(
                       "flex-1 justify-start text-left p-4 text-lg rounded-xl",
-                      "transition-all duration-300 hover:scale-102",
-                      "border-2 border-purple-500/20 hover:border-purple-500/40",
+                      "transition-all duration-300",
+                      "bg-gradient-to-r from-purple-500/5 via-blue-500/5 to-purple-500/5",
+                      "border-2 border-purple-500/20",
+                      "hover:border-purple-500/40 hover:shadow-[0_0_20px_rgba(168,85,247,0.2)]",
+                      "hover:scale-[1.02] hover:bg-gradient-to-r hover:from-purple-500/10 hover:via-blue-500/10 hover:to-purple-500/10",
                       isAnimating && "opacity-50 cursor-not-allowed"
                     )}
                     disabled={isAnimating}
@@ -166,9 +193,11 @@ export default function PlaywiseContent() {
 
           {/* Animated Answer Display */}
           <Card className={cn(
-            "p-8 transition-all duration-300",
+            "p-8 transition-all duration-500",
+            "bg-gradient-to-br from-purple-500/10 via-blue-500/5 to-purple-500/10",
             "border-2 border-purple-500/20 hover:border-purple-500/30",
-            "rounded-2xl shadow-lg",
+            "rounded-2xl shadow-lg backdrop-blur-sm",
+            "hover:shadow-[0_0_30px_rgba(168,85,247,0.15)]",
             animatedText ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           )}>
             <p className="text-2xl font-medium leading-relaxed min-h-[100px]">
