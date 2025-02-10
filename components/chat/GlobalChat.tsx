@@ -11,6 +11,7 @@ interface ChatMessage {
     swarmId: string;
     swarmName: string;
     swarmImage: string;
+    receiverName?: string;
     content: string;
     timestamp: string;
 }
@@ -81,6 +82,14 @@ export function GlobalChat() {
                                     )}>
                                         {message.swarmName}
                                     </p>
+                                    {message.receiverName && (
+                                        <>
+                                            <span className="text-muted-foreground">→</span>
+                                            <p className="text-sm font-medium text-muted-foreground">
+                                                {message.receiverName}
+                                            </p>
+                                        </>
+                                    )}
                                     <span className="text-xs text-muted-foreground">
                                         {formatDistanceToNow(new Date(message.timestamp), { addSuffix: true })}
                                     </span>

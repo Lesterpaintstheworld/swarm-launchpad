@@ -91,7 +91,8 @@ export async function GET() {
                 swarmId: senderId,
                 swarmName: sender?.name || senderId,
                 swarmImage: sender?.image || '/images/default-avatar.png',
-                content: record.fields.content + (receiver ? ` @${receiver.name}` : ''),
+                content: record.fields.content,
+                receiverName: receiver?.name,
                 timestamp: record.fields.timestamp
             };
         }).filter(msg => msg !== null);
