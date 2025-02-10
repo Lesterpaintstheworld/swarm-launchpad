@@ -3,10 +3,12 @@
 import { useState, useEffect } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/shadcn/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/shadcn/dialog'
 import speechContent from './speech.md'
 
 export default function StumpedContent() {
   const [speech, setSpeech] = useState<string>('')
+  const [showIntro, setShowIntro] = useState(true)
 
   useEffect(() => {
     setSpeech(speechContent)
@@ -24,6 +26,17 @@ export default function StumpedContent() {
 
   return (
     <>
+      <Dialog open={showIntro} onOpenChange={setShowIntro}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Welcome to Toast Speech!</DialogTitle>
+            <DialogDescription className="pt-2">
+              This is a fun tool that lets you type or paste any text and have it read aloud using your browser&apos;s speech synthesis.
+              Try editing the text on the left and click &quot;Read Speech&quot; to hear it!
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
       {/* Left side - Speech */}
       <div className="w-1/2 p-8 bg-background border-r">
         <h2 className="text-2xl font-bold mb-4">Toast Speech</h2>
