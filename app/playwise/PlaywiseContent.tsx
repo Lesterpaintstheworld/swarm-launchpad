@@ -23,8 +23,8 @@ interface Mode {
 }
 
 const topics: Topic[] = [
-  { id: 'math', name: 'Math', icon: '🔢', color: 'bg-blue-500/10 text-blue-500' },
-  { id: 'science', name: 'Science', icon: '🔬', color: 'bg-green-500/10 text-green-500' },
+  { id: 'feelings', name: 'Feelings', icon: '🫂', color: 'bg-pink-500/10 text-pink-500' },
+  { id: 'science', name: 'Science', icon: '🔬', color: 'bg-blue-500/10 text-blue-500' },
   { id: 'stories', name: 'Stories', icon: '📚', color: 'bg-purple-500/10 text-purple-500' }
 ]
 
@@ -123,8 +123,8 @@ export default function PlaywiseContent() {
                     "hover:scale-105 hover:shadow-lg",
                     "bg-gradient-to-r",
                     selectedTopic === topic.id ? [
-                      topic.id === 'math' && "from-blue-500/20 to-blue-600/20 text-blue-400",
-                      topic.id === 'science' && "from-green-500/20 to-green-600/20 text-green-400",
+                      topic.id === 'feelings' && "from-pink-500/20 to-pink-600/20 text-pink-400",
+                      topic.id === 'science' && "from-blue-500/20 to-blue-600/20 text-blue-400",
                       topic.id === 'stories' && "from-purple-500/20 to-purple-600/20 text-purple-400",
                     ] : "hover:bg-white/5"
                   )}
