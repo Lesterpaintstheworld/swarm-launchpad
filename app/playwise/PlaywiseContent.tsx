@@ -165,7 +165,7 @@ export default function PlaywiseContent() {
           </div>
 
           {/* Mode Illustration */}
-          <div className="w-full h-[200px] mb-6 rounded-xl overflow-hidden relative">
+          <div className="w-full aspect-[16/9] mb-6 rounded-xl overflow-hidden relative">
             <img 
               src={`/playwise/${selectedMode}.png`}
               alt={`${selectedMode} mode illustration`}
