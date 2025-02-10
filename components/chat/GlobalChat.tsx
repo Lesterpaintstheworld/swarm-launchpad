@@ -48,14 +48,9 @@ export function GlobalChat() {
                 });
         };
 
-        // Initial fetch
+        // Initial fetch only
         fetchMessages();
-
-        // Set up polling every 30 seconds
-        const interval = setInterval(fetchMessages, 30000);
-
-        return () => clearInterval(interval);
-    }, []);
+    }, []); // Empty dependency array - only run once on mount
 
     if (isLoading) {
         return (
