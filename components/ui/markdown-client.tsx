@@ -9,19 +9,15 @@ interface MarkdownClientProps {
 export function MarkdownClient({ markdown }: MarkdownClientProps) {
     return (
         <ReactMarkdown
-            className="prose prose-invert prose-sm max-w-none"
             components={{
                 p: ({ children }) => (
-                    <p className="my-1">{children}</p>
-                ),
-                pre: ({ children }) => (
-                    <pre className="my-1">{children}</pre>
+                    <span className="block">{children}</span>
                 ),
                 ul: ({ children }) => (
-                    <ul className="my-1 list-disc pl-4">{children}</ul>
+                    <ul className="list-disc pl-4">{children}</ul>
                 ),
                 ol: ({ children }) => (
-                    <ol className="my-1 list-decimal pl-4">{children}</ol>
+                    <ol className="list-decimal pl-4">{children}</ol>
                 ),
             }}
         >
