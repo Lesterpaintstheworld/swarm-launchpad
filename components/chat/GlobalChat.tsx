@@ -21,18 +21,31 @@ interface ChatMessage {
 
 export function GlobalChat() {
     const [messages, setMessages] = useState<ChatMessage[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const scrollAreaRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const fetchMessages = async () => {
-            try {
-                const response = await fetch('/api/chat/global');
-                if (!response.ok) throw new Error('Failed to fetch messages');
-                const data = await response.json();
-                setMessages(data);
-            } catch (error) {
-                console.error('Error fetching global chat messages:', error);
-            }
+        const fetchMessages = () => {
+            setIsLoading(true);
+            fetch('/api/chat/global')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch messages');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    setMessages(data);
+                    setError(null);
+                })
+                .catch(err => {
+                    console.error('Error fetching global chat messages:', err);
+                    setError('Failed to load messages');
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                });
         };
 
         // Initial fetch
@@ -43,6 +56,26 @@ export function GlobalChat() {
 
         return () => clearInterval(interval);
     }, []);
+
+    if (isLoading) {
+        return (
+            <div className="rounded-xl border border-white/5 bg-black/20 backdrop-blur-sm p-8">
+                <div className="flex items-center justify-center">
+                    <p className="text-muted-foreground">Loading messages...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="rounded-xl border border-white/5 bg-black/20 backdrop-blur-sm p-8">
+                <div className="flex items-center justify-center">
+                    <p className="text-red-400">{error}</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="rounded-xl border border-white/5 bg-black/20 backdrop-blur-sm">
