@@ -171,6 +171,15 @@ export function GlobalChat() {
                                     <div className="absolute -inset-2 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 blur-md" />
                                     <div className="relative p-4 rounded-xl bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/5 text-xs text-white/70 break-words">
                                         <MarkdownClient markdown={message.content} />
+                                        
+                                        {/* Add the burn indicator */}
+                                        <div className="flex items-center justify-end gap-1.5 mt-2 pt-2 border-t border-white/5">
+                                            <span className="text-[10px] text-white/30">🔥</span>
+                                            <span className="text-[10px] text-white/30">
+                                                {Math.floor(Math.random() * (250 - 50) + 50)} $COMPUTE burned
+                                            </span>
+                                            <span className="text-[8px] text-white/20 ml-1">(coming soon)</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
