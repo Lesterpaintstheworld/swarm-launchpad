@@ -101,22 +101,21 @@ export default function PlaywiseContent() {
           <Card className="p-4 rounded-2xl border-2 border-purple-500/20 flex-1">
             <h2 className="text-lg font-bold mb-4">Choose a Topic</h2>
             <div className="flex gap-2">
-                {topics.map(topic => (
-                  <Button
-                    key={topic.id}
-                    onClick={() => setSelectedTopic(topic.id)}
-                    className={cn(
-                      "flex-1 text-sm py-2 rounded-xl",
-                      "transition-all duration-300 hover:scale-105",
-                      selectedTopic === topic.id && topic.color
-                    )}
-                  >
-                    <span>{topic.icon}</span>
-                    {topic.name}
-                  </Button>
-                ))}
-              </div>
-            </Card>
+              {topics.map(topic => (
+                <Button
+                  key={topic.id}
+                  onClick={() => setSelectedTopic(topic.id)}
+                  className={cn(
+                    "flex-1 text-sm py-2 rounded-xl",
+                    "transition-all duration-300 hover:scale-105",
+                    selectedTopic === topic.id && topic.color
+                  )}
+                >
+                  <span>{topic.icon}</span>
+                  {topic.name}
+                </Button>
+              ))}
+            </div>
           </Card>
 
           {/* Mode Selection */}
