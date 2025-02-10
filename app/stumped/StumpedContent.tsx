@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/shadcn/button'
 
 export default function StumpedContent() {
   const [speech, setSpeech] = useState<string>(`
