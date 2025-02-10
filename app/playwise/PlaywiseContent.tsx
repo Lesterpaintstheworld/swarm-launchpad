@@ -188,10 +188,12 @@ export default function PlaywiseContent() {
                       className={cn(
                         "flex-1 justify-start text-left p-4 text-lg rounded-xl",
                         "transition-all duration-300",
-                        "bg-gradient-to-r from-purple-500/5 via-blue-500/5 to-purple-500/5",
-                        "border-2 border-purple-500/20",
-                        "hover:border-purple-500/40 hover:shadow-[0_0_20px_rgba(168,85,247,0.2)]",
-                        "hover:scale-[1.02] hover:bg-gradient-to-r hover:from-purple-500/10 hover:via-blue-500/10 hover:to-purple-500/10",
+                        "bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-purple-500/20",
+                        "border-2 border-purple-500/30",
+                        "hover:border-purple-500/50 hover:shadow-[0_0_25px_rgba(168,85,247,0.3)]",
+                        "hover:scale-[1.02] hover:bg-gradient-to-r hover:from-purple-500/30 hover:via-blue-500/30 hover:to-purple-500/30",
+                        "text-white/90",
+                        "font-medium",
                         isAnimating && "opacity-50 cursor-not-allowed"
                       )}
                       disabled={isAnimating}
@@ -201,7 +203,10 @@ export default function PlaywiseContent() {
                         animateText(response);
                       }}
                     >
-                      {question.question}
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl opacity-90">{question.question.split(' ')[0]}</span>
+                        <span>{question.question.split(' ').slice(1).join(' ')}</span>
+                      </div>
                     </Button>
                   ))}
           </div>
