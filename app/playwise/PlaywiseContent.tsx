@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import responses from '@/data/playwise/responses.json'
 import { toast } from 'sonner'
 import { Button } from '@/components/shadcn/button'
 import { Card } from '@/components/ui/card'
@@ -120,23 +121,32 @@ export default function PlaywiseContent() {
             <Button 
               variant="secondary"
               className="justify-start text-left"
-              onClick={() => toast('Coming soon: AI responses adapted to age and mode!')}
+              onClick={() => {
+                const ageGroup = age >= 8 ? "8" : age >= 6 ? "6-7" : "4-5";
+                toast(responses.questions.sky.responses[ageGroup][selectedMode]);
+              }}
             >
-              Why is the sky blue? 🌤️
+              {responses.questions.sky.question}
             </Button>
             <Button
               variant="secondary" 
               className="justify-start text-left"
-              onClick={() => toast('Coming soon: AI responses adapted to age and mode!')}
+              onClick={() => {
+                const ageGroup = age >= 8 ? "8" : age >= 6 ? "6-7" : "4-5";
+                toast(responses.questions.plants.responses[ageGroup][selectedMode]);
+              }}
             >
-              How do plants grow? 🌱
+              {responses.questions.plants.question}
             </Button>
             <Button
               variant="secondary"
               className="justify-start text-left"
-              onClick={() => toast('Coming soon: AI responses adapted to age and mode!')}
+              onClick={() => {
+                const ageGroup = age >= 8 ? "8" : age >= 6 ? "6-7" : "4-5";
+                toast(responses.questions.rainbow.responses[ageGroup][selectedMode]);
+              }}
             >
-              What makes rainbows? 🌈
+              {responses.questions.rainbow.question}
             </Button>
           </div>
         </Card>

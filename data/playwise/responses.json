@@ -1,0 +1,64 @@
+{
+  "questions": {
+    "sky": {
+      "question": "Why is the sky blue? 🌤️",
+      "responses": {
+        "4-5": {
+          "playful": "The sky is like a big blue blanket made of tiny bits that love to play with sunlight! When the sun's rays come to play, these bits catch the blue light and throw it all around - that's why we see a beautiful blue sky! Isn't it magical? ✨",
+          "learning": "The sky looks blue because of something called light! The sun's light has many colors, and tiny parts in the air catch the blue color the most. That's what makes our sky look blue!",
+          "bedtime": "As the day gets sleepy, the beautiful blue sky watches over us like a cozy blanket. It's nature's way of giving us a big, gentle hug from above. Sweet dreams under our blue friend! 🌙"
+        },
+        "6-7": {
+          "playful": "Imagine throwing thousands of tiny blue bouncy balls in the air - that's kind of like what happens in our sky! Sunlight bounces off tiny particles in the air, and they love to bounce the blue color right to our eyes! Cool, right? 🎾",
+          "learning": "The sky is blue because of something called scattering. When sunlight travels through the air, tiny molecules scatter blue light more than other colors. This scattered blue light reaches our eyes from all directions!",
+          "bedtime": "Just like how your favorite blue blanket keeps you cozy, the sky wraps our whole world in a beautiful blue color. It's made by sunlight dancing with tiny particles in the air, creating a peaceful blue ceiling above us. 💫"
+        },
+        "8": {
+          "playful": "Let's play scientist! Imagine sunlight is like a rainbow paintball, and the air is full of tiny mirrors. These mirrors are really picky - they love to bounce the blue paint everywhere, making our whole sky look blue! 🎨",
+          "learning": "The sky appears blue due to a process called Rayleigh scattering. Air molecules scatter sunlight in all directions, but they scatter blue light more than other colors because blue light has a shorter wavelength. This scattered blue light is what we see as our blue sky!",
+          "bedtime": "As you rest beneath the sky's blue canvas, think about how amazing it is that tiny air molecules can turn sunlight into such a beautiful color. It's like nature's own nightlight, keeping watch over us until the stars come out to play. 🌟"
+        }
+      }
+    },
+    "plants": {
+      "question": "How do plants grow? 🌱",
+      "responses": {
+        "4-5": {
+          "playful": "Plants are like little superheroes! They drink water with their roots, eat sunshine with their leaves, and grow bigger and stronger every day! Just like you! 🦸‍♂️",
+          "learning": "Plants need three special things to grow: water, sunlight, and food from the soil. They use their roots to drink, and their leaves to catch sunshine!",
+          "bedtime": "Just like how you grow while you sleep, plants grow too! They rest at night and stretch towards the stars, dreaming of becoming big and strong. 🌙"
+        },
+        "6-7": {
+          "playful": "Plants are nature's magicians! They take invisible air, water, and sunshine, and POOF! - turn them into leaves, flowers, and yummy fruits! How cool is that? 🪄",
+          "learning": "Plants grow through a process called photosynthesis. They use sunlight, water, and air to make their own food. Their roots take water from the soil, and their leaves catch sunlight and air to help them grow!",
+          "bedtime": "As you drift off to sleep, imagine all the plants in the world quietly growing, reaching up towards the moon, making our world a little greener every day. Sweet dreams! 🌿"
+        },
+        "8": {
+          "playful": "Ready for some plant magic? Plants are like tiny factories! They take sunshine, water, and air, mix them all together in their leaves, and CREATE their own food! No kitchen needed! 🏭",
+          "learning": "Plants grow through photosynthesis - they combine water (H2O) from their roots, carbon dioxide (CO2) from the air, and energy from sunlight to make glucose (sugar) and oxygen. The glucose helps them grow, and they release the oxygen for us to breathe!",
+          "bedtime": "Tonight, while you're sleeping, millions of plants around the world are quietly working their magic, turning tomorrow's sunshine into new leaves and flowers. They're nature's patient gardeners, growing dreams into reality. 🌺"
+        }
+      }
+    },
+    "rainbow": {
+      "question": "What makes rainbows? 🌈",
+      "responses": {
+        "4-5": {
+          "playful": "Rainbows are nature's happy surprise! When the sun plays peek-a-boo with raindrops, they work together to paint beautiful colors in the sky! It's like magic! ✨",
+          "learning": "Rainbows happen when sunlight meets raindrops. The raindrops split the sunlight into pretty colors, just like a prism!",
+          "bedtime": "When the sun and rain work together, they paint sweet rainbow dreams in the sky. Each color waves goodnight as you drift off to sleep... 😴"
+        },
+        "6-7": {
+          "playful": "Imagine each raindrop is a tiny disco ball! When sunlight hits these natural disco balls, they split the light into a fantastic color show in the sky! Let's dance! 💃",
+          "learning": "Rainbows form when sunlight enters raindrops and splits into different colors. Each color has a different path through the raindrop, which is why we see them spread out in the sky!",
+          "bedtime": "As you close your eyes, imagine gentle raindrops catching the last rays of sunshine, turning them into peaceful rainbow bridges that lead to dreamland... 🌈"
+        },
+        "8": {
+          "playful": "Time for rainbow science! Each raindrop is like a natural prism having a party with sunlight - splitting white light into a spectacular color parade! Who's ready to celebrate? 🎉",
+          "learning": "Rainbows appear through a process called refraction. When sunlight enters a raindrop, it bends and splits into different wavelengths (colors). The light then reflects off the back of the raindrop and exits at different angles, creating the rainbow pattern we see!",
+          "bedtime": "Tonight, remember that even the smallest things, like tiny raindrops, can create something as magnificent as a rainbow. Dreams, like rainbows, paint our world with wonder and possibility... 🌠"
+        }
+      }
+    }
+  }
+}
