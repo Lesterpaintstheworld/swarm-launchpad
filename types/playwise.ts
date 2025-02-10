@@ -1,21 +1,17 @@
-type AgeGroup = '4-5' | '6-7' | '8';
-type Mode = 'playful' | 'learning' | 'bedtime';
+export type AgeGroup = '4-5' | '6-7' | '8';
+export type Mode = 'playful' | 'learning' | 'bedtime';
 
-interface ResponsesByMode {
+export interface ResponsesByMode {
   playful: string;
   learning: string;
   bedtime: string;
 }
 
-interface Question {
+export interface Question {
   question: string;
-  responses: {
-    [K in AgeGroup]: ResponsesByMode;
-  };
+  responses: Record<AgeGroup, ResponsesByMode>;
 }
 
 export interface Responses {
-  questions: {
-    [key: string]: Question;
-  };
+  questions: Record<string, Question>;
 }
