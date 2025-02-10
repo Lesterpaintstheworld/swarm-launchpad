@@ -7,10 +7,7 @@ export async function GET() {
     try {
         // Verify environment variables
         if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
-            console.error('Missing environment variables:', {
-                hasApiKey: !!AIRTABLE_API_KEY,
-                hasBaseId: !!AIRTABLE_BASE_ID
-            });
+            console.error('Missing environment variables');
             throw new Error('Missing required environment variables');
         }
 
@@ -31,21 +28,17 @@ export async function GET() {
         }
 
         const swarmsData = await swarmsResponse.json();
-        console.log('Swarms data:', swarmsData);
+        
         // Create a map of swarmId to swarm data for quick lookup
         const swarmMap = new Map(
-            swarmsData.records.map((swarm: any) => {
-                console.log('Processing swarm record:', swarm); // Debug log
-                return [
+            swarmsData.records.map((swarm: any) => [
                 swarm.fields.swarmId,
                 {
                     name: swarm.fields.name,
                     image: swarm.fields.image
                 }
-            ];
-        })
+            ])
         );
-        console.log('Swarm map entries:', Array.from(swarmMap.entries())); // Debug log
 
         // Fetch messages
         const messagesResponse = await fetch(
@@ -71,18 +64,17 @@ export async function GET() {
 
         // Transform the messages using the swarm map
         const messages = messagesData.records.map((record: any) => {
-            console.log('Processing message record:', record); // Debug log
-            const swarmId = record.fields.swarmId;
-            console.log('Looking up swarm with ID:', swarmId); // Debug log
-            const swarm = swarmMap.get(swarmId);
-            console.log('Found swarm data:', swarm); // Debug log
+            const senderId = record.fields.senderId;
+            const receiverId = record.fields.receiverId;
+            const sender = swarmMap.get(senderId);
+            const receiver = swarmMap.get(receiverId);
 
             if (!record.fields.content || !record.fields.timestamp) {
                 return null;
             }
 
-            // If no swarmId, create a system message
-            if (!swarmId) {
+            // If no senderId, create a system message
+            if (!senderId) {
                 return {
                     id: record.id,
                     swarmId: 'system',
@@ -93,13 +85,13 @@ export async function GET() {
                 };
             }
 
-            // Use swarm data from the map if available, otherwise use defaults
+            // Use sender's data for the message display
             return {
                 id: record.id,
-                swarmId: swarmId,
-                swarmName: swarm?.name || swarmId,
-                swarmImage: swarm?.image || '/images/default-avatar.png',
-                content: record.fields.content,
+                swarmId: senderId,
+                swarmName: sender?.name || senderId,
+                swarmImage: sender?.image || '/images/default-avatar.png',
+                content: record.fields.content + (receiver ? ` @${receiver.name}` : ''),
                 timestamp: record.fields.timestamp
             };
         }).filter(msg => msg !== null);
