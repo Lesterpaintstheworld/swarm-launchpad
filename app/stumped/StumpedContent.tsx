@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/shadcn/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/shadcn/dialog'
@@ -11,6 +11,38 @@ export default function StumpedContent() {
   const [showIntro, setShowIntro] = useState(true)
   const [isListening, setIsListening] = useState(false)
   const mediaRecorder = useRef<MediaRecorder | null>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const analyzerRef = useRef<AnalyserNode | null>(null)
+  const animationFrameRef = useRef<number>()
+
+  const drawVolume = useCallback(() => {
+    if (!canvasRef.current || !analyzerRef.current) return
+    
+    const analyzer = analyzerRef.current
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    const dataArray = new Uint8Array(analyzer.frequencyBinCount)
+    analyzer.getByteTimeDomainData(dataArray)
+    
+    // Calculate volume
+    let sum = 0
+    for (const amplitude of dataArray) {
+      sum += Math.abs(amplitude - 128)
+    }
+    const volume = sum / dataArray.length
+    
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    
+    // Draw volume bar
+    const barHeight = (volume / 128) * canvas.height
+    ctx.fillStyle = '#22c55e' // green-500
+    ctx.fillRect(0, canvas.height - barHeight, canvas.width, barHeight)
+    
+    animationFrameRef.current = requestAnimationFrame(drawVolume)
+  }, [])
 
   useEffect(() => {
     setSpeech(speechContent)
@@ -23,11 +55,14 @@ export default function StumpedContent() {
       setIsListening(true)
       toast('Microphone connected!')
       
-      // Optional: Add visualization or level meter here
       const audioContext = new AudioContext()
       const source = audioContext.createMediaStreamSource(stream)
       const analyzer = audioContext.createAnalyser()
+      analyzer.fftSize = 256
       source.connect(analyzer)
+      analyzerRef.current = analyzer
+      
+      drawVolume()
       
     } catch (error) {
       toast('Error accessing microphone')
@@ -40,6 +75,9 @@ export default function StumpedContent() {
       mediaRecorder.current.stream.getTracks().forEach(track => track.stop())
       setIsListening(false)
       toast('Microphone disconnected')
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current)
+      }
     }
   }
 
@@ -79,9 +117,17 @@ export default function StumpedContent() {
               {isListening ? 'Disconnect Mic' : 'Connect Mic'}
             </Button>
             {isListening && (
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-sm text-muted-foreground">Microphone Active</span>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
+                  <span className="text-sm text-muted-foreground">Microphone Active</span>
+                </div>
+                <canvas 
+                  ref={canvasRef}
+                  width={100}
+                  height={30}
+                  className="border rounded"
+                />
               </div>
             )}
           </div>
