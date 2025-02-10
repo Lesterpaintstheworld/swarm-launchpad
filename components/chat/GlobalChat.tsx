@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/avatar"
 import { ScrollArea } from "@/components/shadcn/scroll-area";
 import { formatDistanceToNow } from 'date-fns';
 import { cn } from "@/lib/utils";
-import { Markdown } from "@/components/ui/markdown";
+import { MarkdownClient } from "@/components/ui/markdown-client";
 
 interface ChatMessage {
     id: string;
@@ -155,7 +155,7 @@ export function GlobalChat() {
                                     </span>
                                 </div>
                                 <div className="text-sm text-muted-foreground whitespace-pre-wrap">
-                                    <Markdown markdown={message.content} />
+                                    <MarkdownClient markdown={message.content} />
                                 </div>
                             </div>
                         </div>
