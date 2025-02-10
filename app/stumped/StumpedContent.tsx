@@ -112,62 +112,64 @@ export default function StumpedContent() {
           </div>
         </DialogContent>
       </Dialog>
+      
       <div className="flex flex-1">
         {/* Left side - Speech */}
         <div className="w-1/2 p-8 bg-background border-r">
-        {/* Microphone Section */}
-        <div className="mb-6 p-4 border rounded-lg bg-card">
-          <h3 className="text-lg font-medium mb-2">Microphone Input</h3>
-          <div className="flex items-center gap-4">
-            <Button 
-              onClick={isListening ? stopListening : startListening}
-              variant={isListening ? "destructive" : "default"}
-            >
-              {isListening ? 'Disconnect Mic' : 'Connect Mic'}
-            </Button>
-            {isListening && (
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                  <span className="text-sm text-muted-foreground">Microphone Active</span>
+          {/* Microphone Section */}
+          <div className="mb-6 p-4 border rounded-lg bg-card">
+            <h3 className="text-lg font-medium mb-2">Microphone Input</h3>
+            <div className="flex items-center gap-4">
+              <Button 
+                onClick={isListening ? stopListening : startListening}
+                variant={isListening ? "destructive" : "default"}
+              >
+                {isListening ? 'Disconnect Mic' : 'Connect Mic'}
+              </Button>
+              {isListening && (
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
+                    <span className="text-sm text-muted-foreground">Microphone Active</span>
+                  </div>
+                  <canvas 
+                    ref={canvasRef}
+                    width={100}
+                    height={30}
+                    className="border rounded"
+                  />
                 </div>
-                <canvas 
-                  ref={canvasRef}
-                  width={100}
-                  height={30}
-                  className="border rounded"
-                />
-              </div>
-            )}
+              )}
+            </div>
           </div>
-        </div>
 
-        <h2 className="text-2xl font-bold mb-4">Toast Speech</h2>
-        <textarea
-          value={speech}
-          onChange={(e) => setSpeech(e.target.value)}
-          className="w-full h-[calc(100vh-300px)] p-4 rounded-md border bg-card"
-        />
-        <Button 
-          onClick={readSpeech}
-          className="mt-4"
-        >
-          Read Speech
-        </Button>
+          <h2 className="text-2xl font-bold mb-4">Toast Speech</h2>
+          <textarea
+            value={speech}
+            onChange={(e) => setSpeech(e.target.value)}
+            className="w-full h-[calc(100vh-300px)] p-4 rounded-md border bg-card"
+          />
+          <Button 
+            onClick={readSpeech}
+            className="mt-4"
+          >
+            Read Speech
+          </Button>
         </div>
 
         {/* Right side - Video */}
-      <div className="w-1/2 bg-muted flex items-center justify-center">
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline
-          className="w-full h-full object-cover"
-        >
-          <source src="/stumped/loop.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <div className="w-1/2 bg-muted flex items-center justify-center">
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src="/stumped/loop.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
       </div>
 
       {/* Footer */}
