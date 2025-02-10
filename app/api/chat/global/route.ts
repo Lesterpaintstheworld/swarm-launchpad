@@ -14,9 +14,35 @@ export async function GET() {
             throw new Error('Missing required environment variables');
         }
 
-        console.log('Fetching messages from Airtable...');
-        
-        // Fetch messages from Airtable
+        // First, fetch all swarms to have their data ready
+        const swarmsResponse = await fetch(
+            `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Swarms`,
+            {
+                headers: {
+                    'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+                    'Content-Type': 'application/json',
+                },
+                cache: 'no-store'
+            }
+        );
+
+        if (!swarmsResponse.ok) {
+            throw new Error('Failed to fetch swarms');
+        }
+
+        const swarmsData = await swarmsResponse.json();
+        // Create a map of swarmId to swarm data for quick lookup
+        const swarmMap = new Map(
+            swarmsData.records.map((swarm: any) => [
+                swarm.fields.swarmId,
+                {
+                    name: swarm.fields.name,
+                    image: swarm.fields.image
+                }
+            ])
+        );
+
+        // Fetch messages
         const messagesResponse = await fetch(
             `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Messages?maxRecords=50&sort%5B0%5D%5Bfield%5D=timestamp&sort%5B0%5D%5Bdirection%5D=desc`,
             {
@@ -29,104 +55,48 @@ export async function GET() {
         );
 
         if (!messagesResponse.ok) {
-            const errorText = await messagesResponse.text();
-            console.error('Airtable messages response error:', {
-                status: messagesResponse.status,
-                statusText: messagesResponse.statusText,
-                body: errorText
-            });
-            throw new Error(`Failed to fetch messages: ${messagesResponse.status} ${messagesResponse.statusText}`);
+            throw new Error(`Failed to fetch messages: ${messagesResponse.status}`);
         }
 
         const messagesData = await messagesResponse.json();
         
         if (!Array.isArray(messagesData.records)) {
-            console.error('Unexpected messages data format:', messagesData);
             throw new Error('Invalid messages data format');
         }
 
-        // Transform the data
-        const messages = await Promise.all(messagesData.records.map(async (record: any) => {
-            try {
-                // Check if we have the required fields
-                if (!record.fields.content || !record.fields.timestamp) {
-                    console.warn('Message missing required fields:', record);
-                    return null;
-                }
+        // Transform the messages using the swarm map
+        const messages = messagesData.records.map((record: any) => {
+            const swarmId = record.fields.swarmId;
+            const swarm = swarmMap.get(swarmId);
 
-                // If no swarmId, create a system message
-                if (!record.fields.swarmId) {
-                    return {
-                        id: record.id,
-                        swarmId: 'system',
-                        swarmName: 'System',
-                        swarmImage: '/images/system-avatar.png',
-                        content: record.fields.content,
-                        timestamp: record.fields.timestamp
-                    };
-                }
+            if (!record.fields.content || !record.fields.timestamp) {
+                return null;
+            }
 
-                // Fetch swarm details
-                const swarmResponse = await fetch(
-                    `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Swarms?filterByFormula={swarmId}="${record.fields.swarmId}"`,
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
-                            'Content-Type': 'application/json',
-                        },
-                        cache: 'no-store'
-                    }
-                );
-
-                if (!swarmResponse.ok) {
-                    console.error('Failed to fetch swarm details:', {
-                        swarmId: record.fields.swarmId,
-                        status: swarmResponse.status
-                    });
-                    return {
-                        id: record.id,
-                        swarmId: record.fields.swarmId,
-                        swarmName: record.fields.swarmId,
-                        swarmImage: '/images/default-avatar.png',
-                        content: record.fields.content,
-                        timestamp: record.fields.timestamp
-                    };
-                }
-
-                const swarmData = await swarmResponse.json();
-                const swarm = swarmData.records[0];
-
-                // If no swarm found, use default values
-                if (!swarm) {
-                    return {
-                        id: record.id,
-                        swarmId: record.fields.swarmId,
-                        swarmName: record.fields.swarmId,
-                        swarmImage: '/images/default-avatar.png',
-                        content: record.fields.content,
-                        timestamp: record.fields.timestamp
-                    };
-                }
-
+            // If no swarmId, create a system message
+            if (!swarmId) {
                 return {
                     id: record.id,
-                    swarmId: record.fields.swarmId,
-                    swarmName: swarm.fields.name || record.fields.swarmId,
-                    swarmImage: swarm.fields.image || '/images/default-avatar.png',
+                    swarmId: 'system',
+                    swarmName: 'System',
+                    swarmImage: '/images/system-avatar.png',
                     content: record.fields.content,
                     timestamp: record.fields.timestamp
                 };
-            } catch (error) {
-                console.error('Error processing message:', error);
-                return null;
             }
-        }));
 
-        // Filter out any null results from failed message processing
-        const validMessages = messages.filter(msg => msg !== null);
+            // Use swarm data from the map if available, otherwise use defaults
+            return {
+                id: record.id,
+                swarmId: swarmId,
+                swarmName: swarm?.name || swarmId,
+                swarmImage: swarm?.image || '/images/default-avatar.png',
+                content: record.fields.content,
+                timestamp: record.fields.timestamp
+            };
+        }).filter(msg => msg !== null);
 
-        console.log(`Successfully processed ${validMessages.length} messages`);
-        return NextResponse.json(validMessages);
+        return NextResponse.json(messages);
 
     } catch (error) {
         console.error('Error in global chat API:', error);
