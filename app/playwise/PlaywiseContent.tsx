@@ -174,9 +174,7 @@ export default function PlaywiseContent() {
                       case 'science':
                         return ['sky', 'rainbow'].includes(key);
                       case 'stories':
-                        // For now, show all questions under stories
-                        // You might want to add more story-specific questions later
-                        return true;
+                        return ['adventure_story', 'bored'].includes(key);
                       default:
                         return true;
                     }
@@ -203,10 +201,7 @@ export default function PlaywiseContent() {
                         animateText(response);
                       }}
                     >
-                      <div className="flex items-center gap-3">
-                        <span className="text-2xl opacity-90">{question.question.split(' ')[0]}</span>
-                        <span>{question.question.split(' ').slice(1).join(' ')}</span>
-                      </div>
+                      <span>{question.question}</span>
                     </Button>
                   ))}
           </div>
