@@ -11,11 +11,11 @@ export function MarkdownClient({ markdown }: MarkdownClientProps) {
         <ReactMarkdown
             components={{
                 p: ({ children }) => <span className="block leading-none">{children}</span>,
-                ul: ({ children }) => <ul className="list-disc pl-4 -mt-2">{children}</ul>,
-                ol: ({ children }) => <ol className="list-decimal pl-4 -mt-2">{children}</ol>,
-                li: ({ children }) => <li className="leading-none py-0.5">{children}</li>,
+                ul: ({ children }) => <ul className="list-disc pl-4 my-0">{children}</ul>,
+                ol: ({ children }) => <ol className="list-decimal pl-4 my-0">{children}</ol>,
+                li: ({ children }) => <li className="my-0">{children}</li>,
             }}
-            className="leading-none"
+            className="space-y-0.5"
         >
             {markdown}
         </ReactMarkdown>
