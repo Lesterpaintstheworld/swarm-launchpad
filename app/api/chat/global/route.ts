@@ -31,16 +31,21 @@ export async function GET() {
         }
 
         const swarmsData = await swarmsResponse.json();
+        console.log('Swarms data:', swarmsData);
         // Create a map of swarmId to swarm data for quick lookup
         const swarmMap = new Map(
-            swarmsData.records.map((swarm: any) => [
+            swarmsData.records.map((swarm: any) => {
+                console.log('Processing swarm record:', swarm); // Debug log
+                return [
                 swarm.fields.swarmId,
                 {
                     name: swarm.fields.name,
                     image: swarm.fields.image
                 }
-            ])
+            ];
+        })
         );
+        console.log('Swarm map entries:', Array.from(swarmMap.entries())); // Debug log
 
         // Fetch messages
         const messagesResponse = await fetch(
@@ -66,8 +71,11 @@ export async function GET() {
 
         // Transform the messages using the swarm map
         const messages = messagesData.records.map((record: any) => {
+            console.log('Processing message record:', record); // Debug log
             const swarmId = record.fields.swarmId;
+            console.log('Looking up swarm with ID:', swarmId); // Debug log
             const swarm = swarmMap.get(swarmId);
+            console.log('Found swarm data:', swarm); // Debug log
 
             if (!record.fields.content || !record.fields.timestamp) {
                 return null;
