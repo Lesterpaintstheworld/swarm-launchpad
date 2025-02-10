@@ -7,21 +7,27 @@ interface MarkdownClientProps {
 }
 
 export function MarkdownClient({ markdown }: MarkdownClientProps) {
+    // Split the markdown into lines and process each line
+    const lines = markdown.split('\n');
+    
     return (
-        <ReactMarkdown
-            components={{
-                p: ({ children }) => (
-                    <span className="block">{children}</span>
-                ),
-                ul: ({ children }) => (
-                    <ul className="list-disc pl-4">{children}</ul>
-                ),
-                ol: ({ children }) => (
-                    <ol className="list-decimal pl-4">{children}</ol>
-                ),
-            }}
-        >
-            {markdown}
-        </ReactMarkdown>
+        <div className="space-y-1">
+            {lines.map((line, index) => (
+                <div key={index}>
+                    {line.trim() && (
+                        <ReactMarkdown
+                            components={{
+                                p: ({ children }) => <span>{children}</span>,
+                                ul: ({ children }) => <ul className="list-disc ml-4">{children}</ul>,
+                                ol: ({ children }) => <ol className="list-decimal ml-4">{children}</ol>,
+                                li: ({ children }) => <li className="ml-2">{children}</li>,
+                            }}
+                        >
+                            {line}
+                        </ReactMarkdown>
+                    )}
+                </div>
+            ))}
+        </div>
     );
 }
