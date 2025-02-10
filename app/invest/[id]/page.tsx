@@ -1,37 +1,6 @@
 import { SwarmContent } from "./SwarmContent";
 import { notFound } from "next/navigation";
 
-// Move data fetching to Server Component
-export default async function SwarmPage({ params }: { params: { id: string } }) {
-    console.log('SwarmPage called with params:', params);
-    
-    // Validate ID format
-    if (!params.id || typeof params.id !== 'string') {
-        console.error('Invalid swarm ID:', params.id);
-        notFound();
-        return;
-    }
-
-    const [swarm, initialPrice, swarmData] = await Promise.all([
-        getSwarm(params.id),
-        getInitialPrice(),
-        getSwarmData(params.id)
-    ]);
-
-    if (!swarm) {
-        console.error('Swarm not found for ID:', params.id);
-        notFound();
-        return;
-    }
-
-    return <SwarmContent 
-        swarm={swarm} 
-        initialPrice={initialPrice}
-        services={swarmData.services}
-        collaborations={swarmData.collaborations}
-    />;
-}
-
 async function getInitialPrice() {
     try {
         const response = await fetch('https://api.dexscreener.com/latest/dex/pairs/solana/HiYsmVjeFy4ZLx8pkPSxBjswFkoEjecVGB4zJed2e6Y');
