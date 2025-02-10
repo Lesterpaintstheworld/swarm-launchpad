@@ -75,52 +75,38 @@ export default function PlaywiseContent() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto space-y-10">
-        {/* Animated Answer Display */}
-        <Card className={cn(
-          "p-8 transition-all duration-300",
-          "border-2 border-purple-500/20 hover:border-purple-500/30",
-          "rounded-2xl shadow-lg",
-          animatedText ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-        )}>
-          <p className="text-2xl font-medium leading-relaxed min-h-[100px]">
-            {animatedText}
-          </p>
-        </Card>
-
+      <div className="max-w-4xl mx-auto space-y-6">
         {/* Controls Group */}
-        <div className="grid grid-cols-2 gap-8">
-          {/* Left Column */}
-          <div className="space-y-8">
-            {/* Age Selection */}
-            <Card className="p-8 rounded-2xl border-2 border-purple-500/20">
-              <h2 className="text-2xl font-bold mb-6">1. Select Child's Age</h2>
-              <div className="px-4">
-                <Slider
-                  defaultValue={[age]}
-                  max={8}
-                  min={4}
-                  step={1}
-                  onValueChange={handleAgeChange}
-                  className="py-4"
-                />
-                <div className="flex justify-between mt-4 text-lg text-muted-foreground">
-                  <span>4 years</span>
-                  <span>8 years</span>
-                </div>
+        <div className="flex gap-4 mb-8">
+          {/* Age Selection */}
+          <Card className="p-4 rounded-2xl border-2 border-purple-500/20 flex-1">
+            <h2 className="text-lg font-bold mb-4">Select Child's Age</h2>
+            <div className="px-2">
+              <Slider
+                defaultValue={[age]}
+                max={8}
+                min={4}
+                step={1}
+                onValueChange={handleAgeChange}
+                className="py-2"
+              />
+              <div className="flex justify-between mt-2 text-sm text-muted-foreground">
+                <span>4 years</span>
+                <span>8 years</span>
               </div>
-            </Card>
+            </div>
+          </Card>
 
-            {/* Topic Selection */}
-            <Card className="p-8 rounded-2xl border-2 border-purple-500/20">
-              <h2 className="text-2xl font-bold mb-6">2. Choose a Topic</h2>
-              <div className="flex gap-4">
+          {/* Topic Selection */}
+          <Card className="p-4 rounded-2xl border-2 border-purple-500/20 flex-1">
+            <h2 className="text-lg font-bold mb-4">Choose a Topic</h2>
+            <div className="flex gap-2">
                 {topics.map(topic => (
                   <Button
                     key={topic.id}
                     onClick={() => setSelectedTopic(topic.id)}
                     className={cn(
-                      "flex-1 text-lg py-6 rounded-xl",
+                      "flex-1 text-sm py-2 rounded-xl",
                       "transition-all duration-300 hover:scale-105",
                       selectedTopic === topic.id && topic.color
                     )}
@@ -131,20 +117,18 @@ export default function PlaywiseContent() {
                 ))}
               </div>
             </Card>
-          </div>
+          </Card>
 
-          {/* Right Column */}
-          <div className="space-y-6">
-            {/* Mode Selection */}
-            <Card className="p-8 rounded-2xl border-2 border-purple-500/20">
-              <h2 className="text-2xl font-bold mb-6">3. Select Learning Mode</h2>
-              <div className="flex gap-4">
+          {/* Mode Selection */}
+          <Card className="p-4 rounded-2xl border-2 border-purple-500/20 flex-1">
+            <h2 className="text-lg font-bold mb-4">Learning Mode</h2>
+            <div className="flex gap-2">
                 {modes.map(mode => (
                   <Button
                     key={mode.id}
                     onClick={() => setSelectedMode(mode.id)}
                     className={cn(
-                      "flex-1 text-lg py-6 rounded-xl",
+                      "flex-1 text-sm py-2 rounded-xl",
                       "transition-all duration-300 hover:scale-105",
                       selectedMode === mode.id && mode.color
                     )}
@@ -155,17 +139,16 @@ export default function PlaywiseContent() {
                 ))}
               </div>
             </Card>
+          </div>
 
-            {/* Sample Questions */}
-            <Card className="p-8 rounded-2xl border-2 border-purple-500/20">
-              <h2 className="text-2xl font-bold mb-6">4. Try Sample Questions</h2>
-              <div className="grid gap-5">
+          {/* Sample Questions */}
+          <div className="flex gap-4 mb-6">
                 {Object.entries(responses.questions).map(([key, question]) => (
                   <Button
                     key={key}
                     variant="secondary"
                     className={cn(
-                      "justify-start text-left p-6 text-lg rounded-xl",
+                      "flex-1 justify-start text-left p-4 text-lg rounded-xl",
                       "transition-all duration-300 hover:scale-102",
                       "border-2 border-purple-500/20 hover:border-purple-500/40",
                       isAnimating && "opacity-50 cursor-not-allowed"
@@ -180,10 +163,19 @@ export default function PlaywiseContent() {
                     {question.question}
                   </Button>
                 ))}
-              </div>
-            </Card>
           </div>
-        </div>
+
+          {/* Animated Answer Display */}
+          <Card className={cn(
+            "p-8 transition-all duration-300",
+            "border-2 border-purple-500/20 hover:border-purple-500/30",
+            "rounded-2xl shadow-lg",
+            animatedText ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          )}>
+            <p className="text-2xl font-medium leading-relaxed min-h-[100px]">
+              {animatedText}
+            </p>
+          </Card>
       </div>
     </div>
   )
