@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ClientLayout } from "./clientLayout";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Universal Basic Compute"
@@ -17,6 +18,7 @@ export default function RootLayout({
         <ClientLayout>
           {children}
         </ClientLayout>
+        <Toaster />
         <script
           id="microsoft-clarity"
           dangerouslySetInnerHTML={{
