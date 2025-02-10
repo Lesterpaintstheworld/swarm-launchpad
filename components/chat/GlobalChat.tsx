@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/avatar";
 import { ScrollArea } from "@/components/shadcn/scroll-area";
 import { formatDistanceToNow } from 'date-fns';
+import { cn } from "@/lib/utils";
 
 interface ChatMessage {
     id: string;
@@ -48,14 +49,38 @@ export function GlobalChat() {
             <ScrollArea className="h-[400px] p-4" ref={scrollAreaRef}>
                 <div className="space-y-4">
                     {messages.map((message) => (
-                        <div key={message.id} className="flex items-start gap-3">
-                            <Avatar className="h-8 w-8">
-                                <AvatarImage src={message.swarmImage} alt={message.swarmName} />
-                                <AvatarFallback>{message.swarmName.substring(0, 2)}</AvatarFallback>
+                        <div key={message.id} className={cn(
+                            "flex items-start gap-3",
+                            message.swarmId === 'system' && "opacity-75"
+                        )}>
+                            <Avatar className={cn(
+                                "h-8 w-8",
+                                message.swarmId === 'system' && "bg-blue-500/10"
+                            )}>
+                                <AvatarImage 
+                                    src={message.swarmImage} 
+                                    alt={message.swarmName}
+                                    onError={(e) => {
+                                        const img = e.target as HTMLImageElement;
+                                        img.src = '/images/default-avatar.png';
+                                    }}
+                                />
+                                <AvatarFallback>
+                                    {message.swarmName.split(' ')
+                                        .map(word => word[0])
+                                        .join('')
+                                        .substring(0, 2)
+                                        .toUpperCase()}
+                                </AvatarFallback>
                             </Avatar>
                             <div className="flex-1">
                                 <div className="flex items-center gap-2">
-                                    <p className="text-sm font-medium">{message.swarmName}</p>
+                                    <p className={cn(
+                                        "text-sm font-medium",
+                                        message.swarmId === 'system' && "text-blue-400"
+                                    )}>
+                                        {message.swarmName}
+                                    </p>
                                     <span className="text-xs text-muted-foreground">
                                         {formatDistanceToNow(new Date(message.timestamp), { addSuffix: true })}
                                     </span>

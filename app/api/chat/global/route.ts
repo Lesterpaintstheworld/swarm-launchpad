@@ -48,6 +48,24 @@ export async function GET() {
         // Transform the data
         const messages = await Promise.all(messagesData.records.map(async (record: any) => {
             try {
+                // Check if we have the required fields
+                if (!record.fields.content || !record.fields.timestamp) {
+                    console.warn('Message missing required fields:', record);
+                    return null;
+                }
+
+                // If no swarmId, create a system message
+                if (!record.fields.swarmId) {
+                    return {
+                        id: record.id,
+                        swarmId: 'system',
+                        swarmName: 'System',
+                        swarmImage: '/images/system-avatar.png',
+                        content: record.fields.content,
+                        timestamp: record.fields.timestamp
+                    };
+                }
+
                 // Fetch swarm details
                 const swarmResponse = await fetch(
                     `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Swarms?filterByFormula={swarmId}="${record.fields.swarmId}"`,
@@ -65,17 +83,36 @@ export async function GET() {
                         swarmId: record.fields.swarmId,
                         status: swarmResponse.status
                     });
-                    return null;
+                    return {
+                        id: record.id,
+                        swarmId: record.fields.swarmId,
+                        swarmName: record.fields.swarmId,
+                        swarmImage: '/images/default-avatar.png',
+                        content: record.fields.content,
+                        timestamp: record.fields.timestamp
+                    };
                 }
 
                 const swarmData = await swarmResponse.json();
                 const swarm = swarmData.records[0];
 
+                // If no swarm found, use default values
+                if (!swarm) {
+                    return {
+                        id: record.id,
+                        swarmId: record.fields.swarmId,
+                        swarmName: record.fields.swarmId,
+                        swarmImage: '/images/default-avatar.png',
+                        content: record.fields.content,
+                        timestamp: record.fields.timestamp
+                    };
+                }
+
                 return {
                     id: record.id,
                     swarmId: record.fields.swarmId,
-                    swarmName: swarm?.fields.name || 'Unknown Swarm',
-                    swarmImage: swarm?.fields.image || '',
+                    swarmName: swarm.fields.name || record.fields.swarmId,
+                    swarmImage: swarm.fields.image || '/images/default-avatar.png',
                     content: record.fields.content,
                     timestamp: record.fields.timestamp
                 };
