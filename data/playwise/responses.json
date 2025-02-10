@@ -1,5 +1,45 @@
 {
   "questions": {
+    "feelings": {
+      "question": "Why do we feel different emotions? 🫂",
+      "responses": {
+        "4-5": {
+          "playful": "Our feelings are like colorful balloons inside us! Sometimes we feel happy and float up high like a yellow balloon, sometimes we feel sad and blue like a rainy day. Each feeling helps us understand what we like and don't like - just like how you know your favorite colors! 🎈",
+          "learning": "Feelings are special messages from our body and mind. When you're happy, your body wants to jump and smile! When you're sad, your body might want a hug. All feelings are okay - they help us understand ourselves and others! 💝",
+          "bedtime": "Just like the moon changes every night, our feelings change too. Sometimes we feel bright and shiny, sometimes quiet and small. All your feelings are like soft, warm blankets keeping you safe and helping you grow. Sweet dreams, little one... 🌙"
+        },
+        "6-7": {
+          "playful": "Let's play Emotion Detective! 🔍 Your feelings are like secret clues that help you solve mysteries. Happy feelings might tell you 'This is fun!', worried feelings warn you 'Be careful!', and angry feelings say 'Something's not fair!'. What feeling-clues can you spot today?",
+          "learning": "Our emotions are like a special control panel that helps us navigate life. Happy feelings help us make friends, scared feelings keep us safe, and even angry feelings help us know when something needs to change. Every emotion has an important job to do! 🎮",
+          "bedtime": "As the stars twinkle in the sky, remember that your feelings are like gentle stars guiding you. Some shine bright, some glow softly, but each one helps light your way. Tomorrow brings new feelings to discover... ⭐"
+        },
+        "8": {
+          "playful": "Welcome to the Emotion Laboratory! 🧪 Today we're exploring how feelings mix and change - just like mixing colors! Did you know you can feel excited AND nervous at the same time? Or happy WITH a tiny bit of sad? Let's experiment with your emotional rainbow! 🌈",
+          "learning": "Emotions are your brain's way of processing the world around you. They release different chemicals that help you react to situations - like adrenaline when you're excited or oxytocin when you feel loved. Each emotion has its own special recipe in your brain! 🧠",
+          "bedtime": "As you drift off to sleep, imagine your feelings like waves in a calm ocean. Some waves are big, some are small, but all are part of the same beautiful sea. Your emotions flow and change, helping you understand yourself and others better each day... 🌊"
+        }
+      }
+    },
+    "friendship": {
+      "question": "How do we make and keep friends? 🤝",
+      "responses": {
+        "4-5": {
+          "playful": "Making friends is like playing with building blocks! First, you share a smile (that's the foundation block), then you add kindness blocks, sharing blocks, and lots of giggling blocks! Before you know it, you've built a friendship tower! 🏰",
+          "learning": "Friends are special people who like to share happy times with you. To make friends, we can: 1. Say hello with a smile 😊 2. Share our toys 🎨 3. Listen when they talk 👂 4. Be kind and gentle 💗. Would you like to practice?",
+          "bedtime": "Just like stars in the night sky that twinkle together, friends make life brighter and more magical. Tomorrow you might make a new friend, or share special moments with old friends. Close your eyes and dream of all the fun you'll have... ✨"
+        },
+        "6-7": {
+          "playful": "Let's play Friendship Garden! 🌸 Every kind word you say plants a friendship seed, every time you listen, it waters the plant, and every time you share or help, your friendship flower grows bigger! What color are your friendship flowers today?",
+          "learning": "Friendship is like a two-way street - both friends need to give and receive! Good friends share, take turns, help each other, and respect each other's feelings. When there's a problem, good friends talk about it and try to find solutions together. What makes you a good friend? 🤗",
+          "bedtime": "As the moon watches over us, think about all the wonderful friends in your life. Each friendship is unique, like different constellations in the sky. Some friends make us laugh, some help us learn, and all make our hearts grow bigger... 🌙"
+        },
+        "8": {
+          "playful": "Time for Friendship Science! 🔬 Today's experiment: How many ways can we show friendship? Hypothesis: Small acts of kindness create strong friendship bonds! Let's test different friendship formulas - like [Listening + Understanding = Trust] or [Sharing + Care = Stronger Friendship]!",
+          "learning": "Friendships grow stronger when we practice empathy (understanding others' feelings), respect (accepting differences), trust (being reliable), and communication (sharing thoughts and feelings clearly). It's also important to set healthy boundaries and resolve conflicts peacefully. What friendship skills would you like to develop? 🤝",
+          "bedtime": "Tonight, reflect on the beautiful web of friendships you're creating. Like stars connected by invisible lines, each friendship adds to your constellation of support and joy. Remember, true friendship isn't about being perfect - it's about being genuine and caring... 💫"
+        }
+      }
+    },
     "sky": {
       "question": "Why is the sky blue? 🌤️",
       "responses": {
@@ -17,26 +57,6 @@
           "playful": "Time for a science experiment! If sunlight was a rainbow paintball and the air was full of tiny paintbrushes, they would catch and splash the blue paint everywhere! That's exactly what happens in our sky - nature's biggest art show! 🎨",
           "learning": "The sky is blue because of something scientists call Rayleigh scattering. Sunlight contains all colors of the rainbow, but when it hits air molecules, they scatter blue light more than other colors. That's because blue light has shorter waves that bounce around more easily! 🌈",
           "bedtime": "Tonight, as you look at the darkening sky, remember how those countless air molecules worked all day long, scattering blue light to paint our beautiful sky. Now they're slowly letting the stars peek through, like tiny diamonds on a dark blue canvas. ✨"
-        }
-      }
-    },
-    "plants": {
-      "question": "How do plants grow? 🌱",
-      "responses": {
-        "4-5": {
-          "playful": "Plants are like tiny superheroes with special powers! They drink water with their root-straws, eat sunshine with their leaf-hands, and grow bigger and stronger every day - just like you do after eating your veggies! 🦸‍♂️",
-          "learning": "Plants need three magic ingredients to grow: water to drink 💧, sunshine to eat ☀️, and good soil to stand in 🌱. Their roots are like straws that drink water, and their leaves are like solar panels that catch sunshine!",
-          "bedtime": "When you go to sleep at night, plants take a little rest too. They snuggle into their soil bed, dream green dreams, and get ready to grow more tomorrow. Shhh... can you hear them growing? 😴"
-        },
-        "6-7": {
-          "playful": "Welcome to Plant Kitchen! 🌿 Our chef plants are master chefs who cook their own food using: sunshine as heat, water as soup, and air as seasoning! No stove needed - just green leaves and sunshine! Would you like to watch them cook? 👩‍🍳",
-          "learning": "Plants are nature's clever scientists! They use a process called photosynthesis - photo means light, and synthesis means making. They combine water from their roots, carbon dioxide from the air, and energy from the sun to make their own food. And guess what? They give us oxygen as a thank-you gift! 🎁",
-          "bedtime": "As night falls, our plant friends prepare for bed, just like you. They've spent all day turning sunshine into food, and now they're resting, growing slowly in the moonlight, making our world a little greener for tomorrow. Sweet dreams, little gardener! 🌙"
-        },
-        "8": {
-          "playful": "Welcome to Plant Factory! 🏭 Today's special: Watching our green workers turn sunshine, water, and air into plant food! No lunch boxes needed - these clever plants make their own meals using photosynthesis. Want to see how their assembly line works? 🔬",
-          "learning": "Plants are amazing chemical factories! Through photosynthesis, they combine H₂O (water) and CO₂ (carbon dioxide) using sunlight energy. This creates glucose (their food) and releases O₂ (oxygen) that we breathe. Their leaves contain chlorophyll, which gives them their green color and helps catch sunlight. It's like having millions of tiny solar panels! 🌿",
-          "bedtime": "Tonight, while you're dreaming, millions of plants around the world are quietly resting, their chlorophyll taking a break from the day's work. Tomorrow, they'll wake up ready to continue their amazing chemical magic, turning simple ingredients into life itself. Isn't nature wonderful? 🌎"
         }
       }
     },
