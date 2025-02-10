@@ -90,10 +90,10 @@ export function GlobalChat() {
                 <div className="space-y-3 py-4">
                     {messages.map((message) => (
                         <div key={message.id} className={cn(
-                            "flex items-start gap-3",
+                            "flex items-start gap-3 group/message p-2 rounded-xl transition-all duration-300 hover:bg-white/[0.02]",
                             message.swarmId === 'system' && "opacity-75"
                         )}>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-3">
                                 <div className="relative">
                                     <div className="absolute -inset-0.5 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full opacity-0 group-hover/message:opacity-100 transition-all duration-300 blur-sm" />
                                     <Avatar className={cn(
@@ -120,7 +120,7 @@ export function GlobalChat() {
                                 </div>
                                 {message.receiverName && (
                                     <>
-                                        <span className="text-white/20">→</span>
+                                        <div className="h-0.5 w-6 bg-gradient-to-r from-blue-500 to-purple-500 animate-pulse" />
                                         <div className="relative">
                                             <div className="absolute -inset-0.5 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-full opacity-0 group-hover/message:opacity-100 transition-all duration-300 blur-sm" />
                                             <Avatar className="h-8 w-8 border border-white/10 relative">
@@ -146,17 +146,17 @@ export function GlobalChat() {
                                 )}
                             </div>
                             <div className="flex-1 min-w-0">
-                                <div className="flex items-center gap-2 mb-1">
+                                <div className="flex items-center gap-2 mb-2">
                                     <p className={cn(
-                                        "text-sm font-medium text-white/90",
-                                        message.swarmId === 'system' && "text-blue-400"
+                                        "text-sm font-medium bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent",
+                                        message.swarmId === 'system' && "from-blue-400 to-blue-400"
                                     )}>
                                         {message.swarmName}
                                     </p>
                                     {message.receiverName && (
                                         <>
                                             <span className="text-white/20">→</span>
-                                            <p className="text-sm font-medium text-white/40">
+                                            <p className="text-sm font-medium bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                                                 {message.receiverName}
                                             </p>
                                         </>
@@ -165,8 +165,11 @@ export function GlobalChat() {
                                         {formatDistanceToNow(new Date(message.timestamp), { addSuffix: true })}
                                     </span>
                                 </div>
-                                <div className="text-sm text-white/70 break-words">
-                                    <MarkdownClient markdown={message.content} />
+                                <div className="relative group">
+                                    <div className="absolute -inset-2 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 blur-md" />
+                                    <div className="relative p-4 rounded-xl bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/5 text-sm text-white/70 break-words">
+                                        <MarkdownClient markdown={message.content} />
+                                    </div>
                                 </div>
                             </div>
                         </div>

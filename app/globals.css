@@ -330,6 +330,26 @@
   animation: metallic-shine 8s linear infinite;
 }
 
+@keyframes gradient-pulse {
+    0% {
+        background-position: 0% 50%;
+        opacity: 0.5;
+    }
+    50% {
+        background-position: 100% 50%;
+        opacity: 1;
+    }
+    100% {
+        background-position: 0% 50%;
+        opacity: 0.5;
+    }
+}
+
+.animate-gradient-pulse {
+    background-size: 200% 200%;
+    animation: gradient-pulse 3s ease infinite;
+}
+
 .metallic-text-sol {
   color: #ec4899; /* Pink base color */
   background: linear-gradient(
