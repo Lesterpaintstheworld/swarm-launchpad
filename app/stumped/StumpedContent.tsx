@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/shadcn/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/shadcn/dialog'
@@ -9,10 +9,39 @@ import speechContent from './speech.md'
 export default function StumpedContent() {
   const [speech, setSpeech] = useState<string>('')
   const [showIntro, setShowIntro] = useState(true)
+  const [isListening, setIsListening] = useState(false)
+  const mediaRecorder = useRef<MediaRecorder | null>(null)
 
   useEffect(() => {
     setSpeech(speechContent)
   }, [])
+
+  const startListening = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      mediaRecorder.current = new MediaRecorder(stream)
+      setIsListening(true)
+      toast('Microphone connected!')
+      
+      // Optional: Add visualization or level meter here
+      const audioContext = new AudioContext()
+      const source = audioContext.createMediaStreamSource(stream)
+      const analyzer = audioContext.createAnalyser()
+      source.connect(analyzer)
+      
+    } catch (error) {
+      toast('Error accessing microphone')
+      console.error(error)
+    }
+  }
+
+  const stopListening = () => {
+    if (mediaRecorder.current) {
+      mediaRecorder.current.stream.getTracks().forEach(track => track.stop())
+      setIsListening(false)
+      toast('Microphone disconnected')
+    }
+  }
 
   const readSpeech = () => {
     if ('speechSynthesis' in window) {
@@ -39,11 +68,30 @@ export default function StumpedContent() {
       </Dialog>
       {/* Left side - Speech */}
       <div className="w-1/2 p-8 bg-background border-r">
+        {/* Microphone Section */}
+        <div className="mb-6 p-4 border rounded-lg bg-card">
+          <h3 className="text-lg font-medium mb-2">Microphone Input</h3>
+          <div className="flex items-center gap-4">
+            <Button 
+              onClick={isListening ? stopListening : startListening}
+              variant={isListening ? "destructive" : "default"}
+            >
+              {isListening ? 'Disconnect Mic' : 'Connect Mic'}
+            </Button>
+            {isListening && (
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
+                <span className="text-sm text-muted-foreground">Microphone Active</span>
+              </div>
+            )}
+          </div>
+        </div>
+
         <h2 className="text-2xl font-bold mb-4">Toast Speech</h2>
         <textarea
           value={speech}
           onChange={(e) => setSpeech(e.target.value)}
-          className="w-full h-[calc(100vh-200px)] p-4 rounded-md border bg-card"
+          className="w-full h-[calc(100vh-300px)] p-4 rounded-md border bg-card"
         />
         <Button 
           onClick={readSpeech}
