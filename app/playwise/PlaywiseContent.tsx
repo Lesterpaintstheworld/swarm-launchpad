@@ -166,29 +166,44 @@ export default function PlaywiseContent() {
 
           {/* Sample Questions */}
           <div className="flex gap-4 mb-6">
-                {Object.entries(responses.questions).map(([key, question]) => (
-                  <Button
-                    key={key}
-                    variant="secondary"
-                    className={cn(
-                      "flex-1 justify-start text-left p-4 text-lg rounded-xl",
-                      "transition-all duration-300",
-                      "bg-gradient-to-r from-purple-500/5 via-blue-500/5 to-purple-500/5",
-                      "border-2 border-purple-500/20",
-                      "hover:border-purple-500/40 hover:shadow-[0_0_20px_rgba(168,85,247,0.2)]",
-                      "hover:scale-[1.02] hover:bg-gradient-to-r hover:from-purple-500/10 hover:via-blue-500/10 hover:to-purple-500/10",
-                      isAnimating && "opacity-50 cursor-not-allowed"
-                    )}
-                    disabled={isAnimating}
-                    onClick={() => {
-                      const ageGroup = age >= 8 ? "8" : age >= 6 ? "6-7" : "4-5";
-                      const response = question.responses[ageGroup][selectedMode];
-                      animateText(response);
-                    }}
-                  >
-                    {question.question}
-                  </Button>
-                ))}
+                {Object.entries(responses.questions)
+                  .filter(([key, question]) => {
+                    switch (selectedTopic) {
+                      case 'feelings':
+                        return ['feelings', 'friendship'].includes(key);
+                      case 'science':
+                        return ['sky', 'rainbow'].includes(key);
+                      case 'stories':
+                        // For now, show all questions under stories
+                        // You might want to add more story-specific questions later
+                        return true;
+                      default:
+                        return true;
+                    }
+                  })
+                  .map(([key, question]) => (
+                    <Button
+                      key={key}
+                      variant="secondary"
+                      className={cn(
+                        "flex-1 justify-start text-left p-4 text-lg rounded-xl",
+                        "transition-all duration-300",
+                        "bg-gradient-to-r from-purple-500/5 via-blue-500/5 to-purple-500/5",
+                        "border-2 border-purple-500/20",
+                        "hover:border-purple-500/40 hover:shadow-[0_0_20px_rgba(168,85,247,0.2)]",
+                        "hover:scale-[1.02] hover:bg-gradient-to-r hover:from-purple-500/10 hover:via-blue-500/10 hover:to-purple-500/10",
+                        isAnimating && "opacity-50 cursor-not-allowed"
+                      )}
+                      disabled={isAnimating}
+                      onClick={() => {
+                        const ageGroup = age >= 8 ? "8" : age >= 6 ? "6-7" : "4-5";
+                        const response = question.responses[ageGroup][selectedMode];
+                        animateText(response);
+                      }}
+                    >
+                      {question.question}
+                    </Button>
+                  ))}
           </div>
 
           {/* Animated Answer Display */}
