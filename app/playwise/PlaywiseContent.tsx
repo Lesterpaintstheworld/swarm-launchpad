@@ -164,6 +164,20 @@ export default function PlaywiseContent() {
             </Card>
           </div>
 
+          {/* Mode Illustration */}
+          <div className="w-full h-[200px] mb-6 rounded-xl overflow-hidden relative">
+            <img 
+              src={`/playwise/${selectedMode}.png`}
+              alt={`${selectedMode} mode illustration`}
+              className={cn(
+                "w-full h-full object-cover",
+                "transition-all duration-500",
+                "rounded-xl",
+                "border-2 border-purple-500/20"
+              )}
+            />
+          </div>
+
           {/* Sample Questions */}
           <div className="flex gap-4 mb-6">
                 {Object.entries(responses.questions)
