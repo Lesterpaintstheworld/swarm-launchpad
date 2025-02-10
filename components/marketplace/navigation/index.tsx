@@ -1,4 +1,4 @@
-import { Cpu, GitBranch, Network, Users } from 'lucide-react';
+import { Cpu, GitBranch, Network, Users, ArrowRightLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { TabItem, MarketplaceTab, sectionColors } from '../types';
 
@@ -22,6 +22,11 @@ const tabs: TabItem[] = [
     id: 'profiles',
     label: 'Swarm Profiles',
     icon: <Users className="w-4 h-4" />
+  },
+  {
+    id: 'listings',
+    label: 'Secondary Market',
+    icon: <ArrowRightLeft className="w-4 h-4" />
   }
 ];
 

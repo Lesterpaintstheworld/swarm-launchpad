@@ -14,6 +14,7 @@ import { BN } from '@coral-xyz/anchor'
 import { TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token'
 import { toast } from 'sonner'
 import { ListingAccount } from './types'
+import { VersionedTransaction } from '@solana/web3.js'
 
 // Define fallback RPC endpoint
 const FALLBACK_RPC = 'https://api.mainnet-beta.solana.com';
@@ -164,8 +165,7 @@ export function useLaunchpadProgram() {
         }
     })
 
-    const useListingsPagination = (limit: number = 20) =>{
-
+    const useListingsPagination = (limit: number = 20) => {
         const [currentPage, setCurrentPage] = useState(1);
         const [totalItems, setTotalItems] = useState(0);
     
@@ -180,7 +180,6 @@ export function useLaunchpadProgram() {
                             {
                                 memcmp: {
                                     offset: 0,
-                                    // @ts-ignore - Anchor's type definitions are incomplete
                                     bytes: BorshAccountsCoder.accountDiscriminator('ShareListing')
                                 }
                             }
@@ -195,7 +194,7 @@ export function useLaunchpadProgram() {
                 return accounts.map(acc => acc.pubkey);
             }
         });
-    
+
         // Then fetch only the current page's data
         const currentPageData = useQuery({
             queryKey: ['listings', currentPage, limit],
@@ -226,26 +225,8 @@ export function useLaunchpadProgram() {
             },
             enabled: !!listingKeys.data
         });
-    
+
         const totalPages = Math.ceil(totalItems / limit);
-    
-        const nextPage = () => {
-            if (currentPage < totalPages) {
-                setCurrentPage(prev => prev + 1);
-            }
-        };
-    
-        const previousPage = () => {
-            if (currentPage > 1) {
-                setCurrentPage(prev => prev - 1);
-            }
-        };
-    
-        const goToPage = (page: number) => {
-            if (page >= 1 && page <= totalPages) {
-                setCurrentPage(page);
-            }
-        };
     
         return {
             listings: currentPageData.data || [],
@@ -258,16 +239,136 @@ export function useLaunchpadProgram() {
                 totalItems,
                 hasNextPage: currentPage < totalPages,
                 hasPreviousPage: currentPage > 1,
-                nextPage,
-                previousPage,
-                goToPage
+                nextPage: () => setCurrentPage(prev => Math.min(prev + 1, totalPages)),
+                previousPage: () => setCurrentPage(prev => Math.max(prev - 1, 1)),
+                goToPage: (page: number) => setCurrentPage(Math.min(Math.max(1, page), totalPages))
             },
             refresh: () => {
                 listingKeys.refetch();
                 currentPageData.refetch();
             }
         };
-    }
+    };
+
+    const createListing = useMutation({
+        mutationKey: ['listing', 'create'],
+        mutationFn: async ({
+            listingId,
+            numberOfShares,
+            pricePerShare,
+            pool
+        }: {
+            listingId: string,
+            numberOfShares: number,
+            pricePerShare: number,
+            pool: PublicKey
+        }) => {
+            if (!publicKey) throw new Error('Wallet not connected');
+            
+            const [shareholderPda] = PublicKey.findProgramAddressSync(
+                [Buffer.from("shareholder"), pool.toBuffer(), publicKey.toBuffer()],
+                program.programId
+            );
+
+            const [listingPda] = PublicKey.findProgramAddressSync(
+                [Buffer.from("listing"), pool.toBuffer(), publicKey.toBuffer(), Buffer.from(listingId)],
+                program.programId
+            );
+
+            // Get transaction instead of sending directly
+            const tx = await program.methods
+                .createListing(
+                    listingId,
+                    new BN(numberOfShares),
+                    new BN(pricePerShare)
+                )
+                .accounts({
+                    shareholder: shareholderPda,
+                    shareListing: listingPda,
+                    pool,
+                    seller: publicKey,
+                    systemProgram: SystemProgram.programId,
+                })
+                .transaction(); // Use .transaction() instead of .rpc()
+
+            // Convert to versioned transaction
+            const latestBlockhash = await connection.getLatestBlockhash();
+            const versionedTx = new VersionedTransaction(tx);
+            versionedTx.message.recentBlockhash = latestBlockhash.blockhash;
+
+            return {
+                transaction: versionedTx,
+                signers: [], // Add any additional signers if needed
+                listingPda
+            };
+        }
+    });
+
+    const buyListing = useMutation({
+        mutationKey: ['listing', 'buy'],
+        mutationFn: async ({ listing, pool }: { listing: ListingAccount, pool: PublicKey }) => {
+            if (!publicKey) throw new Error('Wallet not connected');
+
+            const tx = await program.methods
+                .buyListing()
+                .accounts({
+                    shareListing: listing.publicKey,
+                    buyerShareholder: await getShareholderPDA(program.programId, publicKey, pool),
+                    sellerShareholder: await getShareholderPDA(program.programId, listing.account.seller, pool),
+                    computeMintAccount: computeMint,
+                    ubcMintAccount: ubcMint,
+                    buyerComputeAccount: await getAssociatedTokenAddress(computeMint, publicKey),
+                    buyerUbcAccount: await getAssociatedTokenAddress(ubcMint, publicKey),
+                    sellerAccount: listing.account.seller,
+                    sellerComputeAccount: await getAssociatedTokenAddress(computeMint, listing.account.seller),
+                    custodialAccount: await getAssociatedTokenAddress(ubcMint, listing.account.seller),
+                    custodialComputeAccount: await getAssociatedTokenAddress(computeMint, listing.account.seller),
+                    custodialUbcAccount: await getAssociatedTokenAddress(ubcMint, listing.account.seller),
+                    pool,
+                    buyer: publicKey,
+                    systemProgram: SystemProgram.programId,
+                    tokenProgram: TOKEN_PROGRAM_ID,
+                    associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID
+                })
+                .transaction();
+
+            const latestBlockhash = await connection.getLatestBlockhash();
+            const versionedTx = new VersionedTransaction(tx);
+            versionedTx.message.recentBlockhash = latestBlockhash.blockhash;
+
+            return {
+                transaction: versionedTx,
+                signers: []
+            };
+        }
+    });
+
+    const cancelListing = useMutation({
+        mutationKey: ['listing', 'cancel'],
+        mutationFn: async (listing: ListingAccount) => {
+            if (!publicKey) throw new Error('Wallet not connected');
+            
+            const tx = await program.methods
+                .cancelListing()
+                .accounts({
+                    shareListing: listing.publicKey,
+                    shareholder: await getShareholderPDA(program.programId, publicKey, listing.account.pool),
+                    pool: listing.account.pool,
+                    seller: publicKey,
+                    systemProgram: SystemProgram.programId,
+                })
+                .transaction();
+
+            const latestBlockhash = await connection.getLatestBlockhash();
+            const versionedTx = new VersionedTransaction(tx);
+            versionedTx.message.recentBlockhash = latestBlockhash.blockhash;
+
+            return {
+                transaction: versionedTx,
+                signers: []
+            };
+        }
+    });
 
     return {
         program,
@@ -280,7 +381,10 @@ export function useLaunchpadProgram() {
         useListingsPagination,
         freezePool,
         removePool,
-        provider
+        provider,
+        createListing,
+        buyListing,
+        cancelListing
     }
 }
 

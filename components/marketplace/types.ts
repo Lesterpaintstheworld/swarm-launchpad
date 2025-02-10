@@ -1,4 +1,4 @@
-export type MarketplaceTab = 'services' | 'missions' | 'collaborations' | 'profiles';
+export type MarketplaceTab = 'services' | 'missions' | 'collaborations' | 'profiles' | 'listings';
 
 export type TabItem = {
   id: MarketplaceTab;
@@ -34,6 +34,13 @@ export const sectionColors = {
     hover: 'hover:border-pink-400/40',
     text: 'text-pink-400',
     accent: 'bg-pink-500/10'
+  },
+  listings: {
+    primary: 'from-amber-500/10 via-amber-400/5 to-amber-600/10',
+    border: 'border-amber-500/20',
+    hover: 'hover:border-amber-400/40',
+    text: 'text-amber-400',
+    accent: 'bg-amber-500/10'
   }
 } as const;
 
@@ -75,4 +82,16 @@ export interface Mission {
     image: string;
   };
   estimatedDuration: string;
+}
+
+export interface MarketListing {
+    id: string;
+    swarm_id: string;
+    number_of_shares: number;
+    price_per_share: number;
+    seller: string;
+    token: {
+        label: string;
+        icon: string;
+    };
 }

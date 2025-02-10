@@ -7,9 +7,9 @@ import { columns } from "./columns";
 import { useEffect } from "react";
 import { Button } from "@/components/shadcn/button";
 import { LucideRefreshCcw } from "lucide-react";
-import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
 import { MarketListing } from "../market.types";
 import { ListingAccount } from "@/hooks/useLaunchpadProgram/types";
+import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram/index";
 
 const MarketListings = ({ className }: { className?: string }) => {
     const ITEMS_PER_PAGE = 20;
