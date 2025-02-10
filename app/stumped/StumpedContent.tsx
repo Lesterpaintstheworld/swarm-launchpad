@@ -28,8 +28,8 @@ export default function StumpedContent() {
     
     // Calculate volume
     let sum = 0
-    for (const amplitude of dataArray) {
-      sum += Math.abs(amplitude - 128)
+    for (let i = 0; i < dataArray.length; i++) {
+      sum += Math.abs(dataArray[i] - 128)
     }
     const volume = sum / dataArray.length
     
