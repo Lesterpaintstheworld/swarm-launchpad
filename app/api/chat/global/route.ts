@@ -34,11 +34,17 @@ export async function GET() {
             swarmsData.records.map((swarm: any) => [
                 swarm.fields.swarmId,
                 {
-                    name: swarm.fields.name,
-                    image: swarm.fields.image
+                    name: swarm.fields.name as string,
+                    image: swarm.fields.image as string
                 }
             ])
         );
+
+        // Define the type for swarm data
+        type SwarmData = {
+            name: string;
+            image: string;
+        };
 
         // Fetch messages
         const messagesResponse = await fetch(
@@ -66,8 +72,8 @@ export async function GET() {
         const messages = messagesData.records.map((record: any) => {
             const senderId = record.fields.senderId;
             const receiverId = record.fields.receiverId;
-            const sender = swarmMap.get(senderId);
-            const receiver = swarmMap.get(receiverId);
+            const sender = swarmMap.get(senderId) as SwarmData | undefined;
+            const receiver = swarmMap.get(receiverId) as SwarmData | undefined;
 
             if (!record.fields.content || !record.fields.timestamp) {
                 return null;
