@@ -16,7 +16,7 @@ interface Topic {
   color: string
 }
 
-interface Mode {
+interface ModeConfig {
   id: string
   name: string
   icon: string
@@ -29,7 +29,7 @@ const topics: Topic[] = [
   { id: 'stories', name: 'Stories', icon: '📚', color: 'bg-purple-500/10 text-purple-500' }
 ]
 
-const modes: Mode[] = [
+const modes: ModeConfig[] = [
   { id: 'playful', name: 'Playful', icon: '🎮', color: 'bg-yellow-500/10 text-yellow-500' },
   { id: 'learning', name: 'Learning', icon: '📝', color: 'bg-blue-500/10 text-blue-500' },
   { id: 'bedtime', name: 'Bedtime', icon: '🌙', color: 'bg-purple-500/10 text-purple-500' }
