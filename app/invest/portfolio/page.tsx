@@ -151,10 +151,22 @@ export default function Portfolio() {
         };
     }, []); // Empty dependency array - only run once on mount
 
+    // Memoize the dependencies to avoid complex expressions in dependency array
+    const deps = {
+        connected,
+        publicKeyString: publicKey?.toString(),
+        programId: program?.programId?.toString(),
+        poolIdsString: poolIds.join(','),
+        poolIds,
+        program,
+        publicKey,
+        swarmData
+    };
+
     useEffect(() => {
         let isMounted = true;
 
-        if (!connected || !publicKey || !program || poolIds.length === 0) {
+        if (!deps.connected || !deps.publicKey || !deps.program || deps.poolIds.length === 0) {
             setIsLoading(false);
             return;
         }
@@ -258,7 +270,7 @@ export default function Portfolio() {
             isMounted = false;
             clearInterval(refreshInterval);
         };
-    }, [connected, publicKey?.toString(), program?.programId?.toString(), poolIds.join(',')]);
+    }, [deps]);
 
     if (!connected) return (
         <main className="container view">
