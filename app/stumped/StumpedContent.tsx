@@ -179,3 +179,6 @@ export default function StumpedContent() {
     </div>
   )
 }
+  useEffect(() => {
+    setSpeech(speechContent)
+  }, [])
