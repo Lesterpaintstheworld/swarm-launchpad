@@ -265,7 +265,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
             pulseStyle.remove();
         }
     };
-  }, [zoom, getNodeSize, isLoading, swarmMap, collaborationsProp, swarms]);
+  }, [zoom, getNodeSize, isLoading, swarmMap, collaborationsProp, swarms, createSimulation, initializeSimulation, setupDragHandlers]);
 
   const handleZoomIn = () => {
     setZoom(prev => Math.min(prev + 0.2, 2));
