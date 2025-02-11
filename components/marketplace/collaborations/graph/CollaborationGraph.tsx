@@ -130,13 +130,54 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     setSimulation(newSimulation);
     const { dragstarted, dragged, dragended } = setupDragHandlers(newSimulation);
 
-    // Initialize nodes with random positions
-    nodes.forEach(node => {
-        node.x = Math.random() * width;
-        node.y = Math.random() * height;
+    // Initialize nodes in a circle layout
+    const radius = Math.min(width, height) / 3;
+    const angleStep = (2 * Math.PI) / nodes.length;
+    
+    nodes.forEach((node, i) => {
+      const angle = i * angleStep;
+      // Set initial positions
+      node.x = width/2 + radius * Math.cos(angle);
+      node.y = height/2 + radius * Math.sin(angle);
+      // Add some random offset to prevent perfect circle
+      node.x += (Math.random() - 0.5) * 50;
+      node.y += (Math.random() - 0.5) * 50;
     });
 
+    // Initialize simulation with nodes and links
     initializeSimulation(newSimulation, nodes as SimulationNode[], links as SimulationLink[]);
+    
+    // Set up the visualization
+    const g = svg.append("g")
+      .attr("transform", `scale(${zoom})`);
+    
+    const defs = svg.append("defs");
+
+    // Set up the graph components
+    setupGraph(g, defs, nodes, links, newSimulation);
+
+    // Set up the simulation tick handler
+    newSimulation.on("tick", () => {
+      // Update link positions
+      g.selectAll<SVGPathElement, SimulationLink>(".link-path, .link-light")
+        .attr("d", function(d) {
+          const source = d.source as SimulationNode;
+          const target = d.target as SimulationNode;
+          const dx = target.x - source.x;
+          const dy = target.y - source.y;
+          const dr = Math.sqrt(dx * dx + dy * dy);
+          return `M${source.x},${source.y}A${dr},${dr} 0 0,1 ${target.x},${target.y}`;
+        });
+
+      // Update node positions
+      g.selectAll<SVGGElement, SimulationNode>(".nodes g")
+        .attr("transform", function(d) {
+          return `translate(${d.x || 0},${d.y || 0})`;
+        });
+    });
+
+    // Update simulation reference
+    setSimulation(newSimulation);
 
     // Add style for ecosystem glow animation
     const style = document.createElement('style');

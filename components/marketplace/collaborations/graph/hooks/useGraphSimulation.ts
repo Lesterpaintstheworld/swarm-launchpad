@@ -9,17 +9,18 @@ export function useGraphSimulation() {
         const simulation = d3.forceSimulation<SimulationNode>()
             .force("link", d3.forceLink<SimulationNode, SimulationLink>()
                 .id((d: SimulationNode) => d.id)
-                .strength(0.1))  // Reduced link strength further
+                .strength(0.3))  // Increased link strength
             .force("charge", d3.forceManyBody()
-                .strength(-600)  // Increased repulsion
-                .distanceMax(Math.min(width, height)))  // Increased distance
-            .force("x", d3.forceX(width / 2).strength(0.02))  // Reduced x-positioning force
-            .force("y", d3.forceY(height / 2).strength(0.02))  // Reduced y-positioning force
+                .strength(-800)  // Increased repulsion
+                .distanceMax(Math.min(width, height) / 2))
+            .force("x", d3.forceX(width / 2).strength(0.1))  // Increased x-positioning force
+            .force("y", d3.forceY(height / 2).strength(0.1))  // Increased y-positioning force
             .force("collision", d3.forceCollide()
-                .radius((d: any) => getNodeSize((d as SimulationNode).id) + 40)  // Added type casting
-                .strength(0.8))  // Increased collision strength
-            .velocityDecay(0.6)  // Keep same damping
-            .alphaDecay(0.02);   // Keep same cooling
+                .radius((d: any) => getNodeSize((d as SimulationNode).id) + 40)
+                .strength(1))  // Maximum collision strength
+            .velocityDecay(0.4)  // Reduced damping for more movement
+            .alphaDecay(0.01)    // Slower cooling
+            .alpha(1);           // Start with maximum energy
 
         return simulation;
     }, []);
