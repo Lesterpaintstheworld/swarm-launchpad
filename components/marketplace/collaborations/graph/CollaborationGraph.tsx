@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import * as d3 from 'd3';
 import ReactDOMServer from 'react-dom/server';
 import { GraphTooltip } from './components/GraphTooltip';
@@ -17,6 +17,17 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
   const { swarms, swarmMap, isLoading } = useGraphData();
   const [simulation, setSimulation] = useState<d3.Simulation<SimulationNode, SimulationLink> | null>(null);
   const { createSimulation, initializeSimulation, setupDragHandlers } = useGraphSimulation();
+
+  const { nodes, links, ecosystemTargets, maxPrice, minPrice } = useMemo(() => {
+    if (!collaborationsProp?.length) {
+      return { nodes: [], links: [], ecosystemTargets: new Set(), maxPrice: 0, minPrice: 0 };
+    }
+    return processCollaborations(collaborationsProp);
+  }, [collaborationsProp]);
+
+  const calculateWidth = useCallback((value: number) => {
+    return calculateLinkWidth(value, minPrice, maxPrice);
+  }, [minPrice, maxPrice]);
   
   const handleDragStart = useCallback((event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) => {
     if (!event.active && simulation) simulation.alphaTarget(0.3).restart();
@@ -49,8 +60,6 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     // Clear previous graph
     d3.select(svgRef.current).selectAll("*").remove();
-
-    const { nodes, links, ecosystemTargets, maxPrice, minPrice } = processCollaborations(collaborationsProp);
 
     const width = svgRef.current.clientWidth;
     const height = svgRef.current.clientHeight;
@@ -270,7 +279,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
             pulseStyle.remove();
         }
     };
-  }, [zoom, getNodeSize, isLoading, swarmMap, collaborationsProp, swarms, createSimulation, initializeSimulation, setupDragHandlers, simulation]);
+  }, [zoom, isLoading, collaborationsProp, swarms, simulation]);
 
   const handleZoomIn = () => {
     setZoom(prev => Math.min(prev + 0.2, 2));
