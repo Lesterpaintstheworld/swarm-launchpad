@@ -1,28 +1,27 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { 
-  CollaborationGraphProps, 
-  SimulationNode, 
-  SimulationLink, 
-  SwarmData, 
-  Collaboration 
-} from './types';
+import { CollaborationGraphProps, SimulationNode, SimulationLink } from './types';
+import { useGraphData } from './hooks/useGraphData';
+import { useGraphSimulation } from './hooks/useGraphSimulation';
+import { processCollaborations, calculateLinkWidth } from './utils/graphCalculations';
+import { GraphControls } from './components/GraphControls';
+import { GraphLinks } from './components/GraphLinks';
+import { GraphNodes } from './components/GraphNodes';
+import { MessageAnimations } from './components/MessageAnimations';
 
 export function CollaborationGraph({ collaborations: collaborationsProp }: CollaborationGraphProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [zoom, setZoom] = useState(1);
-  const [swarms, setSwarms] = useState<SwarmData[]>([]);
-  const [localCollaborations, setLocalCollaborations] = useState<Collaboration[]>([]);
-  const [swarmMap, setSwarmMap] = useState<Map<string, SwarmData>>(new Map());
-  const [isLoading, setIsLoading] = useState(true);
+  const { swarms, swarmMap, isLoading } = useGraphData();
+  const { createSimulation, initializeSimulation, setupDragHandlers } = useGraphSimulation();
 
-  const getNodeSize = useCallback((swarmId: string): number => {
+  const getNodeSize = (swarmId: string): number => {
     const swarm = swarmMap.get(swarmId);
-    if (!swarm?.multiple) return 30; // Default size
+    if (!swarm?.multiple) return 30;
     return Math.max(25, Math.min(40, 25 + (swarm.multiple * 0.2)));
-  }, [swarmMap]);
+  };
 
   useEffect(() => {
     function fetchData() {
