@@ -58,42 +58,40 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     const simulation = createSimulation(width, height, getNodeSize);
     const { dragstarted, dragged, dragended } = setupDragHandlers(simulation);
-    
+
+    // Initialize nodes with random positions
+    nodes.forEach(node => {
+        node.x = Math.random() * width;
+        node.y = Math.random() * height;
+    });
+
     initializeSimulation(simulation, nodes as SimulationNode[], links as SimulationLink[]);
 
-    // Create container for D3 components
-    const d3Container = g.append('g').attr('class', 'd3-components');
-
-    // Render React components
-    ReactDOM.render(
-        <>
-            <GraphLinks g={d3Container} defs={defs} links={links} calculateWidth={calculateLinkWidth} />
-            <GraphNodes 
-                g={d3Container} 
-                nodes={nodes} 
-                ecosystemTargets={ecosystemTargets} 
-                getNodeSize={getNodeSize} 
-                simulation={simulation}
-                swarmMap={swarmMap}
-                swarms={swarms}
-                onDragStart={dragstarted}
-                onDrag={dragged}
-                onDragEnd={dragended}
-            />
-            <MessageAnimations
-                g={d3Container}
-                defs={defs}
-                nodes={nodes}
-                collaborations={collaborationsProp}
-                getNodeSize={getNodeSize}
-            />
-        </>,
-        d3Container.node()
-    );
+    // Render D3 components directly
+    GraphLinks({ g, defs, links, calculateWidth: calculateLinkWidth });
+    GraphNodes({ 
+        g, 
+        nodes, 
+        ecosystemTargets, 
+        getNodeSize, 
+        simulation,
+        swarmMap,
+        swarms,
+        onDragStart: dragstarted,
+        onDrag: dragged,
+        onDragEnd: dragended
+    });
+    MessageAnimations({
+        g,
+        defs,
+        nodes,
+        collaborations: collaborationsProp,
+        getNodeSize
+    });
 
     simulation.on("tick", () => {
-      // Update base links
-      g.selectAll(".link-path").attr("d", (d: SimulationLink) => {
+      // Update link positions
+      g.selectAll(".link-path, .link-light").attr("d", (d: SimulationLink) => {
         const source = d.source as SimulationNode;
         const target = d.target as SimulationNode;
         const dx = target.x - source.x;
@@ -102,17 +100,11 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
         return `M${source.x},${source.y}A${dr},${dr} 0 0,1 ${target.x},${target.y}`;
       });
 
-      // Update animated lights
-      g.selectAll(".link-light").attr("d", (d: SimulationLink) => {
-        const source = d.source as SimulationNode;
-        const target = d.target as SimulationNode;
-        const dx = target.x - source.x;
-        const dy = target.y - source.y;
-        const dr = Math.sqrt(dx * dx + dy * dy);
-        return `M${source.x},${source.y}A${dr},${dr} 0 0,1 ${target.x},${target.y}`;
+      // Update node positions
+      g.selectAll(".nodes g").attr("transform", (d: any) => {
+        const node = d as SimulationNode;
+        return `translate(${node.x || 0},${node.y || 0})`;
       });
-
-      g.selectAll(".nodes g").attr("transform", (d: SimulationNode) => `translate(${d.x},${d.y})`);
     });
 
 
@@ -120,35 +112,13 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     g.attr("transform", `scale(${zoom})`);
 
     return () => {
-        // Stop simulation
         simulation.stop();
-        
-        // Remove all elements
-        svg.selectAll("*").remove();
-        
-        // Clear any running intervals and animations
-        const highestId = window.requestAnimationFrame(() => {});
-        for (let i = 0; i < highestId; i++) {
-            window.cancelAnimationFrame(i);
-        }
-        
-        // Clear intervals
-        const highestIntervalId = window.setInterval(() => {}, 0);
-        for (let i = 0; i < highestIntervalId; i++) {
-            window.clearInterval(i);
-        }
-        
-        // Remove any tooltips
+        g.selectAll("*").remove();
         d3.select("body").selectAll(".graph-tooltip").remove();
-        
-        // Remove any added styles
         const pulseStyle = document.querySelector('style[data-graph-animation]');
         if (pulseStyle) {
             pulseStyle.remove();
         }
-
-        // Unmount React components
-        ReactDOM.unmountComponentAtNode(d3Container.node());
     };
   }, [zoom, getNodeSize, isLoading, swarmMap, collaborationsProp, swarms]);
 
