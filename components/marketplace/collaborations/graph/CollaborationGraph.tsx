@@ -238,21 +238,22 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     if (simulation) {
       simulation.on("tick", () => {
-        // Update link positions
-        g.selectAll(".link-path, .link-light").attr("d", (d: SimulationLink) => {
-          const source = d.source as SimulationNode;
-          const target = d.target as SimulationNode;
-          const dx = target.x - source.x;
-          const dy = target.y - source.y;
-          const dr = Math.sqrt(dx * dx + dy * dy);
-          return `M${source.x},${source.y}A${dr},${dr} 0 0,1 ${target.x},${target.y}`;
-        });
+        // Update link positions with proper type casting
+        g.selectAll<SVGPathElement, SimulationLink>(".link-path, .link-light")
+          .attr("d", function(d) {
+            const source = d.source as SimulationNode;
+            const target = d.target as SimulationNode;
+            const dx = target.x - source.x;
+            const dy = target.y - source.y;
+            const dr = Math.sqrt(dx * dx + dy * dy);
+            return `M${source.x},${source.y}A${dr},${dr} 0 0,1 ${target.x},${target.y}`;
+          });
 
-        // Update node positions
-        g.selectAll(".nodes g").attr("transform", (d: any) => {
-          const node = d as SimulationNode;
-          return `translate(${node.x || 0},${node.y || 0})`;
-        });
+        // Update node positions with proper type casting
+        g.selectAll<SVGGElement, SimulationNode>(".nodes g")
+          .attr("transform", function(d) {
+            return `translate(${d.x || 0},${d.y || 0})`;
+          });
       });
     }
 
