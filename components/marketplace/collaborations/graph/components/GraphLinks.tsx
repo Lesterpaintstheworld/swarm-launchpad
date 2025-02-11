@@ -165,22 +165,22 @@ export function GraphLinks({ g, defs, links, calculateWidth }: GraphLinksProps) 
                             .transition()
                             .duration(2500) // Slightly slower animation
                             .ease(d3.easeQuadInOut) // Smoother easing
-                                .attrTween("cx", () => {
-                                    return (t: number) => {
-                                        const x1 = source.x;
-                                        const x2 = midX;
-                                        const x3 = target.x;
-                                        return Math.pow(1-t, 2) * x1 + 2 * (1-t) * t * x2 + Math.pow(t, 2) * x3;
-                                    };
-                                })
-                                .attrTween("cy", () => {
-                                    return (t: number) => {
-                                        const y1 = source.y;
-                                        const y2 = midY;
-                                        const y3 = target.y;
-                                        return Math.pow(1-t, 2) * y1 + 2 * (1-t) * t * y2 + Math.pow(t, 2) * y3;
-                                    };
-                                })
+                            .attrTween("cx", () => {
+                                return (t: number) => {
+                                    const x1 = source.x;
+                                    const x2 = midX;
+                                    const x3 = target.x;
+                                    return Math.pow(1-t, 2) * x1 + 2 * (1-t) * t * x2 + Math.pow(t, 2) * x3;
+                                };
+                            })
+                            .attrTween("cy", () => {
+                                return (t: number) => {
+                                    const y1 = source.y;
+                                    const y2 = midY;
+                                    const y3 = target.y;
+                                    return Math.pow(1-t, 2) * y1 + 2 * (1-t) * t * y2 + Math.pow(t, 2) * y3;
+                                };
+                            })
                                 .transition()
                                 .duration(200)
                                 .style("opacity", 0)
