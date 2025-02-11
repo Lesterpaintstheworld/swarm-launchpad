@@ -61,26 +61,26 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     initializeSimulation(simulation, nodes as SimulationNode[], links as SimulationLink[]);
 
     // Add components
-    GraphLinks({ g, defs, links, calculateWidth: calculateLinkWidth });
-    GraphNodes({ 
-      g, 
-      nodes, 
-      ecosystemTargets, 
-      getNodeSize, 
-      simulation,
-      swarmMap,
-      swarms,
-      onDragStart: dragstarted,
-      onDrag: dragged,
-      onDragEnd: dragended
-    });
-    MessageAnimations({
-      g,
-      defs,
-      nodes,
-      collaborations: collaborationsProp,
-      getNodeSize
-    });
+    <GraphLinks g={g} defs={defs} links={links} calculateWidth={calculateLinkWidth} />
+    <GraphNodes 
+      g={g} 
+      nodes={nodes} 
+      ecosystemTargets={ecosystemTargets} 
+      getNodeSize={getNodeSize} 
+      simulation={simulation}
+      swarmMap={swarmMap}
+      swarms={swarms}
+      onDragStart={dragstarted}
+      onDrag={dragged}
+      onDragEnd={dragended}
+    />
+    <MessageAnimations
+      g={g}
+      defs={defs}
+      nodes={nodes}
+      collaborations={collaborationsProp}
+      getNodeSize={getNodeSize}
+    />
 
     simulation.on("tick", () => {
       // Update base links
