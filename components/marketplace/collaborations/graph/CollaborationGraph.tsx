@@ -34,9 +34,20 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     const { nodes, links, ecosystemTargets, maxPrice, minPrice } = processCollaborations(collaborationsProp);
 
-
     const width = svgRef.current.clientWidth;
     const height = svgRef.current.clientHeight;
+
+    // Initialize nodes in a circle
+    const radius = Math.min(width, height) / 3;
+    const angleStep = (2 * Math.PI) / nodes.length;
+    nodes.forEach((node, i) => {
+        const angle = i * angleStep;
+        node.x = width/2 + radius * Math.cos(angle);
+        node.y = height/2 + radius * Math.sin(angle);
+        // Add some random jitter
+        node.x += (Math.random() - 0.5) * 50;
+        node.y += (Math.random() - 0.5) * 50;
+    });
 
     const svg = d3.select(svgRef.current);
     
