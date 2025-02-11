@@ -62,33 +62,77 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     links: SimulationLink[],
     simulation: d3.Simulation<SimulationNode, SimulationLink>
   ) => {
-    // Add style for ecosystem glow animation
-    const style = document.createElement('style');
-    style.setAttribute('data-graph-animation', 'true');
-    style.textContent = `
-      @keyframes pulse {
-          0% { stroke-opacity: 0.4; stroke-width: 4; }
-          50% { stroke-opacity: 0.8; stroke-width: 6; }
-          100% { stroke-opacity: 0.4; stroke-width: 4; }
-      }
-    `;
-    document.head.appendChild(style);
-
-    // Create gradients and other static elements
+    // Add gradient definitions
     const gradient = defs.append("linearGradient")
-        .attr("id", "link-gradient")
-        .attr("gradientUnits", "userSpaceOnUse");
+      .attr("id", "link-gradient")
+      .attr("gradientUnits", "userSpaceOnUse");
 
     gradient.append("stop")
-        .attr("offset", "0%")
-        .attr("stop-color", "rgba(147, 51, 234, 0.3)");
+      .attr("offset", "0%")
+      .attr("stop-color", "rgba(147, 51, 234, 0.3)");
 
     gradient.append("stop")
-        .attr("offset", "100%")
-        .attr("stop-color", "rgba(147, 51, 234, 0.3)");
+      .attr("offset", "100%")
+      .attr("stop-color", "rgba(147, 51, 234, 0.3)");
 
-    // Set up nodes and links here...
-    // (Moving the existing node and link setup code here)
+    // Create links
+    const linkGroup = g.append("g")
+      .attr("class", "links");
+
+    linkGroup.selectAll("path")
+      .data(links)
+      .join("path")
+      .attr("class", "link-path")
+      .attr("stroke", "url(#link-gradient)")
+      .attr("stroke-width", d => calculateWidth(d.value))
+      .attr("stroke-opacity", 1)
+      .attr("fill", "none");
+
+    // Create nodes
+    const nodeGroup = g.append("g")
+      .attr("class", "nodes")
+      .selectAll("g")
+      .data(nodes)
+      .join("g")
+      .call(d3.drag<any, SimulationNode>()
+        .on("start", memoizedHandlers.dragstarted)
+        .on("drag", memoizedHandlers.dragged)
+        .on("end", memoizedHandlers.dragended) as any);
+
+    // Add node visuals
+    nodeGroup.append("circle")
+      .attr("r", d => getNodeSize(d.id))
+      .attr("fill", "rgba(236, 72, 153, 0.2)")
+      .attr("stroke", "rgba(236, 72, 153, 0.5)")
+      .attr("stroke-width", 3);
+
+    nodeGroup.append("image")
+      .attr("xlink:href", d => d.image)
+      .attr("x", d => -getNodeSize(d.id))
+      .attr("y", d => -getNodeSize(d.id))
+      .attr("width", d => getNodeSize(d.id) * 2)
+      .attr("height", d => getNodeSize(d.id) * 2)
+      .attr("clip-path", d => `circle(${getNodeSize(d.id)}px)`);
+
+    nodeGroup.append("text")
+      .text(d => d.name)
+      .attr("text-anchor", "middle")
+      .attr("dy", d => getNodeSize(d.id) + 20)
+      .attr("fill", "white")
+      .attr("font-size", "12px");
+
+    // Set up simulation tick handler
+    simulation.on("tick", () => {
+      linkGroup.selectAll("path")
+        .attr("d", (d: any) => {
+          const dx = (d.target.x || 0) - (d.source.x || 0);
+          const dy = (d.target.y || 0) - (d.source.y || 0);
+          const dr = Math.sqrt(dx * dx + dy * dy);
+          return `M${d.source.x || 0},${d.source.y || 0}A${dr},${dr} 0 0,1 ${d.target.x || 0},${d.target.y || 0}`;
+        });
+
+      nodeGroup.attr("transform", (d: any) => `translate(${d.x || 0},${d.y || 0})`);
+    });
   };
 
   useEffect(() => {
@@ -103,23 +147,21 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     // Create new simulation
     const newSimulation = createSimulation(width, height, getNodeSize);
     
-    // Initialize nodes in a circle layout
+    // Initialize nodes with positions in a circle
     const radius = Math.min(width, height) / 3;
-    const angleStep = (2 * Math.PI) / nodes.length;
-    
     nodes.forEach((node, i) => {
-      const angle = i * angleStep;
-      // Set initial positions
-      node.x = width/2 + radius * Math.cos(angle);
-      node.y = height/2 + radius * Math.sin(angle);
-      // Add some random offset to prevent perfect circle
-      node.x += (Math.random() - 0.5) * 50;
-      node.y += (Math.random() - 0.5) * 50;
+      const angle = (2 * Math.PI * i) / nodes.length;
+      node.x = width / 2 + radius * Math.cos(angle);
+      node.y = height / 2 + radius * Math.sin(angle);
     });
 
     // Initialize simulation with nodes and links
-    initializeSimulation(newSimulation, nodes as SimulationNode[], links as SimulationLink[]);
-    
+    newSimulation.nodes(nodes);
+    const linkForce = newSimulation.force<d3.ForceLink<SimulationNode, SimulationLink>>("link");
+    if (linkForce) {
+      linkForce.links(links);
+    }
+
     // Set up the visualization
     const g = svg.append("g")
       .attr("transform", `scale(${zoom})`);
@@ -129,37 +171,12 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     // Set up the graph components
     setupGraph(g, defs, nodes, links, newSimulation);
 
-    // Set up the simulation tick handler
-    newSimulation.on("tick", () => {
-      // Update link positions
-      g.selectAll<SVGPathElement, SimulationLink>(".link-path, .link-light")
-        .attr("d", function(d) {
-          const source = d.source as SimulationNode;
-          const target = d.target as SimulationNode;
-          const dx = target.x - source.x;
-          const dy = target.y - source.y;
-          const dr = Math.sqrt(dx * dx + dy * dy);
-          return `M${source.x},${source.y}A${dr},${dr} 0 0,1 ${target.x},${target.y}`;
-        });
-
-      // Update node positions
-      g.selectAll<SVGGElement, SimulationNode>(".nodes g")
-        .attr("transform", function(d) {
-          return `translate(${d.x || 0},${d.y || 0})`;
-        });
-    });
-
     // Update simulation reference
     setSimulation(newSimulation);
 
     return () => {
       newSimulation.stop();
       svg.selectAll("*").remove();
-      d3.select("body").selectAll(".graph-tooltip").remove();
-      const pulseStyle = document.querySelector('style[data-graph-animation]');
-      if (pulseStyle) {
-        pulseStyle.remove();
-      }
     };
   }, [collaborationsProp, isLoading, zoom, nodes, links, getNodeSize]);
 
