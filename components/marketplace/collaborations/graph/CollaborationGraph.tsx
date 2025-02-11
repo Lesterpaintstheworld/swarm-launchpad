@@ -59,6 +59,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       .attr("fill", "currentColor");
 
     const simulation = createSimulation(width, height, getNodeSize);
+    simulation.alpha(1).restart(); // Set initial alpha to 1 for more movement
     const { dragstarted, dragged, dragended } = setupDragHandlers(simulation);
 
     // Initialize nodes with random positions
