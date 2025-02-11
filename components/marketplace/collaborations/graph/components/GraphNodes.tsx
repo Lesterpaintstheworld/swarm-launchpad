@@ -2,7 +2,9 @@
 
 import { useEffect } from 'react';
 import * as d3 from 'd3';
+import ReactDOMServer from 'react-dom/server';
 import { SimulationNode, SwarmData } from '../types';
+import { GraphTooltip } from './GraphTooltip';
 
 interface GraphNodesProps {
     g: d3.Selection<SVGGElement, unknown, null, undefined>;
@@ -59,9 +61,9 @@ export function GraphNodes({
             .data(nodes)
             .join("g")
             .call(d3.drag<SVGGElement, SimulationNode>()
-                .on("start", dragstarted)
-                .on("drag", dragged)
-                .on("end", dragended))
+                .on("start", onDragStart)
+                .on("drag", onDrag)
+                .on("end", onDragEnd))
             .on("mouseover", (event, d) => {
                 const swarm = swarmMap.get(d.id);
                 const previewData = swarms.find(p => p.id === d.id);
@@ -70,27 +72,9 @@ export function GraphNodes({
                 const multiple = swarm.multiple || 1;
                 const revenueShare = swarm.revenueShare || 60;
                 
-                tooltip.html(`
-                    <div class="space-y-1.5">
-                        <div class="flex items-center gap-2">
-                            <h3 class="text-sm font-medium text-white/90">${swarm.name}</h3>
-                            <span class="px-1.5 py-0.5 rounded-full bg-white/5 text-[10px] text-white/40">
-                                ${swarm.swarmType}
-                            </span>
-                        </div>
-                        <p class="text-xs text-white/50 line-clamp-2">${previewData.description}</p>
-                        <div class="grid grid-cols-2 gap-1.5 pt-1">
-                            <div>
-                                <div class="text-[10px] text-white/30">Multiple</div>
-                                <div class="text-xs font-medium text-white/80">${multiple}x</div>
-                            </div>
-                            <div>
-                                <div class="text-[10px] text-white/30">Revenue Share</div>
-                                <div class="text-xs font-medium text-white/80">${revenueShare}%</div>
-                            </div>
-                        </div>
-                    </div>
-                `)
+                tooltip.html(ReactDOMServer.renderToString(
+                    <GraphTooltip swarm={swarm} previewData={previewData} />
+                ))
                 .style("left", (event.pageX + 10) + "px")
                 .style("top", (event.pageY - 10) + "px")
                 .classed("hidden", false);
@@ -143,25 +127,6 @@ export function GraphNodes({
             .attr("font-weight", "bold")
             .style("text-shadow", "0 0 10px rgba(0,0,0,0.5)");
 
-        function dragstarted(event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) {
-            if (!event.active) simulation.alphaTarget(0.3).restart();
-            const subject = event.subject as SimulationNode;
-            subject.fx = subject.x;
-            subject.fy = subject.y;
-        }
-
-        function dragged(event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) {
-            const subject = event.subject as SimulationNode;
-            subject.fx = event.x;
-            subject.fy = event.y;
-        }
-
-        function dragended(event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) {
-            if (!event.active) simulation.alphaTarget(0);
-            const subject = event.subject as SimulationNode;
-            subject.fx = null;
-            subject.fy = null;
-        }
 
         return () => {
             tooltip.remove();

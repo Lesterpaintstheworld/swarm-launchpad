@@ -513,16 +513,32 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     g.attr("transform", `scale(${zoom})`);
 
     return () => {
-      simulation.stop();
-      // Clean up animations
-      lightsGroup.selectAll(".link-light").interrupt();
-      g.selectAll(".message-envelope").remove();
-      // Clear any running intervals
-      const highestId = window.setInterval(() => {}, 0);
-      for (let i = 0; i < highestId; i++) {
-        window.clearInterval(i);
-      }
-      tooltip.remove(); // Remove tooltip when component unmounts
+        // Stop simulation
+        simulation.stop();
+        
+        // Remove all elements
+        svg.selectAll("*").remove();
+        
+        // Clear any running intervals and animations
+        const highestId = window.requestAnimationFrame(() => {});
+        for (let i = 0; i < highestId; i++) {
+            window.cancelAnimationFrame(i);
+        }
+        
+        // Clear intervals
+        const highestIntervalId = window.setInterval(() => {}, 0);
+        for (let i = 0; i < highestIntervalId; i++) {
+            window.clearInterval(i);
+        }
+        
+        // Remove any tooltips
+        d3.select("body").selectAll(".graph-tooltip").remove();
+        
+        // Remove any added styles
+        const pulseStyle = document.querySelector('style[data-graph-animation]');
+        if (pulseStyle) {
+            pulseStyle.remove();
+        }
     };
   }, [zoom, getNodeSize, isLoading, swarmMap, collaborationsProp, swarms]);
 
