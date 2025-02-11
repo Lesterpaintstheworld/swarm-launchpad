@@ -131,53 +131,40 @@ export function GraphLinks({ g, defs, links, calculateWidth }: GraphLinksProps) 
         createComputePulses();
 
         function createComputePulses() {
-            console.log('Creating compute pulses for links:', links.map(l => ({
-                source: l.source,
-                target: l.target,
-                value: l.value
-            })));
-
             links.forEach(link => {
-                const computeAmount = link.value;
-                const numPulses = Math.floor(computeAmount / 1000);
-        
-                console.log('Link compute details:', {
-                    computeAmount,
-                    numPulses,
-                    source: (link.source as SimulationNode).id,
-                    target: (link.target as SimulationNode).id
-                });
-        
-                if (numPulses > 0) {
-                    const source = link.source as SimulationNode;
-                    const target = link.target as SimulationNode;
-                    
-                    for (let i = 0; i < numPulses; i++) {
-                        const pulseGroup = computePulsesGroup.append("g")
-                            .attr("class", "compute-pulse");
+                // Adjust compute amount scaling
+                const computeAmount = Math.min(link.value / 1000, 10); // Cap at 10 pulses max
+                const numPulses = Math.max(1, Math.floor(computeAmount)); // Ensure at least 1 pulse
+                
+                const source = link.source as SimulationNode;
+                const target = link.target as SimulationNode;
+                
+                for (let i = 0; i < numPulses; i++) {
+                    const pulseGroup = computePulsesGroup.append("g")
+                        .attr("class", "compute-pulse");
 
-                        const pulse = pulseGroup.append("circle")
-                            .attr("r", 3)
-                            .attr("fill", "#00ff88")
-                            .style("filter", "url(#compute-pulse-glow)")
-                            .style("opacity", 0);
+                    const pulse = pulseGroup.append("circle")
+                        .attr("r", 4) // Slightly larger radius
+                        .attr("fill", "#00ff88")
+                        .style("filter", "url(#compute-pulse-glow)")
+                        .style("opacity", 0);
 
-                        function animatePulse() {
-                            const dx = target.x - source.x;
-                            const dy = target.y - source.y;
-                            const distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                            // Calculate path points for curved animation
-                            const midX = (source.x + target.x) / 2;
-                            const midY = (source.y + target.y) / 2 - distance * 0.2;
-                    
-                            pulse
-                                .attr("cx", source.x)
-                                .attr("cy", source.y)
-                                .style("opacity", 1)
-                                .transition()
-                                .duration(2000)
-                                .ease(d3.easeLinear)
+                    function animatePulse() {
+                        const dx = target.x - source.x;
+                        const dy = target.y - source.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        // Smoother curve calculation
+                        const midX = (source.x + target.x) / 2;
+                        const midY = (source.y + target.y) / 2 - distance * 0.3; // Increased curve height
+
+                        pulse
+                            .attr("cx", source.x)
+                            .attr("cy", source.y)
+                            .style("opacity", 0.8) // Higher initial opacity
+                            .transition()
+                            .duration(2500) // Slightly slower animation
+                            .ease(d3.easeQuadInOut) // Smoother easing
                                 .attrTween("cx", () => {
                                     return (t: number) => {
                                         const x1 = source.x;
