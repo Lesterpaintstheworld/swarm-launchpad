@@ -13,10 +13,18 @@ export function calculateNodeSize(multiple: number | undefined): number {
 }
 
 export function processCollaborations(collaborations: any[]) {
+    console.log('Processing collaborations:', collaborations);
+
     // Filter collaborations and create set of ecosystem targets
-    const filteredCollaborations = collaborations.filter(
-        collab => collab.providerSwarm && collab.clientSwarm
-    );
+    const filteredCollaborations = collaborations.filter(collab => {
+        const isValid = collab.providerSwarm && collab.clientSwarm;
+        if (!isValid) {
+            console.warn('Invalid collaboration:', collab);
+        }
+        return isValid;
+    });
+
+    console.log('Filtered collaborations:', filteredCollaborations);
 
     const ecosystemTargets = new Set(
         collaborations
@@ -28,31 +36,39 @@ export function processCollaborations(collaborations: any[]) {
     // Create unique nodes
     const uniqueSwarms = new Set();
     filteredCollaborations.forEach(collab => {
-        uniqueSwarms.add(JSON.stringify({
-            id: collab.providerSwarm.id,
-            name: collab.providerSwarm.name,
-            image: collab.providerSwarm.image
-        }));
-        uniqueSwarms.add(JSON.stringify({
-            id: collab.clientSwarm.id,
-            name: collab.clientSwarm.name,
-            image: collab.clientSwarm.image
-        }));
+        if (collab.providerSwarm?.id && collab.providerSwarm?.name && collab.providerSwarm?.image) {
+            uniqueSwarms.add(JSON.stringify({
+                id: collab.providerSwarm.id,
+                name: collab.providerSwarm.name,
+                image: collab.providerSwarm.image
+            }));
+        }
+        if (collab.clientSwarm?.id && collab.clientSwarm?.name && collab.clientSwarm?.image) {
+            uniqueSwarms.add(JSON.stringify({
+                id: collab.clientSwarm.id,
+                name: collab.clientSwarm.name,
+                image: collab.clientSwarm.image
+            }));
+        }
     });
 
     const nodes = Array.from(uniqueSwarms).map(s => JSON.parse(s as string));
+    console.log('Created nodes:', nodes);
 
     // Calculate link strengths
-    const maxPrice = Math.max(...filteredCollaborations.map(c => c.price));
-    const minPrice = Math.min(...filteredCollaborations.map(c => c.price));
+    const prices = filteredCollaborations.map(c => c.price).filter(p => !isNaN(p) && p > 0);
+    const maxPrice = Math.max(...prices);
+    const minPrice = Math.min(...prices);
 
     const links = filteredCollaborations.map(collab => ({
         source: collab.providerSwarm.id,
         target: collab.clientSwarm.id,
-        value: collab.price,
-        strength: (collab.price / maxPrice) * 0.3 + 0.2,
+        value: collab.price || minPrice,
+        strength: ((collab.price || minPrice) / maxPrice) * 0.3 + 0.2,
         serviceName: collab.serviceName
     }));
+
+    console.log('Created links:', links);
 
     return {
         nodes,
