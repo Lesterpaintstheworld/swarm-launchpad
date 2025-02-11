@@ -59,6 +59,7 @@
     "next-themes": "^0.4.4",
     "react": "^18",
     "react-dom": "^18.3.1",
+    "react-dom-server": "^0.0.5",
     "react-markdown": "^9.0.1",
     "recharts": "^2.15.1",
     "remark-gfm": "^4.0.0",
