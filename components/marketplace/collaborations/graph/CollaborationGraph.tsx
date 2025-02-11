@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
+import * as d3 from 'd3';
 import ReactDOMServer from 'react-dom/server';
 import { GraphTooltip } from './components/GraphTooltip';
 import * as d3 from 'd3';
@@ -15,14 +16,15 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
   const svgRef = useRef<SVGSVGElement>(null);
   const [zoom, setZoom] = useState(1);
   const { swarms, swarmMap, isLoading } = useGraphData();
+  const [simulation, setSimulation] = useState<d3.Simulation<SimulationNode, SimulationLink> | null>(null);
   const { createSimulation, initializeSimulation, setupDragHandlers } = useGraphSimulation();
   
   const handleDragStart = useCallback((event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) => {
-    if (!event.active) simulation.alphaTarget(0.3).restart();
+    if (!event.active && simulation) simulation.alphaTarget(0.3).restart();
     const subject = event.subject as SimulationNode;
     subject.fx = subject.x;
     subject.fy = subject.y;
-  }, []);
+  }, [simulation]);
 
   const handleDrag = useCallback((event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) => {
     const subject = event.subject as SimulationNode;
@@ -31,11 +33,11 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
   }, []);
 
   const handleDragEnd = useCallback((event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) => {
-    if (!event.active) simulation.alphaTarget(0);
+    if (!event.active && simulation) simulation.alphaTarget(0);
     const subject = event.subject as SimulationNode;
     subject.fx = null;
     subject.fy = null;
-  }, []);
+  }, [simulation]);
   const getNodeSize = useCallback((swarmId: string): number => {
     const swarm = swarmMap.get(swarmId);
     if (!swarm?.multiple) return 30;
@@ -80,8 +82,9 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     const g = svg.append("g")
       .attr("transform", `scale(${zoom})`);
 
-    const simulation = createSimulation(width, height, getNodeSize);
-    simulation.alpha(1).restart(); // Set initial alpha to 1 for more movement
+    const newSimulation = createSimulation(width, height, getNodeSize);
+    newSimulation.alpha(1).restart(); // Set initial alpha to 1 for more movement
+    setSimulation(newSimulation);
     const { dragstarted, dragged, dragended } = setupDragHandlers(simulation);
 
     // Initialize nodes with random positions
@@ -257,7 +260,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     g.attr("transform", `scale(${zoom})`);
 
     return () => {
-        simulation.stop();
+        if (simulation) simulation.stop();
         g.selectAll("*").remove();
         d3.select("body").selectAll(".graph-tooltip").remove();
         const pulseStyle = document.querySelector('style[data-graph-animation]');
@@ -265,7 +268,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
             pulseStyle.remove();
         }
     };
-  }, [zoom, getNodeSize, isLoading, swarmMap, collaborationsProp, swarms, createSimulation, initializeSimulation, setupDragHandlers]);
+  }, [zoom, getNodeSize, isLoading, swarmMap, collaborationsProp, swarms, createSimulation, initializeSimulation, setupDragHandlers, simulation]);
 
   const handleZoomIn = () => {
     setZoom(prev => Math.min(prev + 0.2, 2));
