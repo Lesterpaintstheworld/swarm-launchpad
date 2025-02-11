@@ -16,8 +16,6 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
   const [zoom, setZoom] = useState(1);
   const { swarms, swarmMap, isLoading } = useGraphData();
   const { createSimulation, initializeSimulation, setupDragHandlers } = useGraphSimulation();
-  const { dragstarted, dragged, dragended } = setupDragHandlers(simulation);
-
   const getNodeSize = (swarmId: string): number => {
     const swarm = swarmMap.get(swarmId);
     if (!swarm?.multiple) return 30;
@@ -33,21 +31,6 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     const { nodes, links, ecosystemTargets, maxPrice, minPrice } = processCollaborations(collaborationsProp);
 
-    // Helper function to calculate width based on value
-    const calculateWidth = (value: number) => {
-      const minWidth = 1;  // Minimum width for smallest values
-      const maxWidth = 8;  // Maximum width for largest values
-      const scale = (Math.log(value) - Math.log(minPrice)) / (Math.log(maxPrice) - Math.log(minPrice));
-      return minWidth + (scale * (maxWidth - minWidth));
-    };
-
-    const links = filteredCollaborations.map(collab => ({
-      source: collab.providerSwarm.id,
-      target: collab.clientSwarm.id,
-      value: collab.price,
-      strength: (collab.price / maxPrice) * 0.3 + 0.2,
-      serviceName: collab.serviceName
-    }));
 
     const width = svgRef.current.clientWidth;
     const height = svgRef.current.clientHeight;
@@ -102,7 +85,10 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       .attr("offset", "100%")
       .attr("stop-color", "rgba(255, 255, 255, 0)");
 
-    const simulation = d3.forceSimulation<SimulationNode>()
+    const simulation = d3.forceSimulation<SimulationNode>();
+    const { dragstarted, dragged, dragended } = setupDragHandlers(simulation);
+
+    simulation
       .force("link", d3.forceLink<SimulationNode, SimulationLink>()
         .id((d: SimulationNode) => d.id)
         .strength((d: SimulationLink) => d.strength * 0.1))
@@ -562,36 +548,8 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
         ref={svgRef} 
         className="w-full h-[600px] bg-black/20 rounded-xl"
         style={{ minHeight: '600px' }}
-      >
-        <GraphNodes 
-          g={g}
-          nodes={nodes}
-          ecosystemTargets={ecosystemTargets}
-          getNodeSize={getNodeSize}
-          simulation={simulation}
-          swarmMap={swarmMap}
-          swarms={swarms}
-          onDragStart={dragstarted}
-          onDrag={dragged}
-          onDragEnd={dragended}
-        />
-      </svg>
-      
-      {/* Zoom controls */}
-      <div className="absolute top-4 right-4 flex flex-col gap-2">
-        <button
-          onClick={handleZoomIn}
-          className="w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/80 hover:text-white transition-colors"
-        >
-          +
-        </button>
-        <button
-          onClick={handleZoomOut}
-          className="w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/80 hover:text-white transition-colors"
-        >
-          -
-        </button>
-      </div>
+      />
+      <GraphControls onZoomIn={handleZoomIn} onZoomOut={handleZoomOut} />
     </div>
   );
 }
