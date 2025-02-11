@@ -23,42 +23,6 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     return Math.max(25, Math.min(40, 25 + (swarm.multiple * 0.2)));
   };
 
-  useEffect(() => {
-    function fetchData() {
-      setIsLoading(true);
-      Promise.all([
-        fetch('/api/swarms'),
-        fetch('/api/collaborations')
-      ])
-      .then(([swarmsResponse, collaborationsResponse]) => {
-        if (swarmsResponse.ok && collaborationsResponse.ok) {
-          return Promise.all([
-            swarmsResponse.json(),
-            collaborationsResponse.json()
-          ]);
-        }
-        throw new Error('Failed to fetch data');
-      })
-      .then(([swarmsData, collaborationsData]) => {
-        setSwarms(swarmsData);
-        setLocalCollaborations(collaborationsData);
-        
-        // Create a map for easier lookup
-        const map = new Map();
-        swarmsData.forEach((swarm: SwarmData) => {
-          map.set(swarm.id, swarm);
-        });
-        setSwarmMap(map);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-    }
-    fetchData();
-  }, []);
 
   useEffect(() => {
     if (!svgRef.current || isLoading || !collaborationsProp?.length) return;
@@ -66,34 +30,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     // Clear previous graph
     d3.select(svgRef.current).selectAll("*").remove();
 
-    // Filter collaborations and create set of ecosystem targets
-    const filteredCollaborations = collaborationsProp.filter(
-      collab => collab.providerSwarm && collab.clientSwarm // Ensure both swarms exist
-    );
-
-    // Create set of ecosystem targets
-    const ecosystemTargets = new Set(
-      collaborationsProp
-        .filter(collab => collab.providerSwarm?.id === 'ecosystem')
-        .map(collab => collab.clientSwarm?.id)
-        .filter(Boolean) // Remove any undefined values
-    );
-
-    // Create nodes array (unique swarms)
-    const uniqueSwarms = new Set();
-    filteredCollaborations.forEach(collab => {
-      // Add both provider and client swarms
-      uniqueSwarms.add(JSON.stringify({
-        id: collab.providerSwarm.id,
-        name: collab.providerSwarm.name,
-        image: collab.providerSwarm.image
-      }));
-      uniqueSwarms.add(JSON.stringify({
-        id: collab.clientSwarm.id,
-        name: collab.clientSwarm.name,
-        image: collab.clientSwarm.image
-      }));
-    });
+    const { nodes, links, ecosystemTargets, maxPrice, minPrice } = processCollaborations(collaborationsProp);
 
     // Convert Set back to array and parse JSON strings
     const nodes = Array.from(uniqueSwarms).map(s => JSON.parse(s as string));
