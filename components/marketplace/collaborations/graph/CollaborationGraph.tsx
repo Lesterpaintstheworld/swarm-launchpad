@@ -19,6 +19,11 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
   const [zoom, setZoom] = useState(1);
   const { swarms, swarmMap, isLoading } = useGraphData();
   const { createSimulation, initializeSimulation, setupDragHandlers } = useGraphSimulation();
+  const [graphElements, setGraphElements] = useState<{
+    g: d3.Selection<SVGGElement, unknown, null, undefined> | null;
+    defs: d3.Selection<SVGDefsElement, unknown, null, undefined> | null;
+    nodes: SimulationNode[] | null;
+  }>({ g: null, defs: null, nodes: null });
   const getNodeSize = (swarmId: string): number => {
     const swarm = swarmMap.get(swarmId);
     if (!swarm?.multiple) return 30;
@@ -62,6 +67,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     // Create definitions section for gradients and animations
     const defs = g.append("defs");
+    setGraphElements({ g, defs, nodes });
 
     // Add envelope path to defs
     defs.append("path")
@@ -280,6 +286,15 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
         style={{ minHeight: '600px' }}
       />
       <GraphControls onZoomIn={handleZoomIn} onZoomOut={handleZoomOut} />
+      {!isLoading && graphElements.g && graphElements.defs && graphElements.nodes && (
+        <MessageAnimations
+          g={graphElements.g}
+          defs={graphElements.defs}
+          nodes={graphElements.nodes}
+          collaborations={collaborationsProp}
+          getNodeSize={getNodeSize}
+        />
+      )}
     </div>
   );
 }
