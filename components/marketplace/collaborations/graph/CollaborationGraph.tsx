@@ -93,7 +93,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     simulation.on("tick", () => {
       // Update base links
-      baseLinks.attr("d", (d: SimulationLink) => {
+      g.selectAll(".link-path").attr("d", (d: SimulationLink) => {
         const source = d.source as SimulationNode;
         const target = d.target as SimulationNode;
         const dx = target.x - source.x;
@@ -103,7 +103,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       });
 
       // Update animated lights
-      lights.attr("d", (d: SimulationLink) => {
+      g.selectAll(".link-light").attr("d", (d: SimulationLink) => {
         const source = d.source as SimulationNode;
         const target = d.target as SimulationNode;
         const dx = target.x - source.x;
@@ -112,7 +112,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
         return `M${source.x},${source.y}A${dr},${dr} 0 0,1 ${target.x},${target.y}`;
       });
 
-      node.attr("transform", (d: SimulationNode) => `translate(${d.x},${d.y})`);
+      g.selectAll(".nodes g").attr("transform", (d: SimulationNode) => `translate(${d.x},${d.y})`);
     });
 
 

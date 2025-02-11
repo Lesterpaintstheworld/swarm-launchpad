@@ -87,7 +87,7 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
                     .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
                     .slice(-100);
 
-                animateMessageBatches(allMessages, messageMap, nodePositions);
+                animateMessageBatches(allMessages, messageMap, nodePositions, g);
             })
             .catch(error => {
                 console.error('Error fetching messages:', error);
@@ -112,7 +112,8 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
 function animateMessageBatches(
     messages: Array<{senderId: string, timestamp: string}>,
     messageMap: Map<string, string[]>,
-    nodePositions: Map<string, {x: number, y: number, size: number}>
+    nodePositions: Map<string, {x: number, y: number, size: number}>,
+    g: d3.Selection<SVGGElement, unknown, null, undefined>
 ) {
     const batchSize = 10;
     let activeAnimations = 0;

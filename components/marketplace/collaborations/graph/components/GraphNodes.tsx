@@ -26,7 +26,10 @@ export function GraphNodes({
     getNodeSize, 
     simulation,
     swarmMap,
-    swarms
+    swarms,
+    onDragStart,
+    onDrag,
+    onDragEnd
 }: GraphNodesProps) {
     useEffect(() => {
         // Add style for ecosystem glow animation
