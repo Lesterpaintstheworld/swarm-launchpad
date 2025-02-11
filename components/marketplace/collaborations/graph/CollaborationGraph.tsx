@@ -4,7 +4,6 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import * as d3 from 'd3';
 import ReactDOMServer from 'react-dom/server';
 import { GraphTooltip } from './components/GraphTooltip';
-import * as d3 from 'd3';
 import { CollaborationGraphProps, SimulationNode, SimulationLink } from './types';
 import { useGraphData } from './hooks/useGraphData';
 import { useGraphSimulation } from './hooks/useGraphSimulation';
