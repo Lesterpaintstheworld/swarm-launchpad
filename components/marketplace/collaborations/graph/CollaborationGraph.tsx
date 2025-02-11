@@ -67,27 +67,147 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     initializeSimulation(simulation, nodes as SimulationNode[], links as SimulationLink[]);
 
-    // Render D3 components directly
-    GraphLinks({ g, defs, links, calculateWidth: calculateLinkWidth });
-    GraphNodes({ 
-        g, 
-        nodes, 
-        ecosystemTargets, 
-        getNodeSize, 
-        simulation,
-        swarmMap,
-        swarms,
-        onDragStart: dragstarted,
-        onDrag: dragged,
-        onDragEnd: dragended
-    });
-    MessageAnimations({
-        g,
-        defs,
-        nodes,
-        collaborations: collaborationsProp,
-        getNodeSize
-    });
+    // Add style for ecosystem glow animation
+    const style = document.createElement('style');
+    style.setAttribute('data-graph-animation', 'true');
+    style.textContent = `
+      @keyframes pulse {
+          0% { stroke-opacity: 0.4; stroke-width: 4; }
+          50% { stroke-opacity: 0.8; stroke-width: 6; }
+          100% { stroke-opacity: 0.4; stroke-width: 4; }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Create gradient for base links
+    const gradient = defs.append("linearGradient")
+        .attr("id", "link-gradient")
+        .attr("gradientUnits", "userSpaceOnUse");
+
+    gradient.append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", "rgba(147, 51, 234, 0.3)");
+
+    gradient.append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", "rgba(147, 51, 234, 0.3)");
+
+    // Create animated light gradient
+    const lightGradient = defs.append("linearGradient")
+        .attr("id", "light-gradient")
+        .attr("gradientUnits", "userSpaceOnUse");
+
+    lightGradient.append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", "rgba(255, 255, 255, 0)");
+
+    lightGradient.append("stop")
+        .attr("offset", "50%")
+        .attr("stop-color", "rgba(147, 51, 234, 0.8)");
+
+    lightGradient.append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", "rgba(255, 255, 255, 0)");
+
+    // Draw links with animated lights
+    const linkGroup = g.append("g")
+        .attr("class", "links");
+
+    // Base links
+    const baseLinks = linkGroup.append("g")
+        .attr("class", "base-links")
+        .selectAll("path")
+        .data(links)
+        .join("path")
+        .attr("class", "link-path")
+        .attr("stroke", "url(#link-gradient)")
+        .attr("stroke-width", d => calculateLinkWidth(d.value, minPrice, maxPrice))
+        .attr("stroke-opacity", 1)
+        .attr("fill", "none");
+
+    // Animated lights
+    const lightsGroup = linkGroup.append("g")
+        .attr("class", "animated-lights");
+
+    const lights = lightsGroup.selectAll("path")
+        .data(links)
+        .join("path")
+        .attr("class", "link-light")
+        .attr("stroke", "url(#light-gradient)")
+        .attr("stroke-width", d => calculateLinkWidth(d.value, minPrice, maxPrice) * 2)
+        .attr("stroke-opacity", 0.8)
+        .attr("fill", "none")
+        .style("filter", "blur(3px)");
+
+    // Create node groups
+    const node = g.append("g")
+        .attr("class", "nodes")
+        .selectAll("g")
+        .data(nodes)
+        .join("g")
+        .call(d3.drag<SVGGElement, SimulationNode>()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended))
+        .on("mouseover", (event, d) => {
+            const swarm = swarmMap.get(d.id);
+            const previewData = swarms.find(p => p.id === d.id);
+            if (!swarm || !previewData) return;
+
+            tooltip.html(ReactDOMServer.renderToString(
+                <GraphTooltip swarm={swarm} previewData={previewData} />
+            ))
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 10) + "px")
+            .classed("hidden", false);
+        })
+        .on("mousemove", (event) => {
+            tooltip
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 10) + "px");
+        })
+        .on("mouseout", () => {
+            tooltip.classed("hidden", true);
+        });
+
+    // Add circles to nodes with glowing effect
+    node.append("circle")
+        .attr("r", d => getNodeSize(d.id))
+        .attr("fill", "rgba(236, 72, 153, 0.2)")
+        .attr("stroke", "rgba(236, 72, 153, 0.5)")
+        .attr("stroke-width", 3)
+        .style("filter", "drop-shadow(0 0 10px rgba(236, 72, 153, 0.3))");
+
+    // Add pulsing yellow glow for ecosystem targets
+    node.filter(d => ecosystemTargets.has(d.id))
+        .append("circle")
+        .attr("r", d => getNodeSize(d.id) + 5)
+        .attr("fill", "none")
+        .attr("stroke", "rgba(250, 204, 21, 0.4)")
+        .attr("stroke-width", 4)
+        .attr("class", "ecosystem-glow")
+        .style("filter", "drop-shadow(0 0 8px rgba(250, 204, 21, 0.6)) blur(3px)")
+        .style("animation", "pulse 4s ease-in-out infinite");
+
+    // Add images to nodes
+    node.append("image")
+        .attr("xlink:href", d => d.image)
+        .attr("x", d => -getNodeSize(d.id) * 1.1)
+        .attr("y", d => -getNodeSize(d.id) * 1.1)
+        .attr("width", d => getNodeSize(d.id) * 2.2)
+        .attr("height", d => getNodeSize(d.id) * 2.2)
+        .attr("clip-path", d => `circle(${getNodeSize(d.id)}px)`);
+
+    // Add labels to nodes
+    node.append("text")
+        .text(d => d.name)
+        .attr("x", 0)
+        .attr("y", d => getNodeSize(d.id) + 15)
+        .attr("text-anchor", "middle")
+        .attr("fill", "rgb(236, 72, 153)")
+        .attr("font-size", "14px")
+        .attr("font-weight", "bold")
+        .style("text-shadow", "0 0 10px rgba(0,0,0,0.5)");
 
     simulation.on("tick", () => {
       // Update link positions
