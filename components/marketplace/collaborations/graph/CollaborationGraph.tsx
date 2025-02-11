@@ -53,10 +53,6 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
         .attr("class", "absolute hidden p-4 rounded-lg bg-black/90 border border-white/10 backdrop-blur-sm shadow-xl z-50 pointer-events-none")
         .style("max-width", "280px");
     
-    // Create a group for zoom transformation
-    const g = svg.append("g")
-      .attr("transform", `scale(${zoom})`);
-
     // Create base group for graph elements
     const g = svg.append("g")
       .attr("transform", `scale(${zoom})`);
