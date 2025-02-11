@@ -9,17 +9,17 @@ export function useGraphSimulation() {
         const simulation = d3.forceSimulation<SimulationNode>()
             .force("link", d3.forceLink<SimulationNode, SimulationLink>()
                 .id((d: SimulationNode) => d.id)
-                .strength(0.5))  // Increased link strength
+                .strength(0.3))  // Reduced link strength
             .force("charge", d3.forceManyBody()
-                .strength(-1000)  // Much stronger repulsion
+                .strength(-300)  // Reduced repulsion
                 .distanceMax(Math.min(width, height) / 2))
-            .force("x", d3.forceX(width / 2).strength(0.1))  // Add x-positioning force
-            .force("y", d3.forceY(height / 2).strength(0.1))  // Add y-positioning force
+            .force("x", d3.forceX(width / 2).strength(0.05))  // Reduced x-positioning force
+            .force("y", d3.forceY(height / 2).strength(0.05))  // Reduced y-positioning force
             .force("collision", d3.forceCollide()
-                .radius(d => getNodeSize(d.id) + 30)  // Increased padding
-                .strength(0.8))  // Strong collision avoidance
-            .velocityDecay(0.4)  // Add some damping
-            .alphaDecay(0.01);   // Slower cooling
+                .radius(d => getNodeSize(d.id) + 20)  // Reduced padding
+                .strength(0.5))  // Reduced collision strength
+            .velocityDecay(0.6)  // Increased damping to reduce "ice" effect
+            .alphaDecay(0.02);   // Slightly faster cooling
 
         return simulation;
     }, []);
