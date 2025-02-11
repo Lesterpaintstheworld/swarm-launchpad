@@ -22,6 +22,26 @@ interface Message {
     timestamp: string;
 }
 
+const createMessageMap = (collaborations: Array<{
+    id: string;
+    providerSwarm: { id: string };
+    clientSwarm: { id: string };
+}>) => {
+    const messageMap = new Map<string, string[]>();
+    collaborations.forEach(collab => {
+        if (!messageMap.has(collab.providerSwarm.id)) {
+            messageMap.set(collab.providerSwarm.id, []);
+        }
+        messageMap.get(collab.providerSwarm.id)?.push(collab.clientSwarm.id);
+
+        if (!messageMap.has(collab.clientSwarm.id)) {
+            messageMap.set(collab.clientSwarm.id, []);
+        }
+        messageMap.get(collab.clientSwarm.id)?.push(collab.providerSwarm.id);
+    });
+    return messageMap;
+};
+
 export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize }: MessageAnimationsProps) {
     console.log('MessageAnimations mounted with:', {
         hasG: !!g,
@@ -135,19 +155,8 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
             return;
         }
 
-        // Create message map for finding valid receivers
-        const messageMap = new Map<string, string[]>();
-        collaborations.forEach(collab => {
-            if (!messageMap.has(collab.providerSwarm.id)) {
-                messageMap.set(collab.providerSwarm.id, []);
-            }
-            messageMap.get(collab.providerSwarm.id)?.push(collab.clientSwarm.id);
-
-            if (!messageMap.has(collab.clientSwarm.id)) {
-                messageMap.set(collab.clientSwarm.id, []);
-            }
-            messageMap.get(collab.clientSwarm.id)?.push(collab.providerSwarm.id);
-        });
+        // Get the message map
+        const messageMap = createMessageMap(collaborations);
 
         // Add envelope icon if not already present
         if (!defs.select("#envelope-icon").size()) {
@@ -236,7 +245,7 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
             clearTimeout(timer);
             g.selectAll(".message-envelope").remove();
         };
-    }, [messages, currentMessageIndex, g, defs, nodes, collaborations, getNodeSize, messageMap]);
+    }, [messages, currentMessageIndex, g, defs, nodes, collaborations, getNodeSize]);
 
     return null;
 }
