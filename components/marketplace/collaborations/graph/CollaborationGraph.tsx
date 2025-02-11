@@ -144,9 +144,9 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       .data(nodes)
       .join("g")
       .call(d3.drag<SVGGElement, SimulationNode>()
-        .on("start", dragstarted)
-        .on("drag", dragged)
-        .on("end", dragended))
+        .on("start", setupDragHandlers(simulation).dragstarted)
+        .on("drag", setupDragHandlers(simulation).dragged)
+        .on("end", setupDragHandlers(simulation).dragended))
       .on("mouseover", (event, d) => {
         const swarm = swarmMap.get(d.id);
         const previewData = swarms.find(p => p.id === d.id);
@@ -459,25 +459,6 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       node.attr("transform", (d: SimulationNode) => `translate(${d.x},${d.y})`);
     });
 
-    function dragstarted(event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) {
-      if (!event.active) simulation.alphaTarget(0.3).restart();
-      const subject = event.subject as SimulationNode;
-      subject.fx = subject.x;
-      subject.fy = subject.y;
-    }
-
-    function dragged(event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) {
-      const subject = event.subject as SimulationNode;
-      subject.fx = event.x;
-      subject.fy = event.y;
-    }
-
-    function dragended(event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) {
-      if (!event.active) simulation.alphaTarget(0);
-      const subject = event.subject as SimulationNode;
-      subject.fx = null;
-      subject.fy = null;
-    }
 
     // Update transform when zoom changes
     g.attr("transform", `scale(${zoom})`);
