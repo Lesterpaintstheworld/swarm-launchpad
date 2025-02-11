@@ -84,10 +84,13 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
             ))
             .then(messagesArrays => {
                 const allMessages = messagesArrays.flat()
+                    .filter(msg => msg && msg.senderId)
                     .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
                     .slice(-100);
 
-                animateMessageBatches(allMessages, messageMap, nodePositions, g);
+                if (allMessages.length > 0) {
+                    animateMessageBatches(allMessages, messageMap, nodePositions, g);
+                }
             })
             .catch(error => {
                 console.error('Error fetching messages:', error);
@@ -115,6 +118,8 @@ function animateMessageBatches(
     nodePositions: Map<string, {x: number, y: number, size: number}>,
     g: d3.Selection<SVGGElement, unknown, null, undefined>
 ) {
+    if (!messages || !messages.length) return;  // Add safety check
+
     const batchSize = 10;
     let activeAnimations = 0;
 
@@ -198,7 +203,9 @@ function animateMessageBatches(
                         activeAnimations--;
 
                         if (activeAnimations === 0) {
-                            setTimeout(animateMessageBatches, 500);
+                            setTimeout(() => {
+                                animateMessageBatches(messages, messageMap, nodePositions, g);
+                            }, 500);
                         }
                     }
                 }
