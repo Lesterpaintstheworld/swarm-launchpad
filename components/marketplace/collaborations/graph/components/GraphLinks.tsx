@@ -21,8 +21,8 @@ export function GraphLinks({ g, defs, links, calculateWidth }: GraphLinksProps) 
             .attr("x", "-100%")
             .attr("y", "-100%")
             .html(`
-                <feGaussianBlur stdDeviation="2" result="blur"/>
-                <feFlood flood-color="#00ff00" flood-opacity="0.3"/>
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feFlood flood-color="#00ff88" flood-opacity="0.6"/>
                 <feComposite in2="blur" operator="in"/>
                 <feMerge>
                     <feMergeNode/>
@@ -122,10 +122,23 @@ export function GraphLinks({ g, defs, links, calculateWidth }: GraphLinksProps) 
         createComputePulses();
 
         function createComputePulses() {
+            console.log('Creating compute pulses for links:', links.map(l => ({
+                source: l.source,
+                target: l.target,
+                value: l.value
+            })));
+
             links.forEach(link => {
                 const computeAmount = link.value;
                 const numPulses = Math.floor(computeAmount / 1000);
-                
+        
+                console.log('Link compute details:', {
+                    computeAmount,
+                    numPulses,
+                    source: (link.source as SimulationNode).id,
+                    target: (link.target as SimulationNode).id
+                });
+        
                 if (numPulses > 0) {
                     const source = link.source as SimulationNode;
                     const target = link.target as SimulationNode;
@@ -135,8 +148,8 @@ export function GraphLinks({ g, defs, links, calculateWidth }: GraphLinksProps) 
                             .attr("class", "compute-pulse");
 
                         const pulse = pulseGroup.append("circle")
-                            .attr("r", 4)
-                            .attr("fill", "#00ff00")
+                            .attr("r", 3)
+                            .attr("fill", "#00ff88")
                             .style("filter", "url(#compute-pulse-glow)")
                             .style("opacity", 0);
 
@@ -144,7 +157,11 @@ export function GraphLinks({ g, defs, links, calculateWidth }: GraphLinksProps) 
                             const dx = target.x - source.x;
                             const dy = target.y - source.y;
                             const distance = Math.sqrt(dx * dx + dy * dy);
-                            
+                    
+                            // Calculate path points for curved animation
+                            const midX = (source.x + target.x) / 2;
+                            const midY = (source.y + target.y) / 2 - distance * 0.2;
+                    
                             pulse
                                 .attr("cx", source.x)
                                 .attr("cy", source.y)
@@ -152,8 +169,22 @@ export function GraphLinks({ g, defs, links, calculateWidth }: GraphLinksProps) 
                                 .transition()
                                 .duration(2000)
                                 .ease(d3.easeLinear)
-                                .attr("cx", target.x)
-                                .attr("cy", target.y)
+                                .attrTween("cx", () => {
+                                    return (t: number) => {
+                                        const x1 = source.x;
+                                        const x2 = midX;
+                                        const x3 = target.x;
+                                        return Math.pow(1-t, 2) * x1 + 2 * (1-t) * t * x2 + Math.pow(t, 2) * x3;
+                                    };
+                                })
+                                .attrTween("cy", () => {
+                                    return (t: number) => {
+                                        const y1 = source.y;
+                                        const y2 = midY;
+                                        const y3 = target.y;
+                                        return Math.pow(1-t, 2) * y1 + 2 * (1-t) * t * y2 + Math.pow(t, 2) * y3;
+                                    };
+                                })
                                 .transition()
                                 .duration(200)
                                 .style("opacity", 0)
