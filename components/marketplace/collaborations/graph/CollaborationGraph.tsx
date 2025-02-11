@@ -67,7 +67,11 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     // Create definitions section for gradients and animations
     const defs = g.append("defs");
-    setGraphElements({ g, defs, nodes });
+    
+    // Only set graph elements once
+    if (!graphElements.g) {
+        setGraphElements({ g, defs, nodes });
+    }
 
     // Add envelope path to defs
     defs.append("path")

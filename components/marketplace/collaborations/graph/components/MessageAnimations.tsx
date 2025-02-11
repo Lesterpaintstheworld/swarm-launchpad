@@ -236,7 +236,7 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
             clearTimeout(timer);
             g.selectAll(".message-envelope").remove();
         };
-    }, [messages, currentMessageIndex, g, defs, nodes, collaborations, getNodeSize]);
+    }, [messages, currentMessageIndex, g, defs, nodes, collaborations, getNodeSize, messageMap]);
 
     return null;
 }
