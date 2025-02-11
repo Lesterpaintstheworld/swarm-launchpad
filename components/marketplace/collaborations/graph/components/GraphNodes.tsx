@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import * as d3 from 'd3';
 import ReactDOMServer from 'react-dom/server';
+import ReactDOMServer from 'react-dom/server';
 import { SimulationNode, SwarmData } from '../types';
 import { GraphTooltip } from './GraphTooltip';
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
+import ReactDOMServer from 'react-dom/server';
 import * as d3 from 'd3';
 import { CollaborationGraphProps, SimulationNode, SimulationLink } from './types';
 import { useGraphData } from './hooks/useGraphData';
