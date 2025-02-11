@@ -16,6 +16,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
   const [zoom, setZoom] = useState(1);
   const { swarms, swarmMap, isLoading } = useGraphData();
   const { createSimulation, initializeSimulation, setupDragHandlers } = useGraphSimulation();
+  const { dragstarted, dragged, dragended } = setupDragHandlers(simulation);
 
   const getNodeSize = (swarmId: string): number => {
     const swarm = swarmMap.get(swarmId);
@@ -31,17 +32,6 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     d3.select(svgRef.current).selectAll("*").remove();
 
     const { nodes, links, ecosystemTargets, maxPrice, minPrice } = processCollaborations(collaborationsProp);
-
-    // Convert Set back to array and parse JSON strings
-    const nodes = Array.from(uniqueSwarms).map(s => JSON.parse(s as string));
-
-    // Debug logging
-    console.log('Collaborations:', filteredCollaborations);
-    console.log('Created nodes:', nodes);
-
-    // Create links array with normalized strengths based on price
-    const maxPrice = Math.max(...filteredCollaborations.map(c => c.price));
-    const minPrice = Math.min(...filteredCollaborations.map(c => c.price));
 
     // Helper function to calculate width based on value
     const calculateWidth = (value: number) => {

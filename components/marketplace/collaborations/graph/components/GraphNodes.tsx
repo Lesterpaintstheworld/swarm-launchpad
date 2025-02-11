@@ -12,6 +12,9 @@ interface GraphNodesProps {
     simulation: d3.Simulation<SimulationNode, any>;
     swarmMap: Map<string, SwarmData>;
     swarms: SwarmData[];
+    onDragStart: (event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) => void;
+    onDrag: (event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) => void;
+    onDragEnd: (event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) => void;
 }
 
 export function GraphNodes({ 
