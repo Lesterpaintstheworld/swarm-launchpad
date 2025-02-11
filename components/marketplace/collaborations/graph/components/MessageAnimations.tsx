@@ -166,6 +166,12 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
                 .attr("fill", "currentColor");
         }
 
+        // Verify envelope icon creation
+        console.log('Envelope icon added:', {
+            exists: defs.select("#envelope-icon").size() > 0,
+            icon: defs.select("#envelope-icon").node()
+        });
+
         // Add glow filter
         const glowFilter = defs.append("filter")
             .attr("id", "envelope-glow")
@@ -185,7 +191,17 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
 
         const animateMessage = () => {
             const message = messages[currentMessageIndex];
+            console.log('Animating message:', {
+                messageIndex: currentMessageIndex,
+                message,
+                totalMessages: messages.length
+            });
+
             const possibleTargets = messageMap.get(message.senderId);
+            console.log('Possible targets:', {
+                senderId: message.senderId,
+                targets: possibleTargets
+            });
             
             if (possibleTargets?.length) {
                 const targetId = possibleTargets[Math.floor(Math.random() * possibleTargets.length)];
@@ -193,10 +209,25 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
                 const sourceNode = nodes.find(n => n.id === message.senderId);
                 const targetNode = nodes.find(n => n.id === targetId);
 
+                console.log('Source and target nodes:', {
+                    sourceNode,
+                    targetNode,
+                    sourceFound: !!sourceNode,
+                    targetFound: !!targetNode
+                });
+
                 if (sourceNode && targetNode) {
+                    console.log('Creating envelope animation');
                     const envelopeGroup = g.append("g")
                         .attr("class", "message-envelope")
                         .style("opacity", 0);
+
+                    // Add debug rectangle to check if group is being created
+                    envelopeGroup.append("rect")
+                        .attr("width", 32)
+                        .attr("height", 32)
+                        .attr("fill", "red")
+                        .style("opacity", 0.5);
 
                     envelopeGroup.html(`
                         <use href="#envelope-icon" width="32" height="32" fill="white" style="filter:url(#envelope-glow)"/>
@@ -206,6 +237,14 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
                     const dx = targetNode.x - sourceNode.x;
                     const dy = targetNode.y - sourceNode.y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    console.log('Animation parameters:', {
+                        dx,
+                        dy,
+                        distance,
+                        sourcePos: { x: sourceNode.x, y: sourceNode.y },
+                        targetPos: { x: targetNode.x, y: targetNode.y }
+                    });
 
                     const duration = 1000; // 1 second animation
                     const startTime = Date.now();
@@ -219,6 +258,13 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
                         const y = sourceNode.y + dy * progress;
                         const angle = Math.atan2(dy, dx) * 180 / Math.PI;
 
+                        console.log('Animation frame:', {
+                            progress,
+                            x,
+                            y,
+                            angle
+                        });
+
                         envelopeGroup
                             .attr("transform", `translate(${x - 16},${y - 16}) rotate(${angle}, 16, 16)`)
                             .style("opacity", progress < 0.1 ? progress * 10 : progress > 0.9 ? (1 - progress) * 10 : 1);
@@ -226,6 +272,7 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
                         if (progress < 1) {
                             requestAnimationFrame(animate);
                         } else {
+                            console.log('Animation complete');
                             envelopeGroup.remove();
                             setCurrentMessageIndex(i => i + 1);
                         }
