@@ -274,7 +274,7 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
                     const duration = 1000; // 1 second animation
                     const startTime = Date.now();
 
-                    function animate() {
+                    const animate = () => {
                         const now = Date.now();
                         const elapsed = now - startTime;
                         const progress = Math.min(elapsed / duration, 1);
@@ -302,7 +302,7 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
                             envelopeGroup.remove();
                             setCurrentMessageIndex(i => i + 1);
                         }
-                    }
+                    };
 
                     animate();
                 }
