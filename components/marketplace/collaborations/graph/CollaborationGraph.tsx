@@ -48,6 +48,9 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     const svg = d3.select(svgRef.current);
     
+    // Create defs element for reusable elements
+    const defs = svg.append("defs");
+    
     // Add a tooltip div
     const tooltip = d3.select("body").append("div")
         .attr("class", "absolute hidden p-4 rounded-lg bg-black/90 border border-white/10 backdrop-blur-sm shadow-xl z-50 pointer-events-none")
