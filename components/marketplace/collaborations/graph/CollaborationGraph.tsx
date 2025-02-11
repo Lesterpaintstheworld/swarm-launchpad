@@ -49,41 +49,11 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     // Create definitions section for gradients and animations
     const defs = g.append("defs");
 
-    // Create gradient for base links
-    const gradient = defs.append("linearGradient")
-      .attr("id", "link-gradient")
-      .attr("gradientUnits", "userSpaceOnUse");
-
-    gradient.append("stop")
-      .attr("offset", "0%")
-      .attr("stop-color", "rgba(147, 51, 234, 0.3)");
-
-    gradient.append("stop")
-      .attr("offset", "100%")
-      .attr("stop-color", "rgba(147, 51, 234, 0.3)");
-
-    // Create animated light gradient
-    const lightGradient = defs.append("linearGradient")
-      .attr("id", "light-gradient")
-      .attr("gradientUnits", "userSpaceOnUse");
-
     // Add envelope path to defs
     defs.append("path")
       .attr("id", "envelope-icon")
       .attr("d", "M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.708 2.825L15 11.105V5.383zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741zM1 11.105l4.708-2.897L1 5.383v5.722z")
       .attr("fill", "currentColor");
-
-    lightGradient.append("stop")
-      .attr("offset", "0%")
-      .attr("stop-color", "rgba(255, 255, 255, 0)");
-
-    lightGradient.append("stop")
-      .attr("offset", "50%")
-      .attr("stop-color", "rgba(147, 51, 234, 0.8)");
-
-    lightGradient.append("stop")
-      .attr("offset", "100%")
-      .attr("stop-color", "rgba(255, 255, 255, 0)");
 
     const simulation = d3.forceSimulation<SimulationNode>();
     const { dragstarted, dragged, dragended } = setupDragHandlers(simulation);
