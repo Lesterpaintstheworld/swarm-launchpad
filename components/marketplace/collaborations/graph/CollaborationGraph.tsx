@@ -236,23 +236,25 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
         .attr("font-weight", "bold")
         .style("text-shadow", "0 0 10px rgba(0,0,0,0.5)");
 
-    simulation.on("tick", () => {
-      // Update link positions
-      g.selectAll(".link-path, .link-light").attr("d", (d: SimulationLink) => {
-        const source = d.source as SimulationNode;
-        const target = d.target as SimulationNode;
-        const dx = target.x - source.x;
-        const dy = target.y - source.y;
-        const dr = Math.sqrt(dx * dx + dy * dy);
-        return `M${source.x},${source.y}A${dr},${dr} 0 0,1 ${target.x},${target.y}`;
-      });
+    if (simulation) {
+      simulation.on("tick", () => {
+        // Update link positions
+        g.selectAll(".link-path, .link-light").attr("d", (d: SimulationLink) => {
+          const source = d.source as SimulationNode;
+          const target = d.target as SimulationNode;
+          const dx = target.x - source.x;
+          const dy = target.y - source.y;
+          const dr = Math.sqrt(dx * dx + dy * dy);
+          return `M${source.x},${source.y}A${dr},${dr} 0 0,1 ${target.x},${target.y}`;
+        });
 
-      // Update node positions
-      g.selectAll(".nodes g").attr("transform", (d: any) => {
-        const node = d as SimulationNode;
-        return `translate(${node.x || 0},${node.y || 0})`;
+        // Update node positions
+        g.selectAll(".nodes g").attr("transform", (d: any) => {
+          const node = d as SimulationNode;
+          return `translate(${node.x || 0},${node.y || 0})`;
+        });
       });
-    });
+    }
 
 
     // Update transform when zoom changes
