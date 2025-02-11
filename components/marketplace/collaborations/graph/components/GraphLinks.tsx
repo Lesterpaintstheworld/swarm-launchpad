@@ -13,6 +13,23 @@ interface GraphLinksProps {
 
 export function GraphLinks({ g, defs, links, calculateWidth }: GraphLinksProps) {
     useEffect(() => {
+        // Add a filter for the compute pulse glow
+        const pulseFilter = defs.append("filter")
+            .attr("id", "compute-pulse-glow")
+            .attr("width", "300%")
+            .attr("height", "300%")
+            .attr("x", "-100%")
+            .attr("y", "-100%")
+            .html(`
+                <feGaussianBlur stdDeviation="2" result="blur"/>
+                <feFlood flood-color="#00ff00" flood-opacity="0.3"/>
+                <feComposite in2="blur" operator="in"/>
+                <feMerge>
+                    <feMergeNode/>
+                    <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+            `);
+
         // Create gradient for base links
         const gradient = defs.append("linearGradient")
             .attr("id", "link-gradient")
@@ -42,6 +59,10 @@ export function GraphLinks({ g, defs, links, calculateWidth }: GraphLinksProps) 
         lightGradient.append("stop")
             .attr("offset", "100%")
             .attr("stop-color", "rgba(255, 255, 255, 0)");
+
+        // Create a group for compute pulses
+        const computePulsesGroup = g.append("g")
+            .attr("class", "compute-pulses");
 
         // Draw links with animated lights
         const linkGroup = g.append("g")
@@ -96,11 +117,61 @@ export function GraphLinks({ g, defs, links, calculateWidth }: GraphLinksProps) 
             });
         }
 
-        // Start the animation
+        // Start the animations
         animateLights();
+        createComputePulses();
+
+        function createComputePulses() {
+            links.forEach(link => {
+                const computeAmount = link.value;
+                const numPulses = Math.floor(computeAmount / 1000);
+                
+                if (numPulses > 0) {
+                    const source = link.source as SimulationNode;
+                    const target = link.target as SimulationNode;
+                    
+                    for (let i = 0; i < numPulses; i++) {
+                        const pulseGroup = computePulsesGroup.append("g")
+                            .attr("class", "compute-pulse");
+
+                        const pulse = pulseGroup.append("circle")
+                            .attr("r", 4)
+                            .attr("fill", "#00ff00")
+                            .style("filter", "url(#compute-pulse-glow)")
+                            .style("opacity", 0);
+
+                        function animatePulse() {
+                            const dx = target.x - source.x;
+                            const dy = target.y - source.y;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            
+                            pulse
+                                .attr("cx", source.x)
+                                .attr("cy", source.y)
+                                .style("opacity", 1)
+                                .transition()
+                                .duration(2000)
+                                .ease(d3.easeLinear)
+                                .attr("cx", target.x)
+                                .attr("cy", target.y)
+                                .transition()
+                                .duration(200)
+                                .style("opacity", 0)
+                                .on("end", () => {
+                                    setTimeout(animatePulse, (2000 * numPulses) / numPulses);
+                                });
+                        }
+
+                        // Stagger the start of each pulse
+                        setTimeout(() => animatePulse(), (i * 2000) / numPulses);
+                    }
+                }
+            });
+        }
 
         return () => {
             lightsGroup.selectAll(".link-light").interrupt();
+            computePulsesGroup.selectAll(".compute-pulse").remove();
         };
     }, [g, defs, links, calculateWidth]);
 
