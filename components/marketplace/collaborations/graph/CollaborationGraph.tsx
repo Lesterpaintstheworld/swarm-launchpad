@@ -562,7 +562,20 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
         ref={svgRef} 
         className="w-full h-[600px] bg-black/20 rounded-xl"
         style={{ minHeight: '600px' }}
-      />
+      >
+        <GraphNodes 
+          g={g}
+          nodes={nodes}
+          ecosystemTargets={ecosystemTargets}
+          getNodeSize={getNodeSize}
+          simulation={simulation}
+          swarmMap={swarmMap}
+          swarms={swarms}
+          onDragStart={dragstarted}
+          onDrag={dragged}
+          onDragEnd={dragended}
+        />
+      </svg>
       
       {/* Zoom controls */}
       <div className="absolute top-4 right-4 flex flex-col gap-2">
