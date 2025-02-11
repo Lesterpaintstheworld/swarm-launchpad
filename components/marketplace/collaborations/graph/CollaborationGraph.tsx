@@ -172,10 +172,10 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
         .selectAll("g")
         .data(nodes)
         .join("g")
-        .call(d3.drag<SVGGElement, SimulationNode>()
+        .call(d3.drag<any, SimulationNode>()
             .on("start", dragstarted)
             .on("drag", dragged)
-            .on("end", dragended))
+            .on("end", dragended) as any)
         .on("mouseover", (event, d) => {
             const swarm = swarmMap.get(d.id);
             const previewData = swarms.find(p => p.id === d.id);

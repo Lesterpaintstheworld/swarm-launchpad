@@ -63,10 +63,10 @@ export function GraphNodes({
             .selectAll<SVGGElement, SimulationNode>("g")
             .data(nodes)
             .join("g")
-            .call(d3.drag<SVGGElement, SimulationNode>()
+            .call(d3.drag<any, SimulationNode>()
                 .on("start", onDragStart)
                 .on("drag", onDrag)
-                .on("end", onDragEnd))
+                .on("end", onDragEnd) as any)
             .on("mouseover", (event, d) => {
                 const swarm = swarmMap.get(d.id);
                 const previewData = swarms.find(p => p.id === d.id);
