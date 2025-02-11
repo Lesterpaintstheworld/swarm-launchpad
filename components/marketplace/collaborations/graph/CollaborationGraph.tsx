@@ -84,7 +84,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     const newSimulation = createSimulation(width, height, getNodeSize);
     newSimulation.alpha(1).restart(); // Set initial alpha to 1 for more movement
     setSimulation(newSimulation);
-    const { dragstarted, dragged, dragended } = setupDragHandlers(simulation);
+    const { dragstarted, dragged, dragended } = setupDragHandlers(newSimulation);
 
     // Initialize nodes with random positions
     nodes.forEach(node => {
@@ -92,7 +92,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
         node.y = Math.random() * height;
     });
 
-    initializeSimulation(simulation, nodes as SimulationNode[], links as SimulationLink[]);
+    initializeSimulation(newSimulation, nodes as SimulationNode[], links as SimulationLink[]);
 
     // Add style for ecosystem glow animation
     const style = document.createElement('style');
