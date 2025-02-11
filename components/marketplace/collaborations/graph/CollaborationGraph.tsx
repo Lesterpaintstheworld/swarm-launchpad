@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import ReactDOM from 'react-dom';
 import ReactDOMServer from 'react-dom/server';
 import { GraphTooltip } from './components/GraphTooltip';
 import * as d3 from 'd3';
@@ -10,20 +9,13 @@ import { useGraphData } from './hooks/useGraphData';
 import { useGraphSimulation } from './hooks/useGraphSimulation';
 import { processCollaborations, calculateLinkWidth } from './utils/graphCalculations';
 import { GraphControls } from './components/GraphControls';
-import { GraphLinks } from './components/GraphLinks';
 import { GraphNodes } from './components/GraphNodes';
-import { MessageAnimations } from './components/MessageAnimations';
 
 export function CollaborationGraph({ collaborations: collaborationsProp }: CollaborationGraphProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [zoom, setZoom] = useState(1);
   const { swarms, swarmMap, isLoading } = useGraphData();
   const { createSimulation, initializeSimulation, setupDragHandlers } = useGraphSimulation();
-  const [graphElements, setGraphElements] = useState<{
-    g: d3.Selection<SVGGElement, unknown, null, undefined> | null;
-    defs: d3.Selection<SVGDefsElement, unknown, null, undefined> | null;
-    nodes: SimulationNode[] | null;
-  }>({ g: null, defs: null, nodes: null });
   const getNodeSize = (swarmId: string): number => {
     const swarm = swarmMap.get(swarmId);
     if (!swarm?.multiple) return 30;
@@ -65,19 +57,9 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     const g = svg.append("g")
       .attr("transform", `scale(${zoom})`);
 
-    // Create definitions section for gradients and animations
-    const defs = g.append("defs");
-    
-    // Only set graph elements once
-    if (!graphElements.g) {
-        setGraphElements({ g, defs, nodes });
-    }
-
-    // Add envelope path to defs
-    defs.append("path")
-      .attr("id", "envelope-icon")
-      .attr("d", "M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.708 2.825L15 11.105V5.383zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741zM1 11.105l4.708-2.897L1 5.383v5.722z")
-      .attr("fill", "currentColor");
+    // Create base group for graph elements
+    const g = svg.append("g")
+      .attr("transform", `scale(${zoom})`);
 
     const simulation = createSimulation(width, height, getNodeSize);
     simulation.alpha(1).restart(); // Set initial alpha to 1 for more movement
@@ -290,15 +272,6 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
         style={{ minHeight: '600px' }}
       />
       <GraphControls onZoomIn={handleZoomIn} onZoomOut={handleZoomOut} />
-      {!isLoading && graphElements.g && graphElements.defs && graphElements.nodes && (
-        <MessageAnimations
-          g={graphElements.g}
-          defs={graphElements.defs}
-          nodes={graphElements.nodes}
-          collaborations={collaborationsProp}
-          getNodeSize={getNodeSize}
-        />
-      )}
     </div>
   );
 }
