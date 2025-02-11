@@ -222,17 +222,42 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
                         .attr("class", "message-envelope")
                         .style("opacity", 0);
 
-                    // Add debug rectangle to check if group is being created
-                    envelopeGroup.append("rect")
-                        .attr("width", 32)
-                        .attr("height", 32)
-                        .attr("fill", "red")
-                        .style("opacity", 0.5);
+                    // Create a visible background for the envelope
+                    envelopeGroup.append("circle")
+                        .attr("r", 16)
+                        .attr("fill", "#1a1a1a")
+                        .attr("stroke", "#ffffff20")
+                        .attr("stroke-width", 2);
 
-                    envelopeGroup.html(`
-                        <use href="#envelope-icon" width="32" height="32" fill="white" style="filter:url(#envelope-glow)"/>
-                        <use href="#envelope-icon" width="32" height="32" fill="white"/>
-                    `);
+                    // Add the envelope icon with better visibility
+                    envelopeGroup.append("use")
+                        .attr("href", "#envelope-icon")
+                        .attr("width", 20)
+                        .attr("height", 20)
+                        .attr("x", -10)
+                        .attr("y", -10)
+                        .attr("fill", "white")
+                        .style("filter", "url(#envelope-glow)");
+
+                    // Update the glow filter for better visibility
+                    const glowFilter = defs.select("#envelope-glow");
+                    if (!glowFilter.size()) {
+                        defs.append("filter")
+                            .attr("id", "envelope-glow")
+                            .attr("width", "300%")
+                            .attr("height", "300%")
+                            .attr("x", "-100%")
+                            .attr("y", "-100%")
+                            .html(`
+                                <feGaussianBlur stdDeviation="3" result="blur"/>
+                                <feFlood flood-color="#ffffff" flood-opacity="0.5"/>
+                                <feComposite in2="blur" operator="in"/>
+                                <feMerge>
+                                    <feMergeNode/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            `);
+                    }
 
                     const dx = targetNode.x - sourceNode.x;
                     const dy = targetNode.y - sourceNode.y;
@@ -266,8 +291,9 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
                         });
 
                         envelopeGroup
-                            .attr("transform", `translate(${x - 16},${y - 16}) rotate(${angle}, 16, 16)`)
-                            .style("opacity", progress < 0.1 ? progress * 10 : progress > 0.9 ? (1 - progress) * 10 : 1);
+                            .attr("transform", `translate(${x},${y}) rotate(${angle})`)
+                            .style("opacity", progress < 0.1 ? progress * 10 : 
+                                              progress > 0.9 ? (1 - progress) * 10 : 1);
 
                         if (progress < 1) {
                             requestAnimationFrame(animate);
