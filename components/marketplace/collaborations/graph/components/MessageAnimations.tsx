@@ -23,14 +23,46 @@ interface Message {
 }
 
 export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize }: MessageAnimationsProps) {
+    console.log('MessageAnimations mounted with:', {
+        hasG: !!g,
+        hasDefs: !!defs,
+        nodesCount: nodes.length,
+        collaborations: collaborations,
+        firstCollab: collaborations[0]
+    });
+
     const [messages, setMessages] = useState<Message[]>([]);
     const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
 
     // Fetch messages
     useEffect(() => {
         const fetchMessages = async () => {
-            console.log('🚀 Starting message fetch');
-            console.log('Collaborations:', collaborations);
+            if (!collaborations || collaborations.length === 0) {
+                console.log('No collaborations provided');
+                return;
+            }
+
+            const firstCollab = collaborations[0];
+            console.log('Attempting to fetch messages for first collaboration:', {
+                id: firstCollab.id,
+                provider: firstCollab.providerSwarm.id,
+                client: firstCollab.clientSwarm.id
+            });
+
+            try {
+                const response = await fetch(`/api/collaborations/${firstCollab.id}/messages`);
+                console.log('First API response:', {
+                    status: response.status,
+                    ok: response.ok
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('First collaboration messages:', data);
+                }
+            } catch (error) {
+                console.error('Error fetching first collaboration messages:', error);
+            }
 
             try {
                 // Test with one collaboration first
