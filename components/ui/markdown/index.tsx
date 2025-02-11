@@ -1,19 +1,15 @@
+'use client';
+
 import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import css from "./markdown.module.css";
 
 interface MarkdownProps {
     markdown: string;
 }
 
-const Markdown = async ({ markdown }: MarkdownProps) => {
-
+export function Markdown({ markdown }: MarkdownProps) {
     return (
-        <ReactMarkdown remarkPlugins={[remarkGfm]} className={css.markdown}>
-            {markdown}
-        </ReactMarkdown>
-    )
-
+        <div className="prose prose-invert max-w-none">
+            <ReactMarkdown>{markdown}</ReactMarkdown>
+        </div>
+    );
 }
-
-export { Markdown };
