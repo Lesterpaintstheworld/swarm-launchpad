@@ -36,11 +36,11 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     subject.fx = null;
     subject.fy = null;
   }, []);
-  const getNodeSize = (swarmId: string): number => {
+  const getNodeSize = useCallback((swarmId: string): number => {
     const swarm = swarmMap.get(swarmId);
     if (!swarm?.multiple) return 30;
     return Math.max(25, Math.min(40, 25 + (swarm.multiple * 0.2)));
-  };
+  }, [swarmMap]);
 
 
   useEffect(() => {
