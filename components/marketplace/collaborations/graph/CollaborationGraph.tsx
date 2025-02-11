@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import ReactDOM from 'react-dom';
 import * as d3 from 'd3';
 import { CollaborationGraphProps, SimulationNode, SimulationLink } from './types';
 import { useGraphData } from './hooks/useGraphData';
@@ -60,27 +61,35 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     
     initializeSimulation(simulation, nodes as SimulationNode[], links as SimulationLink[]);
 
-    // Render components directly
-    const graphLinks = new GraphLinks({ g, defs, links, calculateWidth: calculateLinkWidth });
-    const graphNodes = new GraphNodes({ 
-        g, 
-        nodes, 
-        ecosystemTargets, 
-        getNodeSize, 
-        simulation,
-        swarmMap,
-        swarms,
-        onDragStart: dragstarted,
-        onDrag: dragged,
-        onDragEnd: dragended
-    });
-    const messageAnimations = new MessageAnimations({
-        g,
-        defs,
-        nodes,
-        collaborations: collaborationsProp,
-        getNodeSize
-    });
+    // Create container for D3 components
+    const d3Container = g.append('g').attr('class', 'd3-components');
+
+    // Render React components
+    ReactDOM.render(
+        <>
+            <GraphLinks g={d3Container} defs={defs} links={links} calculateWidth={calculateLinkWidth} />
+            <GraphNodes 
+                g={d3Container} 
+                nodes={nodes} 
+                ecosystemTargets={ecosystemTargets} 
+                getNodeSize={getNodeSize} 
+                simulation={simulation}
+                swarmMap={swarmMap}
+                swarms={swarms}
+                onDragStart={dragstarted}
+                onDrag={dragged}
+                onDragEnd={dragended}
+            />
+            <MessageAnimations
+                g={d3Container}
+                defs={defs}
+                nodes={nodes}
+                collaborations={collaborationsProp}
+                getNodeSize={getNodeSize}
+            />
+        </>,
+        d3Container.node()
+    );
 
     simulation.on("tick", () => {
       // Update base links
@@ -137,6 +146,9 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
         if (pulseStyle) {
             pulseStyle.remove();
         }
+
+        // Unmount React components
+        ReactDOM.unmountComponentAtNode(d3Container.node());
     };
   }, [zoom, getNodeSize, isLoading, swarmMap, collaborationsProp, swarms]);
 
