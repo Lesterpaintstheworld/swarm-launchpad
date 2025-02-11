@@ -16,7 +16,7 @@ export function useGraphSimulation() {
             .force("x", d3.forceX(width / 2).strength(0.02))  // Reduced x-positioning force
             .force("y", d3.forceY(height / 2).strength(0.02))  // Reduced y-positioning force
             .force("collision", d3.forceCollide()
-                .radius(d => getNodeSize(d.id) + 40)  // Increased padding
+                .radius((d: any) => getNodeSize((d as SimulationNode).id) + 40)  // Added type casting
                 .strength(0.8))  // Increased collision strength
             .velocityDecay(0.6)  // Keep same damping
             .alphaDecay(0.02);   // Keep same cooling
