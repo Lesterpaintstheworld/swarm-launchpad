@@ -29,36 +29,57 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
     // Fetch messages
     useEffect(() => {
         const fetchMessages = async () => {
-            console.log('Starting to fetch messages for collaborations:', collaborations.length);
+            console.log('🚀 Starting message fetch');
+            console.log('Collaborations:', collaborations);
+
             try {
+                // Test with one collaboration first
+                const testCollab = collaborations[0];
+                console.log('Testing first collab:', testCollab);
+                
+                const testResponse = await fetch(`/api/collaborations/${testCollab.id}/messages`);
+                const testData = await testResponse.json();
+                console.log('Test response data:', testData);
+
+                // Now fetch all messages
                 const allMessages = await Promise.all(
-                    collaborations.map(collab => {
-                        console.log(`Fetching messages for collab ${collab.id}`);
-                        return fetch(`/api/collaborations/${collab.id}/messages`)
-                            .then(res => {
-                                console.log(`Response for collab ${collab.id}:`, res.status);
-                                return res.json();
-                            })
-                            .then(data => {
-                                console.log(`Got messages for collab ${collab.id}:`, data.messages?.length || 0);
-                                return data.messages;
-                            })
-                            .catch((err) => {
-                                console.error(`Error fetching messages for collab ${collab.id}:`, err);
-                                return [];
-                            });
+                    collaborations.map(async collab => {
+                        try {
+                            const response = await fetch(`/api/collaborations/${collab.id}/messages`);
+                            const data = await response.json();
+                            console.log(`Messages for collab ${collab.id}:`, data);
+                            return data.messages || [];
+                        } catch (err) {
+                            console.error(`Error fetching messages for collab ${collab.id}:`, err);
+                            return [];
+                        }
                     })
                 );
 
-                // Flatten and sort messages by timestamp
+                // Log the results
+                console.log('All messages fetched:', {
+                    totalArrays: allMessages.length,
+                    totalMessages: allMessages.reduce((acc, arr) => acc + arr.length, 0)
+                });
+
+                // Process messages
                 const sortedMessages = allMessages
                     .flat()
-                    .filter(msg => msg && msg.senderId)
-                    .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+                    .filter(msg => msg && msg.senderId);
 
-                console.log('Total messages after processing:', sortedMessages.length);
-                setMessages(sortedMessages);
-                setCurrentMessageIndex(0);
+                console.log('Messages after filtering:', sortedMessages);
+
+                if (sortedMessages.length > 0) {
+                    setMessages(sortedMessages);
+                    setCurrentMessageIndex(0);
+                    console.log('Set initial messages:', {
+                        count: sortedMessages.length,
+                        first: sortedMessages[0],
+                        last: sortedMessages[sortedMessages.length - 1]
+                    });
+                } else {
+                    console.log('No messages to display');
+                }
             } catch (error) {
                 console.error('Error fetching messages:', error);
             }
@@ -69,7 +90,18 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
 
     // Animate messages
     useEffect(() => {
-        if (!messages.length || currentMessageIndex >= messages.length) return;
+        console.log('Animation effect running:', {
+            messagesCount: messages.length,
+            currentIndex: currentMessageIndex,
+            hasNodes: nodes.length,
+            hasG: !!g,
+            hasDefs: !!defs
+        });
+
+        if (!messages.length || currentMessageIndex >= messages.length) {
+            console.log('No messages to animate or reached end');
+            return;
+        }
 
         // Create message map for finding valid receivers
         const messageMap = new Map<string, string[]>();
