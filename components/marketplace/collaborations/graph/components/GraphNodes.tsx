@@ -3,7 +3,6 @@
 import { useEffect } from 'react';
 import * as d3 from 'd3';
 import ReactDOMServer from 'react-dom/server';
-import ReactDOMServer from 'react-dom/server';
 import { SimulationNode, SwarmData } from '../types';
 import { GraphTooltip } from './GraphTooltip';
 
@@ -136,7 +135,7 @@ export function GraphNodes({
             tooltip.remove();
             document.head.removeChild(style);
         };
-    }, [g, nodes, ecosystemTargets, getNodeSize, simulation, swarmMap, swarms]);
+    }, [g, nodes, ecosystemTargets, getNodeSize, simulation, swarmMap, swarms, onDrag, onDragEnd, onDragStart]);
 
     return null;
 }

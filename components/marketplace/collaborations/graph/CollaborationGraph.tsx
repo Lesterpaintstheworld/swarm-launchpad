@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { GraphTooltip } from './components/GraphTooltip';
 import * as d3 from 'd3';
@@ -16,6 +16,26 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
   const [zoom, setZoom] = useState(1);
   const { swarms, swarmMap, isLoading } = useGraphData();
   const { createSimulation, initializeSimulation, setupDragHandlers } = useGraphSimulation();
+  
+  const handleDragStart = useCallback((event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) => {
+    if (!event.active) simulation.alphaTarget(0.3).restart();
+    const subject = event.subject as SimulationNode;
+    subject.fx = subject.x;
+    subject.fy = subject.y;
+  }, []);
+
+  const handleDrag = useCallback((event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) => {
+    const subject = event.subject as SimulationNode;
+    subject.fx = event.x;
+    subject.fy = event.y;
+  }, []);
+
+  const handleDragEnd = useCallback((event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) => {
+    if (!event.active) simulation.alphaTarget(0);
+    const subject = event.subject as SimulationNode;
+    subject.fx = null;
+    subject.fy = null;
+  }, []);
   const getNodeSize = (swarmId: string): number => {
     const swarm = swarmMap.get(swarmId);
     if (!swarm?.multiple) return 30;
