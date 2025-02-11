@@ -13,21 +13,30 @@ interface GraphLinksProps {
 
 export function GraphLinks({ g, defs, links, calculateWidth }: GraphLinksProps) {
     useEffect(() => {
-        // Add a filter for the compute pulse glow
-        const pulseFilter = defs.append("filter")
+        // Add an improved glow filter for compute pulses
+        const computePulseFilter = defs.append("filter")
             .attr("id", "compute-pulse-glow")
             .attr("width", "300%")
             .attr("height", "300%")
             .attr("x", "-100%")
-            .attr("y", "-100%")
+            .attr("y", "-100%");
+
+        computePulseFilter.append("feGaussianBlur")
+            .attr("stdDeviation", "3")
+            .attr("result", "coloredBlur");
+
+        computePulseFilter.append("feFlood")
+            .attr("flood-color", "#00ff88")
+            .attr("flood-opacity", "0.5");
+
+        computePulseFilter.append("feComposite")
+            .attr("in2", "coloredBlur")
+            .attr("operator", "in");
+
+        computePulseFilter.append("feMerge")
             .html(`
-                <feGaussianBlur stdDeviation="3" result="blur"/>
-                <feFlood flood-color="#00ff88" flood-opacity="0.6"/>
-                <feComposite in2="blur" operator="in"/>
-                <feMerge>
-                    <feMergeNode/>
-                    <feMergeNode in="SourceGraphic"/>
-                </feMerge>
+                <feMergeNode/>
+                <feMergeNode in="SourceGraphic"/>
             `);
 
         // Create gradient for base links
