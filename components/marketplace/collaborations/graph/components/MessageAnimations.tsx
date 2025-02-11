@@ -29,14 +29,25 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
     // Fetch messages
     useEffect(() => {
         const fetchMessages = async () => {
+            console.log('Starting to fetch messages for collaborations:', collaborations.length);
             try {
                 const allMessages = await Promise.all(
-                    collaborations.map(collab =>
-                        fetch(`/api/collaborations/${collab.id}/messages`)
-                            .then(res => res.json())
-                            .then(data => data.messages)
-                            .catch(() => [])
-                    )
+                    collaborations.map(collab => {
+                        console.log(`Fetching messages for collab ${collab.id}`);
+                        return fetch(`/api/collaborations/${collab.id}/messages`)
+                            .then(res => {
+                                console.log(`Response for collab ${collab.id}:`, res.status);
+                                return res.json();
+                            })
+                            .then(data => {
+                                console.log(`Got messages for collab ${collab.id}:`, data.messages?.length || 0);
+                                return data.messages;
+                            })
+                            .catch((err) => {
+                                console.error(`Error fetching messages for collab ${collab.id}:`, err);
+                                return [];
+                            });
+                    })
                 );
 
                 // Flatten and sort messages by timestamp
@@ -45,6 +56,7 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
                     .filter(msg => msg && msg.senderId)
                     .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
 
+                console.log('Total messages after processing:', sortedMessages.length);
                 setMessages(sortedMessages);
                 setCurrentMessageIndex(0);
             } catch (error) {
