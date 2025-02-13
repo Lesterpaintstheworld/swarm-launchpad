@@ -64,9 +64,8 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
         if (!sourceNode || !targetNode) return;
 
         const animationsLayer = g.select('.animations-layer');
-        // Calculate number of dollar signs (1 per 10,000 COMPUTE), no cap
         const numberOfDollars = Math.max(1, Math.floor(amount / 10000));
-        const dollarSpacing = 25; // Space between dollar signs
+        const dollarSpacing = 0.05; // Spacing between dollars along the path (as a fraction of path length)
         const dollarAppearInterval = 100; // Time between each dollar appearing (milliseconds)
 
         // Create a group for all dollar signs
@@ -74,15 +73,29 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
             .attr("class", "token-transfer")
             .style("opacity", 0);
 
+        function createArcPath(source: { x: number, y: number }, target: { x: number, y: number }, isReverse: boolean) {
+            const dx = target.x - source.x;
+            const dy = target.y - source.y;
+            const dr = Math.sqrt(dx * dx + dy * dy);
+            const sweepFlag = isReverse ? "0" : "1";
+            return `M${source.x},${source.y}A${dr},${dr} 0 0,${sweepFlag} ${target.x},${target.y}`;
+        }
+
+        const path = createArcPath(sourceNode, targetNode, true);
+        const pathElement = animationsLayer.append("path")
+            .attr("d", path)
+            .style("display", "none");
+
+        const pathLength = pathElement.node()?.getTotalLength() || 0;
+        const duration = ANIMATION_DURATION;
+        const startTime = Date.now();
+        let dollarSigns: d3.Selection<SVGGElement, unknown, null, undefined>[] = [];
+
         // Create and animate dollar signs one by one
-        let currentDollarIndex = 0;
+        function addNextDollar(index: number) {
+            if (index >= numberOfDollars) return;
 
-        function addNextDollar() {
-            if (currentDollarIndex >= numberOfDollars) return;
-
-            const dollarGroup = tokenGroup.append("g")
-                .attr("transform", `translate(${(currentDollarIndex * dollarSpacing) - ((numberOfDollars-1) * dollarSpacing/2)}, 0)`)
-                .style("opacity", 0);
+            const dollarGroup = tokenGroup.append("g");
 
             dollarGroup.append("circle")
                 .attr("r", 12)
@@ -97,48 +110,33 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
                 .attr("font-size", "12px")
                 .text("$");
 
-            // Fade in the dollar sign
-            dollarGroup.transition()
-                .duration(200)
-                .style("opacity", 1);
+            dollarSigns.push(dollarGroup);
 
-            currentDollarIndex++;
-            if (currentDollarIndex < numberOfDollars) {
-                setTimeout(addNextDollar, dollarAppearInterval);
+            if (index < numberOfDollars - 1) {
+                setTimeout(() => addNextDollar(index + 1), dollarAppearInterval);
             }
         }
-
-        function createArcPath(source: { x: number, y: number }, target: { x: number, y: number }, isReverse: boolean) {
-            const dx = target.x - source.x;
-            const dy = target.y - source.y;
-            const dr = Math.sqrt(dx * dx + dy * dy);
-            const sweepFlag = isReverse ? "0" : "1";
-            return `M${source.x},${source.y}A${dr},${dr} 0 0,${sweepFlag} ${target.x},${target.y}`;
-        }
-
-        const path = createArcPath(sourceNode, targetNode, true);
-        
-        const pathElement = animationsLayer.append("path")
-            .attr("d", path)
-            .style("display", "none");
-
-        const pathLength = pathElement.node()?.getTotalLength() || 0;
-        const duration = ANIMATION_DURATION;
-        const startTime = Date.now();
 
         function animate() {
             const elapsed = Date.now() - startTime;
             const progress = Math.min(elapsed / duration, 1);
 
-            const point = pathElement.node()?.getPointAtLength(progress * pathLength);
-            if (!point) return;
+            // Calculate base opacity for the whole group
+            const groupOpacity = progress < 0.1 ? progress * 10 : 
+                               progress > 0.9 ? (1 - progress) * 10 : 1;
 
-            const opacity = progress < 0.1 ? progress * 10 : 
-                          progress > 0.9 ? (1 - progress) * 10 : 1;
+            tokenGroup.style("opacity", groupOpacity);
 
-            tokenGroup
-                .attr("transform", `translate(${point.x},${point.y})`)
-                .style("opacity", opacity);
+            // Update position for each dollar sign
+            dollarSigns.forEach((dollarSign, index) => {
+                // Calculate offset position for each dollar
+                const dollarProgress = Math.max(0, Math.min(1, progress - (index * dollarSpacing)));
+                const point = pathElement.node()?.getPointAtLength(dollarProgress * pathLength);
+                
+                if (point) {
+                    dollarSign.attr("transform", `translate(${point.x},${point.y})`);
+                }
+            });
 
             if (progress < 1) {
                 requestAnimationFrame(animate);
@@ -155,7 +153,7 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
 
         // Start the animation and begin adding dollar signs
         animate();
-        addNextDollar();
+        addNextDollar(0);
     };
 
     return null;
