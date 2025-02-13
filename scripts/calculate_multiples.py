@@ -10,7 +10,12 @@ load_dotenv()
 
 AIRTABLE_API_KEY = os.getenv('AIRTABLE_API_KEY')
 AIRTABLE_BASE_ID = os.getenv('AIRTABLE_BASE_ID')
-HELIUS_RPC = f"https://mainnet.helius-rpc.com/?api-key={os.getenv('HELIUS_RPC_KEY')}"
+HELIUS_RPC_URL = os.getenv('NEXT_PUBLIC_HELIUS_RPC_URL')
+if not HELIUS_RPC_URL:
+    print("Warning: HELIUS_RPC_URL not found in environment")
+    HELIUS_RPC_URL = "https://api.mainnet-beta.solana.com"
+else:
+    print(f"Using RPC URL: {HELIUS_RPC_URL}")
 PROGRAM_ID = "4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf"
 
 def get_swarms() -> list:
@@ -51,11 +56,23 @@ def get_program_accounts(pool_address: str) -> Dict:
             ]
         }
         
-        response = requests.post(HELIUS_RPC, json=payload)
+        headers = {
+            "Content-Type": "application/json",
+        }
+        
+        print(f"Sending request to {HELIUS_RPC_URL} for pool {pool_address}")
+        response = requests.post(HELIUS_RPC_URL, json=payload, headers=headers)
         response.raise_for_status()
-        return response.json().get('result', [])
+        
+        result = response.json().get('result', [])
+        print(f"Got {len(result)} accounts for pool {pool_address}")
+        return result
+        
     except Exception as e:
         print(f"Error fetching program accounts for pool {pool_address}: {e}")
+        if hasattr(e, 'response'):
+            print(f"Response status: {e.response.status_code}")
+            print(f"Response text: {e.response.text}")
         return []
 
 def parse_pool_data(data: str) -> int:
