@@ -190,9 +190,12 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     // Set up simulation tick handler
     simulation.on("tick", () => {
-        // Update link positions with proper path creation
+        // Update link positions
         linkElements.attr("d", (d: any) => {
-            if (!d.source?.x || !d.source?.y || !d.target?.x || !d.target?.y) return null;
+            if (!d.source?.x || !d.source?.y || !d.target?.x || !d.target?.y) {
+                console.warn('Missing coordinates for link:', d);
+                return null;
+            }
             const dx = d.target.x - d.source.x;
             const dy = d.target.y - d.source.y;
             const dr = Math.sqrt(dx * dx + dy * dy);
