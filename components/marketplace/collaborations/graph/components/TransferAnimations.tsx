@@ -150,11 +150,9 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
         // Check if this is a revenue flow (transfer to shareholders)
         const isRevenueFlow = targetId === 'shareholders';
         
-        const numberOfDollars = isRevenueFlow ? 
-            Math.max(1, Math.floor(amount / 5000)) : // More frequent tokens for revenue (changed from 1000)
-            Math.max(1, Math.floor(amount / 10000)); // Regular token frequency
-        const dollarSpacing = 0.05; // Spacing between dollars along the path
-        const dollarAppearInterval = 100; // Time between each dollar appearing
+        const numberOfDollars = Math.max(1, Math.floor(amount / 10000));
+        const dollarSpacing = 0.1; // Spacing between dollars along the path
+        const dollarAppearInterval = 200; // Time between each dollar appearing
 
         function createArcPath(source: { x: number, y: number }, target: { x: number, y: number }, isReverse: boolean) {
             const dx = target.x - source.x;
