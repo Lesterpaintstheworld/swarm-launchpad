@@ -50,10 +50,11 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
                 console.log('Revenue flows available:', revenueFlows);
                 availableTransfers = revenueFlows.filter(
                     flow => {
-                        const id = flow.source + '-revenue';
+                        const id = `${flow.source.id || flow.source}-revenue`;
                         const isActive = !activeTransfers.has(id);
                         console.log('Checking revenue flow:', {
                             source: flow.source,
+                            sourceId: flow.source.id || flow.source,
                             id,
                             isActive,
                             activeTransfers: Array.from(activeTransfers)
@@ -73,7 +74,7 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
                 ];
                 
                 if (shouldAnimateRevenue) {
-                    const transferId = transfer.source + '-revenue';
+                    const transferId = `${transfer.source.id || transfer.source}-revenue`;
                     setActiveTransfers(prev => {
                         const next = new Set(prev);
                         next.add(transferId);
@@ -81,7 +82,7 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
                     });
                     
                     animateTransfer(
-                        transfer.source,
+                        transfer.source.id || transfer.source,
                         'shareholders',
                         transfer.value,
                         transferId
