@@ -20,9 +20,9 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
     const [messages, setMessages] = useState<Array<{ id: string; senderId: string; timestamp: string }>>([]);
     const [activeMessages, setActiveMessages] = useState<Set<string>>(new Set());
     const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
-    const MAX_CONCURRENT_MESSAGES = 8;
-    const ANIMATION_DURATION = 4000;
-    const NEW_MESSAGE_INTERVAL = 600;
+    const MAX_CONCURRENT_MESSAGES = 15;
+    const ANIMATION_DURATION = 2500;
+    const NEW_MESSAGE_INTERVAL = 400;
 
     // Add envelope icon definition
     useEffect(() => {
@@ -105,19 +105,14 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
             .style("opacity", 0);
 
         // Add envelope visualization
-        envelopeGroup.append("circle")
-            .attr("r", 16)
-            .attr("fill", "#1a1a1a")
-            .attr("stroke", "#ffffff20")
-            .attr("stroke-width", 2);
-
         envelopeGroup.append("use")
             .attr("href", "#envelope-icon")
-            .attr("width", 20)
-            .attr("height", 20)
-            .attr("x", -10)
-            .attr("y", -10)
+            .attr("width", 16)
+            .attr("height", 16)
+            .attr("x", -8)
+            .attr("y", -8)
             .attr("fill", "white")
+            .style("opacity", 0.6)
             .style("filter", "url(#envelope-glow)");
 
         function createArcPath(source: { x: number, y: number }, target: { x: number, y: number }) {
