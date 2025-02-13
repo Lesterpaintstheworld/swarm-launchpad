@@ -92,14 +92,29 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
                 .attr("class", "token-transfer")
                 .style("opacity", 0);
 
-            // Create metallic violet circle
-            dollarGroup.append("circle")
-                .attr("r", 3)  // 4 times smaller
-                .attr("fill", "url(#violet-metallic-gradient)")  // Use gradient fill
-                .attr("stroke", "#a855f7")  // Violet stroke
-                .attr("stroke-width", 1);  // Thinner stroke for smaller circle
+            // Add flame gradient if it doesn't exist
+            if (!defs.select("#flame-gradient").size()) {
+                const flameGradient = defs.append("radialGradient")
+                    .attr("id", "flame-gradient")
+                    .attr("gradientUnits", "objectBoundingBox")
+                    .attr("cx", "0.5")
+                    .attr("cy", "0.5")
+                    .attr("r", "0.5");
 
-            // Add the gradient definition if it doesn't exist
+                flameGradient.append("stop")
+                    .attr("offset", "0%")
+                    .attr("stop-color", "#fef08a"); // Yellow
+
+                flameGradient.append("stop")
+                    .attr("offset", "50%")
+                    .attr("stop-color", "#f97316"); // Orange
+
+                flameGradient.append("stop")
+                    .attr("offset", "100%")
+                    .attr("stop-color", "#dc2626"); // Red
+            }
+
+            // Add the violet gradient definition if it doesn't exist
             if (!defs.select("#violet-metallic-gradient").size()) {
                 const gradient = defs.append("radialGradient")
                     .attr("id", "violet-metallic-gradient")
@@ -124,21 +139,67 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
 
             activeDollars++;
 
+            // Should this token disappear at midpoint? (every other one)
+            const shouldDisappear = index % 2 === 0;
+
             function animateSingleDollar() {
                 const elapsed = Date.now() - startTime;
                 const progress = Math.min(elapsed / duration, 1);
-
-                // Calculate opacity for fade in/out
-                const opacity = progress < 0.1 ? progress * 10 : 
-                              progress > 0.9 ? (1 - progress) * 10 : 1;
 
                 // Calculate position along the path
                 const point = pathElement.node()?.getPointAtLength(progress * pathLength);
                 
                 if (point) {
+                    // Calculate if we're at the midpoint (with some tolerance)
+                    const isMidpoint = Math.abs(progress - 0.5) < 0.05;
+                    
+                    if (shouldDisappear && isMidpoint) {
+                        // Create flame effect
+                        const flameGroup = animationsLayer.append("g")
+                            .attr("transform", `translate(${point.x},${point.y})`);
+
+                        // Add multiple flame particles
+                        for (let i = 0; i < 8; i++) {
+                            const angle = (i * Math.PI * 2) / 8;
+                            const flameParticle = flameGroup.append("circle")
+                                .attr("r", 2)
+                                .attr("fill", "url(#flame-gradient)")
+                                .attr("opacity", 1);
+
+                            // Animate each particle
+                            flameParticle.transition()
+                                .duration(500)
+                                .attr("r", 0.5)
+                                .attr("transform", `translate(${Math.cos(angle) * 10},${Math.sin(angle) * 10})`)
+                                .style("opacity", 0)
+                                .remove();
+                        }
+
+                        // Remove the original token
+                        dollarGroup.remove();
+                        activeDollars--;
+                        
+                        if (activeDollars === 0) {
+                            pathElement.remove();
+                            setActiveTransfers(prev => {
+                                const next = new Set(prev);
+                                next.delete(transferId);
+                                return next;
+                            });
+                        }
+                        return;
+                    }
+
+                    // Normal animation for tokens that continue
+                    const opacity = progress < 0.1 ? progress * 10 : 
+                                  progress > 0.9 ? (1 - progress) * 10 : 1;
+
                     dollarGroup
                         .attr("transform", `translate(${point.x},${point.y})`)
-                        .style("opacity", opacity);
+                        .style("opacity", shouldDisappear ? 
+                            (progress < 0.5 ? opacity : 0) : 
+                            opacity
+                        );
                 }
 
                 if (progress < 1) {
@@ -147,7 +208,6 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
                     dollarGroup.remove();
                     activeDollars--;
                     
-                    // If this was the last dollar, clean up
                     if (activeDollars === 0) {
                         pathElement.remove();
                         setActiveTransfers(prev => {
