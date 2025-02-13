@@ -18,7 +18,9 @@ interface MessageAnimationsProps {
 
 export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize }: MessageAnimationsProps) {
     const [messages, setMessages] = useState<Array<{ id: string; senderId: string; timestamp: string }>>([]);
-    const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+    const MAX_CONCURRENT_MESSAGES = 8;
+    const ANIMATION_DURATION = 4000;
+    const NEW_MESSAGE_INTERVAL = 600;
 
     // Add envelope icon definition
     useEffect(() => {
@@ -59,24 +61,32 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
 
     // Animate messages
     useEffect(() => {
-        if (!messages.length || currentMessageIndex >= messages.length) return;
+        if (!messages.length) return;
 
-        const timer = setTimeout(() => {
-            const message = messages[currentMessageIndex];
+        const activeMessages = new Set<string>();
+
+        const timer = setInterval(() => {
+            if (activeMessages.size >= MAX_CONCURRENT_MESSAGES) return;
+
+            const availableMessages = messages.filter(msg => !activeMessages.has(msg.id));
+            if (availableMessages.length === 0) return;
+
+            const message = availableMessages[Math.floor(Math.random() * availableMessages.length)];
             const possibleTargets = collaborations
                 .filter(c => c.providerSwarm.id === message.senderId || c.clientSwarm.id === message.senderId)
                 .map(c => c.providerSwarm.id === message.senderId ? c.clientSwarm.id : c.providerSwarm.id);
 
             if (possibleTargets.length) {
                 const targetId = possibleTargets[Math.floor(Math.random() * possibleTargets.length)];
-                animateMessage(message.senderId, targetId);
+                activeMessages.add(message.id);
+                animateMessage(message.senderId, targetId, message.id);
             }
-        }, 333);
+        }, NEW_MESSAGE_INTERVAL);
 
         return () => clearTimeout(timer);
-    }, [messages, currentMessageIndex, nodes, g, defs, getNodeSize]);
+    }, [messages, collaborations, nodes, g, defs, getNodeSize]);
 
-    const animateMessage = (sourceId: string, targetId: string) => {
+    const animateMessage = (sourceId: string, targetId: string, messageId: string) => {
         const sourceNode = nodes.find(n => n.id === sourceId);
         const targetNode = nodes.find(n => n.id === targetId);
 
@@ -102,28 +112,41 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
             .attr("fill", "white")
             .style("filter", "url(#envelope-glow)");
 
-        // Animate the envelope
-        const duration = 1000;
+        // Calculate curved path
+        const dx = targetNode.x - sourceNode.x;
+        const dy = targetNode.y - sourceNode.y;
+        const dr = Math.sqrt(dx * dx + dy * dy);
+        const path = `M${sourceNode.x},${sourceNode.y}A${dr},${dr} 0 0,1 ${targetNode.x},${targetNode.y}`;
+        
+        // Create invisible path for animation
+        const pathElement = g.append("path")
+            .attr("d", path)
+            .style("display", "none");
+
+        const pathLength = pathElement.node()?.getTotalLength() || 0;
+        const duration = ANIMATION_DURATION;
         const startTime = Date.now();
 
         function animate() {
             const elapsed = Date.now() - startTime;
             const progress = Math.min(elapsed / duration, 1);
 
-            const x = sourceNode.x + (targetNode.x - sourceNode.x) * progress;
-            const y = sourceNode.y + (targetNode.y - sourceNode.y) * progress;
+            const point = pathElement.node()?.getPointAtLength(progress * pathLength);
+            if (!point) return;
+
             const opacity = progress < 0.1 ? progress * 10 : 
-                           progress > 0.9 ? (1 - progress) * 10 : 1;
+                          progress > 0.9 ? (1 - progress) * 10 : 1;
 
             envelopeGroup
-                .attr("transform", `translate(${x},${y})`)
+                .attr("transform", `translate(${point.x},${point.y})`)
                 .style("opacity", opacity);
 
             if (progress < 1) {
                 requestAnimationFrame(animate);
             } else {
                 envelopeGroup.remove();
-                setCurrentMessageIndex(i => i + 1);
+                pathElement.remove();
+                activeMessages.delete(messageId);
             }
         }
 

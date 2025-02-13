@@ -19,11 +19,13 @@ interface TransferAnimationsProps {
 
 export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize }: TransferAnimationsProps) {
     const [activeTransfers, setActiveTransfers] = useState<Set<string>>(new Set());
+    const MAX_CONCURRENT_TRANSFERS = 8;
+    const ANIMATION_DURATION = 5000;
+    const NEW_TRANSFER_INTERVAL = 800;
 
     useEffect(() => {
-        // Start a new transfer every 1000ms if we have less than 5 active transfers
         const timer = setInterval(() => {
-            if (activeTransfers.size >= 5) return;
+            if (activeTransfers.size >= MAX_CONCURRENT_TRANSFERS) return;
             
             const availableCollaborations = collaborations.filter(
                 collab => !activeTransfers.has(collab.id)
@@ -47,7 +49,7 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
                     collaboration.id
                 );
             }
-        }, 1000);
+        }, NEW_TRANSFER_INTERVAL);
 
         return () => clearInterval(timer);
     }, [activeTransfers, collaborations, nodes, g, defs, getNodeSize]);
@@ -91,7 +93,7 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
         const pathLength = pathElement.node()?.getTotalLength() || 0;
 
         // Animate the token
-        const duration = 3000; // Slower animation (3 seconds)
+        const duration = ANIMATION_DURATION;
         const startTime = Date.now();
 
         function animate() {
