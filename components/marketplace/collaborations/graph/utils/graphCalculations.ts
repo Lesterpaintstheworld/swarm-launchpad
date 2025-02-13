@@ -92,8 +92,9 @@ export function processCollaborations(collaborations: any[], swarms: any[]) {
         })
         .map(swarm => {
             const revenueShare = swarm.revenueShare || 60; // default to 60% if not specified
-            const revenueDistributed = Math.floor((swarm.weeklyRevenue! * revenueShare) / 100);
-            
+            // Add the 50% factor to the calculation
+            const revenueDistributed = Math.floor((swarm.weeklyRevenue! * revenueShare * 0.5) / 100);
+        
             console.log('Creating revenue flow:', {
                 id: swarm.id,
                 weeklyRevenue: swarm.weeklyRevenue,
