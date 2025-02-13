@@ -81,7 +81,6 @@ export function useGraphSimulation() {
 
     return {
         createSimulation,
-        setupGraph
         initializeSimulation,
         setupDragHandlers
     };
