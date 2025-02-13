@@ -63,6 +63,9 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
     // Animate messages
     useEffect(() => {
         if (!messages.length) return;
+        
+        const animationsLayer = g.select('.animations-layer');
+        if (animationsLayer.empty()) return;
 
         const timer = setInterval(() => {
             if (activeMessages.size >= MAX_CONCURRENT_MESSAGES) return;

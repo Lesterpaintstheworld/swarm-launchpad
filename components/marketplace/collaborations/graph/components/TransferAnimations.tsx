@@ -24,6 +24,9 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
     const NEW_TRANSFER_INTERVAL = 800;
 
     useEffect(() => {
+        const animationsLayer = g.select('.animations-layer');
+        if (animationsLayer.empty()) return;
+
         const timer = setInterval(() => {
             if (activeTransfers.size >= MAX_CONCURRENT_TRANSFERS) return;
             
