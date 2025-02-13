@@ -26,7 +26,7 @@ interface TransferAnimationsProps {
     getNodeSize: (id: string) => number;
 }
 
-export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize }: TransferAnimationsProps) {
+export function TransferAnimations({ g, defs, nodes, links, collaborations, getNodeSize }: TransferAnimationsProps) {
     const [activeTransfers, setActiveTransfers] = useState<Set<string>>(new Set());
     const MAX_CONCURRENT_TRANSFERS = 8;
     const ANIMATION_DURATION = 5000;
@@ -36,7 +36,7 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
         const animationsLayer = g.select('.animations-layer');
         if (animationsLayer.empty()) return;
 
-        // Get all links that are revenue flows
+        // Get all links that are revenue flows 
         const revenueFlows = links.filter((link: any) => link.isRevenueFlow);
         
         const timer = setInterval(() => {
