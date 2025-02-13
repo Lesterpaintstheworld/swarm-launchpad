@@ -10,9 +10,10 @@ import { ConnectButton } from '@/components/solana/connectButton';
 import { ListingAccount } from '@/hooks/useLaunchpadProgram/types';
 import { MarketListing } from '../types';
 import { useLaunchpadProgram } from '@/hooks/useLaunchpadProgram/index';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/shadcn/table';
+import { DataTable } from '@/components/ui/datatable';
 import { formatPublicKey } from '@/lib/utils';
 import { PublicKey, VersionedTransaction } from '@solana/web3.js';
+import { SellPositionModal } from '@/components/swarms/sellPositionModal';
 
 export function MarketplaceListings() {
     const { connection } = useConnection();
@@ -27,6 +28,8 @@ export function MarketplaceListings() {
         refresh 
     } = launchpadProgram.useListingsPagination(20);
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     // Transform ListingAccount[] to MarketListing[]
     const listings: MarketListing[] = rawListings.map((listing: ListingAccount) => ({
         id: listing.account.listingId,
@@ -39,56 +42,6 @@ export function MarketplaceListings() {
             icon: '/tokens/compute.svg'
         }
     }));
-
-    const [newListing, setNewListing] = useState({
-        numberOfShares: '',
-        pricePerShare: '',
-        swarmId: '' // Add swarm ID field
-    });
-
-    const handleCreateListing = async () => {
-        if (!connected || !publicKey) {
-            toast.error('Please connect your wallet first');
-            return;
-        }
-
-        setIsLoading(true);
-        try {
-            const listingId = `listing-${Date.now()}`;
-            const { transaction, signers } = await launchpadProgram.createListing.mutateAsync({
-                listingId,
-                numberOfShares: parseInt(newListing.numberOfShares),
-                pricePerShare: parseInt(newListing.pricePerShare),
-                pool: new PublicKey(newListing.swarmId)
-            });
-
-            // Simulate transaction
-            const simulation = await connection.simulateTransaction(transaction);
-            if (simulation.value.err) {
-                throw new Error(`Simulation failed: ${JSON.stringify(simulation.value.err)}`);
-            }
-
-            // Sign transaction
-            if (signers.length > 0) {
-                signers.forEach(signer => transaction.sign([signer]));
-            }
-            const signedTx = await signTransaction!(transaction);
-            
-            // Send and confirm
-            const signature = await connection.sendRawTransaction(signedTx.serialize());
-            await connection.confirmTransaction(signature);
-
-            console.log('Listing created successfully:', { signature, listingId });
-            toast.success('Listing created successfully');
-            refresh();
-            setNewListing({ numberOfShares: '', pricePerShare: '', swarmId: '' });
-        } catch (error) {
-            console.error('Error creating listing:', error);
-            toast.error(`Failed to create listing: ${error}`);
-        } finally {
-            setIsLoading(false);
-        }
-    };
 
     const handleBuyListing = async (listing: ListingAccount) => {
         if (!connected || !publicKey) {
@@ -141,53 +94,79 @@ export function MarketplaceListings() {
         }
     };
 
+    const columns = [
+        {
+            accessorKey: 'swarm_id',
+            header: 'Swarm ID',
+            cell: ({ row }: { row: any }) => <span className="font-medium">{formatPublicKey(row.getValue('swarm_id'))}</span>
+        },
+        {
+            accessorKey: 'number_of_shares',
+            header: 'Shares',
+            cell: ({ row }: { row: any }) => row.getValue('number_of_shares').toLocaleString()
+        },
+        {
+            accessorKey: 'price_per_share',
+            header: 'Price/Share',
+            cell: ({ row }: { row: any }) => row.getValue('price_per_share').toLocaleString()
+        },
+        {
+            accessorKey: 'seller',
+            header: 'Seller',
+            cell: ({ row }: { row: any }) => formatPublicKey(row.getValue('seller'))
+        },
+        {
+            accessorKey: 'total_price',
+            header: 'Total Price',
+            cell: ({ row }: { row: any }) => {
+                const listing = row.original;
+                return (
+                    <div className="flex items-center gap-2">
+                        <span>{(listing.number_of_shares * listing.price_per_share).toLocaleString()}</span>
+                        <img src={listing.token.icon} alt={listing.token.label} className="w-4 h-4" />
+                    </div>
+                );
+            }
+        },
+        {
+            id: 'actions',
+            header: 'Actions',
+            cell: ({ row }: { row: any }) => {
+                const listing = rawListings.find(l => l.account.listingId === row.original.id);
+                return (
+                    <div className="flex gap-2">
+                        <Button 
+                            onClick={() => handleBuyListing(listing!)}
+                            className="bg-green-500/20 text-green-300 hover:bg-green-500/30"
+                        >
+                            Buy
+                        </Button>
+                        {row.original.seller === publicKey?.toString() && (
+                            <Button 
+                                onClick={() => handleCancelListing(listing!)}
+                                className="bg-red-500/20 text-red-300 hover:bg-red-500/30"
+                            >
+                                Cancel
+                            </Button>
+                        )}
+                    </div>
+                );
+            }
+        }
+    ];
+
     return (
         <div className="space-y-8">
             {/* Create Listing Card */}
             <Card className="p-6 bg-white/5 border-amber-500/20 backdrop-blur-sm">
                 <h2 className="text-2xl font-semibold text-white mb-6">Create New Listing</h2>
                 {connected ? (
-                    <div className="space-y-4">
-                        <div>
-                            <label className="text-sm text-white/60 mb-2 block">Swarm ID</label>
-                            <Input
-                                type="text"
-                                value={newListing.swarmId}
-                                onChange={(e) => setNewListing(prev => ({ ...prev, swarmId: e.target.value }))}
-                                className="bg-white/5 border-amber-500/20"
-                                placeholder="Enter Swarm ID"
-                            />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="text-sm text-white/60 mb-2 block">Number of Shares</label>
-                                <Input
-                                    type="number"
-                                    value={newListing.numberOfShares}
-                                    onChange={(e) => setNewListing(prev => ({ ...prev, numberOfShares: e.target.value }))}
-                                    className="bg-white/5 border-amber-500/20"
-                                    placeholder="Enter number of shares"
-                                />
-                            </div>
-                            <div>
-                                <label className="text-sm text-white/60 mb-2 block">Price per Share</label>
-                                <Input
-                                    type="number"
-                                    value={newListing.pricePerShare}
-                                    onChange={(e) => setNewListing(prev => ({ ...prev, pricePerShare: e.target.value }))}
-                                    className="bg-white/5 border-amber-500/20"
-                                    placeholder="Enter price in $COMPUTE"
-                                />
-                            </div>
-                        </div>
-                        <Button
-                            onClick={handleCreateListing}
-                            disabled={isLoading}
-                            className="w-full bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 border border-amber-500/20"
-                        >
-                            {isLoading ? 'Creating...' : 'Create Listing'}
-                        </Button>
-                    </div>
+                    <Button
+                        onClick={() => setIsModalOpen(true)}
+                        className="w-full bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 border border-amber-500/20"
+                    >
+                        Create Listing
+                    </Button>
                 ) : (
                     <ConnectButton className="w-full" />
                 )}
@@ -200,83 +179,24 @@ export function MarketplaceListings() {
                     <Button 
                         onClick={refresh}
                         disabled={isLoadingListings}
-                        className="bg-white/5 hover:bg-white/10 text-white"
+                        className="bg-white/5 hover:bg-white/10 text-foreground"
                     >
                         Refresh
                     </Button>
                 </div>
 
-                <div className="rounded-md border w-full">
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>Swarm ID</TableHead>
-                                <TableHead>Shares</TableHead>
-                                <TableHead>Price/Share</TableHead>
-                                <TableHead>Seller</TableHead>
-                                <TableHead>Total Price</TableHead>
-                                <TableHead>Actions</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {!isLoadingListings && listings.map((listing) => (
-                                <TableRow key={listing.id}>
-                                    <TableCell className="font-medium">{formatPublicKey(listing.swarm_id)}</TableCell>
-                                    <TableCell>{listing.number_of_shares.toLocaleString()}</TableCell>
-                                    <TableCell>{listing.price_per_share.toLocaleString()}</TableCell>
-                                    <TableCell>{formatPublicKey(listing.seller)}</TableCell>
-                                    <TableCell>
-                                        <div className="flex items-center gap-2">
-                                            <span>{(listing.number_of_shares * listing.price_per_share).toLocaleString()}</span>
-                                            <img src={listing.token.icon} alt={listing.token.label} className="w-4 h-4" />
-                                        </div>
-                                    </TableCell>
-                                    <TableCell>
-                                        <div className="flex gap-2">
-                                            <Button 
-                                                onClick={() => handleBuyListing(rawListings.find(l => l.account.listingId === listing.id)!)}
-                                                className="bg-green-500/20 text-green-300 hover:bg-green-500/30"
-                                            >
-                                                Buy
-                                            </Button>
-                                            {listing.seller === publicKey?.toString() && (
-                                                <Button 
-                                                    onClick={() => handleCancelListing(rawListings.find(l => l.account.listingId === listing.id)!)}
-                                                    className="bg-red-500/20 text-red-300 hover:bg-red-500/30"
-                                                >
-                                                    Cancel
-                                                </Button>
-                                            )}
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </div>
-
-                {listings.length > 0 && (
-                    <div className="flex gap-2 mt-4">
-                        <Button 
-                            onClick={pagination.previousPage}
-                            disabled={!pagination.hasPreviousPage}
-                            className="bg-white/5 hover:bg-white/10 text-white"
-                        >
-                            Previous
-                        </Button>
-                        <span className="text-white/60">
-                            Page {pagination.currentPage} of {pagination.totalPages}
-                        </span>
-                        <Button 
-                            onClick={pagination.nextPage}
-                            disabled={!pagination.hasNextPage}
-                            className="bg-white/5 hover:bg-white/10 text-white"
-                        >
-                            Next
-                        </Button>
-                    </div>
-                )}
+                <DataTable
+                    columns={columns}
+                    data={!isLoadingListings ? listings : []}
+                    pagination={true}
+                    searchable={true}
+                />
             </Card>
+
+            <SellPositionModal
+                isModalOpen={isModalOpen}
+                closeModal={() => setIsModalOpen(false)}
+            />
         </div>
     );
 } 
