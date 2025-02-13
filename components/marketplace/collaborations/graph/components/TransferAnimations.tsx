@@ -42,6 +42,13 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
         const timer = setInterval(() => {
             if (activeTransfers.size >= MAX_CONCURRENT_TRANSFERS) return;
             
+            const getSourceId = (source: string | number | SimulationNode) => {
+                if (typeof source === 'object' && source !== null && 'id' in source) {
+                    return source.id;
+                }
+                return String(source);
+            };
+
             // Randomly choose between regular collaborations and revenue flows
             const shouldAnimateRevenue = Math.random() < 0.5; // 50% chance for revenue flows
             
@@ -50,11 +57,11 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
                 console.log('Revenue flows available:', revenueFlows);
                 availableTransfers = revenueFlows.filter(
                     flow => {
-                        const id = `${flow.source.id || flow.source}-revenue`;
+                        const id = `${getSourceId(flow.source)}-revenue`;
                         const isActive = !activeTransfers.has(id);
                         console.log('Checking revenue flow:', {
                             source: flow.source,
-                            sourceId: flow.source.id || flow.source,
+                            sourceId: getSourceId(flow.source),
                             id,
                             isActive,
                             activeTransfers: Array.from(activeTransfers)
@@ -75,7 +82,7 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
                 ];
                 
                 if (shouldAnimateRevenue) {
-                    const transferId = `${transfer.source.id || transfer.source}-revenue`;
+                    const transferId = `${getSourceId(transfer.source)}-revenue`;
                     setActiveTransfers(prev => {
                         const next = new Set(prev);
                         next.add(transferId);
@@ -83,7 +90,7 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
                     });
                     
                     animateTransfer(
-                        transfer.source.id || transfer.source,
+                        getSourceId(transfer.source),
                         'shareholders',
                         transfer.value,
                         transferId
