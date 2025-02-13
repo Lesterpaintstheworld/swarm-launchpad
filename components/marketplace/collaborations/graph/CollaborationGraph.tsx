@@ -185,7 +185,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     initializeSimulation(newSimulation, nodes, links);
 
     // Set up the graph components
-    setupGraph(g, defs, nodes, links, newSimulation);
+    setupGraph(gElement, defsElement, nodes, links, newSimulation);
 
     // Center the view
     const initialTransform = d3.zoomIdentity
