@@ -93,16 +93,16 @@ export function GraphNodes({
 
         // Add circles to nodes with glowing effect
         node.append("circle")
-            .attr("r", (d: SimulationNode) => getNodeSize(d.id))
+            .attr("r", (d: SimulationNode) => d.id === 'shareholders' ? getNodeSize(d.id) * 2 : getNodeSize(d.id))
             .attr("fill", (d: SimulationNode) => d.id === 'shareholders' ? 
                 "rgba(250, 204, 21, 0.2)" : 
                 "rgba(236, 72, 153, 0.2)")
             .attr("stroke", (d: SimulationNode) => d.id === 'shareholders' ? 
                 "rgba(250, 204, 21, 0.5)" : 
                 "rgba(236, 72, 153, 0.5)")
-            .attr("stroke-width", 3)
+            .attr("stroke-width", d => d.id === 'shareholders' ? 4 : 3)
             .style("filter", (d: SimulationNode) => d.id === 'shareholders' ?
-                "drop-shadow(0 0 10px rgba(250, 204, 21, 0.3))" : 
+                "drop-shadow(0 0 15px rgba(250, 204, 21, 0.4))" : 
                 "drop-shadow(0 0 10px rgba(236, 72, 153, 0.3))");
 
         // Add pulsing yellow glow for ecosystem targets
@@ -119,11 +119,19 @@ export function GraphNodes({
         // Add images to nodes
         node.append("image")
             .attr("xlink:href", (d: SimulationNode) => d.image)
-            .attr("x", (d: SimulationNode) => -getNodeSize(d.id) * 1.1)
-            .attr("y", (d: SimulationNode) => -getNodeSize(d.id) * 1.1)
-            .attr("width", (d: SimulationNode) => getNodeSize(d.id) * 2.2)
-            .attr("height", (d: SimulationNode) => getNodeSize(d.id) * 2.2)
-            .attr("clip-path", (d: SimulationNode) => `circle(${getNodeSize(d.id)}px)`);
+            .attr("x", (d: SimulationNode) => d.id === 'shareholders' ? 
+                -getNodeSize(d.id) * 2.2 : 
+                -getNodeSize(d.id) * 1.1)
+            .attr("y", (d: SimulationNode) => d.id === 'shareholders' ? 
+                -getNodeSize(d.id) * 2.2 : 
+                -getNodeSize(d.id) * 1.1)
+            .attr("width", (d: SimulationNode) => d.id === 'shareholders' ? 
+                getNodeSize(d.id) * 4.4 : 
+                getNodeSize(d.id) * 2.2)
+            .attr("height", (d: SimulationNode) => d.id === 'shareholders' ? 
+                getNodeSize(d.id) * 4.4 : 
+                getNodeSize(d.id) * 2.2)
+            .attr("clip-path", (d: SimulationNode) => `circle(${d.id === 'shareholders' ? getNodeSize(d.id) * 2 : getNodeSize(d.id)}px)`);
 
         // Add labels to nodes
         node.append("text")

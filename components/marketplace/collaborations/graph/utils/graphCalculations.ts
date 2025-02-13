@@ -57,6 +57,7 @@ export function processCollaborations(collaborations: any[]) {
         id: 'shareholders',
         name: 'Shareholders',
         image: '/images/shareholders.png',
+        isShareholderNode: true
     }));
 
     const nodes = Array.from(uniqueSwarms).map(s => JSON.parse(s as string));
