@@ -20,9 +20,9 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
     const [messages, setMessages] = useState<Array<{ id: string; senderId: string; timestamp: string }>>([]);
     const [activeMessages, setActiveMessages] = useState<Set<string>>(new Set());
     const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
-    const MAX_CONCURRENT_MESSAGES = 15;
+    const MAX_CONCURRENT_MESSAGES = 25;
     const ANIMATION_DURATION = 2500;
-    const NEW_MESSAGE_INTERVAL = 400;
+    const NEW_MESSAGE_INTERVAL = 300;
 
     // Add envelope icon definition
     useEffect(() => {
