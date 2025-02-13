@@ -128,7 +128,7 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
             const dy = target.y - source.y;
             const dr = Math.sqrt(dx * dx + dy * dy);
             // Change sweep flag for revenue flows (to shareholders)
-            const sweepFlag = targetId === 'shareholders' ? "0" : isReverse ? "0" : "1";
+            const sweepFlag = targetId === 'shareholders' ? "1" : isReverse ? "0" : "1";
             return `M${source.x},${source.y}A${dr},${dr} 0 0,${sweepFlag} ${target.x},${target.y}`;
         }
 
