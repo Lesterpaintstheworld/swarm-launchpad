@@ -12,8 +12,8 @@ export function useGraphSimulation() {
                 .strength(0.25))
             .force("charge", d3.forceManyBody()
                 .strength((d: SimulationNode) => d.id === 'shareholders' ? -5000 : -1500))
-            .force("x", d3.forceX(width / 2).strength(0.06))
-            .force("y", d3.forceY(height / 2).strength(0.06))
+            .force("x", d3.forceX(width / 2).strength((d: SimulationNode) => d.id === 'shareholders' ? 1 : 0.06))
+            .force("y", d3.forceY(height / 2).strength((d: SimulationNode) => d.id === 'shareholders' ? 1 : 0.06))
             .force("collision", d3.forceCollide()
                 .radius((d: any) => {
                     const baseRadius = getNodeSize((d as SimulationNode).id);
@@ -25,6 +25,18 @@ export function useGraphSimulation() {
             .velocityDecay(0.45)
             .alphaDecay(0.01)
             .alpha(0.3);
+
+        // Fix shareholders node to center
+        simulation.on("tick", () => {
+            simulation.nodes().forEach(node => {
+                if (node.id === 'shareholders') {
+                    node.x = width / 2;
+                    node.y = height / 2;
+                    node.fx = width / 2; // Fix x position
+                    node.fy = height / 2; // Fix y position
+                }
+            });
+        });
 
         return simulation;
     }, []);
