@@ -309,6 +309,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
               g={g} 
               defs={defs} 
               nodes={nodes} 
+              links={links}
               collaborations={collaborationsProp} 
               getNodeSize={getNodeSize} 
             />
