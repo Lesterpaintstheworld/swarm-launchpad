@@ -1,5 +1,12 @@
 'use client';
 
+const graphStyles = {
+  cursor: 'grab',
+  ':active': {
+    cursor: 'grabbing'
+  }
+};
+
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import * as d3 from 'd3';
 import ReactDOMServer from 'react-dom/server';
@@ -143,6 +150,12 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     const width = svgRef.current.clientWidth;
     const height = svgRef.current.clientHeight;
 
+    // Create container group for all elements
+    const g = svg.append("g")
+        .attr("class", "graph-container");
+    
+    const defs = svg.append("defs");
+
     // Create zoom behavior
     const zoomBehavior = d3.zoom<SVGSVGElement, unknown>()
         .scaleExtent([0.1, 4])
@@ -153,21 +166,13 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     // Apply zoom to svg
     svg.call(zoomBehavior);
 
-    // Create container group for all elements
-    const g = svg.append("g")
-        .attr("class", "graph-container");
-    
-    const defs = svg.append("defs");
-
     // Create new simulation
     const newSimulation = createSimulation(width, height, getNodeSize);
     
-    // Initialize nodes with positions in a circle
-    const radius = Math.min(width, height) / 3;
-    nodes.forEach((node, i) => {
-        const angle = (2 * Math.PI * i) / nodes.length;
-        node.x = width / 2 + radius * Math.cos(angle);
-        node.y = height / 2 + radius * Math.sin(angle);
+    // Initialize nodes positions in the center
+    nodes.forEach(node => {
+        node.x = width / 2;
+        node.y = height / 2;
     });
 
     // Initialize simulation with nodes and links
@@ -176,14 +181,17 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     // Set up the graph components
     setupGraph(g, defs, nodes, links, newSimulation);
 
-    // Center the graph initially
+    // Center the view
     const initialTransform = d3.zoomIdentity
-        .translate(width / 2, height / 2)
-        .scale(1);
+        .translate(0, 0)
+        .scale(0.8);
     svg.call(zoomBehavior.transform, initialTransform);
 
     // Update simulation reference
     setSimulation(newSimulation);
+
+    // Add some initial force to spread nodes
+    newSimulation.alpha(1).restart();
 
     return () => {
         newSimulation.stop();
@@ -215,7 +223,10 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       <svg 
         ref={svgRef} 
         className="w-full h-[600px] bg-black/20 rounded-xl"
-        style={{ minHeight: '600px' }}
+        style={{ 
+          minHeight: '600px',
+          ...graphStyles
+        }}
       />
     </div>
   );
