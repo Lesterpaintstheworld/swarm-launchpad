@@ -204,7 +204,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     // Start the simulation
     simulation.alpha(1).restart();
-  };
+  }, [calculateWidth, getNodeSize, memoizedHandlers]);
 
   useEffect(() => {
     if (!svgRef.current || isLoading || !collaborationsProp?.length) return;
