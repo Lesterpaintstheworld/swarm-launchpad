@@ -65,13 +65,8 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
 
         const animationsLayer = g.select('.animations-layer');
         const numberOfDollars = Math.max(1, Math.floor(amount / 10000));
-        const dollarSpacing = 0.05; // Spacing between dollars along the path (as a fraction of path length)
-        const dollarAppearInterval = 100; // Time between each dollar appearing (milliseconds)
-
-        // Create a group for all dollar signs
-        const tokenGroup = animationsLayer.append("g")
-            .attr("class", "token-transfer")
-            .style("opacity", 0);
+        const dollarSpacing = 0.05; // Spacing between dollars along the path
+        const dollarAppearInterval = 100; // Time between each dollar appearing
 
         function createArcPath(source: { x: number, y: number }, target: { x: number, y: number }, isReverse: boolean) {
             const dx = target.x - source.x;
@@ -88,14 +83,14 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
 
         const pathLength = pathElement.node()?.getTotalLength() || 0;
         const duration = ANIMATION_DURATION;
-        const startTime = Date.now();
-        let dollarSigns: d3.Selection<SVGGElement, unknown, null, undefined>[] = [];
+        let activeDollars = 0;
 
-        // Create and animate dollar signs one by one
-        function addNextDollar(index: number) {
-            if (index >= numberOfDollars) return;
-
-            const dollarGroup = tokenGroup.append("g");
+        // Create and animate a single dollar sign
+        function animateDollar(index: number) {
+            const startTime = Date.now();
+            const dollarGroup = animationsLayer.append("g")
+                .attr("class", "token-transfer")
+                .style("opacity", 0);
 
             dollarGroup.append("circle")
                 .attr("r", 12)
@@ -110,50 +105,50 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
                 .attr("font-size", "12px")
                 .text("$");
 
-            dollarSigns.push(dollarGroup);
+            activeDollars++;
 
-            if (index < numberOfDollars - 1) {
-                setTimeout(() => addNextDollar(index + 1), dollarAppearInterval);
-            }
-        }
+            function animateSingleDollar() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
 
-        function animate() {
-            const elapsed = Date.now() - startTime;
-            const progress = Math.min(elapsed / duration, 1);
+                // Calculate opacity for fade in/out
+                const opacity = progress < 0.1 ? progress * 10 : 
+                              progress > 0.9 ? (1 - progress) * 10 : 1;
 
-            // Calculate base opacity for the whole group
-            const groupOpacity = progress < 0.1 ? progress * 10 : 
-                               progress > 0.9 ? (1 - progress) * 10 : 1;
-
-            tokenGroup.style("opacity", groupOpacity);
-
-            // Update position for each dollar sign
-            dollarSigns.forEach((dollarSign, index) => {
-                // Calculate offset position for each dollar
-                const dollarProgress = Math.max(0, Math.min(1, progress - (index * dollarSpacing)));
-                const point = pathElement.node()?.getPointAtLength(dollarProgress * pathLength);
+                // Calculate position along the path
+                const point = pathElement.node()?.getPointAtLength(progress * pathLength);
                 
                 if (point) {
-                    dollarSign.attr("transform", `translate(${point.x},${point.y})`);
+                    dollarGroup
+                        .attr("transform", `translate(${point.x},${point.y})`)
+                        .style("opacity", opacity);
                 }
-            });
 
-            if (progress < 1) {
-                requestAnimationFrame(animate);
-            } else {
-                tokenGroup.remove();
-                pathElement.remove();
-                setActiveTransfers(prev => {
-                    const next = new Set(prev);
-                    next.delete(transferId);
-                    return next;
-                });
+                if (progress < 1) {
+                    requestAnimationFrame(animateSingleDollar);
+                } else {
+                    dollarGroup.remove();
+                    activeDollars--;
+                    
+                    // If this was the last dollar, clean up
+                    if (activeDollars === 0) {
+                        pathElement.remove();
+                        setActiveTransfers(prev => {
+                            const next = new Set(prev);
+                            next.delete(transferId);
+                            return next;
+                        });
+                    }
+                }
             }
+
+            animateSingleDollar();
         }
 
-        // Start the animation and begin adding dollar signs
-        animate();
-        addNextDollar(0);
+        // Start creating dollar signs with intervals
+        for (let i = 0; i < numberOfDollars; i++) {
+            setTimeout(() => animateDollar(i), i * dollarAppearInterval);
+        }
     };
 
     return null;
