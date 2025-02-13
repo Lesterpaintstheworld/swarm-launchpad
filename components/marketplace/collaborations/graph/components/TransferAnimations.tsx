@@ -106,7 +106,7 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
         const isRevenueFlow = targetId === 'shareholders';
         
         const numberOfDollars = isRevenueFlow ? 
-            Math.max(1, Math.floor(amount / 1000)) : // More frequent tokens for revenue
+            Math.max(1, Math.floor(amount / 5000)) : // More frequent tokens for revenue (changed from 1000)
             Math.max(1, Math.floor(amount / 10000)); // Regular token frequency
         const dollarSpacing = 0.05; // Spacing between dollars along the path
         const dollarAppearInterval = 100; // Time between each dollar appearing
@@ -137,9 +137,9 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
 
             // Create just the token circle, no background circle needed
             dollarGroup.append("circle")
-                .attr("r", 3)
-                .attr("fill", "#8b5cf6")  // Solid violet color
-                .attr("stroke", "#a855f7")
+                .attr("r", isRevenueFlow ? 12 : 3)  // Bigger tokens for revenue flows
+                .attr("fill", isRevenueFlow ? "#fbbf24" : "#8b5cf6")  // Yellow for revenue, violet for regular
+                .attr("stroke", isRevenueFlow ? "#fde68a" : "#a855f7")
                 .attr("stroke-width", 1);
 
             // Add flame gradient if it doesn't exist
