@@ -15,7 +15,7 @@ interface TransferAnimationsProps {
     g: d3.Selection<SVGGElement, unknown, null, undefined>;
     defs: d3.Selection<SVGDefsElement, unknown, null, undefined>;
     nodes: SimulationNode[];
-    links: Array<any>;
+    links: SimulationLink[];
     collaborations: Array<{
         id: string;
         providerSwarm: { id: string };
