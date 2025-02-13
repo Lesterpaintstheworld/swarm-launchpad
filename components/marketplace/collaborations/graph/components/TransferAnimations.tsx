@@ -82,7 +82,7 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
         const dx = targetNode.x - sourceNode.x;
         const dy = targetNode.y - sourceNode.y;
         const dr = Math.sqrt(dx * dx + dy * dy);
-        const path = `M${sourceNode.x},${sourceNode.y}A${dr},${dr} 0 0,1 ${targetNode.x},${targetNode.y}`;
+        const path = `M${sourceNode.x},${sourceNode.y}A${dr},${dr} 0 0,0 ${targetNode.x},${targetNode.y}`;
         
         // Create a path element for the token to follow (invisible)
         const pathElement = g.append("path")
