@@ -82,11 +82,15 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
             .attr("font-size", "12px")
             .text("$");
 
-        // Calculate the path data for the curve
-        const dx = targetNode.x - sourceNode.x;
-        const dy = targetNode.y - sourceNode.y;
-        const dr = Math.sqrt(dx * dx + dy * dy);
-        const path = `M${sourceNode.x},${sourceNode.y}A${dr},${dr} 0 0,1 ${targetNode.x},${targetNode.y}`;
+        function createArcPath(source: { x: number, y: number }, target: { x: number, y: number }, isReverse: boolean) {
+            const dx = target.x - source.x;
+            const dy = target.y - source.y;
+            const dr = Math.sqrt(dx * dx + dy * dy);
+            const sweepFlag = isReverse ? "0" : "1";
+            return `M${source.x},${source.y}A${dr},${dr} 0 0,${sweepFlag} ${target.x},${target.y}`;
+        }
+
+        const path = createArcPath(sourceNode, targetNode, true); // true because transfers go in reverse
         
         // Create a path element for the token to follow (invisible)
         const pathElement = animationsLayer.append("path")

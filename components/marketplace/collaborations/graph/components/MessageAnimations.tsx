@@ -119,11 +119,15 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
             .attr("fill", "white")
             .style("filter", "url(#envelope-glow)");
 
-        // Calculate curved path
-        const dx = targetNode.x - sourceNode.x;
-        const dy = targetNode.y - sourceNode.y;
-        const dr = Math.sqrt(dx * dx + dy * dy);
-        const path = `M${sourceNode.x},${sourceNode.y}A${dr},${dr} 0 0,1 ${targetNode.x},${targetNode.y}`;
+        function createArcPath(source: { x: number, y: number }, target: { x: number, y: number }, isReverse: boolean) {
+            const dx = target.x - source.x;
+            const dy = target.y - source.y;
+            const dr = Math.sqrt(dx * dx + dy * dy);
+            const sweepFlag = isReverse ? "0" : "1";
+            return `M${source.x},${source.y}A${dr},${dr} 0 0,${sweepFlag} ${target.x},${target.y}`;
+        }
+
+        const path = createArcPath(sourceNode, targetNode, false);
         
         // Create invisible path for animation
         const pathElement = animationsLayer.append("path")

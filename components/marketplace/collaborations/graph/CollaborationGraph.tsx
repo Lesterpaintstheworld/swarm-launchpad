@@ -1,5 +1,12 @@
 'use client';
 
+function createArcPath(source: { x: number, y: number }, target: { x: number, y: number }) {
+  const dx = target.x - source.x;
+  const dy = target.y - source.y;
+  const dr = Math.sqrt(dx * dx + dy * dy);
+  return `M${source.x},${source.y}A${dr},${dr} 0 0,1 ${target.x},${target.y}`;
+}
+
 const graphStyles = {
   cursor: 'grab',
   ':active': {
