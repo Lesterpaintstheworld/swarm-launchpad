@@ -18,6 +18,7 @@ import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import * as d3 from 'd3';
 import ReactDOMServer from 'react-dom/server';
 import { GraphTooltip } from './components/GraphTooltip';
+import { GraphLinks } from './components/GraphLinks';
 import { CollaborationGraphProps, SimulationNode, SimulationLink } from './types';
 import { useGraphData } from './hooks/useGraphData';
 import { useGraphSimulation } from './hooks/useGraphSimulation';
@@ -307,6 +308,12 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       >
         {g && defs && (
           <>
+            <GraphLinks 
+              g={g}
+              defs={defs}
+              links={links}
+              calculateWidth={calculateWidth}
+            />
             <MessageAnimations 
               g={g} 
               defs={defs} 
