@@ -127,7 +127,8 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
             const dx = target.x - source.x;
             const dy = target.y - source.y;
             const dr = Math.sqrt(dx * dx + dy * dy);
-            const sweepFlag = isReverse ? "0" : "1";
+            // Change sweep flag for revenue flows (to shareholders)
+            const sweepFlag = targetId === 'shareholders' ? "0" : isReverse ? "0" : "1";
             return `M${source.x},${source.y}A${dr},${dr} 0 0,${sweepFlag} ${target.x},${target.y}`;
         }
 
@@ -182,8 +183,8 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
 
             activeDollars++;
 
-            // Should this token disappear at midpoint? (every other one)
-            const shouldDisappear = index % 2 === 0;
+            // Remove shouldDisappear check for revenue flows
+            const shouldDisappear = !isRevenueFlow && index % 2 === 0;
 
             function animateSingleDollar() {
                 const animate = () => {
@@ -194,7 +195,8 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
                     if (point) {
                         const isMidpoint = Math.abs(progress - 0.5) < 0.05;
                         
-                        if (shouldDisappear && isMidpoint) {
+                        // Only do flame effect for non-revenue flows
+                        if (!isRevenueFlow && shouldDisappear && isMidpoint) {
                             const flameGroup = animationsLayer.append("g")
                                 .attr("transform", `translate(${point.x},${point.y})`);
 
@@ -233,7 +235,7 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
 
                         dollarGroup
                             .attr("transform", `translate(${point.x},${point.y})`)
-                            .style("opacity", shouldDisappear ? 
+                            .style("opacity", shouldDisappear && !isRevenueFlow ? 
                                 (progress < 0.5 ? opacity : 0) : 
                                 opacity
                             );
