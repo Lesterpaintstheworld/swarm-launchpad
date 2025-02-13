@@ -119,15 +119,25 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
             .attr("fill", "white")
             .style("filter", "url(#envelope-glow)");
 
-        function createArcPath(source: { x: number, y: number }, target: { x: number, y: number }, isReverse: boolean) {
+        function createArcPath(source: { x: number, y: number }, target: { x: number, y: number }) {
             const dx = target.x - source.x;
             const dy = target.y - source.y;
             const dr = Math.sqrt(dx * dx + dy * dy);
-            const sweepFlag = isReverse ? "0" : "1";
+        
+            // Determine if this is a reverse direction message
+            const collaboration = collaborations.find(c => 
+                (c.providerSwarm.id === sourceId && c.clientSwarm.id === targetId) ||
+                (c.clientSwarm.id === sourceId && c.providerSwarm.id === targetId)
+            );
+        
+            // Use sweep flag 1 if source is provider, 0 if source is client
+            const isSourceProvider = collaboration?.providerSwarm.id === sourceId;
+            const sweepFlag = isSourceProvider ? "1" : "0";
+        
             return `M${source.x},${source.y}A${dr},${dr} 0 0,${sweepFlag} ${target.x},${target.y}`;
         }
 
-        const path = createArcPath(sourceNode, targetNode, false);
+        const path = createArcPath(sourceNode, targetNode);
         
         // Create invisible path for animation
         const pathElement = animationsLayer.append("path")
