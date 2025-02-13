@@ -79,10 +79,13 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     links: SimulationLink[],
     simulation: d3.Simulation<SimulationNode, SimulationLink>
   ) => {
-    if (!g || !defs) {
-      console.warn('Graph container or defs not available');
+    if (!g || !defs || !svgRef.current) {
+      console.warn('Graph container, defs, or SVG ref not available');
       return;
     }
+
+    const width = svgRef.current.clientWidth;
+    const height = svgRef.current.clientHeight;
 
     // Create layers in specific order (bottom to top)
     const linksLayer = g.append("g").attr("class", "links-layer");
@@ -102,7 +105,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       .attr("offset", "100%")
       .attr("stop-color", "rgba(147, 51, 234, 0.3)");
 
-    // Create links in the links layer
+    // Create links with proper visibility
     const linkElements = linksLayer.selectAll("path")
       .data(links)
       .join("path")
@@ -118,13 +121,12 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       })
       .attr("stroke-width", d => {
           if ((d as any).isRevenueFlow) {
-              // Make revenue flow links wider based on the amount
               return calculateWidth(d.value) * 1.5;
           }
           return (d as any).invisible ? 0 : calculateWidth(d.value);
       })
-      .attr("stroke-opacity", d => (d as any).invisible ? 0 : 1)
-      .attr("fill", "none");
+      .attr("fill", "none")
+      .attr("opacity", 1); // Make sure opacity is set to 1
 
     // Create nodes in the nodes layer
     const nodeElements = nodesLayer
