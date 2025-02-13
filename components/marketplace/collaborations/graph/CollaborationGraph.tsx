@@ -24,6 +24,8 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
   const svgRef = useRef<SVGSVGElement>(null);
   const { swarms, swarmMap, isLoading } = useGraphData();
   const [simulation, setSimulation] = useState<d3.Simulation<SimulationNode, SimulationLink> | null>(null);
+  const [g, setG] = useState<d3.Selection<SVGGElement, unknown, null, undefined> | null>(null);
+  const [defs, setDefs] = useState<d3.Selection<SVGDefsElement, unknown, null, undefined> | null>(null);
   const { createSimulation, initializeSimulation, setupDragHandlers } = useGraphSimulation();
 
   const { nodes, links, ecosystemTargets, maxPrice, minPrice } = useMemo(() => {
@@ -153,10 +155,12 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     const height = svgRef.current.clientHeight;
 
     // Create container group for all elements
-    const g = svg.append("g")
+    const gElement = svg.append("g")
         .attr("class", "graph-container");
+    setG(gElement);
     
-    const defs = svg.append("defs");
+    const defsElement = svg.append("defs");
+    setDefs(defsElement);
 
     // Create zoom behavior
     const zoomBehavior = d3.zoom<SVGSVGElement, unknown>()
@@ -182,10 +186,6 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     // Set up the graph components
     setupGraph(g, defs, nodes, links, newSimulation);
-
-    // Add animations
-    const messageAnimations = new MessageAnimations({ g, defs, nodes, collaborations: collaborationsProp, getNodeSize });
-    const transferAnimations = new TransferAnimations({ g, defs, nodes, collaborations: collaborationsProp, getNodeSize });
 
     // Center the view
     const initialTransform = d3.zoomIdentity
@@ -233,7 +233,26 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
           minHeight: '600px',
           ...graphStyles
         }}
-      />
+      >
+        {g && defs && (
+          <>
+            <MessageAnimations 
+              g={g} 
+              defs={defs} 
+              nodes={nodes} 
+              collaborations={collaborationsProp} 
+              getNodeSize={getNodeSize} 
+            />
+            <TransferAnimations 
+              g={g} 
+              defs={defs} 
+              nodes={nodes} 
+              collaborations={collaborationsProp} 
+              getNodeSize={getNodeSize} 
+            />
+          </>
+        )}
+      </svg>
     </div>
   );
 }
