@@ -95,10 +95,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       .attr("offset", "100%")
       .attr("stop-color", "rgba(147, 51, 234, 0.3)");
 
-    // Create links
-    const linkGroup = g.append("g")
-      .attr("class", "links");
-
+    // Create links in the links layer
     linksLayer.selectAll("path")
       .data(links)
       .join("path")
