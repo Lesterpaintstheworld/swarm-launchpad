@@ -33,6 +33,44 @@ def get_swarms() -> list:
         print(f"Error fetching swarms: {e}")
         return []
 
+def update_swarm_multiple(swarm_id: str, multiple: float) -> None:
+    """Update swarm's multiple in Airtable"""
+    try:
+        # First find the record ID by querying with swarmId
+        response = requests.get(
+            f"https://api.airtable.com/v0/{AIRTABLE_BASE_ID}/Swarms?filterByFormula={{swarmId}}=\"{swarm_id}\"",
+            headers={
+                "Authorization": f"Bearer {AIRTABLE_API_KEY}",
+            }
+        )
+        response.raise_for_status()
+        data = response.json()
+        
+        if not data['records'] or len(data['records']) == 0:
+            print(f"No record found for swarm {swarm_id}")
+            return
+            
+        record_id = data['records'][0]['id']
+        
+        # Update the record with new multiple
+        update_response = requests.patch(
+            f"https://api.airtable.com/v0/{AIRTABLE_BASE_ID}/Swarms/{record_id}",
+            headers={
+                "Authorization": f"Bearer {AIRTABLE_API_KEY}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "fields": {
+                    "multiple": multiple
+                }
+            }
+        )
+        update_response.raise_for_status()
+        print(f"Updated multiple for {swarm_id} to {multiple:.2f}x")
+        
+    except Exception as e:
+        print(f"Error updating multiple for swarm {swarm_id}: {e}")
+
 def get_program_accounts(pool_address: str) -> Dict:
     """Fetch pool data from Solana"""
     try:
@@ -160,6 +198,9 @@ def main():
         # Calculate multiple (current price / initial price)
         initial_price = calculate_share_price(0)  # Price at 0 shares sold
         multiple = current_price / initial_price if initial_price > 0 else 1
+        
+        # Update multiple in Airtable
+        update_swarm_multiple(swarm_data.get('swarmId'), multiple)
         
         result = {
             'name': swarm_data.get('name'),
