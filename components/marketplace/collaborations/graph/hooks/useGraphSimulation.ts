@@ -46,10 +46,44 @@ export function useGraphSimulation() {
         nodes: SimulationNode[],
         links: SimulationLink[]
     ) => {
+        // First set the nodes
         simulation.nodes(nodes);
+
+        // Create a Set of valid node IDs for quick lookup
+        const nodeIds = new Set(nodes.map(node => node.id));
+
+        // Filter out invalid links and convert string IDs to node references
+        const validLinks = links
+            .filter(link => {
+                const sourceId = typeof link.source === 'string' ? link.source : link.source.id;
+                const targetId = typeof link.target === 'string' ? link.target : link.target.id;
+                
+                const sourceExists = nodeIds.has(sourceId);
+                const targetExists = nodeIds.has(targetId);
+                
+                if (!sourceExists) {
+                    console.warn(`Source node not found: ${sourceId}`);
+                }
+                if (!targetExists) {
+                    console.warn(`Target node not found: ${targetId}`);
+                }
+                
+                return sourceExists && targetExists;
+            })
+            .map(link => ({
+                ...link,
+                source: typeof link.source === 'string' ? 
+                    nodes.find(n => n.id === link.source)! : 
+                    link.source,
+                target: typeof link.target === 'string' ? 
+                    nodes.find(n => n.id === link.target)! : 
+                    link.target
+            }));
+
+        // Set the valid links
         const linkForce = simulation.force<d3.ForceLink<SimulationNode, SimulationLink>>("link");
         if (linkForce) {
-            linkForce.links(links);
+            linkForce.links(validLinks);
         }
     }, []);
 
