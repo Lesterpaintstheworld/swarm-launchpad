@@ -169,15 +169,15 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
                         for (let i = 0; i < 8; i++) {
                             const angle = (i * Math.PI * 2) / 8;
                             const flameParticle = flameGroup.append("circle")
-                                .attr("r", 2)
+                                .attr("r", 3)
                                 .attr("fill", "url(#flame-gradient)")
                                 .attr("opacity", 1);
 
                             // Animate each particle
                             flameParticle.transition()
                                 .duration(500)
-                                .attr("r", 0.5)
-                                .attr("transform", `translate(${Math.cos(angle) * 10},${Math.sin(angle) * 10})`)
+                                .attr("r", 1)
+                                .attr("transform", `translate(${Math.cos(angle) * 15},${Math.sin(angle) * 15})`)
                                 .style("opacity", 0)
                                 .remove();
                         }
