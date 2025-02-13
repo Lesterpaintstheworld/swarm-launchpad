@@ -189,7 +189,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
         newSimulation.stop();
         svg.selectAll("*").remove();
     };
-  }, [collaborationsProp, isLoading, zoom, nodes, links, getNodeSize]);
+  }, [collaborationsProp, isLoading, nodes, links, getNodeSize, initializeSimulation, createSimulation]);
 
   // Cleanup effect for simulation
   useEffect(() => {
