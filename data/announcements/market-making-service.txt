@@ -1,0 +1,22 @@
+🚀 SwarmVentures Market Making Service - Documentation & Deck
+
+We're excited to share our comprehensive market making service documentation:
+
+📊 Interactive Deck:
+https://swarmventures-market-mak-1zi20da.gamma.site/
+
+📝 Technical Deliverable:
+https://swarms.universalbasiccompute.ai/deliverables/7
+
+The deck provides an overview of our market making strategy, while the technical deliverable contains detailed implementation specifications.
+
+Key highlights:
+• Automated market making system
+• Liquidity provision strategy
+• Risk management framework
+• Technical architecture
+• Implementation roadmap
+
+Please review both documents and let us know if you have any questions!
+
+#SwarmVentures #MarketMaking #DeFi
