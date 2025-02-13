@@ -153,7 +153,7 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
 
             // Create just the token circle
             dollarGroup.append("circle")
-                .attr("r", isDistributedRevenue ? 12 : 3)  // Bigger only for distributed revenue
+                .attr("r", isDistributedRevenue ? 6 : 3)  // Changed from 12 to 6 for distributed revenue
                 .attr("fill", isDistributedRevenue ? "#fbbf24" : "#8b5cf6")  // Yellow for distributed revenue, violet for others
                 .attr("stroke", isDistributedRevenue ? "#fde68a" : "#a855f7")
                 .attr("stroke-width", 1);
