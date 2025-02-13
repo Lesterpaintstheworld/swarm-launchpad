@@ -17,6 +17,8 @@ import { useGraphSimulation } from './hooks/useGraphSimulation';
 import { processCollaborations, calculateLinkWidth } from './utils/graphCalculations';
 import { GraphControls } from './components/GraphControls';
 import { GraphNodes } from './components/GraphNodes';
+import { MessageAnimations } from './components/MessageAnimations';
+import { TransferAnimations } from './components/TransferAnimations';
 
 export function CollaborationGraph({ collaborations: collaborationsProp }: CollaborationGraphProps) {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -180,6 +182,10 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     // Set up the graph components
     setupGraph(g, defs, nodes, links, newSimulation);
+
+    // Add animations
+    const messageAnimations = new MessageAnimations({ g, defs, nodes, collaborations: collaborationsProp, getNodeSize });
+    const transferAnimations = new TransferAnimations({ g, defs, nodes, collaborations: collaborationsProp, getNodeSize });
 
     // Center the view
     const initialTransform = d3.zoomIdentity
