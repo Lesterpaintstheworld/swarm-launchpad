@@ -188,18 +188,20 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     // Set up simulation tick handler
     simulation.on("tick", () => {
-      // Update link positions
-      linkElements.attr("d", (d: any) => {
-        const dx = d.target.x - d.source.x;
-        const dy = d.target.y - d.source.y;
-        const dr = Math.sqrt(dx * dx + dy * dy);
-        return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
-      });
+        // Update link positions with proper path creation
+        linkElements.attr("d", (d: any) => {
+            if (!d.source?.x || !d.source?.y || !d.target?.x || !d.target?.y) return null;
+            const dx = d.target.x - d.source.x;
+            const dy = d.target.y - d.source.y;
+            const dr = Math.sqrt(dx * dx + dy * dy);
+            return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
+        });
 
-      // Update node positions
-      nodeElements.attr("transform", (d: any) => {
-        return `translate(${d.x},${d.y})`;
-      });
+        // Update node positions
+        nodeElements.attr("transform", (d: any) => {
+            if (!d.x || !d.y) return null;
+            return `translate(${d.x},${d.y})`;
+        });
     });
 
     // Start the simulation
