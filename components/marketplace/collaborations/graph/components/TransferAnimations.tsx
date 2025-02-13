@@ -15,6 +15,7 @@ interface TransferAnimationsProps {
     g: d3.Selection<SVGGElement, unknown, null, undefined>;
     defs: d3.Selection<SVGDefsElement, unknown, null, undefined>;
     nodes: SimulationNode[];
+    links: Array<any>;
     collaborations: Array<{
         id: string;
         providerSwarm: { id: string };
@@ -34,35 +35,64 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
         const animationsLayer = g.select('.animations-layer');
         if (animationsLayer.empty()) return;
 
+        // Get all links that are revenue flows
+        const revenueFlows = links.filter((link: any) => link.isRevenueFlow);
+        
         const timer = setInterval(() => {
             if (activeTransfers.size >= MAX_CONCURRENT_TRANSFERS) return;
             
-            const availableCollaborations = collaborations.filter(
-                collab => !activeTransfers.has(collab.id)
-            );
+            // Randomly choose between regular collaborations and revenue flows
+            const shouldAnimateRevenue = Math.random() < 0.3; // 30% chance for revenue flows
             
-            if (availableCollaborations.length > 0) {
-                const collaboration = availableCollaborations[
-                    Math.floor(Math.random() * availableCollaborations.length)
+            let availableTransfers;
+            if (shouldAnimateRevenue) {
+                availableTransfers = revenueFlows.filter(
+                    flow => !activeTransfers.has(flow.source + '-revenue')
+                );
+            } else {
+                availableTransfers = collaborations.filter(
+                    collab => !activeTransfers.has(collab.id)
+                );
+            }
+            
+            if (availableTransfers.length > 0) {
+                const transfer = availableTransfers[
+                    Math.floor(Math.random() * availableTransfers.length)
                 ];
                 
-                setActiveTransfers(prev => {
-                    const next = new Set(prev);
-                    next.add(collaboration.id);
-                    return next;
-                });
-                
-                animateTransfer(
-                    collaboration.clientSwarm.id,
-                    collaboration.providerSwarm.id,
-                    collaboration.price,
-                    collaboration.id
-                );
+                if (shouldAnimateRevenue) {
+                    const transferId = transfer.source + '-revenue';
+                    setActiveTransfers(prev => {
+                        const next = new Set(prev);
+                        next.add(transferId);
+                        return next;
+                    });
+                    
+                    animateTransfer(
+                        transfer.source,
+                        'shareholders',
+                        transfer.value,
+                        transferId
+                    );
+                } else {
+                    setActiveTransfers(prev => {
+                        const next = new Set(prev);
+                        next.add(transfer.id);
+                        return next;
+                    });
+                    
+                    animateTransfer(
+                        transfer.clientSwarm.id,
+                        transfer.providerSwarm.id,
+                        transfer.price,
+                        transfer.id
+                    );
+                }
             }
         }, NEW_TRANSFER_INTERVAL);
 
         return () => clearInterval(timer);
-    }, [activeTransfers, collaborations, nodes, g, defs, getNodeSize]);
+    }, [activeTransfers, collaborations, nodes, g, defs, getNodeSize, links]);
 
     const animateTransfer = (sourceId: string, targetId: string, amount: number, transferId: string) => {
         const sourceNode = nodes.find(n => n.id === sourceId);
