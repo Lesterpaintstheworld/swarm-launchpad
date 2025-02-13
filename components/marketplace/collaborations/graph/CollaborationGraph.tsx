@@ -252,7 +252,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     // Center the view
     const initialTransform = d3.zoomIdentity
         .translate(width/4, height/4)
-        .scale(0.8);
+        .scale(0.6);  // More zoomed out view
     svg.call(zoomBehavior.transform, initialTransform);
 
     // Update simulation reference
