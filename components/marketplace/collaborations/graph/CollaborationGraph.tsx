@@ -72,7 +72,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
   }, [swarmMap]);
 
 
-  const setupGraph = (
+  const setupGraph = useCallback((
     g: d3.Selection<SVGGElement, unknown, null, undefined> | null,
     defs: d3.Selection<SVGDefsElement, unknown, null, undefined> | null,
     nodes: SimulationNode[],
