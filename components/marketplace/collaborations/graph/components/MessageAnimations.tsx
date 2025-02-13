@@ -98,7 +98,8 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
 
         if (!sourceNode || !targetNode) return;
 
-        const envelopeGroup = g.append("g")
+        const animationsLayer = g.select('.animations-layer');
+        const envelopeGroup = animationsLayer.append("g")
             .attr("class", "message-envelope")
             .style("opacity", 0);
 
@@ -125,7 +126,7 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
         const path = `M${sourceNode.x},${sourceNode.y}A${dr},${dr} 0 0,0 ${targetNode.x},${targetNode.y}`;
         
         // Create invisible path for animation
-        const pathElement = g.append("path")
+        const pathElement = animationsLayer.append("path")
             .attr("d", path)
             .style("display", "none");
 

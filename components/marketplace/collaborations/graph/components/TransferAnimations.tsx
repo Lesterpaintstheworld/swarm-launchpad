@@ -63,7 +63,8 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
 
         if (!sourceNode || !targetNode) return;
 
-        const tokenGroup = g.append("g")
+        const animationsLayer = g.select('.animations-layer');
+        const tokenGroup = animationsLayer.append("g")
             .attr("class", "token-transfer")
             .style("opacity", 0);
 
@@ -88,7 +89,7 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
         const path = `M${sourceNode.x},${sourceNode.y}A${dr},${dr} 0 0,0 ${targetNode.x},${targetNode.y}`;
         
         // Create a path element for the token to follow (invisible)
-        const pathElement = g.append("path")
+        const pathElement = animationsLayer.append("path")
             .attr("d", path)
             .style("display", "none");
 

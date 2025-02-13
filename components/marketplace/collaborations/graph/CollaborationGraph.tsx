@@ -94,7 +94,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     const linkGroup = g.append("g")
       .attr("class", "links");
 
-    linkGroup.selectAll("path")
+    linksLayer.selectAll("path")
       .data(links)
       .join("path")
       .attr("class", "link-path")
@@ -159,14 +159,9 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     const width = svgRef.current.clientWidth;
     const height = svgRef.current.clientHeight;
 
-    // Create container group for all elements with proper layering
+    // Create container group
     const gElement = svg.append("g")
         .attr("class", "graph-container");
-    
-    // Create layer groups
-    gElement.append("g").attr("class", "links-layer");
-    gElement.append("g").attr("class", "animations-layer");
-    gElement.append("g").attr("class", "nodes-layer");
     
     setG(gElement);
     
