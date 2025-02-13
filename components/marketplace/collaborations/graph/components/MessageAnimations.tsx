@@ -19,6 +19,7 @@ interface MessageAnimationsProps {
 export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize }: MessageAnimationsProps) {
     const [messages, setMessages] = useState<Array<{ id: string; senderId: string; timestamp: string }>>([]);
     const [activeMessages, setActiveMessages] = useState<Set<string>>(new Set());
+    const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
     const MAX_CONCURRENT_MESSAGES = 8;
     const ANIMATION_DURATION = 4000;
     const NEW_MESSAGE_INTERVAL = 600;
