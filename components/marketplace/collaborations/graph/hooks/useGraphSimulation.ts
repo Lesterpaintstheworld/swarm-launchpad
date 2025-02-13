@@ -4,6 +4,12 @@ import { useCallback } from 'react';
 import * as d3 from 'd3';
 import { SimulationNode, SimulationLink } from '../types';
 
+const getNodeId = (node: string | number | SimulationNode): string => {
+    if (typeof node === 'string') return node;
+    if (typeof node === 'number') return node.toString();
+    return node.id;
+};
+
 export function useGraphSimulation() {
     const createSimulation = useCallback((width: number, height: number, getNodeSize: (id: string) => number) => {
         const simulation = d3.forceSimulation<SimulationNode>()
@@ -57,8 +63,8 @@ export function useGraphSimulation() {
         // Filter out invalid links and convert string IDs to node references
         const validLinks = links
             .filter(link => {
-                const sourceId = typeof link.source === 'string' ? link.source : link.source.id;
-                const targetId = typeof link.target === 'string' ? link.target : link.target.id;
+                const sourceId = getNodeId(link.source);
+                const targetId = getNodeId(link.target);
                 
                 const sourceExists = nodeIds.has(sourceId);
                 const targetExists = nodeIds.has(targetId);
@@ -74,11 +80,11 @@ export function useGraphSimulation() {
             })
             .map(link => ({
                 ...link,
-                source: typeof link.source === 'string' ? 
-                    nodes.find(n => n.id === link.source)! : 
+                source: typeof link.source === 'string' || typeof link.source === 'number' ? 
+                    nodes.find(n => n.id === getNodeId(link.source))! : 
                     link.source,
-                target: typeof link.target === 'string' ? 
-                    nodes.find(n => n.id === link.target)! : 
+                target: typeof link.target === 'string' || typeof link.target === 'number' ? 
+                    nodes.find(n => n.id === getNodeId(link.target))! : 
                     link.target
             }));
 
