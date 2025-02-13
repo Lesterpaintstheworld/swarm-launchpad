@@ -66,12 +66,17 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
 
   const setupGraph = (
-    g: d3.Selection<SVGGElement, unknown, null, undefined>,
-    defs: d3.Selection<SVGDefsElement, unknown, null, undefined>,
+    g: d3.Selection<SVGGElement, unknown, null, undefined> | null,
+    defs: d3.Selection<SVGDefsElement, unknown, null, undefined> | null,
     nodes: SimulationNode[],
     links: SimulationLink[],
     simulation: d3.Simulation<SimulationNode, SimulationLink>
   ) => {
+    if (!g || !defs) {
+      console.warn('Graph container or defs not available');
+      return;
+    }
+
     // Add gradient definitions
     const gradient = defs.append("linearGradient")
       .attr("id", "link-gradient")
