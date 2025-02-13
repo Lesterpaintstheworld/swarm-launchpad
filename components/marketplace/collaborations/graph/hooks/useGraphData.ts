@@ -9,11 +9,14 @@ export function useGraphData() {
     const [swarmMap, setSwarmMap] = useState<Map<string, SwarmData>>(new Map());
     const [isLoading, setIsLoading] = useState(true);
 
-    const memoizedProcessData = useCallback((swarmsData, collaborationsData) => {
+    const memoizedProcessData = useCallback((
+        swarmsData: SwarmData[], 
+        collaborationsData: Collaboration[]
+    ) => {
         setSwarms(swarmsData);
         setLocalCollaborations(collaborationsData);
         
-        const map = new Map();
+        const map = new Map<string, SwarmData>();
         swarmsData.forEach((swarm: SwarmData) => {
             map.set(swarm.id, swarm);
         });
