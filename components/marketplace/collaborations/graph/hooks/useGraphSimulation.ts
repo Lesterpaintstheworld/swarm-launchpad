@@ -11,7 +11,7 @@ export function useGraphSimulation() {
                 .id((d: SimulationNode) => d.id)
                 .strength(0.25))
             .force("charge", d3.forceManyBody()
-                .strength(-1000))
+                .strength(-1500))
             .force("x", d3.forceX(width / 2).strength(0.06))
             .force("y", d3.forceY(height / 2).strength(0.06))
             .force("collision", d3.forceCollide()
