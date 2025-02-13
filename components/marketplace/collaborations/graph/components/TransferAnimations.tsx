@@ -10,7 +10,6 @@ const globalAnimationFrame = () => {
     }
 };
 import * as d3 from 'd3';
-import { SimulationNode } from '../types';
 
 interface TransferAnimationsProps {
     g: d3.Selection<SVGGElement, unknown, null, undefined>;
