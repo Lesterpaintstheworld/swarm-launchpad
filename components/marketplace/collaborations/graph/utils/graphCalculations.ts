@@ -52,6 +52,13 @@ export function processCollaborations(collaborations: any[]) {
         }
     });
 
+    // Add Shareholders node
+    uniqueSwarms.add(JSON.stringify({
+        id: 'shareholders',
+        name: 'Shareholders',
+        image: '/images/shareholders.png',
+    }));
+
     const nodes = Array.from(uniqueSwarms).map(s => JSON.parse(s as string));
     console.log('Created nodes:', nodes);
 
@@ -60,6 +67,7 @@ export function processCollaborations(collaborations: any[]) {
     const maxPrice = Math.max(...prices);
     const minPrice = Math.min(...prices);
 
+    // Create regular links
     const links = filteredCollaborations.map(collab => ({
         source: collab.providerSwarm.id,
         target: collab.clientSwarm.id,
@@ -67,6 +75,16 @@ export function processCollaborations(collaborations: any[]) {
         strength: ((collab.price || minPrice) / maxPrice) * 0.3 + 0.2,
         serviceName: collab.serviceName
     }));
+
+    // Add invisible link between Shareholders and kinos
+    links.push({
+        source: 'shareholders',
+        target: 'kinos',
+        value: minPrice,
+        strength: 0.3,
+        serviceName: 'ownership',
+        invisible: true
+    });
 
     console.log('Created links:', links);
 

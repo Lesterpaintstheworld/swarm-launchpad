@@ -107,9 +107,9 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       .data(links)
       .join("path")
       .attr("class", "link-path")
-      .attr("stroke", "url(#link-gradient)")
-      .attr("stroke-width", d => calculateWidth(d.value))
-      .attr("stroke-opacity", 1)
+      .attr("stroke", d => (d as any).invisible ? "none" : "url(#link-gradient)")
+      .attr("stroke-width", d => (d as any).invisible ? 0 : calculateWidth(d.value))
+      .attr("stroke-opacity", d => (d as any).invisible ? 0 : 1)
       .attr("fill", "none");
 
     // Create nodes in the nodes layer

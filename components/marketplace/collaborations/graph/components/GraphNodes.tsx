@@ -94,10 +94,16 @@ export function GraphNodes({
         // Add circles to nodes with glowing effect
         node.append("circle")
             .attr("r", (d: SimulationNode) => getNodeSize(d.id))
-            .attr("fill", "rgba(236, 72, 153, 0.2)")
-            .attr("stroke", "rgba(236, 72, 153, 0.5)")
+            .attr("fill", (d: SimulationNode) => d.id === 'shareholders' ? 
+                "rgba(250, 204, 21, 0.2)" : 
+                "rgba(236, 72, 153, 0.2)")
+            .attr("stroke", (d: SimulationNode) => d.id === 'shareholders' ? 
+                "rgba(250, 204, 21, 0.5)" : 
+                "rgba(236, 72, 153, 0.5)")
             .attr("stroke-width", 3)
-            .style("filter", "drop-shadow(0 0 10px rgba(236, 72, 153, 0.3))");
+            .style("filter", (d: SimulationNode) => d.id === 'shareholders' ?
+                "drop-shadow(0 0 10px rgba(250, 204, 21, 0.3))" : 
+                "drop-shadow(0 0 10px rgba(236, 72, 153, 0.3))");
 
         // Add pulsing yellow glow for ecosystem targets
         node.filter((d: SimulationNode) => ecosystemTargets.has(d.id))
