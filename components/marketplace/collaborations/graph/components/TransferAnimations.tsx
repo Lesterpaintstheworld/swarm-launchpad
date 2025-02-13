@@ -64,23 +64,34 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
         if (!sourceNode || !targetNode) return;
 
         const animationsLayer = g.select('.animations-layer');
+        // Calculate number of dollar signs (1 per 10,000 COMPUTE)
+        const numberOfDollars = Math.max(1, Math.min(5, Math.floor(amount / 10000)));
+        const dollarSpacing = 25; // Space between dollar signs
+        const totalWidth = (numberOfDollars - 1) * dollarSpacing;
+
+        // Create a group for all dollar signs
         const tokenGroup = animationsLayer.append("g")
             .attr("class", "token-transfer")
             .style("opacity", 0);
 
-        // Add token visualization
-        tokenGroup.append("circle")
-            .attr("r", 12)
-            .attr("fill", "#2563eb")
-            .attr("stroke", "#60a5fa")
-            .attr("stroke-width", 2);
+        // Create multiple dollar signs
+        for (let i = 0; i < numberOfDollars; i++) {
+            const dollarGroup = tokenGroup.append("g")
+                .attr("transform", `translate(${(i * dollarSpacing) - (totalWidth/2)}, 0)`);
 
-        tokenGroup.append("text")
-            .attr("text-anchor", "middle")
-            .attr("dy", "0.3em")
-            .attr("fill", "white")
-            .attr("font-size", "12px")
-            .text("$");
+            dollarGroup.append("circle")
+                .attr("r", 12)
+                .attr("fill", "#2563eb")
+                .attr("stroke", "#60a5fa")
+                .attr("stroke-width", 2);
+
+            dollarGroup.append("text")
+                .attr("text-anchor", "middle")
+                .attr("dy", "0.3em")
+                .attr("fill", "white")
+                .attr("font-size", "12px")
+                .text("$");
+        }
 
         function createArcPath(source: { x: number, y: number }, target: { x: number, y: number }, isReverse: boolean) {
             const dx = target.x - source.x;
