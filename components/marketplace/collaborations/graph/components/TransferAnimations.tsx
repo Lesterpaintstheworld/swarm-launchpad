@@ -1,6 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
+const frameCallbacks = new Set<() => void>();
+const globalAnimationFrame = () => {
+    frameCallbacks.forEach(cb => cb());
+    if (frameCallbacks.size > 0) {
+        requestAnimationFrame(globalAnimationFrame);
+    }
+};
 import * as d3 from 'd3';
 import { SimulationNode } from '../types';
 
@@ -150,39 +157,62 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
             const shouldDisappear = index % 2 === 0;
 
             function animateSingleDollar() {
-                const elapsed = Date.now() - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-
-                // Calculate position along the path
-                const point = pathElement.node()?.getPointAtLength(progress * pathLength);
-                
-                if (point) {
-                    // Calculate if we're at the midpoint (with some tolerance)
-                    const isMidpoint = Math.abs(progress - 0.5) < 0.05;
+                const animate = () => {
+                    const elapsed = Date.now() - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const point = pathElement.node()?.getPointAtLength(progress * pathLength);
                     
-                    if (shouldDisappear && isMidpoint) {
-                        // Create flame effect
-                        const flameGroup = animationsLayer.append("g")
-                            .attr("transform", `translate(${point.x},${point.y})`);
+                    if (point) {
+                        const isMidpoint = Math.abs(progress - 0.5) < 0.05;
+                        
+                        if (shouldDisappear && isMidpoint) {
+                            const flameGroup = animationsLayer.append("g")
+                                .attr("transform", `translate(${point.x},${point.y})`);
 
-                        // Add multiple flame particles
-                        for (let i = 0; i < 8; i++) {
-                            const angle = (i * Math.PI * 2) / 8;
-                            const flameParticle = flameGroup.append("circle")
-                                .attr("r", 3)
-                                .attr("fill", "url(#flame-gradient)")
-                                .attr("opacity", 1);
+                            for (let i = 0; i < 8; i++) {
+                                const angle = (i * Math.PI * 2) / 8;
+                                const flameParticle = flameGroup.append("circle")
+                                    .attr("r", 3)
+                                    .attr("fill", "url(#flame-gradient)")
+                                    .attr("opacity", 1);
 
-                            // Animate each particle
-                            flameParticle.transition()
-                                .duration(500)
-                                .attr("r", 1)
-                                .attr("transform", `translate(${Math.cos(angle) * 15},${Math.sin(angle) * 15})`)
-                                .style("opacity", 0)
-                                .remove();
+                                flameParticle.transition()
+                                    .duration(500)
+                                    .attr("r", 1)
+                                    .attr("transform", `translate(${Math.cos(angle) * 15},${Math.sin(angle) * 15})`)
+                                    .style("opacity", 0)
+                                    .remove();
+                            }
+
+                            dollarGroup.remove();
+                            activeDollars--;
+                            
+                            if (activeDollars === 0) {
+                                pathElement.remove();
+                                setActiveTransfers(prev => {
+                                    const next = new Set(prev);
+                                    next.delete(transferId);
+                                    return next;
+                                });
+                            }
+                            frameCallbacks.delete(animate);
+                            return false;
                         }
 
-                        // Remove the original token
+                        const opacity = progress < 0.1 ? progress * 10 : 
+                                      progress > 0.9 ? (1 - progress) * 10 : 1;
+
+                        dollarGroup
+                            .attr("transform", `translate(${point.x},${point.y})`)
+                            .style("opacity", shouldDisappear ? 
+                                (progress < 0.5 ? opacity : 0) : 
+                                opacity
+                            );
+                    }
+
+                    if (progress < 1) {
+                        return true;
+                    } else {
                         dollarGroup.remove();
                         activeDollars--;
                         
@@ -194,35 +224,14 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
                                 return next;
                             });
                         }
-                        return;
+                        frameCallbacks.delete(animate);
+                        return false;
                     }
+                };
 
-                    // Normal animation for tokens that continue
-                    const opacity = progress < 0.1 ? progress * 10 : 
-                                  progress > 0.9 ? (1 - progress) * 10 : 1;
-
-                    dollarGroup
-                        .attr("transform", `translate(${point.x},${point.y})`)
-                        .style("opacity", shouldDisappear ? 
-                            (progress < 0.5 ? opacity : 0) : 
-                            opacity
-                        );
-                }
-
-                if (progress < 1) {
-                    requestAnimationFrame(animateSingleDollar);
-                } else {
-                    dollarGroup.remove();
-                    activeDollars--;
-                    
-                    if (activeDollars === 0) {
-                        pathElement.remove();
-                        setActiveTransfers(prev => {
-                            const next = new Set(prev);
-                            next.delete(transferId);
-                            return next;
-                        });
-                    }
+                frameCallbacks.add(animate);
+                if (frameCallbacks.size === 1) {
+                    requestAnimationFrame(globalAnimationFrame);
                 }
             }
 
