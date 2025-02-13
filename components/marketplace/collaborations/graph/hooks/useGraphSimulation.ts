@@ -11,11 +11,16 @@ export function useGraphSimulation() {
                 .id((d: SimulationNode) => d.id)
                 .strength(0.25))
             .force("charge", d3.forceManyBody()
-                .strength(-1500))
+                .strength((d: SimulationNode) => d.id === 'shareholders' ? -5000 : -1500))
             .force("x", d3.forceX(width / 2).strength(0.06))
             .force("y", d3.forceY(height / 2).strength(0.06))
             .force("collision", d3.forceCollide()
-                .radius((d: any) => getNodeSize((d as SimulationNode).id) + 35)
+                .radius((d: any) => {
+                    const baseRadius = getNodeSize((d as SimulationNode).id);
+                    return (d as SimulationNode).id === 'shareholders' ? 
+                        baseRadius * 6 :  // Larger collision radius for shareholders
+                        baseRadius + 35;
+                })
                 .strength(0.8))
             .velocityDecay(0.45)
             .alphaDecay(0.01)
