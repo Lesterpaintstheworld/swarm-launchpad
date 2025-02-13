@@ -93,40 +93,42 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     const nodesLayer = g.append("g").attr("class", "nodes-layer");
 
     // Add gradient definitions
-    const gradient = defs.append("linearGradient")
+    defs.append("linearGradient")
       .attr("id", "link-gradient")
-      .attr("gradientUnits", "userSpaceOnUse");
-
-    gradient.append("stop")
-      .attr("offset", "0%")
-      .attr("stop-color", "rgba(147, 51, 234, 0.3)");
-
-    gradient.append("stop")
-      .attr("offset", "100%")
-      .attr("stop-color", "rgba(147, 51, 234, 0.3)");
+      .attr("gradientUnits", "userSpaceOnUse")
+      .selectAll("stop")
+      .data([
+        { offset: "0%", color: "rgba(147, 51, 234, 0.3)" },
+        { offset: "100%", color: "rgba(147, 51, 234, 0.3)" }
+      ])
+      .join("stop")
+      .attr("offset", d => d.offset)
+      .attr("stop-color", d => d.color);
 
     // Create links with proper visibility
-    const linkElements = linksLayer.selectAll("path")
+    const linkElements = linksLayer
+      .selectAll("path")
       .data(links)
       .join("path")
       .attr("class", "link-path")
       .attr("stroke", d => {
-          if ((d as any).isRevenueFlow) {
-              return "rgba(234, 179, 8, 0.3)";  // Yellow for revenue flows
-          }
-          if ((d as any).isShareholderLink) {
-              return "rgba(234, 179, 8, 0.15)";  // Lighter yellow for shareholder links
-          }
-          return "url(#link-gradient)";  // Default gradient for other links
+        if ((d as any).isRevenueFlow) {
+          return "rgba(234, 179, 8, 0.3)";
+        }
+        if ((d as any).isShareholderLink) {
+          return "rgba(234, 179, 8, 0.15)";
+        }
+        return "url(#link-gradient)";
       })
       .attr("stroke-width", d => {
-          if ((d as any).isRevenueFlow) {
-              return calculateWidth(d.value) * 1.5;
-          }
-          return (d as any).invisible ? 0 : calculateWidth(d.value);
+        if ((d as any).isRevenueFlow) {
+          return calculateWidth(d.value) * 1.5;
+        }
+        return (d as any).invisible ? 0 : calculateWidth(d.value);
       })
       .attr("fill", "none")
-      .attr("opacity", 1); // Make sure opacity is set to 1
+      .style("pointer-events", "none")
+      .style("opacity", 1);
 
     // Create nodes in the nodes layer
     const nodeElements = nodesLayer
