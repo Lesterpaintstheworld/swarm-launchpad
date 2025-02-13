@@ -39,8 +39,8 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     if (!collaborationsProp?.length) {
       return { nodes: [], links: [], ecosystemTargets: new Set(), maxPrice: 0, minPrice: 0 };
     }
-    return processCollaborations(collaborationsProp);
-  }, [collaborationsProp]);
+    return processCollaborations(collaborationsProp, swarms);
+  }, [collaborationsProp, swarms]);
 
   const calculateWidth = useCallback((value: number) => {
     return calculateLinkWidth(value, minPrice, maxPrice);

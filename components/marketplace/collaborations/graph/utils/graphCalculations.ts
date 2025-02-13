@@ -12,7 +12,7 @@ export function calculateNodeSize(multiple: number | undefined): number {
     return Math.max(25, Math.min(40, 25 + (multiple * 0.2)));
 }
 
-export function processCollaborations(collaborations: any[]) {
+export function processCollaborations(collaborations: any[], swarms: any[]) {
     console.log('Processing collaborations:', collaborations);
 
     // Filter collaborations and create set of ecosystem targets
