@@ -114,35 +114,63 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     // Create nodes in the nodes layer
     const nodeElements = nodesLayer
-      .selectAll("g")
-      .data(nodes)
-      .join("g")
-      .call(d3.drag<any, SimulationNode>()
-        .on("start", memoizedHandlers.dragstarted)
-        .on("drag", memoizedHandlers.dragged)
-        .on("end", memoizedHandlers.dragended) as any);
+        .selectAll("g")
+        .data(nodes)
+        .join("g")
+        .call(d3.drag<any, SimulationNode>()
+            .on("start", memoizedHandlers.dragstarted)
+            .on("drag", memoizedHandlers.dragged)
+            .on("end", memoizedHandlers.dragended) as any);
 
     // Add node visuals
     nodeElements.append("circle")
-      .attr("r", d => getNodeSize(d.id))
-      .attr("fill", "rgba(236, 72, 153, 0.2)")
-      .attr("stroke", "rgba(236, 72, 153, 0.5)")
-      .attr("stroke-width", 3);
+        .attr("r", (d: SimulationNode) => d.id === 'shareholders' ? 
+            getNodeSize(d.id) * 4 : 
+            getNodeSize(d.id))
+        .attr("fill", (d: SimulationNode) => d.id === 'shareholders' ? 
+            "rgba(234, 179, 8, 0.2)" : 
+            "rgba(236, 72, 153, 0.2)")
+        .attr("stroke", (d: SimulationNode) => d.id === 'shareholders' ? 
+            "rgba(234, 179, 8, 0.5)" : 
+            "rgba(236, 72, 153, 0.5)")
+        .attr("stroke-width", d => d.id === 'shareholders' ? 6 : 3)
+        .style("filter", (d: SimulationNode) => d.id === 'shareholders' ?
+            "drop-shadow(0 0 20px rgba(234, 179, 8, 0.4))" : 
+            "drop-shadow(0 0 10px rgba(236, 72, 153, 0.3))");
 
+    // Add images to nodes
     nodeElements.append("image")
-      .attr("xlink:href", d => d.image)
-      .attr("x", d => -getNodeSize(d.id))
-      .attr("y", d => -getNodeSize(d.id))
-      .attr("width", d => getNodeSize(d.id) * 2)
-      .attr("height", d => getNodeSize(d.id) * 2)
-      .attr("clip-path", d => `circle(${getNodeSize(d.id)}px)`);
+        .attr("xlink:href", (d: SimulationNode) => d.image)
+        .attr("x", (d: SimulationNode) => d.id === 'shareholders' ? 
+            -getNodeSize(d.id) * 4 : 
+            -getNodeSize(d.id))
+        .attr("y", (d: SimulationNode) => d.id === 'shareholders' ? 
+            -getNodeSize(d.id) * 4 : 
+            -getNodeSize(d.id))
+        .attr("width", (d: SimulationNode) => d.id === 'shareholders' ? 
+            getNodeSize(d.id) * 8 : 
+            getNodeSize(d.id) * 2)
+        .attr("height", (d: SimulationNode) => d.id === 'shareholders' ? 
+            getNodeSize(d.id) * 8 : 
+            getNodeSize(d.id) * 2)
+        .attr("clip-path", (d: SimulationNode) => `circle(${d.id === 'shareholders' ? 
+            getNodeSize(d.id) * 4 : 
+            getNodeSize(d.id)}px)`);
 
+    // Add labels to nodes
     nodeElements.append("text")
-      .text(d => d.name)
-      .attr("text-anchor", "middle")
-      .attr("dy", d => getNodeSize(d.id) + 20)
-      .attr("fill", "white")
-      .attr("font-size", "12px");
+        .text((d: SimulationNode) => d.name)
+        .attr("x", 0)
+        .attr("y", (d: SimulationNode) => d.id === 'shareholders' ? 
+            getNodeSize(d.id) * 4 + 20 : 
+            getNodeSize(d.id) + 20)
+        .attr("text-anchor", "middle")
+        .attr("fill", (d: SimulationNode) => d.id === 'shareholders' ? 
+            "rgb(234, 179, 8)" : 
+            "rgb(236, 72, 153)")
+        .attr("font-size", "14px")
+        .attr("font-weight", "bold")
+        .style("text-shadow", "0 0 10px rgba(0,0,0,0.5)");
 
     // Set up simulation tick handler
     simulation.on("tick", () => {
