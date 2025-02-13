@@ -81,14 +81,22 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
                     Math.floor(Math.random() * availableTransfers.length)
                 ];
                 
+                const isSimulationLink = (transfer: SimulationLink | any): transfer is SimulationLink => {
+                    return 'source' in transfer && 'target' in transfer;
+                };
+
                 if (shouldAnimateRevenue) {
+                    if (!isSimulationLink(transfer)) {
+                        console.warn('Expected SimulationLink for revenue transfer');
+                        return;
+                    }
                     const transferId = `${getSourceId(transfer.source)}-revenue`;
                     setActiveTransfers(prev => {
                         const next = new Set(prev);
                         next.add(transferId);
                         return next;
                     });
-                    
+                
                     animateTransfer(
                         getSourceId(transfer.source),
                         'shareholders',
@@ -101,7 +109,7 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
                         next.add(transfer.id);
                         return next;
                     });
-                    
+                
                     animateTransfer(
                         transfer.clientSwarm.id,
                         transfer.providerSwarm.id,
