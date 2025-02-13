@@ -92,7 +92,7 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
                 .attr("class", "token-transfer")
                 .style("opacity", 0);
 
-            // Create the token circle
+            // Create just the token circle, no background circle needed
             dollarGroup.append("circle")
                 .attr("r", 3)
                 .attr("fill", "url(#violet-metallic-gradient)")
