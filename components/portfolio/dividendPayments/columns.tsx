@@ -121,12 +121,10 @@ const ActionCell = ({ row }: ActionCellProps) => {
             if (!publicKey || !swarmId) return;
 
             try {
-                const today = new Date();
-                const startOfWeek = new Date(today);
-                startOfWeek.setDate(today.getDate() - today.getDay());
-                const formattedDate = startOfWeek.toISOString().split('T')[0];
+                // Use fixed date of Feb 13, 2025 as the start of the claim period
+                const claimStartDate = '2025-02-13';
 
-                const response = await fetch(`/api/redistributions/check?wallet=${publicKey.toString()}&swarmId=${swarmId}&date=${formattedDate}`);
+                const response = await fetch(`/api/redistributions/check?wallet=${publicKey.toString()}&swarmId=${swarmId}&date=${claimStartDate}`);
                 
                 if (response.ok) {
                     const data = await response.json();
@@ -167,10 +165,7 @@ const ActionCell = ({ row }: ActionCellProps) => {
     }, [swarmId]);
 
     const getWeekKey = () => {
-        const now = new Date();
-        const startOfWeek = new Date(now);
-        startOfWeek.setDate(now.getDate() - now.getDay());
-        return startOfWeek.toISOString().split('T')[0];
+        return '2025-02-13';
     };
     
     const claimKey = `claimed_${swarmId}_${publicKey?.toString()}_week_${getWeekKey()}`;
