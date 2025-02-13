@@ -9,15 +9,15 @@ export function useGraphSimulation() {
         const simulation = d3.forceSimulation<SimulationNode>()
             .force("link", d3.forceLink<SimulationNode, SimulationLink>()
                 .id((d: SimulationNode) => d.id)
-                .strength(0.45))
+                .strength(0.435))
             .force("charge", d3.forceManyBody()
-                .strength(-600))
+                .strength(-585))
             .force("x", d3.forceX(width / 2).strength(0.1))
             .force("y", d3.forceY(height / 2).strength(0.1))
             .force("collision", d3.forceCollide()
                 .radius((d: any) => getNodeSize((d as SimulationNode).id) + 35)
                 .strength(0.8))
-            .velocityDecay(0.4)
+            .velocityDecay(0.45)
             .alphaDecay(0.01)
             .alpha(0.3);
 
