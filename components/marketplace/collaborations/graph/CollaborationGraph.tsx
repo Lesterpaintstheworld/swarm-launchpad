@@ -107,7 +107,12 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       .data(links)
       .join("path")
       .attr("class", "link-path")
-      .attr("stroke", d => (d as any).invisible ? "none" : "url(#link-gradient)")
+      .attr("stroke", d => {
+          if ((d as any).isShareholderLink) {
+              return "rgba(234, 179, 8, 0.3)";  // Yellow for shareholder links
+          }
+          return "url(#link-gradient)";  // Default gradient for other links
+      })
       .attr("stroke-width", d => (d as any).invisible ? 0 : calculateWidth(d.value))
       .attr("stroke-opacity", d => (d as any).invisible ? 0 : 1)
       .attr("fill", "none");

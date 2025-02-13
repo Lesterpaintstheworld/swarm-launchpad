@@ -77,15 +77,23 @@ export function processCollaborations(collaborations: any[]) {
         serviceName: collab.serviceName
     }));
 
-    // Add invisible link between Shareholders and kinos
-    links.push({
-        source: 'shareholders',
-        target: 'kinos',
-        value: minPrice,
-        strength: 0.3,
-        serviceName: 'ownership',
-        invisible: true
-    });
+    // Add links between Shareholders and swarms with weeklyRevenue
+    const shareholderLinks = nodes
+        .filter((node: any) => {
+            const swarm = swarms.find(s => s.id === node.id);
+            return swarm?.weeklyRevenue && node.id !== 'shareholders';
+        })
+        .map((node: any) => ({
+            source: 'shareholders',
+            target: node.id,
+            value: minPrice,
+            strength: 0.3,
+            serviceName: 'revenue',
+            isShareholderLink: true
+        }));
+
+    // Add shareholder links to the main links array
+    links.push(...shareholderLinks);
 
     console.log('Created links:', links);
 
