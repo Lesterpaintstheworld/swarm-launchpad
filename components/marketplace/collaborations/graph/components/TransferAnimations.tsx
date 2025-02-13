@@ -92,18 +92,35 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
                 .attr("class", "token-transfer")
                 .style("opacity", 0);
 
+            // Create metallic violet circle
             dollarGroup.append("circle")
-                .attr("r", 12)
-                .attr("fill", "#2563eb")
-                .attr("stroke", "#60a5fa")
-                .attr("stroke-width", 2);
+                .attr("r", 3)  // 4 times smaller
+                .attr("fill", "url(#violet-metallic-gradient)")  // Use gradient fill
+                .attr("stroke", "#a855f7")  // Violet stroke
+                .attr("stroke-width", 1);  // Thinner stroke for smaller circle
 
-            dollarGroup.append("text")
-                .attr("text-anchor", "middle")
-                .attr("dy", "0.3em")
-                .attr("fill", "white")
-                .attr("font-size", "12px")
-                .text("$");
+            // Add the gradient definition if it doesn't exist
+            if (!defs.select("#violet-metallic-gradient").size()) {
+                const gradient = defs.append("radialGradient")
+                    .attr("id", "violet-metallic-gradient")
+                    .attr("gradientUnits", "objectBoundingBox")
+                    .attr("cx", "0.5")
+                    .attr("cy", "0.5")
+                    .attr("r", "0.5");
+
+                // Metallic effect with violet colors
+                gradient.append("stop")
+                    .attr("offset", "0%")
+                    .attr("stop-color", "#c4b5fd");  // Light violet
+
+                gradient.append("stop")
+                    .attr("offset", "50%")
+                    .attr("stop-color", "#8b5cf6");  // Medium violet
+
+                gradient.append("stop")
+                    .attr("offset", "100%")
+                    .attr("stop-color", "#6d28d9");  // Dark violet
+            }
 
             activeDollars++;
 
