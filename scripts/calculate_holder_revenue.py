@@ -13,9 +13,15 @@ load_dotenv()
 
 # Constants
 PROGRAM_ID = "4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf"
-RPC_URL = os.getenv('NEXT_PUBLIC_HELIUS_RPC_URL')  # Use the public Helius RPC URL
+HELIUS_RPC_URL = os.getenv('NEXT_PUBLIC_HELIUS_RPC_URL')  # This should be the full URL including API key
 MAX_RETRIES = 3
 RETRY_DELAY = 2  # seconds
+
+# Verify RPC URL is properly formatted
+if HELIUS_RPC_URL and '?' not in HELIUS_RPC_URL:
+    print("Warning: RPC URL may be missing API key")
+    # Default to public RPC if Helius URL is invalid
+    HELIUS_RPC_URL = "https://api.mainnet-beta.solana.com"
 
 # Weekly revenue constants (from dividendPayments component)
 WEEKLY_REVENUES = {
@@ -46,8 +52,12 @@ def get_program_accounts(pool_address: str, retries: int = 0) -> List[Dict]:
         ]
     }
     
+    headers = {
+        "Content-Type": "application/json"
+    }
+    
     try:
-        response = requests.post(RPC_URL, json=payload)
+        response = requests.post(HELIUS_RPC_URL, json=payload, headers=headers)
         response.raise_for_status()
         data = response.json()
         
