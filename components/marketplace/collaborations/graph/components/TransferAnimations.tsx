@@ -18,27 +18,41 @@ interface TransferAnimationsProps {
 }
 
 export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize }: TransferAnimationsProps) {
-    const [currentTransferIndex, setCurrentTransferIndex] = useState(0);
+    const [activeTransfers, setActiveTransfers] = useState<Set<string>>(new Set());
 
     useEffect(() => {
-        if (currentTransferIndex >= collaborations.length) {
-            setCurrentTransferIndex(0);
-            return;
-        }
-
-        const timer = setTimeout(() => {
-            const collaboration = collaborations[currentTransferIndex];
-            animateTransfer(
-                collaboration.clientSwarm.id,
-                collaboration.providerSwarm.id,
-                collaboration.price
+        // Start a new transfer every 1000ms if we have less than 5 active transfers
+        const timer = setInterval(() => {
+            if (activeTransfers.size >= 5) return;
+            
+            const availableCollaborations = collaborations.filter(
+                collab => !activeTransfers.has(collab.id)
             );
-        }, 2000);
+            
+            if (availableCollaborations.length > 0) {
+                const collaboration = availableCollaborations[
+                    Math.floor(Math.random() * availableCollaborations.length)
+                ];
+                
+                setActiveTransfers(prev => {
+                    const next = new Set(prev);
+                    next.add(collaboration.id);
+                    return next;
+                });
+                
+                animateTransfer(
+                    collaboration.clientSwarm.id,
+                    collaboration.providerSwarm.id,
+                    collaboration.price,
+                    collaboration.id
+                );
+            }
+        }, 1000);
 
-        return () => clearTimeout(timer);
-    }, [currentTransferIndex, collaborations, nodes, g, defs, getNodeSize]);
+        return () => clearInterval(timer);
+    }, [activeTransfers, collaborations, nodes, g, defs, getNodeSize]);
 
-    const animateTransfer = (sourceId: string, targetId: string, amount: number) => {
+    const animateTransfer = (sourceId: string, targetId: string, amount: number, transferId: string) => {
         const sourceNode = nodes.find(n => n.id === sourceId);
         const targetNode = nodes.find(n => n.id === targetId);
 
@@ -62,28 +76,49 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
             .attr("font-size", "12px")
             .text("$");
 
+        // Calculate the path data for the curve
+        const dx = targetNode.x - sourceNode.x;
+        const dy = targetNode.y - sourceNode.y;
+        const dr = Math.sqrt(dx * dx + dy * dy);
+        const path = `M${sourceNode.x},${sourceNode.y}A${dr},${dr} 0 0,1 ${targetNode.x},${targetNode.y}`;
+        
+        // Create a path element for the token to follow (invisible)
+        const pathElement = g.append("path")
+            .attr("d", path)
+            .style("display", "none");
+
+        // Get the total length of the path
+        const pathLength = pathElement.node()?.getTotalLength() || 0;
+
         // Animate the token
-        const duration = 1500;
+        const duration = 3000; // Slower animation (3 seconds)
         const startTime = Date.now();
 
         function animate() {
             const elapsed = Date.now() - startTime;
             const progress = Math.min(elapsed / duration, 1);
 
-            const x = sourceNode.x + (targetNode.x - sourceNode.x) * progress;
-            const y = sourceNode.y + (targetNode.y - sourceNode.y) * progress;
+            // Get the point at the current position along the path
+            const point = pathElement.node()?.getPointAtLength(progress * pathLength);
+            if (!point) return;
+
             const opacity = progress < 0.1 ? progress * 10 : 
-                           progress > 0.9 ? (1 - progress) * 10 : 1;
+                          progress > 0.9 ? (1 - progress) * 10 : 1;
 
             tokenGroup
-                .attr("transform", `translate(${x},${y})`)
+                .attr("transform", `translate(${point.x},${point.y})`)
                 .style("opacity", opacity);
 
             if (progress < 1) {
                 requestAnimationFrame(animate);
             } else {
                 tokenGroup.remove();
-                setCurrentTransferIndex(i => i + 1);
+                pathElement.remove();
+                setActiveTransfers(prev => {
+                    const next = new Set(prev);
+                    next.delete(transferId);
+                    return next;
+                });
             }
         }
 
