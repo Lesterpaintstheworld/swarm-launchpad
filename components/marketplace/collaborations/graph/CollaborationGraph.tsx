@@ -78,9 +78,9 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     }
 
     // Create layers in specific order (bottom to top)
-    const linksLayer = g.append("g").attr("class", "links-layer");     // Bottom layer
-    const animationsLayer = g.append("g").attr("class", "animations-layer"); // Middle layer
-    const nodesLayer = g.append("g").attr("class", "nodes-layer");     // Top layer
+    const linksLayer = g.append("g").attr("class", "links-layer");
+    const animationsLayer = g.append("g").attr("class", "animations-layer");
+    const nodesLayer = g.append("g").attr("class", "nodes-layer");
 
     // Add gradient definitions
     const gradient = defs.append("linearGradient")
@@ -96,7 +96,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       .attr("stop-color", "rgba(147, 51, 234, 0.3)");
 
     // Create links in the links layer
-    linksLayer.selectAll("path")
+    const linkElements = linksLayer.selectAll("path")
       .data(links)
       .join("path")
       .attr("class", "link-path")
@@ -106,7 +106,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       .attr("fill", "none");
 
     // Create nodes in the nodes layer
-    const nodeGroup = nodesLayer
+    const nodeElements = nodesLayer
       .selectAll("g")
       .data(nodes)
       .join("g")
@@ -116,13 +116,13 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
         .on("end", memoizedHandlers.dragended) as any);
 
     // Add node visuals
-    nodeGroup.append("circle")
+    nodeElements.append("circle")
       .attr("r", d => getNodeSize(d.id))
       .attr("fill", "rgba(236, 72, 153, 0.2)")
       .attr("stroke", "rgba(236, 72, 153, 0.5)")
       .attr("stroke-width", 3);
 
-    nodeGroup.append("image")
+    nodeElements.append("image")
       .attr("xlink:href", d => d.image)
       .attr("x", d => -getNodeSize(d.id))
       .attr("y", d => -getNodeSize(d.id))
@@ -130,7 +130,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       .attr("height", d => getNodeSize(d.id) * 2)
       .attr("clip-path", d => `circle(${getNodeSize(d.id)}px)`);
 
-    nodeGroup.append("text")
+    nodeElements.append("text")
       .text(d => d.name)
       .attr("text-anchor", "middle")
       .attr("dy", d => getNodeSize(d.id) + 20)
@@ -139,16 +139,22 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     // Set up simulation tick handler
     simulation.on("tick", () => {
-      linksLayer.selectAll("path")
-        .attr("d", (d: any) => {
-          const dx = (d.target.x || 0) - (d.source.x || 0);
-          const dy = (d.target.y || 0) - (d.source.y || 0);
-          const dr = Math.sqrt(dx * dx + dy * dy);
-          return `M${d.source.x || 0},${d.source.y || 0}A${dr},${dr} 0 0,1 ${d.target.x || 0},${d.target.y || 0}`;
-        });
+      // Update link positions
+      linkElements.attr("d", (d: any) => {
+        const dx = d.target.x - d.source.x;
+        const dy = d.target.y - d.source.y;
+        const dr = Math.sqrt(dx * dx + dy * dy);
+        return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
+      });
 
-      nodeGroup.attr("transform", (d: any) => `translate(${d.x || 0},${d.y || 0})`);
+      // Update node positions
+      nodeElements.attr("transform", (d: any) => {
+        return `translate(${d.x},${d.y})`;
+      });
     });
+
+    // Start the simulation
+    simulation.alpha(1).restart();
   };
 
   useEffect(() => {
@@ -182,10 +188,10 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     // Create new simulation
     const newSimulation = createSimulation(width, height, getNodeSize);
     
-    // Initialize nodes positions in the center
+    // Initialize nodes positions with some randomness
     nodes.forEach(node => {
-        node.x = width / 2;
-        node.y = height / 2;
+        node.x = width / 2 + (Math.random() - 0.5) * 100;
+        node.y = height / 2 + (Math.random() - 0.5) * 100;
     });
 
     // Initialize simulation with nodes and links
@@ -196,7 +202,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     // Center the view
     const initialTransform = d3.zoomIdentity
-        .translate(0, 0)
+        .translate(width/4, height/4)
         .scale(0.8);
     svg.call(zoomBehavior.transform, initialTransform);
 
