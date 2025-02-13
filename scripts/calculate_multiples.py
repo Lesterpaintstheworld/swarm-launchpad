@@ -75,25 +75,20 @@ def get_program_accounts(pool_address: str) -> Dict:
             print(f"Response text: {e.response.text}")
         return []
 
-def parse_pool_data(data: str) -> int:
-    """Parse pool account data to get available shares"""
+def parse_shareholder_data(data: str) -> int:
+    """Parse shareholder account data to get number of shares"""
     try:
         raw_data = base64.b64decode(data)
-        # Pool struct layout:
+        # Shareholder struct layout:
         # - 8 bytes discriminator
-        # - 32 bytes pool_name (String)
-        # - 32 bytes admin_authority
-        # - 8 bytes total_shares
+        # - 32 bytes pool
+        # - 32 bytes owner
+        # - 8 bytes shares
         # - 8 bytes available_shares
-        # - 1 byte is_frozen
-        # - 32 bytes ubc_mint
-        # - 32 bytes compute_mint
-        # - 8 bytes fee_ratio
-        # - 32 bytes custodial_account
-        available_shares = int.from_bytes(raw_data[80:88], 'little')
-        return available_shares
+        shares = int.from_bytes(raw_data[72:80], 'little')
+        return shares
     except Exception as e:
-        print(f"Error parsing pool data: {e}")
+        print(f"Error parsing shareholder data: {e}")
         return 0
 
 def calculate_share_price(n: int) -> float:
@@ -141,22 +136,23 @@ def main():
             print(f"No pool address for swarm {swarm_data.get('name')}")
             continue
             
-        # Get pool data from Solana
+        # Get all accounts for this pool
         accounts = get_program_accounts(pool_address)
         
-        # Find the pool account and parse available shares
-        available_shares = 100000  # Default to all shares available
+        # Calculate total shares held by shareholders
+        total_shares = 100000  # Fixed total supply
+        shares_sold = 0
+        
         for account in accounts:
             try:
-                if account['account']['data'][0]:  # Check if data exists
-                    available_shares = parse_pool_data(account['account']['data'][0])
-                    break  # Found the pool account
+                if account['account']['data'][0]:
+                    shares = parse_shareholder_data(account['account']['data'][0])
+                    shares_sold += shares
             except Exception as e:
-                print(f"Error parsing account data for {swarm_data.get('name')}: {e}")
+                print(f"Error processing account for {swarm_data.get('name')}: {e}")
         
-        # Calculate shares sold
-        total_shares = 100000  # Default total shares
-        shares_sold = total_shares - available_shares
+        # Calculate available shares
+        available_shares = total_shares - shares_sold
         
         # Calculate current price
         current_price = calculate_share_price(shares_sold)
