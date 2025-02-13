@@ -147,11 +147,14 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
                 .attr("class", "token-transfer")
                 .style("opacity", 0);
 
-            // Create just the token circle, no background circle needed
+            // For revenue flows, make 1/10 of the tokens yellow (representing distributed revenue)
+            const isDistributedRevenue = isRevenueFlow && (index % 10 === 0);
+
+            // Create just the token circle
             dollarGroup.append("circle")
-                .attr("r", isRevenueFlow ? 12 : 3)  // Bigger tokens for revenue flows
-                .attr("fill", isRevenueFlow ? "#fbbf24" : "#8b5cf6")  // Yellow for revenue, violet for regular
-                .attr("stroke", isRevenueFlow ? "#fde68a" : "#a855f7")
+                .attr("r", isDistributedRevenue ? 12 : 3)  // Bigger only for distributed revenue
+                .attr("fill", isDistributedRevenue ? "#fbbf24" : "#8b5cf6")  // Yellow for distributed revenue, violet for others
+                .attr("stroke", isDistributedRevenue ? "#fde68a" : "#a855f7")
                 .attr("stroke-width", 1);
 
             // Add flame gradient if it doesn't exist
