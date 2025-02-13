@@ -3,23 +3,15 @@ export async function GET(
     { params }: { params: { id: string } }
 ) {
     try {
-        // Fetch from Airtable or your database
-        const response = await fetch(
-            `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}/Swarms/${params.id}`,
-            {
-                headers: {
-                    'Authorization': `Bearer ${process.env.AIRTABLE_API_KEY}`,
-                    'Content-Type': 'application/json',
-                },
-            }
-        );
+        // Hardcoded weekly revenue values
+        const revenueMap: Record<string, number> = {
+            'kinos': 800000,
+            'kinkong': 120000,
+            'xforge': 4400000
+        };
 
-        if (!response.ok) {
-            throw new Error('Failed to fetch swarm revenue data');
-        }
-
-        const data = await response.json();
-        return Response.json({ weeklyRevenue: data.fields.weeklyRevenue || 0 });
+        const weeklyRevenue = revenueMap[params.id] || 0;
+        return Response.json({ weeklyRevenue });
     } catch (error) {
         console.error('Error fetching swarm revenue:', error);
         return Response.json({ error: 'Failed to fetch revenue data' }, { status: 500 });
