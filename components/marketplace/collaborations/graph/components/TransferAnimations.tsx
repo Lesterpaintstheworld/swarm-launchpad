@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
+import { SimulationNode, SimulationLink } from '../types';
 const frameCallbacks = new Set<() => void>();
 const globalAnimationFrame = () => {
     frameCallbacks.forEach(cb => cb());
