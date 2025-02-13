@@ -144,7 +144,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
           const dx = (d.target.x || 0) - (d.source.x || 0);
           const dy = (d.target.y || 0) - (d.source.y || 0);
           const dr = Math.sqrt(dx * dx + dy * dy);
-          return `M${d.source.x || 0},${d.source.y || 0}A${dr},${dr} 0 0,0 ${d.target.x || 0},${d.target.y || 0}`;
+          return `M${d.source.x || 0},${d.source.y || 0}A${dr},${dr} 0 0,1 ${d.target.x || 0},${d.target.y || 0}`;
         });
 
       nodeGroup.attr("transform", (d: any) => `translate(${d.x || 0},${d.y || 0})`);
