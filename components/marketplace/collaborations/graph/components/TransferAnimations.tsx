@@ -43,12 +43,23 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
             if (activeTransfers.size >= MAX_CONCURRENT_TRANSFERS) return;
             
             // Randomly choose between regular collaborations and revenue flows
-            const shouldAnimateRevenue = Math.random() < 0.3; // 30% chance for revenue flows
+            const shouldAnimateRevenue = Math.random() < 0.5; // 50% chance for revenue flows
             
             let availableTransfers;
             if (shouldAnimateRevenue) {
+                console.log('Revenue flows available:', revenueFlows);
                 availableTransfers = revenueFlows.filter(
-                    flow => !activeTransfers.has(flow.source + '-revenue')
+                    flow => {
+                        const id = flow.source + '-revenue';
+                        const isActive = !activeTransfers.has(id);
+                        console.log('Checking revenue flow:', {
+                            source: flow.source,
+                            id,
+                            isActive,
+                            activeTransfers: Array.from(activeTransfers)
+                        });
+                        return isActive;
+                    }
                 );
             } else {
                 availableTransfers = collaborations.filter(

@@ -80,11 +80,13 @@ export function processCollaborations(collaborations: any[], swarms: any[]) {
     // Calculate revenue flows for swarms with weeklyRevenue
     const revenueFlows = swarms
         .filter(swarm => {
-            console.log('Checking swarm revenue details:', {
+            console.log('Swarm revenue check:', {
                 id: swarm.id,
                 weeklyRevenue: swarm.weeklyRevenue,
                 revenueShare: swarm.revenueShare,
-                hasRevenue: Boolean(swarm.weeklyRevenue && swarm.weeklyRevenue > 0)
+                hasWeeklyRevenue: Boolean(swarm.weeklyRevenue),
+                isPositive: swarm.weeklyRevenue > 0,
+                willBeIncluded: Boolean(swarm.weeklyRevenue && swarm.weeklyRevenue > 0)
             });
             return swarm.weeklyRevenue && swarm.weeklyRevenue > 0;
         })
@@ -92,12 +94,12 @@ export function processCollaborations(collaborations: any[], swarms: any[]) {
             const revenueShare = swarm.revenueShare || 60; // default to 60% if not specified
             const revenueDistributed = Math.floor((swarm.weeklyRevenue! * revenueShare) / 100);
             
-            console.log('Revenue flow calculation:', {
+            console.log('Creating revenue flow:', {
                 id: swarm.id,
                 weeklyRevenue: swarm.weeklyRevenue,
                 revenueShare,
                 revenueDistributed,
-                flowValue: revenueDistributed * 10 // Increase the value to make flows more visible
+                flowValue: revenueDistributed * 10
             });
 
             return {
