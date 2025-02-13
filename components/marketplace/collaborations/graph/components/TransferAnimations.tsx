@@ -71,7 +71,9 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
         if (!sourceNode || !targetNode) return;
 
         const animationsLayer = g.select('.animations-layer');
-        const numberOfDollars = Math.max(1, Math.floor(amount / 10000));
+        const numberOfDollars = (d as any).isRevenueFlow ? 
+            Math.max(1, Math.floor(amount / 1000)) : // More frequent tokens for revenue
+            Math.max(1, Math.floor(amount / 10000)); // Regular token frequency
         const dollarSpacing = 0.05; // Spacing between dollars along the path
         const dollarAppearInterval = 100; // Time between each dollar appearing
 

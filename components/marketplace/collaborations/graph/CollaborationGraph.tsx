@@ -108,12 +108,21 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       .join("path")
       .attr("class", "link-path")
       .attr("stroke", d => {
+          if ((d as any).isRevenueFlow) {
+              return "rgba(234, 179, 8, 0.3)";  // Yellow for revenue flows
+          }
           if ((d as any).isShareholderLink) {
-              return "rgba(234, 179, 8, 0.3)";  // Yellow for shareholder links
+              return "rgba(234, 179, 8, 0.15)";  // Lighter yellow for shareholder links
           }
           return "url(#link-gradient)";  // Default gradient for other links
       })
-      .attr("stroke-width", d => (d as any).invisible ? 0 : calculateWidth(d.value))
+      .attr("stroke-width", d => {
+          if ((d as any).isRevenueFlow) {
+              // Make revenue flow links wider based on the amount
+              return calculateWidth(d.value) * 1.5;
+          }
+          return (d as any).invisible ? 0 : calculateWidth(d.value);
+      })
       .attr("stroke-opacity", d => (d as any).invisible ? 0 : 1)
       .attr("fill", "none");
 

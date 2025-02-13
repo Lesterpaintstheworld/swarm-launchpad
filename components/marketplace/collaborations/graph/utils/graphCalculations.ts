@@ -77,23 +77,29 @@ export function processCollaborations(collaborations: any[], swarms: any[]) {
         serviceName: collab.serviceName
     }));
 
-    // Add links between Shareholders and swarms with weeklyRevenue
-    const shareholderLinks = nodes
-        .filter((node: any) => {
-            const swarm = swarms.find(s => s.id === node.id);
-            return swarm?.weeklyRevenue && node.id !== 'shareholders';
-        })
-        .map((node: any) => ({
-            source: 'shareholders',
-            target: node.id,
-            value: minPrice,
-            strength: 0.3,
-            serviceName: 'revenue',
-            isShareholderLink: true
-        }));
+    // Calculate revenue flows for swarms with weeklyRevenue
+    const revenueFlows = swarms
+        .filter(swarm => swarm.weeklyRevenue && swarm.weeklyRevenue > 0)
+        .map(swarm => {
+            const revenueShare = swarm.revenueShare || 60; // default to 60% if not specified
+            const revenueDistributed = (swarm.weeklyRevenue * revenueShare) / 100;
+            
+            return {
+                source: swarm.id,
+                target: 'shareholders',
+                value: revenueDistributed,
+                strength: 0.3,
+                serviceName: 'revenue',
+                isRevenueFlow: true,
+                weeklyRevenue: swarm.weeklyRevenue,
+                revenueShare: revenueShare
+            };
+        });
 
-    // Add shareholder links to the main links array
-    links.push(...shareholderLinks);
+    // Add revenue flows to the main links array
+    links.push(...revenueFlows);
+
+    console.log('Created revenue flows:', revenueFlows);
 
     console.log('Created links:', links);
 
