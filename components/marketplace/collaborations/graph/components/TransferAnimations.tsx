@@ -102,7 +102,7 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
             // Create just the token circle, no background circle needed
             dollarGroup.append("circle")
                 .attr("r", 3)
-                .attr("fill", "url(#violet-metallic-gradient)")
+                .attr("fill", "#8b5cf6")  // Solid violet color
                 .attr("stroke", "#a855f7")
                 .attr("stroke-width", 1);
 
@@ -128,28 +128,6 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
                     .attr("stop-color", "#dc2626"); // Red
             }
 
-            // Add the violet gradient definition if it doesn't exist
-            if (!defs.select("#violet-metallic-gradient").size()) {
-                const gradient = defs.append("radialGradient")
-                    .attr("id", "violet-metallic-gradient")
-                    .attr("gradientUnits", "objectBoundingBox")
-                    .attr("cx", "0.5")
-                    .attr("cy", "0.5")
-                    .attr("r", "0.5");
-
-                // Metallic effect with violet colors
-                gradient.append("stop")
-                    .attr("offset", "0%")
-                    .attr("stop-color", "#c4b5fd");  // Light violet
-
-                gradient.append("stop")
-                    .attr("offset", "50%")
-                    .attr("stop-color", "#8b5cf6");  // Medium violet
-
-                gradient.append("stop")
-                    .attr("offset", "100%")
-                    .attr("stop-color", "#6d28d9");  // Dark violet
-            }
 
             activeDollars++;
 
