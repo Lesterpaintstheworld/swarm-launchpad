@@ -95,14 +95,14 @@ export function GraphNodes({
         node.append("circle")
             .attr("r", (d: SimulationNode) => d.id === 'shareholders' ? getNodeSize(d.id) * 4 : getNodeSize(d.id))
             .attr("fill", (d: SimulationNode) => d.id === 'shareholders' ? 
-                "rgba(250, 204, 21, 0.2)" : 
+                "rgba(234, 179, 8, 0.2)" : 
                 "rgba(236, 72, 153, 0.2)")
             .attr("stroke", (d: SimulationNode) => d.id === 'shareholders' ? 
-                "rgba(250, 204, 21, 0.5)" : 
+                "rgba(234, 179, 8, 0.5)" : 
                 "rgba(236, 72, 153, 0.5)")
             .attr("stroke-width", d => d.id === 'shareholders' ? 6 : 3)
             .style("filter", (d: SimulationNode) => d.id === 'shareholders' ?
-                "drop-shadow(0 0 20px rgba(250, 204, 21, 0.4))" : 
+                "drop-shadow(0 0 20px rgba(234, 179, 8, 0.4))" : 
                 "drop-shadow(0 0 10px rgba(236, 72, 153, 0.3))");
 
         // Add pulsing yellow glow for ecosystem targets
@@ -138,11 +138,11 @@ export function GraphNodes({
             .text((d: SimulationNode) => d.name)
             .attr("x", 0)
             .attr("y", (d: SimulationNode) => d.id === 'shareholders' ? 
-                getNodeSize(d.id) * 4 + 15 : 
-                getNodeSize(d.id) + 15)
+                getNodeSize(d.id) * 4 + 20 : 
+                getNodeSize(d.id) + 20)
             .attr("text-anchor", "middle")
             .attr("fill", (d: SimulationNode) => d.id === 'shareholders' ? 
-                "rgb(250, 204, 21)" : 
+                "rgb(234, 179, 8)" : 
                 "rgb(236, 72, 153)")
             .attr("font-size", "14px")
             .attr("font-weight", "bold")
