@@ -18,6 +18,7 @@ interface MessageAnimationsProps {
 
 export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize }: MessageAnimationsProps) {
     const [messages, setMessages] = useState<Array<{ id: string; senderId: string; timestamp: string }>>([]);
+    const [activeMessages, setActiveMessages] = useState<Set<string>>(new Set());
     const MAX_CONCURRENT_MESSAGES = 8;
     const ANIMATION_DURATION = 4000;
     const NEW_MESSAGE_INTERVAL = 600;
@@ -63,8 +64,6 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
     useEffect(() => {
         if (!messages.length) return;
 
-        const activeMessages = new Set<string>();
-
         const timer = setInterval(() => {
             if (activeMessages.size >= MAX_CONCURRENT_MESSAGES) return;
 
@@ -78,7 +77,11 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
 
             if (possibleTargets.length) {
                 const targetId = possibleTargets[Math.floor(Math.random() * possibleTargets.length)];
-                activeMessages.add(message.id);
+                setActiveMessages(prev => {
+                    const next = new Set(prev);
+                    next.add(message.id);
+                    return next;
+                });
                 animateMessage(message.senderId, targetId, message.id);
             }
         }, NEW_MESSAGE_INTERVAL);
@@ -146,7 +149,11 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
             } else {
                 envelopeGroup.remove();
                 pathElement.remove();
-                activeMessages.delete(messageId);
+                setActiveMessages(prev => {
+                    const next = new Set(prev);
+                    next.delete(messageId);
+                    return next;
+                });
             }
         }
 
