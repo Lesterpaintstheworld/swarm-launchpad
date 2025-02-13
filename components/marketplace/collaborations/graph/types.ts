@@ -39,6 +39,7 @@ export interface SwarmData {
   multiple: number;
   revenueShare: number;
   image: string;
+  weeklyRevenue?: number;
 }
 
 export interface Collaboration {
