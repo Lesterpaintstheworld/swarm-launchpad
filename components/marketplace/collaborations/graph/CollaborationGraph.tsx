@@ -13,7 +13,6 @@ import { GraphNodes } from './components/GraphNodes';
 
 export function CollaborationGraph({ collaborations: collaborationsProp }: CollaborationGraphProps) {
   const svgRef = useRef<SVGSVGElement>(null);
-  const [zoom, setZoom] = useState(1);
   const { swarms, swarmMap, isLoading } = useGraphData();
   const [simulation, setSimulation] = useState<d3.Simulation<SimulationNode, SimulationLink> | null>(null);
   const { createSimulation, initializeSimulation, setupDragHandlers } = useGraphSimulation();
@@ -144,39 +143,51 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     const width = svgRef.current.clientWidth;
     const height = svgRef.current.clientHeight;
 
+    // Create zoom behavior
+    const zoomBehavior = d3.zoom<SVGSVGElement, unknown>()
+        .scaleExtent([0.1, 4])
+        .on('zoom', (event) => {
+            g.attr('transform', event.transform);
+        });
+
+    // Apply zoom to svg
+    svg.call(zoomBehavior);
+
+    // Create container group for all elements
+    const g = svg.append("g")
+        .attr("class", "graph-container");
+    
+    const defs = svg.append("defs");
+
     // Create new simulation
     const newSimulation = createSimulation(width, height, getNodeSize);
     
     // Initialize nodes with positions in a circle
     const radius = Math.min(width, height) / 3;
     nodes.forEach((node, i) => {
-      const angle = (2 * Math.PI * i) / nodes.length;
-      node.x = width / 2 + radius * Math.cos(angle);
-      node.y = height / 2 + radius * Math.sin(angle);
+        const angle = (2 * Math.PI * i) / nodes.length;
+        node.x = width / 2 + radius * Math.cos(angle);
+        node.y = height / 2 + radius * Math.sin(angle);
     });
 
     // Initialize simulation with nodes and links
-    newSimulation.nodes(nodes);
-    const linkForce = newSimulation.force<d3.ForceLink<SimulationNode, SimulationLink>>("link");
-    if (linkForce) {
-      linkForce.links(links);
-    }
-
-    // Set up the visualization
-    const g = svg.append("g")
-      .attr("transform", `scale(${zoom})`);
-    
-    const defs = svg.append("defs");
+    initializeSimulation(newSimulation, nodes, links);
 
     // Set up the graph components
     setupGraph(g, defs, nodes, links, newSimulation);
+
+    // Center the graph initially
+    const initialTransform = d3.zoomIdentity
+        .translate(width / 2, height / 2)
+        .scale(1);
+    svg.call(zoomBehavior.transform, initialTransform);
 
     // Update simulation reference
     setSimulation(newSimulation);
 
     return () => {
-      newSimulation.stop();
-      svg.selectAll("*").remove();
+        newSimulation.stop();
+        svg.selectAll("*").remove();
     };
   }, [collaborationsProp, isLoading, zoom, nodes, links, getNodeSize]);
 
@@ -190,13 +201,6 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     };
   }, [simulation]);
 
-  const handleZoomIn = () => {
-    setZoom(prev => Math.min(prev + 0.2, 2));
-  };
-
-  const handleZoomOut = () => {
-    setZoom(prev => Math.max(prev - 0.2, 0.5));
-  };
 
   if (isLoading) {
     return (
@@ -213,7 +217,6 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
         className="w-full h-[600px] bg-black/20 rounded-xl"
         style={{ minHeight: '600px' }}
       />
-      <GraphControls onZoomIn={handleZoomIn} onZoomOut={handleZoomOut} />
     </div>
   );
 }

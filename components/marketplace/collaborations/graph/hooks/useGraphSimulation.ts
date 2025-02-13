@@ -40,15 +40,17 @@ export function useGraphSimulation() {
     const setupDragHandlers = useCallback((simulation: d3.Simulation<SimulationNode, SimulationLink>) => {
         function dragstarted(event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) {
             if (!event.active) simulation.alphaTarget(0.3).restart();
+            const transform = d3.zoomTransform(d3.select('svg').node() as Element);
             const subject = event.subject as SimulationNode;
-            subject.fx = subject.x;
-            subject.fy = subject.y;
+            subject.fx = (event.x - transform.x) / transform.k;
+            subject.fy = (event.y - transform.y) / transform.k;
         }
 
         function dragged(event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) {
+            const transform = d3.zoomTransform(d3.select('svg').node() as Element);
             const subject = event.subject as SimulationNode;
-            subject.fx = event.x;
-            subject.fy = event.y;
+            subject.fx = (event.x - transform.x) / transform.k;
+            subject.fy = (event.y - transform.y) / transform.k;
         }
 
         function dragended(event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) {
