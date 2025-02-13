@@ -50,6 +50,18 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
             };
 
             // Randomly choose between regular collaborations and revenue flows
+            interface CollaborationType {
+                id: string;
+                providerSwarm: { id: string };
+                clientSwarm: { id: string };
+                price: number;
+                status: string;
+            }
+
+            const isCollaboration = (transfer: SimulationLink | CollaborationType): transfer is CollaborationType => {
+                return 'id' in transfer && 'providerSwarm' in transfer && 'clientSwarm' in transfer;
+            };
+
             const shouldAnimateRevenue = Math.random() < 0.5; // 50% chance for revenue flows
             
             let availableTransfers;
@@ -104,9 +116,14 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
                         transferId
                     );
                 } else {
+                    if (!isCollaboration(transfer)) {
+                        console.warn('Expected Collaboration for regular transfer');
+                        return;
+                    }
+                    const transferId = transfer.id;
                     setActiveTransfers(prev => {
                         const next = new Set(prev);
-                        next.add(transfer.id);
+                        next.add(transferId);
                         return next;
                     });
                 
@@ -114,7 +131,7 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
                         transfer.clientSwarm.id,
                         transfer.providerSwarm.id,
                         transfer.price,
-                        transfer.id
+                        transferId
                     );
                 }
             }
