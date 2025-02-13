@@ -92,6 +92,13 @@ export function TransferAnimations({ g, defs, nodes, collaborations, getNodeSize
                 .attr("class", "token-transfer")
                 .style("opacity", 0);
 
+            // Create the token circle
+            dollarGroup.append("circle")
+                .attr("r", 3)
+                .attr("fill", "url(#violet-metallic-gradient)")
+                .attr("stroke", "#a855f7")
+                .attr("stroke-width", 1);
+
             // Add flame gradient if it doesn't exist
             if (!defs.select("#flame-gradient").size()) {
                 const flameGradient = defs.append("radialGradient")
