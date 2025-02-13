@@ -77,6 +77,11 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       return;
     }
 
+    // Create layers in specific order (bottom to top)
+    const linksLayer = g.append("g").attr("class", "links-layer");     // Bottom layer
+    const animationsLayer = g.append("g").attr("class", "animations-layer"); // Middle layer
+    const nodesLayer = g.append("g").attr("class", "nodes-layer");     // Top layer
+
     // Add gradient definitions
     const gradient = defs.append("linearGradient")
       .attr("id", "link-gradient")
@@ -103,9 +108,8 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       .attr("stroke-opacity", 1)
       .attr("fill", "none");
 
-    // Create nodes
-    const nodeGroup = g.append("g")
-      .attr("class", "nodes")
+    // Create nodes in the nodes layer
+    const nodeGroup = nodesLayer
       .selectAll("g")
       .data(nodes)
       .join("g")
