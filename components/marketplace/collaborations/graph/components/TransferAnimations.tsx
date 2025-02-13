@@ -22,6 +22,7 @@ interface TransferAnimationsProps {
         providerSwarm: { id: string };
         clientSwarm: { id: string };
         price: number;
+        status: string;
     }>;
     getNodeSize: (id: string) => number;
 }
@@ -63,8 +64,9 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
                     }
                 );
             } else {
+                // Only use active collaborations
                 availableTransfers = collaborations.filter(
-                    collab => !activeTransfers.has(collab.id)
+                    collab => !activeTransfers.has(collab.id) && collab.status === 'active'
                 );
             }
             
