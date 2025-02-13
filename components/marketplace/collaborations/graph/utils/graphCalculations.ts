@@ -89,25 +89,27 @@ export function processCollaborations(collaborations: any[], swarms: any[]) {
             return swarm.weeklyRevenue && swarm.weeklyRevenue > 0;
         })
         .map(swarm => {
-            const revenueShare = swarm.revenueShare || 60;
-            const revenueDistributed = (swarm.weeklyRevenue! * revenueShare) / 100;
+            const revenueShare = swarm.revenueShare || 60; // default to 60% if not specified
+            const revenueDistributed = Math.floor((swarm.weeklyRevenue! * revenueShare) / 100);
             
             console.log('Revenue flow calculation:', {
                 id: swarm.id,
                 weeklyRevenue: swarm.weeklyRevenue,
                 revenueShare,
-                revenueDistributed
+                revenueDistributed,
+                flowValue: revenueDistributed * 10 // Increase the value to make flows more visible
             });
 
             return {
                 source: swarm.id,
                 target: 'shareholders',
-                value: revenueDistributed,
+                value: revenueDistributed * 10, // Increase the value to make flows more visible
                 strength: 0.3,
                 serviceName: 'revenue',
                 isRevenueFlow: true,
                 weeklyRevenue: swarm.weeklyRevenue,
-                revenueShare: revenueShare
+                revenueShare: revenueShare,
+                revenueDistributed: revenueDistributed // Add the actual distributed amount
             };
         });
 
