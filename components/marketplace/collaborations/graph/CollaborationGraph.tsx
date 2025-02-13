@@ -171,7 +171,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     const zoomBehavior = d3.zoom<SVGSVGElement, unknown>()
         .scaleExtent([0.1, 4])
         .on('zoom', (event) => {
-            g.attr('transform', event.transform);
+            gElement.attr('transform', event.transform);
         });
 
     // Apply zoom to svg
