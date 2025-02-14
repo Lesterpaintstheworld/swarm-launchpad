@@ -335,6 +335,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
               defs={defs}
               links={links}
               calculateWidth={calculateWidth}
+              simulation={simulation}
             />
             <MessageAnimations 
               g={g} 

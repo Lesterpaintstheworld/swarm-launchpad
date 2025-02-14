@@ -9,9 +9,10 @@ interface GraphLinksProps {
     defs: d3.Selection<SVGDefsElement, unknown, null, undefined>;
     links: SimulationLink[];
     calculateWidth: (value: number) => number;
+    simulation: d3.Simulation<SimulationNode, SimulationLink>;
 }
 
-export function GraphLinks({ g, defs, links, calculateWidth }: GraphLinksProps) {
+export function GraphLinks({ g, defs, links, calculateWidth, simulation }: GraphLinksProps) {
     useEffect(() => {
         // Create gradient for base links
         const gradient = defs.append("linearGradient")
@@ -64,16 +65,11 @@ export function GraphLinks({ g, defs, links, calculateWidth }: GraphLinksProps) 
             });
         };
 
-        // Add tick listener to parent simulation
-        const simulation = d3.select(g.node()?.parentNode as any).datum() as any;
-        if (simulation?.on) {
-            simulation.on("tick.links", updateLinks);
-        }
+        // Add tick listener to simulation
+        simulation.on("tick.links", updateLinks);
 
         return () => {
-            if (simulation?.on) {
-                simulation.on("tick.links", null);
-            }
+            simulation.on("tick.links", null);
             linksLayer.selectAll("*").remove();
             gradient.remove();
         };
