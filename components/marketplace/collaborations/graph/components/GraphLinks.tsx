@@ -14,6 +14,8 @@ interface GraphLinksProps {
 
 export function GraphLinks({ g, defs, links, calculateWidth, simulation }: GraphLinksProps) {
     useEffect(() => {
+        if (!simulation || !g || !defs) return; // Add early return if dependencies aren't ready
+
         // Create gradient for base links
         const gradient = defs.append("linearGradient")
             .attr("id", "link-gradient")
@@ -65,11 +67,15 @@ export function GraphLinks({ g, defs, links, calculateWidth, simulation }: Graph
             });
         };
 
-        // Add tick listener to simulation
-        simulation.on("tick.links", updateLinks);
+        // Add tick listener to simulation only if it exists
+        if (simulation) {
+            simulation.on("tick.links", updateLinks);
+        }
 
         return () => {
-            simulation.on("tick.links", null);
+            if (simulation) {
+                simulation.on("tick.links", null);
+            }
             linksLayer.selectAll("*").remove();
             gradient.remove();
         };

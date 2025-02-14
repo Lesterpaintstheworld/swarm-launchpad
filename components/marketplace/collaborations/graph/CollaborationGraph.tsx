@@ -328,7 +328,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
           ...graphStyles
         }}
       >
-        {g && defs && (
+        {g && defs && simulation && (
           <>
             <GraphLinks 
               g={g}
