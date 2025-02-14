@@ -26,24 +26,55 @@ export function GraphLinks({ g, defs, links, calculateWidth }: GraphLinksProps) 
             .attr("offset", "100%")
             .attr("stop-color", "rgba(147, 51, 234, 0.3)");
 
-        // Draw links
-        const linkGroup = g.append("g")
-            .attr("class", "links");
+        // Get or create links layer
+        let linksLayer = g.select('.links-layer');
+        if (linksLayer.empty()) {
+            linksLayer = g.append("g").attr("class", "links-layer");
+        }
 
-        // Base links
-        linkGroup.append("g")
-            .attr("class", "base-links")
+        // Draw links
+        const linkPaths = linksLayer
             .selectAll("path")
             .data(links)
             .join("path")
             .attr("class", "link-path")
-            .attr("stroke", "url(#link-gradient)")
+            .attr("stroke", d => {
+                if ((d as any).isRevenueFlow) {
+                    return "rgba(234, 179, 8, 0.3)";
+                }
+                if ((d as any).isShareholderLink) {
+                    return "rgba(234, 179, 8, 0.15)";
+                }
+                return "url(#link-gradient)";
+            })
             .attr("stroke-width", d => calculateWidth(d.value))
-            .attr("stroke-opacity", 1)
-            .attr("fill", "none");
+            .attr("fill", "none")
+            .style("pointer-events", "none");
+
+        // Update link positions on simulation tick
+        const updateLinks = () => {
+            linkPaths.attr("d", (d: any) => {
+                if (!d.source?.x || !d.source?.y || !d.target?.x || !d.target?.y) {
+                    return null;
+                }
+                const dx = d.target.x - d.source.x;
+                const dy = d.target.y - d.source.y;
+                const dr = Math.sqrt(dx * dx + dy * dy);
+                return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
+            });
+        };
+
+        // Add tick listener to parent simulation
+        const simulation = d3.select(g.node()?.parentNode as any).datum() as any;
+        if (simulation?.on) {
+            simulation.on("tick.links", updateLinks);
+        }
 
         return () => {
-            linkGroup.selectAll("*").remove();
+            if (simulation?.on) {
+                simulation.on("tick.links", null);
+            }
+            linksLayer.selectAll("*").remove();
             gradient.remove();
         };
     }, [g, defs, links, calculateWidth]);
