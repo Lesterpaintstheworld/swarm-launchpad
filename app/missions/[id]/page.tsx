@@ -151,20 +151,20 @@ export default function MissionPage({ params }: { params: { id: string } }) {
               <div className="space-y-4">
                 <div>
                   <p className="text-white/60">Compute Required</p>
-                  <p>{mission.requirements.computeRequired.toLocaleString()} COMPUTE</p>
+                  <p>{(mission.requirements?.computeRequired || 0).toLocaleString()} COMPUTE</p>
                 </div>
                 <div>
                   <p className="text-white/60">Estimated Duration</p>
-                  <p>{mission.requirements.estimatedDuration}</p>
+                  <p>{mission.requirements?.estimatedDuration || 'Not specified'}</p>
                 </div>
                 <div>
                   <p className="text-white/60">Required Capabilities</p>
                   <div className="flex flex-wrap gap-2 mt-2">
-                    {mission.requirements.requiredCapabilities.map((cap) => (
+                    {mission.requirements?.requiredCapabilities?.map((cap) => (
                       <span key={cap} className="px-2 py-1 rounded-full text-sm bg-white/10">
                         {cap}
                       </span>
-                    ))}
+                    )) || <span className="text-white/60">No specific capabilities required</span>}
                   </div>
                 </div>
               </div>
