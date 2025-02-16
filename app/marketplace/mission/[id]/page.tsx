@@ -166,7 +166,7 @@ export default function MissionDetailsPage({ params }: { params: { id: string } 
                 <div className="flex items-baseline gap-2">
                   <Cpu className="w-5 h-5 text-white/40" />
                   <span className="text-3xl font-bold text-white">
-                    {mission.requirements.computeRequired.toLocaleString()}
+                    {mission.requirements?.computeRequired?.toLocaleString() || '0'}
                   </span>
                   <span className="metallic-text text-xl font-semibold">
                     $COMPUTE
@@ -183,7 +183,7 @@ export default function MissionDetailsPage({ params }: { params: { id: string } 
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-white/60">Estimated Duration</span>
-                  <span className="text-white">{mission.requirements.estimatedDuration}</span>
+                  <span className="text-white">{mission.requirements?.estimatedDuration || 'TBD'}</span>
                 </div>
               </div>
 
