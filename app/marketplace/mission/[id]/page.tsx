@@ -244,7 +244,7 @@ export default function MissionDetailsPage({ params }: { params: { id: string } 
             </div>
 
             {/* Tags Card */}
-            {mission.tags?.length > 0 && (
+            {Array.isArray(mission.tags) && mission.tags.length > 0 && (
               <div className="rounded-xl bg-white/5 border border-white/10 p-6">
                 <h2 className="text-lg font-semibold text-white mb-4">Tags</h2>
                 <div className="flex flex-wrap gap-2">

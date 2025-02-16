@@ -43,12 +43,12 @@ export async function GET(
       endDate: record.fields.endDate,
       createdAt: record.fields.createdAt,
       leadSwarm: record.fields.leadSwarm,
-      participatingSwarms: record.fields.participatingSwarms || [],
-      supportingSwarms: record.fields.supportingSwarms || [],
+      participatingSwarms: Array.isArray(record.fields.participatingSwarms) ? record.fields.participatingSwarms : [],
+      supportingSwarms: Array.isArray(record.fields.supportingSwarms) ? record.fields.supportingSwarms : [],
       features: JSON.parse(record.fields.features || '[]'),
       requirements: JSON.parse(record.fields.requirements || '{}'),
       progress: JSON.parse(record.fields.progress || '{}'),
-      tags: record.fields.tags || []
+      tags: Array.isArray(record.fields.tags) ? record.fields.tags : []
     };
 
     return NextResponse.json(mission);
