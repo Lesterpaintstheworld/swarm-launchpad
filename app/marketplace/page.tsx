@@ -63,21 +63,24 @@ function MarketplaceContent() {
     async function fetchData() {
       try {
         setIsLoading(true);
-        const [collabResponse, servicesResponse] = await Promise.all([
+        const [collabResponse, servicesResponse, missionsResponse] = await Promise.all([
           fetch('/api/collaborations'),
-          fetch('/api/services')
+          fetch('/api/services'),
+          fetch('/api/missions')
         ]);
 
-        if (!collabResponse.ok || !servicesResponse.ok) {
+        if (!collabResponse.ok || !servicesResponse.ok || !missionsResponse.ok) {
           throw new Error('Failed to fetch marketplace data');
         }
 
-        const [collabData, servicesData] = await Promise.all([
+        const [collabData, servicesData, missionsData] = await Promise.all([
           collabResponse.json(),
-          servicesResponse.json()
+          servicesResponse.json(),
+          missionsResponse.json()
         ]);
 
         console.log('Fetched services data:', servicesData);
+        console.log('Fetched missions data:', missionsData);
 
         setCollaborations(collabData);
         setServices(servicesData.map((service: ServiceResponse) => {
@@ -88,6 +91,7 @@ function MarketplaceContent() {
           console.log('Mapped service:', mappedService);
           return mappedService;
         }));
+        setMissions(missionsData);
       } catch (error) {
         console.error('Error fetching marketplace data:', error);
       } finally {
