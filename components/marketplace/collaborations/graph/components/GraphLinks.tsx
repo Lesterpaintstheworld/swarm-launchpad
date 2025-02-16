@@ -14,7 +14,7 @@ interface GraphLinksProps {
 
 export function GraphLinks({ g, defs, links, calculateWidth, simulation }: GraphLinksProps) {
     useEffect(() => {
-        if (!simulation || !g || !defs) return; // Add early return if dependencies aren't ready
+        if (!simulation || !g || !defs) return;
 
         // Create gradient for base links
         const gradient = defs.append("linearGradient")
@@ -30,14 +30,15 @@ export function GraphLinks({ g, defs, links, calculateWidth, simulation }: Graph
             .attr("stop-color", "rgba(147, 51, 234, 0.3)");
 
         // Get or create links layer
-        let linksLayer = g.select('.links-layer');
+        let linksLayer = g.select<SVGGElement>('.links-layer');
         if (linksLayer.empty()) {
-            linksLayer = g.append("g").attr("class", "links-layer");
+            linksLayer = g.append<SVGGElement>("g")
+                .attr("class", "links-layer");
         }
 
         // Draw links
         const linkPaths = linksLayer
-            .selectAll("path")
+            .selectAll<SVGPathElement, SimulationLink>("path")
             .data(links)
             .join("path")
             .attr("class", "link-path")
@@ -67,7 +68,6 @@ export function GraphLinks({ g, defs, links, calculateWidth, simulation }: Graph
             });
         };
 
-        // Add tick listener to simulation only if it exists
         if (simulation) {
             simulation.on("tick.links", updateLinks);
         }
@@ -79,7 +79,7 @@ export function GraphLinks({ g, defs, links, calculateWidth, simulation }: Graph
             linksLayer.selectAll("*").remove();
             gradient.remove();
         };
-    }, [g, defs, links, calculateWidth]);
+    }, [g, defs, links, calculateWidth, simulation]);
 
     return null;
 }
