@@ -1,6 +1,6 @@
 'use client';
 
-import { getMission } from '@/data/missions/missions';
+import { useEffect, useState } from 'react';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
@@ -16,21 +16,70 @@ interface MissionRequester {
 
 interface Mission {
   id: string;
-  name: string;
+  title: string;
   description: string;
-  reward: number;
-  deadline?: string;
-  status: 'open' | 'in-progress' | 'completed';
-  swarmId: string;
-  requirements?: string[];
-  deliverables?: string[];
-  requester: MissionRequester;
-  estimatedDuration: string;
+  priority: 'high' | 'medium' | 'low';
+  status: string;
+  startDate: string;
+  endDate: string;
+  createdAt: string;
+  leadSwarm: string;
+  participatingSwarms: string[];
+  supportingSwarms: string[];
+  features: Array<{
+    featureId: string;
+    title: string;
+    description: string;
+    status: string;
+  }>;
+  requirements: {
+    computeRequired: number;
+    estimatedDuration: string;
+    requiredCapabilities: string[];
+  };
+  progress: {
+    progressPercentage: number;
+    completedFeatures: number;
+    totalFeatures: number;
+  };
+  tags: string[];
 }
 
 export default function MissionDetailsPage({ params }: { params: { id: string } }) {
-  const mission = getMission(params.id);
+  const [mission, setMission] = useState<Mission | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const { connected } = useWallet();
+
+  useEffect(() => {
+    async function fetchMission() {
+      try {
+        const response = await fetch(`/api/missions/${params.id}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch mission');
+        }
+        const data = await response.json();
+        setMission(data);
+      } catch (error) {
+        console.error('Error fetching mission:', error);
+        notFound();
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchMission();
+  }, [params.id]);
+
+  if (isLoading) {
+    return (
+      <div className="container py-8">
+        <div className="animate-pulse space-y-4">
+          <div className="h-8 bg-white/5 rounded w-1/4"></div>
+          <div className="h-32 bg-white/5 rounded"></div>
+        </div>
+      </div>
+    );
+  }
 
   if (!mission) {
     notFound();
@@ -39,7 +88,7 @@ export default function MissionDetailsPage({ params }: { params: { id: string } 
   const crumbs = [
     { label: 'Marketplace', href: '/marketplace' },
     { label: 'Missions', href: '/marketplace?tab=missions' },
-    { label: mission.name }
+    { label: mission.title }
   ];
 
   const handleAcceptMission = () => {
@@ -59,7 +108,7 @@ export default function MissionDetailsPage({ params }: { params: { id: string } 
           <div className="rounded-xl bg-white/5 border border-white/10 p-6 space-y-4">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h1 className="text-2xl font-bold text-white">{mission.name}</h1>
+                <h1 className="text-2xl font-bold text-white">{mission.title}</h1>
                 <p className="text-lg text-white/60 mt-2">{mission.description}</p>
               </div>
               <div className={`px-3 py-1 h-fit rounded-full bg-emerald-500/10 border-emerald-500/20 border`}>
@@ -74,7 +123,7 @@ export default function MissionDetailsPage({ params }: { params: { id: string } 
           <div className="rounded-xl bg-white/5 border border-white/10 p-6">
             <h2 className="text-lg font-semibold text-white mb-4">Required Capabilities</h2>
             <div className="flex flex-wrap gap-2">
-              {mission.requirements?.map((requirement) => (
+              {mission.requirements?.requiredCapabilities?.map((requirement) => (
                 <span
                   key={requirement}
                   className="px-3 py-1.5 text-sm rounded-full bg-white/5 text-white/60"
@@ -117,7 +166,7 @@ export default function MissionDetailsPage({ params }: { params: { id: string } 
                 <div className="flex items-baseline gap-2">
                   <Cpu className="w-5 h-5 text-white/40" />
                   <span className="text-3xl font-bold text-white">
-                    {mission.reward.toLocaleString()}
+                    {mission.requirements.computeRequired.toLocaleString()}
                   </span>
                   <span className="metallic-text text-xl font-semibold">
                     $COMPUTE
@@ -129,12 +178,12 @@ export default function MissionDetailsPage({ params }: { params: { id: string } 
                 <div className="flex justify-between text-sm">
                   <span className="text-white/60">Deadline</span>
                   <span className="text-white">
-                    {mission.deadline ? new Date(mission.deadline).toLocaleDateString() : 'No deadline set'}
+                    {mission.endDate ? new Date(mission.endDate).toLocaleDateString() : 'No deadline set'}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-white/60">Estimated Duration</span>
-                  <span className="text-white">{mission.estimatedDuration}</span>
+                  <span className="text-white">{mission.requirements.estimatedDuration}</span>
                 </div>
               </div>
 
