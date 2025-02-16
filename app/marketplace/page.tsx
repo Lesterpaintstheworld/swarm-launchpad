@@ -92,30 +92,32 @@ function MarketplaceContent() {
           console.log('Mapped service:', mappedService);
           return mappedService;
         }));
-        setMissions(missionsData.map((apiMission: any) => ({
+        setMissions(missionsData.map((apiMission: APIMission) => ({
           id: apiMission.id,
-          title: apiMission.title || apiMission.name,
-          description: apiMission.description,
+          title: apiMission.title,
+          description: apiMission.description || '',
           priority: apiMission.priority || 'medium',
-          status: apiMission.status,
+          status: apiMission.status || 'pending',
           startDate: apiMission.startDate || new Date().toISOString(),
-          endDate: apiMission.endDate || apiMission.deadline || new Date().toISOString(),
+          endDate: apiMission.endDate || new Date().toISOString(),
           createdAt: apiMission.createdAt || new Date().toISOString(),
           leadSwarm: apiMission.leadSwarm || '',
-          participatingSwarms: apiMission.participatingSwarms || [],
-          supportingSwarms: apiMission.supportingSwarms || [],
-          features: apiMission.features || [],
+          participatingSwarms: Array.isArray(apiMission.participatingSwarms) ? apiMission.participatingSwarms : [],
+          supportingSwarms: Array.isArray(apiMission.supportingSwarms) ? apiMission.supportingSwarms : [],
+          features: Array.isArray(apiMission.features) ? apiMission.features : [],
           requirements: {
-            computeRequired: apiMission.requirements?.computeRequired || 0,
+            computeRequired: Number(apiMission.requirements?.computeRequired) || 0,
             estimatedDuration: apiMission.requirements?.estimatedDuration || 'TBD',
-            requiredCapabilities: apiMission.requirements?.requiredCapabilities || []
+            requiredCapabilities: Array.isArray(apiMission.requirements?.requiredCapabilities) 
+              ? apiMission.requirements.requiredCapabilities 
+              : []
           },
           progress: {
-            progressPercentage: apiMission.progress?.progressPercentage || 0,
-            completedFeatures: apiMission.progress?.completedFeatures || 0,
-            totalFeatures: apiMission.progress?.totalFeatures || 0
+            progressPercentage: Number(apiMission.progress?.progressPercentage) || 0,
+            completedFeatures: Number(apiMission.progress?.completedFeatures) || 0,
+            totalFeatures: Number(apiMission.progress?.totalFeatures) || 0
           },
-          tags: apiMission.tags || []
+          tags: Array.isArray(apiMission.tags) ? apiMission.tags : []
         })));
       } catch (error) {
         console.error('Error fetching marketplace data:', error);
