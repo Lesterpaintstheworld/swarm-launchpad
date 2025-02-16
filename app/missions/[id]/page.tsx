@@ -173,11 +173,15 @@ export default function MissionPage({ params }: { params: { id: string } }) {
             <div className="bg-card rounded-lg p-6">
               <h2 className="text-xl font-semibold mb-4">Tags</h2>
               <div className="flex flex-wrap gap-2">
-                {mission.tags.map((tag) => (
-                  <span key={tag} className="px-2 py-1 rounded-full text-sm bg-white/10">
-                    {tag}
-                  </span>
-                ))}
+                {Array.isArray(mission.tags) && mission.tags.length > 0 ? (
+                  mission.tags.map((tag) => (
+                    <span key={tag} className="px-2 py-1 rounded-full text-sm bg-white/10">
+                      {tag}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-white/60">No tags</span>
+                )}
               </div>
             </div>
           </div>
