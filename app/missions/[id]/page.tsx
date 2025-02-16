@@ -4,43 +4,7 @@ import { useEffect, useState } from 'react';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { Hero } from '@/components/ui/hero';
 import { ClientMarkdown } from '@/components/ui/clientMarkdown';
-
-interface Feature {
-  featureId: string;
-  title: string;
-  description: string;
-  status: string;
-}
-
-interface Requirements {
-  computeRequired: number;
-  estimatedDuration: string;
-  requiredCapabilities: string[];
-}
-
-interface Progress {
-  progressPercentage: number;
-  completedFeatures: number;
-  totalFeatures: number;
-}
-
-interface Mission {
-  id: string;
-  title: string;
-  description: string;
-  priority: string;
-  status: string;
-  startDate: string;
-  endDate: string;
-  createdAt: string;
-  leadSwarm: string;
-  participatingSwarms: string[];
-  supportingSwarms: string[];
-  features: Feature[];
-  requirements: Requirements;
-  progress: Progress;
-  tags: string[];
-}
+import { Mission } from '@/data/missions/missions';
 
 export default function MissionPage({ params }: { params: { id: string } }) {
   const [mission, setMission] = useState<Mission | null>(null);
