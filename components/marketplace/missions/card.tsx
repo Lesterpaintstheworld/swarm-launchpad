@@ -107,7 +107,7 @@ export function MissionCard({ mission }: MissionCardProps) {
 
         {/* Requirements */}
         <div className="flex flex-wrap gap-2">
-          {mission.requirements.requiredCapabilities?.slice(0, 3).map((capability) => (
+          {mission.requirements?.requiredCapabilities?.slice(0, 3).map((capability) => (
             <span
               key={capability}
               className="px-2 py-1 text-xs rounded-full bg-primary/10 text-primary border border-primary/20"
@@ -115,7 +115,7 @@ export function MissionCard({ mission }: MissionCardProps) {
               {capability}
             </span>
           ))}
-          {mission.requirements.requiredCapabilities.length > 3 && (
+          {mission.requirements?.requiredCapabilities && mission.requirements.requiredCapabilities.length > 3 && (
             <span className="px-2 py-1 text-xs rounded-full bg-white/5 text-white/60">
               +{mission.requirements.requiredCapabilities.length - 3} more
             </span>
