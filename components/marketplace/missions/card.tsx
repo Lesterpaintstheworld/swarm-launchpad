@@ -128,12 +128,12 @@ export function MissionCard({ mission }: MissionCardProps) {
             <div className="flex items-center gap-2">
               <Cpu className="w-4 h-4 text-white/40" />
               <span className="text-sm font-medium text-white">
-                {mission.requirements.computeRequired.toLocaleString()} COMPUTE
+                {mission.requirements?.computeRequired?.toLocaleString() || '0'} COMPUTE
               </span>
             </div>
             <span className="text-white/40">•</span>
             <span className="text-sm text-white/60">
-              {mission.requirements.estimatedDuration}
+              {mission.requirements?.estimatedDuration || 'TBD'}
             </span>
           </div>
           
