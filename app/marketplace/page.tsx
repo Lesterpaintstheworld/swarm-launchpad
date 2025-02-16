@@ -40,7 +40,8 @@ import { MarketplaceTab, SortOption } from '@/components/marketplace/types';
 import { ServiceGrid } from '@/components/marketplace/services/grid';
 import { MissionGrid } from '@/components/marketplace/missions/grid';
 import { SwarmProfiles } from '@/components/marketplace/profiles';
-import { CollaborationResponse, Mission, ServiceResponse } from '@/types/api';
+import { CollaborationResponse, Mission as APIMission, ServiceResponse } from '@/types/api';
+import { Mission as ComponentMission } from '@/components/marketplace/types';
 
 function MarketplaceContent() {
   const router = useRouter();
@@ -55,7 +56,7 @@ function MarketplaceContent() {
   // State for marketplace data
   const [collaborations, setCollaborations] = useState<CollaborationResponse[]>([]);
   const [services, setServices] = useState<Array<ServiceResponse & { serviceType: ValidServiceType }>>([]);
-  const [missions, setMissions] = useState<Mission[]>([]);
+  const [missions, setMissions] = useState<ComponentMission[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Fetch marketplace data
@@ -91,7 +92,31 @@ function MarketplaceContent() {
           console.log('Mapped service:', mappedService);
           return mappedService;
         }));
-        setMissions(missionsData);
+        setMissions(missionsData.map((mission: APIMission) => ({
+          id: mission.id,
+          title: mission.name,
+          description: mission.description,
+          priority: 'medium',
+          status: mission.status,
+          startDate: new Date().toISOString(),
+          endDate: mission.deadline || new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+          leadSwarm: '',
+          participatingSwarms: [],
+          supportingSwarms: [],
+          features: [],
+          requirements: {
+            computeRequired: mission.reward,
+            estimatedDuration: mission.estimatedDuration,
+            requiredCapabilities: mission.requirements || []
+          },
+          progress: {
+            progressPercentage: 0,
+            completedFeatures: 0,
+            totalFeatures: 0
+          },
+          tags: []
+        })));
       } catch (error) {
         console.error('Error fetching marketplace data:', error);
       } finally {
