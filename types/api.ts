@@ -123,15 +123,31 @@ export interface MissionRequester {
 
 export interface Mission {
   id: string;
-  name: string;
+  title: string;
   description: string;
-  reward: number;
-  deadline?: string;
-  status: 'open' | 'in-progress' | 'completed';
-  swarmId: string;
-  requirements?: string[];
-  deliverables?: string[];
-  requester: MissionRequester;
-  estimatedDuration: string;
-  requiredCapabilities?: string[];
+  priority: 'high' | 'medium' | 'low';
+  status: string;
+  startDate: string;
+  endDate: string;
+  createdAt: string;
+  leadSwarm: string;
+  participatingSwarms: string[];
+  supportingSwarms: string[];
+  features: {
+    featureId: string;
+    title: string;
+    description: string;
+    status: string;
+  }[];
+  requirements: {
+    computeRequired: number;
+    estimatedDuration: string;
+    requiredCapabilities: string[];
+  };
+  progress: {
+    progressPercentage: number;
+    completedFeatures: number;
+    totalFeatures: number;
+  };
+  tags: string[];
 }

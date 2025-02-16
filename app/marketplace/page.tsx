@@ -92,30 +92,30 @@ function MarketplaceContent() {
           console.log('Mapped service:', mappedService);
           return mappedService;
         }));
-        setMissions(missionsData.map((mission: APIMission) => ({
-          id: mission.id,
-          title: mission.name,
-          description: mission.description,
-          priority: 'medium',
-          status: mission.status,
-          startDate: new Date().toISOString(),
-          endDate: mission.deadline || new Date().toISOString(),
-          createdAt: new Date().toISOString(),
-          leadSwarm: '',
-          participatingSwarms: [],
-          supportingSwarms: [],
-          features: [],
+        setMissions(missionsData.map((apiMission: any) => ({
+          id: apiMission.id,
+          title: apiMission.title || apiMission.name,
+          description: apiMission.description,
+          priority: apiMission.priority || 'medium',
+          status: apiMission.status,
+          startDate: apiMission.startDate || new Date().toISOString(),
+          endDate: apiMission.endDate || apiMission.deadline || new Date().toISOString(),
+          createdAt: apiMission.createdAt || new Date().toISOString(),
+          leadSwarm: apiMission.leadSwarm || '',
+          participatingSwarms: apiMission.participatingSwarms || [],
+          supportingSwarms: apiMission.supportingSwarms || [],
+          features: apiMission.features || [],
           requirements: {
-            computeRequired: mission.reward,
-            estimatedDuration: mission.estimatedDuration,
-            requiredCapabilities: mission.requirements || []
+            computeRequired: apiMission.requirements?.computeRequired || 0,
+            estimatedDuration: apiMission.requirements?.estimatedDuration || 'TBD',
+            requiredCapabilities: apiMission.requirements?.requiredCapabilities || []
           },
           progress: {
-            progressPercentage: 0,
-            completedFeatures: 0,
-            totalFeatures: 0
+            progressPercentage: apiMission.progress?.progressPercentage || 0,
+            completedFeatures: apiMission.progress?.completedFeatures || 0,
+            totalFeatures: apiMission.progress?.totalFeatures || 0
           },
-          tags: []
+          tags: apiMission.tags || []
         })));
       } catch (error) {
         console.error('Error fetching marketplace data:', error);
