@@ -5,6 +5,7 @@ const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 
 export async function GET() {
   try {
+    console.log('Fetching missions from Airtable...');
     const response = await fetch(
       `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Missions`,
       {
@@ -21,6 +22,7 @@ export async function GET() {
     }
 
     const data = await response.json();
+    console.log('Airtable response:', data);
 
     const missions = data.records.map((record: any) => ({
       id: record.fields.missionId,
@@ -40,6 +42,7 @@ export async function GET() {
       tags: record.fields.tags || []
     }));
 
+    console.log('Processed missions:', missions);
     return NextResponse.json(missions);
   } catch (error) {
     console.error('Error in /api/missions:', error);

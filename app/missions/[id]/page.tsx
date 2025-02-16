@@ -14,13 +14,16 @@ export default function MissionPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     async function fetchMission() {
       try {
+        console.log('Fetching mission...');
         const response = await fetch(`/api/missions/${params.id}`);
         if (!response.ok) {
           throw new Error('Failed to fetch mission');
         }
         const data = await response.json();
+        console.log('Received mission:', data);
         setMission(data);
       } catch (err) {
+        console.error('Error fetching mission:', err);
         setError(err instanceof Error ? err.message : 'Failed to load mission');
       } finally {
         setIsLoading(false);
