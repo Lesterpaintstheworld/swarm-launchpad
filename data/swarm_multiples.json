@@ -1,0 +1,227 @@
+[
+  {
+    "name": "Robinhood Agent",
+    "pool": "H7xCtjoCyqf55uc5nmPKpypN82jANkRDTNmPx6C3XhS5",
+    "shares_sold": 100000,
+    "available_shares": 0,
+    "initial_price": 1.0,
+    "current_price": 404.273589,
+    "multiple": 404.273589
+  },
+  {
+    "name": "PropertyKin",
+    "pool": "6HnxTkNhQaoYRkPyZD1zTH5WBvFGLes5X2vrH66roa5G",
+    "shares_sold": 100000,
+    "available_shares": 0,
+    "initial_price": 1.0,
+    "current_price": 404.273589,
+    "multiple": 404.273589
+  },
+  {
+    "name": "Swarm Ventures",
+    "pool": "911eRdu96ncdnmEUYA3UQ39gEtE9ueg7UbqycKuKweCG",
+    "shares_sold": 100000,
+    "available_shares": 0,
+    "initial_price": 1.0,
+    "current_price": 404.273589,
+    "multiple": 404.273589
+  },
+  {
+    "name": "PlayWise",
+    "pool": "2iAarCWnsdFqddprxzUwmaLiozHarMTpzLdhJPbi2HRR",
+    "shares_sold": 100000,
+    "available_shares": 0,
+    "initial_price": 1.0,
+    "current_price": 404.273589,
+    "multiple": 404.273589
+  },
+  {
+    "name": "KinOS",
+    "pool": "37u532qgHbjUHic6mQK51jkT3Do7qkWLEUQCx22MDBD8",
+    "shares_sold": 100000,
+    "available_shares": 0,
+    "initial_price": 1.0,
+    "current_price": 404.273589,
+    "multiple": 404.273589
+  },
+  {
+    "name": "Kin Kong",
+    "pool": "FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz",
+    "shares_sold": 100000,
+    "available_shares": 0,
+    "initial_price": 1.0,
+    "current_price": 404.273589,
+    "multiple": 404.273589
+  },
+  {
+    "name": "DigitalKin",
+    "pool": "FM6aFbs9cQ6Jrp3GJPABBVxpLnGFEZZD3tSJ5JGCUsyZ",
+    "shares_sold": 100000,
+    "available_shares": 0,
+    "initial_price": 1.0,
+    "current_price": 404.273589,
+    "multiple": 404.273589
+  },
+  {
+    "name": "DuoAI",
+    "pool": "68K6BBsPynRbLkjJzdQmKMvTPLaUiKb93BUwbJfjqepS",
+    "shares_sold": 100000,
+    "available_shares": 0,
+    "initial_price": 1.0,
+    "current_price": 404.273589,
+    "multiple": 404.273589
+  },
+  {
+    "name": "Synthetic Souls",
+    "pool": "CmC2AUuurX19TLBVQbpNct8pmEjaHsRj6o8SLBAVvxAk",
+    "shares_sold": 100000,
+    "available_shares": 0,
+    "initial_price": 1.0,
+    "current_price": 404.273589,
+    "multiple": 404.273589
+  },
+  {
+    "name": "XForge",
+    "pool": "AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi",
+    "shares_sold": 100000,
+    "available_shares": 0,
+    "initial_price": 1.0,
+    "current_price": 404.273589,
+    "multiple": 404.273589
+  },
+  {
+    "name": "AI Alley",
+    "pool": "DmdtWBcEwWr15MCm9Wa8iB8EJhHPK9NydiuLptuvMBxj",
+    "shares_sold": 100000,
+    "available_shares": 0,
+    "initial_price": 1.0,
+    "current_price": 404.273589,
+    "multiple": 404.273589
+  },
+  {
+    "name": "LogicAtlas",
+    "pool": "9pMb8Ez61vh3YRKKKrkdA5MthswuNE6Bzj9KYPEVCFme",
+    "shares_sold": 100000,
+    "available_shares": 0,
+    "initial_price": 1.0,
+    "current_price": 404.273589,
+    "multiple": 404.273589
+  },
+  {
+    "name": "WealthHive",
+    "pool": "HeR7qoPbvmgcLFywkduZ27Hr2wKYuxtVkTBaGhVohP88",
+    "shares_sold": 91849,
+    "available_shares": 8151,
+    "initial_price": 1.0,
+    "current_price": 256.481369,
+    "multiple": 256.481369
+  },
+  {
+    "name": "CommerceNest",
+    "pool": "9hAfNquoNDbvzcEc1rBG8JzbWRskAsjKm7sYbarRfxyj",
+    "shares_sold": 90539,
+    "available_shares": 9461,
+    "initial_price": 1.0,
+    "current_price": 250.518749,
+    "multiple": 250.518749
+  },
+  {
+    "name": "ProfitBeeAI",
+    "pool": "7AEP5qWyPF92Wgv6tLCwe51e8yrF3WwSzSef5Vg7RQt4",
+    "shares_sold": 93081,
+    "available_shares": 6919,
+    "initial_price": 1.0,
+    "current_price": 190.892554,
+    "multiple": 190.892554
+  },
+  {
+    "name": "DeskMate",
+    "pool": "Gucj554x7dRebtfUBxK1XTBUhQmq2Rqp4v2H6WtL7wNX",
+    "shares_sold": 89848,
+    "available_shares": 10152,
+    "initial_price": 1.0,
+    "current_price": 158.319642,
+    "multiple": 158.319642
+  },
+  {
+    "name": "PublishKin",
+    "pool": "Dt7iwGTgRVZGV2NZFvNtrWVNX77s8ejGdhB2XaR4DxX6",
+    "shares_sold": 80607,
+    "available_shares": 19393,
+    "initial_price": 1.0,
+    "current_price": 139.445219,
+    "multiple": 139.445219
+  },
+  {
+    "name": "StudioKin",
+    "pool": "EJ4Ad3faa43JLZW3HQnxweYFqm4T2cUzBGntG5KnJWE8",
+    "shares_sold": 88528,
+    "available_shares": 11472,
+    "initial_price": 1.0,
+    "current_price": 123.774306,
+    "multiple": 123.774306
+  },
+  {
+    "name": "STUMPED",
+    "pool": "5wL5rah4gWqbbv74vWvsmqqEf99uhRLr3jNPsMcw5imN",
+    "shares_sold": 80006,
+    "available_shares": 19994,
+    "initial_price": 1.0,
+    "current_price": 121.889201,
+    "multiple": 121.889201
+  },
+  {
+    "name": "TherapyKin",
+    "pool": "5wWLpeH2DDrAS9Lxx1nGnwtMTvu7U9txf4BuXxdN6V6H",
+    "shares_sold": 79876,
+    "available_shares": 20124,
+    "initial_price": 1.0,
+    "current_price": 87.475353,
+    "multiple": 87.475353
+  },
+  {
+    "name": "CareHive",
+    "pool": "FHXsVnEfqHQBQS6An4icuSD5ewwn5WWkoj2LWRMGw4mb",
+    "shares_sold": 72292,
+    "available_shares": 27708,
+    "initial_price": 1.0,
+    "current_price": 70.117911,
+    "multiple": 70.117911
+  },
+  {
+    "name": "TravelAId",
+    "pool": "BEsb73xDJH3PrRGs1D4zkPAssg94Yi8dAtiFa59gzeY1",
+    "shares_sold": 73073,
+    "available_shares": 26927,
+    "initial_price": 1.0,
+    "current_price": 57.599908,
+    "multiple": 57.599908
+  },
+  {
+    "name": "TalentKin",
+    "pool": "DTFE1peg5aNe8gFuaT9KZe8TJ4RHks9prpd12iUBKwi4",
+    "shares_sold": 65522,
+    "available_shares": 34478,
+    "initial_price": 1.0,
+    "current_price": 55.667227,
+    "multiple": 55.667227
+  },
+  {
+    "name": "CareerKin",
+    "pool": "EMtoBMEn6JtV9tnbF8ZVVrxnYZbdapWAYEzabq7cW2gR",
+    "shares_sold": 65358,
+    "available_shares": 34642,
+    "initial_price": 1.0,
+    "current_price": 53.720101,
+    "multiple": 53.720101
+  },
+  {
+    "name": "GrantKin",
+    "pool": "3oa4GKg3hpavEAEacDUKJQoA12VPvRE1CKoHypBho2Rt",
+    "shares_sold": 61086,
+    "available_shares": 38914,
+    "initial_price": 1.0,
+    "current_price": 46.195142,
+    "multiple": 46.195142
+  }
+]
