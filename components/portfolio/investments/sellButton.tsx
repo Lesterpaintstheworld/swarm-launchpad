@@ -290,7 +290,7 @@ export const columns: ColumnDef<DividendPayment>[] = [
             <DataTableColumnHeader column={column} title="Date" />
         ),
         cell: () => (
-            <p className="text-muted whitespace-nowrap">30/01/2025</p>
+            <p className="text-muted whitespace-nowrap">20/02/2025</p>
         )
     },
     {
