@@ -126,11 +126,12 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
     return (
         <Modal isOpen={isModalOpen} onClose={handleClose} className="p-6">
             <h4 className="mb-2 font-medium">Sell shares</h4>
-            <p className="text-muted text-sm mb-4">Select which swarm you want to sell shares from, define the number of shares you want to let go, and set your price.</p>
+            <p className="text-muted text-sm mb-6">Select which swarm you want to sell shares from, define the number of shares you want to let go, and set your price.</p>
             <SwarmComboBox
                 className="mb-4"
                 defaultValue={swarmID}
                 onChange={(value: string) => setSwarmID(value)}
+                secondaryMarketAvailable
             />
             <div className="border border-border rounded-md bg-card p-4 pb-2 flex flex-col">
                 <p className="text-muted text-sm">You&apos;ll sell</p>
