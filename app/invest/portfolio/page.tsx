@@ -136,6 +136,9 @@ export default function Portfolio() {
             return;
         }
 
+        // Destructure needed dependencies
+        const { account: { shareholder, pool }, programId } = program;
+
         async function fetchPositions() {
             if (!isMounted) return;
 
@@ -152,7 +155,7 @@ export default function Portfolio() {
                     try {
                         const poolPubkey = new PublicKey(poolId);
                         const shareholderPda = getShareholderPDA(
-                            program.programId,
+                            programId,
                             publicKey as PublicKey, // Type assertion is safe here because we checked above
                             poolPubkey
                         );
@@ -164,14 +167,14 @@ export default function Portfolio() {
 
                         // Fetch both shareholder and pool data concurrently
                         const [shareholderData, poolData] = await Promise.all([
-                            program.account.shareholder.fetch(shareholderPda)
+                            shareholder.fetch(shareholderPda)
                                 .catch(e => {
                                     if (e.message.includes('Account does not exist')) {
                                         return null;
                                     }
                                     throw e;
                                 }),
-                            program.account.pool.fetch(poolPubkey)
+                            pool.fetch(poolPubkey)
                         ]);
 
                         // Skip if no shares owned
@@ -235,7 +238,7 @@ export default function Portfolio() {
             isMounted = false;
             clearInterval(refreshInterval);
         };
-    }, [connected, publicKey?.toString(), program?.programId?.toString(), poolIds.join(',')]);
+    }, [connected, poolIds, program, publicKey, swarmData]);
 
     if (!connected) return (
         <main className="container view">

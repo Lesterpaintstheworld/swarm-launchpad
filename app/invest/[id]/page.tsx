@@ -13,35 +13,35 @@ async function getInitialPrice() {
 }
 
 async function getSwarm(id: string) {
-  try {
-    console.log('Fetching swarm with ID:', id);
-    
-    // Use absolute URL with origin for production
-    const origin = process.env.NEXT_PUBLIC_API_BASE_URL || '';
-    const response = await fetch(`${origin}/api/swarms/${id}`, {
-      cache: 'no-store',
-      headers: {
-        'Accept': 'application/json'
-      }
-    });
+    try {
+        console.log('Fetching swarm with ID:', id);
+        
+        // Use absolute URL with origin for production
+        const origin = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+        const response = await fetch(`${origin}/api/swarms/${id}`, {
+            cache: 'no-store',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
 
-    if (!response.ok) {
-      console.error('Swarm fetch failed:', {
-        status: response.status,
-        statusText: response.statusText
-      });
-      const text = await response.text();
-      console.error('Response body:', text);
-      return null;
+        if (!response.ok) {
+            console.error('Swarm fetch failed:', {
+                status: response.status,
+                statusText: response.statusText
+            });
+            const text = await response.text();
+            console.error('Response body:', text);
+            return null;
+        }
+
+        const data = await response.json();
+        console.log('Fetched swarm data:', data);
+        return data;
+    } catch (error) {
+        console.error('Error fetching swarm:', error);
+        return null;
     }
-
-    const data = await response.json();
-    console.log('Fetched swarm data:', data);
-    return data;
-  } catch (error) {
-    console.error('Error fetching swarm:', error);
-    return null;
-  }
 }
 
 async function getSwarmData(id: string) {

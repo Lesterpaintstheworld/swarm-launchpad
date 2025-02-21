@@ -2,6 +2,7 @@
 
 import { TokenTooltip } from "@/components/ui/tokenTooltip";
 import { SwarmsPreviewGrid } from "@/components/swarms/previewGrid";
+import { GlobalChat } from "@/components/chat/GlobalChat";
 
 export default function Invest() {
     return (
@@ -18,6 +19,11 @@ export default function Invest() {
             </div>
 
             <SwarmsPreviewGrid />
+
+            {/* Add the GlobalChat component */}
+            <div className="mt-16 mb-24">
+                <GlobalChat />
+            </div>
         </main>
     );
 }

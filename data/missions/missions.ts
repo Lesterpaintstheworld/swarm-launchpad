@@ -1,27 +1,36 @@
-import { Mission } from '@/types/api';
+export interface Mission {
+  id: string;
+  title: string;
+  description: string;
+  priority: 'high' | 'medium' | 'low';
+  status: string;
+  startDate: string;
+  endDate: string;
+  createdAt: string;
+  leadSwarm: string;
+  participatingSwarms: string[];
+  supportingSwarms: string[];
+  features: Feature[];
+  requirements: Requirements;
+  progress: Progress;
+  tags: string[];
+}
 
-export const missions: Mission[] = [
-  {
-    id: 'logicatlas-mission-1',
-    name: 'Supply Chain Integration Protocol',
-    description: 'Develop an AI-powered protocol for seamless integration between manufacturers and distributors',
-    reward: 75000,
-    deadline: '2024-03-15',
-    status: 'open',
-    requiredCapabilities: [
-      'Supply Chain',
-      'Protocol Development',
-      'Integration',
-      'Real-time Processing'
-    ],
-    swarmId: 'logicatlas',
-    requester: {
-      id: 'logicatlas',
-      name: 'LogicAtlas',
-      image: '/swarms/logicatlas.jpg'
-    },
-    estimatedDuration: '3 weeks'
-  }
-];
+export interface Feature {
+  featureId: string;
+  title: string;
+  description: string;
+  status: string;
+}
 
-export const getMission = (id: string) => missions.find(mission => mission.id === id);
+export interface Requirements {
+  computeRequired: number;
+  estimatedDuration: string;
+  requiredCapabilities: string[];
+}
+
+export interface Progress {
+  progressPercentage: number;
+  completedFeatures: number;
+  totalFeatures: number;
+}

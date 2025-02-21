@@ -22,9 +22,31 @@ interface DividendPaymentsProps {
 
 const DividendPayments = ({ className }: DividendPaymentsProps) => {
     const [dividends, setDividends] = useState<DividendPayment[]>([]);
+    const [revenueData, setRevenueData] = useState<Record<string, number>>({});
     const { position: kinKongPosition } = useLaunchpadProgramAccount({ poolAddress: 'FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz' });
     const { position: xForgePosition } = useLaunchpadProgramAccount({ poolAddress: 'AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi' });
     const { position: kinOSPosition } = useLaunchpadProgramAccount({ poolAddress: '37u532qgHbjUHic6mQK51jkT3Do7qkWLEUQCx22MDBD8' });
+
+    // Fetch revenue data
+    useEffect(() => {
+        const fetchRevenueData = async () => {
+            try {
+                const swarms = ['xforge', 'kinos', 'kinkong'];
+                const revenues = await Promise.all(
+                    swarms.map(async (swarmId) => {
+                        const response = await fetch(`/api/swarms/${swarmId}/revenue`);
+                        const data = await response.json();
+                        return [swarmId, data.weeklyRevenue];
+                    })
+                );
+                setRevenueData(Object.fromEntries(revenues));
+            } catch (error) {
+                console.error('Error fetching revenue data:', error);
+            }
+        };
+
+        fetchRevenueData();
+    }, []);
 
     useEffect(() => {
         const calculateDividends = () => {
@@ -41,36 +63,36 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
 
             // Only add dividend entries if there is actual ownership
             const xForgeOwnership = calculateOwnership(xForgePosition?.data, 100000);
-            if (xForgeOwnership > 0) {
+            if (xForgeOwnership > 0 && revenueData.xforge) {
                 data.push({
                     id: '1',
                     swarm_id: 'xforge',
-                    amount: Math.floor(160000 * 0.90 * xForgeOwnership),
-                    ubcAmount: Math.floor(160000 * 0.10 * xForgeOwnership),
+                    amount: Math.floor(revenueData.xforge * 0.90 * xForgeOwnership),
+                    ubcAmount: Math.floor(revenueData.xforge * 0.10 * xForgeOwnership),
                     timestamp: now.toISOString(),
                     status: 'pending'
                 });
             }
 
             const kinOSOwnership = calculateOwnership(kinOSPosition?.data, 100000);
-            if (kinOSOwnership > 0) {
+            if (kinOSOwnership > 0 && revenueData.kinos) {
                 data.push({
                     id: '2',
                     swarm_id: 'kinos',
-                    amount: Math.floor(46000 * 0.90 * kinOSOwnership),
-                    ubcAmount: Math.floor(46000 * 0.10 * kinOSOwnership),
+                    amount: Math.floor(revenueData.kinos * 0.90 * kinOSOwnership),
+                    ubcAmount: Math.floor(revenueData.kinos * 0.10 * kinOSOwnership),
                     timestamp: now.toISOString(),
                     status: 'pending'
                 });
             }
 
             const kinKongOwnership = calculateOwnership(kinKongPosition?.data, 100000);
-            if (kinKongOwnership > 0) {
+            if (kinKongOwnership > 0 && revenueData.kinkong) {
                 data.push({
                     id: '3',
                     swarm_id: 'kinkong',
-                    amount: Math.floor(12000 * 0.90 * kinKongOwnership),
-                    ubcAmount: Math.floor(12000 * 0.10 * kinKongOwnership),
+                    amount: Math.floor(revenueData.kinkong * 0.90 * kinKongOwnership),
+                    ubcAmount: Math.floor(revenueData.kinkong * 0.10 * kinKongOwnership),
                     timestamp: now.toISOString(),
                     status: 'pending'
                 });
@@ -80,7 +102,7 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
         };
 
         calculateDividends();
-    }, [kinKongPosition?.data, xForgePosition?.data, kinOSPosition?.data]);
+    }, [kinKongPosition?.data, xForgePosition?.data, kinOSPosition?.data, revenueData]);
 
     return (
         <Card className={cn("w-full p-6", className)}>
