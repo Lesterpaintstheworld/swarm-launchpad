@@ -46,10 +46,10 @@ function ConnectButton({ className }: { className?: string }) {
       connected
         ? formatPublicKey(publicKey?.toBase58() as string)
         : connecting
-        ? "Connecting..."
-        : disconnecting
-        ? "Disconnecting..."
-        : "Connect Wallet"
+          ? "Connecting..."
+          : disconnecting
+            ? "Disconnecting..."
+            : "Connect Wallet"
     );
   }, [connected, connecting, disconnecting, publicKey]);
 
@@ -98,14 +98,12 @@ function ConnectButton({ className }: { className?: string }) {
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem
-                onClick={() => router.push("/invest/portfolio")}
-              >
+              <DropdownMenuItem onClick={() => router.push("/invest/portfolio")}>
                 Portfolio
                 <ChartPie className="ml-auto max-w-3" />
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => router.push("/marketplace")}>
-                Market
+              <DropdownMenuItem onClick={() => router.push("/marketplace?tab=listings")}>
+                Secondary Market
                 <LucideArrowLeftRight className="ml-auto max-w-3 text-muted" />
               </DropdownMenuItem>
             </DropdownMenuGroup>
