@@ -1,6 +1,6 @@
 "use client"
 
-import { Check, ChevronDown, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronDown, ChevronsUpDown, LucideLoader } from "lucide-react";
 import Image from "next/image";
 
 import { cn } from "@/lib/utils";
@@ -18,62 +18,48 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/shadcn/popover";
-import { useEffect, useRef, useState } from "react";
-import { SwarmModel, SwarmPreviewData } from "../swarm.types";
+import { useRef, useState } from "react";
+import { SwarmPreviewData } from "../swarm.types";
+import { useQuery } from "@tanstack/react-query";
 
 interface SwarmComboBoxProps {
     defaultValue?: string;
     className?: string;
     onChange: (value: string) => void;
+    secondaryMarketAvailable?: boolean;
 }
 
-const SwarmComboBox = ({ className, defaultValue, onChange }: SwarmComboBoxProps) => {
-    const [swarms, setSwarms] = useState<SwarmPreviewData[]>([]);
-
-    useEffect(() => {
-        async function fetchSwarms() {
-            try {
-                const response = await fetch('/api/swarms', {
-                    cache: 'no-store'
-                });
-                const data = await response.json();
-                setSwarms(data);
-            } catch (error) {
-                console.error('Error fetching swarms:', error);
-            }
-        }
-        fetchSwarms();
-    }, []);
+const SwarmComboBox = ({ className, defaultValue, onChange, secondaryMarketAvailable }: SwarmComboBoxProps) => {
 
     const btnRef = useRef<HTMLButtonElement>(null);
 
     const [open, setOpen] = useState<boolean>(false)
-    const [value, setValue] = useState<string>(defaultValue || "");
-    const [swarm, setSwarm] = useState<SwarmPreviewData | undefined>(undefined);
+    const [value, setValue] = useState<string>(defaultValue || "kinkong");
 
-    useEffect(() => {
-        const fetchSwarm = async () => {
-            try {
-                const response = await fetch(`/api/swarms/${value}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setSwarm(data);
-                }
-            } catch (error) {
-                console.error('Error fetching swarm:', error);
-            }
-        };
+    const { data: swarms, isFetching } = useQuery({
+        queryKey: ['swarms'],
+        queryFn: async () => {
+            const response = secondaryMarketAvailable ? await fetch('/api/swarms/secondary-market-available') : await fetch('/api/swarms');
+            if (!response.ok) throw new Error('Failed to fetch swarms');
+            return response.json();
+        },
+        staleTime: 1000 * 60 * 5, // 5 minutes
+    });
 
-        if (value) {
-            fetchSwarm();
-        }
-        onChange(value);
-    }, [value, defaultValue, onChange])
+    const { data: swarm, isFetching: isFetchingSwarm } = useQuery({
+        queryKey: ['swarm', value],
+        queryFn: async () => {
+            const response = await fetch(`/api/swarms/${value}`);
+            if (!response.ok) throw new Error('Failed to fetch swarms');
+            return response.json();
+        },
+        staleTime: 1000 * 60 * 5, // 5 minutes
+    });
 
     const handleFilter = (value: string, search: string): number => {
-        const swarm = swarms.find(s => s.id === value);
+        const swarm = swarms.find((s: typeof swarm) => s.id === value);
         if (!swarm) return 0;
-        
+
         if (
             swarm.name.toLowerCase().includes(search.toLowerCase()) ||
             swarm.models?.toString().toLowerCase().includes(search.toLowerCase()) ||
@@ -87,10 +73,23 @@ const SwarmComboBox = ({ className, defaultValue, onChange }: SwarmComboBoxProps
     }
 
     const handleClick = (value: string) => {
-        if(!value) return;
-        setValue(value)
-        setOpen(false)
+        if (!value) return;
+        onChange(value);
+        setValue(value);
+        setOpen(false);
     }
+
+    if (isFetching) return (
+        <Button
+            role="combobox"
+            disabled={true}
+            className={cn("w-full justify-between min-h-[60px] h-fit duration-500 bg-card", className)}
+            ref={btnRef}
+        >
+            Select a swarm
+            {value === "" ? <ChevronsUpDown className="text-muted" /> : <ChevronDown className="text-muted" />}
+        </Button>
+    )
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -100,23 +99,27 @@ const SwarmComboBox = ({ className, defaultValue, onChange }: SwarmComboBoxProps
                     aria-expanded={open}
                     className={cn("w-full justify-between min-h-none h-fit duration-500 bg-card", className)}
                     ref={btnRef}
+                    disabled={isFetching || isFetchingSwarm}
                 >
-                    {value ?
-                        <div className="flex items-center min-w-[200px] gap-4 pl-1 py-1">
-                            <Image
-                                src={swarm?.image as string || "/swarms/placeholder.jpg"}
-                                alt={`${swarm?.name} avatar`}
-                                width={32}
-                                height={32}
-                                className="rounded-full"
-                            />
-                            <div className="flex flex-col text-left">
-                                <p className="text-lg mb-0 leading-1 truncate">{swarm?.name}</p>
-                                {swarm?.role && <p className="text-sm text-muted truncate">{swarm?.role}</p>}
-                            </div>
-                        </div>
+                    {isFetchingSwarm ?
+                        <LucideLoader className="animate-spin text-muted" />
                         :
-                        'Select a swarm'
+                        value ?
+                            <div className="flex items-center min-w-[200px] gap-4 py-1">
+                                <Image
+                                    src={swarm?.image as string || "/swarms/placeholder.jpg"}
+                                    alt={`${swarm?.name} avatar`}
+                                    width={32}
+                                    height={32}
+                                    className="rounded-full"
+                                />
+                                <div className="flex flex-col text-left">
+                                    <p className="text-lg mb-0 leading-1 truncate">{swarm?.name}</p>
+                                    {swarm?.role && <p className="text-sm text-muted truncate">{swarm?.role}</p>}
+                                </div>
+                            </div>
+                            :
+                            'Select a swarm'
                     }
                     {value === "" ? <ChevronsUpDown className="text-muted" /> : <ChevronDown className="text-muted" />}
                 </Button>

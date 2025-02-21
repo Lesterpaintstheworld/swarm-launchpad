@@ -1,4 +1,4 @@
-import { Cpu, GitBranch, Network, Users } from 'lucide-react';
+import { Cpu, GitBranch, Network, Users, ArrowRightLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { TabItem, MarketplaceTab, sectionColors } from '../types';
 
@@ -22,6 +22,11 @@ const tabs: TabItem[] = [
     id: 'profiles',
     label: 'Swarm Profiles',
     icon: <Users className="w-4 h-4" />
+  },
+  {
+    id: 'listings',
+    label: 'Secondary Market',
+    icon: <ArrowRightLeft className="w-4 h-4" />
   }
 ];
 
@@ -32,13 +37,13 @@ interface MarketplaceNavigationProps {
 
 export function MarketplaceNavigation({ activeTab, onTabChange }: MarketplaceNavigationProps) {
   return (
-    <div className="flex items-center space-x-2 p-1">
+    <div className="flex border border-border rounded-lg bg-white/5 items-center md:justify-between flex-wrap space-x-2 p-2 mt-8">
       {tabs.map((tab) => (
         <button
           key={tab.id}
           onClick={() => onTabChange(tab.id)}
           className={cn(
-            "group relative flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium rounded-lg transition-all duration-300",
+            "group relative flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium rounded-md transition-colors duration-300",
             activeTab === tab.id
               ? `bg-gradient-to-br ${sectionColors[tab.id].primary} ${sectionColors[tab.id].text} shadow-lg`
               : `text-white/60 hover:${sectionColors[tab.id].text} hover:bg-white/5`
@@ -48,7 +53,7 @@ export function MarketplaceNavigation({ activeTab, onTabChange }: MarketplaceNav
           {activeTab === tab.id && (
             <div className="absolute inset-0 rounded-lg bg-white/5 blur-sm" />
           )}
-          
+
           {/* Icon with transition */}
           <div className={cn(
             "transition-transform duration-300",
@@ -56,7 +61,7 @@ export function MarketplaceNavigation({ activeTab, onTabChange }: MarketplaceNav
           )}>
             {tab.icon}
           </div>
-          
+
           {/* Label */}
           <span className="relative z-10">{tab.label}</span>
         </button>

@@ -36,9 +36,10 @@ export function SwarmProfiles() {
       try {
         const response = await fetch('/api/swarms');
         const data = await response.json();
-        setSwarms(data);
+        setSwarms(Array.isArray(data) ? data : []); // Ensure data is an array
       } catch (error) {
         console.error('Error fetching swarms:', error);
+        setSwarms([]); // Set empty array on error
       } finally {
         setIsLoading(false);
       }
@@ -60,7 +61,7 @@ export function SwarmProfiles() {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {swarms.map((swarm) => (
+          {Array.isArray(swarms) && swarms.map((swarm) => (
             <SwarmPreviewCard key={swarm.id} swarm={swarm} />
           ))}
         </div>

@@ -4,8 +4,9 @@ interface ShareListing {
     pool: PublicKey;
     seller: PublicKey;
     shareholder: PublicKey;
-    numberOfShares: number;
-    pricePerShare: number;
+    numberOfShares: BigInt;
+    pricePerShare: BigInt;
+    desiredToken: PublicKey;
     listingId: string;
 }
 

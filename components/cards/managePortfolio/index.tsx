@@ -21,7 +21,7 @@ const ManagePortfolioCard = ({ className }: ManagePortfolioCardProps) => {
                 <p className="text-muted">Want to buy and sell shares, or check your latest dividend payments.</p>
             </div>
             {connected ?
-                <Button className="bg-foreground text-background font-bold mt-4 sm:mt-0" asChild>
+                <Button className="bg-foreground text-background hover:bg-foreground/70 font-bold mt-4 sm:mt-0" asChild>
                     <Link href="/invest/portfolio">
                         View Portfolio
                     </Link>

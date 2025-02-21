@@ -11,10 +11,9 @@ import { Token } from "@/components/tokens/token";
 import { MarketListing } from "@/types/listing";
 import { useQuery } from "@tanstack/react-query";
 import { supportedTokens } from "@/data/tokens/supported";
+import { LucideSettings } from "lucide-react";
 import { useState } from "react";
-import { BuyListingModal } from "../buyListingModal";
-import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
-import { PoolAccount } from "@/types/pool";
+import { CancelListingModal } from "../cancelListingModal";
 
 export const columns: ColumnDef<MarketListing>[] = [
     {
@@ -135,8 +134,6 @@ export const columns: ColumnDef<MarketListing>[] = [
 
             const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-            const { poolAccount } = useLaunchpadProgramAccount({ poolAddress: row.original.pool.toBase58() });
-
             const { data: swarm, isLoading, error } = useQuery({
                 queryKey: ['swarm', row.original.pool.toBase58()],
                 queryFn: async () => {
@@ -148,27 +145,24 @@ export const columns: ColumnDef<MarketListing>[] = [
                 }
             })
 
-            const { data: poolAccountData, isLoading: isLoadingPoolAccount } = poolAccount;
-
             return (
                 <>
                     <div className="w-full flex my-2">
                         <Button
                             onClick={() => setIsModalOpen(true)}
                             className="ml-auto"
-                            variant='success'
-                            disabled={isLoading || !!error}
+                            variant='ghost'
+                            disabled={isLoading}
                         >
-                            BUY
+                            <LucideSettings />
                         </Button>
                     </div>
-                    {!isLoading && !isLoadingPoolAccount &&
-                        <BuyListingModal
+                    {!isLoading &&
+                        <CancelListingModal
                             isModalOpen={isModalOpen}
                             closeModal={() => setIsModalOpen(false)}
                             listing={row.original}
                             swarm={swarm}
-                            poolAccount={poolAccountData as PoolAccount}
                         />
                     }
                 </>

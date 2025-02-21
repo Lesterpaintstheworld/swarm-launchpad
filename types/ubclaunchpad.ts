@@ -67,15 +67,11 @@ export type Ubclaunchpad = {
           "writable": true
         },
         {
-          "name": "computeMintAccount",
+          "name": "tokenMintAccount",
           "writable": true
         },
         {
-          "name": "ubcMintAccount",
-          "writable": true
-        },
-        {
-          "name": "buyerComputeAccount",
+          "name": "buyerTokenAccount",
           "writable": true,
           "pda": {
             "seeds": [
@@ -122,7 +118,7 @@ export type Ubclaunchpad = {
               },
               {
                 "kind": "account",
-                "path": "computeMintAccount"
+                "path": "tokenMintAccount"
               }
             ],
             "program": {
@@ -165,100 +161,11 @@ export type Ubclaunchpad = {
           }
         },
         {
-          "name": "buyerUbcAccount",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "buyer"
-              },
-              {
-                "kind": "const",
-                "value": [
-                  6,
-                  221,
-                  246,
-                  225,
-                  215,
-                  101,
-                  161,
-                  147,
-                  217,
-                  203,
-                  225,
-                  70,
-                  206,
-                  235,
-                  121,
-                  172,
-                  28,
-                  180,
-                  133,
-                  237,
-                  95,
-                  91,
-                  55,
-                  145,
-                  58,
-                  140,
-                  245,
-                  133,
-                  126,
-                  255,
-                  0,
-                  169
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "ubcMintAccount"
-              }
-            ],
-            "program": {
-              "kind": "const",
-              "value": [
-                140,
-                151,
-                37,
-                143,
-                78,
-                36,
-                137,
-                241,
-                187,
-                61,
-                16,
-                41,
-                20,
-                142,
-                13,
-                131,
-                11,
-                90,
-                19,
-                153,
-                218,
-                255,
-                16,
-                132,
-                4,
-                142,
-                123,
-                216,
-                219,
-                233,
-                248,
-                89
-              ]
-            }
-          }
+          "name": "sellerAccount",
+          "writable": true
         },
         {
-          "name": "sellerAccount"
-        },
-        {
-          "name": "sellerComputeAccount",
+          "name": "sellerTokenAccount",
           "writable": true,
           "pda": {
             "seeds": [
@@ -305,7 +212,7 @@ export type Ubclaunchpad = {
               },
               {
                 "kind": "account",
-                "path": "computeMintAccount"
+                "path": "tokenMintAccount"
               }
             ],
             "program": {
@@ -348,10 +255,11 @@ export type Ubclaunchpad = {
           }
         },
         {
-          "name": "custodialAccount"
+          "name": "custodialAccount",
+          "writable": true
         },
         {
-          "name": "custodialUbcAccount",
+          "name": "custodialTokenAccount",
           "writable": true,
           "pda": {
             "seeds": [
@@ -398,7 +306,7 @@ export type Ubclaunchpad = {
               },
               {
                 "kind": "account",
-                "path": "ubcMintAccount"
+                "path": "tokenMintAccount"
               }
             ],
             "program": {
@@ -458,6 +366,82 @@ export type Ubclaunchpad = {
         {
           "name": "associatedTokenProgram",
           "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "buyListingWithLamports",
+      "discriminator": [
+        75,
+        208,
+        219,
+        236,
+        36,
+        115,
+        51,
+        248
+      ],
+      "accounts": [
+        {
+          "name": "shareListing",
+          "writable": true
+        },
+        {
+          "name": "buyerShareholder",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  104,
+                  97,
+                  114,
+                  101,
+                  104,
+                  111,
+                  108,
+                  100,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "buyer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sellerShareholder",
+          "writable": true
+        },
+        {
+          "name": "sellerAccount",
+          "writable": true
+        },
+        {
+          "name": "custodialAccount",
+          "writable": true
+        },
+        {
+          "name": "pool"
+        },
+        {
+          "name": "buyer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": []
@@ -573,6 +557,10 @@ export type Ubclaunchpad = {
         {
           "name": "pricePerShare",
           "type": "u64"
+        },
+        {
+          "name": "desiredToken",
+          "type": "pubkey"
         }
       ]
     },
@@ -1320,6 +1308,34 @@ export type Ubclaunchpad = {
       ]
     }
   ],
+  "events": [
+    {
+      "name": "buyListingEvent",
+      "discriminator": [
+        16,
+        85,
+        211,
+        187,
+        76,
+        25,
+        176,
+        81
+      ]
+    },
+    {
+      "name": "purchaseSharesEvent",
+      "discriminator": [
+        238,
+        83,
+        223,
+        45,
+        131,
+        222,
+        119,
+        78
+      ]
+    }
+  ],
   "errors": [
     {
       "code": 6000,
@@ -1400,9 +1416,79 @@ export type Ubclaunchpad = {
       "code": 6015,
       "name": "tooManyShares",
       "msg": "Too many shares, limit 1000"
+    },
+    {
+      "code": 6016,
+      "name": "tokenNotWhitelisted",
+      "msg": "Token not in whitelist"
+    },
+    {
+      "code": 6017,
+      "name": "shareholderInitialisationFailed",
+      "msg": "Could not initialise new shareholder account"
+    },
+    {
+      "code": 6018,
+      "name": "invalidListingAccount",
+      "msg": "Invalid listing account"
     }
   ],
   "types": [
+    {
+      "name": "buyListingEvent",
+      "docs": [
+        "Events"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "listingId",
+            "type": "string"
+          },
+          {
+            "name": "transactionType",
+            "type": "string"
+          },
+          {
+            "name": "buyer",
+            "type": "pubkey"
+          },
+          {
+            "name": "seller",
+            "type": "pubkey"
+          },
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "token",
+            "type": "pubkey"
+          },
+          {
+            "name": "numberOfShares",
+            "type": "u64"
+          },
+          {
+            "name": "pricePerShare",
+            "type": "u64"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "fee",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
     {
       "name": "pool",
       "type": {
@@ -1448,6 +1534,46 @@ export type Ubclaunchpad = {
       }
     },
     {
+      "name": "purchaseSharesEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "transactionType",
+            "type": "string"
+          },
+          {
+            "name": "buyer",
+            "type": "pubkey"
+          },
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "numberOfShares",
+            "type": "u64"
+          },
+          {
+            "name": "pricePerShare",
+            "type": "u64"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "fee",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
       "name": "shareListing",
       "type": {
         "kind": "struct",
@@ -1471,6 +1597,10 @@ export type Ubclaunchpad = {
           {
             "name": "pricePerShare",
             "type": "u64"
+          },
+          {
+            "name": "desiredToken",
+            "type": "pubkey"
           },
           {
             "name": "listingId",

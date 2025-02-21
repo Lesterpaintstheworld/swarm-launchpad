@@ -61,15 +61,11 @@
           "writable": true
         },
         {
-          "name": "compute_mint_account",
+          "name": "token_mint_account",
           "writable": true
         },
         {
-          "name": "ubc_mint_account",
-          "writable": true
-        },
-        {
-          "name": "buyer_compute_account",
+          "name": "buyer_token_account",
           "writable": true,
           "pda": {
             "seeds": [
@@ -116,7 +112,7 @@
               },
               {
                 "kind": "account",
-                "path": "compute_mint_account"
+                "path": "token_mint_account"
               }
             ],
             "program": {
@@ -159,100 +155,11 @@
           }
         },
         {
-          "name": "buyer_ubc_account",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "buyer"
-              },
-              {
-                "kind": "const",
-                "value": [
-                  6,
-                  221,
-                  246,
-                  225,
-                  215,
-                  101,
-                  161,
-                  147,
-                  217,
-                  203,
-                  225,
-                  70,
-                  206,
-                  235,
-                  121,
-                  172,
-                  28,
-                  180,
-                  133,
-                  237,
-                  95,
-                  91,
-                  55,
-                  145,
-                  58,
-                  140,
-                  245,
-                  133,
-                  126,
-                  255,
-                  0,
-                  169
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "ubc_mint_account"
-              }
-            ],
-            "program": {
-              "kind": "const",
-              "value": [
-                140,
-                151,
-                37,
-                143,
-                78,
-                36,
-                137,
-                241,
-                187,
-                61,
-                16,
-                41,
-                20,
-                142,
-                13,
-                131,
-                11,
-                90,
-                19,
-                153,
-                218,
-                255,
-                16,
-                132,
-                4,
-                142,
-                123,
-                216,
-                219,
-                233,
-                248,
-                89
-              ]
-            }
-          }
+          "name": "seller_account",
+          "writable": true
         },
         {
-          "name": "seller_account"
-        },
-        {
-          "name": "seller_compute_account",
+          "name": "seller_token_account",
           "writable": true,
           "pda": {
             "seeds": [
@@ -299,7 +206,7 @@
               },
               {
                 "kind": "account",
-                "path": "compute_mint_account"
+                "path": "token_mint_account"
               }
             ],
             "program": {
@@ -342,10 +249,11 @@
           }
         },
         {
-          "name": "custodial_account"
+          "name": "custodial_account",
+          "writable": true
         },
         {
-          "name": "custodial_ubc_account",
+          "name": "custodial_token_account",
           "writable": true,
           "pda": {
             "seeds": [
@@ -392,7 +300,7 @@
               },
               {
                 "kind": "account",
-                "path": "ubc_mint_account"
+                "path": "token_mint_account"
               }
             ],
             "program": {
@@ -452,6 +360,82 @@
         {
           "name": "associated_token_program",
           "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "buy_listing_with_lamports",
+      "discriminator": [
+        75,
+        208,
+        219,
+        236,
+        36,
+        115,
+        51,
+        248
+      ],
+      "accounts": [
+        {
+          "name": "share_listing",
+          "writable": true
+        },
+        {
+          "name": "buyer_shareholder",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  104,
+                  97,
+                  114,
+                  101,
+                  104,
+                  111,
+                  108,
+                  100,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "buyer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "seller_shareholder",
+          "writable": true
+        },
+        {
+          "name": "seller_account",
+          "writable": true
+        },
+        {
+          "name": "custodial_account",
+          "writable": true
+        },
+        {
+          "name": "pool"
+        },
+        {
+          "name": "buyer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": []
@@ -567,6 +551,10 @@
         {
           "name": "price_per_share",
           "type": "u64"
+        },
+        {
+          "name": "desired_token",
+          "type": "pubkey"
         }
       ]
     },
@@ -1314,6 +1302,34 @@
       ]
     }
   ],
+  "events": [
+    {
+      "name": "BuyListingEvent",
+      "discriminator": [
+        16,
+        85,
+        211,
+        187,
+        76,
+        25,
+        176,
+        81
+      ]
+    },
+    {
+      "name": "PurchaseSharesEvent",
+      "discriminator": [
+        238,
+        83,
+        223,
+        45,
+        131,
+        222,
+        119,
+        78
+      ]
+    }
+  ],
   "errors": [
     {
       "code": 6000,
@@ -1394,9 +1410,79 @@
       "code": 6015,
       "name": "TooManyShares",
       "msg": "Too many shares, limit 1000"
+    },
+    {
+      "code": 6016,
+      "name": "TokenNotWhitelisted",
+      "msg": "Token not in whitelist"
+    },
+    {
+      "code": 6017,
+      "name": "ShareholderInitialisationFailed",
+      "msg": "Could not initialise new shareholder account"
+    },
+    {
+      "code": 6018,
+      "name": "InvalidListingAccount",
+      "msg": "Invalid listing account"
     }
   ],
   "types": [
+    {
+      "name": "BuyListingEvent",
+      "docs": [
+        "Events"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "listing_id",
+            "type": "string"
+          },
+          {
+            "name": "transaction_type",
+            "type": "string"
+          },
+          {
+            "name": "buyer",
+            "type": "pubkey"
+          },
+          {
+            "name": "seller",
+            "type": "pubkey"
+          },
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "token",
+            "type": "pubkey"
+          },
+          {
+            "name": "number_of_shares",
+            "type": "u64"
+          },
+          {
+            "name": "price_per_share",
+            "type": "u64"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "fee",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
     {
       "name": "Pool",
       "type": {
@@ -1442,6 +1528,46 @@
       }
     },
     {
+      "name": "PurchaseSharesEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "transaction_type",
+            "type": "string"
+          },
+          {
+            "name": "buyer",
+            "type": "pubkey"
+          },
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "number_of_shares",
+            "type": "u64"
+          },
+          {
+            "name": "price_per_share",
+            "type": "u64"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "fee",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
       "name": "ShareListing",
       "type": {
         "kind": "struct",
@@ -1465,6 +1591,10 @@
           {
             "name": "price_per_share",
             "type": "u64"
+          },
+          {
+            "name": "desired_token",
+            "type": "pubkey"
           },
           {
             "name": "listing_id",

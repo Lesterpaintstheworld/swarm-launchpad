@@ -3,45 +3,17 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { CollaborationGrid } from '@/components/marketplace/collaborations/grid';
-
-type ValidServiceType = 'subscription' | 'one-off' | 'pay-as-you-go' | 'financial';
-
-function validateServiceType(type: string): ValidServiceType {
-  switch (type) {
-    case 'subscription':
-      return 'subscription';
-    case 'one-off':
-      return 'one-off';
-    case 'pay-as-you-go':
-      return 'pay-as-you-go';
-    case 'financial':
-      return 'financial';
-    default:
-      return 'one-off'; // Default fallback
-  }
-}
-
-function validateCollaborationStatus(status: string): 'active' | 'completed' | 'pending' {
-  switch (status.toLowerCase()) {
-    case 'active':
-      return 'active';
-    case 'completed':
-      return 'completed';
-    case 'pending':
-      return 'pending';
-    default:
-      return 'pending'; // Default fallback status
-  }
-}
-import { CollaborationGraph } from '@/components/marketplace/collaborations/graph';
 import { MarketplaceNavigation } from '@/components/marketplace/navigation';
 import { MarketplaceSearch } from '@/components/marketplace/search';
 import { MarketplaceTab, SortOption } from '@/components/marketplace/types';
 import { ServiceGrid } from '@/components/marketplace/services/grid';
 import { MissionGrid } from '@/components/marketplace/missions/grid';
 import { SwarmProfiles } from '@/components/marketplace/profiles';
+import { CollaborationGraph } from '@/components/marketplace/collaborations/graph';
 import { CollaborationResponse, Mission as APIMission, ServiceResponse } from '@/types/api';
 import { Mission as ComponentMission } from '@/components/marketplace/types';
+
+type ValidServiceType = 'subscription' | 'one-off' | 'pay-as-you-go' | 'financial';
 
 function MarketplaceContent() {
   const router = useRouter();
@@ -281,6 +253,13 @@ function MarketplaceContent() {
                 </div>
               )}
               {activeTab === 'profiles' && <SwarmProfiles />}
+              {activeTab === 'listings' &&
+                <>
+                  <SellPositionCard className='mb-6' />
+                  <UserListings className='mb-6' />
+                  <MarketListings />
+                </>
+              }
             </div>
           </div>
         </div>
