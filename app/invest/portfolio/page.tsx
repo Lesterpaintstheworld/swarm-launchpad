@@ -9,55 +9,33 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
 
 import { useState, useEffect } from "react";
 
-const getSwarmUsingPoolId = (poolId: string): { id: string; name: string; wallet?: string } | null => {
-    const swarmMap: Record<string, { id: string; name: string; wallet: string }> = {
-        'FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz': {
-            id: 'kinkong',
-            name: 'KinKong',
-            wallet: 'BQxsFSHqkwxnhYwW1YqhS6eXvbDp6YUhqiWrGvnB3UBE'
-        },
-        'AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi': {
-            id: 'xforge',
-            name: 'XForge',
-            wallet: '5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1'
-        },
-        '37u532qgHbjUHic6mQK51jkT3Do7qkWLEUQCx22MDBD8': {
-            id: 'kinos',
-            name: 'KinOS',
-            wallet: '6MxUwQisBsEQKAWkXQPnVh3L2TZfQBFY3DXr8RaXDYet'
-        }
-    } as const;
-
-    return (poolId in swarmMap) ? swarmMap[poolId as keyof typeof swarmMap] : null;
-};
-
 interface ShareholderAccount {
-  shares: {
-    toNumber: () => number;
-  };
+    shares: {
+        toNumber: () => number;
+    };
 }
 
 interface PoolAccount {
-  totalShares: {
-    toNumber: () => number;
-  };
-  availableShares: {
-    toNumber: () => number;
-  };
+    totalShares: {
+        toNumber: () => number;
+    };
+    availableShares: {
+        toNumber: () => number;
+    };
 }
 
 interface ProgramAccounts {
-  shareholder: {
-    fetch(address: PublicKey): Promise<ShareholderAccount>;
-  };
-  pool: {
-    fetch(address: PublicKey): Promise<PoolAccount>;
-  };
+    shareholder: {
+        fetch(address: PublicKey): Promise<ShareholderAccount>;
+    };
+    pool: {
+        fetch(address: PublicKey): Promise<PoolAccount>;
+    };
 }
 
 interface ApiError extends Error {
-  status?: number;
-  message: string;
+    status?: number;
+    message: string;
 }
 
 import { Investment } from '@/types/investments';
@@ -111,30 +89,29 @@ export default function Portfolio() {
         setIsLoading(true); // This will trigger a re-fetch
     };
 
-
     useEffect(() => {
         let isMounted = true;
 
         async function fetchSwarmData() {
             if (!isMounted) return;
-            
+
             try {
                 const response = await fetch('/api/swarms');
                 if (!response.ok) throw new Error('Failed to fetch swarm data');
                 const data = await response.json();
-                
+
                 if (!isMounted) return;
 
                 const swarmMap: Record<string, SwarmData> = {};
                 const pools: string[] = [];
-                
+
                 data.forEach((swarm: SwarmData) => {
                     if (swarm.pool) {
                         swarmMap[swarm.pool] = swarm;
                         pools.push(swarm.pool);
                     }
                 });
-                
+
                 setSwarmData(swarmMap);
                 setPoolIds(pools);
             } catch (error: any) {
@@ -161,7 +138,7 @@ export default function Portfolio() {
 
         async function fetchPositions() {
             if (!isMounted) return;
-            
+
             try {
                 // Check memory cache first
                 if (cachedData && (Date.now() - cachedData.timestamp < CACHE_DURATION)) {
@@ -226,7 +203,7 @@ export default function Portfolio() {
 
                 if (!isMounted) return;
 
-                const validPositions = positions.filter((pos): pos is Investment => 
+                const validPositions = positions.filter((pos): pos is Investment =>
                     pos !== null && pos.number_of_shares > 0
                 );
 
@@ -250,7 +227,7 @@ export default function Portfolio() {
         }
 
         fetchPositions();
-        
+
         // Set up manual refresh interval
         const refreshInterval = setInterval(fetchPositions, CACHE_DURATION);
 
@@ -295,13 +272,13 @@ export default function Portfolio() {
                     Manage your AI swarm investments, and track returns
                 </p>
             </div>
-            <Investments 
+            <Investments
                 className="mb-6"
                 investments={investments}
             />
-            <PortfolioOverview 
-                investments={investments.length > 0 ? investments : []} 
-                className="mb-6" 
+            <PortfolioOverview
+                investments={investments.length > 0 ? investments : []}
+                className="mb-6"
             />
             <DividendPayments className="mb-12" />
         </main>
