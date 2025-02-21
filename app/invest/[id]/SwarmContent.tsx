@@ -96,9 +96,9 @@ export function SwarmContent({ swarm, initialPrice, services, collaborations }: 
                                 </p>
                                 {price && (
                                     <p className="text-sm italic text-muted-foreground/40 mt-1">
-                                        $<SwarmInvestCard 
-                                            pool={swarm.pool} 
-                                            marketCapOnly 
+                                        $<SwarmInvestCard
+                                            pool={swarm.pool}
+                                            marketCapOnly
                                             priceInUsd={price}
                                         />
                                     </p>
@@ -111,9 +111,9 @@ export function SwarmContent({ swarm, initialPrice, services, collaborations }: 
                                 </p>
                                 {price && (
                                     <p className="text-sm italic text-muted-foreground/40 mt-1">
-                                        $<SwarmInvestCard 
-                                            pool={swarm.pool} 
-                                            amountRaisedOnly 
+                                        $<SwarmInvestCard
+                                            pool={swarm.pool}
+                                            amountRaisedOnly
                                             priceInUsd={price}
                                         />
                                     </p>
@@ -147,10 +147,10 @@ export function SwarmContent({ swarm, initialPrice, services, collaborations }: 
             />
             <div className="mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8">
                 <div className="lg:col-span-7 space-y-8">
-                    <SwarmNews 
+                    <SwarmNews
                         swarmId={swarm.id}
                     />
-                    
+
                     {swarm?.description && (
                         <div className="flex flex-col gap-8">
                             <div className="flex-1">
@@ -162,7 +162,7 @@ export function SwarmContent({ swarm, initialPrice, services, collaborations }: 
                                     <Markdown markdown={swarm.description} />
                                 </div>
                             </div>
-                            <InfoPanel 
+                            <InfoPanel
                                 socials={{
                                     ...swarm.socials,
                                     twitter: swarm.twitterAccount || swarm.socials?.twitter
@@ -180,7 +180,7 @@ export function SwarmContent({ swarm, initialPrice, services, collaborations }: 
                                         <h4 className="font-semibold">Services Offered</h4>
                                     </div>
                                     <hr className="mt-3" />
-                                    <ServiceGrid 
+                                    <ServiceGrid
                                         services={services}
                                     />
                                 </div>
@@ -219,7 +219,7 @@ export function SwarmContent({ swarm, initialPrice, services, collaborations }: 
                     </div>
                     <hr className="mb-6" />
                     <div className="bg-black/20 rounded-xl p-6 border border-white/10">
-                        <CollaborationGrid 
+                        <CollaborationGrid
                             collaborations={collaborations}
                         />
                     </div>
@@ -227,11 +227,12 @@ export function SwarmContent({ swarm, initialPrice, services, collaborations }: 
             )}
 
             {/* Market Listings */}
-            <SwarmRecentMarketListings
-                swarmId={swarm.id}
-                numberOfListings={7}
-                className="mt-16"
-            />
+            {swarm.pool &&
+                <SwarmRecentMarketListings
+                    pool={swarm.pool}
+                    className="mt-16"
+                />
+            }
             <ManagePortfolioCard className="mt-8" />
         </main>
     );
