@@ -32,7 +32,6 @@ const MarketListings = ({ className }: { className?: string }) => {
 			<DataTable
 				columns={columns}
 				data={isFetching ? [] : data as MarketListing[]}
-				searchable
 			/>
 		</Card>
 	);
