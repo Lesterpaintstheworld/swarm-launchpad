@@ -2,79 +2,79 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
-import { useState, useEffect } from "react";
 import { formatPublicKey, IntlNumberFormat } from "@/lib/utils";
 import { Button } from "@/components/shadcn/button";
-import { MarketListing } from "../market.types";
 import Image from "next/image";
 import Link from "next/link";
 import { Token } from "@/components/tokens/token";
+import { MarketListing } from "@/types/listing";
+import { useQuery } from "@tanstack/react-query";
+import { supportedTokens } from "@/data/tokens/supported";
+import { useState } from "react";
+import { BuyListingModal } from "../buyListingModal";
+import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
+import { PoolAccount } from "@/types/pool";
 
 export const columns: ColumnDef<MarketListing>[] = [
     {
-        accessorKey: 'swarm_id',
+        accessorKey: 'pool',
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Swarm" />
         ),
         minSize: 250,
         cell: ({ row }) => {
 
-            interface SwarmData {
-              id: string;
-              name: string;
-              image: string;
-              role?: string;
-            }
-
-            const SwarmCell = ({ swarmId }: { swarmId: string }) => {
-              const [swarm, setSwarm] = useState<SwarmData | null>(null);
-
-              useEffect(() => {
-                async function fetchSwarm() {
-                  try {
-                    const response = await fetch(`/api/swarms/${swarmId}`);
-                    if (!response.ok) return;
-                    const data = await response.json();
-                    setSwarm(data);
-                  } catch (error) {
-                    console.error('Error fetching swarm:', error);
-                  }
+            const { data: swarm, isLoading } = useQuery({
+                queryKey: ['swarm', row.original.pool.toBase58()],
+                queryFn: async () => {
+                    const response = await fetch(`/api/swarms/find-using-pool-id/${row.original.pool.toBase58()}`);
+                    if (!response.ok) {
+                        throw new Error('Could not fetch swarm');
+                    }
+                    return response.json();
                 }
-                fetchSwarm();
-              }, [swarmId]);
+            })
 
-              if (!swarm) return null;
-
+            if (isLoading || !swarm) {
                 return (
                     <div className="flex items-center min-w-[200px] gap-4 py-1">
-                        <Image
-                            src={swarm.image}
-                            alt={`${swarm.name} avatar`}
-                            width={32}
-                            height={32}
-                            className="rounded-full"
-                            sizes="32px"
-                        />
-                        <div className="flex flex-col">
-                            <Link className="text-lg mb-0 leading-1 truncate hover:underline" href={`/invest/${swarm.id}`}>
-                                {swarm.name}
-                            </Link>
-                            {swarm.role && <p className="text-sm text-muted truncate">{swarm.role}</p>}
+                        <div className="w-8 h-8 rounded-full bg-white/10 animate-pulse" />
+                        <div className="flex flex-col gap-2">
+                            <div className="h-4 w-24 bg-white/10 rounded animate-pulse" />
+                            <div className="h-3 w-16 bg-white/10 rounded animate-pulse" />
                         </div>
                     </div>
-                );
-            };
+                )
+            }
 
-            return <SwarmCell swarmId={row.getValue('swarm_id')} />;
+            return (
+                <div className="flex items-center min-w-[200px] gap-4 py-1">
+                    <Image
+                        src={swarm.image}
+                        alt={`${swarm.name} avatar`}
+                        width={32}
+                        height={32}
+                        className="rounded-full"
+                    />
+                    <div className="flex flex-col">
+                        <Link className="text-lg mb-0 leading-1 truncate hover:underline" href={`/invest/${swarm.id}`}>
+                            {swarm.name}
+                        </Link>
+                        {swarm.role && <p className="text-sm text-muted truncate">{swarm.role}</p>}
+                    </div>
+                </div>
+            );
+
         }
     },
     {
-        accessorKey: 'number_of_shares',
+        accessorKey: 'numberOfShares',
+        accessorFn: row => Number(row.numberOfShares),
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="No. Shares" />
         ),
         cell: ({ row }) => (
-            <p>{IntlNumberFormat(Number(row.getValue('number_of_shares')))}</p>
+            <p>{IntlNumberFormat(Number(row.original.numberOfShares))}</p>
         )
     },
     {
@@ -83,28 +83,46 @@ export const columns: ColumnDef<MarketListing>[] = [
             <DataTableColumnHeader column={column} title="Seller" />
         ),
         cell: ({ row }) => (
-            <p className="w-fit rounded-sm truncate max-w-[17ch]">{formatPublicKey(row.getValue('seller'))}</p>
+            <p className="w-fit rounded-sm truncate max-w-[17ch]">{formatPublicKey(row.original.seller.toBase58())}</p>
         )
     },
     {
-        accessorKey: 'price_per_share',
+        accessorKey: 'pricePerShare',
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Price per share" />
         ),
         cell: ({ row }) => {
-            return <p className="text-foreground/60">{IntlNumberFormat(Number(row.getValue('price_per_share')))}</p>
+
+
+            const token = supportedTokens.find(t => t.mint == row.original.desiredToken.toBase58()) || supportedTokens[0];
+            let value = Number(row.original.pricePerShare) / token.resolution;
+
+            return (
+                <p className="text-foreground/60">
+                    {IntlNumberFormat(value, token.decimals)}
+                </p>
+            );
         }
     },
     {
-        accessorKey: 'token',
+        accessorKey: 'askingAmount',
+        minSize: 250,
+        accessorFn: row => Number(row.pricePerShare) * Number(row.numberOfShares),
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Asking amount" />
         ),
         cell: ({ row }) => {
+
+            // @ts-ignore
+            const token = supportedTokens.find(t => t.mint == row.original.desiredToken.toBase58()) || supportedTokens[0];
+            let value = (Number(row.original.pricePerShare) / token.resolution) * Number(row.original.numberOfShares);
+
             return (
                 <div className="flex flex-row items-center gap-2">
-                    <p className="text-foreground/60 font-bold !text-foreground">{IntlNumberFormat(Number(row.getValue('price_per_share')) * Number(row.getValue('number_of_shares')))}</p>
-                    <Token token={row.getValue('token')} />
+                    <p className="text-foreground/60 font-bold !text-foreground">
+                        {IntlNumberFormat(value, token.decimals)}
+                    </p>
+                    <Token token={token} hover={false} />
                 </div>
             )
         }
@@ -113,16 +131,46 @@ export const columns: ColumnDef<MarketListing>[] = [
         accessorKey: 'id',
         header: () => <></>,
         cell: ({ row }) => {
+
+            const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+            const { poolAccount } = useLaunchpadProgramAccount({ poolAddress: row.original.pool.toBase58() });
+
+            const { data: swarm, isLoading, error } = useQuery({
+                queryKey: ['swarm', row.original.pool.toBase58()],
+                queryFn: async () => {
+                    const response = await fetch(`/api/swarms/find-using-pool-id/${row.original.pool.toBase58()}`);
+                    if (!response.ok) {
+                        throw new Error('Could not fetch swarm');
+                    }
+                    return response.json();
+                }
+            })
+
+            const { data: poolAccountData, isLoading: isLoadingPoolAccount } = poolAccount;
+
             return (
-                <div className="w-full flex my-2">
-                    <Button
-                        variant='success'
-                        className="ml-auto h-fit py-1"
-                        onClick={() => alert(`Initiate payment flow for sale id: ${row.getValue('id')}`)}
-                    >
-                        Buy
-                    </Button>
-                </div>
+                <>
+                    <div className="w-full flex my-2">
+                        <Button
+                            onClick={() => setIsModalOpen(true)}
+                            className="ml-auto"
+                            variant='success'
+                            disabled={isLoading || !!error}
+                        >
+                            BUY
+                        </Button>
+                    </div>
+                    {!isLoading && !isLoadingPoolAccount &&
+                        <BuyListingModal
+                            isModalOpen={isModalOpen}
+                            closeModal={() => setIsModalOpen(false)}
+                            listing={row.original}
+                            swarm={swarm}
+                            poolAccount={poolAccountData as PoolAccount}
+                        />
+                    }
+                </>
             )
         }
     },
