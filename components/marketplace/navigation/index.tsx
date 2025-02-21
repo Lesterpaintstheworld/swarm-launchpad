@@ -37,13 +37,13 @@ interface MarketplaceNavigationProps {
 
 export function MarketplaceNavigation({ activeTab, onTabChange }: MarketplaceNavigationProps) {
   return (
-    <div className="flex items-center md:justify-between flex-wrap space-x-2 p-1 mt-4">
+    <div className="flex border border-border rounded-lg bg-white/5 items-center md:justify-between flex-wrap space-x-2 p-2 mt-8">
       {tabs.map((tab) => (
         <button
           key={tab.id}
           onClick={() => onTabChange(tab.id)}
           className={cn(
-            "group relative flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium rounded-lg transition-all duration-300",
+            "group relative flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium rounded-md transition-colors duration-300",
             activeTab === tab.id
               ? `bg-gradient-to-br ${sectionColors[tab.id].primary} ${sectionColors[tab.id].text} shadow-lg`
               : `text-white/60 hover:${sectionColors[tab.id].text} hover:bg-white/5`
