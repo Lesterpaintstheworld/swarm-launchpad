@@ -1,4 +1,10 @@
-{
+/**
+ * Program IDL in camelCase format in order to be used in JS/TS.
+ *
+ * Note that this is only a type helper and is not the actual IDL. The original
+ * IDL can be found at `target/idl/ubclaunchpad.json`.
+ */
+export type Ubclaunchpad = {
   "address": "4dWhc3nkP4WeQkv7ws4dAxp6sNTBLCuzhTGTf1FynDcf",
   "metadata": {
     "name": "ubclaunchpad",
@@ -8,7 +14,7 @@
   },
   "instructions": [
     {
-      "name": "buy_listing",
+      "name": "buyListing",
       "discriminator": [
         115,
         149,
@@ -21,11 +27,11 @@
       ],
       "accounts": [
         {
-          "name": "share_listing",
+          "name": "shareListing",
           "writable": true
         },
         {
-          "name": "buyer_shareholder",
+          "name": "buyerShareholder",
           "writable": true,
           "pda": {
             "seeds": [
@@ -57,15 +63,15 @@
           }
         },
         {
-          "name": "seller_shareholder",
+          "name": "sellerShareholder",
           "writable": true
         },
         {
-          "name": "token_mint_account",
+          "name": "tokenMintAccount",
           "writable": true
         },
         {
-          "name": "buyer_token_account",
+          "name": "buyerTokenAccount",
           "writable": true,
           "pda": {
             "seeds": [
@@ -112,7 +118,7 @@
               },
               {
                 "kind": "account",
-                "path": "token_mint_account"
+                "path": "tokenMintAccount"
               }
             ],
             "program": {
@@ -155,17 +161,17 @@
           }
         },
         {
-          "name": "seller_account",
+          "name": "sellerAccount",
           "writable": true
         },
         {
-          "name": "seller_token_account",
+          "name": "sellerTokenAccount",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "seller_account"
+                "path": "sellerAccount"
               },
               {
                 "kind": "const",
@@ -206,7 +212,7 @@
               },
               {
                 "kind": "account",
-                "path": "token_mint_account"
+                "path": "tokenMintAccount"
               }
             ],
             "program": {
@@ -249,17 +255,17 @@
           }
         },
         {
-          "name": "custodial_account",
+          "name": "custodialAccount",
           "writable": true
         },
         {
-          "name": "custodial_token_account",
+          "name": "custodialTokenAccount",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "custodial_account"
+                "path": "custodialAccount"
               },
               {
                 "kind": "const",
@@ -300,7 +306,7 @@
               },
               {
                 "kind": "account",
-                "path": "token_mint_account"
+                "path": "tokenMintAccount"
               }
             ],
             "program": {
@@ -351,21 +357,21 @@
           "signer": true
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "token_program"
+          "name": "tokenProgram"
         },
         {
-          "name": "associated_token_program",
+          "name": "associatedTokenProgram",
           "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         }
       ],
       "args": []
     },
     {
-      "name": "buy_listing_with_lamports",
+      "name": "buyListingWithLamports",
       "discriminator": [
         75,
         208,
@@ -378,11 +384,11 @@
       ],
       "accounts": [
         {
-          "name": "share_listing",
+          "name": "shareListing",
           "writable": true
         },
         {
-          "name": "buyer_shareholder",
+          "name": "buyerShareholder",
           "writable": true,
           "pda": {
             "seeds": [
@@ -414,15 +420,15 @@
           }
         },
         {
-          "name": "seller_shareholder",
+          "name": "sellerShareholder",
           "writable": true
         },
         {
-          "name": "seller_account",
+          "name": "sellerAccount",
           "writable": true
         },
         {
-          "name": "custodial_account",
+          "name": "custodialAccount",
           "writable": true
         },
         {
@@ -434,14 +440,14 @@
           "signer": true
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": []
     },
     {
-      "name": "cancel_listing",
+      "name": "cancelListing",
       "discriminator": [
         41,
         183,
@@ -454,7 +460,7 @@
       ],
       "accounts": [
         {
-          "name": "share_listing",
+          "name": "shareListing",
           "writable": true
         },
         {
@@ -470,14 +476,14 @@
           "signer": true
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": []
     },
     {
-      "name": "create_listing",
+      "name": "createListing",
       "discriminator": [
         18,
         168,
@@ -494,7 +500,7 @@
           "writable": true
         },
         {
-          "name": "share_listing",
+          "name": "shareListing",
           "writable": true,
           "pda": {
             "seeds": [
@@ -520,7 +526,7 @@
               },
               {
                 "kind": "arg",
-                "path": "listing_id"
+                "path": "listingId"
               }
             ]
           }
@@ -535,31 +541,31 @@
           "signer": true
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "listing_id",
+          "name": "listingId",
           "type": "string"
         },
         {
-          "name": "number_of_shares",
+          "name": "numberOfShares",
           "type": "u64"
         },
         {
-          "name": "price_per_share",
+          "name": "pricePerShare",
           "type": "u64"
         },
         {
-          "name": "desired_token",
+          "name": "desiredToken",
           "type": "pubkey"
         }
       ]
     },
     {
-      "name": "freeze_pool",
+      "name": "freezePool",
       "discriminator": [
         211,
         216,
@@ -589,7 +595,7 @@
       ]
     },
     {
-      "name": "increase_supply",
+      "name": "increaseSupply",
       "discriminator": [
         101,
         124,
@@ -613,7 +619,7 @@
       ],
       "args": [
         {
-          "name": "number_of_shares",
+          "name": "numberOfShares",
           "type": "u64"
         }
       ]
@@ -651,7 +657,7 @@
               },
               {
                 "kind": "arg",
-                "path": "pool_name"
+                "path": "poolName"
               }
             ]
           }
@@ -662,39 +668,39 @@
           "signer": true
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "pool_name",
+          "name": "poolName",
           "type": "string"
         },
         {
-          "name": "total_shares",
+          "name": "totalShares",
           "type": "u64"
         },
         {
-          "name": "fee_ratio",
+          "name": "feeRatio",
           "type": "u64"
         },
         {
-          "name": "compute_mint",
+          "name": "computeMint",
           "type": "pubkey"
         },
         {
-          "name": "ubc_mint",
+          "name": "ubcMint",
           "type": "pubkey"
         },
         {
-          "name": "custodial_account",
+          "name": "custodialAccount",
           "type": "pubkey"
         }
       ]
     },
     {
-      "name": "purchase_shares",
+      "name": "purchaseShares",
       "discriminator": [
         171,
         132,
@@ -743,15 +749,15 @@
           }
         },
         {
-          "name": "compute_mint_account",
+          "name": "computeMintAccount",
           "writable": true
         },
         {
-          "name": "ubc_mint_account",
+          "name": "ubcMintAccount",
           "writable": true
         },
         {
-          "name": "sender_compute_account",
+          "name": "senderComputeAccount",
           "writable": true,
           "pda": {
             "seeds": [
@@ -798,7 +804,7 @@
               },
               {
                 "kind": "account",
-                "path": "compute_mint_account"
+                "path": "computeMintAccount"
               }
             ],
             "program": {
@@ -841,7 +847,7 @@
           }
         },
         {
-          "name": "sender_ubc_account",
+          "name": "senderUbcAccount",
           "writable": true,
           "pda": {
             "seeds": [
@@ -888,7 +894,7 @@
               },
               {
                 "kind": "account",
-                "path": "ubc_mint_account"
+                "path": "ubcMintAccount"
               }
             ],
             "program": {
@@ -931,16 +937,16 @@
           }
         },
         {
-          "name": "custodial_account"
+          "name": "custodialAccount"
         },
         {
-          "name": "custodial_compute_account",
+          "name": "custodialComputeAccount",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "custodial_account"
+                "path": "custodialAccount"
               },
               {
                 "kind": "const",
@@ -981,7 +987,7 @@
               },
               {
                 "kind": "account",
-                "path": "compute_mint_account"
+                "path": "computeMintAccount"
               }
             ],
             "program": {
@@ -1024,13 +1030,13 @@
           }
         },
         {
-          "name": "custodial_ubc_account",
+          "name": "custodialUbcAccount",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "custodial_account"
+                "path": "custodialAccount"
               },
               {
                 "kind": "const",
@@ -1071,7 +1077,7 @@
               },
               {
                 "kind": "account",
-                "path": "ubc_mint_account"
+                "path": "ubcMintAccount"
               }
             ],
             "program": {
@@ -1119,30 +1125,30 @@
           "signer": true
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "token_program"
+          "name": "tokenProgram"
         },
         {
-          "name": "associated_token_program",
+          "name": "associatedTokenProgram",
           "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         }
       ],
       "args": [
         {
-          "name": "number_of_shares",
+          "name": "numberOfShares",
           "type": "u64"
         },
         {
-          "name": "calculated_cost",
+          "name": "calculatedCost",
           "type": "u64"
         }
       ]
     },
     {
-      "name": "remove_pool",
+      "name": "removePool",
       "discriminator": [
         132,
         42,
@@ -1167,7 +1173,7 @@
       "args": []
     },
     {
-      "name": "set_custodial_account",
+      "name": "setCustodialAccount",
       "discriminator": [
         244,
         121,
@@ -1191,13 +1197,13 @@
       ],
       "args": [
         {
-          "name": "custodial_account",
+          "name": "custodialAccount",
           "type": "pubkey"
         }
       ]
     },
     {
-      "name": "set_fee_ratio",
+      "name": "setFeeRatio",
       "discriminator": [
         213,
         25,
@@ -1221,13 +1227,13 @@
       ],
       "args": [
         {
-          "name": "fee_ratio",
+          "name": "feeRatio",
           "type": "u64"
         }
       ]
     },
     {
-      "name": "set_mints",
+      "name": "setMints",
       "discriminator": [
         176,
         123,
@@ -1251,11 +1257,11 @@
       ],
       "args": [
         {
-          "name": "ubc_mint",
+          "name": "ubcMint",
           "type": "pubkey"
         },
         {
-          "name": "compute_mint",
+          "name": "computeMint",
           "type": "pubkey"
         }
       ]
@@ -1263,7 +1269,7 @@
   ],
   "accounts": [
     {
-      "name": "Pool",
+      "name": "pool",
       "discriminator": [
         241,
         154,
@@ -1276,7 +1282,7 @@
       ]
     },
     {
-      "name": "ShareListing",
+      "name": "shareListing",
       "discriminator": [
         38,
         219,
@@ -1289,7 +1295,7 @@
       ]
     },
     {
-      "name": "Shareholder",
+      "name": "shareholder",
       "discriminator": [
         93,
         254,
@@ -1304,7 +1310,7 @@
   ],
   "events": [
     {
-      "name": "BuyListingEvent",
+      "name": "buyListingEvent",
       "discriminator": [
         16,
         85,
@@ -1317,7 +1323,7 @@
       ]
     },
     {
-      "name": "PurchaseSharesEvent",
+      "name": "purchaseSharesEvent",
       "discriminator": [
         238,
         83,
@@ -1333,103 +1339,103 @@
   "errors": [
     {
       "code": 6000,
-      "name": "InvalidAuthority",
+      "name": "invalidAuthority",
       "msg": "Invalid Authority"
     },
     {
       "code": 6001,
-      "name": "PoolFrozen",
+      "name": "poolFrozen",
       "msg": "Pool is frozen"
     },
     {
       "code": 6002,
-      "name": "InsufficientShares",
+      "name": "insufficientShares",
       "msg": "Insufficient shares available"
     },
     {
       "code": 6003,
-      "name": "MaxWhitelistedTokensReached",
+      "name": "maxWhitelistedTokensReached",
       "msg": "Maximum number of whitelisted tokens reached"
     },
     {
       "code": 6004,
-      "name": "InvalidPaymentAmount",
+      "name": "invalidPaymentAmount",
       "msg": "Invalid payment amount"
     },
     {
       "code": 6005,
-      "name": "InvalidTokenAccountOwner",
+      "name": "invalidTokenAccountOwner",
       "msg": "Invalid token account owner"
     },
     {
       "code": 6006,
-      "name": "InvalidToken",
+      "name": "invalidToken",
       "msg": "Invalid token"
     },
     {
       "code": 6007,
-      "name": "InvalidPaymentToken",
+      "name": "invalidPaymentToken",
       "msg": "Invalid payment token"
     },
     {
       "code": 6008,
-      "name": "InvalidFeeToken",
+      "name": "invalidFeeToken",
       "msg": "Invalid fee token"
     },
     {
       "code": 6009,
-      "name": "InvalidAmount",
+      "name": "invalidAmount",
       "msg": "Invalid amount for operation"
     },
     {
       "code": 6010,
-      "name": "ListingNotActive",
+      "name": "listingNotActive",
       "msg": "Listing is not active"
     },
     {
       "code": 6011,
-      "name": "CannotPurchaseOwnListing",
+      "name": "cannotPurchaseOwnListing",
       "msg": "Cannot purchase your own listing"
     },
     {
       "code": 6012,
-      "name": "InvalidPool",
+      "name": "invalidPool",
       "msg": "Invalid pool for operation"
     },
     {
       "code": 6013,
-      "name": "InvalidPoolNameLength",
+      "name": "invalidPoolNameLength",
       "msg": "Pool name exceeds maximum length"
     },
     {
       "code": 6014,
-      "name": "MathError",
+      "name": "mathError",
       "msg": "Math operation failed"
     },
     {
       "code": 6015,
-      "name": "TooManyShares",
+      "name": "tooManyShares",
       "msg": "Too many shares, limit 1000"
     },
     {
       "code": 6016,
-      "name": "TokenNotWhitelisted",
+      "name": "tokenNotWhitelisted",
       "msg": "Token not in whitelist"
     },
     {
       "code": 6017,
-      "name": "ShareholderInitialisationFailed",
+      "name": "shareholderInitialisationFailed",
       "msg": "Could not initialise new shareholder account"
     },
     {
       "code": 6018,
-      "name": "InvalidListingAccount",
+      "name": "invalidListingAccount",
       "msg": "Invalid listing account"
     }
   ],
   "types": [
     {
-      "name": "BuyListingEvent",
+      "name": "buyListingEvent",
       "docs": [
         "Events"
       ],
@@ -1437,11 +1443,11 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "listing_id",
+            "name": "listingId",
             "type": "string"
           },
           {
-            "name": "transaction_type",
+            "name": "transactionType",
             "type": "string"
           },
           {
@@ -1461,11 +1467,11 @@
             "type": "pubkey"
           },
           {
-            "name": "number_of_shares",
+            "name": "numberOfShares",
             "type": "u64"
           },
           {
-            "name": "price_per_share",
+            "name": "pricePerShare",
             "type": "u64"
           },
           {
@@ -1484,56 +1490,56 @@
       }
     },
     {
-      "name": "Pool",
+      "name": "pool",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "pool_name",
+            "name": "poolName",
             "type": "string"
           },
           {
-            "name": "admin_authority",
+            "name": "adminAuthority",
             "type": "pubkey"
           },
           {
-            "name": "total_shares",
+            "name": "totalShares",
             "type": "u64"
           },
           {
-            "name": "available_shares",
+            "name": "availableShares",
             "type": "u64"
           },
           {
-            "name": "is_frozen",
+            "name": "isFrozen",
             "type": "bool"
           },
           {
-            "name": "ubc_mint",
+            "name": "ubcMint",
             "type": "pubkey"
           },
           {
-            "name": "compute_mint",
+            "name": "computeMint",
             "type": "pubkey"
           },
           {
-            "name": "fee_ratio",
+            "name": "feeRatio",
             "type": "u64"
           },
           {
-            "name": "custodial_account",
+            "name": "custodialAccount",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "PurchaseSharesEvent",
+      "name": "purchaseSharesEvent",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "transaction_type",
+            "name": "transactionType",
             "type": "string"
           },
           {
@@ -1545,11 +1551,11 @@
             "type": "pubkey"
           },
           {
-            "name": "number_of_shares",
+            "name": "numberOfShares",
             "type": "u64"
           },
           {
-            "name": "price_per_share",
+            "name": "pricePerShare",
             "type": "u64"
           },
           {
@@ -1568,7 +1574,7 @@
       }
     },
     {
-      "name": "ShareListing",
+      "name": "shareListing",
       "type": {
         "kind": "struct",
         "fields": [
@@ -1585,26 +1591,26 @@
             "type": "pubkey"
           },
           {
-            "name": "number_of_shares",
+            "name": "numberOfShares",
             "type": "u64"
           },
           {
-            "name": "price_per_share",
+            "name": "pricePerShare",
             "type": "u64"
           },
           {
-            "name": "desired_token",
+            "name": "desiredToken",
             "type": "pubkey"
           },
           {
-            "name": "listing_id",
+            "name": "listingId",
             "type": "string"
           }
         ]
       }
     },
     {
-      "name": "Shareholder",
+      "name": "shareholder",
       "type": {
         "kind": "struct",
         "fields": [
@@ -1621,7 +1627,7 @@
             "type": "u64"
           },
           {
-            "name": "available_shares",
+            "name": "availableShares",
             "type": "u64"
           }
         ]
@@ -1630,9 +1636,9 @@
   ],
   "constants": [
     {
-      "name": "UPGRADE_AUTHORITY",
+      "name": "upgradeAuthority",
       "type": "string",
       "value": "\"DKc63ukZvHo1vfQMYWxk27EconWJ5tMjYrEaFmhpejZf\""
     }
   ]
-}
+};
