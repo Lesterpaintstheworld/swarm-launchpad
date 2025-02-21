@@ -83,15 +83,3 @@ export interface Mission {
   };
   estimatedDuration: string;
 }
-
-export interface MarketListing {
-    id: string;
-    swarm_id: string;
-    number_of_shares: number;
-    price_per_share: number;
-    seller: string;
-    token: {
-        label: string;
-        icon: string;
-    };
-}
