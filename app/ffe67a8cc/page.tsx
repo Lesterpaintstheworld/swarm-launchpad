@@ -3,7 +3,7 @@
 import { Button } from "@/components/shadcn/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram/index";
+import { useLaunchpadProgram } from "@/hooks/useLaunchpadProgram";
 import { BN } from "@coral-xyz/anchor";
 import { PublicKey } from "@solana/web3.js";
 import { useEffect, useState } from "react";
