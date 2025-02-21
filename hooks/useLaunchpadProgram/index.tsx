@@ -572,10 +572,40 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
         }
     });
 
+    const poolListings = useQuery({
+        queryKey: ['listings', pool.toBase58()],
+        queryFn: async () => {
+
+            if (!pool) throw new Error('Pool not found');
+            if (!program) throw new Error('Program not found');
+
+            const accounts: any[] = await program.account.shareListing.all([
+                {
+                    memcmp: {
+                        offset: 8,
+                        bytes: pool.toBase58()
+                    }
+                }
+            ]);
+
+            // Marshall Data from Listing to MarketListing in place
+            accounts.forEach((acc: Listing, index: number) => {
+                accounts[index] = {
+                    ...acc.account,
+                    listingPDA: acc.publicKey
+                };
+            });
+
+            // Only return 8 listings
+            return accounts.slice(0, 8) as MarketListing[];
+        },
+    });
+
     return {
         poolAccount,
         purchaseShares,
         position,
+        poolListings,
         createListing,
         cancelListing,
         buyListing
