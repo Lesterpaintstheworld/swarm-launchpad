@@ -37,7 +37,7 @@ interface MarketplaceNavigationProps {
 
 export function MarketplaceNavigation({ activeTab, onTabChange }: MarketplaceNavigationProps) {
   return (
-    <div className="flex items-center space-x-2 p-1">
+    <div className="flex items-center md:justify-between flex-wrap space-x-2 p-1 mt-4">
       {tabs.map((tab) => (
         <button
           key={tab.id}
@@ -53,7 +53,7 @@ export function MarketplaceNavigation({ activeTab, onTabChange }: MarketplaceNav
           {activeTab === tab.id && (
             <div className="absolute inset-0 rounded-lg bg-white/5 blur-sm" />
           )}
-          
+
           {/* Icon with transition */}
           <div className={cn(
             "transition-transform duration-300",
@@ -61,7 +61,7 @@ export function MarketplaceNavigation({ activeTab, onTabChange }: MarketplaceNav
           )}>
             {tab.icon}
           </div>
-          
+
           {/* Label */}
           <span className="relative z-10">{tab.label}</span>
         </button>
