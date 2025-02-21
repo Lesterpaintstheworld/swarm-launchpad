@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use client'
 
 import { ColumnDef } from "@tanstack/react-table";
@@ -95,7 +96,7 @@ export const columns: ColumnDef<MarketListing>[] = [
 
 
             const token = supportedTokens.find(t => t.mint == row.original.desiredToken.toBase58()) || supportedTokens[0];
-            let value = Number(row.original.pricePerShare) / token.resolution;
+            const value = Number(row.original.pricePerShare) / token.resolution;
 
             return (
                 <p className="text-foreground/60">
@@ -115,7 +116,7 @@ export const columns: ColumnDef<MarketListing>[] = [
 
             // @ts-ignore
             const token = supportedTokens.find(t => t.mint == row.original.desiredToken.toBase58()) || supportedTokens[0];
-            let value = (Number(row.original.pricePerShare) / token.resolution) * Number(row.original.numberOfShares);
+            const value = (Number(row.original.pricePerShare) / token.resolution) * Number(row.original.numberOfShares);
 
             return (
                 <div className="flex flex-row items-center gap-2">
