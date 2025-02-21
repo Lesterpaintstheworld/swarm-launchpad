@@ -39,11 +39,7 @@ const SwarmComboBox = ({ className, defaultValue, onChange, secondaryMarketAvail
     const { data: swarms, isFetching } = useQuery({
         queryKey: ['swarms'],
         queryFn: async () => {
-            let response;
-            if (secondaryMarketAvailable) {
-                response = await fetch('/api/swarms/secondary-market-available');
-            }
-            response = await fetch('/api/swarms');
+            const response = secondaryMarketAvailable ? await fetch('/api/swarms/secondary-market-available') : await fetch('/api/swarms');
             if (!response.ok) throw new Error('Failed to fetch swarms');
             return response.json();
         },
