@@ -37,7 +37,7 @@ interface MarketplaceNavigationProps {
 
 export function MarketplaceNavigation({ activeTab, onTabChange }: MarketplaceNavigationProps) {
   return (
-    <div className="flex border border-border rounded-lg bg-white/5 items-center md:justify-between flex-wrap space-x-2 p-2 mt-8">
+    <div className="flex border border-border rounded-lg bg-white/5 items-center md:justify-between flex-wrap space-x-2 p-2">
       {tabs.map((tab) => (
         <button
           key={tab.id}
