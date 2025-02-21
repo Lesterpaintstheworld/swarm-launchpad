@@ -134,7 +134,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                         <LucideLoaderCircle className='animate-spin' />
                         :
                         publicKey?.toBase58() === listing.seller.toBase58() ?
-                            'You can\'t buy your own shares'
+                            'You cannot buy your own shares'
                             :
                             'Buy Shares'
                     }
