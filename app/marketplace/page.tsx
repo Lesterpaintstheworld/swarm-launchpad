@@ -10,7 +10,10 @@ import { ServiceGrid } from '@/components/marketplace/services/grid';
 import { MissionGrid } from '@/components/marketplace/missions/grid';
 import { SwarmProfiles } from '@/components/marketplace/profiles';
 import { CollaborationResponse, Mission, ServiceResponse } from '@/types/api';
-import { MarketplaceListings } from '@/components/marketplace/listings';
+import { CollaborationGraph } from '@/components/marketplace/collaborations/graph';
+import { SellPositionCard } from '@/components/cards/sellPosition';
+import { UserListings } from '@/components/market/userListings';
+import { MarketListings } from '@/components/market/listings';
 
 type ValidServiceType = 'subscription' | 'one-off' | 'pay-as-you-go' | 'financial';
 
@@ -41,18 +44,17 @@ function validateCollaborationStatus(status: string): 'active' | 'completed' | '
       return 'pending'; // Default fallback status
   }
 }
-import { CollaborationGraph } from '@/components/marketplace/collaborations/graph';
 
 function MarketplaceContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  
+
   const initialTab = (searchParams.get('tab') as MarketplaceTab) || 'services';
   const [activeTab, setActiveTab] = useState<MarketplaceTab>(initialTab);
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
   const [sortOption, setSortOption] = useState<SortOption>(searchParams.get('sort') as SortOption || 'relevance');
   const [collaborationView, setCollaborationView] = useState<'list' | 'graph'>(searchParams.get('view') as 'list' | 'graph' || 'list');
-  
+
   // State for marketplace data
   const [collaborations, setCollaborations] = useState<CollaborationResponse[]>([]);
   const [services, setServices] = useState<Array<ServiceResponse & { serviceType: ValidServiceType }>>([]);
@@ -101,7 +103,7 @@ function MarketplaceContent() {
 
   useEffect(() => {
     const params = new URLSearchParams();
-    
+
     if (activeTab !== 'services') {
       params.set('tab', activeTab);
     }
@@ -115,26 +117,28 @@ function MarketplaceContent() {
       params.set('view', collaborationView);
     }
 
-    const newUrl = params.toString() 
-      ? `/marketplace?${params.toString()}` 
+    const newUrl = params.toString()
+      ? `/marketplace?${params.toString()}`
       : '/marketplace';
     router.replace(newUrl);
   }, [activeTab, searchQuery, sortOption, collaborationView, router]);
 
   return (
     <div className="container pb-12">
-      <MarketplaceNavigation 
-        activeTab={activeTab} 
+      <MarketplaceNavigation
+        activeTab={activeTab}
         onTabChange={setActiveTab}
       />
-      
+
       <div className="mt-8">
-        <MarketplaceSearch 
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          sortOption={sortOption}
-          onSortChange={setSortOption}
-        />
+        {activeTab !== 'listings' &&
+          <MarketplaceSearch
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            sortOption={sortOption}
+            onSortChange={setSortOption}
+          />
+        }
 
         <div className="mt-8">
           {activeTab === 'services' && (
@@ -151,15 +155,15 @@ function MarketplaceContent() {
                 <div className="text-sm text-white/60 mb-2">
                   {collaborations.length} collaborations found
                 </div>
-                
+
                 {/* New styled toggle centered */}
                 <div className="flex items-center bg-white/5 rounded-xl p-1.5 border border-purple-500/20 backdrop-blur-sm">
                   <button
                     onClick={() => setCollaborationView('list')}
                     className={`
                       px-6 py-2 rounded-lg text-sm font-medium transition-all duration-300
-                      ${collaborationView === 'list' 
-                        ? 'bg-purple-500/20 text-purple-300 shadow-lg shadow-purple-500/10' 
+                      ${collaborationView === 'list'
+                        ? 'bg-purple-500/20 text-purple-300 shadow-lg shadow-purple-500/10'
                         : 'text-white/60 hover:text-purple-300 hover:bg-white/5'
                       }
                     `}
@@ -170,8 +174,8 @@ function MarketplaceContent() {
                     onClick={() => setCollaborationView('graph')}
                     className={`
                       px-6 py-2 rounded-lg text-sm font-medium transition-all duration-300
-                      ${collaborationView === 'graph' 
-                        ? 'bg-purple-500/20 text-purple-300 shadow-lg shadow-purple-500/10' 
+                      ${collaborationView === 'graph'
+                        ? 'bg-purple-500/20 text-purple-300 shadow-lg shadow-purple-500/10'
                         : 'text-white/60 hover:text-purple-300 hover:bg-white/5'
                       }
                     `}
@@ -184,7 +188,7 @@ function MarketplaceContent() {
               {/* Content */}
               <div className="mt-8">
                 {collaborationView === 'list' ? (
-                  <CollaborationGrid 
+                  <CollaborationGrid
                     collaborations={collaborations.map(collab => ({
                       ...collab,
                       status: validateCollaborationStatus(collab.status)
@@ -197,7 +201,13 @@ function MarketplaceContent() {
             </div>
           )}
           {activeTab === 'profiles' && <SwarmProfiles />}
-          {activeTab === 'listings' && <MarketplaceListings />}
+          {activeTab === 'listings' &&
+            <>
+              <SellPositionCard className='mb-6' />
+              <UserListings className='mb-6' />
+              <MarketListings />
+            </>
+          }
         </div>
       </div>
     </div>
