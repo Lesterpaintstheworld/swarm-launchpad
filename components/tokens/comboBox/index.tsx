@@ -25,7 +25,7 @@ import { Token } from "../tokens.types";
 interface SwarmComboBoxProps {
     defaultValue?: string;
     className?: string;
-    onChange: (token?: Token) => void;
+    onChange: (token: Token) => void;
     disabled?: boolean;
 }
 
@@ -42,7 +42,7 @@ const TokenComboBox = ({ className, defaultValue, onChange, disabled }: SwarmCom
 
     useEffect(() => {
         if (!getToken(value)) return;
-        onChange(getToken(value));
+        onChange(getToken(value) as Token);
     }, [value, defaultValue, onChange])
 
     const handleFilter = (_value: string, search: string): number => {
@@ -88,8 +88,8 @@ const TokenComboBox = ({ className, defaultValue, onChange, disabled }: SwarmCom
                                 <CommandItem
                                     key={index}
                                     value={token.label}
-                                    onSelect={(currentValue) => {
-                                        setValue(currentValue === value ? "" : currentValue)
+                                    onSelect={(newValue) => {
+                                        setValue(newValue === value ? value : newValue)
                                         setOpen(false)
                                     }}
                                 >
@@ -97,6 +97,7 @@ const TokenComboBox = ({ className, defaultValue, onChange, disabled }: SwarmCom
                                         <Image
                                             src={token.icon}
                                             alt={token.label}
+                                            className={!token.icon.includes('svg') ? 'rounded-full' : ''}
                                             width={12}
                                             height={12}
                                         />
