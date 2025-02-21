@@ -16,17 +16,10 @@ import { Token } from '@/components/tokens/token';
 import { supportedTokens } from '@/data/tokens/supported';
 import { LucideLoaderCircle } from "lucide-react";
 
-// const minPriceData: Record<string, number> = {
-//     $COMPUTE: 6500, // ≈ 1 USD
-//     UBC: 720, // ≈ 1 USD
-//     SOL: 0.006, // ≈ 1 USD
-//     USDT: 1, // ≈ 1 USD
-//     USDC: 1, // ≈ 1 USD
-// }
 const minPriceData: Record<string, number> = {
-    $COMPUTE: 1, // ≈ 1 USD
-    UBC: 1, // ≈ 1 USD
-    SOL: 0.0001, // ≈ 1 USD
+    $COMPUTE: 6500, // ≈ 1 USD
+    UBC: 720, // ≈ 1 USD
+    SOL: 0.006, // ≈ 1 USD
     USDT: 1, // ≈ 1 USD
     USDC: 1, // ≈ 1 USD
 }
