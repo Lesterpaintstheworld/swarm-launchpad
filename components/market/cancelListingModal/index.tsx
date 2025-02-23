@@ -109,7 +109,7 @@ const CancelListingModal = ({ isModalOpen, closeModal, listing, swarm }: CancelL
                     </span>
                 </div>
             </div>
-            <div className='px-5 mb-6'>
+            <div className='px-3 mb-6'>
                 <p className="text-muted text-sm">You&apos;ll receive</p>
                 <div className="overflow-hidden flex flex-row items-center no-wrap gap-2 py-1">
                     <p className="text-4xl leading-none font-bold text-emerald-500 truncate">
