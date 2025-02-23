@@ -7,6 +7,7 @@ import { ExternalLink, Newspaper } from 'lucide-react';
 import Link from 'next/link';
 import { Carousel } from '@/components/ui/carousel';
 import { ClientMarkdown } from '@/components/ui/clientMarkdown';
+import Expandable from '@/components/ui/expandable';
 
 interface SwarmNewsProps {
   swarmId: string;
@@ -57,10 +58,10 @@ export function SwarmNews({ swarmId, className }: SwarmNewsProps) {
     >
       {/* Animated gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      
+
       {/* Content */}
       <div className="relative p-6 bg-white/5 hover:bg-white/10 transition-colors rounded-xl border border-white/10 group-hover:border-white/20">
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-fit">
           {/* Header with icon */}
           <div className="flex items-center gap-2 mb-4">
             <Newspaper className="w-5 h-5 text-blue-400" />
@@ -76,7 +77,9 @@ export function SwarmNews({ swarmId, className }: SwarmNewsProps) {
 
           {/* Content with markdown support */}
           <div className="prose prose-invert prose-sm max-w-none">
-            <ClientMarkdown markdown={item.content} />
+            <Expandable overflowThreshold={150}>
+              <ClientMarkdown markdown={item.content} />
+            </Expandable>
           </div>
 
           {/* Footer */}
@@ -88,7 +91,7 @@ export function SwarmNews({ swarmId, className }: SwarmNewsProps) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 transition-colors group/link"
               >
-                Read Full Story 
+                Read Full Story
                 <ExternalLink className="w-4 h-4 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
               </Link>
             </div>
