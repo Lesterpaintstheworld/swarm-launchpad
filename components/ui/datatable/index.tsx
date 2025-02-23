@@ -32,6 +32,7 @@ interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
     rowAnimationDuration?: number;
+    sortable?: boolean;
     searchable?: boolean;
     pagination?: boolean;
     rowClassName?: string;
@@ -42,6 +43,7 @@ export function DataTable<TData, TValue>({
     columns,
     data,
     rowAnimationDuration = 0.25,
+    sortable = true,
     searchable = false,
     pagination = false,
     rowClassName,
@@ -56,9 +58,9 @@ export function DataTable<TData, TValue>({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: pagination === true ? getPaginationRowModel() : undefined,
-        onSortingChange: setSorting,
-        getSortedRowModel: getSortedRowModel(),
+        getPaginationRowModel: pagination ? getPaginationRowModel() : undefined,
+        onSortingChange: sortable ? setSorting : undefined,
+        getSortedRowModel: sortable ? getSortedRowModel() : undefined,
         getFilteredRowModel: getFilteredRowModel(),
         onGlobalFilterChange: setGlobalFilter,
         globalFilterFn: 'includesString',

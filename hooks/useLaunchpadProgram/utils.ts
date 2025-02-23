@@ -1,7 +1,8 @@
-import { Program as AnchorProgram, Idl } from "@coral-xyz/anchor";
+import { Program } from "@coral-xyz/anchor";
 import { PublicKey as SolanaPublicKey } from "@solana/web3.js";
 import { AnchorProvider } from "@coral-xyz/anchor";
 import UbclaunchpadIDL from "../../data/programs/ubclaunchpad.json";
+import { Ubclaunchpad } from "../../types/ubclaunchpad";
 
 const getShareholderPDA = (
     programId: SolanaPublicKey, 
@@ -65,23 +66,14 @@ const getTokenAccountPDA = (
 
 // This is a helper function to get the Ubclaunchpad Anchor program.
 const getLaunchpadProgram = (
-    provider: AnchorProvider, 
-    address: SolanaPublicKey
-): AnchorProgram => {
-    // Cast the IDL to any to bypass type checking
-    const idl = UbclaunchpadIDL as any;
-    
-    return new AnchorProgram(
-        { 
-            ...idl, 
-            address: address ? address.toBase58() : idl.address 
-        },
-        provider
-    );
+    provider: AnchorProvider
+): Program<Ubclaunchpad> => {    
+    return new Program(UbclaunchpadIDL as Ubclaunchpad, provider);
 }
 
 export {
     getShareholderPDA,
     getTokenAccountPDA,
-    getLaunchpadProgram
+    getLaunchpadProgram,
 };
+

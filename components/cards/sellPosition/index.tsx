@@ -2,8 +2,7 @@
 
 import { Button } from "@/components/shadcn/button"
 import { ConnectButton } from "@/components/solana/connectButton"
-import { SellPositionModal } from "@/components/swarms/sellPositionModal"
-import { SellPositionModalDisconnected } from "@/components/swarms/sellPositionModalDisconnected"
+import { CreateListingModal } from "@/components/market/createListingModal"
 import { Card } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { useWallet } from "@solana/wallet-adapter-react"
@@ -18,10 +17,10 @@ const SellPositionCard = ({ className }: { className?: string }) => {
 
     return (
         <>
-            <Card className={cn("w-full flex flex-col sm:flex-row sm:items-center justify-between mt-6", className)}>
+            <Card className={cn("w-full flex flex-col sm:flex-row sm:items-center justify-between", className)}>
                 <div className="flex flex-col gap-1">
-                    <h4 className="font-medium">Sell your positions</h4>
-                    <p className="text-muted text-balance">Select how many shares from a swarm you want to sell then set a price per share.</p>
+                    <h4 className="font-medium">Sell your shares</h4>
+                    <p className="text-muted text-balance">Select shares from any swarm you are invested in to other traders.</p>
                 </div>
                 {connected ?
                     <Button onClick={() => setIsModalOpen(true)} className="w-full sm:max-w-36 sm:ml-20 mt-4 sm:mt-0">
@@ -31,17 +30,11 @@ const SellPositionCard = ({ className }: { className?: string }) => {
                     <ConnectButton />
                 }
             </Card>
-            {publicKey ?
-                <SellPositionModal
+            {publicKey &&
+                <CreateListingModal
                     isModalOpen={isModalOpen}
                     closeModal={() => setIsModalOpen(false)}
                 />
-                    :
-                <SellPositionModalDisconnected
-                    isModalOpen={isModalOpen}
-                    closeModal={() => setIsModalOpen(false)}
-                />
-
             }
         </>
     )
