@@ -121,6 +121,7 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
                 [@media(max-height:740px)]:h-[88vh]
                 [@media(max-height:740px)]:w-[calc(100vw-12vh)]
                 [@media(max-height:740px)]:max-w-[1048px]
+                [@media(max-height:740px)]:-top-6
                 flex flex-col
                 overflow-scroll p-6
             `}

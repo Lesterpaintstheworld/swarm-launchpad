@@ -92,9 +92,9 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
             isOpen={isModalOpen}
             onClose={closeModal}
             className={`
-                [@media(max-height:575px)]:h-[88vh]
-                [@media(max-height:575px)]:w-[calc(100vw-12vh)]
-                [@media(max-height:575px)]:max-w-[1048px]
+                [@media(max-height:620px)]:h-[88vh]
+                [@media(max-height:620px)]:w-[calc(100vw-12vh)]
+                [@media(max-height:620px)]:max-w-[1048px]
                 overflow-scroll p-6
             `}
         >

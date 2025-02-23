@@ -76,7 +76,7 @@ const CancelListingModal = ({ isModalOpen, closeModal, listing, swarm }: CancelL
                 [@media(max-height:500px)]:h-[88vh]
                 [@media(max-height:500px)]:w-[calc(100vw-12vh)]
                 [@media(max-height:500px)]:max-w-[1048px]
-                overflow-scroll p-6
+                overflow-scroll p-6 flex flex-col
             `}
         >
             <h4 className="mb-2 font-medium">Cancel Sale Listing</h4>
@@ -140,7 +140,7 @@ const CancelListingModal = ({ isModalOpen, closeModal, listing, swarm }: CancelL
             <Button
                 onClick={() => handleCancel()}
                 variant='destructive'
-                className="w-full"
+                className="w-full mt-auto"
                 disabled={loading}
             >
                 {loading ?
