@@ -515,7 +515,7 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
 
     const buyListing = useMutation({
         mutationKey: ['listing', 'buy', pool.toBase58(), publicKey?.toBase58()],
-        mutationFn: async ({ listing, swarm, poolAccount }: { listing: MarketListing, swarm: SwarmResponse, poolAccount: PoolAccount }) => {
+        mutationFn: async ({ listing, swarm, poolAccount, fee }: { listing: MarketListing, swarm: SwarmResponse, poolAccount: PoolAccount, fee: number }) => {
 
             if (!listing) throw new Error('No listing provided');
             if (!publicKey) throw new Error('Wallet not connected');
@@ -528,7 +528,7 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
             if (listing.desiredToken.toBase58() === '11111111111111111111111111111111') {
                 // Seller wants payment in SOL
                 tx = await program.methods
-                    .buyListingWithLamports()
+                    .buyListingWithLamports(new BN(fee))
                     .accounts({
                         shareListing: listing.listingPDA,
                         // @ts-ignore
@@ -540,11 +540,11 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                         buyer: publicKey,
                         systemProgram: SystemProgram.programId
                     })
-                    .rpc();
+                    .simulate();
             } else {
                 // Seller wants payment in an SPL token
                 tx = await program.methods
-                    .buyListing()
+                    .buyListing(new BN(fee))
                     .accounts({
                         shareListing: listing.listingPDA,
                         // @ts-ignore
@@ -562,7 +562,7 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                         tokenProgram: TOKEN_PROGRAM_ID,
                         associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID
                     })
-                    .rpc();
+                    .simulate();
             }
 
             toast.success(`Transaction successful: ${tx}`);
