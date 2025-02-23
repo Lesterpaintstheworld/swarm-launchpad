@@ -6,7 +6,7 @@ import { Button } from "@/components/shadcn/button";
 import { Token as TokenType } from "@/components/tokens/tokens.types";
 import { Modal } from "@/components/ui/modal";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
-import { IntlNumberFormat } from "@/lib/utils";
+import { IntlNumberFormat, IntlNumberFormatCurrency } from "@/lib/utils";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect, useState } from "react";
 import { useQueryClient } from '@tanstack/react-query';
@@ -18,6 +18,7 @@ import Image from "next/image";
 import { LucideLoaderCircle } from 'lucide-react';
 import { PoolAccount } from '@/types/pool';
 import { ConnectButton } from '@/components/solana/connectButton';
+import { useDexScreenerPrice } from '@/hooks/useTokenPrice';
 
 interface BuyListingModalProps {
     isModalOpen: boolean;
@@ -36,6 +37,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
     const [token, setToken] = useState<TokenType>(supportedTokens.find((token: TokenType) => token.mint === listing.desiredToken.toBase58()) as TokenType);
     const [loading, setLoading] = useState(false);
 
+    const { data, isFetching } = useDexScreenerPrice({ token });
     const queryClient = useQueryClient();
 
     const handleBuy = () => {
@@ -57,9 +59,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                 console.log("Full error:", JSON.stringify(error, null, 2));
             })
             .finally(() => {
-                queryClient.invalidateQueries({ queryKey: ['position', publicKey, listing.pool] });
-                queryClient.refetchQueries({ queryKey: ['listings', listing.seller] });
-                queryClient.refetchQueries({ queryKey: ['all-listings', listing.seller] });
+                queryClient.refetchQueries({ queryKey: ['all-listings'] });
                 setLoading(false);
                 closeModal();
             });
@@ -74,7 +74,16 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
     }, [isModalOpen]);
 
     return (
-        <Modal isOpen={isModalOpen} onClose={closeModal} className="p-6">
+        <Modal
+            isOpen={isModalOpen}
+            onClose={closeModal}
+            className={`
+                [@media(max-height:575px)]:h-[88vh]
+                [@media(max-height:575px)]:w-[calc(100vw-12vh)]
+                [@media(max-height:575px)]:max-w-[1048px]
+                overflow-scroll p-6
+            `}
+        >
             <h4 className="mb-2 font-medium">Buy Shares</h4>
             <p className="text-muted text-sm">Are you sure you want to buy {Number(listing.numberOfShares)} share{Number(listing.numberOfShares) > 1 ? 's' : ''} of {swarm?.name}.</p>
             <div className='bg-card min-w-[320px] p-5 rounded-md flex flex-col my-4'>
@@ -99,7 +108,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                     <p className='font-medium w-fit'>No. Shares:</p>
                     <p className='mt-2 sm:ml-auto sm:mt-0'>{Number(listing.numberOfShares)}</p>
                 </div>
-                <div className='border-t py-4 flex-col sm:flex-row text-md border-border w-full flex flex-row leading-none sm:items-center'>
+                <div className='border-t py-4 flex-col sm:flex-row text-md border-border w-full flex leading-none sm:items-center'>
                     <p className='font-medium w-fit'>Price per share:</p>
                     <span className='flex flex-row items-center mt-2 sm:ml-auto sm:mt-0'>
                         <p className='sm:ml-auto'>{IntlNumberFormat((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)), (token?.decimals || 6))}</p>
@@ -111,7 +120,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                     <p className='sm:ml-auto'>{IntlNumberFormat(((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) * 0.05, (token?.decimals || 6))}</p>
                 </div>
             </div>
-            <div className='px-5 mb-6'>
+            <div className='px-3 mb-6'>
                 <p className="text-muted text-sm">You&apos;ll pay</p>
                 <div className="overflow-hidden flex flex-row items-center no-wrap gap-2 py-1">
                     <p className="text-4xl leading-none font-bold text-emerald-500 truncate">
@@ -120,6 +129,20 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                     </p>
                     <Token token={token} hover={false} className='mt-1' />
                 </div>
+                <p className='text-muted text-sm pt-1'>
+                    ≈&nbsp;
+                    {isFetching ?
+                        <span className='bg-white/10 rounded animate-pulse text-foreground/0'>1,000.00</span>
+                        :
+                        <span>
+                            {data?.length > 0 ?
+                                IntlNumberFormatCurrency((((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) * 1.05) * data[0].priceUsd)
+                                :
+                                'No dex data'
+                            }
+                        </span>
+                    }
+                </p>
             </div>
             {!publicKey ?
                 <ConnectButton className='w-full' />
