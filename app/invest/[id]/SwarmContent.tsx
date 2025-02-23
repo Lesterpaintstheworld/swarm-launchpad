@@ -13,7 +13,7 @@ import { SwarmRecentMarketListings } from "@/components/market/recentListings";
 import { ManagePortfolioCard } from "@/components/cards/managePortfolio";
 import { ServiceGrid } from "@/components/marketplace/services/grid";
 import { CollaborationGrid } from "@/components/marketplace/collaborations/grid";
-
+import { useComputePrice } from '@/hooks/useTokenPrice';
 
 interface SwarmContentProps {
     swarm: {
@@ -51,30 +51,16 @@ interface SwarmContentProps {
 }
 
 export function SwarmContent({ swarm, initialPrice, services, collaborations }: SwarmContentProps) {
+
     const [price, setPrice] = useState<number | null>(initialPrice);
     const soldShares = swarm.soldShares || 1000000; // Default to 1M shares if not provided
 
+    const { data, isLoading } = useComputePrice();
+
     useEffect(() => {
-        const fetchPrice = () => {
-            fetch('https://api.dexscreener.com/latest/dex/pairs/solana/HiYsmVjeFy4ZLx8pkPSxBjswFkoEjecVGB4zJed2e6Y')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.pair?.priceUsd) {
-                        setPrice(parseFloat(data.pair.priceUsd));
-                    }
-                })
-                .catch(error => console.error('Failed to fetch price:', error));
-        };
-
-        // Initial fetch
-        fetchPrice();
-
-        // Set up interval for periodic updates
-        const interval = setInterval(fetchPrice, 60000);
-
-        // Cleanup
-        return () => clearInterval(interval);
-    }, []);
+        if (isLoading || !data || data.length === 0) return;
+        setPrice(data[0].price);
+    }, [data, isLoading])
 
     return (
         <main className="container mb-6 md:mb-24 view">
