@@ -18,6 +18,7 @@ export const supportedTokens: Token[] = [
         label: "SOL",
         icon: '/tokens/sol.svg',
         mint: '11111111111111111111111111111111',
+        dexMintRef: 'So11111111111111111111111111111111111111112',
         resolution: 1_000_000_000,
         decimals: 9
     },
