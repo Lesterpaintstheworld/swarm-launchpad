@@ -6,7 +6,7 @@ import { Button } from "@/components/shadcn/button";
 import { Token as TokenType } from "@/components/tokens/tokens.types";
 import { Modal } from "@/components/ui/modal";
 import { useLaunchpadProgram, useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
-import { IntlNumberFormat } from "@/lib/utils";
+import { IntlNumberFormat, IntlNumberFormatCurrency } from "@/lib/utils";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect, useState } from "react";
 import { useQueryClient } from '@tanstack/react-query';
@@ -16,6 +16,7 @@ import { MarketListing } from '@/types/listing';
 import Link from 'next/link';
 import Image from "next/image";
 import { LucideLoaderCircle } from 'lucide-react';
+import { useDexScreenerPrice } from '@/hooks/useTokenPrice';
 
 interface CancelListingModalProps {
     isModalOpen: boolean;
@@ -28,12 +29,12 @@ const CancelListingModal = ({ isModalOpen, closeModal, listing, swarm }: CancelL
 
     const { publicKey } = useWallet();
 
-    const { programId } = useLaunchpadProgram();
     const { cancelListing } = useLaunchpadProgramAccount({ poolAddress: listing.pool.toBase58() });
 
     const [token, setToken] = useState<TokenType>(supportedTokens.find((token: TokenType) => token.mint === listing.desiredToken.toBase58()) as TokenType);
     const [loading, setLoading] = useState(false);
 
+    const { data, isFetching } = useDexScreenerPrice({ token });
     const queryClient = useQueryClient();
 
     const handleCancel = () => {
@@ -50,13 +51,11 @@ const CancelListingModal = ({ isModalOpen, closeModal, listing, swarm }: CancelL
         }).catch(error => {
             console.error('Failed to create listing:', error);
         }).finally(() => {
-            queryClient.invalidateQueries({ queryKey: ['position', listing.seller, listing.pool] });
-            queryClient.invalidateQueries({ queryKey: ['all-listings'] });
-            queryClient.refetchQueries({ queryKey: ['listings', listing.seller] });
+            queryClient.refetchQueries({ queryKey: ['listings', publicKey] });
+            queryClient.refetchQueries({ queryKey: ['listings', swarm.pool] });
             setLoading(false);
             closeModal();
         });
-
     }
 
     useEffect(() => {
@@ -68,7 +67,16 @@ const CancelListingModal = ({ isModalOpen, closeModal, listing, swarm }: CancelL
     }, [isModalOpen]);
 
     return (
-        <Modal isOpen={isModalOpen} onClose={closeModal} className="p-6">
+        <Modal
+            isOpen={isModalOpen}
+            onClose={closeModal}
+            className={`
+                [@media(max-height:500px)]:h-[88vh]
+                [@media(max-height:500px)]:w-[calc(100vw-12vh)]
+                [@media(max-height:500px)]:max-w-[1048px]
+                overflow-scroll p-6
+            `}
+        >
             <h4 className="mb-2 font-medium">Cancel Sale Listing</h4>
             <p className="text-muted text-sm">Are you sure you want to cancel this sale listing?</p>
             <div className='bg-card min-w-[320px] p-5 rounded-md flex flex-col my-4'>
@@ -110,6 +118,20 @@ const CancelListingModal = ({ isModalOpen, closeModal, listing, swarm }: CancelL
                     </p>
                     <Token token={token} hover={false} className='mt-1' />
                 </div>
+                <p className='text-muted text-sm pt-1'>
+                    ≈&nbsp;
+                    {isFetching ?
+                        <span className='bg-white/10 rounded animate-pulse text-foreground/0'>1,000.00</span>
+                        :
+                        <span>
+                            {data?.length > 0 ?
+                                IntlNumberFormatCurrency((((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) * 1.05) * data[0].priceUsd)
+                                :
+                                'No dex data'
+                            }
+                        </span>
+                    }
+                </p>
             </div>
             <Button
                 onClick={() => handleCancel()}

@@ -7,7 +7,7 @@ import { Token as TokenType } from "@/components/tokens/tokens.types";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
-import { IntlNumberFormat } from "@/lib/utils";
+import { IntlNumberFormat, IntlNumberFormatCurrency } from "@/lib/utils";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { randomBytes } from "crypto";
@@ -15,14 +15,7 @@ import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { Token } from '@/components/tokens/token';
 import { supportedTokens } from '@/data/tokens/supported';
 import { LucideLoaderCircle } from "lucide-react";
-
-const minPriceData: Record<string, number> = {
-    $COMPUTE: 6500, // ≈ 1 USD
-    UBC: 720, // ≈ 1 USD
-    SOL: 0.006, // ≈ 1 USD
-    USDT: 1, // ≈ 1 USD
-    USDC: 1, // ≈ 1 USD
-}
+import { useDexScreenerPrice } from "@/hooks/useTokenPrice";
 
 interface CreateListingModalProps {
     isModalOpen: boolean;
@@ -40,8 +33,6 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
     const [token, setToken] = useState<TokenType>(supportedTokens.find((token: TokenType) => token.label === '$COMPUTE') as TokenType);
     const [loading, setLoading] = useState(false);
 
-    const queryClient = useQueryClient();
-
     const { data: swarm } = useQuery({
         queryKey: ['swarm', swarmID],
         queryFn: async () => {
@@ -56,6 +47,14 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
     const { position, createListing } = useLaunchpadProgramAccount({ poolAddress: swarm?.pool || "37u532qgHbjUHic6mQK51jkT3Do7qkWLEUQCx22MDBD8" });
 
     const { data, isLoading: loadingPosition } = position;
+    const { data: priceData, isFetching } = useDexScreenerPrice({ token });
+    const queryClient = useQueryClient();
+
+    useEffect(() => {
+        if (isModalOpen) {
+            console.log({ token: token?.label, priceData, isFetching });
+        }
+    }, [token, priceData, isFetching])
 
     const sharesRef = useRef<HTMLParagraphElement>(null);
 
@@ -71,10 +70,6 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
         if (isNaN(value) || value < 0) return;
         setPricePerShare(value);
     }
-
-    useEffect(() => {
-        console.log({ positionData: data });
-    }, [data])
 
     const handleSale = () => {
         if (!createListing) {
@@ -92,8 +87,8 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
         }).catch(error => {
             console.error('Failed to create listing:', error);
         }).finally(() => {
-            queryClient.invalidateQueries({ queryKey: ['position', publicKey, swarm.pool] });
             queryClient.refetchQueries({ queryKey: ['listings', publicKey] });
+            queryClient.refetchQueries({ queryKey: ['listings', swarm.pool] });
             setLoading(false);
             handleClose();
         });
@@ -117,7 +112,17 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
     }, [isModalOpen]);
 
     return (
-        <Modal isOpen={isModalOpen} onClose={handleClose} className="p-6">
+        <Modal
+            isOpen={isModalOpen}
+            onClose={handleClose}
+            className={`
+                [@media(max-height:740px)]:h-[88vh]
+                [@media(max-height:740px)]:w-[calc(100vw-12vh)]
+                [@media(max-height:740px)]:max-w-[1048px]
+                flex flex-col
+                overflow-scroll p-6
+            `}
+        >
             <h4 className="mb-2 font-medium">Sell shares</h4>
             <p className="text-muted text-sm mb-6">Select which swarm you want to sell shares from, define the number of shares you want to let go, and set your price.</p>
             <SwarmComboBox
@@ -159,9 +164,9 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
                         className="border-none rounded-none bg-transparent pl-0 text-4xl font-bold no-arrows w-full"
                         disabled={data?.availableShares === 0 || Number(numShares) === 0 || loadingPosition || loading}
                         type="number"
-                        placeholder={IntlNumberFormat(minPriceData[token.label as keyof typeof minPriceData], (token?.decimals || 6)) || "--"}
+                        placeholder="10"
                         step={1}
-                        min={minPriceData[token.label as keyof typeof minPriceData] || 0}
+                        min={1 / token.resolution}
                         value={pricePerShare === 0 ? '' : pricePerShare}
                         onChange={handlePriceInput}
                     />
@@ -173,7 +178,7 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
                 </div>
             </div>
             <div className="flex flex-row justify-between mt-2 text-sm text-muted px-4 gap-6 flex-wrap mb-4">
-                <p>Minimum: <span className='font-bold'>{minPriceData[token.label as keyof typeof minPriceData]}</span> {token.label}</p>
+                <p>Minimum: <span className='font-bold'>{1 / token.resolution}</span> {token.label}</p>
             </div>
             {pricePerShare !== 0 && Number(numShares) !== 0 && token &&
                 <div className="px-4 py-3 mb-4 w-full">
@@ -185,13 +190,27 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
                         </p>
                         <Token token={token} hover={false} />
                     </div>
+                    <p className='text-muted text-sm pt-1'>
+                        ≈&nbsp;
+                        {isFetching ?
+                            <span className='bg-white/10 rounded animate-pulse text-foreground/0'>1,000.00</span>
+                            :
+                            <span>
+                                {priceData?.length > 0 ?
+                                    IntlNumberFormatCurrency((Number(numShares) * Number(pricePerShare)) * priceData[0].priceUsd)
+                                    :
+                                    'No dex data'
+                                }
+                            </span>
+                        }
+                    </p>
                 </div>
             }
             <Button
                 onClick={() => handleSale()}
                 variant='destructive'
                 disabled={data?.availableShares === 0 || Number(numShares) === 0 || pricePerShare === 0 || !token || !publicKey || !swarmID || loadingPosition || loading}
-                className="w-full"
+                className="w-full mt-auto"
             >
                 {loading ?
                     <LucideLoaderCircle className='animate-spin' />
