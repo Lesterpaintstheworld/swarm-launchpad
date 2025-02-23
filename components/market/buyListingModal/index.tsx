@@ -119,7 +119,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                     </div>
                 }
                 <div className='border-t py-4 flex-col sm:flex-row text-md border-border w-full flex flex-row leading-none sm:items-center'>
-                    <p className='font-medium w-fit min-h-[26px] flex items-center'>No. Shares:</p>
+                    <p className='font-medium w-fit min-h-[26px] flex items-center'>No. shares:</p>
                     <p className='mt-2 sm:ml-auto sm:mt-0'>{Number(listing.numberOfShares)}</p>
                 </div>
                 <div className='border-t py-4 flex-col sm:flex-row text-md border-border w-full flex leading-none sm:items-center'>
@@ -136,7 +136,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                         <Token token={token} className='ml-2' hover={false} />
                     </span>
                 </div>
-                <div className='border-t pt-4 flex-col sm:flex-row text-md border-border w-full flex flex-row leading-none sm:items-center'>
+                <div className='border-t pt-4 pb-2 flex-col sm:flex-row text-md border-border w-full flex flex-row leading-none sm:items-center'>
                     <TooltipProvider>
                         <Tooltip>
                             <TooltipTrigger asChild>
@@ -144,8 +144,8 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                                     variant='ghost'
                                     className='flex flex-row items-center w-fit gap-1 -ml-2 px-2 py-1'
                                 >
-                                    <p className='font-medium w-fit'>Txn Fee:</p>
                                     <LucideInfo width={14} />
+                                    <p className='font-medium w-fit'>Txn fee:</p>
                                 </Button>
                             </TooltipTrigger>
                             <TooltipContent className='border border-border'>
