@@ -15,10 +15,11 @@ import { supportedTokens } from '@/data/tokens/supported';
 import { MarketListing } from '@/types/listing';
 import Link from 'next/link';
 import Image from "next/image";
-import { LucideLoaderCircle } from 'lucide-react';
+import { LucideInfo, LucideLoaderCircle } from 'lucide-react';
 import { PoolAccount } from '@/types/pool';
 import { ConnectButton } from '@/components/solana/connectButton';
 import { useDexScreenerPrice } from '@/hooks/useTokenPrice';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/shadcn/tooltip';
 
 interface BuyListingModalProps {
     isModalOpen: boolean;
@@ -31,6 +32,7 @@ interface BuyListingModalProps {
 const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount }: BuyListingModalProps) => {
 
     const SHOW_USD_PRICE = false;
+    const TRANSACTION_CHARGE_MIN_USD = 3.87;
 
     const { publicKey } = useWallet();
 
@@ -55,7 +57,8 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
             .mutateAsync({
                 listing,
                 swarm,
-                poolAccount
+                poolAccount,
+                fee: Math.floor(min_transaction_fee() * token.resolution)
             })
             .catch(error => {
                 console.log("Full error:", JSON.stringify(error, null, 2));
@@ -74,6 +77,15 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
             document.body.style.overflow = 'unset';
         }
     }, [isModalOpen]);
+
+    const percent_fee = useCallback(() => {
+        return ((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) * ((1 / Number(poolAccount.feeRatio)));
+    }, [poolAccount, listing, data])
+
+    const min_transaction_fee = useCallback(() => {
+        if (!data || data.length === 0) return 0;
+        return Math.floor((TRANSACTION_CHARGE_MIN_USD / data[0]?.priceUsd) * 100) / 100;
+    }, [poolAccount, listing, data])
 
     return (
         <Modal
@@ -118,9 +130,21 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                     </span>
                 </div>
                 <div className='border-t pt-4 flex-col sm:flex-row text-md border-border w-full flex flex-row leading-none sm:items-center'>
-                    <p className='font-medium w-fit'>Txn Fee (5%):</p>
+                    <div className='flex flex-row items-center w-fit gap-1'>
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <LucideInfo width={14} />
+                                </TooltipTrigger>
+                                <TooltipContent className='border border-border'>
+                                    {IntlNumberFormatCurrency(TRANSACTION_CHARGE_MIN_USD)} + 5%
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                        <p className='font-medium w-fit'>Txn Fee:</p>
+                    </div>
                     <span className='flex flex-row items-center mt-2 sm:ml-auto sm:mt-0'>
-                        <p className='sm:ml-auto'>{IntlNumberFormat(((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) * 0.05, (token?.decimals || 6))}</p>
+                        <p className='sm:ml-auto'>{IntlNumberFormat(percent_fee() + min_transaction_fee(), (token?.decimals || 6))}</p>
                         <Token token={token} className='ml-2' hover={false} />
                     </span>
                 </div>
@@ -130,7 +154,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                 <div className="overflow-hidden flex flex-row items-center no-wrap gap-2 py-1">
                     <p className="text-4xl leading-none font-bold text-emerald-500 truncate">
                         +
-                        {IntlNumberFormat(((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) * 1.05, (token?.decimals || 6))}
+                        {IntlNumberFormat(((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) + percent_fee() + min_transaction_fee(), (token?.decimals || 6))}
                     </p>
                     <Token token={token} hover={false} className='mt-1' />
                 </div>
@@ -142,7 +166,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                             :
                             <span>
                                 {data?.length > 0 ?
-                                    IntlNumberFormatCurrency((((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) * 1.05) * data[0].priceUsd)
+                                    IntlNumberFormatCurrency((((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) + percent_fee() + min_transaction_fee()) * data[0].priceUsd)
                                     :
                                     'No dex data'
                                 }
