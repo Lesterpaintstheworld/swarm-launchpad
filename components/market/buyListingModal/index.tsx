@@ -30,6 +30,8 @@ interface BuyListingModalProps {
 
 const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount }: BuyListingModalProps) => {
 
+    const SHOW_USD_PRICE = false;
+
     const { publicKey } = useWallet();
 
     const { buyListing } = useLaunchpadProgramAccount({ poolAddress: listing.pool.toBase58() });
@@ -117,7 +119,10 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                 </div>
                 <div className='border-t pt-4 flex-col sm:flex-row text-md border-border w-full flex flex-row leading-none sm:items-center'>
                     <p className='font-medium w-fit'>Txn Fee (5%):</p>
-                    <p className='sm:ml-auto'>{IntlNumberFormat(((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) * 0.05, (token?.decimals || 6))}</p>
+                    <span className='flex flex-row items-center mt-2 sm:ml-auto sm:mt-0'>
+                        <p className='sm:ml-auto'>{IntlNumberFormat(((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) * 0.05, (token?.decimals || 6))}</p>
+                        <Token token={token} className='ml-2' hover={false} />
+                    </span>
                 </div>
             </div>
             <div className='px-3 mb-6'>
@@ -129,20 +134,22 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                     </p>
                     <Token token={token} hover={false} className='mt-1' />
                 </div>
-                <p className='text-muted text-sm pt-1'>
-                    ≈&nbsp;
-                    {isFetching ?
-                        <span className='bg-white/10 rounded animate-pulse text-foreground/0'>1,000.00</span>
-                        :
-                        <span>
-                            {data?.length > 0 ?
-                                IntlNumberFormatCurrency((((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) * 1.05) * data[0].priceUsd)
-                                :
-                                'No dex data'
-                            }
-                        </span>
-                    }
-                </p>
+                {SHOW_USD_PRICE &&
+                    <p className='text-muted text-sm pt-1'>
+                        ≈&nbsp;
+                        {isFetching ?
+                            <span className='bg-white/10 rounded animate-pulse text-foreground/0'>1,000.00</span>
+                            :
+                            <span>
+                                {data?.length > 0 ?
+                                    IntlNumberFormatCurrency((((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) * 1.05) * data[0].priceUsd)
+                                    :
+                                    'No dex data'
+                                }
+                            </span>
+                        }
+                    </p>
+                }
             </div>
             {!publicKey ?
                 <ConnectButton className='w-full' />

@@ -25,6 +25,8 @@ interface CreateListingModalProps {
 
 const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingModalProps) => {
 
+    const SHOW_USD_PRICE = false;
+
     const { publicKey } = useWallet();
 
     const [swarmID, setSwarmID] = useState<string>(swarmId || 'kinkong');
@@ -190,20 +192,22 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
                         </p>
                         <Token token={token} hover={false} />
                     </div>
-                    <p className='text-muted text-sm pt-1'>
-                        ≈&nbsp;
-                        {isFetching ?
-                            <span className='bg-white/10 rounded animate-pulse text-foreground/0'>1,000.00</span>
-                            :
-                            <span>
-                                {priceData?.length > 0 ?
-                                    IntlNumberFormatCurrency((Number(numShares) * Number(pricePerShare)) * priceData[0].priceUsd)
-                                    :
-                                    'No dex data'
-                                }
-                            </span>
-                        }
-                    </p>
+                    {SHOW_USD_PRICE &&
+                        <p className='text-muted text-sm pt-1'>
+                            ≈&nbsp;
+                            {isFetching ?
+                                <span className='bg-white/10 rounded animate-pulse text-foreground/0'>1,000.00</span>
+                                :
+                                <span>
+                                    {priceData?.length > 0 ?
+                                        IntlNumberFormatCurrency((Number(numShares) * Number(pricePerShare)) * priceData[0].priceUsd)
+                                        :
+                                        'No dex data'
+                                    }
+                                </span>
+                            }
+                        </p>
+                    }
                 </div>
             }
             <Button
