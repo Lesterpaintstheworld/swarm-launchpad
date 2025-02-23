@@ -118,8 +118,8 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                         </div>
                     </div>
                 }
-                <div className='border-t py-4 min-h-[26px] flex-col sm:flex-row text-md border-border w-full flex flex-row leading-none sm:items-center'>
-                    <p className='font-medium w-fit'>No. Shares:</p>
+                <div className='border-t py-4 flex-col sm:flex-row text-md border-border w-full flex flex-row leading-none sm:items-center'>
+                    <p className='font-medium w-fit min-h-[26px] flex items-center'>No. Shares:</p>
                     <p className='mt-2 sm:ml-auto sm:mt-0'>{Number(listing.numberOfShares)}</p>
                 </div>
                 <div className='border-t py-4 flex-col sm:flex-row text-md border-border w-full flex leading-none sm:items-center'>
@@ -129,21 +129,34 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                         <Token token={token} className='ml-2' hover={false} />
                     </span>
                 </div>
-                <div className='border-t pt-4 pb-2 flex-coltext-md border-border w-full'>
-                    <p className='font-medium w-fit'>Txn Fee:</p>
-                    <div className='flex flex-row items-center mt-2'>
-                        <p className='text-muted'>5%</p>
-                        <span className='flex flex-row items-center mt-2 sm:ml-auto sm:mt-0'>
-                            <p className='sm:ml-auto'>{IntlNumberFormat(percent_fee(), (token?.decimals || 6))}</p>
-                            <Token token={token} className='ml-2' hover={false} />
-                        </span>
-                    </div>
-                    <div className='flex flex-row items-center mt-2'>
-                        <p className='text-muted'>Service charge</p>
-                        <span className='flex flex-row items-center mt-2 sm:ml-auto sm:mt-0'>
-                            <p className='sm:ml-auto'>{IntlNumberFormatCurrency(TRANSACTION_CHARGE_MIN_USD)}</p>
-                        </span>
-                    </div>
+                <div className='border-t py-4 flex-col sm:flex-row text-md border-border w-full flex leading-none sm:items-center'>
+                    <p className='font-medium w-fit'>Sub total:</p>
+                    <span className='flex flex-row items-center mt-2 sm:ml-auto sm:mt-0'>
+                        <p className='sm:ml-auto'>{IntlNumberFormat((Number(listing.pricePerShare) / (token?.resolution || 1_000_000) * Number(listing.numberOfShares)), (token?.decimals || 6))}</p>
+                        <Token token={token} className='ml-2' hover={false} />
+                    </span>
+                </div>
+                <div className='border-t pt-4 flex-col sm:flex-row text-md border-border w-full flex flex-row leading-none sm:items-center'>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    variant='ghost'
+                                    className='flex flex-row items-center w-fit gap-1 -ml-2 px-2 py-1'
+                                >
+                                    <p className='font-medium w-fit'>Txn Fee:</p>
+                                    <LucideInfo width={14} />
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent className='border border-border'>
+                                {IntlNumberFormatCurrency(TRANSACTION_CHARGE_MIN_USD)} + 5%
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                    <span className='flex flex-row items-center mt-2 sm:ml-auto sm:mt-0'>
+                        <p className='sm:ml-auto'>{IntlNumberFormat(percent_fee() + min_transaction_fee(), (token?.decimals || 6))}</p>
+                        <Token token={token} className='ml-2' hover={false} />
+                    </span>
                 </div>
             </div>
             <div className='px-3 mb-6'>
