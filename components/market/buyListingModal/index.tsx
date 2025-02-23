@@ -100,7 +100,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
         >
             <h4 className="mb-2 font-medium">Buy Shares</h4>
             <p className="text-muted text-sm">Are you sure you want to buy {Number(listing.numberOfShares)} share{Number(listing.numberOfShares) > 1 ? 's' : ''} of {swarm?.name}.</p>
-            <div className='bg-card min-w-[320px] p-5 rounded-md flex flex-col my-4'>
+            <div className='bg-card min-w-[320px] p-5 pb-3 rounded-md flex flex-col my-4'>
                 {swarm &&
                     <div className="flex items-center min-w-[200px] gap-2 pb-4">
                         <Image
@@ -118,7 +118,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                         </div>
                     </div>
                 }
-                <div className='border-t py-4 flex-col sm:flex-row text-md border-border w-full flex flex-row leading-none sm:items-center'>
+                <div className='border-t py-4 min-h-[26px] flex-col sm:flex-row text-md border-border w-full flex flex-row leading-none sm:items-center'>
                     <p className='font-medium w-fit'>No. Shares:</p>
                     <p className='mt-2 sm:ml-auto sm:mt-0'>{Number(listing.numberOfShares)}</p>
                 </div>
@@ -129,20 +129,23 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                         <Token token={token} className='ml-2' hover={false} />
                     </span>
                 </div>
-                <div className='border-t pt-4 flex-col sm:flex-row text-md border-border w-full flex flex-row leading-none sm:items-center'>
-                    <div className='flex flex-row items-center w-fit gap-1'>
-                        <TooltipProvider>
-                            <Tooltip>
-                                <TooltipTrigger>
+                <div className='border-t pt-2 flex-col sm:flex-row text-md border-border w-full flex flex-row leading-none sm:items-center'>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    variant='ghost'
+                                    className='flex flex-row items-center w-fit gap-1 px-2 py-2 -ml-2'
+                                >
                                     <LucideInfo width={14} />
-                                </TooltipTrigger>
-                                <TooltipContent className='border border-border'>
-                                    {IntlNumberFormatCurrency(TRANSACTION_CHARGE_MIN_USD)} + 5%
-                                </TooltipContent>
-                            </Tooltip>
-                        </TooltipProvider>
-                        <p className='font-medium w-fit'>Txn Fee:</p>
-                    </div>
+                                    <p className='font-medium w-fit'>Txn Fee:</p>
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent className='border border-border'>
+                                {IntlNumberFormatCurrency(TRANSACTION_CHARGE_MIN_USD)} + 5%
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
                     <span className='flex flex-row items-center mt-2 sm:ml-auto sm:mt-0'>
                         <p className='sm:ml-auto'>{IntlNumberFormat(percent_fee() + min_transaction_fee(), (token?.decimals || 6))}</p>
                         <Token token={token} className='ml-2' hover={false} />
