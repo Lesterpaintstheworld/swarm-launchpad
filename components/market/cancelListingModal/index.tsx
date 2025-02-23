@@ -100,7 +100,7 @@ const CancelListingModal = ({ isModalOpen, closeModal, listing, swarm }: CancelL
                     </div>
                 }
                 <div className='border-t py-4 flex-col sm:flex-row text-md border-border w-full flex flex-row leading-none sm:items-center'>
-                    <p className='font-medium w-fit'>No. Shares:</p>
+                    <p className='font-medium w-fit min-h-[26px] flex items-center'>No. Shares:</p>
                     <p className='mt-2 sm:ml-auto sm:mt-0'>{Number(listing.numberOfShares)}</p>
                 </div>
                 <div className='border-t pt-4 flex-col sm:flex-row text-md border-border w-full flex flex-row leading-none sm:items-center'>
