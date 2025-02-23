@@ -8,7 +8,7 @@ import { Modal } from "@/components/ui/modal";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { IntlNumberFormat, IntlNumberFormatCurrency } from "@/lib/utils";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useQueryClient } from '@tanstack/react-query';
 import { Token } from '@/components/tokens/token';
 import { supportedTokens } from '@/data/tokens/supported';
