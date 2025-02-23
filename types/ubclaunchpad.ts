@@ -368,7 +368,12 @@ export type Ubclaunchpad = {
           "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "transactionFee",
+          "type": "u64"
+        }
+      ]
     },
     {
       "name": "buyListingWithLamports",
@@ -444,7 +449,12 @@ export type Ubclaunchpad = {
           "address": "11111111111111111111111111111111"
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "transactionFee",
+          "type": "u64"
+        }
+      ]
     },
     {
       "name": "cancelListing",

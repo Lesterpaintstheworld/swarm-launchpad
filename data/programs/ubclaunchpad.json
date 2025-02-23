@@ -362,7 +362,12 @@
           "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "transaction_fee",
+          "type": "u64"
+        }
+      ]
     },
     {
       "name": "buy_listing_with_lamports",
@@ -438,7 +443,12 @@
           "address": "11111111111111111111111111111111"
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "transaction_fee",
+          "type": "u64"
+        }
+      ]
     },
     {
       "name": "cancel_listing",

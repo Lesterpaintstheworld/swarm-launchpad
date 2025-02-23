@@ -277,7 +277,7 @@ pub mod ubclaunchpad {
         Ok(())
     }
 
-    pub fn buy_listing(ctx: Context<BuyListing>) -> Result<()> {
+    pub fn buy_listing(ctx: Context<BuyListing>, transaction_fee: u64) -> Result<()> {
         
         let listing = &mut ctx.accounts.share_listing;
         let buyer_shareholder = &mut ctx.accounts.buyer_shareholder;
@@ -334,8 +334,12 @@ pub mod ubclaunchpad {
             .ok_or(error!(ErrorCode::MathError))?;
 
         // Fees
-        let fee = total_cost
+        let percent_fee = total_cost
             .checked_div(pool.fee_ratio)
+            .ok_or(error!(ErrorCode::InvalidAmount))?;
+
+        let final_calculated_fee = percent_fee
+            .checked_add(transaction_fee)
             .ok_or(error!(ErrorCode::InvalidAmount))?;
 
         // Transfer token to seller
@@ -361,7 +365,7 @@ pub mod ubclaunchpad {
                     authority: ctx.accounts.buyer.to_account_info(),
                 },
             ),
-            fee,
+            final_calculated_fee,
         )?;
 
         // Close shareholder account if seller has no more shares
@@ -379,7 +383,7 @@ pub mod ubclaunchpad {
             number_of_shares: listing.number_of_shares,
             price_per_share: listing.price_per_share,
             amount: total_cost,
-            fee: fee,
+            fee: final_calculated_fee,
             timestamp: Clock::get()?.unix_timestamp,
         });
 
@@ -387,7 +391,7 @@ pub mod ubclaunchpad {
         Ok(())
     }
     
-    pub fn buy_listing_with_lamports(ctx: Context<BuyListingWithLamports>) -> Result<()> {
+    pub fn buy_listing_with_lamports(ctx: Context<BuyListingWithLamports>, transaction_fee: u64) -> Result<()> {
         
         let listing = &mut ctx.accounts.share_listing;
         let buyer_shareholder = &mut ctx.accounts.buyer_shareholder;
@@ -444,8 +448,12 @@ pub mod ubclaunchpad {
             .ok_or(error!(ErrorCode::MathError))?;
 
         // Fees
-        let fee = total_cost
+        let percent_fee = total_cost
             .checked_div(pool.fee_ratio)
+            .ok_or(error!(ErrorCode::InvalidAmount))?;
+
+        let final_calculated_fee = percent_fee
+            .checked_add(transaction_fee)
             .ok_or(error!(ErrorCode::InvalidAmount))?;
 
         // Transfer SOL to seller
@@ -461,7 +469,7 @@ pub mod ubclaunchpad {
         )?;
         
         // Transfer fee to custodial account
-        let transfer_fee_instruction = anchor_lang::solana_program::system_instruction::transfer(&ctx.accounts.buyer.key(), &ctx.accounts.custodial_account.key(), fee);
+        let transfer_fee_instruction = anchor_lang::solana_program::system_instruction::transfer(&ctx.accounts.buyer.key(), &ctx.accounts.custodial_account.key(), final_calculated_fee);
 
         anchor_lang::solana_program::program::invoke(
             &transfer_fee_instruction,
@@ -487,7 +495,7 @@ pub mod ubclaunchpad {
             number_of_shares: listing.number_of_shares,
             price_per_share: listing.price_per_share,
             amount: total_cost,
-            fee: fee,
+            fee: final_calculated_fee,
             timestamp: Clock::get()?.unix_timestamp,
         });
 
