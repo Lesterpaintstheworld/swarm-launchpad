@@ -19,6 +19,15 @@ export function IntlNumberFormat(number: number, decimals?: number): string {
     }).format(number);
 }
 
+export function IntlNumberFormatCurrency(number: number, decimals?: number): string {
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        currencyDisplay: 'narrowSymbol'
+        
+    }).format(number);
+}
+
 export function formatPublicKey(publicKey: string): string {
 	return publicKey?.slice(0, 5) + '...' + publicKey?.slice(-4);
 }
