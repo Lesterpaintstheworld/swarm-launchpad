@@ -540,7 +540,7 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                         buyer: publicKey,
                         systemProgram: SystemProgram.programId
                     })
-                    .simulate();
+                    .rpc();
             } else {
                 // Seller wants payment in an SPL token
                 tx = await program.methods
@@ -562,7 +562,7 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                         tokenProgram: TOKEN_PROGRAM_ID,
                         associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID
                     })
-                    .simulate();
+                    .rpc();
             }
 
             toast.success(`Transaction successful: ${tx}`);
