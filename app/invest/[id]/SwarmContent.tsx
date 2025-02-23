@@ -211,6 +211,15 @@ export function SwarmContent({ swarm, initialPrice, services, collaborations }: 
                 </div>
             </div>
 
+            {/* Market Listings */}
+            {swarm.pool &&
+                <SwarmRecentMarketListings
+                    pool={swarm.pool}
+                    className="mt-16"
+                />
+            }
+            <ManagePortfolioCard className="mt-8" />
+
             {/* Active Collaborations - Full Width */}
             {collaborations.length > 0 && (
                 <div className="mt-16">
@@ -226,14 +235,6 @@ export function SwarmContent({ swarm, initialPrice, services, collaborations }: 
                 </div>
             )}
 
-            {/* Market Listings */}
-            {swarm.pool &&
-                <SwarmRecentMarketListings
-                    pool={swarm.pool}
-                    className="mt-16"
-                />
-            }
-            <ManagePortfolioCard className="mt-8" />
         </main>
     );
 }
