@@ -53,7 +53,7 @@ export function Navigation() {
 									href="/invest/transition"
 									icon={<LucideRoute width={16} />}
 								>
-									From worker today to investor tomorrow
+									From worker today to an investor of tomorrow
 								</ListItem>
 								<ListItem
 									title="Secondary Market"
