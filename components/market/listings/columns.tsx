@@ -89,6 +89,7 @@ export const columns: ColumnDef<MarketListing>[] = [
     },
     {
         accessorKey: 'pricePerShare',
+        accessorFn: row => Number(row.pricePerShare),
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Price per share" />
         ),
