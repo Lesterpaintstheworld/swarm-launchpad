@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react';
 
 interface CountdownTimerProps {
     launchDate: string | Date;
+    title?: string;
+    hideDays?: boolean;
 }
 
-export function CountdownTimer({ launchDate }: CountdownTimerProps) {
+export function CountdownTimer({ launchDate, title, hideDays = false }: CountdownTimerProps) {
     const [timeLeft, setTimeLeft] = useState<{
         days: number;
         hours: number;
@@ -17,7 +19,7 @@ export function CountdownTimer({ launchDate }: CountdownTimerProps) {
     useEffect(() => {
         const calculateTimeLeft = () => {
             const difference = new Date(launchDate).getTime() - Date.now();
-            
+
             if (difference <= 0) {
                 setTimeLeft(null);
                 return;
@@ -41,12 +43,18 @@ export function CountdownTimer({ launchDate }: CountdownTimerProps) {
 
     return (
         <div className="p-8 rounded-xl bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-white/5 backdrop-blur-sm">
-            <h3 className="text-xl font-semibold mb-6 text-center">Launch Countdown</h3>
-            <div className="grid grid-cols-4 gap-4">
-                <div className="text-center">
-                    <div className="text-2xl font-bold">{timeLeft.days}</div>
-                    <div className="text-sm text-muted-foreground">Days</div>
-                </div>
+            <h3 className="text-xl font-semibold mb-10 text-center">{title || 'Launch Countdown'}</h3>
+            <div
+                className={`
+                    flex flex-row justify-around w-full bg-card py-6 px-4 rounded-xl border
+                `}
+            >
+                {!hideDays &&
+                    <div className="text-center">
+                        <div className="text-2xl font-bold">{timeLeft.days}</div>
+                        <div className="text-sm text-muted-foreground">Days</div>
+                    </div>
+                }
                 <div className="text-center">
                     <div className="text-2xl font-bold">{timeLeft.hours}</div>
                     <div className="text-sm text-muted-foreground">Hours</div>
