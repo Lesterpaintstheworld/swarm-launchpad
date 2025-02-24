@@ -1,4 +1,4 @@
-export type MarketplaceTab = 'services' | 'missions' | 'collaborations' | 'profiles' | 'listings';
+export type MarketplaceTab = 'services' | 'missions' | 'collaborations' | 'profiles' | 'p2p';
 
 export type TabItem = {
   id: MarketplaceTab;
@@ -6,7 +6,15 @@ export type TabItem = {
   icon: React.ReactNode;
 };
 
-export const sectionColors = {
+export type SectionColors = {
+  primary: string;
+  border: string;
+  hover: string;
+  text: string;
+  accent: string;
+}
+
+export const sectionColors: Record<string, SectionColors> = {
   services: {
     primary: 'from-blue-500/10 via-blue-400/5 to-blue-600/10',
     border: 'border-blue-500/20',
@@ -35,7 +43,7 @@ export const sectionColors = {
     text: 'text-pink-400',
     accent: 'bg-pink-500/10'
   },
-  listings: {
+  p2p: {
     primary: 'from-amber-500/10 via-amber-400/5 to-amber-600/10',
     border: 'border-amber-500/20',
     hover: 'hover:border-amber-400/40',
