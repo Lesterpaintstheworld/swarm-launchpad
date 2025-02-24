@@ -60,6 +60,28 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                 poolAccount,
                 fee: Math.floor(min_transaction_fee() * token.resolution)
             })
+            .then(async () => {
+                // Send Telegram notification after successful purchase
+                try {
+                    const totalAmount = ((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) + percent_fee() + min_transaction_fee();
+                    
+                    await fetch('/api/notifications/telegram', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            swarmName: swarm.name,
+                            numberOfShares: Number(listing.numberOfShares),
+                            pricePerShare: IntlNumberFormat((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)), (token?.decimals || 6)),
+                            tokenSymbol: token.symbol,
+                            totalAmount: IntlNumberFormat(totalAmount, (token?.decimals || 6))
+                        }),
+                    });
+                } catch (error) {
+                    console.error('Failed to send Telegram notification:', error);
+                }
+            })
             .catch(error => {
                 console.log("Full error:", JSON.stringify(error, null, 2));
             })
