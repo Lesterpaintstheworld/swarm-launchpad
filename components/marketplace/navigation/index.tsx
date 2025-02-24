@@ -24,7 +24,7 @@ const tabs: TabItem[] = [
     icon: <Users className="w-4 h-4" />
   },
   {
-    id: 'listings',
+    id: 'p2p',
     label: 'Secondary Market',
     icon: <ArrowRightLeft className="w-4 h-4" />
   }
