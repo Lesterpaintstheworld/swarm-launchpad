@@ -12,9 +12,7 @@ import { MissionGrid } from '@/components/marketplace/missions/grid';
 import { SwarmProfiles } from '@/components/marketplace/profiles';
 import { CollaborationResponse, Mission as APIMission, ServiceResponse } from '@/types/api';
 import { Mission as ComponentMission } from '@/components/marketplace/types';
-import { SellPositionCard } from '@/components/cards/sellPosition';
-import { UserListings } from '@/components/market/userListings';
-import { MarketListings } from '@/components/market/listings';
+import { SecondaryMarket } from '@/components/marketplace/secondary-market';
 
 type ValidServiceType = 'subscription' | 'one-off' | 'pay-as-you-go' | 'financial';
 
@@ -172,7 +170,7 @@ function MarketplaceContent() {
 				</div>
 
 				{/* Search Section with Floating Effect */}
-				{activeTab !== 'listings' &&
+				{activeTab !== 'p2p' &&
 					<>
 
 						<div className="relative">
@@ -293,12 +291,8 @@ function MarketplaceContent() {
 					</>
 				}
 
-				{activeTab === 'listings' &&
-					<>
-						<SellPositionCard />
-						<UserListings />
-						<MarketListings />
-					</>
+				{activeTab === 'p2p' &&
+					<SecondaryMarket />
 				}
 
 			</div>
