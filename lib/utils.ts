@@ -13,8 +13,18 @@ export function IntlNumberFormatCompact(number: number): string {
 
 export function IntlNumberFormat(number: number, decimals?: number): string {
     return new Intl.NumberFormat('en-US', {
-        minimumFractionDigits: decimals,
-        maximumFractionDigits: decimals
+        minimumFractionDigits: decimals && 0,
+        maximumFractionDigits: decimals ? decimals : 0,
+        
+    }).format(number);
+}
+
+export function IntlNumberFormatCurrency(number: number, decimals?: number): string {
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        currencyDisplay: 'narrowSymbol'
+        
     }).format(number);
 }
 

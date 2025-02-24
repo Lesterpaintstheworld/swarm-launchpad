@@ -34,8 +34,8 @@ export default function HomePage() {
     return (
         <main>
             <Navigation />
-            
-            <Hero 
+
+            <Hero
                 title={<>Invest <span className="metallic-text">$COMPUTE</span>, get returns in <span className="metallic-text-ubc">$UBC</span></>}
                 className="text-balance"
             />
@@ -53,12 +53,12 @@ export default function HomePage() {
                             {/* Moving light effect */}
                             <div className="absolute inset-0 w-1/2 -translate-x-full animate-[moveLight_2s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
                         </div>
-                        
+
                         {/* Button text with glow effect */}
                         <span className="relative z-10 bg-gradient-to-b from-yellow-200 to-yellow-400 bg-clip-text text-transparent font-medium">
                             Invest in Swarms
                         </span>
-                        
+
                         {/* Hover glow effect */}
                         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-yellow-500 to-orange-500 opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500" />
                     </Link>

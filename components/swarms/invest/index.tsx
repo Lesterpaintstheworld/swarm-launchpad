@@ -86,13 +86,13 @@ interface SwarmInvestCardProps {
     };
 }
 
-const SwarmInvestCard = ({ 
-    pool, 
-    className, 
-    marketCapOnly, 
+const SwarmInvestCard = ({
+    pool,
+    className,
+    marketCapOnly,
     amountRaisedOnly,
     priceInUsd,
-    weeklyRevenuePerShare 
+    weeklyRevenuePerShare
 }: SwarmInvestCardProps) => {
     const { connected } = useWallet();
     const [numShares, setNumShares] = useState<number>(0);
@@ -130,7 +130,7 @@ const SwarmInvestCard = ({
                 console.error('Could not find swarm ID for pool:', pool);
                 return;
             }
-            
+
             fetch(`/api/swarms/${swarmId}`)
                 .then(response => {
                     if (!response.ok) throw new Error('Failed to fetch swarm');
@@ -144,9 +144,10 @@ const SwarmInvestCard = ({
                     console.error('Error fetching swarm:', error);
                 });
         }
-        
+
         fetchSwarm();
     }, [pool]);
+
     const [data, setData] = useState({
         totalSupply: 0,
         remainingSupply: 0,
@@ -155,51 +156,52 @@ const SwarmInvestCard = ({
     });
 
     const { poolAccount, purchaseShares } = useLaunchpadProgramAccount({ poolAddress: pool });
+    const { data: poolAccountData, isLoading: isPoolAccountLoading, error } = poolAccount;
 
     useEffect(() => {
-        console.log('Pool Account Data:', poolAccount);
-        
+
         if (poolAccount.error) {
             console.error('Pool Account Error:', poolAccount.error);
         }
-        
-        if (poolAccount.data) {
+
+        if (poolAccountData) {
             try {
-                const totalSupply = poolAccount.data.totalShares.toNumber();
-                const remainingSupply = poolAccount.data.availableShares.toNumber();
+                const totalSupply = poolAccountData.totalShares.toNumber();
+                const remainingSupply = poolAccountData.availableShares.toNumber();
                 const soldShares = totalSupply - remainingSupply;
                 const currentPrice = calculateSharePrice(soldShares);
-                
+
                 console.log('Price calculation:', {
                     totalSupply,
                     remainingSupply,
                     soldShares,
                     currentPrice
                 });
-                
+
                 setData({
                     totalSupply: totalSupply,
                     remainingSupply: remainingSupply,
                     pricePerShare: currentPrice,
-                    frozen: poolAccount.data.isFrozen || false,
+                    frozen: poolAccountData.isFrozen || false,
                 });
             } catch (error) {
                 console.error('Error processing pool data:', error);
             }
         }
-    }, [poolAccount]);
+
+    }, [poolAccountData, isPoolAccountLoading, error]);
 
     const handleSharesInput = (e: ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value.replace(/,/g, ''));
         if (isNaN(value) || value < 0 || value > data.remainingSupply) return;
-        
+
         const totalPrice = value * data.pricePerShare;
         console.log('Share input calculation:', {
             shares: value,
             pricePerShare: data.pricePerShare,
             totalPrice
         });
-        
+
         setPrice(totalPrice);
         setNumShares(value);
     };
@@ -207,13 +209,13 @@ const SwarmInvestCard = ({
     const handleQuickAmount = (amount: number) => {
         if (amount > data.remainingSupply) return;
         const totalPrice = amount * data.pricePerShare;
-        
+
         console.log('Quick amount calculation:', {
             amount,
             pricePerShare: data.pricePerShare,
             totalPrice
         });
-        
+
         setNumShares(amount);
         setPrice(totalPrice);
     };
@@ -258,10 +260,10 @@ const SwarmInvestCard = ({
 
         setIsLoading(true);
         const calculatedCostInBaseUnits = Math.floor(price * Math.pow(10, 6));
-            
+
         try {
-            const result = await purchaseShares.mutateAsync({ 
-                numberOfShares: numShares, 
+            const result = await purchaseShares.mutateAsync({
+                numberOfShares: numShares,
                 calculatedCost: calculatedCostInBaseUnits
             });
 
@@ -368,136 +370,136 @@ const SwarmInvestCard = ({
                         </p>
                     </div>
                 </div>
-            <div className="space-y-6">
-                {/* Supply information */}
-                <div className="space-y-2">
-                    <div className="relative h-4 rounded-full bg-slate-800/50 overflow-hidden">
-                        <div 
-                            className="absolute h-full bg-gradient-to-l from-blue-500 to-blue-400 rounded-full transition-all duration-300"
-                            style={{ 
-                                width: `${(data.remainingSupply / data.totalSupply) * 100}%`,
-                                right: '0',
-                                boxShadow: '0 0 20px rgba(59, 130, 246, 0.5)'
-                            }} 
-                        />
-                        <div 
-                            className="absolute h-full w-[2px] bg-white/30 blur-[2px] animate-pulse"
-                            style={{ 
-                                right: `${(data.remainingSupply / data.totalSupply) * 100}%`,
-                                transform: 'translateX(50%)'
-                            }}
-                        />
+                <div className="space-y-6">
+                    {/* Supply information */}
+                    <div className="space-y-2">
+                        <div className="relative h-4 rounded-full bg-slate-800/50 overflow-hidden">
+                            <div
+                                className="absolute h-full bg-gradient-to-l from-blue-500 to-blue-400 rounded-full transition-all duration-300"
+                                style={{
+                                    width: `${(data.remainingSupply / data.totalSupply) * 100}%`,
+                                    right: '0',
+                                    boxShadow: '0 0 20px rgba(59, 130, 246, 0.5)'
+                                }}
+                            />
+                            <div
+                                className="absolute h-full w-[2px] bg-white/30 blur-[2px] animate-pulse"
+                                style={{
+                                    right: `${(data.remainingSupply / data.totalSupply) * 100}%`,
+                                    transform: 'translateX(50%)'
+                                }}
+                            />
+                        </div>
+                        <div className="flex justify-between text-sm">
+                            <span className="text-slate-400">Total Supply</span>
+                            <div className="flex items-center gap-2">
+                                <span className="text-slate-400">{IntlNumberFormat(data.totalSupply)}</span>
+                                <div className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400">
+                                    <span>{Math.round((data.remainingSupply / data.totalSupply) * 100)}%</span>
+                                    <span>remaining</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="flex justify-between text-sm">
-                        <span className="text-slate-400">Total Supply</span>
-                        <div className="flex items-center gap-2">
-                            <span className="text-slate-400">{IntlNumberFormat(data.totalSupply)}</span>
-                            <div className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400">
-                                <span>{Math.round((data.remainingSupply / data.totalSupply) * 100)}%</span>
-                                <span>remaining</span>
+
+                    {/* Share input section */}
+                    <div>
+                        <div className="flex justify-between mb-2">
+                            <label className="text-sm text-slate-300">Amount of Shares</label>
+                            <span className="text-sm text-slate-400">
+                                Available: {IntlNumberFormat(data.remainingSupply)}
+                            </span>
+                        </div>
+
+                        <Input
+                            type="number"
+                            value={numShares || ''}
+                            onChange={handleSharesInput}
+                            className="w-full bg-slate-800/50 border-slate-700 text-white mb-3"
+                            placeholder="0"
+                        />
+
+                        {/* Quick amount buttons */}
+                        <div className="grid grid-cols-4 gap-2">
+                            {[10, 100, 500, 1000].map((amount) => (
+                                <Button
+                                    key={amount}
+                                    // onClick={() => handleQuickAmount(amount)}
+                                    variant="secondary"
+                                    className="bg-slate-700 hover:bg-slate-600"
+                                    disabled={amount > data.remainingSupply}
+                                >
+                                    {amount}
+                                </Button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Cost breakdown */}
+                    <div className="space-y-4 bg-slate-800/50 p-6 rounded-lg">
+                        {/* Cost per Share */}
+                        <div className="flex justify-between mb-2">
+                            <span className="text-slate-300">Cost per Share</span>
+                            <div className="flex items-center gap-1">
+                                <span>{IntlNumberFormat(data.pricePerShare)}</span>
+                                <span className="metallic-text">$COMPUTE</span>
+                            </div>
+                        </div>
+
+                        {/* Total Cost */}
+                        <div className="flex justify-between items-baseline mb-2">
+                            <span className="text-slate-300">Total Cost</span>
+                            <div className="flex items-center gap-1">
+                                <span className="text-2xl font-bold">{IntlNumberFormat(numShares * data.pricePerShare)}</span>
+                                <span className="metallic-text text-lg">$COMPUTE</span>
+                            </div>
+                        </div>
+
+                        {/* Tx Fee */}
+                        <div className="flex justify-between text-sm pt-2 border-t border-white/10">
+                            <span className="text-slate-400">Tx Fee (5%)</span>
+                            <div className="flex items-center gap-1">
+                                <span className="text-slate-300">{IntlNumberFormat(numShares * data.pricePerShare * 0.05)}</span>
+                                <span className="metallic-text-ubc">$UBC</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Share input section */}
-                <div>
-                    <div className="flex justify-between mb-2">
-                        <label className="text-sm text-slate-300">Amount of Shares</label>
-                        <span className="text-sm text-slate-400">
-                            Available: {IntlNumberFormat(data.remainingSupply)}
-                        </span>
-                    </div>
-                    
-                    <Input
-                        type="number"
-                        value={numShares || ''}
-                        onChange={handleSharesInput}
-                        className="w-full bg-slate-800/50 border-slate-700 text-white mb-3"
-                        placeholder="0"
-                    />
-
-                    {/* Quick amount buttons */}
-                    <div className="grid grid-cols-4 gap-2">
-                        {[10, 100, 500, 1000].map((amount) => (
-                            <Button
-                                key={amount}
-                                onClick={() => handleQuickAmount(amount)}
-                                variant="secondary"
-                                className="bg-slate-700 hover:bg-slate-600"
-                                disabled={amount > data.remainingSupply}
-                            >
-                                {amount}
-                            </Button>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Cost breakdown */}
-                <div className="space-y-4 bg-slate-800/50 p-6 rounded-lg">
-                    {/* Cost per Share */}
-                    <div className="flex justify-between mb-2">
-                        <span className="text-slate-300">Cost per Share</span>
-                        <div className="flex items-center gap-1">
-                            <span>{IntlNumberFormat(data.pricePerShare)}</span>
-                            <span className="metallic-text">$COMPUTE</span>
-                        </div>
-                    </div>
-
-                    {/* Total Cost */}
-                    <div className="flex justify-between items-baseline mb-2">
-                        <span className="text-slate-300">Total Cost</span>
-                        <div className="flex items-center gap-1">
-                            <span className="text-2xl font-bold">{IntlNumberFormat(numShares * data.pricePerShare)}</span>
-                            <span className="metallic-text text-lg">$COMPUTE</span>
-                        </div>
-                    </div>
-
-                    {/* Tx Fee */}
-                    <div className="flex justify-between text-sm pt-2 border-t border-white/10">
-                        <span className="text-slate-400">Tx Fee (5%)</span>
-                        <div className="flex items-center gap-1">
-                            <span className="text-slate-300">{IntlNumberFormat(numShares * data.pricePerShare * 0.05)}</span>
-                            <span className="metallic-text-ubc">$UBC</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Action button */}
-            {connected ? (
-                <Button
-                    onClick={handleBuy}
-                    className={cn(
-                        "w-full mt-6 relative overflow-hidden",
-                        "bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-400",
-                        "hover:from-yellow-300 hover:via-orange-300 to-yellow-300",
-                        "border-none text-black font-semibold",
-                        "transition-all duration-500",
-                        "transform hover:scale-[1.02]",
-                        "before:absolute before:inset-0",
-                        "before:bg-gradient-to-r before:from-transparent before:via-white/40 before:to-transparent",
-                        "before:translate-x-[-200%] before:animate-[shine_6s_ease-in-out_infinite]",
-                        "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
-                        "shadow-[0_0_15px_rgba(234,179,8,0.3)]",
-                        "hover:shadow-[0_0_20px_rgba(234,179,8,0.5)]"
-                    )}
-                    disabled={!numShares || numShares <= 0 || isLoading || isBeforeLaunch}
-                >
-                    {isLoading ? (
-                        <div className="flex items-center gap-2">
-                            <span className="animate-spin">⚪</span>
-                            Processing...
-                        </div>
-                    ) : isBeforeLaunch ? (
-                        'Launching Soon'
-                    ) : (
-                        'Purchase Shares'
-                    )}
-                </Button>
-            ) : (
-                <ConnectButton className="w-full mt-6" />
-            )}
+                {/* Action button */}
+                {connected ? (
+                    <Button
+                        // onClick={handleBuy}
+                        className={cn(
+                            "w-full mt-6 relative overflow-hidden",
+                            "bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-400",
+                            "hover:from-yellow-300 hover:via-orange-300 to-yellow-300",
+                            "border-none text-black font-semibold",
+                            "transition-all duration-500",
+                            "transform hover:scale-[1.02]",
+                            "before:absolute before:inset-0",
+                            "before:bg-gradient-to-r before:from-transparent before:via-white/40 before:to-transparent",
+                            "before:translate-x-[-200%] before:animate-[shine_6s_ease-in-out_infinite]",
+                            "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
+                            "shadow-[0_0_15px_rgba(234,179,8,0.3)]",
+                            "hover:shadow-[0_0_20px_rgba(234,179,8,0.5)]"
+                        )}
+                        disabled={!numShares || numShares <= 0 || isLoading || isBeforeLaunch}
+                    >
+                        {isLoading ? (
+                            <div className="flex items-center gap-2">
+                                <span className="animate-spin">⚪</span>
+                                Processing...
+                            </div>
+                        ) : isBeforeLaunch ? (
+                            'Launching Soon'
+                        ) : (
+                            'Purchase Shares'
+                        )}
+                    </Button>
+                ) : (
+                    <ConnectButton className="w-full mt-6" />
+                )}
 
             </Card>
 
@@ -523,19 +525,19 @@ const SwarmInvestCard = ({
                         </div>
                     </div>
                 )}
-                
+
                 {/* Wallet Address */}
                 <div className="bg-slate-800/30 rounded-lg p-4 mt-8">
                     <div className="flex justify-between items-start mb-2">
                         <span className="text-sm text-slate-400">Swarm Wallet</span>
                         <div className="flex items-center gap-2">
-                            <a 
+                            <a
                                 href={`https://solscan.io/account/${swarm?.wallet}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-sm text-slate-300 font-mono hover:text-blue-400 transition-colors"
                             >
-                                {swarm?.wallet 
+                                {swarm?.wallet
                                     ? `${swarm.wallet.slice(0, 4)}...${swarm.wallet.slice(-4)}`
                                     : "Not available"
                                 }
@@ -563,7 +565,7 @@ const SwarmInvestCard = ({
                     <div className="bg-slate-800/30 rounded-lg p-4 mt-4">
                         <div className="flex justify-between items-center">
                             <span className="text-sm text-slate-400">X (Twitter) Page</span>
-                            <Link 
+                            <Link
                                 href={`https://x.com/${swarm.X}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -579,7 +581,7 @@ const SwarmInvestCard = ({
                 <div className="bg-slate-800/30 rounded-lg p-4 mt-4">
                     <div className="flex justify-between items-center">
                         <span className="text-sm text-slate-400">Telegram Group</span>
-                        <a 
+                        <a
                             href={`https://t.me/${getSwarmUsingPoolId(pool)?.name.toLowerCase()}_ubc`}
                             target="_blank"
                             rel="noopener noreferrer"
@@ -599,7 +601,7 @@ const SwarmInvestCard = ({
                             <ResponsiveContainer width="100%" height="100%">
                                 <PieChart>
                                     <Pie
-                                        data={revenueData}
+                                        // data={revenueData}
                                         cx="50%"
                                         cy="50%"
                                         innerRadius={45}
@@ -607,13 +609,13 @@ const SwarmInvestCard = ({
                                         paddingAngle={5}
                                         dataKey="value"
                                     >
-                                        {revenueData.map((entry, index) => (
-                                            <Cell 
-                                                key={`cell-${index}`} 
+                                        {/* {revenueData.map((entry, index) => (
+                                            <Cell
+                                                key={`cell-${index}`}
                                                 fill={entry.color}
                                                 className="stroke-transparent hover:opacity-80 transition-opacity"
                                             />
-                                        ))}
+                                        ))} */}
                                     </Pie>
                                     <Tooltip
                                         content={({ active, payload }) => {
@@ -632,19 +634,19 @@ const SwarmInvestCard = ({
                                             return null;
                                         }}
                                     />
-                                    <Legend 
-                                        verticalAlign="bottom" 
+                                    <Legend
+                                        verticalAlign="bottom"
                                         height={36}
                                         content={(props: RechartsProps) => {
                                             const { payload } = props;
                                             if (!payload) return null;
-                                            
+
                                             return (
                                                 <ul className="flex flex-wrap gap-4 justify-center mt-4">
                                                     {((payload as unknown) as CustomPayload[]).map((entry, index) => (
                                                         <li key={`item-${index}`} className="flex items-center gap-2">
-                                                            <div 
-                                                                className="w-3 h-3 rounded-full" 
+                                                            <div
+                                                                className="w-3 h-3 rounded-full"
                                                                 style={{ backgroundColor: entry.payload.color }}
                                                             />
                                                             <span className="text-sm">
@@ -660,7 +662,7 @@ const SwarmInvestCard = ({
                             </ResponsiveContainer>
                         </div>
                     </div>
-                    
+
                     {/* Weekly Revenue */}
                     <div className="bg-slate-800/30 rounded-lg p-4">
                         <span className="text-sm text-white/60">Weekly Revenue</span>
@@ -680,7 +682,7 @@ const SwarmInvestCard = ({
                             </div>
                         </div>
                     </div>
-                    
+
                     {/* Total Revenue */}
                     <div className="bg-slate-800/30 rounded-lg p-4">
                         <span className="text-sm text-white/60">Total Revenue</span>
@@ -731,7 +733,7 @@ const SwarmInvestCard = ({
                                                         className="text-blue-400 hover:text-blue-300 transition-colors"
                                                     >
                                                         <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                                                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.717-.962 3.845-1.362 5.452-.168.676-.336 1.363-.48 1.957-.169.687-.318 1.288-.467 1.81-.151.527-.302.983-.468 1.362-.151.345-.259.527-.366.628-.108.101-.194.151-.259.151-.13 0-.26-.075-.39-.226-.13-.151-.26-.377-.39-.678-.13-.301-.26-.653-.39-1.057-.13-.404-.26-.854-.39-1.349-.13-.495-.26-1.019-.39-1.57-.13-.551-.26-1.127-.39-1.727-.13-.6-.26-1.214-.39-1.84-.13-.626-.26-1.253-.39-1.879-.13-.626-.26-1.24-.39-1.84-.13-.6-.26-1.165-.39-1.694-.13-.529-.26-1.006-.39-1.432-.13-.426-.26-.795-.39-1.108-.13-.313-.26-.551-.39-.714-.13-.163-.26-.244-.39-.244-.065 0-.13.025-.195.075-.065.05-.13.126-.195.226-.065.1-.13.226-.195.377-.065.151-.13.327-.195.527-.065.2-.13.426-.195.677-.065.251-.13.527-.195.828-.065.301-.13.628-.195.983-.065.355-.13.729-.195 1.121-.065.392-.13.804-.195 1.235-.065.431-.13.881-.195 1.349-.065.468-.13.954-.195 1.457-.065.503-.13 1.019-.195 1.547-.065.528-.13 1.069-.195 1.622-.065.553-.13 1.114-.195 1.684-.065.57-.13 1.146-.195 1.728-.065.582-.13 1.165-.195 1.748-.065.583-.13 1.159-.195 1.728-.065.569-.13 1.127-.195 1.674-.065.547-.13 1.082-.195 1.604-.065.522-.13 1.032-.195 1.529-.065.497-.13.982-.195 1.454-.065.472-.13.932-.195 1.38-.065.448-.13.884-.195 1.308-.065.424-.13.836-.195 1.235-.065.399-.13.786-.195 1.159-.065.373-.13.734-.195 1.083-.065.349-.13.686-.195 1.011-.065.325-.13.638-.195.939-.065.301-.13.59-.195.867-.065.277-.13.542-.195.795-.065.253-.13.494-.195.723-.065.229-.13.446-.195.651-.065.205-.13.398-.195.579-.065.181-.13.349-.195.505-.065.156-.13.301-.195.434-.065.133-.13.253-.195.361-.065.108-.13.205-.195.29-.065.085-.13.156-.195.214-.065.058-.13.104-.195.138-.065.034-.13.051-.195.051z"/>
+                                                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.717-.962 3.845-1.362 5.452-.168.676-.336 1.363-.48 1.957-.169.687-.318 1.288-.467 1.81-.151.527-.302.983-.468 1.362-.151.345-.259.527-.366.628-.108.101-.194.151-.259.151-.13 0-.26-.075-.39-.226-.13-.151-.26-.377-.39-.678-.13-.301-.26-.653-.39-1.057-.13-.404-.26-.854-.39-1.349-.13-.495-.26-1.019-.39-1.57-.13-.551-.26-1.127-.39-1.727-.13-.6-.26-1.214-.39-1.84-.13-.626-.26-1.253-.39-1.879-.13-.626-.26-1.24-.39-1.84-.13-.6-.26-1.165-.39-1.694-.13-.529-.26-1.006-.39-1.432-.13-.426-.26-.795-.39-1.108-.13-.313-.26-.551-.39-.714-.13-.163-.26-.244-.39-.244-.065 0-.13.025-.195.075-.065.05-.13.126-.195.226-.065.1-.13.226-.195.377-.065.151-.13.327-.195.527-.065.2-.13.426-.195.677-.065.251-.13.527-.195.828-.065.301-.13.628-.195.983-.065.355-.13.729-.195 1.121-.065.392-.13.804-.195 1.235-.065.431-.13.881-.195 1.349-.065.468-.13.954-.195 1.457-.065.503-.13 1.019-.195 1.547-.065.528-.13 1.069-.195 1.622-.065.553-.13 1.114-.195 1.684-.065.57-.13 1.146-.195 1.728-.065.582-.13 1.165-.195 1.748-.065.583-.13 1.159-.195 1.728-.065.569-.13 1.127-.195 1.674-.065.547-.13 1.082-.195 1.604-.065.522-.13 1.032-.195 1.529-.065.497-.13.982-.195 1.454-.065.472-.13.932-.195 1.38-.065.448-.13.884-.195 1.308-.065.424-.13.836-.195 1.235-.065.399-.13.786-.195 1.159-.065.373-.13.734-.195 1.083-.065.349-.13.686-.195 1.011-.065.325-.13.638-.195.939-.065.301-.13.59-.195.867-.065.277-.13.542-.195.795-.065.253-.13.494-.195.723-.065.229-.13.446-.195.651-.065.205-.13.398-.195.579-.065.181-.13.349-.195.505-.065.156-.13.301-.195.434-.065.133-.13.253-.195.361-.065.108-.13.205-.195.29-.065.085-.13.156-.195.214-.065.058-.13.104-.195.138-.065.034-.13.051-.195.051z" />
                                                         </svg>
                                                     </a>
                                                 )}
@@ -743,7 +745,7 @@ const SwarmInvestCard = ({
                                                         className="text-blue-400 hover:text-blue-300 transition-colors"
                                                     >
                                                         <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                                                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                                                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                                                         </svg>
                                                     </a>
                                                 )}
@@ -812,21 +814,21 @@ const SwarmInvestCard = ({
                     <div className="relative flex flex-col gap-8">
                         {/* Timeline line */}
                         <div className="absolute left-[11px] top-[24px] bottom-4 w-[2px] bg-gradient-to-b from-blue-500/50 via-slate-700 to-slate-700/50" />
-                            
+
                         {/* Timeline nodes */}
                         {[
-                            { 
-                                label: 'Inception Swarm', 
+                            {
+                                label: 'Inception Swarm',
                                 description: 'Initial concept and development',
                                 emoji: '🌱'
                             },
-                            { 
-                                label: 'Early Swarm', 
+                            {
+                                label: 'Early Swarm',
                                 description: 'Growing revenue and user base',
                                 emoji: '🚀'
                             },
-                            { 
-                                label: 'Partner Swarm', 
+                            {
+                                label: 'Partner Swarm',
                                 description: 'Established and scaling',
                                 emoji: '🤝'
                             }
@@ -844,23 +846,23 @@ const SwarmInvestCard = ({
                                         {isActive && (
                                             <div className="absolute inset-0 bg-blue-500/20 blur-xl transform scale-150" />
                                         )}
-                                        
+
                                         {/* Outer ring */}
                                         <div className={cn(
                                             "w-6 h-6 rounded-full border-2 z-10 relative",
-                                            isCurrent ? "border-blue-500" : 
-                                            isActive ? "border-slate-400" : 
-                                            "border-slate-700",
+                                            isCurrent ? "border-blue-500" :
+                                                isActive ? "border-slate-400" :
+                                                    "border-slate-700",
                                             "bg-[#0f172a]" // Match card background
                                         )}>
                                             {/* Inner dot */}
                                             <div className={cn(
                                                 "absolute inset-[4px] rounded-full",
-                                                isCurrent ? "bg-blue-500" : 
-                                                isActive ? "bg-slate-400" : 
-                                                "bg-slate-700"
+                                                isCurrent ? "bg-blue-500" :
+                                                    isActive ? "bg-slate-400" :
+                                                        "bg-slate-700"
                                             )} />
-                                            
+
                                             {/* Animated rings for current stage */}
                                             {isCurrent && (
                                                 <>
@@ -870,7 +872,7 @@ const SwarmInvestCard = ({
                                             )}
                                         </div>
                                     </div>
-                                        
+
                                     {/* Content with hover effect */}
                                     <div className={cn(
                                         "flex-1 p-2 rounded-lg transition-colors duration-200",
@@ -893,7 +895,7 @@ const SwarmInvestCard = ({
             {/* Risk Disclosures */}
             <Card className="bg-[#0f172a] p-4 w-full mt-4">
                 <h3 className="text-sm font-semibold text-white mb-3">Important Risk Disclosures</h3>
-                
+
                 <div className="space-y-4">
                     {/* Market Risks */}
                     <div>
