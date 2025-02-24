@@ -27,7 +27,7 @@ interface CancelListingModalProps {
 
 const CancelListingModal = ({ isModalOpen, closeModal, listing, swarm }: CancelListingModalProps) => {
 
-    const SHOW_USD_PRICE = false;
+    const SHOW_USD_PRICE = true;
 
     const { publicKey } = useWallet();
 
