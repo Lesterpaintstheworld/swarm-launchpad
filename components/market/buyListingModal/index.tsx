@@ -30,13 +30,17 @@ interface BuyListingModalProps {
 }
 
 const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount }: BuyListingModalProps) => {
+    if (!swarm) {
+        console.error('Swarm data not available');
+        return null;
+    }
 
     const SHOW_USD_PRICE = false;
     const TRANSACTION_CHARGE_MIN_USD = 3.87;
 
     const { publicKey } = useWallet();
 
-    const { buyListing } = useLaunchpadProgramAccount({ poolAddress: listing.pool.toBase58() });
+    const { program, buyListing } = useLaunchpadProgramAccount({ poolAddress: listing.pool.toBase58() });
 
     const [token, setToken] = useState<TokenType>(supportedTokens.find((token: TokenType) => token.mint === listing.desiredToken.toBase58()) as TokenType);
     const [loading, setLoading] = useState(false);
@@ -44,8 +48,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
     const { data, isFetching } = useDexScreenerPrice({ token });
     const queryClient = useQueryClient();
 
-    const handleBuy = () => {
-
+    const handleBuy = async () => {
         if (!listing) {
             console.error('Buy listing mutation not available');
             return;
@@ -53,43 +56,58 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
 
         setLoading(true);
 
-        buyListing
-            .mutateAsync({
+        try {
+            // First check if shareholder account exists
+            const shareholderAccount = await program?.account.shareholder.fetch(listing.shareholder);
+            
+            if (!shareholderAccount) {
+                // Initialize shareholder account if it doesn't exist
+                await program?.methods.initializeShareholder()
+                    .accounts({
+                        shareholder: listing.shareholder,
+                        pool: listing.pool,
+                        authority: publicKey,
+                    })
+                    .rpc();
+            }
+
+            // Proceed with buy transaction
+            await buyListing.mutateAsync({
                 listing,
                 swarm,
                 poolAccount,
                 fee: Math.floor(min_transaction_fee() * token.resolution)
-            })
-            .then(async () => {
-                // Send Telegram notification after successful purchase
-                try {
-                    const totalAmount = ((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) + percent_fee() + min_transaction_fee();
-                    
-                    await fetch('/api/notifications/telegram', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            swarmName: swarm.name,
-                            numberOfShares: Number(listing.numberOfShares),
-                            pricePerShare: IntlNumberFormat((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)), (token?.decimals || 6)),
-                            tokenSymbol: token.symbol,
-                            totalAmount: IntlNumberFormat(totalAmount, (token?.decimals || 6))
-                        }),
-                    });
-                } catch (error) {
-                    console.error('Failed to send Telegram notification:', error);
-                }
-            })
-            .catch(error => {
-                console.log("Full error:", JSON.stringify(error, null, 2));
-            })
-            .finally(() => {
-                queryClient.refetchQueries({ queryKey: ['all-listings'] });
-                setLoading(false);
-                closeModal();
             });
+
+            // Send Telegram notification after successful purchase
+            try {
+                const totalAmount = ((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) + percent_fee() + min_transaction_fee();
+                
+                await fetch('/api/notifications/telegram', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        swarmName: swarm?.name || 'Unknown Swarm',
+                        numberOfShares: Number(listing.numberOfShares),
+                        pricePerShare: IntlNumberFormat((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)), (token?.decimals || 6)),
+                        tokenSymbol: token.symbol,
+                        totalAmount: IntlNumberFormat(totalAmount, (token?.decimals || 6))
+                    }),
+                });
+            } catch (error) {
+                console.error('Failed to send Telegram notification:', error);
+            }
+
+        } catch (error) {
+            console.error("Transaction failed:", error);
+            // You might want to show an error message to the user here
+        } finally {
+            queryClient.refetchQueries({ queryKey: ['all-listings'] });
+            setLoading(false);
+            closeModal();
+        }
     }
 
     useEffect(() => {
