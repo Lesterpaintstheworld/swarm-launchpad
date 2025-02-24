@@ -101,8 +101,9 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
     }, [isModalOpen]);
 
     const percent_fee = useCallback(() => {
+        if (!poolAccount?.feeRatio) return 0;
         return ((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) * ((1 / Number(poolAccount.feeRatio)));
-    }, [poolAccount, listing, data])
+    }, [poolAccount, listing, token])
 
     const min_transaction_fee = useCallback(() => {
         if (!data || data.length === 0) return 0;
