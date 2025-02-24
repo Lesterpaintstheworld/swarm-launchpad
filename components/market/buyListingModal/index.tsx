@@ -1,5 +1,18 @@
 'use client'
 
+const isValidListing = (listing: MarketListing) => {
+    return listing && 
+           listing.pool && 
+           listing.shareholder && 
+           listing.numberOfShares && 
+           listing.pricePerShare;
+};
+
+const showErrorToUser = (message: string) => {
+    // TODO: Implement proper UI error feedback
+    console.error(message);
+};
+
 import { SwarmResponse } from '@/types/api';
 
 import { Button } from "@/components/shadcn/button";
@@ -30,8 +43,18 @@ interface BuyListingModalProps {
 }
 
 const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount }: BuyListingModalProps) => {
+    if (!isValidListing(listing)) {
+        console.error('Invalid listing data');
+        return null;
+    }
+
     if (!swarm) {
         console.error('Swarm data not available');
+        return null;
+    }
+
+    if (!poolAccount) {
+        console.error('Pool account not available');
         return null;
     }
 
@@ -57,18 +80,35 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
         setLoading(true);
 
         try {
-            // First check if shareholder account exists
-            const shareholderAccount = await program?.account.shareholder.fetch(listing.shareholder);
-            
+            // Validate pool account exists
+            const poolAccountExists = await program?.account.pool.fetch(listing.pool)
+                .catch(() => null);
+
+            if (!poolAccountExists) {
+                throw new Error('Pool account does not exist or is inaccessible');
+            }
+
+            // Try to fetch shareholder account
+            let shareholderAccount;
+            try {
+                shareholderAccount = await program?.account.shareholder.fetch(listing.shareholder);
+            } catch (error) {
+                console.log('Shareholder account does not exist, will try to initialize');
+            }
+
             if (!shareholderAccount) {
-                // Initialize shareholder account if it doesn't exist
-                await program?.methods.initializeShareholder()
-                    .accounts({
-                        shareholder: listing.shareholder,
-                        pool: listing.pool,
-                        authority: publicKey,
-                    })
-                    .rpc();
+                try {
+                    await program?.methods.initializeShareholder()
+                        .accounts({
+                            shareholder: listing.shareholder,
+                            pool: listing.pool,
+                            authority: publicKey,
+                        })
+                        .rpc();
+                } catch (error) {
+                    console.error('Failed to initialize shareholder account:', error);
+                    throw new Error('Failed to initialize shareholder account');
+                }
             }
 
             // Proceed with buy transaction
@@ -79,7 +119,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                 fee: Math.floor(min_transaction_fee() * token.resolution)
             });
 
-            // Send Telegram notification after successful purchase
+            // Send Telegram notification
             try {
                 const totalAmount = ((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) + percent_fee() + min_transaction_fee();
                 
@@ -98,11 +138,13 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                 });
             } catch (error) {
                 console.error('Failed to send Telegram notification:', error);
+                // Don't throw here - notification failure shouldn't stop the transaction
             }
 
         } catch (error) {
             console.error("Transaction failed:", error);
-            // You might want to show an error message to the user here
+            const errorMessage = error instanceof Error ? error.message : 'Transaction failed';
+            showErrorToUser(errorMessage);
         } finally {
             queryClient.refetchQueries({ queryKey: ['all-listings'] });
             setLoading(false);
