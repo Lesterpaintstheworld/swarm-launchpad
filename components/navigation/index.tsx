@@ -57,7 +57,7 @@ export function Navigation() {
 								</ListItem>
 								<ListItem
 									title="Secondary Market"
-									href="/marketplace?tab=listings"
+									href="/marketplace?tab=p2p"
 									icon={<LucideArrowLeftRight width={16} />}
 								>
 									Buy and sell shares to other investors in the secondary market.

@@ -102,7 +102,7 @@ function ConnectButton({ className }: { className?: string }) {
                 Portfolio
                 <ChartPie className="ml-auto max-w-3" />
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => router.push("/marketplace?tab=listings")}>
+              <DropdownMenuItem onClick={() => router.push("/marketplace?tab=p2p")}>
                 Secondary Market
                 <LucideArrowLeftRight className="ml-auto max-w-3 text-muted" />
               </DropdownMenuItem>

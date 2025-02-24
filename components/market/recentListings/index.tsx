@@ -30,7 +30,7 @@ const SwarmRecentMarketListings = ({ pool, className }: SwarmRecentMarketListing
                     <hr />
                     <Button variant='link' className="ml-auto hover:no-underline" asChild>
                         <div className="flex flex-row items-center gap-2 w-fit text-muted mt-4 hover:text-foreground">
-                            <Link href={`/marketplace?tab=listings`}>
+                            <Link href={`/marketplace?tab=p2p`}>
                                 View all
                             </Link>
                             <LucideArrowRight />
