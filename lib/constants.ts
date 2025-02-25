@@ -12,8 +12,11 @@ const constants = {
         computeMint: 'B1N1HcMm4RysYz4smsXwmk2UnS8NziqKCM6Ho8i62vXo',
     },
 
-    rpcUrl: process.env.NEXT_PUBLIC_HELIUS_RPC_URL || 
-        clusterApiUrl(environment == "production" ? "mainnet-beta" : "devnet"),
+    rpcUrl: {
+        custom: process.env.NEXT_PUBLIC_HELIUS_RPC_URL,
+        mainnet: clusterApiUrl("mainnet-beta"),
+        devnet: clusterApiUrl("devnet"),
+    },
 
     WalletConnect: {
         projectId: "",

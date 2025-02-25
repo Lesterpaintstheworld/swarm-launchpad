@@ -14,26 +14,19 @@ import { toast } from 'sonner'
 import { Listing, MarketListing } from '@/types/listing'
 import { SwarmResponse } from '@/types/api'
 import { PoolAccount } from '@/types/pool'
-
-// Define fallback RPC endpoint
-const FALLBACK_RPC = 'https://api.mainnet-beta.solana.com';
-
-// Get RPC endpoint with fallback
-const getRpcEndpoint = () => {
-    if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_HELIUS_RPC_KEY) {
-        return `https://mainnet.helius-rpc.com/?api-key=${process.env.NEXT_PUBLIC_HELIUS_RPC_KEY}`;
-    }
-    return FALLBACK_RPC;
-};
+import { useSolanaProvider } from '../useSolanaProvider'
 
 export function useLaunchpadProgram() {
+
+    const { rpc, useFallbackRPC } = useSolanaProvider();
+
     const connection = useMemo(() => {
-        const endpoint = getRpcEndpoint();
+        const endpoint = rpc;
         return new Connection(endpoint, {
             commitment: 'confirmed',
             wsEndpoint: undefined
         });
-    }, []);
+    }, [rpc]);
 
     const { publicKey } = useWallet();
     const provider = useAnchorProvider();
@@ -61,7 +54,13 @@ export function useLaunchpadProgram() {
     // Query all pools
     const pools = useQuery({
         queryKey: ['pools', 'all'],
-        queryFn: () => program.account.pool.all(),
+        queryFn: async () => {
+            try {
+                return program.account.pool.all();
+            } catch (e) {
+                useFallbackRPC();
+            }
+        },
         enabled: !!connection && !!program
     })
 
@@ -122,6 +121,7 @@ export function useLaunchpadProgram() {
                 return signature;
 
             } catch (error) {
+                useFallbackRPC();
                 console.error("Detailed error:", error);
                 if (error instanceof WalletSignTransactionError) {
                     throw new Error(`Failed to sign transaction: ${error.message}`);
@@ -137,13 +137,17 @@ export function useLaunchpadProgram() {
         mutationFn: async ({ pool, state }: { pool: PublicKey, state: boolean }) => {
             if (!publicKey) throw new Error('Wallet not connected')
 
-            return program.methods
-                .freezePool(state)
-                .accounts({
-                    pool,
-                    authority: publicKey
-                })
-                .rpc()
+            try {
+                return program.methods
+                    .freezePool(state)
+                    .accounts({
+                        pool,
+                        authority: publicKey
+                    })
+                    .rpc()
+            } catch (e) {
+                useFallbackRPC();
+            }
         }
     })
 
@@ -153,13 +157,17 @@ export function useLaunchpadProgram() {
         mutationFn: async ({ pool }: { pool: PublicKey }) => {
             if (!publicKey) throw new Error('Wallet not connected')
 
-            return program.methods
-                .removePool()
-                .accounts({
-                    pool,
-                    authority: publicKey
-                })
-                .rpc()
+            try {
+                return program.methods
+                    .removePool()
+                    .accounts({
+                        pool,
+                        authority: publicKey
+                    })
+                    .rpc()
+            } catch (e) {
+                useFallbackRPC();
+            }
         }
     });
 
@@ -170,41 +178,49 @@ export function useLaunchpadProgram() {
             if (!publicKey) throw new Error('Wallet not connected');
             if (!program) throw new Error('Program not found');
 
-            const accounts: any[] = await program.account.shareListing.all([
-                {
-                    memcmp: {
-                        offset: 40,
-                        bytes: publicKey.toBase58()
+            try {
+                const accounts: any[] = await program.account.shareListing.all([
+                    {
+                        memcmp: {
+                            offset: 40,
+                            bytes: publicKey.toBase58()
+                        }
                     }
-                }
-            ]);
+                ]);
 
-            // Marshall Data from Listing to MarketListing in place
-            accounts.forEach((acc: Listing, index: number) => {
-                accounts[index] = {
-                    ...acc.account,
-                    listingPDA: acc.publicKey
-                };
-            });
+                // Marshall Data from Listing to MarketListing in place
+                accounts.forEach((acc: Listing, index: number) => {
+                    accounts[index] = {
+                        ...acc.account,
+                        listingPDA: acc.publicKey
+                    };
+                });
 
-            return accounts as MarketListing[];
+                return accounts as MarketListing[];
+            } catch (e) {
+                useFallbackRPC();
+            }
         },
     });
 
     const allListings = useQuery({
         queryKey: ['all-listings'],
         queryFn: async () => {
-            const accounts: any[] = await program.account.shareListing.all();
+            try {
+                const accounts: any[] = await program.account.shareListing.all();
 
-            // Marshall Data from Listing to MarketListing in place
-            accounts.forEach((acc: Listing, index: number) => {
-                accounts[index] = {
-                    ...acc.account,
-                    listingPDA: acc.publicKey
-                };
-            });
+                // Marshall Data from Listing to MarketListing in place
+                accounts.forEach((acc: Listing, index: number) => {
+                    accounts[index] = {
+                        ...acc.account,
+                        listingPDA: acc.publicKey
+                    };
+                });
 
-            return accounts as MarketListing[];
+                return accounts as MarketListing[];
+            } catch (e) {
+                useFallbackRPC();
+            }
         }
     });
 
@@ -226,6 +242,7 @@ export function useLaunchpadProgram() {
 
 export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: string }) {
 
+    const { useFallbackRPC } = useSolanaProvider();
     const { publicKey, sendTransaction } = useWallet()
     const { program, programId, computeMint, ubcMint, connection } = useLaunchpadProgram()
 
@@ -247,12 +264,13 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
 
                 return program.account.pool.fetch(pool);
             } catch (error) {
+                useFallbackRPC();
                 console.error('Error fetching pool account:', error);
                 throw error;
             }
         },
         enabled: !!program && !!pool,
-        retry: 3, // Retry 3 times
+        retry: 1, // Retry 3 times
         retryDelay: 1000, // Retry every 1 second
         staleTime: 1000 * 30 // Cache for 30 seconds
     })
@@ -579,25 +597,29 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
             if (!pool) throw new Error('Pool not found');
             if (!program) throw new Error('Program not found');
 
-            const accounts: any[] = await program.account.shareListing.all([
-                {
-                    memcmp: {
-                        offset: 8,
-                        bytes: pool.toBase58()
+            try {
+                const accounts: any[] = await program.account.shareListing.all([
+                    {
+                        memcmp: {
+                            offset: 8,
+                            bytes: pool.toBase58()
+                        }
                     }
-                }
-            ]);
+                ]);
 
-            // Marshall Data from Listing to MarketListing in place
-            accounts.forEach((acc: Listing, index: number) => {
-                accounts[index] = {
-                    ...acc.account,
-                    listingPDA: acc.publicKey
-                };
-            });
+                // Marshall Data from Listing to MarketListing in place
+                accounts.forEach((acc: Listing, index: number) => {
+                    accounts[index] = {
+                        ...acc.account,
+                        listingPDA: acc.publicKey
+                    };
+                });
 
-            // Only return 8 listings
-            return accounts.slice(0, 8) as MarketListing[];
+                // Only return 8 listings
+                return accounts.slice(0, 8) as MarketListing[];
+            } catch (e) {
+                useFallbackRPC();
+            }
         },
     });
 
