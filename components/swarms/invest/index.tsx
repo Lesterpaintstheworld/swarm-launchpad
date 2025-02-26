@@ -469,7 +469,7 @@ const SwarmInvestCard = ({
                 {/* Action button */}
                 {connected ? (
                     <Button
-                        // onClick={handleBuy}
+                        onClick={handleBuy}
                         className={cn(
                             "w-full mt-6 relative overflow-hidden",
                             "bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-400",
