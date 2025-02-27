@@ -54,9 +54,9 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
 
     useEffect(() => {
         if (isModalOpen) {
-            console.log({ token: token?.label, priceData, isFetching });
+            console.log({ token: token?.label, tokenPrices, isFetching });
         }
-    }, [token, priceData, isFetching])
+    }, [token, tokenPrices, isFetching, isModalOpen])
 
     const sharesRef = useRef<HTMLParagraphElement>(null);
 
