@@ -153,7 +153,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
         } catch (error) {
             console.error("Transaction failed:", error);
             const errorMessage = error instanceof Error ? error.message : 'Transaction failed';
-            showErrorToUser(errorMessage);
+            console.error(errorMessage);
         } finally {
             queryClient.refetchQueries({ queryKey: ['all-listings'] });
             setLoading(false);
