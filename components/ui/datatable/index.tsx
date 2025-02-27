@@ -13,6 +13,7 @@ import {
     getPaginationRowModel,
     getSortedRowModel,
     useReactTable,
+    Row,
 } from "@tanstack/react-table";
 
 import {
@@ -37,6 +38,8 @@ interface DataTableProps<TData, TValue> {
     pagination?: boolean;
     rowClassName?: string;
     initialFilter?: string;
+    // Add this new prop for custom sorting functions
+    sortingFns?: Record<string, (rowA: Row<TData>, rowB: Row<TData>, columnId: string) => number>;
 }
 
 export function DataTable<TData, TValue>({
@@ -47,7 +50,8 @@ export function DataTable<TData, TValue>({
     searchable = false,
     pagination = false,
     rowClassName,
-    initialFilter
+    initialFilter,
+    sortingFns
 }: DataTableProps<TData, TValue>) {
 
     const [sorting, setSorting] = useState<SortingState>([]);
@@ -64,6 +68,8 @@ export function DataTable<TData, TValue>({
         getFilteredRowModel: getFilteredRowModel(),
         onGlobalFilterChange: setGlobalFilter,
         globalFilterFn: 'includesString',
+        // Add custom sorting functions if provided
+        sortingFns: sortingFns,
         state: {
             sorting,
             globalFilter,

@@ -19,15 +19,6 @@ import { useTokenPrices } from "@/hooks/useTokenPrices";
 
 export const columns: ColumnDef<MarketListing>[] = [
     {
-        id: 'queryClient',
-        cell: () => null,
-        header: () => null,
-        enableHiding: true,
-        accessorFn: () => {
-            return useQueryClient();
-        }
-    },
-    {
         accessorKey: 'pool',
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Swarm" />
@@ -90,18 +81,10 @@ export const columns: ColumnDef<MarketListing>[] = [
     },
     {
         accessorKey: 'pricePerShare',
+        // Simplified accessorFn that doesn't use hooks
         accessorFn: row => {
             const token = supportedTokens.find(t => t.mint == row.desiredToken.toBase58()) || supportedTokens[0];
-            const value = Number(row.pricePerShare) / token.resolution;
-            
-            // For sorting, use the USD value if available
-            const tokenPrices = useQueryClient().getQueryData(['token-prices']);
-            if (tokenPrices && tokenPrices.get(token.mint)) {
-                return value * tokenPrices.get(token.mint);
-            }
-            
-            // Fallback to token value
-            return value;
+            return Number(row.pricePerShare) / token.resolution;
         },
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Price per share" />
@@ -140,18 +123,10 @@ export const columns: ColumnDef<MarketListing>[] = [
     {
         accessorKey: 'askingAmount',
         minSize: 250,
+        // Simplified accessorFn that doesn't use hooks
         accessorFn: row => {
             const token = supportedTokens.find(t => t.mint == row.desiredToken.toBase58()) || supportedTokens[0];
-            const value = (Number(row.pricePerShare) / token.resolution) * Number(row.numberOfShares);
-            
-            // For sorting, use the USD value if available
-            const tokenPrices = useQueryClient().getQueryData(['token-prices']);
-            if (tokenPrices && tokenPrices.get(token.mint)) {
-                return value * tokenPrices.get(token.mint);
-            }
-            
-            // Fallback to token value
-            return value;
+            return (Number(row.pricePerShare) / token.resolution) * Number(row.numberOfShares);
         },
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Asking amount" />
