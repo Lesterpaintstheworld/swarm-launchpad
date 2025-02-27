@@ -20,19 +20,6 @@ import { ConnectButton } from '@/components/solana/connectButton';
 import { useTokenPrices } from '@/hooks/useTokenPrices';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/shadcn/tooltip';
 
-const isValidListing = (listing: MarketListing) => {
-    return listing && 
-           listing.pool && 
-           listing.shareholder && 
-           listing.numberOfShares && 
-           listing.pricePerShare;
-};
-
-const showErrorToUser = (message: string) => {
-    // TODO: Implement proper UI error feedback
-    console.error(message);
-};
-
 interface BuyListingModalProps {
     isModalOpen: boolean;
     closeModal: () => void;
@@ -42,28 +29,51 @@ interface BuyListingModalProps {
 }
 
 const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount }: BuyListingModalProps) => {
-    // Move all hooks to the top level, before any conditional logic
+    // Move all hooks to the top level
     const { publicKey } = useWallet();
-    const { program, buyListing } = useLaunchpadProgramAccount({ poolAddress: listing?.pool?.toBase58() || "" });
-    const [token, setToken] = useState<TokenType>(supportedTokens.find((token: TokenType) => 
-        listing?.desiredToken?.toBase58() === token.mint) as TokenType || supportedTokens[0]);
+    const { program, buyListing } = useLaunchpadProgramAccount({ 
+        poolAddress: listing?.pool?.toBase58() || "" 
+    });
+    const [token, setToken] = useState<TokenType>(
+        supportedTokens.find((token: TokenType) => 
+            listing?.desiredToken?.toBase58() === token.mint
+        ) as TokenType || supportedTokens[0]
+    );
     const [loading, setLoading] = useState(false);
     const { data: tokenPrices, isFetching } = useTokenPrices();
     const queryClient = useQueryClient();
+    
+    // Move all useEffect and useCallback hooks to the top level
+    useEffect(() => {
+        if (isModalOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+    }, [isModalOpen]);
 
-    // Now check if the data is valid
-    if (!isValidListing(listing)) {
-        console.error('Invalid listing data');
-        return null;
-    }
+    const percent_fee = useCallback(() => {
+        if (!poolAccount?.feeRatio) return 0;
+        return ((Number(listing?.pricePerShare || 0) / (token?.resolution || 1_000_000)) * Number(listing?.numberOfShares || 0)) * ((1 / Number(poolAccount.feeRatio)));
+    }, [token?.resolution, listing?.pricePerShare, listing?.numberOfShares, poolAccount?.feeRatio]);
 
-    if (!swarm) {
-        console.error('Swarm data not available');
-        return null;
-    }
+    const min_transaction_fee = useCallback(() => {
+        if (!tokenPrices || !token?.mint || !tokenPrices.get(token.mint)) return 0;
+        const TRANSACTION_CHARGE_MIN_USD = 3.87;
+        return Math.floor((TRANSACTION_CHARGE_MIN_USD / tokenPrices.get(token.mint)) * 100) / 100;
+    }, [tokenPrices, token?.mint]);
 
-    if (!poolAccount) {
-        console.error('Pool account not available');
+    // Check if data is valid
+    const isValidData = 
+        listing && 
+        listing.pool && 
+        listing.shareholder && 
+        listing.numberOfShares && 
+        listing.pricePerShare &&
+        swarm &&
+        poolAccount;
+
+    if (!isValidData) {
         return null;
     }
 
