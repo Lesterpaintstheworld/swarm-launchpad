@@ -15,7 +15,7 @@ import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { Token } from '@/components/tokens/token';
 import { supportedTokens } from '@/data/tokens/supported';
 import { LucideLoaderCircle } from "lucide-react";
-import { useDexScreenerPrice } from "@/hooks/useTokenPrice";
+import { useTokenPrices } from "@/hooks/useTokenPrices";
 
 interface CreateListingModalProps {
     isModalOpen: boolean;
@@ -49,7 +49,7 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
     const { position, createListing } = useLaunchpadProgramAccount({ poolAddress: swarm?.pool || "37u532qgHbjUHic6mQK51jkT3Do7qkWLEUQCx22MDBD8" });
 
     const { data, isLoading: loadingPosition } = position;
-    const { data: priceData, isFetching } = useDexScreenerPrice({ token });
+    const { data: tokenPrices, isFetching } = useTokenPrices();
     const queryClient = useQueryClient();
 
     useEffect(() => {
@@ -200,8 +200,8 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
                                 <span className='bg-white/10 rounded animate-pulse text-foreground/0'>1,000.00</span>
                                 :
                                 <span>
-                                    {priceData?.length > 0 ?
-                                        IntlNumberFormatCurrency((Number(numShares) * Number(pricePerShare)) * priceData[0].priceUsd)
+                                    {tokenPrices && tokenPrices.get(token.mint) ?
+                                        IntlNumberFormatCurrency((Number(numShares) * Number(pricePerShare)) * tokenPrices.get(token.mint))
                                         :
                                         'No dex data'
                                     }

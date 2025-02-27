@@ -31,7 +31,7 @@ import Image from "next/image";
 import { LucideInfo, LucideLoaderCircle } from 'lucide-react';
 import { PoolAccount } from '@/types/pool';
 import { ConnectButton } from '@/components/solana/connectButton';
-import { useDexScreenerPrice } from '@/hooks/useTokenPrice';
+import { useTokenPrices } from '@/hooks/useTokenPrices';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/shadcn/tooltip';
 
 interface BuyListingModalProps {
@@ -68,7 +68,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
     const [token, setToken] = useState<TokenType>(supportedTokens.find((token: TokenType) => token.mint === listing.desiredToken.toBase58()) as TokenType);
     const [loading, setLoading] = useState(false);
 
-    const { data, isFetching } = useDexScreenerPrice({ token });
+    const { data: tokenPrices, isFetching } = useTokenPrices();
     const queryClient = useQueryClient();
 
     const handleBuy = async () => {
@@ -166,9 +166,9 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
     }, [poolAccount, listing, token])
 
     const min_transaction_fee = useCallback(() => {
-        if (!data || data.length === 0) return 0;
-        return Math.floor((TRANSACTION_CHARGE_MIN_USD / data[0]?.priceUsd) * 100) / 100;
-    }, [poolAccount, listing, data])
+        if (!tokenPrices || !tokenPrices.get(token.mint)) return 0;
+        return Math.floor((TRANSACTION_CHARGE_MIN_USD / tokenPrices.get(token.mint)) * 100) / 100;
+    }, [poolAccount, listing, tokenPrices, token.mint])
 
     return (
         <Modal
@@ -258,8 +258,8 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                             <span className='bg-white/10 rounded animate-pulse text-foreground/0'>1,000.00</span>
                             :
                             <span>
-                                {data?.length > 0 ?
-                                    IntlNumberFormatCurrency((((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) + percent_fee() + min_transaction_fee()) * data[0].priceUsd)
+                                {tokenPrices && tokenPrices.get(token.mint) ?
+                                    IntlNumberFormatCurrency((((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) + percent_fee() + min_transaction_fee()) * tokenPrices.get(token.mint))
                                     :
                                     'No dex data'
                                 }

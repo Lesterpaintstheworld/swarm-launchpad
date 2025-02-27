@@ -16,7 +16,7 @@ import { MarketListing } from '@/types/listing';
 import Link from 'next/link';
 import Image from "next/image";
 import { LucideLoaderCircle } from 'lucide-react';
-import { useDexScreenerPrice } from '@/hooks/useTokenPrice';
+import { useTokenPrices } from '@/hooks/useTokenPrices';
 
 interface CancelListingModalProps {
     isModalOpen: boolean;
@@ -36,7 +36,7 @@ const CancelListingModal = ({ isModalOpen, closeModal, listing, swarm }: CancelL
     const [token, setToken] = useState<TokenType>(supportedTokens.find((token: TokenType) => token.mint === listing.desiredToken.toBase58()) as TokenType);
     const [loading, setLoading] = useState(false);
 
-    const { data, isFetching } = useDexScreenerPrice({ token });
+    const { data: tokenPrices, isFetching } = useTokenPrices();
     const queryClient = useQueryClient();
 
     const handleCancel = () => {
@@ -127,8 +127,8 @@ const CancelListingModal = ({ isModalOpen, closeModal, listing, swarm }: CancelL
                             <span className='bg-white/10 rounded animate-pulse text-foreground/0'>1,000.00</span>
                             :
                             <span>
-                                {data?.length > 0 ?
-                                    IntlNumberFormatCurrency((((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) * 1.05) * data[0].priceUsd)
+                                {tokenPrices && tokenPrices.get(token.mint) ?
+                                    IntlNumberFormatCurrency((((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) * 1.05) * tokenPrices.get(token.mint))
                                     :
                                     'No dex data'
                                 }

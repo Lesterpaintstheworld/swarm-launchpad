@@ -3,7 +3,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/ui/datatable/columnHeader";
-import { formatPublicKey, IntlNumberFormat } from "@/lib/utils";
+import { formatPublicKey, IntlNumberFormat, IntlNumberFormatCurrency } from "@/lib/utils";
 import { Button } from "@/components/shadcn/button";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,6 +15,7 @@ import { useState } from "react";
 import { BuyListingModal } from "../buyListingModal";
 import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { PoolAccount } from "@/types/pool";
+import { useTokenPrices } from "@/hooks/useTokenPrices";
 
 export const columns: ColumnDef<MarketListing>[] = [
     {
@@ -93,15 +94,26 @@ export const columns: ColumnDef<MarketListing>[] = [
             <DataTableColumnHeader column={column} title="Price per share" />
         ),
         cell: ({ row }) => {
-
-
             const token = supportedTokens.find(t => t.mint == row.original.desiredToken.toBase58()) || supportedTokens[0];
             const value = Number(row.original.pricePerShare) / token.resolution;
+            
+            // Use the token prices from our hook
+            const { data: tokenPrices, isLoading } = useTokenPrices();
+            const usdPrice = !isLoading && tokenPrices && tokenPrices.get(token.mint) 
+              ? value * tokenPrices.get(token.mint) 
+              : null;
 
             return (
-                <p className="text-foreground/60">
-                    {IntlNumberFormat(value, token.decimals)}
-                </p>
+                <div>
+                    <p className="text-foreground/60">
+                        {IntlNumberFormat(value, token.decimals)}
+                    </p>
+                    {usdPrice && (
+                        <p className="text-xs text-muted-foreground">
+                            ≈ {IntlNumberFormatCurrency(usdPrice)}
+                        </p>
+                    )}
+                </div>
             );
         }
     },
@@ -113,17 +125,29 @@ export const columns: ColumnDef<MarketListing>[] = [
             <DataTableColumnHeader column={column} title="Asking amount" />
         ),
         cell: ({ row }) => {
-
             // @ts-ignore
             const token = supportedTokens.find(t => t.mint == row.original.desiredToken.toBase58()) || supportedTokens[0];
             const value = (Number(row.original.pricePerShare) / token.resolution) * Number(row.original.numberOfShares);
+            
+            // Use the token prices from our hook
+            const { data: tokenPrices, isLoading } = useTokenPrices();
+            const usdPrice = !isLoading && tokenPrices && tokenPrices.get(token.mint) 
+              ? value * tokenPrices.get(token.mint) 
+              : null;
 
             return (
-                <div className="flex flex-row items-center gap-2">
-                    <p className="text-foreground/60 font-bold !text-foreground">
-                        {IntlNumberFormat(value, token.decimals)}
-                    </p>
-                    <Token token={token} hover={false} />
+                <div>
+                    <div className="flex flex-row items-center gap-2">
+                        <p className="text-foreground/60 font-bold !text-foreground">
+                            {IntlNumberFormat(value, token.decimals)}
+                        </p>
+                        <Token token={token} hover={false} />
+                    </div>
+                    {usdPrice && (
+                        <p className="text-xs text-muted-foreground">
+                            ≈ {IntlNumberFormatCurrency(usdPrice)}
+                        </p>
+                    )}
                 </div>
             )
         }
