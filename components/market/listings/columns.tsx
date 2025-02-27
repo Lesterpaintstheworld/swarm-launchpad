@@ -104,9 +104,16 @@ export const columns: ColumnDef<MarketListing>[] = [
               ? value * tokenPrices.get(token.mint) 
               : null;
 
+            // Add metallic effect class based on token
+            const metallicClass = token.mint === '9psiRdn9cXYVps4F1kFuoNjd2EtmqNJXrCPmRppJpump' 
+              ? 'metallic-text-ubc' 
+              : token.mint === 'B1N1HcMm4RysYz4smsXwmk2UnS8NziqKCM6Ho8i62vXo' 
+                ? 'metallic-text' 
+                : '';
+
             return (
                 <div>
-                    <p className="text-foreground/60">
+                    <p className={`text-foreground/60 ${metallicClass}`}>
                         {IntlNumberFormat(value, token.decimals)}
                     </p>
                     {usdPrice && (
@@ -136,10 +143,17 @@ export const columns: ColumnDef<MarketListing>[] = [
               ? value * tokenPrices.get(token.mint) 
               : null;
 
+            // Add metallic effect class based on token
+            const metallicClass = token.mint === '9psiRdn9cXYVps4F1kFuoNjd2EtmqNJXrCPmRppJpump' 
+              ? 'metallic-text-ubc' 
+              : token.mint === 'B1N1HcMm4RysYz4smsXwmk2UnS8NziqKCM6Ho8i62vXo' 
+                ? 'metallic-text' 
+                : '';
+
             return (
                 <div>
                     <div className="flex flex-row items-center gap-2">
-                        <p className="text-foreground/60 font-bold !text-foreground">
+                        <p className={`text-foreground/60 font-bold !text-foreground ${metallicClass}`}>
                             {IntlNumberFormat(value, token.decimals)}
                         </p>
                         <Token token={token} hover={false} />

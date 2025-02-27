@@ -245,7 +245,13 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
             <div className='px-3 mb-6'>
                 <p className="text-muted text-sm">You&apos;ll pay</p>
                 <div className="overflow-hidden flex flex-row items-center no-wrap gap-2 py-1">
-                    <p className="text-4xl leading-none font-bold text-emerald-500 truncate">
+                    <p className={`text-4xl leading-none font-bold text-emerald-500 truncate ${
+                        token.mint === '9psiRdn9cXYVps4F1kFuoNjd2EtmqNJXrCPmRppJpump' 
+                        ? 'metallic-text-ubc' 
+                        : token.mint === 'B1N1HcMm4RysYz4smsXwmk2UnS8NziqKCM6Ho8i62vXo' 
+                          ? 'metallic-text' 
+                          : ''
+                    }`}>
                         +
                         {IntlNumberFormat(((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) + percent_fee() + min_transaction_fee(), (token?.decimals || 6))}
                     </p>

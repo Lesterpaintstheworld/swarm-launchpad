@@ -5,7 +5,7 @@ export function useTokenPrices() {
     queryKey: ['token-prices'],
     queryFn: async () => {
       // Fetch both token prices in a single call
-      const response = await fetch('https://api.dexscreener.com/latest/dex/tokens/9psiRdn9cXYVps4F1kFuoNjd2EtmqNJXrCPmRppJpump,HN7ibjiyX399d1EfYXcWaSHZRSMfUmonYvXGFXG41Rr3');
+      const response = await fetch('https://api.dexscreener.com/latest/dex/tokens/9psiRdn9cXYVps4F1kFuoNjd2EtmqNJXrCPmRppJpump,B1N1HcMm4RysYz4smsXwmk2UnS8NziqKCM6Ho8i62vXo');
       
       if (!response.ok) {
         throw new Error('Failed to fetch token prices');
@@ -27,10 +27,10 @@ export function useTokenPrices() {
         
         // For COMPUTE token
         const computePairs = data.pairs.filter(pair => 
-          pair.baseToken.address === 'HN7ibjiyX399d1EfYXcWaSHZRSMfUmonYvXGFXG41Rr3'
+          pair.baseToken.address === 'B1N1HcMm4RysYz4smsXwmk2UnS8NziqKCM6Ho8i62vXo'
         );
         if (computePairs.length > 0) {
-          priceMap.set('HN7ibjiyX399d1EfYXcWaSHZRSMfUmonYvXGFXG41Rr3', computePairs[0].priceUsd);
+          priceMap.set('B1N1HcMm4RysYz4smsXwmk2UnS8NziqKCM6Ho8i62vXo', computePairs[0].priceUsd);
         }
       }
       

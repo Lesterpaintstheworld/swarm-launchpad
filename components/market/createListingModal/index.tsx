@@ -187,7 +187,13 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
                 <div className="px-4 py-3 mb-4 w-full">
                     <p className="text-muted text-sm">You&apos;ll receive</p>
                     <div className="overflow-hidden flex flex-row items-center no-wrap gap-2">
-                        <p className="text-4xl leading-none font-bold my-2 text-emerald-500 truncate">
+                        <p className={`text-4xl leading-none font-bold my-2 text-emerald-500 truncate ${
+                            token.mint === '9psiRdn9cXYVps4F1kFuoNjd2EtmqNJXrCPmRppJpump' 
+                            ? 'metallic-text-ubc' 
+                            : token.mint === 'B1N1HcMm4RysYz4smsXwmk2UnS8NziqKCM6Ho8i62vXo' 
+                              ? 'metallic-text' 
+                              : ''
+                        }`}>
                             +
                             {IntlNumberFormat(pricePerShare * Number(numShares), token.decimals)}
                         </p>
