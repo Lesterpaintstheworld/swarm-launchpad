@@ -9,7 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Token } from "@/components/tokens/token";
 import { MarketListing } from "@/types/listing";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supportedTokens } from "@/data/tokens/supported";
 import { useState } from "react";
 import { BuyListingModal } from "../buyListingModal";
@@ -18,6 +18,15 @@ import { PoolAccount } from "@/types/pool";
 import { useTokenPrices } from "@/hooks/useTokenPrices";
 
 export const columns: ColumnDef<MarketListing>[] = [
+    {
+        id: 'queryClient',
+        cell: () => null,
+        header: () => null,
+        enableHiding: true,
+        accessorFn: () => {
+            return useQueryClient();
+        }
+    },
     {
         accessorKey: 'pool',
         header: ({ column }) => (
@@ -81,7 +90,19 @@ export const columns: ColumnDef<MarketListing>[] = [
     },
     {
         accessorKey: 'pricePerShare',
-        accessorFn: row => Number(row.pricePerShare),
+        accessorFn: row => {
+            const token = supportedTokens.find(t => t.mint == row.desiredToken.toBase58()) || supportedTokens[0];
+            const value = Number(row.pricePerShare) / token.resolution;
+            
+            // For sorting, use the USD value if available
+            const tokenPrices = useQueryClient().getQueryData(['token-prices']);
+            if (tokenPrices && tokenPrices.get(token.mint)) {
+                return value * tokenPrices.get(token.mint);
+            }
+            
+            // Fallback to token value
+            return value;
+        },
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Price per share" />
         ),
@@ -104,7 +125,7 @@ export const columns: ColumnDef<MarketListing>[] = [
 
             return (
                 <div>
-                    <p className={`text-foreground/60 ${metallicClass}`}>
+                    <p className={`${usdPrice ? 'text-foreground' : 'text-foreground/60'} ${metallicClass}`}>
                         {IntlNumberFormat(value, token.decimals)}
                     </p>
                     {usdPrice && (
@@ -119,7 +140,19 @@ export const columns: ColumnDef<MarketListing>[] = [
     {
         accessorKey: 'askingAmount',
         minSize: 250,
-        accessorFn: row => Number(row.pricePerShare) * Number(row.numberOfShares),
+        accessorFn: row => {
+            const token = supportedTokens.find(t => t.mint == row.desiredToken.toBase58()) || supportedTokens[0];
+            const value = (Number(row.pricePerShare) / token.resolution) * Number(row.numberOfShares);
+            
+            // For sorting, use the USD value if available
+            const tokenPrices = useQueryClient().getQueryData(['token-prices']);
+            if (tokenPrices && tokenPrices.get(token.mint)) {
+                return value * tokenPrices.get(token.mint);
+            }
+            
+            // Fallback to token value
+            return value;
+        },
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Asking amount" />
         ),
@@ -144,7 +177,7 @@ export const columns: ColumnDef<MarketListing>[] = [
             return (
                 <div>
                     <div className="flex flex-row items-center gap-2">
-                        <p className={`text-foreground/60 font-bold !text-foreground ${metallicClass}`}>
+                        <p className={`${usdPrice ? 'text-foreground' : 'text-foreground/60'} font-bold !text-foreground ${metallicClass}`}>
                             {IntlNumberFormat(value, token.decimals)}
                         </p>
                         <Token token={token} hover={false} />
