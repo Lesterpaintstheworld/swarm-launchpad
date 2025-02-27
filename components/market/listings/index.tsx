@@ -1,6 +1,7 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
+import { Row } from "@tanstack/react-table";
 import { DataTable } from "@/components/ui/datatable";
 import { cn } from "@/lib/utils";
 import { columns } from "./columns";
@@ -22,7 +23,7 @@ const MarketListings = ({ className }: { className?: string }) => {
 
 	// Define custom sorting functions that use token prices
 	const sortingFns = {
-		pricePerShare: (rowA, rowB) => {
+		pricePerShare: (rowA: Row<MarketListing>, rowB: Row<MarketListing>) => {
 			const tokenA = supportedTokens.find(t => t.mint == rowA.original.desiredToken.toBase58()) || supportedTokens[0];
 			const tokenB = supportedTokens.find(t => t.mint == rowB.original.desiredToken.toBase58()) || supportedTokens[0];
 			
@@ -39,7 +40,7 @@ const MarketListings = ({ className }: { className?: string }) => {
 			// Fallback to token value
 			return valueA > valueB ? 1 : -1;
 		},
-		askingAmount: (rowA, rowB) => {
+		askingAmount: (rowA: Row<MarketListing>, rowB: Row<MarketListing>) => {
 			const tokenA = supportedTokens.find(t => t.mint == rowA.original.desiredToken.toBase58()) || supportedTokens[0];
 			const tokenB = supportedTokens.find(t => t.mint == rowB.original.desiredToken.toBase58()) || supportedTokens[0];
 			

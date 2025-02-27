@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { DataTable } from "@/components/ui/datatable";
+import { Row } from "@tanstack/react-table";
 import { cn } from "@/lib/utils";
 import { columns } from "./columns";
 import { Button } from "@/components/shadcn/button";
@@ -23,7 +24,7 @@ const SwarmRecentMarketListings = ({ pool, className }: SwarmRecentMarketListing
 
     // Define custom sorting functions that use token prices
     const sortingFns = {
-        pricePerShare: (rowA, rowB) => {
+        pricePerShare: (rowA: Row<MarketListing>, rowB: Row<MarketListing>) => {
             const tokenA = supportedTokens.find(t => t.mint == rowA.original.desiredToken.toBase58()) || supportedTokens[0];
             const tokenB = supportedTokens.find(t => t.mint == rowB.original.desiredToken.toBase58()) || supportedTokens[0];
             
@@ -40,7 +41,7 @@ const SwarmRecentMarketListings = ({ pool, className }: SwarmRecentMarketListing
             // Fallback to token value
             return valueA > valueB ? 1 : -1;
         },
-        askingAmount: (rowA, rowB) => {
+        askingAmount: (rowA: Row<MarketListing>, rowB: Row<MarketListing>) => {
             const tokenA = supportedTokens.find(t => t.mint == rowA.original.desiredToken.toBase58()) || supportedTokens[0];
             const tokenB = supportedTokens.find(t => t.mint == rowB.original.desiredToken.toBase58()) || supportedTokens[0];
             
