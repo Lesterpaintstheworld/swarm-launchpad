@@ -163,7 +163,7 @@ export const columns: ColumnDef<MarketListing>[] = [
             <DataTableColumnHeader column={column} title="Seller" />
         ),
         cell: ({ row }) => (
-            <p className="w-fit rounded-sm truncate max-w-[17ch] text-muted-foreground">{formatPublicKey(row.original.seller.toBase58())}</p>
+            <p className="w-fit rounded-sm truncate max-w-[17ch] text-gray-400">{formatPublicKey(row.original.seller.toBase58())}</p>
         )
     },
     {
