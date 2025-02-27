@@ -38,3 +38,5 @@ next-env.d.ts
 .aider*
 .env
 .env*
+
+venv*
