@@ -8,6 +8,7 @@ import { columns } from "./columns";
 import { cn } from "@/lib/utils";
 import { useTokenPrices } from "@/hooks/useTokenPrices";
 import { supportedTokens } from "@/data/tokens/supported";
+import { MarketListing } from "@/types/listing";
 
 const UserListings = ({ className }: { className?: string }) => {
 
