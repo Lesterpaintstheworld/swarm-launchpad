@@ -163,26 +163,8 @@ export const columns: ColumnDef<MarketListing>[] = [
             <DataTableColumnHeader column={column} title="Seller" />
         ),
         cell: ({ row }) => (
-            <p className="w-fit rounded-sm truncate max-w-[17ch]">{formatPublicKey(row.original.seller.toBase58())}</p>
+            <p className="w-fit rounded-sm truncate max-w-[17ch] text-muted-foreground">{formatPublicKey(row.original.seller.toBase58())}</p>
         )
-    },
-    {
-        accessorKey: 'createdAt',
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Date" />
-        ),
-        cell: ({ row }) => {
-            // Check if createdAt exists in the data
-            if (!row.original.createdAt) return null;
-            
-            // Format the date
-            const date = new Date(row.original.createdAt);
-            return (
-                <p className="text-muted-foreground">
-                    {date.toLocaleDateString()}
-                </p>
-            );
-        }
     },
     {
         accessorKey: 'id',
