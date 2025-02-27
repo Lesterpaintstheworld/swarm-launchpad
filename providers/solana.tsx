@@ -2,7 +2,7 @@
 
 import { Adapter, WalletAdapterNetwork, WalletError } from "@solana/wallet-adapter-base"
 import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react"
-import { useCallback, useMemo } from "react"
+import { useCallback, createContext, useMemo, useState } from "react"
 import { constants } from "@/lib/constants";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { toast } from "sonner";
@@ -16,14 +16,25 @@ import {
 } from "@solana/wallet-adapter-wallets";
 
 import '@solana/wallet-adapter-react-ui/styles.css';
+import { clusterApiUrl } from "@solana/web3.js";
+
+const SolanaProviderContext = createContext<SolanaProviderContextProps>({
+    rpc: '',
+    useFallbackRPC: () => { },
+    updateRPC: (value: string) => { }
+});
 
 const SolanaProvider = ({ children }: { children: React.ReactNode }) => {
+
+    // RPC endpoint
+    const [rpc, setRpc] = useState<string>(constants.rpcUrl.custom || clusterApiUrl(constants.environment === 'production' ? "mainnet-beta" : "devnet"));
 
     // 'devnet' or 'mainnet-beta'
     const network = constants.environment === 'production' ? WalletAdapterNetwork.Mainnet : WalletAdapterNetwork.Devnet;
 
-    // Can accept a custom RPC endpoint
-    const endpoint = useMemo(() => constants.rpcUrl, [constants.rpcUrl]);
+    const useFallbackRPC = () => {
+        setRpc(clusterApiUrl(constants.environment === 'production' ? "mainnet-beta" : "devnet"));
+    }
 
     /**
      * Wallets that implement either of these standards will be available automatically.
@@ -54,14 +65,16 @@ const SolanaProvider = ({ children }: { children: React.ReactNode }) => {
     }, []);
 
     return (
-        <ConnectionProvider endpoint={constants.rpcUrl}>
-            <WalletProvider wallets={wallets} onError={onError} autoConnect>
-                <WalletModalProvider>
-                    {children}
-                </WalletModalProvider>
-            </WalletProvider>
-        </ConnectionProvider>
+        <SolanaProviderContext.Provider value={{ rpc, useFallbackRPC, updateRPC: setRpc }}>
+            <ConnectionProvider endpoint={rpc}>
+                <WalletProvider wallets={wallets} onError={onError} autoConnect>
+                    <WalletModalProvider>
+                        {children}
+                    </WalletModalProvider>
+                </WalletProvider>
+            </ConnectionProvider>
+        </SolanaProviderContext.Provider>
     )
 }
 
-export { SolanaProvider }
+export { SolanaProvider, SolanaProviderContext }

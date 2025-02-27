@@ -25,7 +25,7 @@ interface CreateListingModalProps {
 
 const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingModalProps) => {
 
-    const SHOW_USD_PRICE = false;
+    const SHOW_USD_PRICE = true;
 
     const { publicKey } = useWallet();
 

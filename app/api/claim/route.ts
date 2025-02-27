@@ -18,7 +18,7 @@ const BACKEND_KEYPAIR = process.env.BACKEND_WALLET_KEYPAIR
       )
     : Keypair.generate(); // Generate a dummy keypair if env var is missing
 
-const connection = new Connection(constants.rpcUrl);
+const connection = new Connection(constants.rpcUrl.custom as string);
 
 export async function POST(req: Request): Promise<Response> {
     // Check for backend wallet configuration

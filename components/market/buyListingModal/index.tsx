@@ -58,7 +58,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
         return null;
     }
 
-    const SHOW_USD_PRICE = false;
+    const SHOW_USD_PRICE = true;
     const TRANSACTION_CHARGE_MIN_USD = 3.87;
 
     const { publicKey } = useWallet();
