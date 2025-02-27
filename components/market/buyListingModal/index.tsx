@@ -61,7 +61,8 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
     const min_transaction_fee = useCallback(() => {
         if (!tokenPrices || !token?.mint || !tokenPrices.get(token.mint)) return 0;
         const TRANSACTION_CHARGE_MIN_USD = 3.87;
-        return Math.floor((TRANSACTION_CHARGE_MIN_USD / tokenPrices.get(token.mint)) * 100) / 100;
+        const tokenPrice = tokenPrices.get(token.mint) || 1; // Default to 1 if undefined
+        return Math.floor((TRANSACTION_CHARGE_MIN_USD / tokenPrice) * 100) / 100;
     }, [tokenPrices, token?.mint]);
 
     // Check if data is valid
