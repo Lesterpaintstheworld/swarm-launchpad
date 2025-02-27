@@ -72,19 +72,10 @@ export const columns: ColumnDef<MarketListing>[] = [
         accessorKey: 'numberOfShares',
         accessorFn: row => Number(row.numberOfShares),
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="No. Shares" />
+            <DataTableColumnHeader column={column} title="Shares" />
         ),
         cell: ({ row }) => (
             <p>{IntlNumberFormat(Number(row.original.numberOfShares))}</p>
-        )
-    },
-    {
-        accessorKey: 'seller',
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Seller" />
-        ),
-        cell: ({ row }) => (
-            <p className="w-fit rounded-sm truncate max-w-[17ch]">{formatPublicKey(row.original.seller.toBase58())}</p>
         )
     },
     {
@@ -116,7 +107,7 @@ export const columns: ColumnDef<MarketListing>[] = [
                     </p>
                     {usdPrice && (
                         <p className="text-xs text-muted-foreground">
-                            ≈ {IntlNumberFormatCurrency(usdPrice)}
+                            {IntlNumberFormatCurrency(usdPrice)}
                         </p>
                     )}
                 </div>
@@ -158,11 +149,38 @@ export const columns: ColumnDef<MarketListing>[] = [
                     </div>
                     {usdPrice && (
                         <p className="text-xs text-muted-foreground">
-                            ≈ {IntlNumberFormatCurrency(usdPrice)}
+                            {IntlNumberFormatCurrency(usdPrice)}
                         </p>
                     )}
                 </div>
             )
+        }
+    },
+    {
+        accessorKey: 'seller',
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Seller" />
+        ),
+        cell: ({ row }) => (
+            <p className="w-fit rounded-sm truncate max-w-[17ch]">{formatPublicKey(row.original.seller.toBase58())}</p>
+        )
+    },
+    {
+        accessorKey: 'createdAt',
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Date" />
+        ),
+        cell: ({ row }) => {
+            // Check if createdAt exists in the data
+            if (!row.original.createdAt) return null;
+            
+            // Format the date
+            const date = new Date(row.original.createdAt);
+            return (
+                <p className="text-muted-foreground">
+                    {date.toLocaleDateString()}
+                </p>
+            );
         }
     },
     {
