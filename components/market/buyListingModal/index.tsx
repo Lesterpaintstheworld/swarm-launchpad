@@ -128,7 +128,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                         swarmName: swarm?.name || 'Unknown Swarm',
                         numberOfShares: Number(listing.numberOfShares),
                         pricePerShare: IntlNumberFormat((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)), (token?.decimals || 6)),
-                        tokenSymbol: token.symbol,
+                        tokenSymbol: token.label,
                         totalAmount: IntlNumberFormat(totalAmount, (token?.decimals || 6))
                     }),
                 });
