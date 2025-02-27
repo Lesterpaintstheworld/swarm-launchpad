@@ -98,27 +98,13 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                 throw new Error('Pool account does not exist or is inaccessible');
             }
 
-            // Try to fetch shareholder account
+            // Try to fetch shareholder account - just for logging purposes
             let shareholderAccount;
             try {
                 shareholderAccount = await program?.account.shareholder.fetch(listing.shareholder);
             } catch (error) {
-                console.log('Shareholder account does not exist, will try to initialize');
-            }
-
-            if (!shareholderAccount) {
-                try {
-                    await program?.methods.initializeShareholder()
-                        .accounts({
-                            shareholder: listing.shareholder,
-                            pool: listing.pool,
-                            authority: publicKey,
-                        })
-                        .rpc();
-                } catch (error) {
-                    console.error('Failed to initialize shareholder account:', error);
-                    throw new Error('Failed to initialize shareholder account');
-                }
+                console.log('Shareholder account does not exist, it will be initialized during the transaction');
+                // No need for a separate initialization call - the buy_listing instruction handles this
             }
 
             // Proceed with buy transaction
