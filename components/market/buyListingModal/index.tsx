@@ -4,7 +4,7 @@ import { SwarmResponse } from '@/types/api';
 import { Button } from "@/components/shadcn/button";
 import { Token as TokenType } from "@/components/tokens/tokens.types";
 import { Modal } from "@/components/ui/modal";
-import { useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
+import { useLaunchpadProgram, useLaunchpadProgramAccount } from "@/hooks/useLaunchpadProgram";
 import { IntlNumberFormat, IntlNumberFormatCurrency } from "@/lib/utils";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useCallback, useEffect, useState } from "react";
@@ -31,9 +31,10 @@ interface BuyListingModalProps {
 const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount }: BuyListingModalProps) => {
     // Move all hooks to the top level
     const { publicKey } = useWallet();
-    const { program, buyListing } = useLaunchpadProgramAccount({ 
+    const { buyListing } = useLaunchpadProgramAccount({ 
         poolAddress: listing?.pool?.toBase58() || "" 
     });
+    const { program } = useLaunchpadProgram();
     const [token, setToken] = useState<TokenType>(
         supportedTokens.find((token: TokenType) => 
             listing?.desiredToken?.toBase58() === token.mint
