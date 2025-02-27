@@ -207,7 +207,7 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
                                 :
                                 <span>
                                     {tokenPrices && tokenPrices.get(token.mint) ?
-                                        IntlNumberFormatCurrency((Number(numShares) * Number(pricePerShare)) * tokenPrices.get(token.mint))
+                                        IntlNumberFormatCurrency((Number(numShares) * Number(pricePerShare)) * tokenPrices.get(token.mint)!)
                                         :
                                         'No dex data'
                                     }

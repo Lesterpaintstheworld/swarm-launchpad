@@ -32,8 +32,8 @@ const MarketListings = ({ className }: { className?: string }) => {
 			
 			// If we have token prices, sort by USD value
 			if (tokenPrices) {
-				const usdValueA = tokenPrices.get(tokenA.mint) ? valueA * tokenPrices.get(tokenA.mint) : valueA;
-				const usdValueB = tokenPrices.get(tokenB.mint) ? valueB * tokenPrices.get(tokenB.mint) : valueB;
+				const usdValueA = tokenPrices.get(tokenA.mint) ? valueA * tokenPrices.get(tokenA.mint)! : valueA;
+				const usdValueB = tokenPrices.get(tokenB.mint) ? valueB * tokenPrices.get(tokenB.mint)! : valueB;
 				return usdValueA > usdValueB ? 1 : -1;
 			}
 			
@@ -49,8 +49,8 @@ const MarketListings = ({ className }: { className?: string }) => {
 			
 			// If we have token prices, sort by USD value
 			if (tokenPrices) {
-				const usdValueA = tokenPrices.get(tokenA.mint) ? valueA * tokenPrices.get(tokenA.mint) : valueA;
-				const usdValueB = tokenPrices.get(tokenB.mint) ? valueB * tokenPrices.get(tokenB.mint) : valueB;
+				const usdValueA = tokenPrices.get(tokenA.mint) ? valueA * tokenPrices.get(tokenA.mint)! : valueA;
+				const usdValueB = tokenPrices.get(tokenB.mint) ? valueB * tokenPrices.get(tokenB.mint)! : valueB;
 				return usdValueA > usdValueB ? 1 : -1;
 			}
 			

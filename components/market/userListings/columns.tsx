@@ -95,7 +95,7 @@ export const columns: ColumnDef<MarketListing>[] = [
             // Use the token prices from our hook
             const { data: tokenPrices, isLoading } = useTokenPrices();
             const usdPrice = !isLoading && tokenPrices && tokenPrices.get(token.mint) 
-              ? value * tokenPrices.get(token.mint) 
+              ? value * tokenPrices.get(token.mint)! 
               : null;
 
             // Add metallic effect class based on token
@@ -138,7 +138,7 @@ export const columns: ColumnDef<MarketListing>[] = [
             // Use the token prices from our hook
             const { data: tokenPrices, isLoading } = useTokenPrices();
             const usdPrice = !isLoading && tokenPrices && tokenPrices.get(token.mint) 
-              ? value * tokenPrices.get(token.mint) 
+              ? value * tokenPrices.get(token.mint)! 
               : null;
 
             // Add metallic effect class based on token

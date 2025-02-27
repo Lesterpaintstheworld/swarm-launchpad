@@ -134,7 +134,7 @@ const CancelListingModal = ({ isModalOpen, closeModal, listing, swarm }: CancelL
                             :
                             <span>
                                 {tokenPrices && tokenPrices.get(token.mint) ?
-                                    IntlNumberFormatCurrency((((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) * 1.05) * tokenPrices.get(token.mint))
+                                    IntlNumberFormatCurrency((((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) * 1.05) * tokenPrices.get(token.mint)!)
                                     :
                                     'No dex data'
                                 }

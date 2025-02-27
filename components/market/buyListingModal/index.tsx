@@ -244,7 +244,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                             :
                             <span>
                                 {tokenPrices && tokenPrices.get(token.mint) ?
-                                    IntlNumberFormatCurrency((((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) + percent_fee() + min_transaction_fee()) * tokenPrices.get(token.mint))
+                                    IntlNumberFormatCurrency((((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) + percent_fee() + min_transaction_fee()) * tokenPrices.get(token.mint)!)
                                     :
                                     'No dex data'
                                 }
