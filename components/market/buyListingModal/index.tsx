@@ -1,20 +1,6 @@
 'use client'
 
-const isValidListing = (listing: MarketListing) => {
-    return listing && 
-           listing.pool && 
-           listing.shareholder && 
-           listing.numberOfShares && 
-           listing.pricePerShare;
-};
-
-const showErrorToUser = (message: string) => {
-    // TODO: Implement proper UI error feedback
-    console.error(message);
-};
-
 import { SwarmResponse } from '@/types/api';
-
 import { Button } from "@/components/shadcn/button";
 import { Token as TokenType } from "@/components/tokens/tokens.types";
 import { Modal } from "@/components/ui/modal";
@@ -34,6 +20,19 @@ import { ConnectButton } from '@/components/solana/connectButton';
 import { useTokenPrices } from '@/hooks/useTokenPrices';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/shadcn/tooltip';
 
+const isValidListing = (listing: MarketListing) => {
+    return listing && 
+           listing.pool && 
+           listing.shareholder && 
+           listing.numberOfShares && 
+           listing.pricePerShare;
+};
+
+const showErrorToUser = (message: string) => {
+    // TODO: Implement proper UI error feedback
+    console.error(message);
+};
+
 interface BuyListingModalProps {
     isModalOpen: boolean;
     closeModal: () => void;
@@ -43,6 +42,16 @@ interface BuyListingModalProps {
 }
 
 const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount }: BuyListingModalProps) => {
+    // Move all hooks to the top level, before any conditional logic
+    const { publicKey } = useWallet();
+    const { program, buyListing } = useLaunchpadProgramAccount({ poolAddress: listing?.pool?.toBase58() || "" });
+    const [token, setToken] = useState<TokenType>(supportedTokens.find((token: TokenType) => 
+        listing?.desiredToken?.toBase58() === token.mint) as TokenType || supportedTokens[0]);
+    const [loading, setLoading] = useState(false);
+    const { data: tokenPrices, isFetching } = useTokenPrices();
+    const queryClient = useQueryClient();
+
+    // Now check if the data is valid
     if (!isValidListing(listing)) {
         console.error('Invalid listing data');
         return null;
@@ -60,16 +69,6 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
 
     const SHOW_USD_PRICE = true;
     const TRANSACTION_CHARGE_MIN_USD = 3.87;
-
-    const { publicKey } = useWallet();
-
-    const { program, buyListing } = useLaunchpadProgramAccount({ poolAddress: listing.pool.toBase58() });
-
-    const [token, setToken] = useState<TokenType>(supportedTokens.find((token: TokenType) => token.mint === listing.desiredToken.toBase58()) as TokenType);
-    const [loading, setLoading] = useState(false);
-
-    const { data: tokenPrices, isFetching } = useTokenPrices();
-    const queryClient = useQueryClient();
 
     const handleBuy = async () => {
         if (!listing) {
@@ -163,12 +162,12 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
     const percent_fee = useCallback(() => {
         if (!poolAccount?.feeRatio) return 0;
         return ((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) * ((1 / Number(poolAccount.feeRatio)));
-    }, [poolAccount, listing, token])
+    }, [token?.resolution, listing.pricePerShare, listing.numberOfShares, poolAccount.feeRatio]);
 
     const min_transaction_fee = useCallback(() => {
         if (!tokenPrices || !tokenPrices.get(token.mint)) return 0;
         return Math.floor((TRANSACTION_CHARGE_MIN_USD / tokenPrices.get(token.mint)) * 100) / 100;
-    }, [poolAccount, listing, tokenPrices, token.mint])
+    }, [tokenPrices, token.mint, TRANSACTION_CHARGE_MIN_USD]);
 
     return (
         <Modal
@@ -259,7 +258,6 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                 </div>
                 {SHOW_USD_PRICE &&
                     <p className='text-muted text-sm pt-1'>
-                        ≈&nbsp;
                         {isFetching ?
                             <span className='bg-white/10 rounded animate-pulse text-foreground/0'>1,000.00</span>
                             :
