@@ -126,7 +126,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
 
     useEffect(() => {
         let isMounted = true;
-        let abortController = new AbortController();
+        const abortController = new AbortController();
 
         async function fetchData() {
             if (!program || investments.length === 0) {
@@ -210,7 +210,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
             isMounted = false;
             abortController.abort();
         };
-    }, [investments, program]); // Removed typedProgram.account.pool from dependencies
+    }, [investments, program, typedProgram.account.pool]); // Added typedProgram.account.pool to dependencies
 
     const CustomTooltip = ({ active, payload }: TooltipProps) => {
         if (active && payload && payload.length) {
