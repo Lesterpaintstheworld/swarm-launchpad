@@ -103,8 +103,7 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
             const xForgeOwnership = calculateOwnership(xForgePosition?.data, 100000);
             if (xForgeOwnership > 0 && revenueData.xforge) {
                 // Apply revenueShare as a percentage (divide by 100)
-                // Also divide the XForge amount by 10
-                const revenue = (revenueData.xforge.weeklyRevenue / 10) * (revenueData.xforge.revenueShare / 100);
+                const revenue = revenueData.xforge.weeklyRevenue * (revenueData.xforge.revenueShare / 100);
                 data.push({
                     id: '1',
                     swarm_id: 'xforge',
@@ -118,8 +117,7 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
             const kinOSOwnership = calculateOwnership(kinOSPosition?.data, 100000);
             if (kinOSOwnership > 0 && revenueData.kinos) {
                 // Apply revenueShare as a percentage (divide by 100)
-                // Also divide the KinOS amount by 10
-                const revenue = (revenueData.kinos.weeklyRevenue / 10) * (revenueData.kinos.revenueShare / 100);
+                const revenue = revenueData.kinos.weeklyRevenue * (revenueData.kinos.revenueShare / 100);
                 data.push({
                     id: '2',
                     swarm_id: 'kinos',
@@ -133,8 +131,7 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
             const kinKongOwnership = calculateOwnership(kinKongPosition?.data, 100000);
             if (kinKongOwnership > 0 && revenueData.kinkong) {
                 // Apply revenueShare as a percentage (divide by 100)
-                // Also divide the KinKong amount by 10
-                const revenue = (revenueData.kinkong.weeklyRevenue / 10) * (revenueData.kinkong.revenueShare / 100);
+                const revenue = revenueData.kinkong.weeklyRevenue * (revenueData.kinkong.revenueShare / 100);
                 data.push({
                     id: '3',
                     swarm_id: 'kinkong',
