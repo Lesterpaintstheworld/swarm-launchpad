@@ -27,34 +27,39 @@ async function getRevenueWithAirtablePackage(swarmId: string) {
         // Initialize Airtable
         const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(process.env.AIRTABLE_BASE_ID!);
     
-    try {
-        // Get all records from the Swarms table that match the swarmId
-        const records = await base('Swarms')
-            .select({
-                filterByFormula: `{swarmId} = "${swarmId}"`,
-                fields: ['weeklyRevenue', 'swarmId', 'name', 'revenueShare']
-            })
-            .firstPage();
-        
-        if (!records || records.length === 0) {
-            console.log(`No swarm found with swarmId: ${swarmId}`);
-            return Response.json({ error: 'Swarm not found' }, { status: 404 });
+        try {
+            // Get all records from the Swarms table that match the swarmId
+            const records = await base('Swarms')
+                .select({
+                    filterByFormula: `{swarmId} = "${swarmId}"`,
+                    fields: ['weeklyRevenue', 'swarmId', 'name', 'revenueShare']
+                })
+                .firstPage();
+            
+            if (!records || records.length === 0) {
+                console.log(`No swarm found with swarmId: ${swarmId}`);
+                return Response.json({ error: 'Swarm not found' }, { status: 404 });
+            }
+            
+            // Get the weeklyRevenue and revenueShare values from the record
+            const weeklyRevenue = records[0].get('weeklyRevenue') as number || 0;
+            let revenueShare = records[0].get('revenueShare') as number || 100; // Default to 100% if not provided
+
+            // Ensure revenueShare is between 10 and 100
+            revenueShare = Math.max(10, Math.min(100, revenueShare));
+
+            console.log(`Found weeklyRevenue: ${weeklyRevenue}, revenueShare: ${revenueShare}% for swarm: ${swarmId} (${records[0].get('name')})`);
+            
+            return Response.json({ weeklyRevenue, revenueShare });
+        } catch (error) {
+            console.error('Error with Airtable package:', error);
+            throw error; // Rethrow to be caught by the outer try/catch
         }
-        
-        // Get the weeklyRevenue and revenueShare values from the record
-        const weeklyRevenue = records[0].get('weeklyRevenue') as number || 0;
-        let revenueShare = records[0].get('revenueShare') as number || 100; // Default to 100% if not provided
-
-        // Ensure revenueShare is between 10 and 100
-        revenueShare = Math.max(10, Math.min(100, revenueShare));
-
-        console.log(`Found weeklyRevenue: ${weeklyRevenue}, revenueShare: ${revenueShare}% for swarm: ${swarmId} (${records[0].get('name')})`);
-        
-        return Response.json({ weeklyRevenue, revenueShare });
     } catch (error) {
-        console.error('Error with Airtable package:', error);
-        throw error; // Rethrow to be caught by the outer try/catch
+        console.error('Error initializing Airtable:', error);
+        throw error;
     }
+}
 }
 
 async function getRevenueWithDirectApi(swarmId: string) {
