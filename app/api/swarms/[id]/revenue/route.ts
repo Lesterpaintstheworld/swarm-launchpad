@@ -10,29 +10,44 @@ export async function GET(
     try {
         console.log(`Fetching revenue for swarm: ${params.id}`);
         
-        // First, try to get all records to see the structure
-        const allRecords = await base('Swarms')
+        // Get all records from the Swarms table that match the swarmId
+        const records = await base('Swarms')
             .select({
-                maxRecords: 3,
-                view: "Grid view"
+                filterByFormula: `{swarmId} = "${params.id}"`,
+                fields: ['weeklyRevenue', 'swarmId', 'name']
             })
             .firstPage();
         
-        // Log the field names of the first record to see what's available
-        if (allRecords && allRecords.length > 0) {
-            console.log('Available fields:', Object.keys(allRecords[0].fields));
+        if (!records || records.length === 0) {
+            console.log(`No swarm found with swarmId: ${params.id}`);
+            return Response.json({ error: 'Swarm not found' }, { status: 404 });
         }
         
-        // For now, return hardcoded values to keep the app working
-        const revenueMap: Record<string, number> = {
-            'kinos': 45000,
-            'kinkong': 820000,
-            'xforge': 220000
-        };
+        // Get the weeklyRevenue value from the record
+        const weeklyRevenue = records[0].get('weeklyRevenue') as number || 0;
+        console.log(`Found weeklyRevenue: ${weeklyRevenue} for swarm: ${params.id} (${records[0].get('name')})`);
         
-        return Response.json({ weeklyRevenue: revenueMap[params.id] || 0 });
+        return Response.json({ weeklyRevenue });
     } catch (error) {
         console.error('Error fetching swarm revenue:', error);
+        
+        // If there's an error with the field names, log more details
+        if (error instanceof Error && error.message.includes('Unknown field names')) {
+            console.log('Available fields might be different. Trying to fetch a record to see available fields...');
+            
+            try {
+                const sampleRecords = await base('Swarms')
+                    .select({ maxRecords: 1 })
+                    .firstPage();
+                
+                if (sampleRecords && sampleRecords.length > 0) {
+                    console.log('Available fields:', Object.keys(sampleRecords[0].fields));
+                }
+            } catch (innerError) {
+                console.error('Error fetching sample record:', innerError);
+            }
+        }
+        
         return Response.json({ error: 'Failed to fetch revenue data' }, { status: 500 });
     }
 }
