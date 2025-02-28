@@ -12,7 +12,11 @@ interface MarketListing extends ShareListing {
     _askingAmountInUsd?: number;
     _askingAmountInToken?: number;
     _pricePerShareInUsd?: number;
-    _token?: string;
+    _token?: {
+        mint: string;
+        label: string;
+        decimals: number;
+    };
 }
 
 export type {

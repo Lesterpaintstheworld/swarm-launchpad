@@ -201,7 +201,7 @@ export const columns: ColumnDef<MarketListing>[] = [
             <DataTableColumnHeader column={column} title="Price per share" />
         ),
         cell: ({ row }) => {
-            const valueInUsd = row.original._pricePerShareInUsd;
+            const valueInUsd = row.original._pricePerShareInUsd ?? 0;
             const colorClass = getPriceColor(valueInUsd);
             
             // We're no longer showing the token value, only USD
@@ -226,9 +226,9 @@ export const columns: ColumnDef<MarketListing>[] = [
             <DataTableColumnHeader column={column} title="Asking amount" />
         ),
         cell: ({ row }) => {
-            const token = row.original._token;
-            const valueInToken = row.original._askingAmountInToken;
-            const valueInUsd = row.original._askingAmountInUsd;
+            const token = row.original._token || { mint: '', label: '', decimals: 0 };
+            const valueInToken = row.original._askingAmountInToken ?? 0;
+            const valueInUsd = row.original._askingAmountInUsd ?? 0;
             
             // Add metallic effect class based on token
             const metallicClass = token.mint === '9psiRdn9cXYVps4F1kFuoNjd2EtmqNJXrCPmRppJpump' 
