@@ -1,16 +1,28 @@
+import Airtable from 'airtable';
+
+// Initialize Airtable
+const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(process.env.AIRTABLE_BASE_ID!);
+
 export async function GET(
     request: Request,
     { params }: { params: { id: string } }
 ) {
     try {
-        // Hardcoded weekly revenue values (divided by 10)
-        const revenueMap: Record<string, number> = {
-            'kinos': 80000,    // 800000 / 10
-            'kinkong': 12000,  // 120000 / 10
-            'xforge': 440000   // 4400000 / 10
-        };
+        // Fetch the swarm record from Airtable
+        const records = await base('SWARMS')
+            .select({
+                filterByFormula: `{id} = "${params.id}"`,
+                fields: ['weeklyRevenue']
+            })
+            .firstPage();
 
-        const weeklyRevenue = revenueMap[params.id] || 0;
+        if (!records || records.length === 0) {
+            return Response.json({ error: 'Swarm not found' }, { status: 404 });
+        }
+
+        // Get the weeklyRevenue value from the record
+        const weeklyRevenue = records[0].get('weeklyRevenue') as number || 0;
+
         return Response.json({ weeklyRevenue });
     } catch (error) {
         console.error('Error fetching swarm revenue:', error);
