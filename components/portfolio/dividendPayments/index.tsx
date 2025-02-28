@@ -22,7 +22,7 @@ interface DividendPaymentsProps {
 
 const DividendPayments = ({ className }: DividendPaymentsProps) => {
     const [dividends, setDividends] = useState<DividendPayment[]>([]);
-    const [revenueData, setRevenueData] = useState<Record<string, number>>({});
+    const [revenueData, setRevenueData] = useState<Record<string, { weeklyRevenue: number, revenueShare: number }>>({});
     const { position: kinKongPosition } = useLaunchpadProgramAccount({ poolAddress: 'FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz' });
     const { position: xForgePosition } = useLaunchpadProgramAccount({ poolAddress: 'AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi' });
     const { position: kinOSPosition } = useLaunchpadProgramAccount({ poolAddress: '37u532qgHbjUHic6mQK51jkT3Do7qkWLEUQCx22MDBD8' });
@@ -36,7 +36,10 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
                     swarms.map(async (swarmId) => {
                         const response = await fetch(`/api/swarms/${swarmId}/revenue`);
                         const data = await response.json();
-                        return [swarmId, data];
+                        return [swarmId, {
+                            weeklyRevenue: data.weeklyRevenue || 0,
+                            revenueShare: data.revenueShare || 100
+                        }];
                     })
                 );
                 setRevenueData(Object.fromEntries(revenues));
