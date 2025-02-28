@@ -14,36 +14,53 @@ const swarmCache: Record<string, any> = {};
 // Add a simple request queue to prevent too many simultaneous requests
 const requestQueue: string[] = [];
 let isProcessingQueue = false;
+let queueProcessorTimeout: NodeJS.Timeout | null = null;
 
 const processQueue = async () => {
+    // If already processing or queue is empty, don't start a new process
     if (isProcessingQueue || requestQueue.length === 0) return;
     
     isProcessingQueue = true;
     const BATCH_SIZE = 3; // Process 3 requests at a time
     const DELAY = 1000; // 1 second delay between batches
 
-    while (requestQueue.length > 0) {
-        const batch = requestQueue.splice(0, BATCH_SIZE);
-        await Promise.all(batch.map(async (swarmId) => {
-            try {
-                if (!swarmCache[swarmId]) {
-                    const response = await fetch(`/api/swarms/${swarmId}`);
-                    if (response.ok) {
-                        const data = await response.json();
-                        swarmCache[swarmId] = data;
+    try {
+        while (requestQueue.length > 0) {
+            const batch = requestQueue.splice(0, BATCH_SIZE);
+            await Promise.all(batch.map(async (swarmId) => {
+                try {
+                    if (!swarmCache[swarmId]) {
+                        const response = await fetch(`/api/swarms/${swarmId}`);
+                        if (response.ok) {
+                            const data = await response.json();
+                            swarmCache[swarmId] = data;
+                        }
                     }
+                } catch (error) {
+                    console.error(`Error fetching swarm ${swarmId}:`, error);
                 }
-            } catch (error) {
-                console.error(`Error fetching swarm ${swarmId}:`, error);
-            }
-        }));
+            }));
 
-        if (requestQueue.length > 0) {
-            await new Promise(resolve => setTimeout(resolve, DELAY));
+            if (requestQueue.length > 0) {
+                await new Promise(resolve => setTimeout(resolve, DELAY));
+            }
         }
+    } catch (error) {
+        console.error("Error processing queue:", error);
+    } finally {
+        isProcessingQueue = false;
     }
-    
-    isProcessingQueue = false;
+};
+
+// Debounced queue processor to prevent multiple calls
+const scheduleQueueProcessing = () => {
+    if (queueProcessorTimeout) {
+        clearTimeout(queueProcessorTimeout);
+    }
+    queueProcessorTimeout = setTimeout(() => {
+        processQueue();
+        queueProcessorTimeout = null;
+    }, 100);
 };
 
 const SwarmCell = ({ swarmId }: { swarmId: string }) => {
@@ -63,23 +80,34 @@ const SwarmCell = ({ swarmId }: { swarmId: string }) => {
                 return;
             }
 
-            // Add to queue if not in cache
+            // Add to queue if not in cache and not already in queue
             if (!requestQueue.includes(swarmId)) {
                 requestQueue.push(swarmId);
-                processQueue();
+                scheduleQueueProcessing();
             }
 
-            // Poll cache until data is available
+            // Poll cache until data is available, but with a maximum timeout
             const checkCache = setInterval(() => {
                 if (swarmCache[swarmId] && isMounted) {
                     setSwarm(swarmCache[swarmId]);
                     setIsLoading(false);
                     clearInterval(checkCache);
                 }
-            }, 100);
+            }, 200); // Reduced polling frequency
+            
+            // Set a timeout to stop polling after 10 seconds to prevent infinite polling
+            const maxWaitTimeout = setTimeout(() => {
+                clearInterval(checkCache);
+                if (isMounted) {
+                    setIsLoading(false);
+                }
+            }, 10000);
 
             // Cleanup
-            return () => clearInterval(checkCache);
+            return () => {
+                clearInterval(checkCache);
+                clearTimeout(maxWaitTimeout);
+            };
         };
 
         fetchSwarm();

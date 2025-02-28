@@ -29,26 +29,61 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
 
     // Fetch revenue data
     useEffect(() => {
+        let isMounted = true;
+        const controllers = new Map();
+        
         const fetchRevenueData = async () => {
             try {
                 const swarms = ['xforge', 'kinos', 'kinkong'];
+                
                 const revenues = await Promise.all(
                     swarms.map(async (swarmId) => {
-                        const response = await fetch(`/api/swarms/${swarmId}/revenue`);
-                        const data = await response.json();
-                        return [swarmId, {
-                            weeklyRevenue: data.weeklyRevenue || 0,
-                            revenueShare: data.revenueShare || 100
-                        }];
+                        // Create an abort controller for each request
+                        const controller = new AbortController();
+                        controllers.set(swarmId, controller);
+                        
+                        try {
+                            const response = await fetch(`/api/swarms/${swarmId}/revenue`, {
+                                signal: controller.signal
+                            });
+                            
+                            if (!response.ok) {
+                                return [swarmId, {
+                                    weeklyRevenue: 0,
+                                    revenueShare: 100
+                                }];
+                            }
+                            
+                            const data = await response.json();
+                            return [swarmId, {
+                                weeklyRevenue: data.weeklyRevenue || 0,
+                                revenueShare: data.revenueShare || 100
+                            }];
+                        } catch (error) {
+                            if (error instanceof Error && error.name === 'AbortError') {
+                                return [swarmId, { weeklyRevenue: 0, revenueShare: 100 }];
+                            }
+                            console.error(`Error fetching revenue for ${swarmId}:`, error);
+                            return [swarmId, { weeklyRevenue: 0, revenueShare: 100 }];
+                        }
                     })
                 );
-                setRevenueData(Object.fromEntries(revenues));
+                
+                if (isMounted) {
+                    setRevenueData(Object.fromEntries(revenues));
+                }
             } catch (error) {
                 console.error('Error fetching revenue data:', error);
             }
         };
 
         fetchRevenueData();
+        
+        return () => {
+            isMounted = false;
+            // Abort all pending requests on cleanup
+            controllers.forEach(controller => controller.abort());
+        };
     }, []);
 
     useEffect(() => {

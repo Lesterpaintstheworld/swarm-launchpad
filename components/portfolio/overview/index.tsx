@@ -1,12 +1,16 @@
 'use client'
 
-const swarmCache: Record<string, any> = {};
+// Global cache for swarm data with expiration
+const swarmCache: Record<string, { data: any, timestamp: number }> = {};
 const pendingRequests: { [key: string]: Promise<any> | undefined } = {};
+const CACHE_EXPIRATION = 5 * 60 * 1000; // 5 minutes
 
 const fetchSwarmWithCache = async (swarmId: string) => {
-  // Return cached data if available
-  if (swarmCache[swarmId]) {
-    return swarmCache[swarmId];
+  const now = Date.now();
+  
+  // Return cached data if available and not expired
+  if (swarmCache[swarmId] && (now - swarmCache[swarmId].timestamp < CACHE_EXPIRATION)) {
+    return swarmCache[swarmId].data;
   }
 
   // Return existing promise if request is pending
@@ -14,17 +18,28 @@ const fetchSwarmWithCache = async (swarmId: string) => {
     return pendingRequests[swarmId];
   }
 
-  // Create new request
-  pendingRequests[swarmId] = fetch(`/api/swarms/${swarmId}`)
+  // Create new request with timeout
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+  
+  pendingRequests[swarmId] = fetch(`/api/swarms/${swarmId}`, { signal: controller.signal })
     .then(async (response) => {
+      clearTimeout(timeoutId);
       if (!response.ok) throw new Error('Failed to fetch swarm');
       const data = await response.json();
-      swarmCache[swarmId] = data;
+      swarmCache[swarmId] = { data, timestamp: now };
       delete pendingRequests[swarmId];
       return data;
     })
     .catch((error) => {
+      clearTimeout(timeoutId);
       delete pendingRequests[swarmId];
+      console.error(`Error fetching swarm ${swarmId}:`, error);
+      // Return cached data even if expired rather than failing completely
+      if (swarmCache[swarmId]) {
+        console.log(`Using expired cache for ${swarmId}`);
+        return swarmCache[swarmId].data;
+      }
       throw error;
     });
 
@@ -111,6 +126,7 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
 
     useEffect(() => {
         let isMounted = true;
+        let abortController = new AbortController();
 
         async function fetchData() {
             if (!program || investments.length === 0) {
@@ -119,13 +135,33 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
             }
 
             try {
+                // Create a stable reference to program.account.pool to avoid dependency issues
+                const poolFetcher = typedProgram.account.pool.fetch.bind(typedProgram.account.pool);
+                
+                // Use a map to batch similar requests and reduce API calls
+                const poolDataPromises = new Map();
+                
                 const values = await Promise.all(investments.map(async (investment) => {
                     try {
                         const swarm = await fetchSwarmWithCache(investment.swarm_id);
                         if (!swarm?.pool) return null;
                         
                         const poolPubkey = new PublicKey(swarm.pool);
-                        const poolData = await typedProgram.account.pool.fetch(poolPubkey);
+                        
+                        // Reuse pool data promise if we've already started fetching it
+                        if (!poolDataPromises.has(swarm.pool)) {
+                            poolDataPromises.set(
+                                swarm.pool, 
+                                poolFetcher(poolPubkey)
+                                    .catch(err => {
+                                        console.error(`Error fetching pool data for ${swarm.pool}:`, err);
+                                        return null;
+                                    })
+                            );
+                        }
+                        
+                        const poolData = await poolDataPromises.get(swarm.pool);
+                        if (!poolData) return null;
                         
                         const totalShares = poolData.totalShares.toNumber();
                         const availableShares = poolData.availableShares.toNumber();
@@ -172,8 +208,9 @@ const PortfolioOverview = ({ investments, className }: PortfolioOverviewProps) =
 
         return () => {
             isMounted = false;
+            abortController.abort();
         };
-    }, [investments, program, typedProgram.account.pool]);
+    }, [investments, program]); // Removed typedProgram.account.pool from dependencies
 
     const CustomTooltip = ({ active, payload }: TooltipProps) => {
         if (active && payload && payload.length) {

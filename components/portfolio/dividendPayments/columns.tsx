@@ -23,6 +23,10 @@ async function getSwarm(swarmId: string) {
   }
 }
 
+// Global swarm cache for dividend payments
+const dividendSwarmCache: Record<string, { data: any, timestamp: number }> = {};
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
 const SwarmCell = ({ swarmId }: { swarmId: string }) => {
     const [swarm, setSwarm] = useState<{ name: string; image: string; role?: string } | null>(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -30,19 +34,43 @@ const SwarmCell = ({ swarmId }: { swarmId: string }) => {
     useEffect(() => {
         let isMounted = true;
         const controller = new AbortController();
+        let timeoutId: NodeJS.Timeout;
 
         async function fetchSwarm() {
             try {
-                const response = await fetch(`/api/swarms/${swarmId}`, {
+                // Check cache first
+                const now = Date.now();
+                if (dividendSwarmCache[swarmId] && (now - dividendSwarmCache[swarmId].timestamp < CACHE_DURATION)) {
+                    if (isMounted) {
+                        setSwarm(dividendSwarmCache[swarmId].data);
+                        setIsLoading(false);
+                    }
+                    return;
+                }
+
+                // Set a timeout to prevent hanging requests
+                const fetchPromise = fetch(`/api/swarms/${swarmId}`, {
                     signal: controller.signal
                 });
+                
+                // Add a timeout to abort long-running requests
+                timeoutId = setTimeout(() => controller.abort(), 5000);
+                
+                const response = await fetchPromise;
+                clearTimeout(timeoutId);
+                
                 if (!response.ok) throw new Error('Failed to fetch swarm');
                 const data = await response.json();
+                
+                // Update cache
+                dividendSwarmCache[swarmId] = { data, timestamp: now };
+                
                 if (isMounted) {
                     setSwarm(data);
                     setIsLoading(false);
                 }
             } catch (error) {
+                clearTimeout(timeoutId);
                 if (error instanceof Error && error.name === 'AbortError') {
                     return;
                 }
@@ -58,6 +86,7 @@ const SwarmCell = ({ swarmId }: { swarmId: string }) => {
         return () => {
             isMounted = false;
             controller.abort();
+            clearTimeout(timeoutId);
         };
     }, [swarmId]); // Only depend on swarmId
 
@@ -117,27 +146,46 @@ const ActionCell = ({ row }: ActionCellProps) => {
 
     // Add check for existing claims
     useEffect(() => {
+        let isMounted = true;
+        const controller = new AbortController();
+        
         async function checkExistingClaim() {
-            if (!publicKey || !swarmId) return;
+            if (!publicKey || !swarmId) {
+                if (isMounted) setIsLoading(false);
+                return;
+            }
 
             try {
                 // Use fixed date of Feb 27, 2025 as the start of the claim period
                 const claimStartDate = '2025-02-27';
 
-                const response = await fetch(`/api/redistributions/check?wallet=${publicKey.toString()}&swarmId=${swarmId}&date=${claimStartDate}`);
+                const response = await fetch(
+                    `/api/redistributions/check?wallet=${publicKey.toString()}&swarmId=${swarmId}&date=${claimStartDate}`,
+                    { signal: controller.signal }
+                );
                 
-                if (response.ok) {
+                if (response.ok && isMounted) {
                     const data = await response.json();
                     setIsClaimed(data.exists);
                 }
             } catch (error) {
+                if (error instanceof Error && error.name === 'AbortError') {
+                    return;
+                }
                 console.error('Error checking existing claim:', error);
             } finally {
-                setIsLoading(false);
+                if (isMounted) {
+                    setIsLoading(false);
+                }
             }
         }
 
         checkExistingClaim();
+        
+        return () => {
+            isMounted = false;
+            controller.abort();
+        };
     }, [publicKey, swarmId]);
 
     // Add debug logging
@@ -151,17 +199,46 @@ const ActionCell = ({ row }: ActionCellProps) => {
     const isDisabled = ubcAmount < 10;
 
     useEffect(() => {
+        let isMounted = true;
+        const controller = new AbortController();
+        
         async function fetchSwarm() {
+            // Check cache first
+            const now = Date.now();
+            if (dividendSwarmCache[swarmId] && (now - dividendSwarmCache[swarmId].timestamp < CACHE_DURATION)) {
+                if (isMounted) {
+                    setSwarm(dividendSwarmCache[swarmId].data);
+                }
+                return;
+            }
+            
             try {
-                const response = await fetch(`/api/swarms/${swarmId}`);
+                const response = await fetch(`/api/swarms/${swarmId}`, {
+                    signal: controller.signal
+                });
                 if (!response.ok) return;
                 const data = await response.json();
-                setSwarm(data);
+                
+                // Update cache
+                dividendSwarmCache[swarmId] = { data, timestamp: now };
+                
+                if (isMounted) {
+                    setSwarm(data);
+                }
             } catch (error) {
+                if (error instanceof Error && error.name === 'AbortError') {
+                    return;
+                }
                 console.error('Error fetching swarm:', error);
             }
         }
+        
         fetchSwarm();
+        
+        return () => {
+            isMounted = false;
+            controller.abort();
+        };
     }, [swarmId]);
 
     const getWeekKey = () => {

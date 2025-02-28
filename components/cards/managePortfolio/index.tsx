@@ -6,12 +6,14 @@ import { Card } from "@/components/ui/card"
 import { useWallet } from "@solana/wallet-adapter-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import { memo } from "react"
 
 interface ManagePortfolioCardProps {
     className?: string;
 }
 
-const ManagePortfolioCard = ({ className }: ManagePortfolioCardProps) => {
+// Memoize the component to prevent unnecessary re-renders
+const ManagePortfolioCard = memo(({ className }: ManagePortfolioCardProps) => {
     const { connected } = useWallet();
 
     return (
@@ -31,7 +33,10 @@ const ManagePortfolioCard = ({ className }: ManagePortfolioCardProps) => {
             }
         </Card>
     )
-}
+});
+
+// Add display name for better debugging
+ManagePortfolioCard.displayName = "ManagePortfolioCard";
 
 export { ManagePortfolioCard }
 export type { ManagePortfolioCardProps }

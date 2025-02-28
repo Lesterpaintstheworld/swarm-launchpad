@@ -91,12 +91,22 @@ export default function Portfolio() {
 
     useEffect(() => {
         let isMounted = true;
+        const controller = new AbortController();
+        let timeoutId: NodeJS.Timeout;
 
         async function fetchSwarmData() {
             if (!isMounted) return;
 
             try {
-                const response = await fetch('/api/swarms');
+                // Set a timeout to abort the request if it takes too long
+                timeoutId = setTimeout(() => controller.abort(), 10000);
+                
+                const response = await fetch('/api/swarms', {
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
                 if (!response.ok) throw new Error('Failed to fetch swarm data');
                 const data = await response.json();
 
@@ -115,6 +125,13 @@ export default function Portfolio() {
                 setSwarmData(swarmMap);
                 setPoolIds(pools);
             } catch (error: any) {
+                clearTimeout(timeoutId);
+                
+                if (error.name === 'AbortError') {
+                    console.log('Swarm data fetch aborted');
+                    return;
+                }
+                
                 console.error('Error fetching swarm data:', error);
                 if (isMounted) {
                     setError(new Error('Failed to fetch swarm data'));
@@ -123,8 +140,11 @@ export default function Portfolio() {
         }
 
         fetchSwarmData();
+        
         return () => {
             isMounted = false;
+            controller.abort();
+            clearTimeout(timeoutId);
         };
     }, []); // Empty dependency array - only run once on mount
 
@@ -151,6 +171,11 @@ export default function Portfolio() {
                 }
 
                 setIsLoading(true);
+                
+                // Create a map to track in-progress requests to avoid duplicates
+                const poolRequests = new Map();
+                const shareholderRequests = new Map();
+                
                 const positions = await Promise.all(poolIds.map(async (poolId) => {
                     try {
                         const poolPubkey = new PublicKey(poolId);
@@ -165,20 +190,42 @@ export default function Portfolio() {
                             return null;
                         }
 
+                        // Reuse pool data promise if we've already started fetching it
+                        if (!poolRequests.has(poolId)) {
+                            poolRequests.set(
+                                poolId, 
+                                pool.fetch(poolPubkey)
+                                    .catch(err => {
+                                        console.error(`Error fetching pool data for ${poolId}:`, err);
+                                        return null;
+                                    })
+                            );
+                        }
+                        
+                        // Reuse shareholder data promise if we've already started fetching it
+                        const shareholderKey = shareholderPda.toString();
+                        if (!shareholderRequests.has(shareholderKey)) {
+                            shareholderRequests.set(
+                                shareholderKey,
+                                shareholder.fetch(shareholderPda)
+                                    .catch((e: Error): ShareholderAccount | null => {
+                                        if (e.message.includes('Account does not exist')) {
+                                            return null;
+                                        }
+                                        console.error(`Error fetching shareholder data for ${shareholderKey}:`, e);
+                                        return null;
+                                    })
+                            );
+                        }
+
                         // Fetch both shareholder and pool data concurrently
                         const [shareholderData, poolData] = await Promise.all([
-                            shareholder.fetch(shareholderPda)
-                                .catch((e: Error): ShareholderAccount | null => {
-                                    if (e.message.includes('Account does not exist')) {
-                                        return null;
-                                    }
-                                    throw e;
-                                }),
-                            pool.fetch(poolPubkey)
+                            shareholderRequests.get(shareholderKey),
+                            poolRequests.get(poolId)
                         ]);
 
-                        // Skip if no shares owned
-                        if (!shareholderData || shareholderData.shares.toNumber() === 0) {
+                        // Skip if no shares owned or missing data
+                        if (!shareholderData || !poolData || shareholderData.shares.toNumber() === 0) {
                             return null;
                         }
 
@@ -231,12 +278,29 @@ export default function Portfolio() {
 
         fetchPositions();
 
-        // Set up manual refresh interval
-        const refreshInterval = setInterval(fetchPositions, CACHE_DURATION);
+        // Use a more efficient approach for refreshing data
+        // Instead of using setInterval which can cause overlapping calls,
+        // we'll use setTimeout and only schedule the next refresh after the current one completes
+        let refreshTimeout: NodeJS.Timeout;
+        
+        function scheduleNextRefresh() {
+            refreshTimeout = setTimeout(() => {
+                if (isMounted) {
+                    fetchPositions().finally(() => {
+                        if (isMounted) {
+                            scheduleNextRefresh();
+                        }
+                    });
+                }
+            }, CACHE_DURATION);
+        }
+        
+        // Schedule the first refresh
+        scheduleNextRefresh();
 
         return () => {
             isMounted = false;
-            clearInterval(refreshInterval);
+            clearTimeout(refreshTimeout);
         };
     }, [connected, poolIds, program, publicKey, swarmData]);
 
