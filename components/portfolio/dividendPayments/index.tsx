@@ -91,8 +91,8 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
                 data.push({
                     id: '3',
                     swarm_id: 'kinkong',
-                    amount: Math.floor(revenueData.kinkong * 0.90 * kinKongOwnership),
-                    ubcAmount: Math.floor(revenueData.kinkong * 0.10 * kinKongOwnership),
+                    amount: 0, // 0% to COMPUTE
+                    ubcAmount: Math.floor(revenueData.kinkong * kinKongOwnership), // 100% to UBC
                     timestamp: now.toISOString(),
                     status: 'pending'
                 });
