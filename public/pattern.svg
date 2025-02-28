@@ -1,0 +1,11 @@
+<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+  <pattern id="tech-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+    <path d="M0 10h20M10 0v20" stroke="white" stroke-width="0.5" fill="none" opacity="0.3"/>
+    <circle cx="10" cy="10" r="1" fill="white" opacity="0.5"/>
+    <circle cx="0" cy="0" r="1" fill="white" opacity="0.5"/>
+    <circle cx="0" cy="20" r="1" fill="white" opacity="0.5"/>
+    <circle cx="20" cy="0" r="1" fill="white" opacity="0.5"/>
+    <circle cx="20" cy="20" r="1" fill="white" opacity="0.5"/>
+  </pattern>
+  <rect width="20" height="20" fill="url(#tech-pattern)"/>
+</svg>

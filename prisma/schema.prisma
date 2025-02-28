@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Swarm {
+  id            String   @id @default(cuid())
+  name          String
+  description   String
+  image         String
+  models        String[]
+  tags          String[]
+  role          String
+  swarmType     String
+  revenueShare  Float
+  multiple      Float?
+  pool          String?
+  weeklyRevenue Float?
+  totalRevenue  Float?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model News {
+  id        String   @id @default(cuid())
+  swarmId   String
+  title     String
+  content   String
+  date      DateTime @default(now())
+  link      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "outDir": "../dist",
+    "rootDir": "..",
+    "strict": true,
+    "skipLibCheck": true,
+    "baseUrl": "..",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": [
+    "./**/*.ts",
+    "../hooks/**/*.ts",
+    "../data/**/*.ts",
+    "../data/**/*.tsx"
+  ]
+}

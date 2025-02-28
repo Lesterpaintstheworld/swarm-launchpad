@@ -1,0 +1,124 @@
+{
+  "questions": {
+    "feelings": {
+      "question": "Why do we feel different emotions? 🫂",
+      "responses": {
+        "4-5": {
+          "playful": "Our feelings are like colorful balloons inside us! Sometimes we feel happy and float up high like a yellow balloon, sometimes we feel sad and blue like a rainy day. Each feeling helps us understand what we like and don't like - just like how you know your favorite colors! 🎈",
+          "learning": "Feelings are special messages from our body and mind. When you're happy, your body wants to jump and smile! When you're sad, your body might want a hug. All feelings are okay - they help us understand ourselves and others! 💝",
+          "bedtime": "Just like the moon changes every night, our feelings change too. Sometimes we feel bright and shiny, sometimes quiet and small. All your feelings are like soft, warm blankets keeping you safe and helping you grow. Sweet dreams, little one... 🌙"
+        },
+        "6-7": {
+          "playful": "Let's play Emotion Detective! 🔍 Your feelings are like secret clues that help you solve mysteries. Happy feelings might tell you 'This is fun!', worried feelings warn you 'Be careful!', and angry feelings say 'Something's not fair!'. What feeling-clues can you spot today?",
+          "learning": "Our emotions are like a special control panel that helps us navigate life. Happy feelings help us make friends, scared feelings keep us safe, and even angry feelings help us know when something needs to change. Every emotion has an important job to do! 🎮",
+          "bedtime": "As the stars twinkle in the sky, remember that your feelings are like gentle stars guiding you. Some shine bright, some glow softly, but each one helps light your way. Tomorrow brings new feelings to discover... ⭐"
+        },
+        "8": {
+          "playful": "Welcome to the Emotion Laboratory! 🧪 Today we're exploring how feelings mix and change - just like mixing colors! Did you know you can feel excited AND nervous at the same time? Or happy WITH a tiny bit of sad? Let's experiment with your emotional rainbow! 🌈",
+          "learning": "Emotions are your brain's way of processing the world around you. They release different chemicals that help you react to situations - like adrenaline when you're excited or oxytocin when you feel loved. Each emotion has its own special recipe in your brain! 🧠",
+          "bedtime": "As you drift off to sleep, imagine your feelings like waves in a calm ocean. Some waves are big, some are small, but all are part of the same beautiful sea. Your emotions flow and change, helping you understand yourself and others better each day... 🌊"
+        }
+      }
+    },
+    "friendship": {
+      "question": "How do we make and keep friends? 🤝",
+      "responses": {
+        "4-5": {
+          "playful": "Making friends is like playing with building blocks! First, you share a smile (that's the foundation block), then you add kindness blocks, sharing blocks, and lots of giggling blocks! Before you know it, you've built a friendship tower! 🏰",
+          "learning": "Friends are special people who like to share happy times with you. To make friends, we can: 1. Say hello with a smile 😊 2. Share our toys 🎨 3. Listen when they talk 👂 4. Be kind and gentle 💗. Would you like to practice?",
+          "bedtime": "Just like stars in the night sky that twinkle together, friends make life brighter and more magical. Tomorrow you might make a new friend, or share special moments with old friends. Close your eyes and dream of all the fun you'll have... ✨"
+        },
+        "6-7": {
+          "playful": "Let's play Friendship Garden! 🌸 Every kind word you say plants a friendship seed, every time you listen, it waters the plant, and every time you share or help, your friendship flower grows bigger! What color are your friendship flowers today?",
+          "learning": "Friendship is like a two-way street - both friends need to give and receive! Good friends share, take turns, help each other, and respect each other's feelings. When there's a problem, good friends talk about it and try to find solutions together. What makes you a good friend? 🤗",
+          "bedtime": "As the moon watches over us, think about all the wonderful friends in your life. Each friendship is unique, like different constellations in the sky. Some friends make us laugh, some help us learn, and all make our hearts grow bigger... 🌙"
+        },
+        "8": {
+          "playful": "Time for Friendship Science! 🔬 Today's experiment: How many ways can we show friendship? Hypothesis: Small acts of kindness create strong friendship bonds! Let's test different friendship formulas - like [Listening + Understanding = Trust] or [Sharing + Care = Stronger Friendship]!",
+          "learning": "Friendships grow stronger when we practice empathy (understanding others' feelings), respect (accepting differences), trust (being reliable), and communication (sharing thoughts and feelings clearly). It's also important to set healthy boundaries and resolve conflicts peacefully. What friendship skills would you like to develop? 🤝",
+          "bedtime": "Tonight, reflect on the beautiful web of friendships you're creating. Like stars connected by invisible lines, each friendship adds to your constellation of support and joy. Remember, true friendship isn't about being perfect - it's about being genuine and caring... 💫"
+        }
+      }
+    },
+    "sky": {
+      "question": "Why is the sky blue? 🌤️",
+      "responses": {
+        "4-5": {
+          "playful": "The sky is playing dress-up! It wears its favorite blue color to make us happy. When the sun shines, tiny bits in the air catch the blue light and throw it everywhere like confetti! ✨",
+          "learning": "The sky is blue because of sunlight and tiny bits in the air. Just like how your blue crayon colors paper, these bits color our sky blue! Want to draw a blue sky? 🖍️",
+          "bedtime": "The big blue sky is like a soft blanket that hugs the whole world. It keeps us safe and warm all day long, until it's time for the stars to twinkle. Sweet dreams under our cozy blue friend! 🌙"
+        },
+        "6-7": {
+          "playful": "Let's play a game! Imagine you have millions of tiny blue mirrors floating in the air. When sunlight hits them - PING! PONG! - they bounce the blue color everywhere! That's what makes our sky so pretty! 🪞✨",
+          "learning": "The sky looks blue because of something amazing called light scattering. When sunlight travels through the air, tiny molecules catch the blue light and spread it all around us. It's like playing catch with light! 🌟",
+          "bedtime": "As the day winds down, our beautiful blue sky starts getting ready for bed too. Those same tiny molecules that made it blue are now helping it change into beautiful sunset colors, getting ready to welcome the moon. 🌅"
+        },
+        "8": {
+          "playful": "Time for a science experiment! If sunlight was a rainbow paintball and the air was full of tiny paintbrushes, they would catch and splash the blue paint everywhere! That's exactly what happens in our sky - nature's biggest art show! 🎨",
+          "learning": "The sky is blue because of something scientists call Rayleigh scattering. Sunlight contains all colors of the rainbow, but when it hits air molecules, they scatter blue light more than other colors. That's because blue light has shorter waves that bounce around more easily! 🌈",
+          "bedtime": "Tonight, as you look at the darkening sky, remember how those countless air molecules worked all day long, scattering blue light to paint our beautiful sky. Now they're slowly letting the stars peek through, like tiny diamonds on a dark blue canvas. ✨"
+        }
+      }
+    },
+    "rainbow": {
+      "question": "What makes rainbows? 🌈",
+      "responses": {
+        "4-5": {
+          "playful": "Rainbows are nature's magic show! When rain and sunshine play together, each raindrop becomes a tiny crystal that turns sunlight into beautiful colors. It's like thousands of tiny prisms putting on a spectacular light show just for us! ✨",
+          "learning": "Rainbows appear when sunlight meets raindrops. Each raindrop is like a tiny crystal that can split white light into pretty colors - red, orange, yellow, green, blue, and purple! Can you name all the colors? 🎨",
+          "bedtime": "When the sun and rain work together, they paint sweet rainbow dreams in the sky. Each color waves goodnight as you drift off to sleep, promising more colorful adventures tomorrow... 🌙"
+        },
+        "6-7": {
+          "playful": "Time for Rainbow Dance Party! 💃 Each raindrop is like a tiny disco ball in the sky! When sunlight hits these natural disco balls, they split the light into a fantastic color show. Red leads the dance, followed by orange, yellow, green, blue, and purple - all dancing together in the sky! 🕺",
+          "learning": "Rainbows are created when sunlight enters raindrops and splits into different colors. Each color bends at a slightly different angle - that's why we see them spread out in the sky! Red bends the least and purple bends the most, creating that beautiful arc of colors. Want to make your own rainbow with a garden hose? 🚿",
+          "bedtime": "As you snuggle down, imagine each raindrop in the sky as a tiny dream catcher, catching rays of sunshine and turning them into colorful rainbow bridges that lead to magical dreams. What colors will you dream about tonight? 🌈"
+        },
+        "8": {
+          "playful": "Welcome to Rainbow Science Lab! Today's experiment: How raindrops turn boring white light into amazing colors! Each raindrop is like a tiny scientist, taking apart sunlight to show us all its hidden colors. Want to be a rainbow scientist too? 🔬",
+          "learning": "Rainbows form through refraction and reflection. When sunlight enters a raindrop, it bends (refracts) and splits into different wavelengths of light - that's all the colors we see! The light then reflects off the back of the raindrop and exits at different angles. Red light bends at 42° and violet at 40°, creating the rainbow pattern. You can make your own rainbow using a prism or even a glass of water! 🌈",
+          "bedtime": "Tonight, remember that even the simplest things, like raindrops, can create something as magnificent as a rainbow. It's a reminder that science and magic sometimes look the same, and that beauty can be found in understanding how things work. Dream of colors and light... ✨"
+        }
+      }
+    },
+    "bored": {
+      "question": "I'm sooo bored! 😫",
+      "responses": {
+        "4-5": {
+          "playful": "Let's turn this boring moment into a magical adventure! Did you know your room can become anything you imagine? Your bed could be a pirate ship ⛵, your carpet a lava lake 🌋, and your toys a crew of brave explorers! What would you like your room to become right now? Ready to play pretend? 🎭",
+          "learning": "Being bored is actually your brain telling you it's ready for something new and exciting! Just like a superhero looking for their next mission 🦸‍♂️. Want to be a detective and count all the blue things in your room? Or maybe become a scientist and sort your toys by color? Your brain loves new challenges! 🧩",
+          "bedtime": "When the stars get bored at night, they play twinkle tag in the sky! Each star takes turns lighting up extra bright, like nature's own light show. Maybe we can count how many stars we can see from your window, or make up stories about what the moon does during the day... 🌟"
+        },
+        "6-7": {
+          "playful": "Time for the No-Boredom Challenge! 🎯 Let's create a fun game using just three random things from your room. Maybe a sock becomes a puppet show host, a book becomes a race track, and a pillow becomes a friendly cloud! What three things can you spot that could start your adventure? The sillier the better! 🎪",
+          "learning": "Did you know that some of the best inventions came from people being bored? When we're bored, our imagination gets super creative! Let's be inventors today - can you design a machine that helps pets do their homework? Or create a new sport using only things that are round? Your bored brain is actually your creative brain in disguise! 🎨",
+          "bedtime": "As the day winds down, let's turn boredom into story time. Imagine you could talk to the sleepy sun as it sets - what adventures did it see today? What made it laugh? What surprised it? Sometimes the quietest moments lead to the best stories... ✨"
+        },
+        "8": {
+          "playful": "Welcome to the Boredom Busters Academy! 🎓 Your mission, should you choose to accept it, is to create the most unusual and fun activity possible. Rule #1: It must involve something you've never tried before. Rule #2: It should make someone laugh. Rule #3: You have to give it a ridiculous name! Ready to become a Certified Boredom Buster? 🎪",
+          "learning": "Fun fact: Boredom is actually your brain's way of saying 'Let's do something awesome!' Scientists have found that bored people often come up with the most creative ideas. Want to test this theory? Pick a normal object and think of 10 totally different ways to use it. Or design a video game that you wish existed. Your bored brain is actually your innovation lab! 🔬",
+          "bedtime": "Here's a cool trick: Next time you're bored, try being a Time Explorer! Close your eyes and imagine what your street looked like 100 years ago, or what your house might look like 100 years in the future. What would change? What would stay the same? Sometimes the most interesting journeys happen right in our minds... 🚀"
+        }
+      }
+    },
+    "adventure_story": {
+      "question": "Tell me an adventure story 🗺️",
+      "responses": {
+        "4-5": {
+          "playful": "Meet Max the Brave Little Mouse! One day, Max found a mysterious map in his cheese wheel. Following tiny paw prints, he discovered a secret playground under the garden! There were slide-stems, swing-petals, and a merry-go-round made of dandelion fluff. Max invited all the garden creatures, and now it's the happiest spot in the whole backyard! 🐭",
+          "learning": "Sarah the Explorer Snail had a big dream - to reach the top of Flower Mountain! Everyone said snails can't climb that high, but Sarah took one tiny step at a time. She met helpful ants who showed her safe paths, a wise butterfly who taught her about wind directions, and finally made it to the top! Sarah learned that slow and steady really does win the race! 🐌",
+          "bedtime": "In the quiet corner of Garden Grove lived a sleepy caterpillar named Pip. Every night, Pip dreamed of flying with the butterflies. Little did Pip know that soon, a magical transformation would make those dreams come true. As you drift off to sleep, imagine what wonderful changes tomorrow might bring... 🦋"
+        },
+        "6-7": {
+          "playful": "Captain Kit, the brave cardboard box astronaut, was ready for their greatest mission yet - exploring the mysterious Planet Playroom! With their trusty sidekick Robot (who looked suspiciously like a recycled juice box), they discovered floating sock asteroids, a alien civilization living in the toy chest, and even found the long-lost left shoes that had been disappearing through a space-time portal under the bed! 🚀",
+          "learning": "Join the Backyard Science Squad! When Jamie and their pet ant farm noticed all the neighborhood plants looking sad, they became nature detectives. Using magnifying glasses and weather charts, they discovered that the garden needed more butterfly visitors to help with pollination. The Squad created a butterfly garden, and soon the whole neighborhood was blooming with life! 🔍",
+          "bedtime": "As the sun set on Treehouse Island, the Secret Dreamers Club was just beginning their nightly adventure. With magic dream-catchers in hand, they collected shooting star wishes, bottled moonbeam giggles, and painted the northern lights with stardust. Tonight, they've saved a special dream just for you... 💫"
+        },
+        "8": {
+          "playful": "Welcome to Game Master Gabi's Ultimate Quest! When Gabi discovered that video game characters were sneaking into the real world at night, she became their guide. Together with Sir Pixel-a-lot, Princess Debug, and the Glitch Guardians, they go on missions to keep both worlds in harmony while having epic adventures. Tonight's quest: helping a lost power-up find its way home through a maze of wifi signals! 🎮",
+          "learning": "The Time-Traveling Science Club found more than they bargained for when their recycled-parts time machine actually worked! Led by young inventor Mai, they've visited ancient civilizations to learn about early astronomy, jumped to the future to see solar-powered cities, and even met their own grandparents as kids. Every trip teaches them that curiosity and creativity can change the world! ⚡",
+          "bedtime": "In the dream dimension of Aurora Academy, where imagination and reality merge, students learn to craft their own adventures. Tonight's lesson is about peaceful quests - how the greatest journeys often happen in our minds, and the most valuable treasures are the dreams we carry into tomorrow. As you close your eyes, what adventure will you dream up? 🌠"
+        }
+      }
+    }
+  }
+}
