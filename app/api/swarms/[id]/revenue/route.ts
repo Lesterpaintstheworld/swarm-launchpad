@@ -60,7 +60,6 @@ async function getRevenueWithAirtablePackage(swarmId: string) {
         throw error;
     }
 }
-}
 
 async function getRevenueWithDirectApi(swarmId: string) {
     const apiKey = process.env.AIRTABLE_API_KEY;
