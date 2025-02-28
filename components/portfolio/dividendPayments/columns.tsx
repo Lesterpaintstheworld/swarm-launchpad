@@ -148,7 +148,7 @@ const ActionCell = ({ row }: ActionCellProps) => {
         ubcAmount
     });
 
-    const isDisabled = computeAmount < 10;
+    const isDisabled = ubcAmount < 10;
 
     useEffect(() => {
         async function fetchSwarm() {
@@ -356,7 +356,7 @@ const ActionCell = ({ row }: ActionCellProps) => {
                 disabled={isDisabled || isClaimed || isLoading}
                 title={
                     isLoading ? "Checking claim status..." :
-                    isDisabled ? "Minimum 10 $COMPUTE required to claim" : 
+                    isDisabled ? "Minimum 10 $UBC required to claim" : 
                     isClaimed ? "Already claimed this week" : 
                     undefined
                 }
