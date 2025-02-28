@@ -8,10 +8,10 @@ export async function GET(
     { params }: { params: { id: string } }
 ) {
     try {
-        // Fetch the swarm record from Airtable
-        const records = await base('SWARMS')
+        // Fetch the swarm record from Airtable using swarmId instead of id
+        const records = await base('Swarms')
             .select({
-                filterByFormula: `{id} = "${params.id}"`,
+                filterByFormula: `{swarmId} = "${params.id}"`,
                 fields: ['weeklyRevenue']
             })
             .firstPage();
