@@ -32,114 +32,6 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
     const ANIMATION_DURATION = 5000;
     const NEW_TRANSFER_INTERVAL = 800;
 
-    useEffect(() => {
-        const animationsLayer = g.select('.animations-layer');
-        if (animationsLayer.empty()) return;
-
-        // Get all links that are revenue flows 
-        const revenueFlows = links.filter((link: any) => link.isRevenueFlow);
-        
-        const timer = setInterval(() => {
-            if (activeTransfers.size >= MAX_CONCURRENT_TRANSFERS) return;
-            
-            const getSourceId = (source: string | number | SimulationNode) => {
-                if (typeof source === 'object' && source !== null && 'id' in source) {
-                    return source.id;
-                }
-                return String(source);
-            };
-
-            // Randomly choose between regular collaborations and revenue flows
-            interface CollaborationType {
-                id: string;
-                providerSwarm: { id: string };
-                clientSwarm: { id: string };
-                price: number;
-                status: string;
-            }
-
-            const isCollaboration = (transfer: SimulationLink | CollaborationType): transfer is CollaborationType => {
-                return 'id' in transfer && 'providerSwarm' in transfer && 'clientSwarm' in transfer;
-            };
-
-            const shouldAnimateRevenue = Math.random() < 0.5; // 50% chance for revenue flows
-            
-            let availableTransfers;
-            if (shouldAnimateRevenue) {
-                console.log('Revenue flows available:', revenueFlows);
-                availableTransfers = revenueFlows.filter(
-                    flow => {
-                        const id = `${getSourceId(flow.source)}-revenue`;
-                        const isActive = !activeTransfers.has(id);
-                        console.log('Checking revenue flow:', {
-                            source: flow.source,
-                            sourceId: getSourceId(flow.source),
-                            id,
-                            isActive,
-                            activeTransfers: Array.from(activeTransfers)
-                        });
-                        return isActive;
-                    }
-                );
-            } else {
-                // Only use active collaborations
-                availableTransfers = collaborations.filter(
-                    collab => !activeTransfers.has(collab.id) && collab.status === 'active'
-                );
-            }
-            
-            if (availableTransfers.length > 0) {
-                const transfer = availableTransfers[
-                    Math.floor(Math.random() * availableTransfers.length)
-                ];
-                
-                const isSimulationLink = (transfer: SimulationLink | any): transfer is SimulationLink => {
-                    return 'source' in transfer && 'target' in transfer;
-                };
-
-                if (shouldAnimateRevenue) {
-                    if (!isSimulationLink(transfer)) {
-                        console.warn('Expected SimulationLink for revenue transfer');
-                        return;
-                    }
-                    const transferId = `${getSourceId(transfer.source)}-revenue`;
-                    setActiveTransfers(prev => {
-                        const next = new Set(prev);
-                        next.add(transferId);
-                        return next;
-                    });
-                
-                    animateTransfer(
-                        getSourceId(transfer.source),
-                        'shareholders',
-                        transfer.value,
-                        transferId
-                    );
-                } else {
-                    if (!isCollaboration(transfer)) {
-                        console.warn('Expected Collaboration for regular transfer');
-                        return;
-                    }
-                    const transferId = transfer.id;
-                    setActiveTransfers(prev => {
-                        const next = new Set(prev);
-                        next.add(transferId);
-                        return next;
-                    });
-                
-                    animateTransfer(
-                        transfer.clientSwarm.id,
-                        transfer.providerSwarm.id,
-                        transfer.price,
-                        transferId
-                    );
-                }
-            }
-        }, NEW_TRANSFER_INTERVAL);
-
-        return () => clearInterval(timer);
-    }, [activeTransfers, collaborations, nodes, g, defs, getNodeSize, links, animateTransfer]);
-
     const animateTransfer = useCallback((sourceId: string, targetId: string, amount: number, transferId: string) => {
         const sourceNode = nodes.find(n => n.id === sourceId);
         const targetNode = nodes.find(n => n.id === targetId);
@@ -305,6 +197,114 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
             setTimeout(() => animateDollar(i), i * dollarAppearInterval);
         }
     }, [nodes, g, defs]);
+
+    useEffect(() => {
+        const animationsLayer = g.select('.animations-layer');
+        if (animationsLayer.empty()) return;
+
+        // Get all links that are revenue flows 
+        const revenueFlows = links.filter((link: any) => link.isRevenueFlow);
+        
+        const timer = setInterval(() => {
+            if (activeTransfers.size >= MAX_CONCURRENT_TRANSFERS) return;
+            
+            const getSourceId = (source: string | number | SimulationNode) => {
+                if (typeof source === 'object' && source !== null && 'id' in source) {
+                    return source.id;
+                }
+                return String(source);
+            };
+
+            // Randomly choose between regular collaborations and revenue flows
+            interface CollaborationType {
+                id: string;
+                providerSwarm: { id: string };
+                clientSwarm: { id: string };
+                price: number;
+                status: string;
+            }
+
+            const isCollaboration = (transfer: SimulationLink | CollaborationType): transfer is CollaborationType => {
+                return 'id' in transfer && 'providerSwarm' in transfer && 'clientSwarm' in transfer;
+            };
+
+            const shouldAnimateRevenue = Math.random() < 0.5; // 50% chance for revenue flows
+            
+            let availableTransfers;
+            if (shouldAnimateRevenue) {
+                console.log('Revenue flows available:', revenueFlows);
+                availableTransfers = revenueFlows.filter(
+                    flow => {
+                        const id = `${getSourceId(flow.source)}-revenue`;
+                        const isActive = !activeTransfers.has(id);
+                        console.log('Checking revenue flow:', {
+                            source: flow.source,
+                            sourceId: getSourceId(flow.source),
+                            id,
+                            isActive,
+                            activeTransfers: Array.from(activeTransfers)
+                        });
+                        return isActive;
+                    }
+                );
+            } else {
+                // Only use active collaborations
+                availableTransfers = collaborations.filter(
+                    collab => !activeTransfers.has(collab.id) && collab.status === 'active'
+                );
+            }
+            
+            if (availableTransfers.length > 0) {
+                const transfer = availableTransfers[
+                    Math.floor(Math.random() * availableTransfers.length)
+                ];
+                
+                const isSimulationLink = (transfer: SimulationLink | any): transfer is SimulationLink => {
+                    return 'source' in transfer && 'target' in transfer;
+                };
+
+                if (shouldAnimateRevenue) {
+                    if (!isSimulationLink(transfer)) {
+                        console.warn('Expected SimulationLink for revenue transfer');
+                        return;
+                    }
+                    const transferId = `${getSourceId(transfer.source)}-revenue`;
+                    setActiveTransfers(prev => {
+                        const next = new Set(prev);
+                        next.add(transferId);
+                        return next;
+                    });
+                
+                    animateTransfer(
+                        getSourceId(transfer.source),
+                        'shareholders',
+                        transfer.value,
+                        transferId
+                    );
+                } else {
+                    if (!isCollaboration(transfer)) {
+                        console.warn('Expected Collaboration for regular transfer');
+                        return;
+                    }
+                    const transferId = transfer.id;
+                    setActiveTransfers(prev => {
+                        const next = new Set(prev);
+                        next.add(transferId);
+                        return next;
+                    });
+                
+                    animateTransfer(
+                        transfer.clientSwarm.id,
+                        transfer.providerSwarm.id,
+                        transfer.price,
+                        transferId
+                    );
+                }
+            }
+        }, NEW_TRANSFER_INTERVAL);
+
+        return () => clearInterval(timer);
+    }, [activeTransfers, collaborations, nodes, g, defs, getNodeSize, links, animateTransfer]);
 
     return null;
 }
