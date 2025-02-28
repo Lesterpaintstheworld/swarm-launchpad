@@ -168,7 +168,7 @@ export default function Portfolio() {
                         // Fetch both shareholder and pool data concurrently
                         const [shareholderData, poolData] = await Promise.all([
                             shareholder.fetch(shareholderPda)
-                                .catch(e => {
+                                .catch((e: Error): ShareholderAccount | null => {
                                     if (e.message.includes('Account does not exist')) {
                                         return null;
                                     }
