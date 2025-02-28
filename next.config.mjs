@@ -18,7 +18,15 @@ const nextConfig = {
         ],
     },
     webpack: config => {
+        // Only externalize these packages, not airtable
         config.externals.push('pino-pretty', 'encoding')
+        
+        // Explicitly handle airtable
+        config.resolve.alias = {
+            ...config.resolve.alias,
+            'airtable': require.resolve('airtable')
+        }
+        
         return config
     },
     async headers() {
