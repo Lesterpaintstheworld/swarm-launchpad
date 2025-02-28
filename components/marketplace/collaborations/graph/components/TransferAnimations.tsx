@@ -304,7 +304,7 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
         for (let i = 0; i < numberOfDollars; i++) {
             setTimeout(() => animateDollar(i), i * dollarAppearInterval);
         }
-    }, [nodes, g, defs, getNodeSize]);
+    }, [nodes, g, defs]);
 
     return null;
 }

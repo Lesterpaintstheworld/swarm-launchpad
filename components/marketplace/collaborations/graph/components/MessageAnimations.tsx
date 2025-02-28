@@ -172,7 +172,7 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
         }
 
         animate();
-    }, [nodes, g]);
+    }, [nodes, g, collaborations]);
 
     return null;
 }
