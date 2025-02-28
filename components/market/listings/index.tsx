@@ -231,13 +231,15 @@ const MarketListings = ({ className }: { className?: string }) => {
 				sortingFns={{
 					pricePerShare: (rowA, rowB) => {
 						// Sort by USD value
-						return rowA.original._pricePerShareInUsd > rowB.original._pricePerShareInUsd ? 1 : 
-							rowA.original._pricePerShareInUsd < rowB.original._pricePerShareInUsd ? -1 : 0;
+						const valueA = rowA.original._pricePerShareInUsd ?? 0;
+						const valueB = rowB.original._pricePerShareInUsd ?? 0;
+						return valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
 					},
 					askingAmount: (rowA, rowB) => {
 						// Sort by USD value
-						return rowA.original._askingAmountInUsd > rowB.original._askingAmountInUsd ? 1 : 
-							rowA.original._askingAmountInUsd < rowB.original._askingAmountInUsd ? -1 : 0;
+						const valueA = rowA.original._askingAmountInUsd ?? 0;
+						const valueB = rowB.original._askingAmountInUsd ?? 0;
+						return valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
 					}
 				}}
 				columnFilters={columnFilters}
