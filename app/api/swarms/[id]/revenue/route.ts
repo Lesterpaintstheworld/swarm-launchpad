@@ -23,11 +23,16 @@ export async function GET(
             return Response.json({ error: 'Swarm not found' }, { status: 404 });
         }
         
-        // Get the weeklyRevenue value from the record
+        // Get the weeklyRevenue and revenueShare values from the record
         const weeklyRevenue = records[0].get('weeklyRevenue') as number || 0;
-        console.log(`Found weeklyRevenue: ${weeklyRevenue} for swarm: ${params.id} (${records[0].get('name')})`);
+        let revenueShare = records[0].get('revenueShare') as number || 100; // Default to 100% if not provided
+
+        // Ensure revenueShare is between 10 and 100
+        revenueShare = Math.max(10, Math.min(100, revenueShare));
+
+        console.log(`Found weeklyRevenue: ${weeklyRevenue}, revenueShare: ${revenueShare}% for swarm: ${params.id} (${records[0].get('name')})`);
         
-        return Response.json({ weeklyRevenue });
+        return Response.json({ weeklyRevenue, revenueShare });
     } catch (error) {
         console.error('Error fetching swarm revenue:', error);
         

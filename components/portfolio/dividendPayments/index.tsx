@@ -36,7 +36,7 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
                     swarms.map(async (swarmId) => {
                         const response = await fetch(`/api/swarms/${swarmId}/revenue`);
                         const data = await response.json();
-                        return [swarmId, data.weeklyRevenue];
+                        return [swarmId, data];
                     })
                 );
                 setRevenueData(Object.fromEntries(revenues));
@@ -64,11 +64,13 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
             // Only add dividend entries if there is actual ownership
             const xForgeOwnership = calculateOwnership(xForgePosition?.data, 100000);
             if (xForgeOwnership > 0 && revenueData.xforge) {
+                // Apply revenueShare as a percentage (divide by 100)
+                const revenue = revenueData.xforge.weeklyRevenue * (revenueData.xforge.revenueShare / 100);
                 data.push({
                     id: '1',
                     swarm_id: 'xforge',
-                    amount: Math.floor(revenueData.xforge * 0.90 * xForgeOwnership),
-                    ubcAmount: Math.floor(revenueData.xforge * 0.10 * xForgeOwnership),
+                    amount: Math.floor(revenue * 0.90 * xForgeOwnership),
+                    ubcAmount: Math.floor(revenue * 0.10 * xForgeOwnership),
                     timestamp: now.toISOString(),
                     status: 'pending'
                 });
@@ -76,11 +78,13 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
 
             const kinOSOwnership = calculateOwnership(kinOSPosition?.data, 100000);
             if (kinOSOwnership > 0 && revenueData.kinos) {
+                // Apply revenueShare as a percentage (divide by 100)
+                const revenue = revenueData.kinos.weeklyRevenue * (revenueData.kinos.revenueShare / 100);
                 data.push({
                     id: '2',
                     swarm_id: 'kinos',
-                    amount: Math.floor(revenueData.kinos * 0.90 * kinOSOwnership),
-                    ubcAmount: Math.floor(revenueData.kinos * 0.10 * kinOSOwnership),
+                    amount: Math.floor(revenue * 0.90 * kinOSOwnership),
+                    ubcAmount: Math.floor(revenue * 0.10 * kinOSOwnership),
                     timestamp: now.toISOString(),
                     status: 'pending'
                 });
@@ -88,11 +92,13 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
 
             const kinKongOwnership = calculateOwnership(kinKongPosition?.data, 100000);
             if (kinKongOwnership > 0 && revenueData.kinkong) {
+                // Apply revenueShare as a percentage (divide by 100)
+                const revenue = revenueData.kinkong.weeklyRevenue * (revenueData.kinkong.revenueShare / 100);
                 data.push({
                     id: '3',
                     swarm_id: 'kinkong',
                     amount: 0, // 0% to COMPUTE
-                    ubcAmount: Math.floor(revenueData.kinkong * kinKongOwnership), // 100% to UBC
+                    ubcAmount: Math.floor(revenue * kinKongOwnership), // 100% to UBC
                     timestamp: now.toISOString(),
                     status: 'pending'
                 });
