@@ -61,38 +61,7 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
         fetchMessages();
     }, [collaborations]);
 
-    // Animate messages
-    useEffect(() => {
-        if (!messages.length) return;
-        
-        const animationsLayer = g.select('.animations-layer');
-        if (animationsLayer.empty()) return;
-
-        const timer = setInterval(() => {
-            if (activeMessages.size >= MAX_CONCURRENT_MESSAGES) return;
-
-            const availableMessages = messages.filter(msg => !activeMessages.has(msg.id));
-            if (availableMessages.length === 0) return;
-
-            const message = availableMessages[Math.floor(Math.random() * availableMessages.length)];
-            const possibleTargets = collaborations
-                .filter(c => c.providerSwarm.id === message.senderId || c.clientSwarm.id === message.senderId)
-                .map(c => c.providerSwarm.id === message.senderId ? c.clientSwarm.id : c.providerSwarm.id);
-
-            if (possibleTargets.length) {
-                const targetId = possibleTargets[Math.floor(Math.random() * possibleTargets.length)];
-                setActiveMessages(prev => {
-                    const next = new Set(prev);
-                    next.add(message.id);
-                    return next;
-                });
-                animateMessage(message.senderId, targetId, message.id);
-            }
-        }, NEW_MESSAGE_INTERVAL);
-
-        return () => clearTimeout(timer);
-    }, [messages, collaborations, nodes, g, defs, getNodeSize, activeMessages, animateMessage]);
-
+    // Define animateMessage before using it in useEffect
     const animateMessage = useCallback((sourceId: string, targetId: string, messageId: string) => {
         const sourceNode = nodes.find(n => n.id === sourceId);
         const targetNode = nodes.find(n => n.id === targetId);
@@ -173,6 +142,38 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
 
         animate();
     }, [nodes, g, collaborations]);
+
+    // Animate messages
+    useEffect(() => {
+        if (!messages.length) return;
+        
+        const animationsLayer = g.select('.animations-layer');
+        if (animationsLayer.empty()) return;
+
+        const timer = setInterval(() => {
+            if (activeMessages.size >= MAX_CONCURRENT_MESSAGES) return;
+
+            const availableMessages = messages.filter(msg => !activeMessages.has(msg.id));
+            if (availableMessages.length === 0) return;
+
+            const message = availableMessages[Math.floor(Math.random() * availableMessages.length)];
+            const possibleTargets = collaborations
+                .filter(c => c.providerSwarm.id === message.senderId || c.clientSwarm.id === message.senderId)
+                .map(c => c.providerSwarm.id === message.senderId ? c.clientSwarm.id : c.providerSwarm.id);
+
+            if (possibleTargets.length) {
+                const targetId = possibleTargets[Math.floor(Math.random() * possibleTargets.length)];
+                setActiveMessages(prev => {
+                    const next = new Set(prev);
+                    next.add(message.id);
+                    return next;
+                });
+                animateMessage(message.senderId, targetId, message.id);
+            }
+        }, NEW_MESSAGE_INTERVAL);
+
+        return () => clearTimeout(timer);
+    }, [messages, collaborations, nodes, g, defs, getNodeSize, activeMessages, animateMessage]);
 
     return null;
 }
