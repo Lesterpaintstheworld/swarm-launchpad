@@ -1,13 +1,5 @@
-// Try to import Airtable, but have a fallback mechanism
-let Airtable: any;
-let useDirectApi = false;
-
-try {
-    Airtable = require('airtable');
-} catch (error) {
-    console.warn('Airtable package not available, falling back to direct API calls');
-    useDirectApi = true;
-}
+// Import Airtable properly
+import Airtable from 'airtable';
 
 export async function GET(
     request: Request,
@@ -16,12 +8,13 @@ export async function GET(
     try {
         console.log(`Fetching revenue for swarm: ${params.id}`);
         
-        if (useDirectApi) {
-            // Use direct Airtable API if the package is not available
-            return await getRevenueWithDirectApi(params.id);
-        } else {
-            // Use Airtable package
+        try {
+            // Try to use Airtable package first
             return await getRevenueWithAirtablePackage(params.id);
+        } catch (airtableError) {
+            console.warn('Error with Airtable package, falling back to direct API:', airtableError);
+            // Fall back to direct API if Airtable package fails
+            return await getRevenueWithDirectApi(params.id);
         }
     } catch (error) {
         console.error('Error fetching swarm revenue:', error);
@@ -30,8 +23,9 @@ export async function GET(
 }
 
 async function getRevenueWithAirtablePackage(swarmId: string) {
-    // Initialize Airtable
-    const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(process.env.AIRTABLE_BASE_ID!);
+    try {
+        // Initialize Airtable
+        const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(process.env.AIRTABLE_BASE_ID!);
     
     try {
         // Get all records from the Swarms table that match the swarmId
@@ -59,8 +53,7 @@ async function getRevenueWithAirtablePackage(swarmId: string) {
         return Response.json({ weeklyRevenue, revenueShare });
     } catch (error) {
         console.error('Error with Airtable package:', error);
-        // If there's an error with the Airtable package, fall back to direct API
-        return getRevenueWithDirectApi(swarmId);
+        throw error; // Rethrow to be caught by the outer try/catch
     }
 }
 
