@@ -12,7 +12,7 @@ export function Returns() {
                 <div className="text-center mb-16">
                     <h2 className="text-4xl font-bold">Investment Returns</h2>
                     <h3 className="text-2xl font-semibold mt-4 text-muted-foreground/60">
-                        100% of the revenues of our swarms goes to the UBC community and builders
+                        100% of the profits of our swarms goes to the UBC community and builders
                     </h3>
                     <p className="mt-6 max-w-2xl mx-auto text-muted-foreground">
                         AIs should work for humans, not corporations. Our swarms operate with complete transparency, 
