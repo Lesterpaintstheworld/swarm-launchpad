@@ -47,6 +47,14 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
         const dollarAppearInterval = 200; // Time between each dollar appearing
 
         function createArcPath(source: { x: number, y: number }, target: { x: number, y: number }, isReverse: boolean) {
+            // Validate coordinates
+            if (typeof source.x !== 'number' || typeof source.y !== 'number' || 
+                typeof target.x !== 'number' || typeof target.y !== 'number' ||
+                isNaN(source.x) || isNaN(source.y) || isNaN(target.x) || isNaN(target.y)) {
+                console.warn('Invalid coordinates for animation path', { source, target });
+                return null;
+            }
+    
             const dx = target.x - source.x;
             const dy = target.y - source.y;
             const dr = Math.sqrt(dx * dx + dy * dy);
@@ -56,6 +64,11 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
         }
 
         const path = createArcPath(sourceNode, targetNode, true);
+        if (!path) {
+            console.warn('Could not create valid path for animation');
+            return; // Exit early if we can't create a valid path
+        }
+        
         const pathElement = animationsLayer.append("path")
             .attr("d", path)
             .style("display", "none");
@@ -167,6 +180,22 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
                     if (progress < 1) {
                         return true;
                     } else {
+                        dollarGroup.remove();
+                        activeDollars--;
+                        
+                        if (activeDollars === 0) {
+                            pathElement.remove();
+                            setActiveTransfers(prev => {
+                                const next = new Set(prev);
+                                next.delete(transferId);
+                                return next;
+                            });
+                        }
+                        frameCallbacks.delete(animate);
+                        return false;
+                    }
+                    } catch (error) {
+                        console.error('Error in animation:', error);
                         dollarGroup.remove();
                         activeDollars--;
                         

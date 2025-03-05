@@ -85,6 +85,14 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
             .style("filter", "url(#envelope-glow)");
 
         function createArcPath(source: { x: number, y: number }, target: { x: number, y: number }) {
+            // Validate coordinates
+            if (typeof source.x !== 'number' || typeof source.y !== 'number' || 
+                typeof target.x !== 'number' || typeof target.y !== 'number' ||
+                isNaN(source.x) || isNaN(source.y) || isNaN(target.x) || isNaN(target.y)) {
+                console.warn('Invalid coordinates for message animation path', { source, target });
+                return null;
+            }
+            
             const dx = target.x - source.x;
             const dy = target.y - source.y;
             const dr = Math.sqrt(dx * dx + dy * dy);
@@ -103,6 +111,10 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
         }
 
         const path = createArcPath(sourceNode, targetNode);
+        if (!path) {
+            console.warn('Could not create valid path for message animation');
+            return; // Exit early if we can't create a valid path
+        }
         
         // Create invisible path for animation
         const pathElement = animationsLayer.append("path")
@@ -117,19 +129,52 @@ export function MessageAnimations({ g, defs, nodes, collaborations, getNodeSize 
             const elapsed = Date.now() - startTime;
             const progress = Math.min(elapsed / duration, 1);
 
-            const point = pathElement.node()?.getPointAtLength(progress * pathLength);
-            if (!point) return;
+            // Check if pathElement exists and has a valid node
+            if (!pathElement.node()) {
+                console.warn('Path element node is null for message animation');
+                envelopeGroup.remove();
+                setActiveMessages(prev => {
+                    const next = new Set(prev);
+                    next.delete(messageId);
+                    return next;
+                });
+                return; // Exit early
+            }
+            
+            try {
+                const point = pathElement.node()?.getPointAtLength(progress * pathLength);
+                if (!point) {
+                    console.warn('Could not get point at length for message animation');
+                    envelopeGroup.remove();
+                    pathElement.remove();
+                    setActiveMessages(prev => {
+                        const next = new Set(prev);
+                        next.delete(messageId);
+                        return next;
+                    });
+                    return;
+                }
+                
+                const opacity = progress < 0.1 ? progress * 10 : 
+                              progress > 0.9 ? (1 - progress) * 10 : 1;
 
-            const opacity = progress < 0.1 ? progress * 10 : 
-                          progress > 0.9 ? (1 - progress) * 10 : 1;
+                envelopeGroup
+                    .attr("transform", `translate(${point.x},${point.y})`)
+                    .style("opacity", opacity);
 
-            envelopeGroup
-                .attr("transform", `translate(${point.x},${point.y})`)
-                .style("opacity", opacity);
-
-            if (progress < 1) {
-                requestAnimationFrame(animate);
-            } else {
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    envelopeGroup.remove();
+                    pathElement.remove();
+                    setActiveMessages(prev => {
+                        const next = new Set(prev);
+                        next.delete(messageId);
+                        return next;
+                    });
+                }
+            } catch (error) {
+                console.error('Error in message animation:', error);
                 envelopeGroup.remove();
                 pathElement.remove();
                 setActiveMessages(prev => {

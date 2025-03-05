@@ -313,7 +313,12 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
           {nodes.length > 0 ? `Graph with ${nodes.length} nodes and ${links.length} links` : "Initializing graph..."}
         </text>
         
-        {g && defs && simulation && (
+        {g && defs && simulation && nodes.length > 0 && nodes.every(node => 
+          typeof node.x === 'number' && 
+          typeof node.y === 'number' && 
+          !isNaN(node.x) && 
+          !isNaN(node.y)
+        ) ? (
           <>
             <GraphLinks 
               g={g}
@@ -338,7 +343,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
               getNodeSize={getNodeSize} 
             />
           </>
-        )}
+        ) : null}
       </svg>
     </div>
   );
