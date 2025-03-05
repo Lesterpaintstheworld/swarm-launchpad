@@ -36,19 +36,37 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
         const sourceNode = nodes.find(n => n.id === sourceId);
         const targetNode = nodes.find(n => n.id === targetId);
 
-        if (!sourceNode || !targetNode) return;
+        if (!sourceNode || !targetNode) {
+            console.warn('Source or target node not found', { sourceId, targetId });
+            return;
+        }
+
+        // Validate node coordinates
+        if (typeof sourceNode.x !== 'number' || typeof sourceNode.y !== 'number' || 
+            typeof targetNode.x !== 'number' || typeof targetNode.y !== 'number' ||
+            isNaN(sourceNode.x) || isNaN(sourceNode.y) || 
+            isNaN(targetNode.x) || isNaN(targetNode.y)) {
+            console.warn('Invalid node coordinates', { sourceNode, targetNode });
+            return;
+        }
 
         const animationsLayer = g.select('.animations-layer');
+        if (!animationsLayer || animationsLayer.empty()) {
+            console.warn('Animations layer not found');
+            return;
+        }
+    
         // Check if this is a revenue flow (transfer to shareholders)
         const isRevenueFlow = targetId === 'shareholders';
-        
+    
         const numberOfDollars = Math.max(1, Math.floor(amount / 10000));
         const dollarSpacing = 0.1; // Spacing between dollars along the path
         const dollarAppearInterval = 200; // Time between each dollar appearing
 
         function createArcPath(source: { x: number, y: number }, target: { x: number, y: number }, isReverse: boolean) {
-            // Validate coordinates
-            if (typeof source.x !== 'number' || typeof source.y !== 'number' || 
+            // Validate coordinates more thoroughly
+            if (!source || !target || 
+                typeof source.x !== 'number' || typeof source.y !== 'number' || 
                 typeof target.x !== 'number' || typeof target.y !== 'number' ||
                 isNaN(source.x) || isNaN(source.y) || isNaN(target.x) || isNaN(target.y)) {
                 console.warn('Invalid coordinates for animation path', { source, target });
@@ -58,6 +76,13 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
             const dx = target.x - source.x;
             const dy = target.y - source.y;
             const dr = Math.sqrt(dx * dx + dy * dy);
+    
+            // Ensure dr is valid
+            if (isNaN(dr) || dr === 0) {
+                console.warn('Invalid path calculation', { dx, dy, dr });
+                return null;
+            }
+    
             // Change sweep flag for revenue flows (to shareholders)
             const sweepFlag = targetId === 'shareholders' ? "1" : isReverse ? "0" : "1";
             return `M${source.x},${source.y}A${dr},${dr} 0 0,${sweepFlag} ${target.x},${target.y}`;
@@ -87,6 +112,12 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
             // For revenue flows, make 1/10 of the tokens yellow (representing distributed revenue)
             const isDistributedRevenue = isRevenueFlow && (index % 10 === 0);
 
+            // Check if animationsLayer exists
+            if (!animationsLayer || animationsLayer.empty()) {
+                console.warn('Animations layer not found');
+                return;
+            }
+        
             // Create just the token circle
             dollarGroup.append("circle")
                 .attr("r", isDistributedRevenue ? 6 : 3)  // Changed from 12 to 6 for distributed revenue
@@ -135,11 +166,29 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
                     }
                     
                     try {
-                        const point = pathElement.node()?.getPointAtLength(progress * pathLength);
-                        
-                        if (point) {
+                        // Get the path length again to ensure it's valid
+                        const currentPathLength = pathElement.node()?.getTotalLength() || 0;
+                        if (currentPathLength <= 0) {
+                            console.warn('Path has zero or negative length');
+                            frameCallbacks.delete(animate);
+                            dollarGroup.remove();
+                            activeDollars--;
+                            return false;
+                        }
+                    
+                        const point = pathElement.node()?.getPointAtLength(progress * currentPathLength);
+                    
+                        if (!point || typeof point.x !== 'number' || typeof point.y !== 'number' || 
+                            isNaN(point.x) || isNaN(point.y)) {
+                            console.warn('Invalid point from getPointAtLength', point);
+                            frameCallbacks.delete(animate);
+                            dollarGroup.remove();
+                            activeDollars--;
+                            return false;
+                        }
+                    
                         const isMidpoint = Math.abs(progress - 0.5) < 0.05;
-                        
+                    
                         // Only do flame effect for non-revenue flows
                         if (!isRevenueFlow && shouldDisappear && isMidpoint) {
                             const flameGroup = animationsLayer.append("g")
@@ -162,7 +211,7 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
 
                             dollarGroup.remove();
                             activeDollars--;
-                            
+                        
                             if (activeDollars === 0) {
                                 pathElement.remove();
                                 setActiveTransfers(prev => {

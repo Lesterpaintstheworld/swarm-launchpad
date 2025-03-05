@@ -77,7 +77,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     const gElement = svg.append("g").attr("class", "graph-container");
     const defsElement = svg.append("defs");
     
-    // Create layers
+    // Create layers with explicit class names for easier selection
     const linksLayer = gElement.append("g").attr("class", "links-layer");
     const animationsLayer = gElement.append("g").attr("class", "animations-layer");
     const nodesLayer = gElement.append("g").attr("class", "nodes-layer");
@@ -261,6 +261,11 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     // Add some initial force to spread nodes
     newSimulation.alpha(0.5).restart();
+    
+    // Ensure animations layer exists
+    if (gElement.select('.animations-layer').empty()) {
+      gElement.append("g").attr("class", "animations-layer");
+    }
 
     return () => {
       newSimulation.stop();
