@@ -73,156 +73,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
   }, [swarmMap]);
 
 
-  const setupGraph = useCallback((
-    g: d3.Selection<SVGGElement, unknown, null, undefined> | null,
-    defs: d3.Selection<SVGDefsElement, unknown, null, undefined> | null,
-    nodes: SimulationNode[],
-    links: SimulationLink[],
-    simulation: d3.Simulation<SimulationNode, SimulationLink>
-  ) => {
-    if (!g || !defs || !svgRef.current) {
-      console.warn('Graph container, defs, or SVG ref not available');
-      return;
-    }
-
-    // Remove any existing layers to prevent duplicates
-    g.selectAll('.links-layer, .animations-layer, .nodes-layer').remove();
-
-    // Create layers in specific order (bottom to top)
-    const linksLayer = g.append("g").attr("class", "links-layer");
-    const animationsLayer = g.append("g").attr("class", "animations-layer");
-    const nodesLayer = g.append("g").attr("class", "nodes-layer");
-
-    // IMPORTANT: Remove the duplicate tick handler here - this is causing the infinite loop
-    // We'll set up the tick handler only once in the main useEffect
-
-    // Add gradient definitions
-    defs.append("linearGradient")
-      .attr("id", "link-gradient")
-      .attr("gradientUnits", "userSpaceOnUse")
-      .selectAll("stop")
-      .data([
-        { offset: "0%", color: "rgba(147, 51, 234, 0.3)" },
-        { offset: "100%", color: "rgba(147, 51, 234, 0.3)" }
-      ])
-      .join("stop")
-      .attr("offset", d => d.offset)
-      .attr("stop-color", d => d.color);
-
-    // Create links with proper visibility
-    const linkElements = linksLayer
-      .selectAll("path")
-      .data(links)
-      .join("path")
-      .attr("class", "link-path")
-      .attr("stroke", d => {
-        if ((d as any).isRevenueFlow) {
-          return "rgba(234, 179, 8, 0.3)";
-        }
-        if ((d as any).isShareholderLink) {
-          return "rgba(234, 179, 8, 0.15)";
-        }
-        return "url(#link-gradient)";
-      })
-      .attr("stroke-width", d => {
-        if ((d as any).isRevenueFlow) {
-          return calculateWidth(d.value) * 1.5;
-        }
-        return (d as any).invisible ? 0 : calculateWidth(d.value);
-      })
-      .attr("fill", "none")
-      .style("pointer-events", "none")
-      .style("opacity", 1);
-
-    // Create nodes in the nodes layer
-    const nodeElements = nodesLayer
-        .selectAll("g")
-        .data(nodes)
-        .join("g")
-        .call(d3.drag<any, SimulationNode>()
-            .on("start", memoizedHandlers.dragstarted)
-            .on("drag", memoizedHandlers.dragged)
-            .on("end", memoizedHandlers.dragended) as any);
-
-    // Add node visuals
-    nodeElements.append("circle")
-        .attr("r", (d: SimulationNode) => d.id === 'shareholders' ? 
-            getNodeSize(d.id) * 4 : 
-            getNodeSize(d.id))
-        .attr("fill", (d: SimulationNode) => d.id === 'shareholders' ? 
-            "rgba(234, 179, 8, 0.2)" : 
-            "rgba(236, 72, 153, 0.2)")
-        .attr("stroke", (d: SimulationNode) => d.id === 'shareholders' ? 
-            "rgba(234, 179, 8, 0.5)" : 
-            "rgba(236, 72, 153, 0.5)")
-        .attr("stroke-width", d => d.id === 'shareholders' ? 6 : 3)
-        .style("filter", (d: SimulationNode) => d.id === 'shareholders' ?
-            "drop-shadow(0 0 20px rgba(234, 179, 8, 0.4))" : 
-            "drop-shadow(0 0 10px rgba(236, 72, 153, 0.3))");
-
-    // Add images to nodes
-    nodeElements.append("image")
-        .attr("xlink:href", (d: SimulationNode) => d.image)
-        .attr("x", (d: SimulationNode) => d.id === 'shareholders' ? 
-            -getNodeSize(d.id) * 4 : 
-            -getNodeSize(d.id))
-        .attr("y", (d: SimulationNode) => d.id === 'shareholders' ? 
-            -getNodeSize(d.id) * 4 : 
-            -getNodeSize(d.id))
-        .attr("width", (d: SimulationNode) => d.id === 'shareholders' ? 
-            getNodeSize(d.id) * 8 : 
-            getNodeSize(d.id) * 2)
-        .attr("height", (d: SimulationNode) => d.id === 'shareholders' ? 
-            getNodeSize(d.id) * 8 : 
-            getNodeSize(d.id) * 2)
-        .attr("clip-path", (d: SimulationNode) => `circle(${d.id === 'shareholders' ? 
-            getNodeSize(d.id) * 4 : 
-            getNodeSize(d.id)}px)`);
-
-    // Add labels to nodes
-    nodeElements.append("text")
-        .text((d: SimulationNode) => d.name)
-        .attr("x", 0)
-        .attr("y", (d: SimulationNode) => d.id === 'shareholders' ? 
-            getNodeSize(d.id) * 4 + 20 : 
-            getNodeSize(d.id) + 20)
-        .attr("text-anchor", "middle")
-        .attr("fill", (d: SimulationNode) => d.id === 'shareholders' ? 
-            "rgb(234, 179, 8)" : 
-            "rgb(236, 72, 153)")
-        .attr("font-size", "14px")
-        .attr("font-weight", "bold")
-        .style("text-shadow", "0 0 10px rgba(0,0,0,0.5)");
-
-    // Set up simulation tick handler
-    simulation.on("tick", () => {
-        // Update link positions
-        linkElements.attr("d", (d: any) => {
-            // Make sure both source and target nodes have valid coordinates
-            if (!d.source || !d.target || 
-                typeof d.source.x !== 'number' || 
-                typeof d.source.y !== 'number' || 
-                typeof d.target.x !== 'number' || 
-                typeof d.target.y !== 'number') {
-                return null; // Return null path if coordinates are invalid
-            }
-            
-            const dx = d.target.x - d.source.x;
-            const dy = d.target.y - d.source.y;
-            const dr = Math.sqrt(dx * dx + dy * dy);
-            return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
-        });
-
-        // Update node positions
-        nodeElements.attr("transform", (d: any) => {
-            if (typeof d.x !== 'number' || typeof d.y !== 'number') return null;
-            return `translate(${d.x},${d.y})`;
-        });
-    });
-
-    // Start the simulation
-    simulation.alpha(1).restart();
-  }, [calculateWidth, getNodeSize, memoizedHandlers]);
+  // Removed setupGraph function as it's now integrated directly in the useEffect
 
   useEffect(() => {
     if (!svgRef.current || isLoading || !collaborationsProp?.length) return;
@@ -273,35 +124,133 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     // Initialize simulation with nodes and links
     initializeSimulation(newSimulation, nodes, links);
 
-    // Set up the graph components
-    setupGraph(gElement, defsElement, nodes, links, newSimulation);
+    // Create layers in specific order (bottom to top)
+    const linksLayer = gElement.append("g").attr("class", "links-layer");
+    const animationsLayer = gElement.append("g").attr("class", "animations-layer");
+    const nodesLayer = gElement.append("g").attr("class", "nodes-layer");
 
-    // Set up a SINGLE tick handler here
+    // Add gradient definitions
+    defsElement.append("linearGradient")
+      .attr("id", "link-gradient")
+      .attr("gradientUnits", "userSpaceOnUse")
+      .selectAll("stop")
+      .data([
+        { offset: "0%", color: "rgba(147, 51, 234, 0.3)" },
+        { offset: "100%", color: "rgba(147, 51, 234, 0.3)" }
+      ])
+      .join("stop")
+      .attr("offset", d => d.offset)
+      .attr("stop-color", d => d.color);
+
+    // Create links with proper visibility
+    const linkElements = linksLayer
+      .selectAll("path")
+      .data(links)
+      .join("path")
+      .attr("class", "link-path")
+      .attr("stroke", d => {
+        if ((d as any).isRevenueFlow) {
+          return "rgba(234, 179, 8, 0.3)";
+        }
+        if ((d as any).isShareholderLink) {
+          return "rgba(234, 179, 8, 0.15)";
+        }
+        return "url(#link-gradient)";
+      })
+      .attr("stroke-width", d => {
+        if ((d as any).isRevenueFlow) {
+          return calculateWidth(d.value) * 1.5;
+        }
+        return (d as any).invisible ? 0 : calculateWidth(d.value);
+      })
+      .attr("fill", "none")
+      .style("pointer-events", "none")
+      .style("opacity", 1);
+
+    // Create nodes in the nodes layer
+    const nodeElements = nodesLayer
+      .selectAll("g")
+      .data(nodes)
+      .join("g")
+      .call(d3.drag<any, SimulationNode>()
+        .on("start", memoizedHandlers.dragstarted)
+        .on("drag", memoizedHandlers.dragged)
+        .on("end", memoizedHandlers.dragended) as any);
+
+    // Add node visuals
+    nodeElements.append("circle")
+      .attr("r", (d: SimulationNode) => d.id === 'shareholders' ? 
+        getNodeSize(d.id) * 4 : 
+        getNodeSize(d.id))
+      .attr("fill", (d: SimulationNode) => d.id === 'shareholders' ? 
+        "rgba(234, 179, 8, 0.2)" : 
+        "rgba(236, 72, 153, 0.2)")
+      .attr("stroke", (d: SimulationNode) => d.id === 'shareholders' ? 
+        "rgba(234, 179, 8, 0.5)" : 
+        "rgba(236, 72, 153, 0.5)")
+      .attr("stroke-width", d => d.id === 'shareholders' ? 6 : 3)
+      .style("filter", (d: SimulationNode) => d.id === 'shareholders' ?
+        "drop-shadow(0 0 20px rgba(234, 179, 8, 0.4))" : 
+        "drop-shadow(0 0 10px rgba(236, 72, 153, 0.3))");
+
+    // Add images to nodes
+    nodeElements.append("image")
+      .attr("xlink:href", (d: SimulationNode) => d.image)
+      .attr("x", (d: SimulationNode) => d.id === 'shareholders' ? 
+        -getNodeSize(d.id) * 4 : 
+        -getNodeSize(d.id))
+      .attr("y", (d: SimulationNode) => d.id === 'shareholders' ? 
+        -getNodeSize(d.id) * 4 : 
+        -getNodeSize(d.id))
+      .attr("width", (d: SimulationNode) => d.id === 'shareholders' ? 
+        getNodeSize(d.id) * 8 : 
+        getNodeSize(d.id) * 2)
+      .attr("height", (d: SimulationNode) => d.id === 'shareholders' ? 
+        getNodeSize(d.id) * 8 : 
+        getNodeSize(d.id) * 2)
+      .attr("clip-path", (d: SimulationNode) => `circle(${d.id === 'shareholders' ? 
+        getNodeSize(d.id) * 4 : 
+        getNodeSize(d.id)}px)`);
+
+    // Add labels to nodes
+    nodeElements.append("text")
+      .text((d: SimulationNode) => d.name)
+      .attr("x", 0)
+      .attr("y", (d: SimulationNode) => d.id === 'shareholders' ? 
+        getNodeSize(d.id) * 4 + 20 : 
+        getNodeSize(d.id) + 20)
+      .attr("text-anchor", "middle")
+      .attr("fill", (d: SimulationNode) => d.id === 'shareholders' ? 
+        "rgb(234, 179, 8)" : 
+        "rgb(236, 72, 153)")
+      .attr("font-size", "14px")
+      .attr("font-weight", "bold")
+      .style("text-shadow", "0 0 10px rgba(0,0,0,0.5)");
+
+    // Set up a SINGLE tick handler
     newSimulation.on("tick", () => {
       // Update link positions
-      gElement.selectAll(".link-path")
-        .attr("d", (d: any) => {
-          // Make sure both source and target nodes have valid coordinates
-          if (!d.source || !d.target || 
-              typeof d.source.x !== 'number' || 
-              typeof d.source.y !== 'number' || 
-              typeof d.target.x !== 'number' || 
-              typeof d.target.y !== 'number') {
-              return null; // Return null path if coordinates are invalid
-          }
-          
-          const dx = d.target.x - d.source.x;
-          const dy = d.target.y - d.source.y;
-          const dr = Math.sqrt(dx * dx + dy * dy);
-          return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
-        });
+      linkElements.attr("d", (d: any) => {
+        // Make sure both source and target nodes have valid coordinates
+        if (!d.source || !d.target || 
+            typeof d.source.x !== 'number' || 
+            typeof d.source.y !== 'number' || 
+            typeof d.target.x !== 'number' || 
+            typeof d.target.y !== 'number') {
+            return null; // Return null path if coordinates are invalid
+        }
+        
+        const dx = d.target.x - d.source.x;
+        const dy = d.target.y - d.source.y;
+        const dr = Math.sqrt(dx * dx + dy * dy);
+        return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
+      });
 
       // Update node positions
-      gElement.selectAll(".nodes-layer g")
-        .attr("transform", (d: any) => {
-          if (typeof d.x !== 'number' || typeof d.y !== 'number') return null;
-          return `translate(${d.x},${d.y})`;
-        });
+      nodeElements.attr("transform", (d: any) => {
+        if (typeof d.x !== 'number' || typeof d.y !== 'number') return null;
+        return `translate(${d.x},${d.y})`;
+      });
     });
 
     // Center the view
@@ -320,7 +269,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
         newSimulation.stop();
         svg.selectAll("*").remove();
     };
-  }, [collaborationsProp, isLoading, nodes, links, getNodeSize, initializeSimulation, createSimulation, setupGraph]);
+  }, [isLoading]); // IMPORTANT: Only depend on isLoading to prevent infinite loops
 
   // Cleanup effect for simulation
   useEffect(() => {
