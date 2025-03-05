@@ -58,7 +58,11 @@ export function GraphLinks({ g, defs, links, calculateWidth, simulation }: Graph
         // Update link positions on simulation tick
         const updateLinks = () => {
             linkPaths.attr("d", (d: any) => {
-                if (!d.source?.x || !d.source?.y || !d.target?.x || !d.target?.y) {
+                if (!d.source || !d.target || 
+                    typeof d.source.x !== 'number' || 
+                    typeof d.source.y !== 'number' || 
+                    typeof d.target.x !== 'number' || 
+                    typeof d.target.y !== 'number') {
                     return null;
                 }
                 const dx = d.target.x - d.source.x;

@@ -217,10 +217,15 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     simulation.on("tick", () => {
         // Update link positions
         linkElements.attr("d", (d: any) => {
-            if (!d.source?.x || !d.source?.y || !d.target?.x || !d.target?.y) {
-                console.warn('Missing coordinates for link:', d);
-                return null;
+            // Make sure both source and target nodes have valid coordinates
+            if (!d.source || !d.target || 
+                typeof d.source.x !== 'number' || 
+                typeof d.source.y !== 'number' || 
+                typeof d.target.x !== 'number' || 
+                typeof d.target.y !== 'number') {
+                return null; // Return null path if coordinates are invalid
             }
+            
             const dx = d.target.x - d.source.x;
             const dy = d.target.y - d.source.y;
             const dr = Math.sqrt(dx * dx + dy * dy);
@@ -229,7 +234,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
         // Update node positions
         nodeElements.attr("transform", (d: any) => {
-            if (!d.x || !d.y) return null;
+            if (typeof d.x !== 'number' || typeof d.y !== 'number') return null;
             return `translate(${d.x},${d.y})`;
         });
     });
@@ -271,8 +276,17 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     
     // Initialize nodes positions with some randomness
     nodes.forEach(node => {
+        // Ensure nodes have valid initial positions
         node.x = width / 2 + (Math.random() - 0.5) * 100;
         node.y = height / 2 + (Math.random() - 0.5) * 100;
+        
+        // Fix shareholders node to center if present
+        if (node.id === 'shareholders') {
+            node.x = width / 2;
+            node.y = height / 2;
+            node.fx = width / 2; // Fix x position
+            node.fy = height / 2; // Fix y position
+        }
     });
 
     // Initialize simulation with nodes and links

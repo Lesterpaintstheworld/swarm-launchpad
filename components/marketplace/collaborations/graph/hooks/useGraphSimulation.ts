@@ -54,6 +54,14 @@ export function useGraphSimulation() {
         nodes: SimulationNode[],
         links: SimulationLink[]
     ) => {
+        // Make sure all nodes have valid initial positions
+        nodes.forEach(node => {
+            if (!node.x || !node.y) {
+                node.x = 0;
+                node.y = 0;
+            }
+        });
+
         // First set the nodes
         simulation.nodes(nodes);
 
