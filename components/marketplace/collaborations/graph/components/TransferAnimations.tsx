@@ -126,9 +126,18 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
                 const animate = () => {
                     const elapsed = Date.now() - startTime;
                     const progress = Math.min(elapsed / duration, 1);
-                    const point = pathElement.node()?.getPointAtLength(progress * pathLength);
                     
-                    if (point) {
+                    // Check if pathElement exists and has a valid node
+                    if (!pathElement.node()) {
+                        console.warn('Path element node is null');
+                        frameCallbacks.delete(animate);
+                        return false;
+                    }
+                    
+                    try {
+                        const point = pathElement.node()?.getPointAtLength(progress * pathLength);
+                        
+                        if (point) {
                         const isMidpoint = Math.abs(progress - 0.5) < 0.05;
                         
                         // Only do flame effect for non-revenue flows
