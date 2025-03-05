@@ -74,7 +74,7 @@ export default function HomePage() {
                         <div className="relative p-8 rounded-xl bg-black/40 border border-white/10 backdrop-blur-sm hover:bg-black/50 transition-all duration-300 h-full">
                             <div className="text-center h-full flex flex-col justify-center">
                                 <h3 className="text-sm text-muted-foreground/80 uppercase tracking-wider mb-4 font-medium">Active Swarms</h3>
-                                <p className="text-6xl font-bold bg-gradient-to-br from-white via-white/90 to-white/80 bg-clip-text text-transparent">25</p>
+                                <p className="text-6xl font-bold bg-gradient-to-br from-white via-white/90 to-white/80 bg-clip-text text-transparent">{/* 25 */}</p>
                             </div>
                         </div>
                     </div>
@@ -87,7 +87,7 @@ export default function HomePage() {
                                 <h3 className="text-sm text-muted-foreground/80 uppercase tracking-wider mb-4 font-medium">Total Market Cap</h3>
                                 <div className="space-y-1">
                                     <p className="text-5xl tracking-tight text-green-400/90 font-medium">
-                                        ${computePrice ? (10000000000 * computePrice).toLocaleString() : '26,080,000'}
+                                        ${computePrice ? (10000000000 * computePrice).toLocaleString() : /* '26,080,000' */ ''}
                                     </p>
                                 </div>
                             </div>
@@ -102,10 +102,10 @@ export default function HomePage() {
                                 <h3 className="text-sm text-muted-foreground/80 uppercase tracking-wider mb-4 font-medium">Total Amount Raised</h3>
                                 <div className="space-y-1">
                                     <p className="text-4xl tracking-tight">
-                                        <span className="metallic-text font-light">47.6M $COMPUTE</span>
+                                        <span className="metallic-text font-light">{/* 47.6M $COMPUTE */}</span>
                                     </p>
                                     <p className="text-2xl text-green-400/90 font-medium tracking-tight">
-                                        ${computePrice ? (47600000 * computePrice).toLocaleString() : '124,164'}
+                                        ${computePrice ? (47600000 * computePrice).toLocaleString() : /* '124,164' */ ''}
                                     </p>
                                 </div>
                             </div>
@@ -120,10 +120,10 @@ export default function HomePage() {
                                 <h3 className="text-sm text-muted-foreground/80 uppercase tracking-wider mb-4 font-medium">Total Weekly Revenue</h3>
                                 <div className="space-y-1">
                                     <p className="text-4xl tracking-tight">
-                                        <span className="metallic-text font-light">2.18M $COMPUTE</span>
+                                        <span className="metallic-text font-light">{/* 2.18M $COMPUTE */}</span>
                                     </p>
                                     <p className="text-2xl text-green-400/90 font-medium tracking-tight">
-                                        ${computePrice ? (2180000 * computePrice).toLocaleString() : '5,685'}
+                                        ${computePrice ? (2180000 * computePrice).toLocaleString() : /* '5,685' */ ''}
                                     </p>
                                 </div>
                             </div>
