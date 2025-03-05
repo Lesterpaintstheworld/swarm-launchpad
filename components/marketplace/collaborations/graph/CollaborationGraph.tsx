@@ -75,8 +75,17 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
   // Removed setupGraph function as it's now integrated directly in the useEffect
 
+  // Add debug logging to help identify issues
   useEffect(() => {
-    if (!svgRef.current || isLoading || !collaborationsProp?.length) return;
+    console.log('Collaboration props:', collaborationsProp);
+    console.log('Nodes:', nodes);
+    console.log('Links:', links);
+  }, [collaborationsProp, nodes, links]);
+
+  useEffect(() => {
+    if (!svgRef.current || isLoading) return;
+
+    console.log('Setting up graph with nodes:', nodes.length, 'links:', links.length);
 
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove();
@@ -269,7 +278,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
         newSimulation.stop();
         svg.selectAll("*").remove();
     };
-  }, [isLoading]); // IMPORTANT: Only depend on isLoading to prevent infinite loops
+  }, [isLoading, collaborationsProp, nodes, links, getNodeSize, initializeSimulation, createSimulation, calculateWidth, memoizedHandlers]); // Include all dependencies
 
   // Cleanup effect for simulation
   useEffect(() => {
@@ -290,6 +299,14 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     );
   }
 
+  if (!collaborationsProp?.length || collaborationsProp.length === 0) {
+    return (
+      <div className="w-full h-[600px] bg-black/20 rounded-xl flex items-center justify-center">
+        <div className="text-white/60">No collaboration data available to display</div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative">
       <svg 
@@ -300,6 +317,14 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
           ...graphStyles
         }}
       >
+        {/* Add a background rect to make the SVG clickable */}
+        <rect width="100%" height="100%" fill="transparent" />
+        
+        {/* Add a visible text element to confirm the SVG is rendering */}
+        <text x="50%" y="50%" textAnchor="middle" fill="white" fontSize="16px">
+          {nodes.length > 0 ? `Graph with ${nodes.length} nodes and ${links.length} links` : "Initializing graph..."}
+        </text>
+        
         {g && defs && simulation && (
           <>
             <GraphLinks 

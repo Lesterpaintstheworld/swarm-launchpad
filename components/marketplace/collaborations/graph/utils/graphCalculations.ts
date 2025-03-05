@@ -15,9 +15,33 @@ export function calculateNodeSize(multiple: number | undefined): number {
 export function processCollaborations(collaborations: any[], swarms: any[]) {
     console.log('Processing collaborations:', collaborations);
 
+    // Handle empty collaborations
+    if (!collaborations || collaborations.length === 0) {
+        console.warn('No collaborations provided');
+        return {
+            nodes: [],
+            links: [],
+            ecosystemTargets: new Set(),
+            maxPrice: 1,
+            minPrice: 1
+        };
+    }
+
+    // Handle empty swarms
+    if (!swarms || swarms.length === 0) {
+        console.warn('No swarms provided');
+        return {
+            nodes: [],
+            links: [],
+            ecosystemTargets: new Set(),
+            maxPrice: 1,
+            minPrice: 1
+        };
+    }
+
     // Filter collaborations and create set of ecosystem targets
     const filteredCollaborations = collaborations.filter(collab => {
-        const isValid = collab.providerSwarm && collab.clientSwarm;
+        const isValid = collab && collab.providerSwarm && collab.clientSwarm;
         if (!isValid) {
             console.warn('Invalid collaboration:', collab);
         }

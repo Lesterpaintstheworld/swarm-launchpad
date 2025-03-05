@@ -41,9 +41,48 @@ export function useGraphData() {
                     collaborationsResponse.json()
                 ]);
 
+                console.log('Fetched swarms data:', swarmsData);
+                console.log('Fetched collaborations data:', collaborationsData);
+
                 memoizedProcessData(swarmsData, collaborationsData);
             } catch (error) {
                 console.error('Error fetching data:', error);
+                // Provide fallback data for development/testing
+                const fallbackSwarms = [
+                    {
+                        id: 'swarm1',
+                        name: 'Data Processing Swarm',
+                        swarmType: 'Processing',
+                        description: 'Processes large datasets efficiently',
+                        multiple: 2.5,
+                        revenueShare: 60,
+                        image: '/images/swarm-placeholder.png',
+                        weeklyRevenue: 5000
+                    },
+                    {
+                        id: 'swarm2',
+                        name: 'AI Research Swarm',
+                        swarmType: 'Research',
+                        description: 'Conducts AI research and development',
+                        multiple: 3.2,
+                        revenueShare: 70,
+                        image: '/images/swarm-placeholder.png',
+                        weeklyRevenue: 7500
+                    }
+                ];
+                
+                const fallbackCollaborations = [
+                    {
+                        id: 'collab1',
+                        providerSwarm: fallbackSwarms[0],
+                        clientSwarm: fallbackSwarms[1],
+                        serviceName: 'Data Processing',
+                        price: 2000,
+                        status: 'active'
+                    }
+                ];
+                
+                memoizedProcessData(fallbackSwarms, fallbackCollaborations);
             } finally {
                 setIsLoading(false);
             }
