@@ -233,6 +233,21 @@ export function TransferAnimations({ g, defs, nodes, links, collaborations, getN
                                 (progress < 0.5 ? opacity : 0) : 
                                 opacity
                             );
+                    } catch (error) {
+                        console.error('Error in animation:', error);
+                        dollarGroup.remove();
+                        activeDollars--;
+                        
+                        if (activeDollars === 0) {
+                            pathElement.remove();
+                            setActiveTransfers(prev => {
+                                const next = new Set(prev);
+                                next.delete(transferId);
+                                return next;
+                            });
+                        }
+                        frameCallbacks.delete(animate);
+                        return false;
                     }
 
                     if (progress < 1) {
