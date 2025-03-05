@@ -15,13 +15,13 @@ export function useGraphSimulation() {
         const simulation = d3.forceSimulation<SimulationNode>()
             .force("link", d3.forceLink<SimulationNode, SimulationLink>()
                 .id((d: SimulationNode) => d.id)
-                .strength(0.25))
+                .strength(0.15))  // Reduce from 0.25 to 0.15
             .force("charge", d3.forceManyBody()
-                .strength((d) => ((d as SimulationNode).id === 'shareholders' ? -5000 : -1500)))
+                .strength((d) => ((d as SimulationNode).id === 'shareholders' ? -2000 : -500)))  // Reduce from -5000/-1500 to -2000/-500
             .force("x", d3.forceX(width / 2)
-                .strength((d) => ((d as SimulationNode).id === 'shareholders' ? 1 : 0.06)))
+                .strength(0.1))  // Increase from 0.06 to 0.1
             .force("y", d3.forceY(height / 2)
-                .strength((d) => ((d as SimulationNode).id === 'shareholders' ? 1 : 0.06)))
+                .strength(0.1))  // Increase from 0.06 to 0.1
             .force("collision", d3.forceCollide()
                 .radius((d) => {
                     const baseRadius = getNodeSize((d as SimulationNode).id);
@@ -29,10 +29,10 @@ export function useGraphSimulation() {
                         baseRadius * 6 :  // Larger collision radius for shareholders
                         baseRadius + 35;
                 })
-                .strength(0.8))
-            .velocityDecay(0.45)
-            .alphaDecay(0.01)
-            .alpha(0.3);
+                .strength(1.0))  // Increase from 0.8 to 1.0 for more damping
+            .velocityDecay(0.7)  // Increase from 0.45 to 0.7 for more damping
+            .alphaDecay(0.02)    // Increase from 0.01 to 0.02 for faster stabilization
+            .alpha(0.2);         // Reduce from 0.3 to 0.2 for less initial energy
 
         // Fix shareholders node to center
         simulation.on("tick", () => {

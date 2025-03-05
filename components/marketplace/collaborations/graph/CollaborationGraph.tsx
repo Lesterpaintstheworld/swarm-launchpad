@@ -85,35 +85,16 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       return;
     }
 
-    const width = svgRef.current.clientWidth;
-    const height = svgRef.current.clientHeight;
+    // Remove any existing layers to prevent duplicates
+    g.selectAll('.links-layer, .animations-layer, .nodes-layer').remove();
 
     // Create layers in specific order (bottom to top)
     const linksLayer = g.append("g").attr("class", "links-layer");
     const animationsLayer = g.append("g").attr("class", "animations-layer");
     const nodesLayer = g.append("g").attr("class", "nodes-layer");
 
-    // Set up simulation tick handler
-    simulation.on("tick", () => {
-        // Update link positions
-        g.selectAll(".link-path")
-            .attr("d", (d: any) => {
-                if (!d.source?.x || !d.source?.y || !d.target?.x || !d.target?.y) {
-                    return null;
-                }
-                const dx = d.target.x - d.source.x;
-                const dy = d.target.y - d.source.y;
-                const dr = Math.sqrt(dx * dx + dy * dy);
-                return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
-            });
-
-        // Update node positions
-        g.selectAll(".nodes g")
-            .attr("transform", (d: any) => {
-                if (!d.x || !d.y) return null;
-                return `translate(${d.x},${d.y})`;
-            });
-    });
+    // IMPORTANT: Remove the duplicate tick handler here - this is causing the infinite loop
+    // We'll set up the tick handler only once in the main useEffect
 
     // Add gradient definitions
     defs.append("linearGradient")
@@ -277,8 +258,8 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     // Initialize nodes positions with some randomness
     nodes.forEach(node => {
         // Ensure nodes have valid initial positions
-        node.x = width / 2 + (Math.random() - 0.5) * 100;
-        node.y = height / 2 + (Math.random() - 0.5) * 100;
+        node.x = width / 2 + (Math.random() - 0.5) * 50; // Reduced from 100 to 50
+        node.y = height / 2 + (Math.random() - 0.5) * 50; // Reduced from 100 to 50
         
         // Fix shareholders node to center if present
         if (node.id === 'shareholders') {
@@ -295,6 +276,34 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     // Set up the graph components
     setupGraph(gElement, defsElement, nodes, links, newSimulation);
 
+    // Set up a SINGLE tick handler here
+    newSimulation.on("tick", () => {
+      // Update link positions
+      gElement.selectAll(".link-path")
+        .attr("d", (d: any) => {
+          // Make sure both source and target nodes have valid coordinates
+          if (!d.source || !d.target || 
+              typeof d.source.x !== 'number' || 
+              typeof d.source.y !== 'number' || 
+              typeof d.target.x !== 'number' || 
+              typeof d.target.y !== 'number') {
+              return null; // Return null path if coordinates are invalid
+          }
+          
+          const dx = d.target.x - d.source.x;
+          const dy = d.target.y - d.source.y;
+          const dr = Math.sqrt(dx * dx + dy * dy);
+          return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
+        });
+
+      // Update node positions
+      gElement.selectAll(".nodes-layer g")
+        .attr("transform", (d: any) => {
+          if (typeof d.x !== 'number' || typeof d.y !== 'number') return null;
+          return `translate(${d.x},${d.y})`;
+        });
+    });
+
     // Center the view
     const initialTransform = d3.zoomIdentity
         .translate(width/4, height/4)
@@ -305,7 +314,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     setSimulation(newSimulation);
 
     // Add some initial force to spread nodes
-    newSimulation.alpha(1).restart();
+    newSimulation.alpha(0.5).restart(); // Reduced from 1 to 0.5
 
     return () => {
         newSimulation.stop();
