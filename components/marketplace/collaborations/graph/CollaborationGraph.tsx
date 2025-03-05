@@ -47,33 +47,11 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     return calculateLinkWidth(value, minPrice, maxPrice);
   }, [minPrice, maxPrice]);
   
-  const memoizedHandlers = useMemo(() => ({
-    dragstarted: (event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) => {
-      if (!event.active && simulation) simulation.alphaTarget(0.3).restart();
-      const subject = event.subject as SimulationNode;
-      subject.fx = subject.x;
-      subject.fy = subject.y;
-    },
-    dragged: (event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) => {
-      const subject = event.subject as SimulationNode;
-      subject.fx = event.x;
-      subject.fy = event.y;
-    },
-    dragended: (event: d3.D3DragEvent<SVGGElement, SimulationNode, unknown>) => {
-      if (!event.active && simulation) simulation.alphaTarget(0);
-      const subject = event.subject as SimulationNode;
-      subject.fx = null;
-      subject.fy = null;
-    }
-  }), [simulation]);
   const getNodeSize = useCallback((swarmId: string): number => {
     const swarm = swarmMap.get(swarmId);
     if (!swarm?.multiple) return 30;
     return Math.max(25, Math.min(40, 25 + (swarm.multiple * 0.2)));
   }, [swarmMap]);
-
-
-  // Removed setupGraph function as it's now integrated directly in the useEffect
 
   // Add debug logging to help identify issues
   useEffect(() => {
@@ -87,27 +65,29 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     console.log('Setting up graph with nodes:', nodes.length, 'links:', links.length);
 
+    // Store these values to avoid recreating them on each render
+    const width = svgRef.current.clientWidth;
+    const height = svgRef.current.clientHeight;
+    
+    // Clear any existing content
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove();
 
-    const width = svgRef.current.clientWidth;
-    const height = svgRef.current.clientHeight;
-
-    // Create container group
-    const gElement = svg.append("g")
-        .attr("class", "graph-container");
-    
-    setG(gElement);
-    
+    // Create container group and defs
+    const gElement = svg.append("g").attr("class", "graph-container");
     const defsElement = svg.append("defs");
-    setDefs(defsElement);
+    
+    // Create layers
+    const linksLayer = gElement.append("g").attr("class", "links-layer");
+    const animationsLayer = gElement.append("g").attr("class", "animations-layer");
+    const nodesLayer = gElement.append("g").attr("class", "nodes-layer");
 
     // Create zoom behavior
     const zoomBehavior = d3.zoom<SVGSVGElement, unknown>()
-        .scaleExtent([0.1, 4])
-        .on('zoom', (event) => {
-            gElement.attr('transform', event.transform);
-        });
+      .scaleExtent([0.1, 4])
+      .on('zoom', (event) => {
+        gElement.attr('transform', event.transform);
+      });
 
     // Apply zoom to svg
     svg.call(zoomBehavior);
@@ -115,28 +95,21 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     // Create new simulation
     const newSimulation = createSimulation(width, height, getNodeSize);
     
-    // Initialize nodes positions with some randomness
+    // Initialize nodes positions
     nodes.forEach(node => {
-        // Ensure nodes have valid initial positions
-        node.x = width / 2 + (Math.random() - 0.5) * 50; // Reduced from 100 to 50
-        node.y = height / 2 + (Math.random() - 0.5) * 50; // Reduced from 100 to 50
-        
-        // Fix shareholders node to center if present
-        if (node.id === 'shareholders') {
-            node.x = width / 2;
-            node.y = height / 2;
-            node.fx = width / 2; // Fix x position
-            node.fy = height / 2; // Fix y position
-        }
+      node.x = width / 2 + (Math.random() - 0.5) * 50;
+      node.y = height / 2 + (Math.random() - 0.5) * 50;
+      
+      if (node.id === 'shareholders') {
+        node.x = width / 2;
+        node.y = height / 2;
+        node.fx = width / 2;
+        node.fy = height / 2;
+      }
     });
 
     // Initialize simulation with nodes and links
     initializeSimulation(newSimulation, nodes, links);
-
-    // Create layers in specific order (bottom to top)
-    const linksLayer = gElement.append("g").attr("class", "links-layer");
-    const animationsLayer = gElement.append("g").attr("class", "animations-layer");
-    const nodesLayer = gElement.append("g").attr("class", "nodes-layer");
 
     // Add gradient definitions
     defsElement.append("linearGradient")
@@ -151,7 +124,7 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       .attr("offset", d => d.offset)
       .attr("stop-color", d => d.color);
 
-    // Create links with proper visibility
+    // Create links
     const linkElements = linksLayer
       .selectAll("path")
       .data(links)
@@ -176,15 +149,29 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
       .style("pointer-events", "none")
       .style("opacity", 1);
 
-    // Create nodes in the nodes layer
+    // Create nodes
     const nodeElements = nodesLayer
       .selectAll("g")
       .data(nodes)
       .join("g")
       .call(d3.drag<any, SimulationNode>()
-        .on("start", memoizedHandlers.dragstarted)
-        .on("drag", memoizedHandlers.dragged)
-        .on("end", memoizedHandlers.dragended) as any);
+        .on("start", (event) => {
+          if (!event.active) newSimulation.alphaTarget(0.3).restart();
+          const subject = event.subject as SimulationNode;
+          subject.fx = subject.x;
+          subject.fy = subject.y;
+        })
+        .on("drag", (event) => {
+          const subject = event.subject as SimulationNode;
+          subject.fx = event.x;
+          subject.fy = event.y;
+        })
+        .on("end", (event) => {
+          if (!event.active) newSimulation.alphaTarget(0);
+          const subject = event.subject as SimulationNode;
+          subject.fx = null;
+          subject.fy = null;
+        }) as any);
 
     // Add node visuals
     nodeElements.append("circle")
@@ -240,13 +227,12 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
     newSimulation.on("tick", () => {
       // Update link positions
       linkElements.attr("d", (d: any) => {
-        // Make sure both source and target nodes have valid coordinates
         if (!d.source || !d.target || 
             typeof d.source.x !== 'number' || 
             typeof d.source.y !== 'number' || 
             typeof d.target.x !== 'number' || 
             typeof d.target.y !== 'number') {
-            return null; // Return null path if coordinates are invalid
+            return null;
         }
         
         const dx = d.target.x - d.source.x;
@@ -264,21 +250,23 @@ export function CollaborationGraph({ collaborations: collaborationsProp }: Colla
 
     // Center the view
     const initialTransform = d3.zoomIdentity
-        .translate(width/4, height/4)
-        .scale(0.6);  // More zoomed out view
+      .translate(width/4, height/4)
+      .scale(0.6);
     svg.call(zoomBehavior.transform, initialTransform);
 
-    // Update simulation reference
+    // Store references for other components to use
+    setG(gElement);
+    setDefs(defsElement);
     setSimulation(newSimulation);
 
     // Add some initial force to spread nodes
-    newSimulation.alpha(0.5).restart(); // Reduced from 1 to 0.5
+    newSimulation.alpha(0.5).restart();
 
     return () => {
-        newSimulation.stop();
-        svg.selectAll("*").remove();
+      newSimulation.stop();
+      svg.selectAll("*").remove();
     };
-  }, [isLoading, collaborationsProp, nodes, links, getNodeSize, initializeSimulation, createSimulation, calculateWidth, memoizedHandlers]); // Include all dependencies
+  }, [isLoading, collaborationsProp?.length]); // Only depend on isLoading and if collaborations exist
 
   // Cleanup effect for simulation
   useEffect(() => {
