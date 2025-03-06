@@ -101,22 +101,37 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
             try {
                 console.log('Sending Telegram notification to chat ID:', -1001699255893);
                 
+                // Make sure the chat ID is passed as a number, not a string
+                const chatId = -1001699255893;
+                
+                // Format the message with proper escaping
+                const message = `🔔 A new listing has been created!\n\n` +
+                              `Swarm: ${swarm?.name || 'Unknown Swarm'}\n` +
+                              `Shares: ${Number(numShares)}\n` +
+                              `Price per share: ${pricePerShare} ${token.label}`;
+                
+                console.log('Message to be sent:', message);
+                
                 fetch(`https://api.telegram.org/bot7728404959:AAHoVX05vxCQgzxqAJa5Em8i5HCLs2hJleo/sendMessage`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        chat_id: -1001699255893,
-                        text: `🔔 A new listing has been created!\n\n` +
-                              `Swarm: ${swarm?.name || 'Unknown Swarm'}\n` +
-                              `Shares: ${Number(numShares)}\n` +
-                              `Price per share: ${pricePerShare} ${token.label}`,
-                        parse_mode: 'HTML'
+                        chat_id: chatId,
+                        text: message
+                        // Remove parse_mode as it might be causing issues if the text doesn't contain valid HTML
                     })
                 })
                 .then(response => {
                     console.log('Telegram API response status:', response.status);
+                    if (!response.ok) {
+                        // Log the full response for debugging
+                        return response.text().then(text => {
+                            console.error('Telegram API error response:', text);
+                            throw new Error(`Telegram API returned ${response.status}: ${text}`);
+                        });
+                    }
                     return response.json();
                 })
                 .then(data => {

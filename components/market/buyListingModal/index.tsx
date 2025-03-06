@@ -136,17 +136,30 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                 });
                 
                 // Send simple notification to the new chat
-                await fetch(`https://api.telegram.org/bot7728404959:AAHoVX05vxCQgzxqAJa5Em8i5HCLs2hJleo/sendMessage`, {
+                const chatId = -1001699255893;
+                const message = `🚀 A new share has been bought!`;
+                
+                console.log('Sending Telegram notification to chat ID:', chatId);
+                console.log('Message to be sent:', message);
+                
+                const response = await fetch(`https://api.telegram.org/bot7728404959:AAHoVX05vxCQgzxqAJa5Em8i5HCLs2hJleo/sendMessage`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        chat_id: -1001699255893,
-                        text: `🚀 A new share has been bought!`,
-                        parse_mode: 'HTML'
+                        chat_id: chatId,
+                        text: message
+                        // Remove parse_mode parameter
                     })
                 });
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Telegram API error response:', errorText);
+                } else {
+                    console.log('Telegram notification sent successfully');
+                }
             } catch (error) {
                 console.error('Failed to send Telegram notification:', error);
                 // Don't throw here - notification failure shouldn't stop the transaction
