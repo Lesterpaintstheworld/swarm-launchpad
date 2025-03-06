@@ -135,28 +135,33 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                     }),
                 });
                 
-                // Send simple notification to the new chat
-                const message = `🚀 A new share has been bought!`;
-                
-                console.log('Sending notification for purchase');
-                
-                // Use our proxy API instead of calling Telegram directly
-                const response = await fetch('/api/notifications/telegram-direct', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        message: message
-                        // No need to specify chatId, the API will use the default
-                    })
-                });
-                
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    console.error('API error response:', errorText);
+                // Only send notification if number of shares is >= 10
+                if (Number(listing.numberOfShares) >= 10) {
+                    console.log('Sending notification for purchase with >= 10 shares');
+                    
+                    // Send simple notification to the new chat
+                    const message = `🚀 A new share has been bought!`;
+                    
+                    // Use our proxy API instead of calling Telegram directly
+                    const response = await fetch('/api/notifications/telegram-direct', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            message: message
+                            // No need to specify chatId, the API will use the default
+                        })
+                    });
+                    
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error('API error response:', errorText);
+                    } else {
+                        console.log('Notification sent successfully');
+                    }
                 } else {
-                    console.log('Notification sent successfully');
+                    console.log('Skipping notification for purchase with < 10 shares');
                 }
             } catch (error) {
                 console.error('Failed to send Telegram notification:', error);

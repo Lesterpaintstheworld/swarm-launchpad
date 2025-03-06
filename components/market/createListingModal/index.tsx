@@ -89,55 +89,60 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
             desiredToken: token.mint
         }).then(() => {
             // Add debug logging
-            console.log('Listing created successfully, attempting to send Telegram notification');
-            console.log('Notification data:', {
-                swarmName: swarm?.name || 'Unknown Swarm',
-                shares: Number(numShares),
-                pricePerShare: pricePerShare,
-                tokenLabel: token.label
-            });
+            console.log('Listing created successfully');
             
-            // Send Telegram notification after successful listing creation
-            try {
-                console.log('Sending Telegram notification');
-                
-                // Format the message
-                const message = `🔔 A new listing has been created!\n\n` +
-                              `Swarm: ${swarm?.name || 'Unknown Swarm'}\n` +
-                              `Shares: ${Number(numShares)}\n` +
-                              `Price per share: ${pricePerShare} ${token.label}`;
-                
-                console.log('Message to be sent:', message);
-                
-                // Use our proxy API instead of calling Telegram directly
-                fetch('/api/notifications/telegram-direct', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        message: message
-                        // No need to specify chatId, the API will use the default
-                    })
-                })
-                .then(response => {
-                    console.log('API response status:', response.status);
-                    if (!response.ok) {
-                        return response.text().then(text => {
-                            console.error('API error response:', text);
-                            throw new Error(`API returned ${response.status}: ${text}`);
-                        });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Notification sent successfully:', data);
-                })
-                .catch(error => {
-                    console.error('Failed to send notification:', error);
+            // Only send notification if number of shares is >= 10
+            if (Number(numShares) >= 10) {
+                console.log('Sending Telegram notification for listing with >= 10 shares');
+                console.log('Notification data:', {
+                    swarmName: swarm?.name || 'Unknown Swarm',
+                    shares: Number(numShares),
+                    pricePerShare: pricePerShare,
+                    tokenLabel: token.label
                 });
-            } catch (error) {
-                console.error('Exception in notification code:', error);
+                
+                // Send Telegram notification after successful listing creation
+                try {
+                    // Format the message
+                    const message = `🔔 A new listing has been created!\n\n` +
+                                  `Swarm: ${swarm?.name || 'Unknown Swarm'}\n` +
+                                  `Shares: ${Number(numShares)}\n` +
+                                  `Price per share: ${pricePerShare} ${token.label}`;
+                    
+                    console.log('Message to be sent:', message);
+                    
+                    // Use our proxy API instead of calling Telegram directly
+                    fetch('/api/notifications/telegram-direct', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            message: message
+                            // No need to specify chatId, the API will use the default
+                        })
+                    })
+                    .then(response => {
+                        console.log('API response status:', response.status);
+                        if (!response.ok) {
+                            return response.text().then(text => {
+                                console.error('API error response:', text);
+                                throw new Error(`API returned ${response.status}: ${text}`);
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Notification sent successfully:', data);
+                    })
+                    .catch(error => {
+                        console.error('Failed to send notification:', error);
+                    });
+                } catch (error) {
+                    console.error('Exception in notification code:', error);
+                }
+            } else {
+                console.log('Skipping notification for listing with < 10 shares');
             }
         }).catch(error => {
             console.error('Failed to create listing:', error);
