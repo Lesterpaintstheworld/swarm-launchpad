@@ -136,13 +136,13 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                 });
                 
                 // Send simple notification to the new chat
-                const chatId = -1001699255893;
+                const chatId = process.env.NEXT_PUBLIC_MAIN_TELEGRAM_CHAT_ID;
                 const message = `🚀 A new share has been bought!`;
                 
                 console.log('Sending Telegram notification to chat ID:', chatId);
                 console.log('Message to be sent:', message);
                 
-                const response = await fetch(`https://api.telegram.org/bot7728404959:AAHoVX05vxCQgzxqAJa5Em8i5HCLs2hJleo/sendMessage`, {
+                const response = await fetch(`https://api.telegram.org/bot${process.env.NEXT_PUBLIC_SWARMVENTURES_TELEGRAM_BOT_TOKEN}/sendMessage`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

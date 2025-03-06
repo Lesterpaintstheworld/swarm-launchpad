@@ -101,8 +101,8 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
             try {
                 console.log('Sending Telegram notification to chat ID:', -1001699255893);
                 
-                // Make sure the chat ID is passed as a number, not a string
-                const chatId = -1001699255893;
+                // Use environment variable for chat ID
+                const chatId = process.env.NEXT_PUBLIC_MAIN_TELEGRAM_CHAT_ID;
                 
                 // Format the message with proper escaping
                 const message = `🔔 A new listing has been created!\n\n` +
@@ -112,7 +112,7 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
                 
                 console.log('Message to be sent:', message);
                 
-                fetch(`https://api.telegram.org/bot7728404959:AAHoVX05vxCQgzxqAJa5Em8i5HCLs2hJleo/sendMessage`, {
+                fetch(`https://api.telegram.org/bot${process.env.NEXT_PUBLIC_SWARMVENTURES_TELEGRAM_BOT_TOKEN}/sendMessage`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
