@@ -87,6 +87,29 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
             numberOfShares: Math.floor(Number(numShares)),
             pricePerShare: Math.floor(pricePerShare * token.resolution), // Convert to base units
             desiredToken: token.mint
+        }).then(() => {
+            // Send Telegram notification after successful listing creation
+            try {
+                fetch(`https://api.telegram.org/bot7728404959:AAHoVX05vxCQgzxqAJa5Em8i5HCLs2hJleo/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: -1001699255893,
+                        text: `🔔 A new listing has been created!\n\n` +
+                              `Swarm: ${swarm?.name || 'Unknown Swarm'}\n` +
+                              `Shares: ${Number(numShares)}\n` +
+                              `Price per share: ${pricePerShare} ${token.label}`,
+                        parse_mode: 'HTML'
+                    })
+                }).catch(error => {
+                    console.error('Failed to send Telegram notification:', error);
+                    // Don't throw here - notification failure shouldn't stop the transaction
+                });
+            } catch (error) {
+                console.error('Failed to send Telegram notification:', error);
+            }
         }).catch(error => {
             console.error('Failed to create listing:', error);
         }).finally(() => {
@@ -95,7 +118,6 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
             setLoading(false);
             handleClose();
         });
-
     }
 
     const handleClose = () => {
