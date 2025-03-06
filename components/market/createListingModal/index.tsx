@@ -88,8 +88,19 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
             pricePerShare: Math.floor(pricePerShare * token.resolution), // Convert to base units
             desiredToken: token.mint
         }).then(() => {
+            // Add debug logging
+            console.log('Listing created successfully, attempting to send Telegram notification');
+            console.log('Notification data:', {
+                swarmName: swarm?.name || 'Unknown Swarm',
+                shares: Number(numShares),
+                pricePerShare: pricePerShare,
+                tokenLabel: token.label
+            });
+            
             // Send Telegram notification after successful listing creation
             try {
+                console.log('Sending Telegram notification to chat ID:', -1001699255893);
+                
                 fetch(`https://api.telegram.org/bot7728404959:AAHoVX05vxCQgzxqAJa5Em8i5HCLs2hJleo/sendMessage`, {
                     method: 'POST',
                     headers: {
@@ -103,12 +114,20 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
                               `Price per share: ${pricePerShare} ${token.label}`,
                         parse_mode: 'HTML'
                     })
-                }).catch(error => {
+                })
+                .then(response => {
+                    console.log('Telegram API response status:', response.status);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Telegram API response data:', data);
+                })
+                .catch(error => {
                     console.error('Failed to send Telegram notification:', error);
                     // Don't throw here - notification failure shouldn't stop the transaction
                 });
             } catch (error) {
-                console.error('Failed to send Telegram notification:', error);
+                console.error('Exception in Telegram notification code:', error);
             }
         }).catch(error => {
             console.error('Failed to create listing:', error);
