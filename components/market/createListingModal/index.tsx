@@ -99,12 +99,9 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
             
             // Send Telegram notification after successful listing creation
             try {
-                console.log('Sending Telegram notification to chat ID:', -1001699255893);
+                console.log('Sending Telegram notification');
                 
-                // Use environment variable for chat ID
-                const chatId = process.env.NEXT_PUBLIC_MAIN_TELEGRAM_CHAT_ID;
-                
-                // Format the message with proper escaping
+                // Format the message
                 const message = `🔔 A new listing has been created!\n\n` +
                               `Swarm: ${swarm?.name || 'Unknown Swarm'}\n` +
                               `Shares: ${Number(numShares)}\n` +
@@ -112,37 +109,35 @@ const CreateListingModal = ({ isModalOpen, closeModal, swarmId }: CreateListingM
                 
                 console.log('Message to be sent:', message);
                 
-                fetch(`https://api.telegram.org/bot${process.env.NEXT_PUBLIC_SWARMVENTURES_TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                // Use our proxy API instead of calling Telegram directly
+                fetch('/api/notifications/telegram-direct', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        chat_id: chatId,
-                        text: message
-                        // Remove parse_mode as it might be causing issues if the text doesn't contain valid HTML
+                        message: message
+                        // No need to specify chatId, the API will use the default
                     })
                 })
                 .then(response => {
-                    console.log('Telegram API response status:', response.status);
+                    console.log('API response status:', response.status);
                     if (!response.ok) {
-                        // Log the full response for debugging
                         return response.text().then(text => {
-                            console.error('Telegram API error response:', text);
-                            throw new Error(`Telegram API returned ${response.status}: ${text}`);
+                            console.error('API error response:', text);
+                            throw new Error(`API returned ${response.status}: ${text}`);
                         });
                     }
                     return response.json();
                 })
                 .then(data => {
-                    console.log('Telegram API response data:', data);
+                    console.log('Notification sent successfully:', data);
                 })
                 .catch(error => {
-                    console.error('Failed to send Telegram notification:', error);
-                    // Don't throw here - notification failure shouldn't stop the transaction
+                    console.error('Failed to send notification:', error);
                 });
             } catch (error) {
-                console.error('Exception in Telegram notification code:', error);
+                console.error('Exception in notification code:', error);
             }
         }).catch(error => {
             console.error('Failed to create listing:', error);

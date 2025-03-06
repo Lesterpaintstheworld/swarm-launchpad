@@ -136,29 +136,27 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                 });
                 
                 // Send simple notification to the new chat
-                const chatId = process.env.NEXT_PUBLIC_MAIN_TELEGRAM_CHAT_ID;
                 const message = `🚀 A new share has been bought!`;
                 
-                console.log('Sending Telegram notification to chat ID:', chatId);
-                console.log('Message to be sent:', message);
+                console.log('Sending notification for purchase');
                 
-                const response = await fetch(`https://api.telegram.org/bot${process.env.NEXT_PUBLIC_SWARMVENTURES_TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                // Use our proxy API instead of calling Telegram directly
+                const response = await fetch('/api/notifications/telegram-direct', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        chat_id: chatId,
-                        text: message
-                        // Remove parse_mode parameter
+                        message: message
+                        // No need to specify chatId, the API will use the default
                     })
                 });
                 
                 if (!response.ok) {
                     const errorText = await response.text();
-                    console.error('Telegram API error response:', errorText);
+                    console.error('API error response:', errorText);
                 } else {
-                    console.log('Telegram notification sent successfully');
+                    console.log('Notification sent successfully');
                 }
             } catch (error) {
                 console.error('Failed to send Telegram notification:', error);

@@ -128,15 +128,14 @@ const ActionCell = ({ row }: ActionCellProps) => {
             `Week: ${getWeekKey()}`;
 
         try {
-            await fetch(`https://api.telegram.org/bot${process.env.NEXT_PUBLIC_SWARMVENTURES_TELEGRAM_BOT_TOKEN}/sendMessage`, {
+            await fetch('/api/notifications/telegram-direct', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    chat_id: process.env.NEXT_PUBLIC_DIVIDENDS_TELEGRAM_CHAT_ID,
-                    text: message,
-                    parse_mode: 'HTML'
+                    message: message,
+                    chatId: process.env.NEXT_PUBLIC_DIVIDENDS_TELEGRAM_CHAT_ID
                 })
             });
 
