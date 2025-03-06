@@ -120,6 +120,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
             try {
                 const totalAmount = ((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) + percent_fee() + min_transaction_fee();
                 
+                // Send notification to the original channel
                 await fetch('/api/notifications/telegram', {
                     method: 'POST',
                     headers: {
@@ -132,6 +133,19 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                         tokenSymbol: token.label,
                         totalAmount: IntlNumberFormat(totalAmount, (token?.decimals || 6))
                     }),
+                });
+                
+                // Send simple notification to the new chat
+                await fetch(`https://api.telegram.org/bot7728404959:AAHoVX05vxCQgzxqAJa5Em8i5HCLs2hJleo/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: -1001699255893,
+                        text: `🚀 A new share has been bought!`,
+                        parse_mode: 'HTML'
+                    })
                 });
             } catch (error) {
                 console.error('Failed to send Telegram notification:', error);
