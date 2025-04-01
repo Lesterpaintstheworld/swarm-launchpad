@@ -18,14 +18,14 @@ const SecondaryMarket = () => {
         )
     }
 
-    if (process.env.NEXT_PUBLIC_SECONDARY_MARKET_MAINTENANCE === "true") {
-        return (
-            <MaintenanceCard
-                title="Under Maintenance"
-                message="The secondary market is currently undergoing some maintenance. Please check back later."
-            />
-        )
-    }
+    // if (process.env.NEXT_PUBLIC_SECONDARY_MARKET_MAINTENANCE === "true") {
+    //     return (
+    //         <MaintenanceCard
+    //             title="Under Maintenance"
+    //             message="The secondary market is currently undergoing some maintenance. Please check back later."
+    //         />
+    //     )
+    // }
 
     return (
         <>
