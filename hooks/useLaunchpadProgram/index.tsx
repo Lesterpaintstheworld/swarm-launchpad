@@ -15,6 +15,7 @@ import { Listing, MarketListing } from '@/types/listing'
 import { SwarmResponse } from '@/types/api'
 import { PoolAccount } from '@/types/pool'
 import { useSolanaProvider } from '../useSolanaProvider'
+import { supportedTokens } from '@/data/tokens/supported'
 
 export function useLaunchpadProgram() {
 
@@ -131,46 +132,6 @@ export function useLaunchpadProgram() {
         }
     });
 
-    // Freeze/unfreeze pool
-    const freezePool = useMutation({
-        mutationKey: ['pool', 'freeze'],
-        mutationFn: async ({ pool, state }: { pool: PublicKey, state: boolean }) => {
-            if (!publicKey) throw new Error('Wallet not connected')
-
-            try {
-                return program.methods
-                    .freezePool(state)
-                    .accounts({
-                        pool,
-                        authority: publicKey
-                    })
-                    .rpc()
-            } catch (e) {
-                useFallbackRPC();
-            }
-        }
-    })
-
-    // Freeze/unfreeze pool
-    const removePool = useMutation({
-        mutationKey: ['remove-pool', 'freeze'],
-        mutationFn: async ({ pool }: { pool: PublicKey }) => {
-            if (!publicKey) throw new Error('Wallet not connected')
-
-            try {
-                return program.methods
-                    .removePool()
-                    .accounts({
-                        pool,
-                        authority: publicKey
-                    })
-                    .rpc()
-            } catch (e) {
-                useFallbackRPC();
-            }
-        }
-    });
-
     const userListings = useQuery({
         queryKey: ['listings', publicKey],
         queryFn: async () => {
@@ -233,8 +194,6 @@ export function useLaunchpadProgram() {
         ubcMint,
         pools,
         initializePool,
-        freezePool,
-        removePool,
         userListings,
         allListings,
     }
@@ -305,11 +264,11 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
     const purchaseShares = useMutation({
         mutationKey: ['shares', 'purchase', pool?.toString() ?? 'unknown'],
         mutationFn: async ({
-            numberOfShares,
-            calculatedCost
+            calculatedCost,
+            numberOfShares
         }: {
-            numberOfShares: number,
-            calculatedCost: number
+            calculatedCost: number,
+            numberOfShares: number
         }) => {
             // Early validation with detailed logging
             console.log('Purchase validation:', {
@@ -317,8 +276,8 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                 pool: !!pool,
                 poolAccount: !!poolAccount.data,
                 programId: program.programId.toString(),
-                numberOfShares,
                 calculatedCost,
+                numberOfShares,
                 // Add more detailed pool data
                 poolData: poolAccount.data ? {
                     totalShares: poolAccount.data.totalShares.toNumber(),
@@ -380,8 +339,8 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
                 }
 
                 console.log('Transaction params:', {
-                    numberOfShares: numberOfShares.toString(),
                     calculatedCost: calculatedCost.toString(),
+                    numberOfShares: numberOfShares.toString(),
                     accounts: {
                         pool: pool.toString(),
                         shareholder: shareholderPda.toString(),
@@ -408,8 +367,8 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
 
                 const tx = await program.methods
                     .purchaseShares(
-                        new BN(numberOfShares),
-                        new BN(calculatedCost)
+                        new BN(calculatedCost),
+                        new BN(numberOfShares)
                     )
                     .accounts({
                         pool: new PublicKey(pool),
@@ -533,7 +492,7 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
 
     const buyListing = useMutation({
         mutationKey: ['listing', 'buy', pool.toBase58(), publicKey?.toBase58()],
-        mutationFn: async ({ listing, swarm, poolAccount, fee }: { listing: MarketListing, swarm: SwarmResponse, poolAccount: PoolAccount, fee: number }) => {
+        mutationFn: async ({ listing, swarm, poolAccount, fee, numberOfShares }: { listing: MarketListing, swarm: SwarmResponse, poolAccount: PoolAccount, fee: number, numberOfShares: number }) => {
 
             if (!listing) throw new Error('No listing provided');
             if (!publicKey) throw new Error('Wallet not connected');
@@ -546,7 +505,7 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
             if (listing.desiredToken.toBase58() === '11111111111111111111111111111111') {
                 // Seller wants payment in SOL
                 tx = await program.methods
-                    .buyListingWithLamports(new BN(fee))
+                    .buyListingWithLamports(new BN(fee), new BN(numberOfShares))
                     .accounts({
                         shareListing: listing.listingPDA,
                         // @ts-ignore
@@ -562,7 +521,7 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
             } else {
                 // Seller wants payment in an SPL token
                 tx = await program.methods
-                    .buyListing(new BN(fee))
+                    .buyListing(new BN(fee), new BN(numberOfShares))
                     .accounts({
                         shareListing: listing.listingPDA,
                         // @ts-ignore
@@ -586,6 +545,51 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
             toast.success(`Transaction successful: ${tx}`);
             toast.success(`You successfully purchased ${Number(listing.numberOfShares)} share${Number(listing.numberOfShares) > 1 ? 's' : ''} of ${swarm.name}.`);
             return tx;
+
+        }
+    });
+
+    const transferShares = useMutation({
+        mutationKey: ['shares', 'transfer', pool.toBase58()],
+        mutationFn: async ({ recipient, numberOfShares, custodialWallet }: { recipient: string, numberOfShares: number, custodialWallet: string }) => {
+
+            const USDC_MINT = new PublicKey(supportedTokens.find(token => token.label === 'USDC')?.mint as string);
+
+            // Generate the sender PDA
+            const senderPDA = getShareholderPDA(
+                program.programId,
+                publicKey,
+                pool
+            );
+
+            // Generate the recipient PDA
+            const recipientPDA = getShareholderPDA(
+                program.programId,
+                new PublicKey(recipient),
+                pool
+            );
+
+            const tx = await program.methods
+                .transferShares(new BN(numberOfShares))
+                .accounts({
+                    // @ts-ignore
+                    recipientShareholder: recipientPDA,
+                    senderShareholder: senderPDA,
+                    senderAccount: publicKey,
+                    senderTokenAccount: await getAssociatedTokenAddress(USDC_MINT, publicKey),
+                    recipientAccount: new PublicKey(recipient),
+                    custodialAccount: new PublicKey(custodialWallet),
+                    custodialTokenAccount: await getAssociatedTokenAddress(USDC_MINT, new PublicKey(custodialWallet)),
+                    tokenMintAccount: USDC_MINT,
+                    pool,
+                    authority: publicKey,
+                    systemProgram: SystemProgram.programId,
+                    tokenProgram: TOKEN_PROGRAM_ID,
+                    associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID
+                })
+                .rpc();
+
+            toast.success(`Sent ${numberOfShares} share${numberOfShares > 1 ? 's' : ''} to ${recipient}.`);
 
         }
     });
@@ -623,6 +627,125 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
         },
     });
 
+    const updateCustodialAccount = useMutation({
+        mutationKey: ['custodial-account', 'update', pool.toBase58()],
+        mutationFn: async (newAuthority: string) => {
+            if (!publicKey) throw new Error('Wallet not connected');
+            if (!pool) throw new Error('Pool not found');
+
+            try {
+                const tx = await program.methods
+                    .setCustodialAccount(new PublicKey(newAuthority))
+                    .accounts({
+                        pool,
+                        authority: publicKey
+                    })
+                    .rpc();
+                toast.success(`Transaction successful: ${tx}`);
+                toast.success(`Updated custodial wallet.`);
+                return tx;
+            } catch (e) {
+                console.error('Failed to update authority:', e);
+            }
+
+        },
+    })
+
+    const updateAdminAuthority = useMutation({
+        mutationKey: ['admin-authority', 'update', pool.toBase58()],
+        mutationFn: async (newAuthority: string) => {
+            if (!publicKey) throw new Error('Wallet not connected');
+            if (!pool) throw new Error('Pool not found');
+
+            try {
+                const tx = await program.methods
+                    .setAdminAuthority(new PublicKey(newAuthority))
+                    .accounts({
+                        pool,
+                        authority: publicKey
+                    })
+                    .rpc();
+                toast.success(`Transaction successful: ${tx}`);
+                toast.success(`Updated pool authority.`);
+                return tx;
+            } catch (e) {
+                console.error('Failed to update authority:', e);
+            }
+
+        },
+    })
+
+    const increaseSupply = useMutation({
+        mutationKey: ['supply', 'increase', pool.toBase58()],
+        mutationFn: async (numberOfShares: number) => {
+            if (!publicKey) throw new Error('Wallet not connected');
+            if (!pool) throw new Error('Pool not found');
+
+            try {
+                const tx = await program.methods
+                    .increaseSupply(new BN(numberOfShares))
+                    .accounts({
+                        pool,
+                        authority: publicKey
+                    })
+                    .rpc();
+                toast.success(`Transaction successful: ${tx}`);
+                toast.success(`You increased the pool share supply by ${numberOfShares} share(s).`);
+                return tx;
+            } catch (e) {
+                console.error('Failed to increase supply:', e);
+            }
+        },
+    })
+
+    const closePool = useMutation({
+        mutationKey: ['close', pool.toBase58()],
+        mutationFn: async () => {
+            if (!publicKey) throw new Error('Wallet not connected');
+            if (!pool) throw new Error('Pool not found');
+
+            try {
+                const tx = await program.methods
+                    .removePool()
+                    .accounts({
+                        pool,
+                        authority: publicKey
+                    })
+                    .rpc();
+                toast.success(`Transaction successful: ${tx}`);
+                toast.success(`You successfully closed pool id: ${pool.toBase58()}`);
+                return tx;
+            } catch (e) {
+                console.error('Failed to close pool:', e);
+            }
+
+
+        },
+    })
+
+    // Freeze/unfreeze pool
+    const freezePool = useMutation({
+        mutationKey: ['pool', 'freeze'],
+        mutationFn: async (state: boolean) => {
+            if (!publicKey) throw new Error('Wallet not connected')
+
+            try {
+                const tx = await program.methods
+                    .freezePool(state)
+                    .accounts({
+                        pool,
+                        authority: publicKey
+                    })
+                    .rpc();
+                toast.success(`Transaction successful: ${tx}`);
+                toast.success(`Pool (${pool.toBase58()}) is now ${state ? 'frozen' : 'unfrozen'}.`);
+                return tx;
+            } catch (e) {
+                useFallbackRPC();
+            }
+        }
+    });
+
     return {
         poolAccount,
         purchaseShares,
@@ -630,6 +753,12 @@ export function useLaunchpadProgramAccount({ poolAddress }: { poolAddress: strin
         poolListings,
         createListing,
         cancelListing,
-        buyListing
+        buyListing,
+        updateCustodialAccount,
+        updateAdminAuthority,
+        increaseSupply,
+        closePool,
+        freezePool,
+        transferShares
     }
 }

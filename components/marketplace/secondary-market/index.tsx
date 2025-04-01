@@ -1,4 +1,5 @@
 import { CountdownTimer } from "@/app/invest/[id]/CountdownTimer";
+import { MaintenanceCard } from "@/components/cards/maintenance";
 import { SellPositionCard } from "@/components/cards/sellPosition";
 import { MarketListings } from "@/components/market/listings";
 import { UserListings } from "@/components/market/userListings";
@@ -13,6 +14,15 @@ const SecondaryMarket = () => {
                 title="Secondary market will go live @ 18:00 UTC"
                 hideDays
                 launchDate={LAUNCH_DATE}
+            />
+        )
+    }
+
+    if (process.env.NEXT_PUBLIC_SECONDARY_MARKET_MAINTENANCE === "true") {
+        return (
+            <MaintenanceCard
+                title="Under Maintenance"
+                message="The secondary market is currently undergoing some maintenance. Please check back later."
             />
         )
     }

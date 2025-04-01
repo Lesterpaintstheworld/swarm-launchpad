@@ -263,8 +263,8 @@ const SwarmInvestCard = ({
 
         try {
             const result = await purchaseShares.mutateAsync({
-                numberOfShares: numShares,
-                calculatedCost: calculatedCostInBaseUnits
+                calculatedCost: calculatedCostInBaseUnits,
+                numberOfShares: numShares
             });
 
             // Webhook notification
