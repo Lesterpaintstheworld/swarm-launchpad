@@ -76,7 +76,7 @@ const Modal = ({ isOpen, onClose, children, animationDuration, className }: Moda
                     >
                         <button
                             onClick={onClose}
-                            className="absolute right-4 top-4 text-foreground hover:text-muted"
+                            className="absolute right-4 top-4 text-foreground hover:text-muted duration-100"
                             aria-label="Close modal"
                         >
                             <X size={24} />
