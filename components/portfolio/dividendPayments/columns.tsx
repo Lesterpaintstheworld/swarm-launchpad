@@ -156,8 +156,8 @@ const ActionCell = ({ row }: ActionCellProps) => {
             }
 
             try {
-                // Use fixed date of March 27, 2025 as the start of the claim period
-                const claimStartDate = '2025-03-27';
+                // Use fixed date of April 4, 2025 as the start of the claim period
+                const claimStartDate = '2025-04-04';
 
                 const response = await fetch(
                     `/api/redistributions/check?wallet=${publicKey.toString()}&swarmId=${swarmId}&date=${claimStartDate}`,
@@ -242,7 +242,7 @@ const ActionCell = ({ row }: ActionCellProps) => {
     }, [swarmId]);
 
     const getWeekKey = () => {
-        return '2025-03-27';
+        return '2025-04-04';
     };
     
     const claimKey = `claimed_${swarmId}_${publicKey?.toString()}_week_${getWeekKey()}`;
@@ -483,7 +483,7 @@ export const columns: ColumnDef<DividendPayment>[] = [
             <DataTableColumnHeader column={column} title="Date" />
         ),
         cell: () => (
-            <p className="text-muted whitespace-nowrap">27/03/2025</p>
+            <p className="text-muted whitespace-nowrap">04/04/2025</p>
         )
     },
     {
