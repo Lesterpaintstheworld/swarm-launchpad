@@ -156,8 +156,20 @@ const ActionCell = ({ row }: ActionCellProps) => {
             }
 
             try {
-                // Use fixed date of April 4, 2025 as the start of the claim period
-                const claimStartDate = '2025-04-04';
+                // Calculate the last Thursday as the start of the claim period
+                const getLastThursday = () => {
+                    const today = new Date();
+                    const day = today.getDay(); // 0 is Sunday, 4 is Thursday
+                    const diff = day <= 4 ? 4 - day - 7 : 4 - day; // Go back to previous Thursday
+                    
+                    const lastThursday = new Date(today);
+                    lastThursday.setDate(today.getDate() + diff);
+                    
+                    // Format as YYYY-MM-DD
+                    return lastThursday.toISOString().split('T')[0];
+                };
+
+                const claimStartDate = getLastThursday();
 
                 const response = await fetch(
                     `/api/redistributions/check?wallet=${publicKey.toString()}&swarmId=${swarmId}&date=${claimStartDate}`,
@@ -241,8 +253,20 @@ const ActionCell = ({ row }: ActionCellProps) => {
         };
     }, [swarmId]);
 
+    const getLastThursday = () => {
+        const today = new Date();
+        const day = today.getDay(); // 0 is Sunday, 4 is Thursday
+        const diff = day <= 4 ? 4 - day - 7 : 4 - day; // Go back to previous Thursday
+        
+        const lastThursday = new Date(today);
+        lastThursday.setDate(today.getDate() + diff);
+        
+        // Format as YYYY-MM-DD
+        return lastThursday.toISOString().split('T')[0];
+    };
+    
     const getWeekKey = () => {
-        return '2025-04-04';
+        return getLastThursday();
     };
     
     const claimKey = `claimed_${swarmId}_${publicKey?.toString()}_week_${getWeekKey()}`;
@@ -482,9 +506,24 @@ export const columns: ColumnDef<DividendPayment>[] = [
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Date" />
         ),
-        cell: () => (
-            <p className="text-muted whitespace-nowrap">04/04/2025</p>
-        )
+        cell: () => {
+            const getLastThursday = () => {
+                const today = new Date();
+                const day = today.getDay(); // 0 is Sunday, 4 is Thursday
+                const diff = day <= 4 ? 4 - day - 7 : 4 - day; // Go back to previous Thursday
+                
+                const lastThursday = new Date(today);
+                lastThursday.setDate(today.getDate() + diff);
+                
+                return lastThursday;
+            };
+            
+            return (
+                <p className="text-muted whitespace-nowrap">
+                    {getLastThursday().toLocaleDateString()}
+                </p>
+            );
+        }
     },
     {
         id: 'actions',
