@@ -37,6 +37,7 @@ interface DataTableProps<TData, TValue> {
     sortable?: boolean;
     searchable?: boolean;
     pagination?: boolean;
+    className?: string;
     rowClassName?: string;
     initialFilter?: string;
     // Add this new prop for custom sorting functions
@@ -53,6 +54,7 @@ export function DataTable<TData, TValue>({
     sortable = true,
     searchable = false,
     pagination = false,
+    className,
     rowClassName,
     initialFilter,
     sortingFns,
@@ -62,10 +64,10 @@ export function DataTable<TData, TValue>({
 
     const [sorting, setSorting] = useState<SortingState>([]);
     const [globalFilter, setGlobalFilter] = useState<string>(initialFilter || '');
-    
+
     // Add state for column filters if not provided externally
     const [internalColumnFilters, setInternalColumnFilters] = useState<ColumnFiltersState>(columnFilters);
-    
+
     // Use either external or internal column filters
     const activeColumnFilters = onColumnFiltersChange ? columnFilters : internalColumnFilters;
     const setActiveColumnFilters = onColumnFiltersChange ? onColumnFiltersChange : setInternalColumnFilters;
@@ -107,7 +109,7 @@ export function DataTable<TData, TValue>({
     })
 
     return (
-        <div>
+        <div className={className}>
             {searchable &&
                 <div className="flex flex-row justify-between w-full mb-4">
                     <Search
@@ -124,9 +126,9 @@ export function DataTable<TData, TValue>({
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup, index) => (
                             <TableRow key={index}>
-                                {headerGroup.headers.map((header) => {
+                                {headerGroup.headers.map((header, i) => {
                                     return (
-                                        <TableHead key={header.id} style={{ width: header.getSize() }}>
+                                        <TableHead key={`${header.id} ${index} ${i}`} style={{ width: header.getSize() }}>
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(header.column.columnDef.header, header.getContext())
@@ -139,14 +141,14 @@ export function DataTable<TData, TValue>({
                     </TableHeader>
                     <TableBody>
                         {table.getRowModel().rows?.length ? (
-                            table.getRowModel().rows.map((row) => (
+                            table.getRowModel().rows.map((row, index) => (
                                 <TableRow
                                     className={cn("border-b border-border transition-colors hover:bg-foreground/[3%] data-[state=selected]:bg-muted", rowClassName)}
-                                    key={row.id}
+                                    key={`${row.id} ${index}`}
                                     data-state={row.getIsSelected() && "selected"}
                                 >
-                                    {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id} className="pl-4">
+                                    {row.getVisibleCells().map((cell, i) => (
+                                        <TableCell key={`${cell.id} ${index} ${i}`} className="pl-4">
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </TableCell>
                                     ))}

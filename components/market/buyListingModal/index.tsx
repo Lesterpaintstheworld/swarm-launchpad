@@ -31,19 +31,19 @@ interface BuyListingModalProps {
 const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount }: BuyListingModalProps) => {
     // Move all hooks to the top level
     const { publicKey } = useWallet();
-    const { buyListing } = useLaunchpadProgramAccount({ 
-        poolAddress: listing?.pool?.toBase58() || "" 
+    const { buyListing } = useLaunchpadProgramAccount({
+        poolAddress: listing?.pool?.toBase58() || ""
     });
     const { program } = useLaunchpadProgram();
     const [token, setToken] = useState<TokenType>(
-        supportedTokens.find((token: TokenType) => 
+        supportedTokens.find((token: TokenType) =>
             listing?.desiredToken?.toBase58() === token.mint
         ) as TokenType || supportedTokens[0]
     );
     const [loading, setLoading] = useState(false);
     const { data: tokenPrices, isFetching } = useTokenPrices();
     const queryClient = useQueryClient();
-    
+
     // Move all useEffect and useCallback hooks to the top level
     useEffect(() => {
         if (isModalOpen) {
@@ -66,11 +66,11 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
     }, [tokenPrices, token?.mint]);
 
     // Check if data is valid
-    const isValidData = 
-        listing && 
-        listing.pool && 
-        listing.shareholder && 
-        listing.numberOfShares && 
+    const isValidData =
+        listing &&
+        listing.pool &&
+        listing.shareholder &&
+        listing.numberOfShares &&
         listing.pricePerShare &&
         swarm &&
         poolAccount;
@@ -113,13 +113,14 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                 listing,
                 swarm,
                 poolAccount,
-                fee: Math.floor(min_transaction_fee() * token.resolution)
+                fee: Math.floor(min_transaction_fee() * token.resolution),
+                numberOfShares: Number(listing.numberOfShares)
             });
 
             // Send Telegram notification
             try {
                 const totalAmount = ((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) + percent_fee() + min_transaction_fee();
-                
+
                 // Send notification to the original channel
                 await fetch('/api/notifications/telegram', {
                     method: 'POST',
@@ -134,14 +135,14 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                         totalAmount: IntlNumberFormat(totalAmount, (token?.decimals || 6))
                     }),
                 });
-                
+
                 // Only send notification if number of shares is >= 10
                 if (Number(listing.numberOfShares) >= 10) {
                     console.log('Sending notification for purchase with >= 10 shares');
-                    
+
                     // Send simple notification to the new chat
                     const message = `🚀 A new share has been bought!`;
-                    
+
                     // Use our proxy API instead of calling Telegram directly
                     const response = await fetch('/api/notifications/telegram-direct', {
                         method: 'POST',
@@ -153,7 +154,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
                             // No need to specify chatId, the API will use the default
                         })
                     });
-                    
+
                     if (!response.ok) {
                         const errorText = await response.text();
                         console.error('API error response:', errorText);
@@ -175,7 +176,7 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
         } finally {
             queryClient.refetchQueries({ queryKey: ['all-listings'] });
             setLoading(false);
-            closeModal();
+            // closeModal();
         }
     }
 
@@ -255,13 +256,12 @@ const BuyListingModal = ({ isModalOpen, closeModal, listing, swarm, poolAccount 
             <div className='px-3 mb-6'>
                 <p className="text-muted text-sm">You&apos;ll pay</p>
                 <div className="overflow-hidden flex flex-row items-center no-wrap gap-2 py-1">
-                    <p className={`text-4xl leading-none font-bold text-emerald-500 truncate ${
-                        token.mint === '9psiRdn9cXYVps4F1kFuoNjd2EtmqNJXrCPmRppJpump' 
-                        ? 'metallic-text-ubc' 
-                        : token.mint === 'B1N1HcMm4RysYz4smsXwmk2UnS8NziqKCM6Ho8i62vXo' 
-                          ? 'metallic-text' 
-                          : ''
-                    }`}>
+                    <p className={`text-4xl leading-none font-bold text-emerald-500 truncate ${token.mint === '9psiRdn9cXYVps4F1kFuoNjd2EtmqNJXrCPmRppJpump'
+                        ? 'metallic-text-ubc'
+                        : token.mint === 'B1N1HcMm4RysYz4smsXwmk2UnS8NziqKCM6Ho8i62vXo'
+                            ? 'metallic-text'
+                            : ''
+                        }`}>
                         +
                         {IntlNumberFormat(((Number(listing.pricePerShare) / (token?.resolution || 1_000_000)) * Number(listing.numberOfShares)) + percent_fee() + min_transaction_fee(), (token?.decimals || 6))}
                     </p>

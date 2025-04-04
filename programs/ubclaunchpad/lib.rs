@@ -88,6 +88,15 @@ pub mod ubclaunchpad {
         pool.custodial_account = custodial_account;
         Ok(())
     }
+    
+    pub fn set_admin_authority(
+        ctx: Context<UpdatePool>,
+        admin_authority: Pubkey,
+    ) -> Result<()> {
+        let pool = &mut ctx.accounts.pool;
+        pool.admin_authority = admin_authority;
+        Ok(())
+    }
 
     pub fn set_mints(
         ctx: Context<UpdatePool>,
@@ -114,7 +123,12 @@ pub mod ubclaunchpad {
         number_of_shares: u64,
         calculated_cost: u64,
     ) -> Result<()> {
+
         let pool = &mut ctx.accounts.pool;
+
+        // Ensure pool is not frozen.
+        require!(pool.is_frozen == false, ErrorCode::PoolFrozen);
+
         require!(number_of_shares <= 1000, ErrorCode::TooManyShares);
 
         // Check if enough shares are available
@@ -226,17 +240,22 @@ pub mod ubclaunchpad {
         desired_token: Pubkey,
     ) -> Result<()> {
 
+        let pool = &ctx.accounts.pool;
+
+        // Ensure pool is not frozen.
+        require!(pool.is_frozen == false, ErrorCode::PoolFrozen);
+
         // Check if shareholder has enough available shares
         require!(
             ctx.accounts.shareholder.available_shares >= number_of_shares,
             ErrorCode::InsufficientShares
         );
 
+        // Validate desired token
         require!(
             validate_whitelisted_token(&desired_token),
             ErrorCode::TokenNotWhitelisted
         );
-
 
         let listing = &mut ctx.accounts.share_listing;
         let shareholder = &mut ctx.accounts.shareholder;
@@ -277,7 +296,7 @@ pub mod ubclaunchpad {
         Ok(())
     }
 
-    pub fn buy_listing(ctx: Context<BuyListing>, transaction_fee: u64) -> Result<()> {
+    pub fn buy_listing(ctx: Context<BuyListing>, transaction_fee: u64, number_of_shares: u64) -> Result<()> {
         
         let listing = &mut ctx.accounts.share_listing;
         let buyer_shareholder = &mut ctx.accounts.buyer_shareholder;
@@ -285,11 +304,11 @@ pub mod ubclaunchpad {
         let seller = &mut ctx.accounts.seller_account;
         let pool = &mut ctx.accounts.pool;
 
+        // Ensure pool is not frozen.
+        require!(pool.is_frozen == false, ErrorCode::PoolFrozen);
+
         // Check seller does not want SOL.
-        require!(
-            listing.desired_token.to_string() != "11111111111111111111111111111111",
-            ErrorCode::InvalidToken
-        );
+        require!(listing.desired_token.to_string() != "11111111111111111111111111111111", ErrorCode::InvalidToken);
 
         // Validate the listing PDA (Done here to reduce stack size)
         let (expected_listing_pda, _bump) = Pubkey::find_program_address(
@@ -302,20 +321,20 @@ pub mod ubclaunchpad {
             ctx.program_id,
         );
     
-        require!(
-            listing.key() == expected_listing_pda,
-            ErrorCode::InvalidListingAccount
-        );
+        require!(listing.key() == expected_listing_pda, ErrorCode::InvalidListingAccount);
+
+        // Check there are sufficient remaining shares
+        require!(listing.number_of_shares >= number_of_shares, ErrorCode::InvalidAmount);
 
         // Update buyers share counts
         buyer_shareholder.shares = buyer_shareholder
             .shares
-            .checked_add(listing.number_of_shares)
+            .checked_add(number_of_shares)
             .ok_or(error!(ErrorCode::InvalidAmount))?;
 
         buyer_shareholder.available_shares = buyer_shareholder
             .available_shares
-            .checked_add(listing.number_of_shares)
+            .checked_add(number_of_shares)
             .ok_or(error!(ErrorCode::InvalidAmount))?;
 
         // Properly initialise data if buyer is a new shareholder
@@ -325,11 +344,17 @@ pub mod ubclaunchpad {
         // Update sellers share count
         seller_shareholder.shares = seller_shareholder
             .shares
-            .checked_sub(listing.number_of_shares)
+            .checked_sub(number_of_shares)
             .ok_or(error!(ErrorCode::InvalidAmount))?;
 
-        let total_cost: u64 = listing
+        // Update listing
+        listing.number_of_shares = listing
             .number_of_shares
+            .checked_sub(number_of_shares)
+            .ok_or(error!(ErrorCode::InvalidAmount))?;
+
+        // Total cost
+        let total_cost: u64 = number_of_shares
             .checked_mul(listing.price_per_share)
             .ok_or(error!(ErrorCode::MathError))?;
 
@@ -369,9 +394,10 @@ pub mod ubclaunchpad {
         )?;
 
         // Close shareholder account if seller has no more shares
-        if seller_shareholder.shares == 0 {
-            seller_shareholder.close(seller.to_account_info())?;
-        }
+        if seller_shareholder.shares == 0 { seller_shareholder.close(seller.to_account_info())?; }
+
+        // Close listing if no more shares
+        if listing.number_of_shares == 0 { listing.close(seller.to_account_info())?; }
 
         emit!(BuyListingEvent {
             listing_id: listing.listing_id.to_string(),
@@ -380,18 +406,17 @@ pub mod ubclaunchpad {
             token: listing.desired_token,
             buyer: buyer_shareholder.owner,
             seller: seller_shareholder.owner,
-            number_of_shares: listing.number_of_shares,
+            number_of_shares: number_of_shares,
             price_per_share: listing.price_per_share,
             amount: total_cost,
             fee: final_calculated_fee,
             timestamp: Clock::get()?.unix_timestamp,
         });
 
-
         Ok(())
     }
     
-    pub fn buy_listing_with_lamports(ctx: Context<BuyListingWithLamports>, transaction_fee: u64) -> Result<()> {
+    pub fn buy_listing_with_lamports(ctx: Context<BuyListingWithLamports>, transaction_fee: u64, number_of_shares: u64) -> Result<()> {
         
         let listing = &mut ctx.accounts.share_listing;
         let buyer_shareholder = &mut ctx.accounts.buyer_shareholder;
@@ -399,11 +424,11 @@ pub mod ubclaunchpad {
         let seller = &mut ctx.accounts.seller_account;
         let pool = &mut ctx.accounts.pool;
 
+        // Ensure pool is not frozen.
+        require!(pool.is_frozen == false, ErrorCode::PoolFrozen);
+
         // Check seller wants SOL
-        require!(
-            listing.desired_token.to_string() == "11111111111111111111111111111111",
-            ErrorCode::InvalidToken
-        );
+        require!(listing.desired_token.to_string() == "11111111111111111111111111111111", ErrorCode::InvalidToken);
 
         // Validate the listing PDA (Done here to reduce stack size)
         let (expected_listing_pda, _bump) = Pubkey::find_program_address(
@@ -416,20 +441,20 @@ pub mod ubclaunchpad {
             ctx.program_id,
         );
     
-        require!(
-            listing.key() == expected_listing_pda,
-            ErrorCode::InvalidListingAccount
-        );
+        require!(listing.key() == expected_listing_pda, ErrorCode::InvalidListingAccount);
+
+        // Check there are sufficient remaining shares
+        require!(listing.number_of_shares >= number_of_shares, ErrorCode::InvalidAmount);
 
         // Update buyers share counts
         buyer_shareholder.shares = buyer_shareholder
             .shares
-            .checked_add(listing.number_of_shares)
+            .checked_add(number_of_shares)
             .ok_or(error!(ErrorCode::InvalidAmount))?;
 
         buyer_shareholder.available_shares = buyer_shareholder
             .available_shares
-            .checked_add(listing.number_of_shares)
+            .checked_add(number_of_shares)
             .ok_or(error!(ErrorCode::InvalidAmount))?;
 
         // Properly initialise data if buyer is a new shareholder
@@ -439,11 +464,17 @@ pub mod ubclaunchpad {
         // Update sellers share count
         seller_shareholder.shares = seller_shareholder
             .shares
-            .checked_sub(listing.number_of_shares)
+            .checked_sub(number_of_shares)
             .ok_or(error!(ErrorCode::InvalidAmount))?;
 
-        let total_cost: u64 = listing
+        // Update listing
+        listing.number_of_shares = listing
             .number_of_shares
+            .checked_sub(number_of_shares)
+            .ok_or(error!(ErrorCode::InvalidAmount))?;
+
+        // Total cost
+        let total_cost: u64 = number_of_shares
             .checked_mul(listing.price_per_share)
             .ok_or(error!(ErrorCode::MathError))?;
 
@@ -481,9 +512,10 @@ pub mod ubclaunchpad {
         )?;
 
         // Close shareholder account if seller has no more shares
-        if seller_shareholder.shares == 0 {
-            seller_shareholder.close(seller.to_account_info())?;
-        }
+        if seller_shareholder.shares == 0 { seller_shareholder.close(seller.to_account_info())?; }
+
+        // Close listing if no more shares
+        if listing.number_of_shares == 0 { listing.close(seller.to_account_info())?; }
 
         emit!(BuyListingEvent {
             listing_id: listing.listing_id.to_string(),
@@ -492,12 +524,73 @@ pub mod ubclaunchpad {
             token: listing.desired_token,
             buyer: buyer_shareholder.owner,
             seller: seller_shareholder.owner,
-            number_of_shares: listing.number_of_shares,
+            number_of_shares: number_of_shares,
             price_per_share: listing.price_per_share,
             amount: total_cost,
             fee: final_calculated_fee,
             timestamp: Clock::get()?.unix_timestamp,
         });
+
+        Ok(())
+    }
+
+    pub fn transfer_shares(ctx: Context<TransferShares>, number_of_shares: u64) -> Result<()> {
+
+        let recipient_shareholder = &mut ctx.accounts.recipient_shareholder;
+        let sender_shareholder = &mut ctx.accounts.sender_shareholder;
+        let sender = &mut ctx.accounts.sender_account;
+        let pool = &mut ctx.accounts.pool;
+
+        // Check pool is not frozen
+        require!(pool.is_frozen == false, ErrorCode::PoolFrozen);
+
+        // Check sender has enough shares
+        require!(sender_shareholder.available_shares >= number_of_shares, ErrorCode::InvalidAmount);
+
+        // Update recipient's share counts
+        recipient_shareholder.shares = recipient_shareholder
+            .shares
+            .checked_add(number_of_shares)
+            .ok_or(error!(ErrorCode::InvalidAmount))?;
+
+        recipient_shareholder.available_shares = recipient_shareholder
+            .available_shares
+            .checked_add(number_of_shares)
+            .ok_or(error!(ErrorCode::InvalidAmount))?;
+
+        // Properly initialise data if recipient is a new shareholder
+        recipient_shareholder.owner = ctx.accounts.authority.key();
+        recipient_shareholder.pool = pool.key();
+
+        // Update sender share count
+        sender_shareholder.shares = sender_shareholder
+            .shares
+            .checked_sub(number_of_shares)
+            .ok_or(error!(ErrorCode::InvalidAmount))?;
+        
+        sender_shareholder.available_shares = sender_shareholder
+            .available_shares
+            .checked_sub(number_of_shares)
+            .ok_or(error!(ErrorCode::InvalidAmount))?;
+        
+        // Transfer Fee 3.79 USDC
+        let fee: u64 = 3790000;
+
+        // Transfer fee to custodial wallet
+        transfer(
+            CpiContext::new(
+                ctx.accounts.token_program.to_account_info(),
+                Transfer {
+                    from: ctx.accounts.sender_token_account.to_account_info(),
+                    to: ctx.accounts.custodial_token_account.to_account_info(),
+                    authority: sender.to_account_info(),
+                },
+            ),
+            fee,
+        )?;
+
+        // Close shareholder account if seller has no more shares
+        if sender_shareholder.shares == 0 { sender_shareholder.close(sender.to_account_info())?; }
 
         Ok(())
     }
@@ -552,7 +645,6 @@ pub struct Pool {
 pub struct CreateShareholder<'info> {
     #[account(
         mut,
-        constraint = !pool.is_frozen @ ErrorCode::PoolFrozen,  // Pool should NOT be frozen
         constraint = pool.available_shares > 0 @ ErrorCode::InsufficientShares  // Should have shares available
     )]
     pub pool: Box<Account<'info, Pool>>,
@@ -847,6 +939,73 @@ pub struct BuyListingWithLamports<'info> {
     pub buyer: Signer<'info>,
 
     pub system_program: Program<'info, System>,
+}
+
+#[derive(Accounts)]
+pub struct TransferShares<'info> {
+    #[account(
+        init_if_needed,
+        payer = authority,
+        space = ANCHOR_DISCRIMINATOR + Shareholder::INIT_SPACE,
+        seeds = [
+            b"shareholder",
+            pool.key().as_ref(),
+            recipient_account.key().as_ref()
+        ],
+        bump
+    )]
+    pub recipient_shareholder: Box<Account<'info, Shareholder>>,
+
+    #[account(
+        mut,
+        constraint = sender_shareholder.pool == pool.key() @ ErrorCode::InvalidPool,
+    )]
+    pub sender_shareholder: Box<Account<'info, Shareholder>>,
+
+    /// CHECK: This is the sender account that sends shares
+    #[account(
+        mut,
+        constraint = sender_account.key() == authority.key() @ ErrorCode::InvalidAuthority
+    )]
+    pub sender_account: AccountInfo<'info>,
+
+    #[account(
+        mut,
+        associated_token::mint = token_mint_account,
+        associated_token::authority = authority,
+    )]
+    pub sender_token_account: Box<Account<'info, TokenAccount>>,
+
+    /// CHECK: This is the recipient account that receives shares
+    #[account(mut)]
+    pub recipient_account: AccountInfo<'info>,
+
+    /// CHECK: This is the platform account from pool
+    #[account(
+        mut,
+        constraint = custodial_account.key() == pool.custodial_account @ ErrorCode::InvalidAuthority
+    )]
+    pub custodial_account: AccountInfo<'info>,
+
+    #[account(
+        init_if_needed,
+        payer = authority,
+        associated_token::mint = token_mint_account,
+        associated_token::authority = custodial_account,
+    )]
+    pub custodial_token_account: Box<Account<'info, TokenAccount>>,
+
+    #[account(mut)]
+    pub token_mint_account: Box<Account<'info, Mint>>,
+
+    pub pool: Box<Account<'info, Pool>>,
+
+    #[account(mut)]
+    pub authority: Signer<'info>,
+
+    pub system_program: Program<'info, System>,
+    pub token_program: Interface<'info, TokenInterface>,
+    pub associated_token_program: Program<'info, AssociatedToken>,
 }
 
 /// Utility & Shared Functions
