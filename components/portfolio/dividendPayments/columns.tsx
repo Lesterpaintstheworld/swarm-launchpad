@@ -255,8 +255,14 @@ const ActionCell = ({ row }: ActionCellProps) => {
 
     const getLastThursday = () => {
         const today = new Date();
+        const utcHours = today.getUTCHours();
         const day = today.getDay(); // 0 is Sunday, 4 is Thursday
-        const diff = day <= 4 ? 4 - day - 7 : 4 - day; // Go back to previous Thursday
+        
+        // If today is Thursday (day 4) and it's before 6pm UTC, 
+        // go back one week to get the previous Thursday
+        const diff = day === 4 && utcHours < 18 
+            ? -7 // Go back a full week on Thursday before 6pm UTC
+            : day <= 4 ? 4 - day - 7 : 4 - day; // Normal calculation for other days
         
         const lastThursday = new Date(today);
         lastThursday.setDate(today.getDate() + diff);
@@ -509,8 +515,14 @@ export const columns: ColumnDef<DividendPayment>[] = [
         cell: () => {
             const getLastThursday = () => {
                 const today = new Date();
+                const utcHours = today.getUTCHours();
                 const day = today.getDay(); // 0 is Sunday, 4 is Thursday
-                const diff = day <= 4 ? 4 - day - 7 : 4 - day; // Go back to previous Thursday
+                
+                // If today is Thursday (day 4) and it's before 6pm UTC, 
+                // go back one week to get the previous Thursday
+                const diff = day === 4 && utcHours < 18 
+                    ? -7 // Go back a full week on Thursday before 6pm UTC
+                    : day <= 4 ? 4 - day - 7 : 4 - day; // Normal calculation for other days
                 
                 const lastThursday = new Date(today);
                 lastThursday.setDate(today.getDate() + diff);
