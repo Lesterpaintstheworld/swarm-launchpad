@@ -26,6 +26,7 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
     const { position: kinKongPosition } = useLaunchpadProgramAccount({ poolAddress: 'FwJfuUfrX91VH1Li4PJWCNXXRR4gUXLkqbEgQPo6t9fz' });
     const { position: xForgePosition } = useLaunchpadProgramAccount({ poolAddress: 'AaFvJBvjuCTs93EVNYqMcK5upiTaTh33SV7q4hjaPFNi' });
     const { position: kinOSPosition } = useLaunchpadProgramAccount({ poolAddress: '37u532qgHbjUHic6mQK51jkT3Do7qkWLEUQCx22MDBD8' });
+    const { position: therapyKinPosition } = useLaunchpadProgramAccount({ poolAddress: '5wWLpeH2DDrAS9Lxx1nGnwtMTvu7U9txf4BuXxdN6V6H' });
 
     // Fetch revenue data
     useEffect(() => {
@@ -34,7 +35,7 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
         
         const fetchRevenueData = async () => {
             try {
-                const swarms = ['xforge', 'kinos', 'kinkong'];
+                const swarms = ['xforge', 'kinos', 'kinkong', 'therapykin'];
                 
                 const revenues = await Promise.all(
                     swarms.map(async (swarmId) => {
@@ -142,11 +143,25 @@ const DividendPayments = ({ className }: DividendPaymentsProps) => {
                 });
             }
 
+            const therapyKinOwnership = calculateOwnership(therapyKinPosition?.data, 100000);
+            if (therapyKinOwnership > 0 && revenueData.therapykin) {
+                // Apply revenueShare as a percentage (divide by 100)
+                const revenue = revenueData.therapykin.weeklyRevenue * (revenueData.therapykin.revenueShare / 100);
+                data.push({
+                    id: '4',
+                    swarm_id: 'therapykin',
+                    amount: 0, // 0% to COMPUTE
+                    ubcAmount: Math.floor(revenue * therapyKinOwnership), // 100% to UBC
+                    timestamp: now.toISOString(),
+                    status: 'pending'
+                });
+            }
+
             setDividends(data);
         };
 
         calculateDividends();
-    }, [kinKongPosition?.data, xForgePosition?.data, kinOSPosition?.data, revenueData]);
+    }, [kinKongPosition?.data, xForgePosition?.data, kinOSPosition?.data, therapyKinPosition?.data, revenueData]);
 
     return (
         <Card className={cn("w-full p-6", className)}>
