@@ -1,8 +1,12 @@
 import { constants } from "@/lib/constants";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
     try {
+
+        const { searchParams } = req.nextUrl;
+
+        const query = searchParams.get('q');
 
         const response = await fetch(process.env.HELIUS_RPC_URL, {
             method: 'POST',
@@ -14,7 +18,7 @@ export async function GET() {
                 id: 1,
                 method: 'getTokenSupply',
                 params: [
-                    constants.investmentProgram.ubcMint,
+                    constants.investmentProgram.computeMint,
                 ],
             })
         });
@@ -25,22 +29,29 @@ export async function GET() {
             throw new Error('Error fetching token supply:');
         }
 
+        if(query === "circulating" || query === "totalcoins") {
+            return new Response(data.result.value.uiAmount, { status: 200 });
+        }
+
         return NextResponse.json(
             {
                 token: {
-                    name: "Universal Basic Compute",
-                    symbol: "UBC",
-                    mint: constants.investmentProgram.ubcMint,
+                    name: "COMPUTE",
+                    symbol: "COMPUTE",
+                    mint: constants.investmentProgram.computeMint,
+                    decimals: data.result.value.decimals,
                 },
                 supply: {
-                    ...data.result.value
+                    amount: data.result.value.amount,
+                    uiAmount: data.result.value.uiAmount,
+                    uiAmountString: data.result.value.uiAmountString,
                 }
             },
             { status: 200 }
         );
 
     } catch (e: any) {
-        console.error('Error in /api/token-supply/ubc:', e);
+        console.error('Error in /api/token-supply/compute:', e);
         return NextResponse.json(
             { error: 'Could not get supply data.' },
             { status: 500 }
