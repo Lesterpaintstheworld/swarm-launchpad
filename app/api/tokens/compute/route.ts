@@ -30,7 +30,15 @@ export async function GET(req: NextRequest) {
         }
 
         if(query === "circulating" || query === "totalcoins") {
-            return new Response(data.result.value.uiAmount, { status: 200 });
+            return new Response(
+                String(data.result.value.uiAmount),
+                {
+                    status: 200,
+                    headers: {
+                        'Content-Type': 'text/plain',
+                    },
+                }
+            );
         }
 
         return NextResponse.json(
