@@ -8,17 +8,12 @@ import { usePermissions } from "@/hooks/usePermissions";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { LucideLoaderCircle, LucideTriangleAlert } from "lucide-react";
 import { redirect } from "next/navigation";
-import { useEffect } from "react";
 
 export default function Page() {
 
     const { publicKey } = useWallet();
 
     const { permissions, isLoading, error } = usePermissions(publicKey);
-
-    useEffect(() => {
-        console.log('permissions', permissions);
-    }, [permissions])
 
     if (isLoading) {
         return <div className="container view"></div>;
